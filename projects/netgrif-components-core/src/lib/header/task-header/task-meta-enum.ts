@@ -1,9 +1,9 @@
 export enum TaskMetaField {
-    CASE = 'caseTitleSortable',
+    CASE = 'caseTitle',
     CASE_ID = 'caseId',
-    TASK_ID = 'taskId',
+    TASK_ID = '_id',
     TITLE = 'title',
     PRIORITY = 'priority',
-    USER = 'user',
-    ASSIGN_DATE = 'assign-date'
+    USER = 'userId',
+    ASSIGN_DATE = 'startDate'
 }

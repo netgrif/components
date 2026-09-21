@@ -1,11 +1,10 @@
 import {waitForAsync, ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
-import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
+import {FlexLayoutModule, FlexModule} from '@ngbracket/ngx-layout';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {RouterTestingModule} from '@angular/router/testing';
 import {Component} from '@angular/core';
 import {AbstractSearchModeComponent} from './abstract-search-mode.component';
-import {SideMenuService} from '../../../side-menu/services/side-menu.service';
 import {CaseHeaderService} from '../../case-header/case-header.service';
 import {UserValue} from '../../../data-fields/user-field/models/user-value';
 import {TranslateLibModule} from '../../../translate/translate-lib.module';
@@ -26,6 +25,7 @@ import {ConfigurationService} from '../../../configuration/configuration.service
 import {NAE_BASE_FILTER} from '../../../search/models/base-filter-injection-token';
 import {AllowedNetsService} from '../../../allowed-nets/services/allowed-nets.service';
 import {AllowedNetsServiceFactory} from '../../../allowed-nets/services/factory/allowed-nets-service-factory';
+import {MatDialog} from '@angular/material/dialog';
 
 describe('AbstractSearchModeComponent', () => {
     let component: TestSeaarchModeComponent;
@@ -56,7 +56,11 @@ describe('AbstractSearchModeComponent', () => {
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: ViewService, useClass: TestViewService},
                 CaseHeaderService,
-                {provide: AllowedNetsService, useFactory: TestCaseViewAllowedNetsFactory, deps: [AllowedNetsServiceFactory]}
+                {
+                    provide: AllowedNetsService,
+                    useFactory: TestCaseViewAllowedNetsFactory,
+                    deps: [AllowedNetsServiceFactory]
+                }
             ],
             declarations: [TestSeaarchModeComponent, TestWrapperComponent],
         }).compileComponents();
@@ -80,7 +84,7 @@ describe('AbstractSearchModeComponent', () => {
     }));
 
     it('should transform UserValue into id', fakeAsync(() => {
-        component.formControls[0].setValue(new UserValue('7', '', '', ''));
+        component.formControls[0].setValue(new UserValue('7', 'realmID0', '', '', '',''));
         tick(600);
         expect(headerSpy).toHaveBeenCalledWith(0, '7');
     }));
@@ -96,8 +100,8 @@ describe('AbstractSearchModeComponent', () => {
     template: ''
 })
 class TestSeaarchModeComponent extends AbstractSearchModeComponent {
-    constructor(protected _sideMenuService: SideMenuService) {
-        super(_sideMenuService);
+    constructor(protected _dialog: MatDialog) {
+        super(_dialog);
     }
 }
 

@@ -4,13 +4,16 @@ import {AbstractDataFieldComponent} from '../models/abstract-data-field-componen
 import {FormControl} from '@angular/forms';
 import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token';
 
+/**
+ * @deprecated
+ * */
 @Component({
     selector: 'ncc-abstract-enumeration-field',
     template: ''
 })
 export abstract class AbstractEnumerationFieldComponent extends AbstractDataFieldComponent {
 
-    @Input() dataField: EnumerationField;
+    @Input() declare dataField: EnumerationField;
 
     protected constructor(@Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
         super(informAboutInvalidData);

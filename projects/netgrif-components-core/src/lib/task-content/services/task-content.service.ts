@@ -7,7 +7,7 @@ import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 import {TranslateService} from '@ngx-translate/core';
 import {EnumerationField, EnumerationFieldValue} from '../../data-fields/enumeration-field/models/enumeration-field';
 import {MultichoiceField} from '../../data-fields/multichoice-field/models/multichoice-field';
-import {Change, ChangedFields, FrontendActions} from '../../data-fields/models/changed-fields';
+import {Change, ChangedFields} from '../../data-fields/models/changed-fields';
 import {FieldConverterService} from './field-converter.service';
 import {FieldTypeResource} from '../model/field-type-resource';
 import {DynamicEnumerationField} from '../../data-fields/enumeration-field/models/dynamic-enumeration-field';
@@ -15,6 +15,7 @@ import {Validation} from '../../data-fields/models/validation';
 import {TaskEventOutcome} from '../../event/model/event-outcomes/task-outcomes/task-event-outcome';
 import {DataField} from '../../data-fields/models/abstract-data-field';
 import {TaskFields} from '../model/task-fields';
+import {TaskRefField} from "../../data-fields/task-ref-field/model/task-ref-field";
 
 /**
  * Acts as a communication interface between the Component that renders Task content and it's parent Component.
@@ -27,18 +28,18 @@ import {TaskFields} from '../model/task-fields';
 @Injectable()
 export abstract class TaskContentService implements OnDestroy {
 
-    private static readonly FRONTEND_ACTIONS_KEY = '_frontend_actions';
-    private static readonly VALIDATE_FRONTEND_ACTION = 'validate';
+    public static readonly FRONTEND_ACTIONS_KEY = '_frontend_actions';
+    public static readonly ACTION = 'action';
 
     $shouldCreate: ReplaySubject<Array<DataGroup>>;
     $shouldCreateCounter: BehaviorSubject<number>;
     protected _task: Task;
-    protected _taskDataReloadRequest$: Subject<FrontendActions>;
+    protected _taskDataReloadRequest$: Subject<Change>;
     protected _isExpanding$: BehaviorSubject<boolean>;
-    private _taskFieldsIndex: {
+    protected _taskFieldsIndex: {
         [taskId: string]: TaskFields
     } = {};
-    private _referencedTaskAndCaseIds: { [caseId: string]: Array<string> } = {};
+    protected _referencedTaskAndCaseIds: { [caseId: string]: Array<string> } = {};
 
     protected constructor(protected _fieldConverterService: FieldConverterService,
                           protected _snackBarService: SnackBarService,
@@ -48,7 +49,7 @@ export abstract class TaskContentService implements OnDestroy {
         this.$shouldCreateCounter = new BehaviorSubject<number>(0);
         this._isExpanding$ = new BehaviorSubject<boolean>(false);
         this._task = undefined;
-        this._taskDataReloadRequest$ = new Subject<FrontendActions>();
+        this._taskDataReloadRequest$ = new Subject<Change>();
     }
 
     ngOnDestroy(): void {
@@ -80,7 +81,7 @@ export abstract class TaskContentService implements OnDestroy {
     /**
      * Stream that emits every time a data reload is requested.
      */
-    public get taskDataReloadRequest$(): Observable<FrontendActions> {
+    public get taskDataReloadRequest$(): Observable<Change> {
         return this._taskDataReloadRequest$.asObservable();
     }
 
@@ -131,12 +132,12 @@ export abstract class TaskContentService implements OnDestroy {
      * A snackbar will also be displayed to the user, informing them of the fact that the fields are invalid.
      * @returns whether the task is valid or not
      */
-    public validateTaskData(): boolean {
+    public validateTaskData(taskId?: string): boolean {
         if (!this._task || !this._task.dataGroups) {
             return false;
         }
-        const valid = !this._task.dataGroups.some(group => group.fields.some(field => !field.valid && !field.disabled));
-        const validDisabled = !this._task.dataGroups.some(group => group.fields.some(field => !field.validRequired && field.disabled));
+        const valid = !this._task.dataGroups.filter(group => !!group.parentTaskId && !!taskId ? group.parentTaskId === taskId : true).some(group => group.fields.some(field => !field.valid && !field.disabled));
+        const validDisabled = !this._task.dataGroups.filter(group => !!group.parentTaskId && !!taskId ? group.parentTaskId === taskId : true).some(group => group.fields.some(field => !field.validRequired && field.disabled));
         if (!valid) {
             this._snackBarService.openErrorSnackBar(this._translate.instant('tasks.snackbar.invalidData'));
             this._task.dataGroups.forEach(group => group.fields.forEach(field => field.touch = true));
@@ -207,7 +208,7 @@ export abstract class TaskContentService implements OnDestroy {
      */
     public updateStateData(eventOutcome: TaskEventOutcome): void {
         if (this._task) {
-            this._task.user = eventOutcome.task.user;
+            this._task.assignee = eventOutcome.task.assignee;
             this._task.startDate = eventOutcome.task.startDate;
             this._task.finishDate = eventOutcome.task.finishDate;
         }
@@ -221,26 +222,19 @@ export abstract class TaskContentService implements OnDestroy {
         if (!this._task || !this._task.dataGroups) {
             return;
         }
-        // todo actions owner zbytočný?
         const frontendActions = chFields.taskId === this.task.stringId && chFields[TaskContentService.FRONTEND_ACTIONS_KEY];
-
         Object.keys(chFields).forEach(changedField => {
-            if (!!this.taskFieldsIndex[chFields.taskId] && !!this.taskFieldsIndex[chFields.taskId].fields
-                && !!this.taskFieldsIndex[chFields.taskId].fields[changedField]) {
+            if (chFields.taskId === this._task.stringId && this.isFieldInTask(chFields.taskId, changedField)) {
                 this.updateField(chFields, this.taskFieldsIndex[chFields.taskId].fields[changedField], frontendActions);
-            } else if (this.isFieldInTaskRef(changedField)) {
-                const taskId = this.getReferencedTaskId(changedField);
-                if (!!taskId && !!this.taskFieldsIndex[taskId] && !!this.taskFieldsIndex[taskId].fields
-                    && !!this.taskFieldsIndex[taskId].fields[changedField])
-                    this.updateReferencedField(chFields, this.taskFieldsIndex[taskId].fields[changedField], frontendActions);
+            } else if (!!this.getReferencedTaskId(changedField, chFields)) {
+                this.updateField(chFields, this.taskFieldsIndex[this.getReferencedTaskId(changedField, chFields)].fields[changedField], frontendActions, true);
             }
         });
 
         this.$shouldCreate.next(this._task.dataGroups);
-        this.performFrontendAction(frontendActions);
     }
 
-    private updateField(chFields: ChangedFields, field: DataField<any>, frontendActions: Change): void {
+    protected updateField(chFields: ChangedFields, field: DataField<any>, frontendActions: Change, referenced: boolean = false): void {
         if (this._fieldConverterService.resolveType(field) === FieldTypeResource.TASK_REF) {
             this._taskDataReloadRequest$.next(frontendActions ? frontendActions : undefined);
             return;
@@ -256,14 +250,14 @@ export abstract class TaskContentService implements OnDestroy {
                     field.valueWithoutChange(this._fieldConverterService.formatValueFromBackend(field, updatedField[key]));
                     break;
                 case 'behavior':
-                    if (updatedField.behavior[this._task.transitionId]) {
-                        // TODO NGSD-489 fix behavior resolution
+                    if (!referenced && updatedField.behavior[this._task.transitionId]) {
                         field.behavior = updatedField.behavior[this._task.transitionId];
-                    } else {
-                        const transitionId = this.getReferencedTransitionId(field.stringId);
+                    } else if (referenced) {
+                        const taskId = this.getReferencedTaskId(field.stringId, chFields);
+                        const taskRef = this.findTaskRefId(taskId, this.taskFieldsIndex[this._task.stringId].fields);
+                        const transitionId = this.taskFieldsIndex[taskId].transitionId;
                         if (!!transitionId && transitionId !== '' && updatedField.behavior[transitionId])
-                            field.behavior = updatedField.behavior[transitionId];
-                        break;
+                            field.behavior = taskRef.behavior.editable ? updatedField.behavior[transitionId] : taskRef.behavior;
                     }
                     break;
                 case 'choices':
@@ -281,6 +275,7 @@ export abstract class TaskContentService implements OnDestroy {
                         });
                     }
                     (field as EnumerationField | MultichoiceField).choices = newChoices;
+                    (field as EnumerationField | MultichoiceField).updateChoice();
                     break;
                 case 'options':
                     const newOptions = [];
@@ -288,6 +283,7 @@ export abstract class TaskContentService implements OnDestroy {
                         newOptions.push({key: optionKey, value: updatedField.options[optionKey]});
                     });
                     (field as EnumerationField | MultichoiceField).choices = newOptions;
+                    (field as EnumerationField | MultichoiceField).updateChoice();
                     break;
                 case 'validations':
                     field.replaceValidations(updatedField.validations.map(it => (it as Validation)));
@@ -300,64 +296,30 @@ export abstract class TaskContentService implements OnDestroy {
         });
     }
 
-    private updateReferencedField(chFields: ChangedFields, field: DataField<any>, frontendActions: Change): void {
-        if (this._fieldConverterService.resolveType(field) === FieldTypeResource.TASK_REF) {
-            this._taskDataReloadRequest$.next(frontendActions ? frontendActions : undefined);
-            return;
+    protected isFieldInTask(taskId: string, changedField: string): boolean {
+        return !!taskId
+            && !!this.taskFieldsIndex[taskId]
+            && !!this.taskFieldsIndex[taskId].fields
+            && !!this.taskFieldsIndex[taskId].fields[changedField]
+    }
+
+    protected getReferencedTaskId(changedField: string, chFields: ChangedFields): string {
+        return !!this.taskFieldsIndex ?
+            (Object.keys(this.taskFieldsIndex).find(taskId => taskId !== this.task.stringId && taskId === chFields.taskId && Object.keys(this.taskFieldsIndex[taskId].fields)?.includes(changedField))
+            || Object.keys(this.taskFieldsIndex).find(taskId => taskId !== this.task.stringId && Object.keys(this.taskFieldsIndex[taskId].fields)?.includes(changedField))) : undefined;
+    }
+
+    protected findTaskRefId(taskId: string, fields: { [fieldId: string]: DataField<any>}): DataField<any> {
+        let taskRefId = Object.values(fields).find(f => f instanceof TaskRefField && f.value?.includes(taskId));
+        if (!taskRefId) {
+            const referencedTaskIds = Object.values(fields).filter(f => f instanceof TaskRefField).map(tr => tr.value);
+            referencedTaskIds.forEach(id => {
+                taskRefId = this.findTaskRefId(taskId, this.taskFieldsIndex[id].fields);
+                if (!!taskRefId) {
+                    return taskRefId;
+                }
+            });
         }
-        const updatedField = chFields[field.stringId];
-        Object.keys(updatedField).forEach(key => {
-            switch (key) {
-                case 'behavior':
-                    const transitionId = this.getReferencedTransitionId(field.stringId);
-                    if (!!transitionId && transitionId !== '' && updatedField.behavior[transitionId])
-                        field.behavior = updatedField.behavior[transitionId];
-                    break;
-                default:
-                    field[key] = updatedField[key];
-            }
-            field.update();
-        });
-    }
-
-    /**
-     * Performs the specific frontend action.
-     *
-     * A prototype implementation of frontend actions.
-     *
-     * The specifics are subject to change. It is very likely that this method will be moved to a different service.
-     *
-     * @param frontendAction the action that should be performed.
-     */
-    public performFrontendAction(frontendAction: FrontendActions): void {
-        if (frontendAction && frontendAction.type === TaskContentService.VALIDATE_FRONTEND_ACTION) {
-            timer().subscribe(() => this.validateTaskData());
-        }
-    }
-
-    public getReferencedFieldTask(field): string {
-        return Object.keys(this.taskFieldsIndex).find(taskId => Object.keys(this.taskFieldsIndex[taskId].fields).includes(field));
-    }
-
-    private isFieldInTaskRef(changedField: string): boolean {
-        return !!this.taskFieldsIndex &&
-            Object.keys(this.taskFieldsIndex)
-                .some(taskId => taskId !== this.task.stringId && this.taskFieldsIndex[taskId].fields[changedField]);
-    }
-
-    private getReferencedTransitionId(changedField: string): string {
-        if (!!this.taskFieldsIndex) {
-            const taskFieldsIndexId = this.getReferencedFieldTask(changedField);
-            return this.taskFieldsIndex[taskFieldsIndexId].transitionId;
-        }
-        return undefined;
-    }
-
-    private getReferencedTaskId(changedField: string): string {
-        if (!!this.taskFieldsIndex) {
-            return Object.keys(this.taskFieldsIndex).find(taskId =>
-                Object.keys(this.taskFieldsIndex[taskId].fields).includes(changedField));
-        }
-        return undefined;
+        return taskRefId
     }
 }

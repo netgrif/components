@@ -59,7 +59,7 @@ describe('TextareaFieldComponent', () => {
 
 @Component({
     selector: 'nc-test-wrapper',
-    template: '<nc-textarea-field [showLargeLayout]="label" [textAreaField]="field" [formControlRef]="formControl"> </nc-textarea-field>'
+    template: '<nc-textarea-field [showLargeLayout]="label" [dataField]="field" [formControlRef]="formControl"> </nc-textarea-field>'
 })
 class TestWrapperComponent {
     label = new WrappedBoolean();

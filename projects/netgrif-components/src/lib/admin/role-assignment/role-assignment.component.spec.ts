@@ -45,13 +45,6 @@ describe('RoleAssignmentComponent', () => {
             declarations: [
                 RoleAssignmentComponent
             ],
-        }).overrideModule(BrowserDynamicTestingModule, {
-            set: {
-                entryComponents: [
-                    ErrorSnackBarComponent,
-                    SuccessSnackBarComponent
-                ]
-            }
         }).compileComponents();
     }));
 

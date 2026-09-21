@@ -1,0 +1,137 @@
+.invisible-input {
+    display: none;
+}
+
+.margin-bottom-default {
+    margin-bottom: 8px;
+}
+
+.do-not-click:hover {
+    cursor: not-allowed;
+}
+
+.input-name-ellipsis {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+}
+
+.input-placeholder {
+    color: #64748B;
+}
+
+.button-icon-input {
+    padding: 2px !important;
+}
+
+.full-width {
+    width: 100%;
+    min-width: 100%;
+}
+
+.form-input {
+    background: #FFFFFF;
+    color: #64748B;
+    outline: none;
+    border: 1px solid #64748B;
+    text-align: left;
+    font-size: 14px;
+    line-height: 20px;
+    border-radius: 6px;
+    min-width: 5px;
+    box-sizing: border-box;
+    height: 43px;
+}
+
+.form-input:hover {
+    border-width: 2px;
+    padding-left: 1px !important;
+    padding-right: 1px !important;
+}
+
+
+.form-input-disabled, .form-input-disabled:focus-within {
+    background: transparent !important;
+    border-color: #CBD5E1 !important;
+}
+
+.form-input-disabled:hover, .form-input-disabled:focus-within  {
+    border-width: 1px !important;
+    padding: 2px !important;
+}
+
+.file-hint-error {
+    padding: 0 1em;
+    width: unset;
+}
+
+.image-preview {
+    width: auto;
+    height: auto;
+    cursor: pointer;
+}
+
+.no-cursor {
+    cursor: default !important;
+    color: #64748B;
+}
+
+.border-LGBTQ {
+    border: 5px solid transparent;
+    border-image: linear-gradient(to bottom right, #B827FC 0%, #2C90FC 25%, #B8FD33 50%, #FEC837 75%, #FD1892 100%);
+    border-image-slice: 1;
+    animation: rainbow 10s infinite;
+}
+@keyframes rainbow {
+    0% {  border-image: linear-gradient(to bottom right, #B827FC 0%, #2C90FC 25%, #B8FD33 50%, #FEC837 75%, #FD1892 100%);
+        border-image-slice: 1;
+    }
+    20% {  border-image: linear-gradient(to bottom right, #2C90FC 0%, #B8FD33 25%, #FEC837 50%, #FD1892 75%, #B827FC 100%);
+        border-image-slice: 1;
+    }
+    40% {  border-image: linear-gradient(to bottom right, #B8FD33 0%, #FEC837 25%, #FD1892 50%, #B827FC 75%, #2C90FC 100%);
+        border-image-slice: 1;
+    }
+    60% {  border-image: linear-gradient(to bottom right, #FEC837 0%, #FD1892 25%, #B827FC 50%, #2C90FC 75%, #B8FD33 100%);
+        border-image-slice: 1;
+    }
+    80% { border-image: linear-gradient(to bottom right,  #FD1892 0%, #B827FC 25%, #2C90FC 50%, #B8FD33 75%, #FEC837 100%);
+        border-image-slice: 1;
+    }
+    100% {  border-image: linear-gradient(to bottom right, #B827FC 0%, #2C90FC 25%, #B8FD33 50%, #FEC837 75%, #FD1892 100%);
+        border-image-slice: 1;
+    }
+}
+
+.border-default {
+    border-width: 1px;
+    border-style: solid;
+    border-color: black;
+}
+
+@media only screen and (max-width: 959.99px) {
+    .input-name-ellipsis {
+        word-break: break-word;
+        white-space: normal;
+        overflow-y: auto;
+        max-height: 40px;
+    }
+}
+
+.file-field-label {
+    transform: translate(0.4em,-0.45em) scale(.75);
+    transform-origin: left;
+    color: #64748B;
+    background: transparent;
+    width: fit-content;
+    padding: 0 0.5em;
+    z-index: 5;
+    height: 0;
+    position: relative;
+}
+
+.netgrif-file-padding {
+    padding-bottom: 22px;
+    position: relative;
+}

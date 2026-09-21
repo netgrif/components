@@ -1,8 +1,10 @@
 import {Component, Inject, Optional} from '@angular/core';
 import {NGX_MAT_DATE_FORMATS} from '@angular-material-components/datetime-picker';
-import {TranslateService} from '@ngx-translate/core';
 import {AbstractDateTimeFieldComponent, DATE_TIME_FORMAT, NAE_INFORM_ABOUT_INVALID_DATA} from '@netgrif/components-core';
 
+/**
+ * @deprecated
+ * */
 @Component({
     selector: 'nc-date-time-field',
     templateUrl: './date-time-field.component.html',
@@ -13,8 +15,7 @@ import {AbstractDateTimeFieldComponent, DATE_TIME_FORMAT, NAE_INFORM_ABOUT_INVAL
 })
 export class DateTimeFieldComponent extends AbstractDateTimeFieldComponent {
 
-    constructor(translate: TranslateService,
-                @Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
-        super(translate, informAboutInvalidData);
+    constructor(@Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
+        super(informAboutInvalidData);
     }
 }

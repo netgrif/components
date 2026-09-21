@@ -1,6 +1,7 @@
 @import 'src/lib/side-menu/side-menu.theme';
 @import 'src/lib/snack-bar/snack-bar.theme';
 @import 'src/lib/dialog/dialog.theme';
+@import 'src/lib/admin/user-invite/user-invite.component.theme';
 
 @function nae-typography-level(
     $font-size,
@@ -15,7 +16,7 @@
 }
 
 @function nae-typography-config(
-    $font-family: 'Roboto, monospace',
+    $font-family: 'Roboto, sans-serif',
     $headline: nae-typography-level(32px, 48px, 700)
 ) {
     @return (
@@ -32,4 +33,5 @@
     @include side-menu-typography($typography-config);
     @include snack-bar-typography($typography-config);
     @include dialog-typography($typography-config);
+    @include user-invite-typography($typography-config);
 }

@@ -39,7 +39,7 @@ export function createTaskView(tree: Tree, args: CreateTaskViewArguments & Tabbe
     }
 
     updateAppModule(tree, view.className, view.fileImportPath, [
-        new ImportToAdd('FlexModule', '@angular/flex-layout'),
+        new ImportToAdd('FlexModule', '@ngbracket/ngx-layout'),
         new ImportToAdd('MaterialModule', '@netgrif/components-core'),
         new ImportToAdd('PanelComponentModule', '@netgrif/components'),
         new ImportToAdd('SearchComponentModule', '@netgrif/components')

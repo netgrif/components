@@ -32,8 +32,8 @@ export function createPublicResolverView(tree: Tree, args: CreateTaskViewArgumen
     rules.push(createFilesFromTemplates(`${commonPathPrefix}common`, destinationPath, templateParams));
 
     updateAppModule(tree, view.className, view.fileImportPath, [
-        new ImportToAdd('FlexModule', '@angular/flex-layout'),
-        new ImportToAdd('FlexLayoutModule', '@angular/flex-layout'),
+        new ImportToAdd('FlexModule', '@ngbracket/ngx-layout'),
+        new ImportToAdd('FlexLayoutModule', '@ngbracket/ngx-layout'),
         new ImportToAdd('MaterialModule', '@netgrif/components-core')
     ]);
 

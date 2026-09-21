@@ -18,9 +18,11 @@ export class UserTransformer implements Transformer<UserResource, User> {
 
         return new User(
             user.id,
+            user.username,
             user.email,
-            user.name,
-            user.surname,
+            user.realmId,
+            user.firstName,
+            user.lastName,
             this.transformAuthorities(user.authorities),
             user.processRoles,
             groups,

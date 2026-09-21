@@ -31,6 +31,8 @@ import {EventOutcomeMessageResource} from '../../resources/interface/message-res
 import {SetDataEventOutcome} from '../../event/model/event-outcomes/data-outcomes/set-data-event-outcome';
 import {createMockCase} from '../../utility/tests/utility/create-mock-case';
 import {createMockNet} from '../../utility/tests/utility/create-mock-net';
+import {Injectable} from '@angular/core';
+import {FrontActionService} from '../../actions/services/front-action.service';
 
 describe('TaskDataService', () => {
     let service: TaskDataService;
@@ -52,20 +54,21 @@ describe('TaskDataService', () => {
                 HttpClientTestingModule,
                 MaterialModule,
                 NoopAnimationsModule,
-                SnackBarModule
+                SnackBarModule,
             ],
             providers: [
                 TaskDataService,
                 DataFocusPolicyService,
                 TaskEventService,
                 ChangedFieldsService,
+                FrontActionService,
                 {provide: TaskRequestStateService, useClass: TestTaskRequestStateService},
                 {provide: TaskContentService, useClass: UnlimitedTaskContentService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: NAE_TASK_OPERATIONS, useClass: NullTaskOperations},
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: TaskResourceService, useClass: MockTaskResourceService},
-            ]
+            ],
         });
         service = TestBed.inject(TaskDataService);
         changedFieldsService = TestBed.inject(ChangedFieldsService);
@@ -104,7 +107,7 @@ describe('TaskDataService', () => {
         taskContentService.task = createMockTask();
         taskResourceService.response = [createMockDataGroup([
             createMockField(true, {x: 0, y: 0, cols: 0, rows: 0}, 0),
-            createMockField(true, {x: 1, y: 0, cols: 0, rows: 0}, 1)
+            createMockField(true, {x: 1, y: 0, cols: 0, rows: 0}, 1),
         ])];
         expect(taskContentService.task.dataGroups.length).toEqual(0);
 
@@ -129,7 +132,7 @@ describe('TaskDataService', () => {
         taskContentService.task = createMockTask();
         taskResourceService.response = [createMockDataGroup([
             createMockField(true, {x: 0, y: 0, cols: 0, rows: 0}, FIELD_1),
-            createMockField(true, {x: 1, y: 0, cols: 0, rows: 0}, FIELD_2)
+            createMockField(true, {x: 1, y: 0, cols: 0, rows: 0}, FIELD_2),
         ])];
 
         taskResourceService.setChangedFieldsResponse(FIELD_1, FIELD_1_RESPONSE);
@@ -148,7 +151,12 @@ describe('TaskDataService', () => {
                     done();
                 });
 
-                taskContentService.task.user = {email: '', id: '', name: '', surname: '', fullName: ''};
+                taskContentService.task.assignee = {
+                    id: '',
+                    realmId: '',
+                    username: '',
+                    fullName: ''
+                };
 
                 mockField.value = !mockField.value;
             }
@@ -163,7 +171,7 @@ describe('TaskDataService', () => {
         taskContentService.task = createMockTask();
         taskResourceService.response = [createMockDataGroup([
             createMockField(true, {x: 0, y: 0, cols: 0, rows: 0}, FIELD_1),
-            createMockField(true, {x: 1, y: 0, cols: 0, rows: 0}, FIELD_2)
+            createMockField(true, {x: 1, y: 0, cols: 0, rows: 0}, FIELD_2),
         ])];
 
         taskResourceService.setChangedFieldsResponse(FIELD_1, FIELD_1_RESPONSE);
@@ -193,7 +201,12 @@ describe('TaskDataService', () => {
                     }
                 });
 
-                taskContentService.task.user = {email: '', id: '', name: '', surname: '', fullName: ''};
+                taskContentService.task.assignee = {
+                    id: '',
+                    realmId: '',
+                    username: '',
+                    fullName: ''
+                };
 
                 mockField1.value = !mockField1.value;
                 mockField2.value = !mockField2.value;
@@ -235,21 +248,21 @@ class MockTaskResourceService {
                         task: createMockTask(),
                         aCase: createMockCase('string'),
                         outcomes: [
-                            {}
+                            {},
                         ],
                         message: '',
                         net: createMockNet(),
                         changedFields: {
-                            changedFields: {}
-                        }
-                    } as SetDataEventOutcome
+                            changedFields: {},
+                        },
+                    } as SetDataEventOutcome,
                 ],
                 message: '',
                 net: createMockNet(),
                 changedFields: {
-                    changedFields: {}
-                }
-            } as SetDataEventOutcome
+                    changedFields: {},
+                },
+            } as SetDataEventOutcome,
         };
         Object.keys(body[taskId]).forEach(key => {
             if (this._changedFieldsMap.has(key)) {
@@ -260,7 +273,13 @@ class MockTaskResourceService {
     }
 }
 
+@Injectable()
 class TestTaskRequestStateService extends TaskRequestStateService {
+
+    constructor(_taskContent: TaskContentService) {
+        super(_taskContent);
+    }
+
     public get loading$(): Observable<boolean> {
         return this._loading.asObservable();
     }

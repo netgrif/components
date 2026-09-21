@@ -1,0 +1,16 @@
+<mat-form-field [appearance]="dataField.materialAppearance" class="full-width" color="primary">
+    <mat-label *ngIf="!showLargeLayout.value">{{dataField.title}}</mat-label>
+    <input matInput
+           [matDatepicker]="datepicker"
+           [required]="dataField.behavior.required"
+           [placeholder]="dataField.placeholder"
+           [formControl]="formControlRef"
+           (click)="datepicker.open()"
+           [min]="dataField.min"
+           [max]="dataField.max"
+           (keydown.enter)="datepicker.close()">
+    <mat-datepicker-toggle matPrefix [for]="datepicker"></mat-datepicker-toggle>
+    <mat-datepicker #datepicker></mat-datepicker>
+    <mat-hint [ngClass]="{'mat-hint-disabled': formControlRef.disabled}">{{dataField.description}}</mat-hint>
+    <mat-error *ngIf="dataField.isInvalid(formControlRef)">{{getErrorMessage()}}</mat-error>
+</mat-form-field>

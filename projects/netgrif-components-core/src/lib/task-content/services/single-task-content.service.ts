@@ -1,4 +1,4 @@
-import {Injectable, OnDestroy} from '@angular/core';
+import {Injectable, Injector, OnDestroy} from '@angular/core';
 import {TaskContentService} from './task-content.service';
 import {FieldConverterService} from './field-converter.service';
 import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
@@ -26,7 +26,8 @@ export class SingleTaskContentService extends TaskContentService implements OnDe
     constructor(_fieldConverterService: FieldConverterService,
                 _snackBarService: SnackBarService,
                 _translate: TranslateService,
-                _logger: LoggerService) {
+                _logger: LoggerService,
+                _injector: Injector) {
         super(_fieldConverterService, _snackBarService, _translate, _logger);
         this._task$ = new ReplaySubject<Task>(1);
     }

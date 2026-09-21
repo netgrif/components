@@ -15,7 +15,7 @@ import {MatExpansionPanel} from '@angular/material/expansion';
 import {ComponentPortal} from '@angular/cdk/portal';
 import {TaskContentService} from '../../task-content/services/task-content.service';
 import {LoggerService} from '../../logger/services/logger.service';
-import {TaskPanelData} from '../task-panel-list/task-panel-data/task-panel-data';
+import {TaskPanelData} from '../task-panel-data/task-panel-data';
 import {Observable, Subscription} from 'rxjs';
 import {TaskViewService} from '../../view/task-view/service/task-view.service';
 import {filter, map, take} from 'rxjs/operators';
@@ -45,9 +45,15 @@ import {CurrencyPipe} from '@angular/common';
 import {PermissionService} from '../../authorization/permission/permission.service';
 import {ChangedFieldsService} from '../../changed-fields/services/changed-fields.service';
 import {ChangedFieldsMap} from '../../event/services/interfaces/changed-fields-map';
-import { TaskPanelContext } from './models/task-panel-context';
+import {TaskPanelContext} from './models/task-panel-context';
 import {OverflowService} from '../../header/services/overflow.service';
+import {NAE_TASK_FORCE_OPEN} from '../../view/task-view/models/injection-token-task-force-open';
+import {CdkVirtualScrollViewport} from '@angular/cdk/scrolling';
 import { FinishPolicyService } from '../../task/services/finish-policy.service';
+import {NAE_TAB_DATA} from '../../tabs/tab-data-injection-token/tab-data-injection-token';
+import {InjectedTabData} from '../../tabs/interfaces';
+import {UnlimitedTaskContentService} from "../../task-content/services/unlimited-task-content.service";
+import {UserComparatorService} from '../../user/services/user-comparator.service';
 
 @Component({
     selector: 'ncc-abstract-legal-notice',
@@ -61,16 +67,19 @@ export abstract class AbstractTaskPanelComponent extends AbstractPanelWithImmedi
      */
     protected _taskPanelData: TaskPanelData;
     protected _forceLoadDataOnOpen = false;
+    @Input() taskListVirtualScroll: CdkVirtualScrollViewport;
     @Input() panelContentComponent: Type<any>;
-    @Input() public selectedHeaders$: Observable<Array<HeaderColumn>>;
     @Input() public first: boolean;
     @Input() public last: boolean;
     @Input() responsiveBody = true;
+    @Input() preventExpand = false;
     @Input() preventCollapse = false;
     @Input() hidePanelHeader = false;
+    @Input() hideActionRow = false;
     @Input() actionButtonTemplates: Array<TemplateRef<any>>;
     @Input() actionRowJustifyContent: 'space-between' | 'flex-start' | 'flex-end' | 'center' | 'space-around' |
         'initial' | 'start' | 'end' | 'left' | 'right' | 'revert' | 'inherit' | 'unset'
+    @Input() showMoreMenu: boolean = true;
 
     thisContext: TaskPanelContext = {
         canAssign: () => this.canAssign(),
@@ -113,6 +122,8 @@ export abstract class AbstractTaskPanelComponent extends AbstractPanelWithImmedi
     protected _subTaskData: Subscription;
     protected _subPanelUpdate: Subscription;
     protected _taskDisableButtonFunctions: DisableButtonFuntions;
+    protected _unsub: Subscription;
+    protected _canReload: boolean;
 
     protected constructor(protected _taskContentService: TaskContentService,
                           protected _log: LoggerService,
@@ -134,7 +145,10 @@ export abstract class AbstractTaskPanelComponent extends AbstractPanelWithImmedi
                           protected _currencyPipe: CurrencyPipe,
                           protected _changedFieldsService: ChangedFieldsService,
                           protected _permissionService: PermissionService,
-                          @Optional() overflowService: OverflowService) {
+                          protected _userComparator: UserComparatorService,
+                          @Optional() overflowService: OverflowService,
+                          @Optional() @Inject(NAE_TASK_FORCE_OPEN) protected _taskForceOpen: boolean,
+                          @Optional() @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabData) {
         super(_translate, _currencyPipe, overflowService);
         this.taskEvent = new EventEmitter<TaskEventNotification>();
         this.panelRefOutput = new EventEmitter<MatExpansionPanel>();
@@ -143,7 +157,7 @@ export abstract class AbstractTaskPanelComponent extends AbstractPanelWithImmedi
         });
         this._subTaskData = _changedFieldsService.changedFields$.subscribe((changedFieldsMap: ChangedFieldsMap) => {
             const filteredCaseIds: Array<string> = Object.keys(changedFieldsMap).filter(
-                caseId => Object.keys(this._taskContentService.referencedTaskAndCaseIds).includes(caseId)
+                caseId => Object.keys(this._taskContentService.referencedTaskAndCaseIds)?.includes(caseId)
             );
             const changedFields: Array<ChangedFields> = [];
             filteredCaseIds.forEach(caseId => {
@@ -151,14 +165,18 @@ export abstract class AbstractTaskPanelComponent extends AbstractPanelWithImmedi
                 changedFields.push(...this._changedFieldsService.parseChangedFieldsByCaseAndTaskIds(caseId, taskIds, changedFieldsMap));
             });
             changedFields.filter(fields => fields !== undefined).forEach(fields => {
-               this.taskPanelData.changedFields.next(fields);
+                this.taskPanelData.changedFields.next(fields);
             });
         });
         _taskOperations.open$.subscribe(() => {
-            this.expand();
+            if (!this.preventExpand) {
+                this.expand();
+            }
         });
         _taskOperations.close$.subscribe(() => {
-            this.collapse();
+            if (!(this._taskForceOpen || this.preventCollapse)) {
+                this.collapse();
+            }
         });
         _taskOperations.reload$.subscribe(() => {
             this._taskViewService.reloadCurrentPage();
@@ -175,6 +193,22 @@ export abstract class AbstractTaskPanelComponent extends AbstractPanelWithImmedi
         };
         if (_disableFunctions) {
             Object.assign(this._taskDisableButtonFunctions, _disableFunctions);
+        }
+        if (injectedTabData !== null) {
+            this._unsub = injectedTabData.tabSelected$.pipe(
+                filter(bool => bool && this.isExpanded())
+            ).subscribe( () => {
+                if (this._canReload) {
+                    this._taskDataService.initializeTaskDataFields(this._callChain.create(() => {
+                        const task = this._taskContentService.task;
+                        const taskShouldBeBlocked = !task?.assignee
+                            || !this._userComparator.compareUsers(task.assignee.id);
+                        this._taskContentService.blockFields(taskShouldBeBlocked);
+                    }), true);
+                } else {
+                    this._canReload = true;
+                }
+            });
         }
     }
 
@@ -197,9 +231,11 @@ export abstract class AbstractTaskPanelComponent extends AbstractPanelWithImmedi
 
     ngAfterViewInit() {
         this.panelRef.opened.subscribe(() => {
-            this._taskContentService.expansionStarted();
-            if (!this._taskState.isLoading()) {
-                this._assignPolicyService.performAssignPolicy(true);
+            if (!this.preventExpand) {
+                this._taskContentService.expansionStarted();
+                if (!this._taskState.isLoading()) {
+                    this._assignPolicyService.performAssignPolicy(true);
+                }
             }
         });
         this.panelRef.closed.subscribe(() => {
@@ -209,7 +245,7 @@ export abstract class AbstractTaskPanelComponent extends AbstractPanelWithImmedi
         });
         this.panelRef.afterExpand.subscribe(() => {
             this._taskContentService.$shouldCreate.pipe(take(1)).subscribe(() => {
-                this._taskContentService.blockFields(!this.canFinish());
+                this._taskContentService.blockFields(this.hasNoFinishPermission());
                 this._taskPanelData.initiallyExpanded = true;
             });
             this._taskContentService.expansionFinished();
@@ -218,7 +254,7 @@ export abstract class AbstractTaskPanelComponent extends AbstractPanelWithImmedi
             this._taskPanelData.initiallyExpanded = false;
         });
 
-        if (this._taskPanelData.initiallyExpanded) {
+        if ((this._taskPanelData.initiallyExpanded || this._taskForceOpen) && !this.preventExpand) {
             this.panelRef.expanded = true;
         }
     }
@@ -228,6 +264,17 @@ export abstract class AbstractTaskPanelComponent extends AbstractPanelWithImmedi
     @Input()
     public set taskPanelData(data: TaskPanelData) {
         this._taskPanelData = data;
+        if (this._taskContentService instanceof UnlimitedTaskContentService && this.panelRef) {
+            this.collapse();
+            this._taskContentService.task = this._taskPanelData.task;
+            if (this._sub) {
+                this._sub.unsubscribe();
+            }
+            this._sub = this._taskPanelData.changedFields.subscribe(chFields => {
+                this._taskContentService.updateFromChangedFields(chFields);
+            });
+            this.expand();
+        }
         this.resolveFeaturedFieldsValues();
     }
 
@@ -299,6 +346,7 @@ export abstract class AbstractTaskPanelComponent extends AbstractPanelWithImmedi
     }
 
     expand() {
+        if (this.preventExpand) { return; }
         this.panelRef.open();
         this.panelRef.expanded = true;
     }
@@ -319,8 +367,12 @@ export abstract class AbstractTaskPanelComponent extends AbstractPanelWithImmedi
         return this._permissionService.canFinish(this.taskPanelData.task) && this.getFinishTitle() !== '';
     }
 
+    private hasNoFinishPermission(): boolean {
+        return !this._permissionService.canFinish(this.taskPanelData.task)
+    }
+
     public canCollapse(): boolean {
-        return this._permissionService.canCollapse(this.taskPanelData.task);
+        return this._taskForceOpen ? false : this._permissionService.canCollapse(this.taskPanelData.task);
     }
 
     public canDo(action): boolean {
@@ -378,7 +430,8 @@ export abstract class AbstractTaskPanelComponent extends AbstractPanelWithImmedi
                 }
                 return {value: 'low', icon: 'south', type: 'meta'};
             case TaskMetaField.USER:
-                return {value: task.user ? task.user.fullName : '', icon: 'account_circle', type: 'meta'};
+                //TODO: refactor after User refactor PR is merged
+                return {value: task.assignee ? task.assignee.fullName : '', icon: 'account_circle', type: 'meta'};
             case TaskMetaField.ASSIGN_DATE:
                 return {
                     value: task.startDate ? toMoment(task.startDate).format(DATE_TIME_FORMAT_STRING) : '',
@@ -404,5 +457,20 @@ export abstract class AbstractTaskPanelComponent extends AbstractPanelWithImmedi
         this._taskOperations.destroy();
         this._subPanelUpdate.unsubscribe();
         this.taskEvent.complete();
+        if (this._unsub) {
+            this._unsub.unsubscribe();
+        }
+    }
+
+    public isForceOpen(): boolean {
+        return this._taskForceOpen && !!this.taskListVirtualScroll?.getElementRef()?.nativeElement;
+    }
+
+    public getContentMinHeight(): string {
+        return this.taskListVirtualScroll.getElementRef().nativeElement.offsetHeight - 32 + 'px';
+    }
+
+    public isExpanded() {
+        return this.panelRef?.expanded && !this._taskContentService?.isExpanding;
     }
 }

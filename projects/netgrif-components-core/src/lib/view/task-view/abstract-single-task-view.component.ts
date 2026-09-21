@@ -1,64 +1,43 @@
-import { Component, Input, OnDestroy } from '@angular/core';
-import { AbstractViewWithHeadersComponent } from '../abstract/view-with-headers';
-import { Observable, ReplaySubject, Subscription } from 'rxjs';
-import { TaskPanelData } from '../../panel/task-panel-list/task-panel-data/task-panel-data';
-import { TaskViewService } from './service/task-view.service';
-import { ActivatedRoute } from '@angular/router';
-
-export class TaskConst {
-    public static readonly TRANSITION_ID = 'transitionId';
-}
+import {Component, EventEmitter,  Input, Output} from '@angular/core';
+import {AbstractViewWithHeadersComponent} from '../abstract/view-with-headers';
+import {Observable} from 'rxjs';
+import {TaskPanelData} from '../../panel/task-panel-data/task-panel-data';
+import {TaskViewService} from './service/task-view.service';
+import {ActivatedRoute} from '@angular/router';
+import {map, tap} from "rxjs/operators";
+import {AssignPolicy} from "../../task-content/model/policy";
 
 @Component({
     selector: 'ncc-abstract-single-task-view',
     template: ''
 })
-export abstract class AbstractSingleTaskViewComponent extends AbstractViewWithHeadersComponent implements OnDestroy {
+export abstract class AbstractSingleTaskViewComponent extends AbstractViewWithHeadersComponent {
 
     @Input() initiallyExpanded: boolean = true;
     @Input() preventCollapse: boolean = true;
-    public taskPanelData: ReplaySubject<TaskPanelData>;
+    @Output() noTaskPresent: EventEmitter<void>;
+    public taskPanelData: Observable<TaskPanelData>;
     public loading$: Observable<boolean>;
-    private transitionId: string;
-    private subRoute: Subscription | undefined;
-    protected subPanelData: Subscription | undefined;
+    protected finishTitle: string | undefined;
 
     protected constructor(protected taskViewService: TaskViewService,
                           activatedRoute: ActivatedRoute) {
         super(taskViewService, activatedRoute);
-        this.taskPanelData = new ReplaySubject<TaskPanelData>(1);
-        this.subRoute = this._activatedRoute.paramMap.subscribe(paramMap => {
-            if (!!(paramMap?.['params']?.[TaskConst.TRANSITION_ID])) {
-                this.transitionId = paramMap['params'][TaskConst.TRANSITION_ID];
-                this.subPanelData = this.taskViewService.tasks$.subscribe(tasks =>  {
-                    if (!!tasks && tasks.length > 0) {
-                        this.taskPanelData.next(this.resolveTransitionTask(tasks));
-                    }
-                });
-            }
-        });
+        this.noTaskPresent = new EventEmitter<void>();
+        this.taskPanelData = this.taskViewService.tasks$.pipe(
+            map<TaskPanelData[], TaskPanelData>(tasks => tasks?.length > 0 ? tasks[0] : undefined),
+            tap(panelData => {
+                if (!!panelData) {
+                    panelData.initiallyExpanded = true
+                    panelData.task.assignPolicy = AssignPolicy.auto;
+                    this.finishTitle = panelData.task.finishTitle;
+                }
+            })
+        );
         this.loading$ = this.taskViewService.loading$;
     }
 
-    ngOnDestroy() {
-        super.ngOnDestroy();
-        if (!!this.subRoute) {
-            this.subRoute.unsubscribe();
-        }
-        if (!!this.subPanelData) {
-            this.subPanelData.unsubscribe();
-        }
-    }
-
     get task$(): Observable<TaskPanelData> {
-        return this.taskPanelData.asObservable();
-    }
-
-    private resolveTransitionTask(tasks: Array<TaskPanelData>): TaskPanelData {
-        const transitionTask = tasks.find(t => t.task.transitionId === this.transitionId);
-        if (!!transitionTask) {
-            transitionTask.initiallyExpanded = transitionTask.task.finishDate === undefined;
-        }
-        return transitionTask;
+        return this.taskPanelData;
     }
 }

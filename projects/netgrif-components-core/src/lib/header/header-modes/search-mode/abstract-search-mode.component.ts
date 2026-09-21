@@ -1,11 +1,10 @@
-import {Component, Input, OnDestroy, OnInit, Type} from '@angular/core';
-import {AbstractHeaderService} from '../../abstract-header-service';
+import {Component, OnDestroy, OnInit, Type} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {debounceTime, map} from 'rxjs/operators';
 import {UserValue} from '../../../data-fields/user-field/models/user-value';
-import {SideMenuService} from '../../../side-menu/services/side-menu.service';
 import {Subscription} from 'rxjs';
 import {AbstractHeaderModeComponent} from '../abstract-header-mode.component';
+import {MatDialog} from '@angular/material/dialog';
 
 @Component({
     selector: 'ncc-abstract-seatch-mode',
@@ -22,10 +21,7 @@ export abstract class AbstractSearchModeComponent extends AbstractHeaderModeComp
 
     public formControls: Array<FormControl> = [];
 
-    @Input()
-    public headerService: AbstractHeaderService;
-
-    constructor(protected _sideMenuService: SideMenuService) {
+    constructor(protected _dialog: MatDialog) {
         super();
     }
 
@@ -84,7 +80,10 @@ export abstract class AbstractSearchModeComponent extends AbstractHeaderModeComp
      */
     public selectAbstractUser(column: number, component: Type<any>): void {
         let valueReturned = false;
-        this._sideMenuService.open(component).onClose.subscribe($event => {
+        const dialogRef = this._dialog.open(component, {
+            panelClass: "dialog-responsive"
+        });
+        dialogRef.afterClosed().subscribe($event => {
             if ($event.data) {
                 this.formControls[column].setValue(($event.data as UserValue).fullName);
                 this.formControls[column].setValue($event.data as UserValue, {emitModelToViewChange: false});

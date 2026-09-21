@@ -42,6 +42,7 @@ export class CaseProcess extends NoConfigurationAutocompleteCategory<string> {
 
         this._allowedNetsSub = this._optionalDependencies.allowedNetsService.allowedNets$.subscribe(allowedNets => {
             this._optionsMap.clear();
+            this._uniqueOptionsMap.clear();
             allowedNets.forEach(petriNet => {
                 if (this.isUniqueOption(petriNet.title, petriNet.identifier)) {
                     this.addToMap(petriNet.title, petriNet.identifier);

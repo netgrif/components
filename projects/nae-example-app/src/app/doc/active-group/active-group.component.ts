@@ -15,8 +15,8 @@ export class ActiveGroupComponent implements OnDestroy {
 
     activeGroups: Array<string>;
 
-    fcGroup: FormControl;
-    fcGroups: FormControl;
+    fcGroup: FormControl<string>;
+    fcGroups: FormControl<string[]>;
 
     private _subGroups: Subscription;
     private _subGroupFc: Subscription;

@@ -9,13 +9,64 @@
 
         <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
 	   <link rel="stylesheet" href="../styles/style.css">
-        <link rel="stylesheet" href="../styles/dark.css" media="(prefers-color-scheme: dark)">
+        <link rel="stylesheet" href="../styles/dark.css">
     </head>
     <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
 
-        <div class="navbar navbar-default navbar-fixed-top visible-xs">
-            <a href="../" class="navbar-brand">Netgrif Components Core library Documentation</a>
-            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">Netgrif Components Core library Documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
         </div>
 
         <div class="xs-menu menu" id="mobile-menu">
@@ -24,7 +75,7 @@
 
         <div class="container-fluid main">
            <div class="row main">
-               <div class="hidden-xs menu">
+               <div class="d-none d-md-block menu">
                    <compodoc-menu mode="normal"></compodoc-menu>
                </div>
                <!-- START CONTENT -->
@@ -41,22 +92,29 @@
 
 
 
+
 <ol class="breadcrumb">
-  <li>Classes</li>
-  <li >ConfigurationInput</li>
+  <li class="breadcrumb-item">Classes</li>
+  <li class="breadcrumb-item" >ConfigurationInput</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
-        <li class="active">
-            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        <li class="nav-item">
+            <a href="#info" 
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
         </li>
-        <li >
-            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        <li class="nav-item">
+            <a href="#source" 
+                class="nav-link"
+                
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
         </li>
 </ul>
 
 <div class="tab-content">
-    <div class="tab-pane fade active in" id="c-info">
+    <div class="tab-pane fade active in" id="info">
         <p class="comment">
             <h3>File</h3>
         </p>
@@ -80,7 +138,7 @@ This behavior might be changed in future releases.</p>
 
 
 
-            <section>
+            <section data-compodoc="block-index">
     <h3 id="index">Index</h3>
     <table class="table table-sm table-bordered index-table">
         <tbody>
@@ -167,13 +225,13 @@ This behavior might be changed in future releases.</p>
     </table>
 </section>
 
-            <section>
+            <section data-compodoc="block-constructor">
     <h3 id="constructor">Constructor</h3>
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(type: <a href="../miscellaneouss/SearchInputType.html" target="_self">SearchInputType.AUTOCOMPLETE | SearchInputType.OPERATOR</a>, label: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, displayBold: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank">boolean</a>, _autocompleteOptions: Map<string | Array<unknown>>, filterOptions: (optionKeys: Array<string>,newValue: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>) => void)</code>
+<code>constructor(type: <a href="../miscellaneouss/SearchInputType.html" target="_self">SearchInputType.AUTOCOMPLETE | SearchInputType.OPERATOR</a>, label: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, displayBold: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank">boolean</a>, _autocompleteOptions: Map<string | Array<>>, filterOptions: (optionKeys: Array<string>,newValue: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>) => void)</code>
                     </td>
                 </tr>
                         <tr>
@@ -210,8 +268,8 @@ This behavior might be changed in future releases.</p>
                                                     </td>
                                                     
                                                         <td>
-                                                                <code><p>the type of the configuration input</p>
-</code>
+                                                                <p>the type of the configuration input</p>
+
                                                         </td>
                                                 </tr>
                                                 <tr>
@@ -226,8 +284,8 @@ This behavior might be changed in future releases.</p>
                                                     </td>
                                                     
                                                         <td>
-                                                                <code><p>the translation path for the label of the input</p>
-</code>
+                                                                <p>the translation path for the label of the input</p>
+
                                                         </td>
                                                 </tr>
                                                 <tr>
@@ -242,15 +300,15 @@ This behavior might be changed in future releases.</p>
                                                     </td>
                                                     
                                                         <td>
-                                                                <code><p>whether the configuration input should be displayed in bold after selection or not</p>
-</code>
+                                                                <p>whether the configuration input should be displayed in bold after selection or not</p>
+
                                                         </td>
                                                 </tr>
                                                 <tr>
                                                         <td>_autocompleteOptions</td>
                                                   
                                                         <td>
-                                                                    <code>Map&lt;string | Array&lt;unknown&gt;&gt;</code>
+                                                                    <code>Map&lt;string | Array&lt;&gt;&gt;</code>
                                                         </td>
                                                   
                                                     <td>
@@ -258,8 +316,8 @@ This behavior might be changed in future releases.</p>
                                                     </td>
                                                     
                                                         <td>
-                                                                <code><p>the autocomplete options that are available in this configuration input</p>
-</code>
+                                                                <p>the autocomplete options that are available in this configuration input</p>
+
                                                         </td>
                                                 </tr>
                                                 <tr>
@@ -274,9 +332,9 @@ This behavior might be changed in future releases.</p>
                                                     </td>
                                                     
                                                         <td>
-                                                                <code><p>a method that receives the keys of the available options and should return
+                                                                <p>a method that receives the keys of the available options and should return
 the appropriately filtered autocomplete options</p>
-</code>
+
                                                         </td>
                                                 </tr>
                                         </tbody>
@@ -288,7 +346,7 @@ the appropriately filtered autocomplete options</p>
         </table>
 </section>
 
-            <section>
+            <section data-compodoc="block-properties">
     
     <h3 id="inputs">
         Properties
@@ -307,7 +365,7 @@ the appropriately filtered autocomplete options</p>
             </tr>
                 <tr>
                     <td class="col-md-4">
-                        <i>Type : </i>    <code>Observable&lt;Array&lt;SearchAutocompleteOption&lt;unknown&gt;&gt;&gt;</code>
+                        <i>Type : </i>    <code>Observable&lt;Array&lt;SearchAutocompleteOption&lt;&gt;&gt;&gt;</code>
 
                     </td>
                 </tr>
@@ -334,7 +392,7 @@ the appropriately filtered autocomplete options</p>
             </tr>
                 <tr>
                     <td class="col-md-4">
-                        <i>Type : </i>        <code><a href="../interfaces/Form.html" target="_self" >FormControl</a></code>
+                        <i>Type : </i>        <code><a href="../interfaces/Form.html" target="_self" >FormControl&lt;any&gt;</a></code>
 
                     </td>
                 </tr>
@@ -445,7 +503,7 @@ the appropriately filtered autocomplete options</p>
     </table>
 </section>
 
-            <section>
+            <section data-compodoc="block-methods">
     
     <h3 id="methods">
         Methods
@@ -456,7 +514,7 @@ the appropriately filtered autocomplete options</p>
                 <td class="col-md-4">
                     <a name="clear"></a>
                     <span class="name">
-                        <span class="modifier">Public</span>
+                            <span class="modifier">Public</span>
                         <span ><b>clear</b></span>
                         <a href="#clear"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -464,27 +522,27 @@ the appropriately filtered autocomplete options</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>clear()</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="69"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/search/models/configuration-input.ts:69</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="69"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/search/models/configuration-input.ts:69</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
 
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
-                    </div>
+                        </div>
                 </td>
             </tr>
         </tbody>
@@ -495,7 +553,7 @@ the appropriately filtered autocomplete options</p>
                 <td class="col-md-4">
                     <a name="valueChanges$"></a>
                     <span class="name">
-                        <span class="modifier">Public</span>
+                            <span class="modifier">Public</span>
                         <span ><b>valueChanges$</b></span>
                         <a href="#valueChanges$"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -503,29 +561,29 @@ the appropriately filtered autocomplete options</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>valueChanges$()</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="65"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/search/models/configuration-input.ts:65</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="65"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/search/models/configuration-input.ts:65</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Value changes of the encapsulated <code>FormControl</code> object</p>
+                        <div class="io-description"><p>Value changes of the encapsulated <code>FormControl</code> object</p>
 </div>
 
-                    <div class="io-description">
-                        <b>Returns : </b>    <code>Observable&lt;any&gt;</code>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Observable&lt;any&gt;</code>
 
-                    </div>
+                        </div>
                 </td>
             </tr>
         </tbody>
@@ -536,7 +594,7 @@ the appropriately filtered autocomplete options</p>
 
 
 
-            <section>
+            <section data-compodoc="block-accessors">
     <h3 id="accessors">
         Accessors
     </h3>
@@ -632,7 +690,7 @@ the appropriately filtered autocomplete options</p>
     </div>
 
 
-    <div class="tab-pane fade  tab-source-code" id="c-source">
+    <div class="tab-pane fade  tab-source-code" id="source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {SearchInputType} from &#x27;./category/search-input-type&#x27;;
 import {FormControl} from &#x27;@angular/forms&#x27;;
 import {Observable} from &#x27;rxjs&#x27;;
@@ -649,7 +707,7 @@ import {filter, map, startWith} from &#x27;rxjs/operators&#x27;;
  */
 export class ConfigurationInput {
 
-    protected _formControl: FormControl;
+    protected _formControl: FormControl&lt;any&gt;;
 
     protected _filteredOptions$: Observable&lt;Array&lt;SearchAutocompleteOption&lt;unknown&gt;&gt;&gt;;
 
@@ -678,7 +736,7 @@ export class ConfigurationInput {
         );
     }
 
-    public get formControl(): FormControl {
+    public get formControl(): FormControl&lt;any&gt; {
         return this._formControl;
     }
 
@@ -711,14 +769,15 @@ export class ConfigurationInput {
 
 
 
-                   
+
+
 
 
 
 
                    </div><div class="search-results">
     <div class="has-results">
-        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
         <ul class="search-results-list"></ul>
     </div>
     <div class="no-results">
@@ -730,6 +789,15 @@ export class ConfigurationInput {
            </div>
        </div>
 
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'class';
@@ -737,10 +805,23 @@ export class ConfigurationInput {
             var MAX_SEARCH_RESULTS = 15;
        </script>
 
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
        <script src="../js/libs/custom-elements.min.js"></script>
        <script src="../js/libs/lit-html.js"></script>
-       
-       <script type="module" src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/menu-wc.js" defer></script>
        <script nomodule src="../js/menu-wc_es5.js" defer></script>
 
        <script src="../js/libs/bootstrap-native.js"></script>

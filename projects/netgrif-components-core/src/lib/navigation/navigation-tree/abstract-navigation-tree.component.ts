@@ -1,25 +1,18 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {NestedTreeControl} from '@angular/cdk/tree';
 import {ConfigurationService} from '../../configuration/configuration.service';
-import {Services, View, Views} from '../../../commons/schema';
+import {View, Views} from '../../../commons/schema';
 import {NavigationEnd, Router} from '@angular/router';
 import {MatTreeNestedDataSource} from '@angular/material/tree';
-import {forkJoin, Observable, of, ReplaySubject, Subscription} from 'rxjs';
+import {ReplaySubject, Subscription} from 'rxjs';
 import {LoggerService} from '../../logger/services/logger.service';
 import {UserService} from '../../user/services/user.service';
 import {
     AbstractNavigationResizableDrawerComponent
 } from '../navigation-drawer/abstract-navigation-resizable-drawer.component';
 import {ActiveGroupService} from '../../groups/services/active-group.service';
-import {concatMap, debounceTime, filter, map, take} from 'rxjs/operators';
+import {debounceTime, filter} from 'rxjs/operators';
 import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
-import {SimpleFilter} from '../../filter/models/simple-filter';
-import {hasContent} from '../../utility/pagination/page-has-content';
-import {DataGroup} from '../../resources/interface/data-groups';
-import {GroupNavigationConstants} from '../model/group-navigation-constants';
-import {refreshTree} from '../../utility/refresh-tree';
-import {getField} from '../../utility/get-field';
-import {extractIconAndTitle, extractRoles} from '../utility/navigation-item-task-utility-methods';
 import {LanguageService} from '../../translate/language.service';
 import {
     DynamicNavigationRouteProviderService
@@ -46,12 +39,10 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
     @Input() public routerChange: boolean;
 
     protected _reloadNavigation: ReplaySubject<void>;
-    protected _groupNavigationConfig: Services['groupNavigation'];
 
     private _subscriptions: Array<Subscription>;
     private _subGroupResolution: Subscription;
     private _subLangChange: Subscription;
-    private _groupNavNodesCount = 0;
 
     treeControl: NestedTreeControl<NavigationNode>;
     dataSource: MatTreeNestedDataSource<NavigationNode>;
@@ -68,7 +59,6 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
         super();
         this.treeControl = new NestedTreeControl<NavigationNode>(node => node.children);
         this.dataSource = new MatTreeNestedDataSource<NavigationNode>();
-        this._groupNavigationConfig = this._config.getConfigurationSubtree(['services', 'groupNavigation']);
         this.dataSource.data = this.resolveNavigationNodes(_config.getConfigurationSubtree(['views']), '');
         this.resolveLevels(this.dataSource.data);
         this._reloadNavigation = new ReplaySubject<void>(1);
@@ -149,22 +139,9 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
             return null;
         }
 
-        let groupNavigationGenerated = false;
         const nodes: Array<NavigationNode> = [];
         Object.keys(views).forEach((viewKey: string) => {
             const view = views[viewKey];
-
-            if (!groupNavigationGenerated && this.isGroupNavigationNode(view)) {
-                groupNavigationGenerated = true;
-                const insertPosition = (ancestorNodeContainer ?? nodes).length;
-
-                this._subLangChange = this._languageService.getLangChange$().subscribe(() => {
-                    this.loadGroupNavigationNodes(insertPosition, ancestorNodeContainer ?? nodes);
-                });
-                this.loadGroupNavigationNodes(insertPosition, ancestorNodeContainer ?? nodes);
-
-                return; // continue
-            }
 
             if (!this.hasNavigation(view) && !this.hasSubRoutes(view)) {
                 return; // continue
@@ -284,138 +261,5 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
             this.dataSource.data = this.resolveNavigationNodes(view.children, this.parentUrl);
         }
         this.resolveLevels(this.dataSource.data);
-    }
-
-    /**
-     * @returns `true` if the layout of the provided {@link View} node's name indicates it is a
-     * [group navigation outlet]{@link GroupNavigationConstants#GROUP_NAVIGATION_OUTLET}. Returns `false` otherwise.
-     */
-    protected isGroupNavigationNode(view: View): boolean {
-        return view?.layout?.name === GroupNavigationConstants.GROUP_NAVIGATION_OUTLET;
-    }
-
-    /**
-     * Forces a reload of the group navigation nodes.
-     * @param insertPosition the position in the container where group navigation nodes reside
-     * @param nodeContainer the node container that contains the group navigation nodes
-     * (can be an inner node of the navigation tree or its root)
-     */
-    protected loadGroupNavigationNodes(insertPosition: number, nodeContainer: Array<NavigationNode>): void {
-        if (this._subGroupResolution !== undefined && !this._subGroupResolution.closed) {
-            this._subGroupResolution.unsubscribe();
-        }
-
-        this._subGroupResolution = this.generateGroupNavigationNodes().pipe(take(1)).subscribe(groupNavNodes => {
-            nodeContainer.splice(insertPosition, this._groupNavNodesCount, ...groupNavNodes);
-            this._groupNavNodesCount = groupNavNodes.length;
-            refreshTree(this.dataSource);
-        });
-    }
-
-    protected generateGroupNavigationNodes(): Observable<Array<NavigationNode>> {
-        return forkJoin(this._activeGroupService.activeGroups.map(groupCase => {
-            return this._taskResourceService.searchTask(SimpleFilter.fromTaskQuery(
-                {
-                    case: {id: groupCase.stringId},
-                    transitionId: GroupNavigationConstants.NAVIGATION_CONFIG_TRANSITION_ID as string
-                }
-            )).pipe(
-                map(taskPage => {
-                    if (hasContent(taskPage)) {
-                        return this._taskResourceService.getData(taskPage.content[0].stringId);
-                    } else {
-                        this._log.error('Group navigation configuration task was not found.'
-                            + ' Navigation for this group cannot be constructed.');
-                        return of([]);
-                    }
-                }),
-                concatMap(o => o)
-            );
-        })).pipe(
-            map((navigationConfigurations: Array<Array<DataGroup>>) => {
-                const result = [];
-                for (const navConfig of navigationConfigurations) {
-                    result.push(...this.convertDatagroupsToNavEntries(navConfig));
-                }
-                return result;
-            })
-        );
-    }
-
-    protected convertDatagroupsToNavEntries(navConfigDatagroups: Array<DataGroup>): Array<NavigationNode> {
-        const result = [];
-        const entryDataGroupIndices = [];
-        navConfigDatagroups.forEach(
-            (group, index) => {
-                if (group.fields.some(
-                    field => field.stringId === GroupNavigationConstants.NAVIGATION_ENTRY_MARKER_FIELD_ID_SUFFIX
-                )) {
-                    entryDataGroupIndices.push(index);
-                }
-            }
-        );
-
-        let navEntriesTaskRef;
-        navConfigDatagroups.some(group => {
-            const taskRef = getField(group.fields, GroupNavigationConstants.NAVIGATION_ENTRIES_TASK_REF_FIELD_ID);
-            if (taskRef !== undefined) {
-                navEntriesTaskRef = taskRef;
-            }
-            return !!taskRef;
-        });
-
-        if (!navEntriesTaskRef) {
-            throw new Error('The navigation configuration task contains no task ref with entries. Navigation cannot be constructed');
-        }
-
-        for (let order = 0; order < navEntriesTaskRef.value.length; order++) {
-            const index = entryDataGroupIndices[order];
-            const label = extractIconAndTitle(navConfigDatagroups.slice(index,
-                index + GroupNavigationConstants.DATAGROUPS_PER_NAVIGATION_ENTRY));
-            const newNode: NavigationNode = {url: '', ...label};
-
-            const url = this._navigationRouteProvider.route;
-            if (url === undefined) {
-                this._log.error(`No URL is configured in nae.json for configurable group navigation. Dynamic navigation entry was ignored`);
-                continue;
-            }
-            newNode.url = `/${url}/${navEntriesTaskRef.value[order]}`;
-            const allowedRoles = extractRoles(navConfigDatagroups.slice(index,
-                    index + GroupNavigationConstants.DATAGROUPS_PER_NAVIGATION_ENTRY),
-                GroupNavigationConstants.NAVIGATION_ENTRY_ALLOWED_ROLES_FIELD_ID_SUFFIX);
-
-            const bannedRoles = extractRoles(navConfigDatagroups.slice(index,
-                    index + GroupNavigationConstants.DATAGROUPS_PER_NAVIGATION_ENTRY),
-                GroupNavigationConstants.NAVIGATION_ENTRY_BANNED_ROLES_FIELD_ID_SUFFIX);
-
-            const splitAllowedRoles = this.extractRoleAndNetId(allowedRoles);
-            const splitBannedRoles = this.extractRoleAndNetId(bannedRoles);
-
-            if ((splitAllowedRoles.length === 0
-                    || splitAllowedRoles.some(idPair => this._userService.hasRoleByIdentifier(idPair[0], idPair[1])))
-                && !splitBannedRoles.some(idPair => this._userService.hasRoleByIdentifier(idPair[0], idPair[1]))) {
-                result.push(newNode);
-            }
-        }
-        return result;
-    }
-
-    /**
-     * Splits the provided strings on the ':' character and returns an array of the resulting splits.
-     *
-     * If any of the input strings split into fewer or more than 2 strings an error is thrown.
-     *
-     * @param joined a list of strings in the form `<role identifier>:<net identifier>`
-     */
-    protected extractRoleAndNetId(joined: Array<string>): Array<Array<string>> {
-        const split = [];
-        for (const pair of joined) {
-            const splitPair = pair.split(':');
-            if (splitPair.length !== 2) {
-                throw new Error(`The role-net pair '${pair}' has invalid format! Cannot extract role and net identifiers.`);
-            }
-            split.push(splitPair);
-        }
-        return split;
     }
 }

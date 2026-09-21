@@ -3,7 +3,7 @@
         "menu": {
             "lang": "Jazyk",
             "profile": "Profil",
-            "logout": "Odhlasiť sa",
+            "logout": "Odhlásiť sa",
             "en": "Anglický",
             "sk": "Slovenský",
             "de": "Nemecký",
@@ -49,7 +49,8 @@
             "finish": "Dokončiť",
             "cancel": "Zrušiť",
             "noData": "Táto úloha nemá žiadne údaje. Stlačte dokončiť pre pokračovanie.",
-            "redirecting": "Presmerovanie..."
+            "redirecting": "Presmerovanie...",
+            "closeTab": "Zavrieť"
         },
         "footer": {
             "defaultText": "NETGRIF, s.r.o. © 2022"
@@ -70,7 +71,8 @@
         "import-net": {
             "upload": "Nahrať model",
             "choose": "Vyberte súbor s procesom",
-            "done": "Dokončiť"
+            "done": "Dokončiť",
+            "search": "Vyhľadajte proces"
         },
         "new-case": {
             "case": "Nový prípad",
@@ -88,6 +90,7 @@
             "noNets": "Žiadne povolené siete",
             "createCase": "Úspešne vytvorený nový prípad",
             "defaultCaseName": "s prednastaveným názvom prípadu",
+            "errorCreate": "Chyba pri vytváraní prípadu ",
             "createCaseError": "Nový prípad vytvorený, nastala však chyba pri vykonávaní akcií"
         },
         "user": {
@@ -255,7 +258,8 @@
             "maxFilesExceeded": "Je presiahnutý maximálny počet nahratých súborov: ",
             "maxFilesSizeExceeded": "Je presiahnutá maximálna veľkosť nahrávaných súborov: ",
             "notSelectedUser": "Nebol vybraný žiadny používateľ",
-            "userAssigned": "Používateľ {{userName}} bol pridelený"
+            "userAssigned": "Používateľ {{userName}} bol pridelený",
+            "userListAssigned": "Vybraní používatelia {{userNames}} boli pridelení"
         },
         "values": {
             "boolean": {
@@ -263,12 +267,16 @@
                 "false": "nie"
             }
         },
+        "clear": "Vymazať",
+        "save": "Uložiť",
         "noFile": "Žiadny súbor",
         "file": {
             "noFile": "Žiadny súbor",
             "clickToUpload": "Kliknutím nahrajte súbor",
             "clickToDownload": "Kliknutím stiahnite súbor {{fileName}}",
-            "clickToDelete": "Kliknutím vymažte súbor"
+            "clickToOpen": "Kliknutím zobrazíte obsah súboru",
+            "clickToDelete": "Kliknutím vymažte súbor",
+            "notAllowed": "Súbor {{fileName}} nie je možné nahrať. Jeho typ nie je povolený."
         },
         "i18n": {
             "languageSelect": "Výber jazyka",
@@ -283,7 +291,10 @@
             "reset": "Resetovať"
         },
         "user": {
-            "selectUser": "Vyberte používateľa"
+            "selectUser": "Vyberte používateľa",
+            "deleteUser": "Vymazať používateľa",
+            "save": "Priradiť",
+            "deleteAll": "Vymazať zoznam používateľov"
         },
         "textarea": {
             "insertText": "Sem zadajte text..."
@@ -302,9 +313,16 @@
             "login": "Prihlasovacie meno",
             "wrongCredentials": "Nesprávne prihlasovacie údaje!",
             "loginButton": "Prihlásiť",
+            "ssoButton": "Prihlásiť sa pomocou SSO",
             "reset": "Obnova hesla",
             "sign": "Registrovať",
             "enterPass": "Zadajte svoje heslo"
+        },
+        "changePassword": {
+            "oldPassword": "Zadajte staré heslo",
+            "enterNewPass": "Zadajte nové heslo",
+            "repeatNewPass": "Zopakujte nové heslo",
+            "changePass": "Zmeniť heslo"
         },
         "register": {
             "email": "Váš email",
@@ -354,7 +372,13 @@
         "editMode": "Zapnúť editačný mód",
         "overflowMode": "Tabuľkový mód",
         "columnWidth": "Šírka stĺpca",
-        "columnCount": "Počet stĺpcov"
+        "columnCount": "Počet stĺpcov",
+        "sortControl": "Zoradiť {{title}}. Aktuálne poradie: {{current}}. Aktivovaním nastavíte {{next}}.",
+        "sortDirections": {
+            "none": "bez zoradenia",
+            "ascending": "vzostupné poradie",
+            "descending": "zostupné poradie"
+        }
     },
     "panel": {
         "case": {
@@ -447,6 +471,7 @@
         "snackBar": {
             "deleteCanceled": "Zmazanie procesu zrušené",
             "deleteSuccess": "Proces bol úspešne zmazaný",
+            "deleteInProgress": "Proces bol označený na vymazanie, momentálne prebieha mazanie procesu",
             "deleteError": "Proces sa nepodarilo zmazať",
             "uploadFailed": "Súbor procesu sa nepodarilo nahrať.",
             "uploadSuccess": "Súbor procesu bol úspešne nahraný"
@@ -466,7 +491,11 @@
         "errorCreate": "Chyba pri vytváraní prípadu "
     },
     "dynamicNavigation": {
-        "couldNotResolveView": "Počas načítania zobrazenia sa vyskytla chyba. Zobrazenie nie je možné zobraziť"
+        "couldNotResolveView": "Počas načítania zobrazenia sa vyskytla chyba. Zobrazenie nie je možné zobraziť",
+        "filterNotFound": "Toto zobrazenie neobsahuje filter",
+        "loadMoreItems": "Viac",
+        "ascending": "Vzostupne",
+        "descending": "Zostupne"
     },
     "impersonation": {
         "user": {
@@ -478,5 +507,20 @@
             "failed": "Akciu sa nepodarilo vykonať",
             "deactivated": "Zastupovanie bolo úspešne deaktivované"
         }
+    },
+    "session": {
+        "expireTitle": "Platnosť Vašej relácie čoskoro vyprší",
+        "expireDetail": "Vaša relácia čoskoro vyprší.\n\nBudete odhlásený za {{time}} sekúnd.",
+        "exitButton": "Odhlásiť sa",
+        "refreshButton": "Zostaň pripojený"
+    },
+    "paginator": {
+        "firstPage": "Prvá strana",
+        "itemsPage": "Položky na stranu:",
+        "lastPage": "Posledná strana",
+        "nextPage": "Ďalšia strana",
+        "previousPage": "Predchádzajúca strana",
+        "pageOne": "Strana 1 z 1",
+        "pageAmount": "Strana {{page}} z {{amountPages}}"
     }
 }

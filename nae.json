@@ -9,14 +9,24 @@
                 "login": "auth/login",
                 "logout": "auth/logout",
                 "signup": "auth/signup",
+                "changePassword": "auth/changePassword",
                 "verification": "auth/verify",
                 "verify": "auth/token/verify",
                 "invite": "auth/invite",
                 "reset": "auth/reset",
-                "recover": "/auth/recover"
+                "recover": "auth/recover"
             },
             "sessionBearer": "X-Auth-Token",
-            "jwtBearer": "X-Jwt-Token"
+            "sessionTimeoutEnabled": false,
+            "sessionTimeout": 900,
+            "jwtBearer": "X-Jwt-Token",
+            "sso": {
+                "enable": false,
+                "clientId": "dev-cluster-worker",
+                "redirectUrl": "http://localhost:8081/realms/netgrif-cloud-testing/protocol/openid-connect/auth",
+                "refreshUrl": "http://localhost:8080/api/auth/login",
+                "scopes": ["openid","email","profile","roles"]
+            }
         },
         "resources": [
             {
@@ -169,6 +179,19 @@
                 "path": "recover/:token"
             }
         },
+        "demo-change-password": {
+            "component": {
+                "class": "ChangePasswordComponent",
+                "from": "./doc/forms/change-password/change-password.component"
+            },
+            "access": "private",
+            "navigation": {
+                "title": "Change Password"
+            },
+            "routing": {
+                "path": "changePassword"
+            }
+        },
         "demo-impersonation": {
             "component": {
                 "class": "ImpersonationDemoComponent",
@@ -189,6 +212,17 @@
             "navigation": true,
             "routing": {
                 "path": "drawer"
+            }
+        },
+        "demo-dashboard": {
+            "component": {
+                "class": "NavigationDashboardExampleComponent",
+                "from": "./doc/navigation-dashboard-example/navigation-dashboard-example.component"
+            },
+            "access": "private",
+            "navigation": true,
+            "routing": {
+                "path": "dashboard"
             }
         },
         "demo-double-drawer": {
@@ -219,12 +253,38 @@
                     "access": "private",
                     "navigation": {
                         "title": "Custom Task View",
-                        "icon": "article"
+                        "icon": "article",
+                        "order": 5
                     },
                     "routing": {
                         "path": "task-view"
                     },
-                    "processUri": "examples"
+                    "processUri": "/"
+                },
+                "menu-order-demo-nae-view": {
+                    "component": {
+                        "class": "TaskViewComponent",
+                        "from": "./doc/task-view/task-view.component"
+                    },
+                    "access": "private",
+                    "navigation": {
+                        "title": "NAE JSON View (order 5.5)",
+                        "icon": "data_object",
+                        "order": 5.5
+                    },
+                    "routing": {
+                        "path": "menu-order-demo-nae-view"
+                    },
+                    "processUri": "/menu_test_root/menu_test_order_demo"
+                },
+                "task-list-view": {
+                    "component": {
+                        "class": "DefaultSimpleTaskViewComponent"
+                    },
+                    "access": "private",
+                    "routing": {
+                        "path": "task-list/:singleCaseId"
+                    }
                 },
                 "hidden-workflow-view": {
                     "component": {
@@ -233,17 +293,32 @@
                     },
                     "access": {
                         "authority": [
-                            "PROCESS_*"
+                            "ROLE_ADMIN"
                         ]
                     },
                     "navigation": {
                         "title": "Workflow view",
                         "icon": "insights",
-                        "hidden": true
+                        "hidden": false
                     },
                     "routing": {
                         "path": "workflow-view"
                     }
+                },
+                "ticket-view": {
+                    "component": {
+                        "class": "TabbedTicketView",
+                        "from": "@netgrif/components"
+                    },
+                    "access": "private",
+                    "navigation": {
+                        "title": "Custom ticket view",
+                        "icon": "add"
+                    },
+                    "routing": {
+                        "path": "ticket-view"
+                    },
+                    "processUri": "/test"
                 },
                 "hidden-active-group": {
                     "component": {
@@ -254,7 +329,7 @@
                     "navigation": {
                         "title": "Active group view",
                         "icon": "coronavirus",
-                        "hidden": true
+                        "hidden": false
                     },
                     "routing": {
                         "path": "active-group"
@@ -412,11 +487,7 @@
                 "class": "WorkflowViewExampleComponent",
                 "from": "./doc/workflow-view-example/workflow-view-example.component"
             },
-            "access": {
-                "authority": [
-                    "PROCESS_*"
-                ]
-            },
+            "access": "private",
             "navigation": true,
             "routing": {
                 "path": "workflow-view"
@@ -488,6 +559,17 @@
                 "path": "titleConfig"
             }
         },
+        "demo-dashboard-case-view": {
+            "component": {
+                "class": "DashboardCaseExampleComponent",
+                "from": "./doc/dashboard-case-example/dashboard-case-example.component"
+            },
+            "access": "private",
+            "navigation": true,
+            "routing": {
+                "path": "dashboard-cases"
+            }
+        },
         "demo-dashboard-view": {
             "component": {
                 "class": "DashboardExampleComponent",
@@ -532,7 +614,7 @@
                 ],
                 "group": [],
                 "authority": [
-                    "USER_*"
+                    "ADMIN"
                 ]
             },
             "navigation": false,
@@ -773,7 +855,7 @@
                         "from": "./doc/navigation-example/buttons-nav/buttons-nav.component"
                     },
                     "access": {
-                        "authority": "AUTHORITY_VIEW"
+                        "authority": "ADMIN"
                     },
                     "navigation": {
                         "title": "authority check",
@@ -1246,8 +1328,9 @@
         }
     },
     "i18n": [
-        "sk-SK",
-        "en-US"
+        "sk",
+        "en",
+        "de"
     ],
     "services": {
         "log": {
@@ -1260,8 +1343,9 @@
             ]
         },
         "auth": {
-            "loginRedirect": "login",
-            "logoutRedirect": "login"
+            "toLoginRedirect": "login",
+            "onLoginRedirect": "tabbed-views",
+            "onLogoutRedirect": "login"
         },
         "routing": {
             "defaultRedirect": "authentication",
@@ -1277,6 +1361,9 @@
         },
         "groupNavigation": {
             "groupNavigationRoute": "group-nav"
+        },
+        "doubleDrawer": {
+            "url": "drawer-double"
         }
     }
 }

@@ -23,10 +23,11 @@ import {QueuedEvent} from '../../event-queue/model/queued-event';
 import {AfterAction} from '../../utility/call-chain/after-action';
 import {PermissionService} from '../../authorization/permission/permission.service';
 import {ChangedFieldsService} from '../../changed-fields/services/changed-fields.service';
-import { EventService} from '../../event/services/event.service';
+import {EventService} from '../../event/services/event.service';
 import {ChangedFieldsMap} from '../../event/services/interfaces/changed-fields-map';
 import {TaskEventOutcome} from '../../event/model/event-outcomes/task-outcomes/task-event-outcome';
-
+import {FrontActionService} from '../../actions/services/front-action.service';
+import {FrontAction} from '../../data-fields/models/changed-fields';
 /**
  * Service that handles the logic of canceling a task.
  */
@@ -49,7 +50,9 @@ export class CancelTaskService extends TaskHandlingService {
                 @Optional() _selectedCaseService: SelectedCaseService,
                 @Optional() protected _taskViewService: TaskViewService,
                 _taskContentService: TaskContentService,
-                protected permissionService: PermissionService) {
+                protected permissionService: PermissionService,
+                protected _frontActionService: FrontActionService
+) {
         super(_taskContentService, _selectedCaseService);
     }
 
@@ -123,9 +126,15 @@ export class CancelTaskService extends TaskHandlingService {
                 this._taskContentService.updateStateData(outcomeResource.outcome as CancelTaskEventOutcome);
                 const changedFieldsMap: ChangedFieldsMap = this._eventService
                     .parseChangedFieldsFromOutcomeTree(outcomeResource.outcome);
+                const frontActions: Array<FrontAction> = this._eventService.parseFrontActionsFromOutcomeTree(outcomeResource.outcome);
+
                 if (!!changedFieldsMap) {
                     this._changedFieldsService.emitChangedFields(changedFieldsMap);
                 }
+                if (frontActions?.length > 0) {
+                    this._frontActionService.runAll(frontActions);
+                }
+
                 forceReload ? this._taskOperations.forceReload() : this._taskOperations.reload();
                 this.completeActions(afterAction, nextEvent, true, outcomeResource.outcome as CancelTaskEventOutcome);
             } else if (outcomeResource.error !== undefined) {

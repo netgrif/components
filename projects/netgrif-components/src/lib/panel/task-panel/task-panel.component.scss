@@ -55,3 +55,13 @@
     display: inline;
     margin: auto 5px;
 }
+
+@media only screen and (max-width: 959.99px) {
+    .task-panel-body {
+        padding: 10px 0;
+    }
+
+    .task-panel-action-row {
+        padding: 8px
+    }
+}

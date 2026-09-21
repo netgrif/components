@@ -1,53 +1,66 @@
-import {Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {FormControl} from '@angular/forms';
-import {Observable, of} from 'rxjs';
+import {
+    AfterViewInit,
+    Component,
+    ElementRef,
+    Inject,
+    OnDestroy,
+    OnInit,
+    Optional,
+    ViewChild
+} from '@angular/core';
+import {Observable, of, Subscription} from 'rxjs';
 import {TranslateService} from '@ngx-translate/core';
 import {map, startWith} from 'rxjs/operators';
 import {DynamicEnumerationField} from '../models/dynamic-enumeration-field';
-import {WrappedBoolean} from '../../data-field-template/models/wrapped-boolean';
 import {EnumerationFieldValidation, EnumerationFieldValue} from '../models/enumeration-field';
+import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
+import {AbstractBaseDataFieldComponent} from "../../base-component/abstract-base-data-field.component";
 
 @Component({
     selector: 'ncc-abstract-enumeration-autocomplete-dynamic-field',
     template: ''
 })
-export abstract class AbstractEnumerationAutocompleteDynamicFieldComponent implements OnInit, OnDestroy {
+export abstract class AbstractEnumerationAutocompleteDynamicFieldComponent extends AbstractBaseDataFieldComponent<DynamicEnumerationField> implements OnInit, OnDestroy, AfterViewInit {
 
-    @Input() enumerationField: DynamicEnumerationField;
-    @Input() formControlRef: FormControl;
-    @Input() showLargeLayout: WrappedBoolean;
     @ViewChild('input') text: ElementRef;
-
     filteredOptions: Observable<Array<EnumerationFieldValue>>;
+    choiceSubscription: Subscription;
 
-    constructor(protected _translate: TranslateService) {
+    constructor(protected _translate: TranslateService,
+                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<DynamicEnumerationField>) {
+        super(dataFieldPortalData);
     }
 
     ngOnInit() {
         this.filteredOptions = this.formControlRef.valueChanges.pipe(
             startWith(''),
-            map(() => this.enumerationField.choices)
+            map(() => this.dataField.choices)
         );
 
-        this.enumerationField.choicesChange$.subscribe(() => {
-            this.filteredOptions = of(this.enumerationField.choices);
+       this.choiceSubscription = this.dataField.choicesChange$.subscribe(() => {
+            this.filteredOptions = of(this.dataField.choices);
         });
+    }
+
+    ngAfterViewInit(): void {
+        this.dataField.input = this.text;
     }
 
     ngOnDestroy(): void {
         this.filteredOptions = undefined;
+        this.choiceSubscription.unsubscribe();
     }
 
     change() {
         if (this.text.nativeElement.value !== undefined) {
-            this.filteredOptions = of(this.enumerationField.choices);
+            this.filteredOptions = of(this.dataField.choices);
         }
     }
 
     public renderSelection = (key) => {
         if (key !== undefined && key !== '' && key !== null) {
-            if (this.enumerationField.choices.find(choice => choice.key === key)) {
-                return this.enumerationField.choices.find(choice => choice.key === key).value;
+            if (this.dataField.choices.find(choice => choice.key === key)) {
+                return this.dataField.choices.find(choice => choice.key === key).value;
             }
         }
         return key;

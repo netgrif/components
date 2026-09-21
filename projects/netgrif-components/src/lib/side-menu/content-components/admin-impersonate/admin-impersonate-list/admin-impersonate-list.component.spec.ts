@@ -40,15 +40,7 @@ describe('AdminImpersonateListComponent', () => {
                 TestWrapperComponent
             ],
             schemas: [NO_ERRORS_SCHEMA]
-        })
-            .overrideModule(BrowserDynamicTestingModule, {
-                set: {
-                    entryComponents: [
-                        ErrorSnackBarComponent
-                    ]
-                }
-            })
-            .compileComponents();
+        }).compileComponents();
 
         fixture = TestBed.createComponent(TestWrapperComponent);
         component = fixture.debugElement.children[0].componentInstance;
@@ -69,6 +61,9 @@ describe('AdminImpersonateListComponent', () => {
     template: '<nc-user-impersonate-list [searchUserControl]="formControl" [roles]="injectedData.roles"></nc-user-impersonate-list>'
 })
 class TestWrapperComponent {
-    injectedData = {roles: [], value: new UserValue('5', 'admin', 'netgrif', 'super@netgrif.com')} as UserListInjectedData;
+    injectedData = {
+        roles: [],
+        value: new UserValue('5', 'realmID0', 'admin', 'netgrif', 'admin netgrif', 'super@netgrif.com')
+    } as UserListInjectedData;
     formControl = new FormControl();
 }

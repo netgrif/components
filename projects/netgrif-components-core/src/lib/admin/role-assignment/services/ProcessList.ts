@@ -2,7 +2,7 @@ import {LoadingEmitter} from '../../../utility/loading-emitter';
 import {PetriNetReference} from '../../../resources/interface/petri-net-reference';
 import {PetriNetResourceService} from '../../../resources/engine-endpoint/petri-net-resource.service';
 import {LoggerService} from '../../../logger/services/logger.service';
-import {forkJoin, Observable, of, timer} from 'rxjs';
+import {forkJoin, Observable, of, Subject, timer} from 'rxjs';
 import {catchError, map, tap} from 'rxjs/operators';
 import NetRole from '../../../process/netRole';
 import RolesAndPermissions from '../../../process/rolesAndPermissions';
@@ -58,10 +58,11 @@ export class ProcessList {
         return [...this._selectedRoles];
     }
 
-    public loadProcesses(): void {
+    public loadProcesses(): Observable<Array<ProcessListItem>> {
         if (this.loading) {
             return;
         }
+        const processes = new Subject<Array<ProcessListItem>>();
         this._loading$.on();
         this._resources.getAll().pipe(
             catchError(err => {
@@ -96,8 +97,10 @@ export class ProcessList {
                 cache[net.identifier].newestVersion = cache[net.identifier].processes[0].version;
             });
             this._processes = Object.values(cache).sort();
+            processes.next(this._processes);
             this._loading$.off();
         });
+        return processes.asObservable();
     }
 
     public prepareToTryAgainToLoadRoles(item: ProcessListItem): void {

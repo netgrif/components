@@ -1,4 +1,4 @@
-@import "projects/netgrif-components/src/styles/core";
+@import "../../../../src/styles/core";
 
 .user-list-item-margin {
     margin: 4px 0;
@@ -31,16 +31,67 @@
 .process-list-accordion {
     overflow-y: auto;
     padding: 0 2px 4px;
+    .mat-mdc-expansion-panel-spacing {
+        margin: 8px 0;
+    }
 }
 
-.user-assign-search {
+.ldapGroup-assign-search {
     width: 100%;
+    color: #64748B;
+    min-width: 250px;
+    border-radius: 6px;
 }
 
 .search-icon {
     margin-right: 10px;
 }
 
-.min-height-72 {
-    min-height: 72px;
+.min-height-radius {
+    min-height: 64px;
+    border-radius: 8px;
 }
+
+.prefix-icon {
+    font-size: 22px;
+}
+
+.paragraph-fix {
+    word-break: break-all;
+    white-space: pre-wrap !important;
+}
+
+.min-height-option {
+    height: auto !important;
+    min-height: 48px;
+    padding: 3px 0 !important;
+}
+
+.role-header {
+    min-height: 48px !important;
+    height: auto !important;
+}
+
+.panel-last {
+    padding-bottom: 16px;
+}
+
+.margin-none {
+    margin-top: 0 !important;
+    margin-bottom: 0!important;
+}
+
+.role-height {
+    height: 100%;
+    min-height: 100%;
+}
+
+
+@media only screen and (max-width: 599.99px) {
+    .role-height {
+        height: 50%;
+        min-height: 50%;
+        width: 100%;
+    }
+}
+

@@ -46,8 +46,17 @@ export interface Auth {
     authentication: string;
     sessionBearer?: string;
     endpoints?: string | { [k: string]: string };
+    sso?: Sso;
 
     [k: string]: any;
+}
+
+export interface Sso {
+    enable: boolean;
+    redirectUrl: string;
+    refreshUrl: string;
+    clientId: string;
+    scopes: Array<string>;
 }
 
 export interface Resource {
@@ -224,6 +233,7 @@ export interface View {
         title?: string;
         icon?: string;
         translate?: boolean;
+        order?: number;
         [k: string]: any;
     };
     children?: Views;
@@ -286,8 +296,45 @@ export interface Services {
         [k: string]: any;
     };
     auth?: {
+        /**
+         * @deprecated in 6.3.0 use [onLogoutRedirect]{@link Services#auth.onLogoutRedirect} instead
+         *
+         * Determines the route the application should redirect to when the logout action is performed
+         *
+         * This value should be retrieved by calling the [getOnLogoutPath]{@link ConfigurationService#getOnLogoutPath} method of the
+         * {@link ConfigurationService} as it handles fall backs on deprecated attributes.
+         */
         logoutRedirect?: string;
+        /**
+         * @deprecated in 6.3.0 use [toLoginRedirect]{@link Services#auth.toLoginRedirect} instead
+         *
+         * Determines the route the application should redirect to when a guard prevents entry to some route
+         *
+         * This value should be retrieved by calling the [getToLoginPath]{@link ConfigurationService#getToLoginPath} method of the
+         * {@link ConfigurationService} as it handles fall backs on deprecated attributes.
+         */
         loginRedirect?: string;
+        /**
+         * Determines the route the application should redirect to when the logout action is performed
+         *
+         * This value should be retrieved by calling the [getOnLogoutPath]{@link ConfigurationService#getOnLogoutPath} method of the
+         * {@link ConfigurationService} as it handles fall backs on deprecated attributes.
+         */
+        onLogoutRedirect?: string;
+        /**
+         * Determines the route the application should redirect to when a guard prevents entry to some route
+         *
+         * This value should be retrieved by calling the [getToLoginPath]{@link ConfigurationService#getToLoginPath} method of the
+         * {@link ConfigurationService} as it handles fall backs on deprecated attributes.
+         */
+        toLoginRedirect?: string;
+        /**
+         * Determines the route the application should redirect to when the login action is performed
+         *
+         * This value should be retrieved by calling the [getOnLoginPath]{@link ConfigurationService#getOnLoginPath} method of the
+         * {@link ConfigurationService}
+         */
+        onLoginRedirect?: string;
     };
     routing?: {
         defaultRedirect?: string;
@@ -304,6 +351,9 @@ export interface Services {
     groupNavigation?: {
         groupNavigationRoute: string,
     };
+    doubleDrawer?: {
+        url: string,
+    }
 
     [k: string]: any;
 }

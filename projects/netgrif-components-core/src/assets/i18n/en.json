@@ -49,7 +49,8 @@
             "finish": "Finish",
             "cancel": "Cancel",
             "noData": "This task has no data. Finish to continue.",
-            "redirecting": "Redirecting..."
+            "redirecting": "Redirecting...",
+            "closeTab": "Close"
         },
         "footer": {
             "defaultText": "NETGRIF, s.r.o. © 2022"
@@ -70,7 +71,8 @@
         "import-net": {
             "upload": "Upload model",
             "choose": "Choose a process file",
-            "done": "Done"
+            "done": "Done",
+            "search": "Search for process"
         },
         "new-case": {
             "case": "New Case",
@@ -88,6 +90,7 @@
             "noNets": "No allowed Nets",
             "createCase": "Successful create new case",
             "defaultCaseName": "with default case name",
+            "errorCreate": "Error while creating case ",
             "createCaseError": "A new case was created, but an error occurred while executing actions"
         },
         "user": {
@@ -255,7 +258,8 @@
             "maxFilesExceeded": "Maximum number of uploadable files exceeded: ",
             "maxFilesSizeExceeded": "The maximum size of uploaded files is exceeded: ",
             "notSelectedUser": "No user has been selected",
-            "userAssigned": "User {{userName}} was assigned"
+            "userAssigned": "User {{userName}} was assigned",
+            "userListAssigned": "Selected users {{userNames}} were assigned"
         },
         "values": {
             "boolean": {
@@ -263,12 +267,16 @@
                 "false": "false"
             }
         },
+        "clear": "Clear",
+        "save": "Save",
         "noFile": "No file",
         "file": {
             "noFile": "No File",
             "clickToUpload": "Click to upload file",
             "clickToDownload": "Click to download {{fileName}}",
-            "clickToDelete": "Click to delete file"
+            "clickToOpen": "Click to view file content",
+            "clickToDelete": "Click to delete file",
+            "notAllowed": "File {{fileName}} can't be uploaded. Its filetype is not allowed."
         },
         "i18n": {
             "languageSelect": "Select language",
@@ -283,7 +291,10 @@
             "reset": "Reset"
         },
         "user": {
-            "selectUser": "Select user"
+            "selectUser": "Select user",
+            "deleteUser": "Delete user",
+            "save": "Assign",
+            "deleteAll": "Empty user list"
         },
         "textarea": {
             "insertText": "Insert text here..."
@@ -302,9 +313,16 @@
             "login": "Username",
             "wrongCredentials": "Wrong credentials!",
             "loginButton": "Log in",
+            "ssoButton": "Log with SSO",
             "reset": "Reset password",
             "sign": "Sign Up",
             "enterPass": "Enter your password"
+        },
+        "changePassword": {
+            "oldPassword": "Enter your old password",
+            "enterNewPass": "Enter your new password",
+            "repeatNewPass": "Repeat your new password",
+            "changePass": "Change password"
         },
         "register": {
             "email": "Your email",
@@ -354,7 +372,13 @@
         "editMode": "Enable edit mode",
         "overflowMode": "Table mode",
         "columnWidth": "Column width",
-        "columnCount": "Number of columns"
+        "columnCount": "Number of columns",
+        "sortControl": "Sort {{title}}. Current direction: {{current}}. Activate to set {{next}}.",
+        "sortDirections": {
+            "none": "not sorted",
+            "ascending": "ascending",
+            "descending": "descending"
+        }
     },
     "panel": {
         "case": {
@@ -448,6 +472,7 @@
         "snackBar": {
             "deleteCanceled": "Process delete canceled",
             "deleteSuccess": "Process successfully deleted",
+            "deleteInProgress": "The process has been marked for deletion, the deletion is now underway",
             "deleteError": "Process could not be deleted",
             "uploadFailed": "Process file could not be uploaded.",
             "uploadSuccess": "Process file uploaded successfully"
@@ -467,7 +492,11 @@
         "errorCreate": "Error while creating case "
     },
     "dynamicNavigation": {
-        "couldNotResolveView": "An error has occurred during the view resolution process. The view could not be displayed"
+        "couldNotResolveView": "An error has occurred during the view resolution process. The view could not be displayed",
+        "filterNotFound": "This view has no filter",
+        "loadMoreItems": "More",
+        "ascending": "Ascending",
+        "descending": "Descending"
     },
     "impersonation": {
         "user": {
@@ -479,5 +508,20 @@
             "failed": "Action failed",
             "deactivated": "Representation was successfully deactivated"
         }
+    },
+    "session": {
+        "expireTitle": "Your Session is about to expire",
+        "expireDetail": "Your session is about to expire.\n\nRedirecting to Login page in {{time}} seconds.",
+        "exitButton": "Logout",
+        "refreshButton": "Stay Connected"
+    },
+    "paginator": {
+        "firstPage": "First page",
+        "itemsPage": "Items per page:",
+        "lastPage": "Last page",
+        "nextPage": "Next page",
+        "previousPage": "Previous page",
+        "pageOne": "Page 1 of 1",
+        "pageAmount": "Page {{page}} of {{amountPages}}"
     }
 }

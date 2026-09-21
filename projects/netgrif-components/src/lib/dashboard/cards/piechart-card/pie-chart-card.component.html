@@ -1,5 +1,5 @@
 <mat-card class="dashboard-card custom-mat-card" fxLayout="row" fxLayoutAlign="start start">
-    <ngx-charts-pie-chart class="custom-chart"
+    <ngx-charts-pie-chart class="custom-chart dashboard-pie-chart"
                           [scheme]="colorScheme"
                           [results]="single"
                           [gradient]="gradient"
@@ -7,7 +7,7 @@
                           [legendPosition]="legendPosition"
                           [labels]="showLabels"
                           [doughnut]="isDoughnut"
-                          (select)="onSelect($event)"
-    >
+                          [legendTitle]="card.title"
+                          (select)="onSelect($event)">
     </ngx-charts-pie-chart>
 </mat-card>

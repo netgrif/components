@@ -8,10 +8,11 @@ import {AngularResizeEventModule} from 'angular-resize-event';
 import {BrowserAnimationsModule, NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {TranslateLibModule} from '../../../translate/translate-lib.module';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+import {Component, CUSTOM_ELEMENTS_SCHEMA, ElementRef, Inject, Optional} from '@angular/core';
 import {WrappedBoolean} from '../../data-field-template/models/wrapped-boolean';
 import {FormControl} from '@angular/forms';
 import {MultichoiceField} from '../models/multichoice-field';
+import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
 
 describe('AbstractMultichoiceAutocompleteFieldComponentComponent', () => {
     let component: TestEnumAutoComponent;
@@ -27,6 +28,20 @@ describe('AbstractMultichoiceAutocompleteFieldComponentComponent', () => {
                 HttpClientTestingModule,
                 NoopAnimationsModule
             ],
+            providers: [
+                {provide: DATA_FIELD_PORTAL_DATA, useValue: {
+                        dataField: new MultichoiceField('', '', [''], [], {
+                            required: true,
+                            optional: true,
+                            visible: true,
+                            editable: true,
+                            hidden: true
+                        }),
+                        formControlRef: new FormControl(),
+                        showLargeLayout: new WrappedBoolean()
+                    } as DataFieldPortalData<MultichoiceField>
+                }
+            ],
             declarations: [TestEnumAutoComponent, TestWrapperComponent],
             schemas: [CUSTOM_ELEMENTS_SCHEMA]
         }).compileComponents();
@@ -37,6 +52,20 @@ describe('AbstractMultichoiceAutocompleteFieldComponentComponent', () => {
 
     it('should create', () => {
         expect(component).toBeTruthy();
+    });
+
+    it('should not add or remove values when disabled', () => {
+        component.input = new ElementRef({value: 'new value'});
+        component.formControlRef.disable();
+        const originalValue = [...component.dataField.value];
+
+        component.add({key: 'new'} as any);
+        component.remove(originalValue[0]);
+        component.change();
+
+        expect(component.dataField.value).toEqual(originalValue);
+        expect(component.input.nativeElement.value).toBe('');
+        component.filteredOptions.subscribe(options => expect(options).toEqual([]));
     });
 
     afterEach(() => {
@@ -51,21 +80,16 @@ describe('AbstractMultichoiceAutocompleteFieldComponentComponent', () => {
 })
 class TestEnumAutoComponent extends AbstractMultichoiceAutocompleteFieldComponentComponent {
 
+    constructor(@Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<MultichoiceField>) {
+        super(dataFieldPortalData);
+    }
+
 }
 
 @Component({
     selector: 'ncc-test-wrapper',
-    template: '<ncc-test-enum-auto [showLargeLayout]="label" [enumerationField]="field" [formControlRef]="form">' +
-        '</ncc-test-enum-auto>'
+    template: '<ncc-test-enum-auto></ncc-test-enum-auto>'
 })
 class TestWrapperComponent {
-    label = new WrappedBoolean();
-    field = new MultichoiceField('', '', [''], [], {
-        required: true,
-        optional: true,
-        visible: true,
-        editable: true,
-        hidden: true
-    });
-    form = new FormControl();
+
 }

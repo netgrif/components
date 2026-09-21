@@ -11,3 +11,4 @@ export * from './dialog.module';
 
 // SERVICES
 export * from './services/dialog.service';
+export * from './injection-tokens';

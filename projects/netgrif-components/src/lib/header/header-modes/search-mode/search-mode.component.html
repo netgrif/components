@@ -1,4 +1,7 @@
 <div fxFlex="100" fxLayout="row" fxLayoutAlign=" center">
+    <mat-checkbox *ngIf="approval && typeApproval === 'multichoice'" [formControl]="approvalFormControl" [indeterminate]="indeterminate"
+                  (click)="$event.stopPropagation();" color='primary' class="checkbox-padding"></mat-checkbox>
+    <mat-icon *ngIf="approval && typeApproval === 'enumeration'" color="warn" (click)="setValue();$event.stopPropagation();" class="checkbox-padding cursor-fix">close</mat-icon>
     <div *ngFor="let header of this.headerService.selectedHeaders$ | async; let i = index"
          [fxHide.lt-xl]="i >= 4 && this.headerService.responsiveHeaders && !this.headerService.overflowMode"
          [fxHide.lt-lg]="i >= 3 && this.headerService.responsiveHeaders && !this.headerService.overflowMode"
@@ -9,7 +12,7 @@
             *ngIf="!!header && header.fieldType !== 'button'; then thenBlock else elseBlock"
             fxFlex></div>
         <ng-template #thenBlock>
-            <div fxLayout="row" fxLayoutAlign=" center" fxFlex [ngSwitch]="header.fieldType" class="netgrif-input netgrif-header-input netgrif-input-fix netgrif-input-primary-fix">
+            <div fxLayout="row" fxLayoutAlign=" center" fxFlex [ngSwitch]="header.fieldType" class="netgrif-input netgrif-header-input netgrif-input-fix netgrif-zero-field-wrapper">
                 <mat-form-field color="primary" fxLayout="row" fxLayoutAlign=" center" fxFlex *ngSwitchCase="'date'" appearance="outline">
                     <mat-label>{{header.title | translate}}</mat-label>
                     <input matInput autocomplete="off"

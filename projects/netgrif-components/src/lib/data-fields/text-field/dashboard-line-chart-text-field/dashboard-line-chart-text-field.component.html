@@ -1,0 +1,9 @@
+<ng-template [ngIf]="!formControlRef.disabled && dataField.behavior.editable" [ngIfElse]="visibleChart">
+    <nc-textarea-field [dataField]="dataField"
+                       [formControlRef]="formControlRef"
+                       [showLargeLayout]="showLargeLayout"></nc-textarea-field>
+</ng-template>
+
+<ng-template #visibleChart>
+    <nc-line-chart-card *ngIf="initialized" [card]="card" class="full-size"></nc-line-chart-card>
+</ng-template>

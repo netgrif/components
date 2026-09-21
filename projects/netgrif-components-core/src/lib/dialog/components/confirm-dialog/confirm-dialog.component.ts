@@ -30,7 +30,7 @@ export class ConfirmDialogComponent extends AbstractDialogComponent<ConfirmDialo
         super(dialogRef, data);
         this.choice = false;
         if (data && data.content) {
-            this.parsedContent = sanitizer.bypassSecurityTrustHtml(data.content.replace('\\n', '<br>'));
+            this.parsedContent = sanitizer.bypassSecurityTrustHtml(data.content?.replace('\\n', '<br>'));
         } else {
             this.parsedContent = sanitizer.bypassSecurityTrustHtml('');
         }

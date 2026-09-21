@@ -1,5 +1,10 @@
-import {Component} from '@angular/core';
-import {AbstractMultichoiceListFieldComponent} from '@netgrif/components-core';
+import {Component, Inject, Optional} from '@angular/core';
+import {
+    AbstractMultichoiceListFieldComponent,
+    DATA_FIELD_PORTAL_DATA,
+    DataFieldPortalData,
+    MultichoiceField
+} from '@netgrif/components-core';
 
 @Component({
     selector: 'nc-multichoice-list-field',
@@ -8,7 +13,7 @@ import {AbstractMultichoiceListFieldComponent} from '@netgrif/components-core';
 })
 export class MultichoiceListFieldComponent extends AbstractMultichoiceListFieldComponent {
 
-    constructor() {
-        super();
+    constructor(@Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<MultichoiceField>) {
+        super(dataFieldPortalData);
     }
 }

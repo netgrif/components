@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Observable, ReplaySubject} from 'rxjs';
+import {Observable, of, ReplaySubject} from 'rxjs';
 import {User} from '../../../user/models/user';
 
 @Injectable()
@@ -40,5 +40,23 @@ export class MockUserService {
 
     hasAuthority(): boolean {
         return true;
+    }
+
+    public isUserEmpty(user: User): boolean {
+        return !user || (!user.id && user.roles.length === 0);
+    }
+
+    public isCurrentUserEmpty(): boolean {
+        return this.isUserEmpty(this.user)
+    }
+
+    logout() {
+        this._user = this.emptyUser()
+        this._userChange$.next(this._user);
+        return of({});
+    }
+
+    protected emptyUser() {
+        return new User('', '', '', '', '', '', [], [], [], []);
     }
 }

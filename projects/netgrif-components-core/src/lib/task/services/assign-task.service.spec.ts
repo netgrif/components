@@ -36,6 +36,7 @@ import {AssignTaskEventOutcome} from '../../event/model/event-outcomes/task-outc
 import {createMockTask} from '../../utility/tests/utility/create-mock-task';
 import {createMockTaskOutcome} from '../../utility/tests/utility/create-mock-task-outcome';
 import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
+import {FrontActionService} from "../../actions/services/front-action.service";
 
 describe('AssignTaskService', () => {
     let service: AssignTaskService;
@@ -61,18 +62,13 @@ describe('AssignTaskService', () => {
                 DataFocusPolicyService,
                 TaskEventService,
                 ChangedFieldsService,
+                FrontActionService,
                 {provide: TaskContentService, useClass: SingleTaskContentService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: NAE_TASK_OPERATIONS, useClass: NullTaskOperations},
                 {provide: TaskResourceService, useClass: TestTaskResourceService},
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
             ]
-        }).overrideModule(BrowserDynamicTestingModule, {
-            set: {
-                entryComponents: [
-                    ErrorSnackBarComponent,
-                ]
-            }
         }).compileComponents();
         service = TestBed.inject(AssignTaskService);
         testTask = {
@@ -81,7 +77,7 @@ describe('AssignTaskService', () => {
             title: '',
             caseColor: '',
             caseTitle: '',
-            user: undefined,
+            assignee: undefined,
             userRefs: undefined,
             roles: {},
             startDate: [1],
@@ -127,7 +123,7 @@ describe('AssignTaskService', () => {
                     title: '',
                     caseColor: '',
                     caseTitle: '',
-                    user: null,
+                    userId: null,
                     roles: {
                         role: 'perform'
                     },

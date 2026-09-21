@@ -19,7 +19,7 @@ describe('UserAutocomplete', () => {
         deps = createMockDependencies(
             undefined,
             undefined,
-            userResourceService as unknown as UserResourceService
+            userResourceService as unknown as UserResourceService,
         );
     });
 
@@ -39,7 +39,11 @@ describe('UserAutocomplete', () => {
             name: 'aaa',
             surname: 'aaa',
             id: '1',
-            email: ''
+            email: '',
+            username: '',
+            realmId: '',
+            firstName: 'first',
+            lastName: 'last',
         }]);
 
         userAutocomplete.filterOptions(of('')).subscribe(options => {
@@ -58,7 +62,11 @@ describe('UserAutocomplete', () => {
             name: 'aaa',
             surname: 'aaa',
             id: '1',
-            email: ''
+            email: '',
+            username: '',
+            realmId: '',
+            firstName: 'first',
+            lastName: 'last',
         }]);
 
         userAutocomplete.filterOptions(of('')).subscribe(options => {
@@ -75,7 +83,7 @@ describe('UserAutocomplete', () => {
         const fc = new FormControl();
         fc.setValue({
             text: 'text',
-            value: ['id']
+            value: ['id'],
         });
 
         const serialised = userAutocomplete.serializeOperandValue(fc);
@@ -92,12 +100,12 @@ describe('UserAutocomplete', () => {
         const fc = new FormControl();
         fc.setValue({
             text: 'text',
-            value: ['id']
+            value: ['id'],
         });
 
         const serialisedUser = userAutocomplete.serializeOperandValue(fc);
 
-        userAutocomplete.deserializeOperandValue(serialisedUser).subscribe( deserialised => {
+        userAutocomplete.deserializeOperandValue(serialisedUser).subscribe(deserialised => {
             expect(deserialised).toBeTruthy();
             expect(deserialised.text).toBe('text');
             expect(deserialised.value).toEqual(['id']);
@@ -114,7 +122,7 @@ describe('UserAutocomplete', () => {
         const fc = new FormControl();
         fc.setValue({
             text: 'text',
-            value: [UserAutocomplete.USER_ME_TEMPLATE]
+            value: [UserAutocomplete.USER_ME_TEMPLATE],
         });
 
         const serialisedMe = userAutocomplete.serializeOperandValue(fc);
@@ -139,13 +147,13 @@ class MockUserResourceService {
     }
 
     public search(): Observable<Page<UserResource>> {
-        return of(createMockPage(this._response.map( user => ({
+        return of(createMockPage(this._response.map(user => ({
             ...user,
             fullName: `${user.name} ${user.surname}`,
             groups: [],
             authorities: [],
             nextGroups: [],
-            processRoles: []
+            processRoles: [],
         }))));
     }
 }

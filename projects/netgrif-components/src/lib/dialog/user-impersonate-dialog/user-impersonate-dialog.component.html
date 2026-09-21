@@ -1,0 +1,9 @@
+<div class="mat-dialog-title" fxLayout="column" fxLayoutAlign="center none">
+    {{ 'side-menu.impersonation.title' | translate  }}
+</div>
+<div mat-dialog-content class="load-filter-container side-menu-root" fxLayout="column" fxLayoutAlign="start stretch">
+    <nc-header #header [type]="headerType" [maxHeaderColumns]="3" [responsiveHeaders]="true" [hideHeaderMenu]="true" class="case-header-padding" [ngStyle]="{'width': getWidth()}"></nc-header>
+    <nc-case-list [selectedHeaders$]="selectedHeaders$" [showDeleteMenu]="false" [width]="getWidth()"
+                  (caseClick)="handleCaseClick($event)" [responsiveBody]="true" fxFlex [textEllipsis]="true" class="virtual-scroll-list-padding"></nc-case-list>
+</div>
+

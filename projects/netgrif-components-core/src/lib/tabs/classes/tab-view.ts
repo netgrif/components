@@ -30,9 +30,14 @@ export class TabView implements TabViewInterface {
      *
      * Selected index initializes to `0`.
      */
-    public selectedIndex: FormControl;
+    public selectedIndex: FormControl<number>;
 
     private uniqueIdCounter = new IncrementingCounter();
+
+    private _switching = false;
+
+    private _pendingTabUniqueId: string | undefined;
+
     /**
      * @ignore
      * Holds a reference to an object that hides some public attributes and methods from tabs.
@@ -222,7 +227,8 @@ export class TabView implements TabViewInterface {
         if (!force && !this.openedTabs[index].canBeClosed) {
             throw new Error(error);
         }
-        if (index === this.selectedIndex.value && this.openedTabs[index].parentUniqueId) {
+        if (index === this.selectedIndex.value && this.openedTabs[index].parentUniqueId &&
+            this.openedTabs.findIndex(tab => tab.uniqueId === this.openedTabs[index].parentUniqueId) !== -1) {
             this.switchToTabUniqueId(this.openedTabs[index].parentUniqueId);
         }
         if (index === this.selectedIndex.value && this.selectedIndex.value + 1 < this.openedTabs.length) {
@@ -262,7 +268,7 @@ export class TabView implements TabViewInterface {
             ];
             providers.push({
                 provide: NAE_VIEW_ID_SEGMENT,
-                useValue: tab.initial ? tab.uniqueId : TabView.DYNAMIC_TAB_VIEW_ID_SEGMENT
+                useValue: tab.initial ? tab.uniqueId : ((tab.injectedObject as InjectedTabData)?.loadFilter?.id ?? TabView.DYNAMIC_TAB_VIEW_ID_SEGMENT)
             });
 
             const injector = Injector.create({providers, parent: this._parentInjector});
@@ -273,17 +279,40 @@ export class TabView implements TabViewInterface {
     }
 
     public tabChange(event: MatTabChangeEvent) {
-        if (event.index !== this.selectedIndex.value) {
+        const pendingTabUniqueId = this.openedTabs[event.index]?.uniqueId;
+        if (pendingTabUniqueId === undefined) {
+            return;
+        }
+        this._pendingTabUniqueId = pendingTabUniqueId;
+        if (this._switching) {
+            return; // an update is already being processed; the pending value will be picked up after
+        }
+        this._processSwitch();
+    }
+
+    private _processSwitch() {
+        this._switching = true;
+        const uniqueId = this._pendingTabUniqueId;
+        const index = this.openedTabs.findIndex(tab => tab.uniqueId === uniqueId);
+
+        if (index !== -1 && index !== this.selectedIndex.value) {
             let tab = this.openedTabs[this.selectedIndex.value];
             if (tab) {
                 tab.tabSelected$.next(false);
             }
-            tab = this.openedTabs[event.index];
+            tab = this.openedTabs[index];
             if (tab) {
                 tab.tabSelected$.next(true);
             }
-            this.selectedIndex.setValue(event.index);
+            this.selectedIndex.setValue(index);
         }
+
+        setTimeout(() => {
+            this._switching = false;
+            if (this._pendingTabUniqueId !== uniqueId) {
+                this._processSwitch();
+            }
+        }, 150);
     }
 
     /**

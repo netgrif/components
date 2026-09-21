@@ -1,4 +1,4 @@
-import {TaskPanelData} from '../../../panel/task-panel-list/task-panel-data/task-panel-data';
+import {TaskPanelData} from '../../../panel/task-panel-data/task-panel-data';
 import {PageLoadRequestContext} from '../../abstract/page-load-request-context';
 
 /**

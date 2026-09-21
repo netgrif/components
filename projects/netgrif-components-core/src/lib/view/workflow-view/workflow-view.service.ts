@@ -13,7 +13,10 @@ import {Page} from '../../resources/interface/page';
 import {ListRange} from '@angular/cdk/collections';
 import {hasContent} from '../../utility/pagination/page-has-content';
 import {PetriNetRequestBody} from '../../resources/interface/petri-net-request-body';
-import {NAE_WORKFLOW_SERVICE_CONFIRM_DELETE, NAE_WORKFLOW_SERVICE_FILTER} from './models/injection-token-workflow-service';
+import {
+    NAE_WORKFLOW_SERVICE_CONFIRM_DELETE,
+    NAE_WORKFLOW_SERVICE_FILTER
+} from './models/injection-token-workflow-service';
 import {DialogService} from '../../dialog/services/dialog.service';
 import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 import {TranslateService} from '@ngx-translate/core';
@@ -115,6 +118,16 @@ export class WorkflowViewService extends AbstractSortableViewComponent implement
         return this._workflows$;
     }
 
+    public setSearchTitle(title: string) {
+        this._baseFilter.title = title;
+        this.reload();
+    }
+
+    public clearSearchTitle() {
+        this._baseFilter.title = undefined;
+        this.reload();
+    }
+
     public loadPage(pageRequest: Pagination): Observable<Array<Net>> {
         if (pageRequest.number < 0) {
             return of([]);
@@ -124,7 +137,13 @@ export class WorkflowViewService extends AbstractSortableViewComponent implement
         params = this.addPageParams(params, pageRequest);
         this._loading$.on();
 
-        return this._petriNetResource.searchPetriNets(this._baseFilter, params).pipe(
+        let request: Observable<Page<PetriNetReference>>;
+        if (this._baseFilter.title !== undefined) {
+            request = this._petriNetResource.searchElasticPetriNets(this._baseFilter, params);
+        } else {
+            request = this._petriNetResource.searchPetriNets(this._baseFilter, params);
+        }
+        return request.pipe(
             catchError(err => {
                 this._log.error('Loading Petri nets has failed!', err);
                 return of({content: [], pagination: {...this._pagination}});
@@ -210,7 +229,7 @@ export class WorkflowViewService extends AbstractSortableViewComponent implement
      */
     protected _deleteWorkflow(workflow: Net): void {
         this._petriNetResource.deletePetriNet(workflow.stringId).subscribe(response => {
-                this._snackBarService.openSuccessSnackBar(this._translate.instant('workflow.snackBar.deleteSuccess'));
+                this._snackBarService.openSuccessSnackBar(this._translate.instant('workflow.snackBar.deleteInProgress'));
                 this._log.info('Process delete success. Server response: ' + response.success);
                 this.reload();
             },
@@ -221,8 +240,8 @@ export class WorkflowViewService extends AbstractSortableViewComponent implement
         );
     }
 
-    protected getMetaFieldSortId(): string {
-        return this._lastHeaderSearchState.fieldIdentifier;
+    protected getMetaFieldSortId(fieldIdentifier?: string): string {
+        return fieldIdentifier || this._lastHeaderSearchState.fieldIdentifier;
     }
 
     protected getDefaultSortParam(): string {

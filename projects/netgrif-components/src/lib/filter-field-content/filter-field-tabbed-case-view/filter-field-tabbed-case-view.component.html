@@ -1,0 +1,10 @@
+<div class="case-view-container min-height-custom" fxLayout="column" fxLayoutAlign="start stretch">
+    <div class="full-height transform-div custom-scrollbar" [ngClass]="{'overflow-div': getOverflowStatus()}" fxLayout="column" fxLayoutAlign="start stretch">
+        <div class="full-height transform-div max-width-fix" fxLayout="column" fxLayoutAlign="start stretch">
+            <nc-header #header [type]="headerType" [maxHeaderColumns]="7" [responsiveHeaders]="true" class="case-header-padding" [ngStyle]="{'width': getWidth()}"></nc-header>
+
+            <nc-case-list [selectedHeaders$]="selectedHeaders$" [showDeleteMenu]="true" [width]="getWidth()"
+                          (caseClick)="handleCaseClick($event)" [responsiveBody]="true" fxFlex [textEllipsis]="true" [redirectEnabled]="true"></nc-case-list>
+        </div>
+    </div>
+</div>

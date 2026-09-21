@@ -43,7 +43,7 @@ describe('EnumerationListFieldComponent', () => {
 
 @Component({
     selector: 'nc-test-wrapper',
-    template: '<nc-enumeration-list-field [showLargeLayout]="label" [enumerationField]="field" [formControlRef]="form">' +
+    template: '<nc-enumeration-list-field [showLargeLayout]="label" [dataField]="field" [formControlRef]="form">' +
         '</nc-enumeration-list-field>'
 })
 class TestWrapperComponent {

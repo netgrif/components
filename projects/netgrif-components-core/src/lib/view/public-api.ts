@@ -10,6 +10,7 @@ export * from './tree-case-view/tree-component/model/case-tree-node';
 export * from './tree-case-view/tree-component/model/case-tree-path';
 export * from './tree-case-view/tree-component/model/expansion-tree';
 export * from './tree-case-view/tree-component/model/tree-case-view-configuration';
+export * from './abstract/netgrif-paginator-intl';
 
 /* ENUMS */
 export * from './tree-case-view/model/tree-petriflow-identifiers';
@@ -34,6 +35,7 @@ export * from './task-view/models/injection-token-task-endpoint';
 export * from './task-view/models/task-view-configuration-injection-token';
 export * from './workflow-view/models/injection-token-workflow-service';
 export * from './tree-case-view/tree-component/model/tree-configuration-injection-token';
+export * from './task-view/models/injection-token-task-force-open';
 
 /* SERVICES */
 export * from './case-view/service/case-view-service';
@@ -56,3 +58,6 @@ export * from './tree-case-view/tree-component/add-child-node/abstract-add-child
 export * from './tree-case-view/tree-component/remove-node/abstract-remove-node.component';
 export * from './tree-case-view/tree-task-content/abstract-tree-task-content.component';
 export * from './task-view/abstract-single-task-view.component';
+export * from './task-view/abstract-tabbed-single-task-view.component';
+export * from './task-view/components/task-panel-list/abstract-task-list.component';
+export * from './task-view/components/task-panel-list-pagination/abstract-task-list-pagination.component';

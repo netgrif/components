@@ -49,14 +49,14 @@ export abstract class AbstractResourceProvider {
 
 
     public static sanitizeUrl(endpoint?: string, url?: string): string {
-        if (endpoint.includes('http://') || (endpoint.includes('https://'))) {
+        if (endpoint?.includes('http://') || (endpoint?.includes('https://'))) {
             if (url) {
-                if (endpoint.includes(url)) {
+                if (endpoint?.includes(url)) {
                     return endpoint;
                 } else {
-                    return url.includes('https://') ? 'https://' +
-                        endpoint.replace(/(^\w+:|^)\/\//, '') : 'http://' +
-                        endpoint.replace(/(^\w+:|^)\/\//, '');
+                    return url?.includes('https://') ? 'https://' +
+                        endpoint?.replace(/(^\w+:|^)\/\//, '') : 'http://' +
+                        endpoint?.replace(/(^\w+:|^)\/\//, '');
                 }
             } else {
                 return endpoint;
@@ -184,12 +184,13 @@ export abstract class AbstractResourceProvider {
     }
 
     public delete$<T>(endpoint?: string, url?: string, params ?: Params, headers ?: Headers,
-                      responseType ?: ResponseType): Observable<T> {
+                      responseType ?: ResponseType, body?: object,): Observable<T> {
         return this.httpClient.delete<T>(AbstractResourceProvider.sanitizeUrl(endpoint, url), {
             headers,
             params,
             responseType: 'json',
-            observe: 'body'
+            observe: 'body',
+            body
         });
     }
 }

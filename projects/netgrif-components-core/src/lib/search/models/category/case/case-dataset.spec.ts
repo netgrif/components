@@ -83,8 +83,8 @@ describe('CaseDataset', () => {
                 {stringId: 'multichoice_mapField', title: 'title', type: 'multichoice_map'},
                 {stringId: 'fileField', title: 'title', type: 'file'},
                 {stringId: 'fileListField', title: 'title', type: 'fileList'},
-                {stringId: 'userListField', title: 'title', type: 'userList'},
-                {stringId: 'userField', title: 'title', type: 'user'},
+                {stringId: 'actorListField', title: 'title', type: 'actorList'},
+                {stringId: 'actorField', title: 'title', type: 'actor'},
                 {stringId: 'dateField', title: 'title', type: 'date'},
                 {stringId: 'dateTimeField', title: 'title', type: 'dateTime'},
             ];
@@ -142,9 +142,9 @@ describe('CaseDataset', () => {
                     expect(metadata.values).toEqual([v]);
                 }, operatorService);
             });
-            it('userList field search', (done) => {
+            it('actorList field search', (done) => {
                 const v = 'value';
-                serializationTest(done, category, Equals, 'userList', v, (metadata) => {
+                serializationTest(done, category, Equals, 'actorList', v, (metadata) => {
                     expect(metadata.values).toEqual([v]);
                 }, operatorService);
             });
@@ -160,9 +160,9 @@ describe('CaseDataset', () => {
                     expect(metadata.values).toEqual([v]);
                 }, operatorService);
             });
-            it('user field search', (done) => {
+            it('actor field search', (done) => {
                 const v = mockUserSearchValue('Test User', '7');
-                serializationTest(done, category, Equals, 'user', v, (metadata) => {
+                serializationTest(done, category, Equals, 'actor', v, (metadata) => {
                     const mockedSerializedValue = mockUserSearchValue('Test User', '7');
                     delete mockedSerializedValue.icon;
                     expect(metadata.values).toEqual([mockedSerializedValue]);
@@ -223,9 +223,9 @@ describe('CaseDataset', () => {
                 deserializationTest(done, category, Equals, 'fileList', v, (d, c) => valueObjectsComparison(d, c),
                     operatorService, allowedNets$);
             });
-            it('userList field search', (done) => {
+            it('actorList field search', (done) => {
                 const v = 'value';
-                deserializationTest(done, category, Equals, 'userList', v, (d, c) => valueObjectsComparison(d, c),
+                deserializationTest(done, category, Equals, 'actorList', v, (d, c) => valueObjectsComparison(d, c),
                     operatorService, allowedNets$);
             });
             it('number field search', (done) => {
@@ -238,9 +238,9 @@ describe('CaseDataset', () => {
                 deserializationTest(done, category, Equals, 'boolean', v, (d, c) => valueObjectsComparison(d, c),
                     operatorService, allowedNets$);
             });
-            it('user field search', (done) => {
+            it('actor field search', (done) => {
                 const v = mockUserSearchValue('Test User', '7');
-                deserializationTest(done, category, Equals, 'user', v, (d, c) => valueObjectsComparison(d, c),
+                deserializationTest(done, category, Equals, 'actor', v, (d, c) => valueObjectsComparison(d, c),
                     operatorService, allowedNets$);
             });
             it('date field search', (done) => {

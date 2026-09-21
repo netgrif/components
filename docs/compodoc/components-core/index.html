@@ -9,13 +9,64 @@
 
         <link rel="icon" type="image/x-icon" href="./images/favicon.ico">
 	   <link rel="stylesheet" href="./styles/style.css">
-        <link rel="stylesheet" href="./styles/dark.css" media="(prefers-color-scheme: dark)">
+        <link rel="stylesheet" href="./styles/dark.css">
     </head>
     <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
 
-        <div class="navbar navbar-default navbar-fixed-top visible-xs">
-            <a href="./" class="navbar-brand">Netgrif Components Core library Documentation</a>
-            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="./" class="navbar-brand">Netgrif Components Core library Documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
         </div>
 
         <div class="xs-menu menu" id="mobile-menu">
@@ -24,14 +75,14 @@
 
         <div class="container-fluid main">
            <div class="row main">
-               <div class="hidden-xs menu">
+               <div class="d-none d-md-block menu">
                    <compodoc-menu mode="normal"></compodoc-menu>
                </div>
                <!-- START CONTENT -->
                <div class="content getting-started">
                    <div class="content-data">
 
-<h1 id="netgrif-components-libraries">Netgrif Components libraries</h1>
+<h1>Netgrif Components libraries</h1>
 <p><a href="https://netgrif.com/engine/license"><img src="https://img.shields.io/badge/license-NETGRIF%20Community%20License-green" alt="License" class="img-responsive"></a>
 <a href="https://www.angular.io/"><img src="https://img.shields.io/github/package-json/dependency-version/netgrif/components/@angular/core?color=red" alt="Angular dependency" class="img-responsive"></a>
 <a href="https://www.npmjs.com/package/@netgrif/components-core"><img src="https://img.shields.io/npm/v/@netgrif/components-core" alt="npm (scoped)" class="img-responsive"></a>
@@ -49,8 +100,10 @@ and to create own library of Angular web components to incorporate your own pers
 <li>Petriflow low-code language: <a href="https://petriflow.com">http://petriflow.com</a></li>
 <li>Documentation: <a href="https://components.netgrif.com">https://components.netgrif.com</a><!-- * Getting Started: [https://components.netgrif.com/get_started](https://components.netgrif.com/get_started) --></li>
 <li>Issue Tracker: <a href="https://github.com/netgrif/components/issues">Github issues</a></li>
-<li>Compodoc: <a href="https://components.netgrif.com/#/compodoc/components">@netgrif/components compodoc</a>, <div><pre class="line-numbers"><code class="language-none">     [&#64;netgrif/components-core compodoc](https://components.netgrif.com/#/compodoc/components-core)</code></pre></div></li>
-<li>Typedoc: <a href="https://components.netgrif.com/#/typedoc/components">@netgrif/components typedoc</a>,<div><pre class="line-numbers"><code class="language-none">     [&#64;netgrif/components-core typedoc](https://components.netgrif.com/#/typedoc/components-core)</code></pre></div></li>
+<li>Compodoc: <a href="https://components.netgrif.com/#/compodoc/components">@netgrif/components compodoc</a>, 
+     <a href="https://components.netgrif.com/#/compodoc/components-core">@netgrif/components-core compodoc</a></li>
+<li>Typedoc: <a href="https://components.netgrif.com/#/typedoc/components">@netgrif/components typedoc</a>,
+     <a href="https://components.netgrif.com/#/typedoc/components-core">@netgrif/components-core typedoc</a></li>
 <li>License: <a href="https://github.com/netgrif/components/blob/master/LICENSE">NETGRIF Community License</a></li>
 </ul>
 <p>In this repository are 3 projects:</p>
@@ -59,18 +112,18 @@ and to create own library of Angular web components to incorporate your own pers
 <li><a href="projects/netgrif-components/README.md">@netgrif/components</a> - Library of angular components implementing classes from core library.</li>
 <li><a href="projects/nae-example-app/README.md">Examples App</a> - Simple application to demonstrate and test individual components.</li>
 </ul>
-<h2 id="requirements">Requirements</h2>
+<h2>Requirements</h2>
 <p>The Libraries are implemented as Angular libraries. With Angular dependencies there are several others to complement functionality and range of components available for
 NAE based applications. The components library is based upon Angular Material components to make it easier to derived and implement own set of components but still keep
 the functionality and compatibility with Application Engine.</p>
 <p>The library has defined peer dependencies that are not installed automatically with npm. You can install dependencies with this command:</p>
-<div><pre class="line-numbers"><code class="language-shell">npm i -S &#64;angular-material-components/datetime-picker&#64;7.0.1 &#64;angular-material-components/moment-adapter&#64;7.0.0 &#64;angular/animations&#64;13.3 &#64;angular/cdk&#64;13.3 &#64;angular/common&#64;13.3.1 &#64;angular/compiler&#64;13.3.1 &#64;angular/core&#64;13.3.1 &#64;angular/flex-layout&#64;13.0.0-beta.38 &#64;angular/forms&#64;13.3.1 &#64;angular/material&#64;13.3.1 &#64;angular/material-moment-adapter&#64;13.3.1 &#64;angular/platform-browser&#64;13.3.1 &#64;angular/platform-browser-dynamic&#64;13.3.1 &#64;angular/router&#64;13.3.1 &#64;covalent/markdown&#64;4.1.0 &#64;ngx-translate/core&#64;13.0.0 &#64;ngx-translate/http-loader&#64;6.0.0 &#64;schematics/angular&#64;13.3.0 &#64;swimlane/ngx-charts&#64;20.1.0 &#64;types/mousetrap&#64;1.6.9 angular-resizable-element&#64;3.3.0 angular-resize-event&#64;3.1.1 angular2-hotkeys&#64;2.4.0 easymde&#64;2.16.1 hammerjs&#64;2.0.8 json-schema-to-typescript&#64;8.1.0 jszip&#64;3.2.2 marked&#64;4.0.12 moment&#64;2.24.0 mousetrap&#64;1.6.5 natural-orderby&#64;2.0.3 ngx-quill&#64;16.2.0 palette-creator&#64;0.5.4 quill&#64;1.3.7 rxjs&#64;6.5.4 showdown&#64;2.0.3 tslib&#64;2.0.0 zone.js&#64;0.11.4</code></pre></div><h2 id="installation">Installation</h2>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-shell">npm i -S &#64;angular-material-components/datetime-picker&#64;7.0.1 &#64;angular-material-components/moment-adapter&#64;7.0.0 &#64;angular/animations&#64;13.3 &#64;angular/cdk&#64;13.3 &#64;angular/common&#64;13.3.1 &#64;angular/compiler&#64;13.3.1 &#64;angular/core&#64;13.3.1 &#64;angular/flex-layout&#64;13.0.0-beta.38 &#64;angular/forms&#64;13.3.1 &#64;angular/material&#64;13.3.1 &#64;angular/material-moment-adapter&#64;13.3.1 &#64;angular/platform-browser&#64;13.3.1 &#64;angular/platform-browser-dynamic&#64;13.3.1 &#64;angular/router&#64;13.3.1 &#64;covalent/markdown&#64;4.1.0 &#64;ngx-translate/core&#64;13.0.0 &#64;ngx-translate/http-loader&#64;6.0.0 &#64;schematics/angular&#64;13.3.0 &#64;swimlane/ngx-charts&#64;20.1.0 &#64;types/mousetrap&#64;1.6.9 angular-resizable-element&#64;3.3.0 angular-resize-event&#64;3.1.1 angular2-hotkeys&#64;2.4.0 easymde&#64;2.16.1 hammerjs&#64;2.0.8 json-schema-to-typescript&#64;8.1.0 jszip&#64;3.2.2 marked&#64;4.0.12 moment&#64;2.24.0 mousetrap&#64;1.6.5 natural-orderby&#64;2.0.3 ngx-quill&#64;16.2.0 palette-creator&#64;0.5.4 quill&#64;1.3.7 rxjs&#64;6.5.4 showdown&#64;2.0.3 tslib&#64;2.0.0 zone.js&#64;0.11.4</code></pre></div><h2>Installation</h2>
 <p>To install complete NAE frontend experience you must install the core library and components library:</p>
-<div><pre class="line-numbers"><code class="language-shell">npm i -S &#64;netgrif/components-core &#64;netgrif/components</code></pre></div><p>If you want to developer own set of NAE components, just install the core library, and you can start developing.</p>
-<h2 id="usage-and-configuration">Usage and configuration</h2>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-shell">npm i -S &#64;netgrif/components-core &#64;netgrif/components</code></pre></div><p>If you want to developer own set of NAE components, just install the core library, and you can start developing.</p>
+<h2>Usage and configuration</h2>
 <p>To start building your NAE web application, it must be configured as Angular application and as NAE application as well.</p>
 <p>Firstly, create new Angular project. We recommend following <a href="https://angular.io/guide/setup-local">official guide</a>.</p>
-<h3 id="naejson">NAE.json</h3>
+<h3>NAE.json</h3>
 <p>To configure NAE application more easily the libraries use file nae.json that is placed in root of the project.
 nae.json defines global application configuration like urls to backend resources, services&#39; configurations, routing and views.</p>
 <p>You can find <a href="docs/configuration/nae-minimal.json">minimal nae.json configuration here</a>. </p>
@@ -80,19 +133,19 @@ nae.json defines global application configuration like urls to backend resources
 <p>For easier startup clone <a href="https://github.com/netgrif/nae-frontend-application-starter">template project for NAE frontend application</a></p>
 <!-- For more information please read instructions in [Get Started](https://components.netgrif.com/#/get_started) -->
 
-<h2 id="other-projects">Other projects</h2>
-<h3 id="application-engine">Application Engine</h3>
+<h2>Other projects</h2>
+<h3>Application Engine</h3>
 <p><a href="https://github.com/netgrif/application-engine">Netgrif Application Engine</a> is workflow management system powered by low-code language Petriflow written in Java.
 Application Engine can run as a standalone java application, as a docker image, or you can embed it to your Java/Spring Boot project.</p>
-<h3 id="application-builder">Application Builder</h3>
+<h3>Application Builder</h3>
 <p>For creating processes in Petriflow language try our free Application Builder on <a href="https://builder.netgrif.com">https://builder.netgrif.com</a>.
 You can start from scratch or import existing process in BPMN 2.0 and builder automatically converts it into Petriflow.</p>
-<h3 id="ncli-coming-soon">NCLI (Coming soon)</h3>
+<h3>NCLI (Coming soon)</h3>
 <p>If you need help with setting up project or looking for tool to automate your developer work with NAE based applications,
 take a look on <a href="https://github.com/netgrif/ncli">NCLI (Netgrif Command Line Interface)</a>.</p>
-<h2 id="reporting-issues">Reporting issues</h2>
+<h2>Reporting issues</h2>
 <p>If you find a bug, let us know at <a href="https://github.com/netgrif/components/issues">Issue page</a>. First, please read our <a href="https://github.com/netgrif/components/blob/master/CONTRIBUTING.md">Contribution guide</a></p>
-<h2 id="license">License</h2>
+<h2>License</h2>
 <p>The software is licensed under NETGRIF Community license. You may be found this license at <a href="https://github.com/netgrif/components/blob/master/LICENSE">the LICENSE file</a> in the repository. </p>
 
 
@@ -108,14 +161,16 @@ take a look on <a href="https://github.com/netgrif/ncli">NCLI (Netgrif Command L
 
 
 
-                   
+
+
+
 
 
 
 
                    </div><div class="search-results">
     <div class="has-results">
-        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
         <ul class="search-results-list"></ul>
     </div>
     <div class="no-results">
@@ -127,6 +182,15 @@ take a look on <a href="https://github.com/netgrif/ncli">NCLI (Netgrif Command L
            </div>
        </div>
 
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 0;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'getting-started';
@@ -134,10 +198,23 @@ take a look on <a href="https://github.com/netgrif/ncli">NCLI (Netgrif Command L
             var MAX_SEARCH_RESULTS = 15;
        </script>
 
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
        <script src="./js/libs/custom-elements.min.js"></script>
        <script src="./js/libs/lit-html.js"></script>
-       
-       <script type="module" src="./js/menu-wc.js" defer></script>
+
+       <script src="./js/menu-wc.js" defer></script>
        <script nomodule src="./js/menu-wc_es5.js" defer></script>
 
        <script src="./js/libs/bootstrap-native.js"></script>

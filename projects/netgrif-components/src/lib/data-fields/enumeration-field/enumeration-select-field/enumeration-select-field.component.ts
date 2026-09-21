@@ -1,5 +1,9 @@
-import {Component} from '@angular/core';
-import {AbstractEnumerationSelectFieldComponent} from '@netgrif/components-core';
+import {Component, Inject, Optional} from '@angular/core';
+import {
+    AbstractEnumerationSelectFieldComponent,
+    DATA_FIELD_PORTAL_DATA,
+    DataFieldPortalData, EnumerationField
+} from '@netgrif/components-core';
 
 @Component({
     selector: 'nc-enumeration-select-field',
@@ -7,7 +11,7 @@ import {AbstractEnumerationSelectFieldComponent} from '@netgrif/components-core'
     styleUrls: ['./enumeration-select-field.component.scss']
 })
 export class EnumerationSelectFieldComponent extends AbstractEnumerationSelectFieldComponent {
-    constructor() {
-        super();
+    constructor(@Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<EnumerationField>) {
+        super(dataFieldPortalData);
     }
 }

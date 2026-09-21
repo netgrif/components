@@ -1,5 +1,6 @@
 import {Type} from '@angular/core';
 import {Observable, ReplaySubject} from 'rxjs';
+import {Filter} from "../filter/models/filter";
 
 /**
  * Stores information about content of one opened tab in tab view.
@@ -107,6 +108,8 @@ export interface InjectedTabData {
      * stream emits when the tab is closed by any means except for the destruction of the parent component
      */
     tabClosed$: Observable<void>;
+
+    loadFilter?: Filter;
 }
 
 

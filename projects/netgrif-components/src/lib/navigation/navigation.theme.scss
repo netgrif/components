@@ -20,11 +20,12 @@
     }
 
     .rail-color {
-        background: mat.get-color-from-palette($primary, 50);
+        background: #F8FAFC;
     }
 
     .rail-selected-color {
         background-color: mat.get-color-from-palette($primary, 100);
+        color: mat.get-color-from-palette($primary) !important;
     }
 
     .tree-node.active {
@@ -35,7 +36,34 @@
         color: mat.get-color-from-palette($primary) !important;
     }
 
-    .logo, .toolbar {
-        background: mat.get-color-from-palette($primary, 50);
+    .active-tree-node {
+        color: mat.get-color-from-palette($primary) !important;
     }
+
+    .tree-node {
+        mat-icon.tree-node-icon {
+            color: mat.get-color-from-palette($primary) !important;
+        }
+    }
+
+    .tree-node:hover {
+        background-color: mat.get-color-from-palette($primary, 50);
+        color: mat.get-color-from-palette($primary) !important;
+    }
+
+    .menu-button:hover {
+        background-color: mat.get-color-from-palette($primary, 100);
+        color: mat.get-color-from-palette($primary) !important;
+    }
+
+    .quick-panel-menu {
+        .mat-mdc-menu-item-text {
+            flex-direction: row;
+            box-sizing: border-box;
+            display: flex;
+            place-content: center flex-start;
+            align-items: center;
+        }
+    }
+
 }

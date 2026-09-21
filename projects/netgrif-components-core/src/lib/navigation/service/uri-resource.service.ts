@@ -20,21 +20,53 @@ export class UriResourceService extends AbstractResourceService {
 
     public getRoot(): Observable<UriNodeResource> {
         return this._resourceProvider.get$('uri/root', this.SERVER_URL).pipe(
-            map(r => this.changeType(r, 'uriNode')));
+            map(r => this.changeType(r, 'uriNode')),
+            map((r: UriNodeResource) => {
+                if (r.path) {
+                    r.uriPath = r.path;
+                    r.id = r.path;
+                }
+                return r;
+            }));
     }
 
     public getByLevel(level: number): Observable<Array<UriNodeResource>> {
         return this._resourceProvider.get$('uri/level/' + level, this.SERVER_URL).pipe(
-            map(r => this.changeType(r, 'uriNodes')));
+            map(r => this.changeType(r, 'uriNodes')),
+            map((ar: Array<UriNodeResource>) => {
+                return ar.map(r => {
+                    if (r.path) {
+                        r.uriPath = r.path;
+                        r.id = r.path;
+                    }
+                    return r;
+                })
+            }));
     }
 
     public getNodesByParent(parentId: string): Observable<Array<UriNodeResource>> {
         return this._resourceProvider.get$('uri/parent/' + parentId, this.SERVER_URL).pipe(
-            map(r => this.changeType(r, 'uriNodes')));
+            map(r => this.changeType(r, 'uriNodes')),
+            map((ar: Array<UriNodeResource>) => {
+                return ar.map(r => {
+                    if (r.path) {
+                        r.uriPath = r.path;
+                        r.id = r.path;
+                    }
+                    return r;
+                })
+            }));
     }
 
     public getNodeByUri(uriPath: string): Observable<UriNodeResource> {
         return this._resourceProvider.get$('uri/' + btoa(uriPath), this.SERVER_URL).pipe(
-            map(r => this.changeType(r, 'uriNode')));
+            map(r => this.changeType(r, 'uriNode')),
+            map((r: UriNodeResource) => {
+                if (r.path) {
+                    r.uriPath = r.path;
+                    r.id = r.path;
+                }
+                return r;
+            }));
     }
 }

@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {FormBuilder} from '@angular/forms';
-import {AbstractLoginFormComponent, UserService} from '@netgrif/components-core';
+import {AbstractLoginFormComponent, ConfigurationService, UserService} from '@netgrif/components-core';
 
 @Component({
     selector: 'nc-login-form',
@@ -8,7 +8,7 @@ import {AbstractLoginFormComponent, UserService} from '@netgrif/components-core'
     styleUrls: ['./login-form.component.scss']
 })
 export class LoginFormComponent extends AbstractLoginFormComponent {
-    constructor(formBuilder: FormBuilder, protected _userService: UserService) {
-        super(formBuilder, _userService);
+    constructor(formBuilder: FormBuilder, protected _userService: UserService, protected _config: ConfigurationService) {
+        super(formBuilder, _userService, _config);
     }
 }

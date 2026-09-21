@@ -32,7 +32,7 @@ import {ChangedFieldsMap} from '../../../event/services/interfaces/changed-field
 export class TreeTaskContentService implements OnDestroy {
 
     private _processingTaskChange: LoadingEmitter;
-    private _displayedTaskText$: Subject<string>;
+    private _displayedTaskText$: ReplaySubject<string>;
     /**
      * a unique identifier consisting of caseId and transition ID
      *
@@ -256,8 +256,8 @@ export class TreeTaskContentService implements OnDestroy {
      */
     protected resolveTaskBlockState(): void {
         const taskShouldBeBlocked = !this._taskContentService.task
-                                    || this._taskContentService.task.user === undefined
-                                    || !this._userComparator.compareUsers(this._taskContentService.task.user);
+                                    || this._taskContentService.task.assignee === undefined
+                                    || !this._userComparator.compareUsers(this._taskContentService.task.assignee?.id);
         this._taskContentService.blockFields(taskShouldBeBlocked);
     }
 
@@ -265,7 +265,7 @@ export class TreeTaskContentService implements OnDestroy {
      * Sets the noData text in the task content to it's default value
      */
     protected setStandardTaskText(): void {
-        this._displayedTaskText$.next();
+        this._displayedTaskText$.next(undefined);
     }
 
     /**

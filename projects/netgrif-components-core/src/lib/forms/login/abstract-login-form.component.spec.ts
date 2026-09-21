@@ -1,5 +1,5 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
-import {FlexLayoutModule} from '@angular/flex-layout';
+import {FlexLayoutModule} from '@ngbracket/ngx-layout';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {Component, NO_ERRORS_SCHEMA} from '@angular/core';
@@ -70,7 +70,7 @@ describe('AbstractLoginFormComponent', () => {
     template: ''
 })
 class TestLoginFormComponent extends AbstractLoginFormComponent {
-    constructor(formBuilder: FormBuilder, protected _userService: UserService) {
-        super(formBuilder, _userService);
+    constructor(formBuilder: FormBuilder, protected _userService: UserService, protected _configService: ConfigurationService) {
+        super(formBuilder, _userService, _configService);
     }
 }

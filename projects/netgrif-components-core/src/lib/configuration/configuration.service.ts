@@ -1,13 +1,38 @@
 import {NetgrifApplicationEngine, Services, View, Views} from '../../commons/schema';
-import {Observable, of} from 'rxjs';
+import {BehaviorSubject, Observable, of} from 'rxjs';
+import {ApplicationConfiguration} from './application-configuration';
+import {ConfigurationResourceService} from '../resources/engine-endpoint/configuration-resource.service';
+import {catchError, take, tap, map, distinctUntilChanged} from 'rxjs/operators';
+import {HttpErrorResponse} from '@angular/common/http';
+
 
 export abstract class ConfigurationService {
 
-    private readonly _dataFieldConfiguration: Services['dataFields'];
+    private _dataFieldConfiguration: Services['dataFields'];
 
-    protected constructor(protected configuration: NetgrifApplicationEngine) {
+    private readonly APPLICATION_CONFIG: ApplicationConfiguration;
+
+    private readonly _config$ = new BehaviorSubject<NetgrifApplicationEngine | null>(null);
+    public readonly config$: Observable<NetgrifApplicationEngine | null> = this._config$.asObservable();
+    public readonly loaded$: Observable<boolean> = this.config$.pipe(map(cfg => !!cfg), distinctUntilChanged());
+
+    protected constructor(protected configuration: NetgrifApplicationEngine,
+                          protected _configurationResource: ConfigurationResourceService,
+                          protected _applicationConfiguration: ApplicationConfiguration) {
+        this.APPLICATION_CONFIG = _applicationConfiguration;
+        if (!this._applicationConfiguration?.resolve_configuration) {
+            this.initialize();
+        }
+    }
+
+    public get snapshot(): NetgrifApplicationEngine | null {
+        return this.configuration ? (this.createConfigurationCopy() as NetgrifApplicationEngine) : null;
+    }
+
+    private initialize(): void {
         this.resolveEndpointURLs();
         this._dataFieldConfiguration = this.getConfigurationSubtree(['services', 'dataFields']);
+        this._config$.next(this.createConfigurationCopy() as NetgrifApplicationEngine);
     }
 
     public getAsync(): Observable<NetgrifApplicationEngine> {
@@ -15,6 +40,8 @@ export abstract class ConfigurationService {
     }
 
     /**
+     * Calls to this method should be avoided as creating a deep copy of the configuration has a large overhead
+     *
      * @returns a deep copy of the entire configuration object
      */
     public get(): NetgrifApplicationEngine {
@@ -52,7 +79,7 @@ export abstract class ConfigurationService {
         map = this.getChildren(views, map, '');
         if (map.get(url) === undefined) {
             for (const [key, value] of map) {
-                if (key.includes('/**') && url.includes(key.split('/**')[0]))
+                if (key?.includes('/**') && url?.includes(key.split('/**')[0]))
                     return value;
             }
         }
@@ -97,6 +124,10 @@ export abstract class ConfigurationService {
         });
 
         return result;
+    }
+
+    public getConfigurationSubtreeByPath(path: string): any | undefined {
+        return this.getConfigurationSubtree(path.split('.'));
     }
 
     /**
@@ -184,6 +215,32 @@ export abstract class ConfigurationService {
         return subtree !== undefined ? this.deepCopy(subtree) as Services : undefined;
     }
 
+    /**
+     * @returns the value stored in the [onLogoutRedirect]{@link Services#auth.onLogoutRedirect} attribute if defined.
+     * If not and the deprecated attribute [logoutRedirect]{@link Services#auth.logoutRedirect} is defined then its value is returned.
+     * Otherwise, `undefined` is returned.
+     */
+    public getOnLogoutPath(): string | undefined {
+        return this.configuration?.services?.auth?.onLogoutRedirect ?? this.configuration?.services?.auth?.logoutRedirect;
+    }
+
+    /**
+     * @returns the value stored in the [toLoginRedirect]{@link Services#auth.toLoginRedirect} attribute if defined.
+     * If not and the deprecated attribute [loginRedirect]{@link Services#auth.loginRedirect} is defined then its value is returned.
+     * Otherwise, `undefined` is returned.
+     */
+    public getToLoginPath(): string | undefined {
+        return this.configuration?.services?.auth?.toLoginRedirect ?? this.configuration?.services?.auth?.loginRedirect;
+    }
+
+    /**
+     * @returns the value stored in the [onLoginRedirect]{@link Services#auth.onLoginRedirect} attribute if defined.
+     * Otherwise, `undefined` is returned.
+     */
+    public getOnLoginPath(): string | undefined {
+        return this.configuration?.services?.auth?.onLoginRedirect;
+    }
+
     private getView(searched: string, view: View): Array<string> {
         const paths = [];
         if (!!view.layout && view.layout.name === searched) {
@@ -195,6 +252,58 @@ export abstract class ConfigurationService {
             });
         }
         return paths;
+    }
+
+    /**
+     * @param endpointKey the attribute name of the endpoint address in `nae.json`
+     * @returns the endpoint address or `undefined` if such endpoint is not defined in `nae.json`
+     */
+    public resolveProvidersEndpoint(endpointKey: string): string {
+        const config = this.configuration;
+        if (!config
+            || !config.providers
+            || !config.providers.auth
+            || !config.providers.auth.address
+            || !config.providers.auth.endpoints
+            || !config.providers.auth.endpoints[endpointKey]) {
+            throw new Error('Authentication provider address is not set!');
+        }
+        return config.providers.auth.address + config.providers.auth.endpoints[endpointKey];
+    }
+
+    /**
+     * Loads and initializes application configuration from the backend.
+     * If configuration resolution is disabled in APPLICATION_CONFIG, returns null Observable.
+     * Otherwise fetches public configuration via ConfigurationResourceService.
+     *
+     * @returns Observable<any> that emits null if resolution is disabled, otherwise emits the loaded configuration
+     * @fires initialize() Upon successful configuration load to setup endpoints and data field configurations
+     * @see ApplicationConfiguration
+     * @see NetgrifApplicationEngine
+     */
+    public loadConfiguration(): Observable<void> {
+        if (!this.APPLICATION_CONFIG?.resolve_configuration) {
+            return of(void 0);
+        }
+
+        return this._configurationResource.getPublicApplicationConfiguration(this.APPLICATION_CONFIG).pipe(
+            catchError((err: HttpErrorResponse) => {
+                if (err.status === 404) {
+                    return of(null);
+                }
+                console.log(err.message);
+                return of(null);
+            }),
+            tap((data: ApplicationConfiguration | null) => {
+                if (!data?.properties) {
+                    return;
+                }
+                this.configuration = data.properties as NetgrifApplicationEngine;
+                this.initialize();
+            }),
+            take(1),
+            map(() => void 0)
+        );
     }
 
     private createConfigurationCopy(): any {

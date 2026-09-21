@@ -11,6 +11,7 @@ import {MockAuthenticationMethodService} from '../../../../utility/tests/mocks/m
 import {AuthenticationService} from '../../authentication/authentication.service';
 import {MockAuthenticationService} from '../../../../utility/tests/mocks/mock-authentication.service';
 
+
 describe('BasicAuthenticationService', () => {
     let service: BasicAuthenticationService;
 
@@ -67,13 +68,6 @@ describe('BasicAuthenticationService', () => {
                 req.flush({success: 'success'});
             }
         )();
-    });
-
-    it('should decode non-latin characters', (done) => {
-        const encoded = service.encodeBase64('ššščččôôôžžťťť');
-        const decoded = service.decodeBase64(encoded);
-        expect(decoded).toEqual('ššščččôôôžžťťť');
-        done();
     });
 
     afterEach(inject([HttpTestingController], (mock: HttpTestingController) => {

@@ -9,13 +9,64 @@
 
         <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
 	   <link rel="stylesheet" href="../styles/style.css">
-        <link rel="stylesheet" href="../styles/dark.css" media="(prefers-color-scheme: dark)">
+        <link rel="stylesheet" href="../styles/dark.css">
     </head>
     <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
 
-        <div class="navbar navbar-default navbar-fixed-top visible-xs">
-            <a href="../" class="navbar-brand">Netgrif Components Core library Documentation</a>
-            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">Netgrif Components Core library Documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
         </div>
 
         <div class="xs-menu menu" id="mobile-menu">
@@ -24,7 +75,7 @@
 
         <div class="container-fluid main">
            <div class="row main">
-               <div class="hidden-xs menu">
+               <div class="d-none d-md-block menu">
                    <compodoc-menu mode="normal"></compodoc-menu>
                </div>
                <!-- START CONTENT -->
@@ -37,22 +88,29 @@
 
 
 
+
 <ol class="breadcrumb">
-  <li>Injectables</li>
-  <li >CaseViewService</li>
+  <li class="breadcrumb-item">Injectables</li>
+  <li class="breadcrumb-item" >CaseViewService</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
-        <li class="active">
-            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        <li class="nav-item">
+            <a href="#info" 
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
         </li>
-        <li >
-            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        <li class="nav-item">
+            <a href="#source" 
+                class="nav-link"
+                
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
         </li>
 </ul>
 
 <div class="tab-content">
-    <div class="tab-pane fade active in" id="c-info">
+    <div class="tab-pane fade active in" id="info">
         <p class="comment">
             <h3>File</h3>
         </p>
@@ -66,11 +124,11 @@
                 <h3>Extends</h3>
             </p>
             <p class="comment">
-                        <code><a href="../components/AbstractSortableViewComponent.html" target="_self" >AbstractSortableViewComponent</a></code>
+                            <code><a href="../components/AbstractSortableViewComponent.html" target="_self" >AbstractSortableViewComponent</a></code>
             </p>
 
 
-            <section>
+            <section data-compodoc="block-index">
     <h3 id="index">Index</h3>
     <table class="table table-sm table-bordered index-table">
         <tbody>
@@ -215,18 +273,18 @@
     </table>
 </section>
 
-            <section>
+            <section data-compodoc="block-constructor">
     <h3 id="constructor">Constructor</h3>
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(_allowedNetsService: <a href="../injectables/AllowedNetsService.html" target="_self">AllowedNetsService</a>, _sideMenuService: <a href="../injectables/SideMenuService.html" target="_self">SideMenuService</a>, _caseResourceService: <a href="../injectables/CaseResourceService.html" target="_self">CaseResourceService</a>, _log: <a href="../injectables/LoggerService.html" target="_self">LoggerService</a>, _snackBarService: <a href="../injectables/SnackBarService.html" target="_self">SnackBarService</a>, _searchService: <a href="../injectables/SearchService.html" target="_self">SearchService</a>, _translate: TranslateService, _user: <a href="../injectables/UserService.html" target="_self">UserService</a>, _processService: <a href="../injectables/ProcessService.html" target="_self">ProcessService</a>, resolver: <a href="../injectables/SearchIndexResolverService.html" target="_self">SearchIndexResolverService</a>, _newCaseComponent: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>, newCaseConfig: <a href="../interfaces/NewCaseConfiguration.html" target="_self">NewCaseConfiguration</a>, _permissionService: <a href="../injectables/PermissionService.html" target="_self">PermissionService</a>)</code>
+<code>constructor(_allowedNetsService: <a href="../injectables/AllowedNetsService.html" target="_self">AllowedNetsService</a>, _dialog: MatDialog, _caseResourceService: <a href="../injectables/CaseResourceService.html" target="_self">CaseResourceService</a>, _log: <a href="../injectables/LoggerService.html" target="_self">LoggerService</a>, _snackBarService: <a href="../injectables/SnackBarService.html" target="_self">SnackBarService</a>, _searchService: <a href="../injectables/SearchService.html" target="_self">SearchService</a>, _translate: TranslateService, _user: <a href="../injectables/UserService.html" target="_self">UserService</a>, _processService: <a href="../injectables/ProcessService.html" target="_self">ProcessService</a>, resolver: <a href="../injectables/SearchIndexResolverService.html" target="_self">SearchIndexResolverService</a>, _newCaseComponent: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>, newCaseConfig: <a href="../interfaces/NewCaseConfiguration.html" target="_self">NewCaseConfiguration</a>, _permissionService: <a href="../injectables/PermissionService.html" target="_self">PermissionService</a>)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="50" class="link-to-prism">projects/netgrif-components-core/src/lib/view/case-view/service/case-view-service.ts:50</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="49" class="link-to-prism">projects/netgrif-components-core/src/lib/view/case-view/service/case-view-service.ts:49</a></div>
                             </td>
                         </tr>
 
@@ -256,10 +314,10 @@
                                                     
                                                 </tr>
                                                 <tr>
-                                                        <td>_sideMenuService</td>
+                                                        <td>_dialog</td>
                                                   
                                                         <td>
-                                                                        <code><a href="../injectables/SideMenuService.html" target="_self" >SideMenuService</a></code>
+                                                                    <code>MatDialog</code>
                                                         </td>
                                                   
                                                     <td>
@@ -408,7 +466,7 @@
         </table>
 </section>
 
-            <section>
+            <section data-compodoc="block-methods">
     
     <h3 id="methods">
         Methods
@@ -419,7 +477,7 @@
                 <td class="col-md-4">
                     <a name="addPageParams"></a>
                     <span class="name">
-                        <span class="modifier">Protected</span>
+                            <span class="modifier">Protected</span>
                         <span ><b>addPageParams</b></span>
                         <a href="#addPageParams"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -427,70 +485,69 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>addPageParams(params: <a href="../miscellaneouss/Params.html" target="_self">HttpParams</a>, pagination: <a href="../interfaces/Pagination.html" target="_self">Pagination</a>)</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="273"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/view/case-view/service/case-view-service.ts:273</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="283"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/view/case-view/service/case-view-service.ts:283</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>params</td>
-                                    <td>
-                                                <code><a href="../miscellaneous/typealiases.html#Params" target="_self" >HttpParams</a></code>
-                                    </td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>params</td>
+                                            <td>
+                                                            <code><a href="../miscellaneous/typealiases.html#Params" target="_self" >HttpParams</a></code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                </tr>
-                                <tr>
-                                    <td>pagination</td>
-                                    <td>
-                                                <code><a href="../interfaces/Pagination.html" target="_self" >Pagination</a></code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="../miscellaneous/typealiases.html#Params" target="_self" >HttpParams</a></code>
+                                        </tr>
+                                        <tr>
+                                                <td>pagination</td>
+                                            <td>
+                                                            <code><a href="../interfaces/Pagination.html" target="_self" >Pagination</a></code>
+                                            </td>
 
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../miscellaneous/typealiases.html#Params" target="_self" >HttpParams</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -501,7 +558,7 @@
                 <td class="col-md-4">
                     <a name="createDefaultNewCase"></a>
                     <span class="name">
-                        <span class="modifier">Public</span>
+                            <span class="modifier">Public</span>
                         <span ><b>createDefaultNewCase</b></span>
                         <a href="#createDefaultNewCase"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -509,27 +566,64 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>createDefaultNewCase()</code>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>createDefaultNewCase(newCaseCreationConfiguration: <a href="../interfaces/NewCaseCreationConfigurationData.html" target="_self">NewCaseCreationConfigurationData</a>)</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="231"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/view/case-view/service/case-view-service.ts:231</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="236"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/view/case-view/service/case-view-service.ts:236</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
 
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="../interfaces/Case.html" target="_self" >Observable&lt;Case&gt;</a></code>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Default value</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>newCaseCreationConfiguration</td>
+                                            <td>
+                                                            <code><a href="../interfaces/NewCaseCreationConfigurationData.html" target="_self" >NewCaseCreationConfigurationData</a></code>
+                                            </td>
 
-                    </div>
+                                            <td>
+                                                    No
+                                            </td>
+
+                                            <td>
+                                                    <code>{
+        enableCaseTitle: true,
+        isCaseTitleRequired: true
+    }</code>
+                                            </td>
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../interfaces/Case.html" target="_self" >Observable&lt;Case&gt;</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -540,7 +634,7 @@
                 <td class="col-md-4">
                     <a name="createNewCase"></a>
                     <span class="name">
-                        <span class="modifier">Public</span>
+                            <span class="modifier">Public</span>
                         <span ><b>createNewCase</b></span>
                         <a href="#createNewCase"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -548,65 +642,64 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>createNewCase(newCaseCreationConfiguration: <a href="../interfaces/NewCaseCreationConfigurationData.html" target="_self">NewCaseCreationConfigurationData</a>)</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="212"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/view/case-view/service/case-view-service.ts:212</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="211"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/view/case-view/service/case-view-service.ts:211</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                    <td>Default value</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>newCaseCreationConfiguration</td>
-                                    <td>
-                                                <code><a href="../interfaces/NewCaseCreationConfigurationData.html" target="_self" >NewCaseCreationConfigurationData</a></code>
-                                    </td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Default value</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>newCaseCreationConfiguration</td>
+                                            <td>
+                                                            <code><a href="../interfaces/NewCaseCreationConfigurationData.html" target="_self" >NewCaseCreationConfigurationData</a></code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
-                                    <td>
-                                        <code>{
+                                            <td>
+                                                    <code>{
         enableCaseTitle: true,
         isCaseTitleRequired: true
     }</code>
-                                    </td>
+                                            </td>
 
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="../interfaces/Case.html" target="_self" >Observable&lt;Case&gt;</a></code>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../interfaces/Case.html" target="_self" >Observable&lt;Case&gt;</a></code>
 
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -617,7 +710,7 @@
                 <td class="col-md-4">
                     <a name="getAllowedNetsCount"></a>
                     <span class="name">
-                        <span class="modifier">Public</span>
+                            <span class="modifier">Public</span>
                         <span ><b>getAllowedNetsCount</b></span>
                         <a href="#getAllowedNetsCount"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -625,35 +718,33 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>getAllowedNetsCount()</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="269"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/view/case-view/service/case-view-service.ts:269</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="279"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/view/case-view/service/case-view-service.ts:279</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Returns number of allowed nets of case view</p>
+                        <div class="io-description"><p>Returns number of allowed nets of case view</p>
 </div>
 
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
 
-                    </div>
-                    <div class="io-description">
-                        <p>length of allowedNets array if it is defined, 0 if it is undefined</p>
+                        </div>
+                            <div class="io-description">
+                                <p>length of allowedNets array if it is defined, 0 if it is undefined</p>
 
-                    </div>
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -664,7 +755,7 @@
                 <td class="col-md-4">
                     <a name="getDefaultSortParam"></a>
                     <span class="name">
-                        <span class="modifier">Protected</span>
+                            <span class="modifier">Protected</span>
                         <span ><b>getDefaultSortParam</b></span>
                         <a href="#getDefaultSortParam"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -672,27 +763,27 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>getDefaultSortParam()</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="279"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/view/case-view/service/case-view-service.ts:279</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="289"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/view/case-view/service/case-view-service.ts:289</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
 
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
 
-                    </div>
+                        </div>
                 </td>
             </tr>
         </tbody>
@@ -703,7 +794,7 @@
                 <td class="col-md-4">
                     <a name="getMetaFieldSortId"></a>
                     <span class="name">
-                        <span class="modifier">Protected</span>
+                            <span class="modifier">Protected</span>
                         <span ><b>getMetaFieldSortId</b></span>
                         <a href="#getMetaFieldSortId"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -711,27 +802,27 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>getMetaFieldSortId()</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="283"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/view/case-view/service/case-view-service.ts:283</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="293"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/view/case-view/service/case-view-service.ts:293</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
 
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
 
-                    </div>
+                        </div>
                 </td>
             </tr>
         </tbody>
@@ -742,7 +833,7 @@
                 <td class="col-md-4">
                     <a name="getNewCaseAllowedNets"></a>
                     <span class="name">
-                        <span class="modifier">Public</span>
+                            <span class="modifier">Public</span>
                         <span ><b>getNewCaseAllowedNets</b></span>
                         <a href="#getNewCaseAllowedNets"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -750,27 +841,61 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>getNewCaseAllowedNets()</code>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getNewCaseAllowedNets(blockNets: string[])</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="249"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/view/case-view/service/case-view-service.ts:249</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="257"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/view/case-view/service/case-view-service.ts:257</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
 
-                    <div class="io-description">
-                        <b>Returns : </b>    <code>Observable&lt;Array&lt;PetriNetReferenceWithPermissions&gt;&gt;</code>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Default value</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>blockNets</td>
+                                            <td>
+                                                        <code>string[]</code>
+                                            </td>
 
-                    </div>
+                                            <td>
+                                                    No
+                                            </td>
+
+                                            <td>
+                                                    <code>[]</code>
+                                            </td>
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Observable&lt;Array&lt;PetriNetReferenceWithPermissions&gt;&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -781,7 +906,7 @@
                 <td class="col-md-4">
                     <a name="hasAuthority"></a>
                     <span class="name">
-                        <span class="modifier">Public</span>
+                            <span class="modifier">Public</span>
                         <span ><b>hasAuthority</b></span>
                         <a href="#hasAuthority"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -789,58 +914,57 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>hasAuthority(authority: Array<string> | string)</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="312"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/view/case-view/service/case-view-service.ts:312</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="322"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/view/case-view/service/case-view-service.ts:322</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>authority</td>
-                                    <td>
-                                            <code>Array&lt;string&gt; | string</code>
-                                    </td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>authority</td>
+                                            <td>
+                                                        <code>Array&lt;string&gt; | string</code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
 
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -851,7 +975,7 @@
                 <td class="col-md-4">
                     <a name="loadPage"></a>
                     <span class="name">
-                        <span class="modifier">Public</span>
+                            <span class="modifier">Public</span>
                         <span ><b>loadPage</b></span>
                         <a href="#loadPage"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -859,58 +983,57 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>loadPage(requestContext: <a href="../interfaces/Page.html" target="_self">PageLoadRequestContext</a>)</code>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>loadPage(requestContext: <a href="../classes/PageLoadRequestContext.html" target="_self">PageLoadRequestContext</a>)</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="138"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/view/case-view/service/case-view-service.ts:138</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="137"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/view/case-view/service/case-view-service.ts:137</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>requestContext</td>
-                                    <td>
-                                                <code><a href="../interfaces/Page.html" target="_self" >PageLoadRequestContext</a></code>
-                                    </td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>requestContext</td>
+                                            <td>
+                                                            <code><a href="../classes/PageLoadRequestContext.html" target="_self" >PageLoadRequestContext</a></code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>    <code>Observable&lt;CasePageLoadRequestResult&gt;</code>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Observable&lt;CasePageLoadRequestResult&gt;</code>
 
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -921,7 +1044,7 @@
                 <td class="col-md-4">
                     <a name="nextPage"></a>
                     <span class="name">
-                        <span class="modifier">Public</span>
+                            <span class="modifier">Public</span>
                         <span ><b>nextPage</b></span>
                         <a href="#nextPage"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -929,82 +1052,81 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>nextPage(renderedRange: ListRange, totalLoaded: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, requestContext?: <a href="../interfaces/Page.html" target="_self">PageLoadRequestContext</a>)</code>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>nextPage(renderedRange: ListRange, totalLoaded: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, requestContext?: <a href="../classes/PageLoadRequestContext.html" target="_self">PageLoadRequestContext</a>)</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="180"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/view/case-view/service/case-view-service.ts:180</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="179"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/view/case-view/service/case-view-service.ts:179</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>renderedRange</td>
-                                    <td>
-                                            <code>ListRange</code>
-                                    </td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>renderedRange</td>
+                                            <td>
+                                                        <code>ListRange</code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                </tr>
-                                <tr>
-                                    <td>totalLoaded</td>
-                                    <td>
-                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                </tr>
-                                <tr>
-                                    <td>requestContext</td>
-                                    <td>
-                                                <code><a href="../interfaces/Page.html" target="_self" >PageLoadRequestContext</a></code>
-                                    </td>
+                                        </tr>
+                                        <tr>
+                                                <td>totalLoaded</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
 
-                                    <td>
-                                        Yes
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+                                        </tr>
+                                        <tr>
+                                                <td>requestContext</td>
+                                            <td>
+                                                            <code><a href="../classes/PageLoadRequestContext.html" target="_self" >PageLoadRequestContext</a></code>
+                                            </td>
 
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
+                                            <td>
+                                                    Yes
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -1015,7 +1137,7 @@
                 <td class="col-md-4">
                     <a name="nextPagePagination"></a>
                     <span class="name">
-                        <span class="modifier">Public</span>
+                            <span class="modifier">Public</span>
                         <span ><b>nextPagePagination</b></span>
                         <a href="#nextPagePagination"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -1023,82 +1145,81 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>nextPagePagination(length: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, pageIndex: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, requestContext?: <a href="../interfaces/Page.html" target="_self">PageLoadRequestContext</a>)</code>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>nextPagePagination(length: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, pageIndex: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, requestContext?: <a href="../classes/PageLoadRequestContext.html" target="_self">PageLoadRequestContext</a>)</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="195"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/view/case-view/service/case-view-service.ts:195</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="194"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/view/case-view/service/case-view-service.ts:194</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>length</td>
-                                    <td>
-                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
-                                    </td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>length</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                </tr>
-                                <tr>
-                                    <td>pageIndex</td>
-                                    <td>
-                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                </tr>
-                                <tr>
-                                    <td>requestContext</td>
-                                    <td>
-                                                <code><a href="../interfaces/Page.html" target="_self" >PageLoadRequestContext</a></code>
-                                    </td>
+                                        </tr>
+                                        <tr>
+                                                <td>pageIndex</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
 
-                                    <td>
-                                        Yes
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+                                        </tr>
+                                        <tr>
+                                                <td>requestContext</td>
+                                            <td>
+                                                            <code><a href="../classes/PageLoadRequestContext.html" target="_self" >PageLoadRequestContext</a></code>
+                                            </td>
 
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
+                                            <td>
+                                                    Yes
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -1121,21 +1242,21 @@
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="112"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/view/case-view/service/case-view-service.ts:112</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="111"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/view/case-view/service/case-view-service.ts:111</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
 
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
-                    </div>
+                        </div>
                 </td>
             </tr>
         </tbody>
@@ -1146,7 +1267,7 @@
                 <td class="col-md-4">
                     <a name="reload"></a>
                     <span class="name">
-                        <span class="modifier">Public</span>
+                            <span class="modifier">Public</span>
                         <span ><b>reload</b></span>
                         <a href="#reload"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -1154,27 +1275,27 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>reload()</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="296"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/view/case-view/service/case-view-service.ts:296</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="306"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/view/case-view/service/case-view-service.ts:306</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
 
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
-                    </div>
+                        </div>
                 </td>
             </tr>
         </tbody>
@@ -1185,7 +1306,7 @@
                 <td class="col-md-4">
                     <a name="viewEnabled"></a>
                     <span class="name">
-                        <span class="modifier">Public</span>
+                            <span class="modifier">Public</span>
                         <span ><b>viewEnabled</b></span>
                         <a href="#viewEnabled"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -1193,72 +1314,71 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>viewEnabled(aCase: <a href="../interfaces/Case.html" target="_self">Case</a>)</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="321"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/view/case-view/service/case-view-service.ts:321</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="331"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/view/case-view/service/case-view-service.ts:331</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Determines whether the current user has the <a href="../miscellaneous/enumerations.html#PermissionType">VIEW</a> permission on the current case</p>
+                        <div class="io-description"><p>Determines whether the current user has the <a href="../miscellaneous/enumerations.html#PermissionType">VIEW</a> permission on the current case</p>
 </div>
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                    <td>Description</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>aCase</td>
-                                    <td>
-                                                <code><a href="../interfaces/Case.html" target="_self" >Case</a></code>
-                                    </td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>aCase</td>
+                                            <td>
+                                                            <code><a href="../interfaces/Case.html" target="_self" >Case</a></code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                    <td>
-                                        <p>the tested case</p>
+                                            <td>
+                                                    <p>the tested case</p>
 
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
 
-                    </div>
-                    <div class="io-description">
-                        <p><code>true</code> if the current user has the <code>VIEW</code> permission on the tested case, <code>false</code> otherwise.</p>
+                        </div>
+                            <div class="io-description">
+                                <p><code>true</code> if the current user has the <code>VIEW</code> permission on the tested case, <code>false</code> otherwise.</p>
 
-                    </div>
+                            </div>
                 </td>
             </tr>
         </tbody>
     </table>
 </section>
-            <section>
+            <section data-compodoc="block-properties">
     
     <h3 id="inputs">
         Properties
@@ -1283,7 +1403,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="46" class="link-to-prism">projects/netgrif-components-core/src/lib/view/case-view/service/case-view-service.ts:46</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="45" class="link-to-prism">projects/netgrif-components-core/src/lib/view/case-view/service/case-view-service.ts:45</a></div>
                         </td>
                     </tr>
 
@@ -1310,7 +1430,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="48" class="link-to-prism">projects/netgrif-components-core/src/lib/view/case-view/service/case-view-service.ts:48</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="47" class="link-to-prism">projects/netgrif-components-core/src/lib/view/case-view/service/case-view-service.ts:47</a></div>
                         </td>
                     </tr>
 
@@ -1337,7 +1457,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="45" class="link-to-prism">projects/netgrif-components-core/src/lib/view/case-view/service/case-view-service.ts:45</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="44" class="link-to-prism">projects/netgrif-components-core/src/lib/view/case-view/service/case-view-service.ts:44</a></div>
                         </td>
                     </tr>
 
@@ -1364,7 +1484,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="50" class="link-to-prism">projects/netgrif-components-core/src/lib/view/case-view/service/case-view-service.ts:50</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="49" class="link-to-prism">projects/netgrif-components-core/src/lib/view/case-view/service/case-view-service.ts:49</a></div>
                         </td>
                     </tr>
 
@@ -1391,7 +1511,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="47" class="link-to-prism">projects/netgrif-components-core/src/lib/view/case-view/service/case-view-service.ts:47</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="46" class="link-to-prism">projects/netgrif-components-core/src/lib/view/case-view/service/case-view-service.ts:46</a></div>
                         </td>
                     </tr>
 
@@ -1418,7 +1538,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="49" class="link-to-prism">projects/netgrif-components-core/src/lib/view/case-view/service/case-view-service.ts:49</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="48" class="link-to-prism">projects/netgrif-components-core/src/lib/view/case-view/service/case-view-service.ts:48</a></div>
                         </td>
                     </tr>
 
@@ -1452,7 +1572,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="41" class="link-to-prism">projects/netgrif-components-core/src/lib/view/case-view/service/case-view-service.ts:41</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="40" class="link-to-prism">projects/netgrif-components-core/src/lib/view/case-view/service/case-view-service.ts:40</a></div>
                         </td>
                     </tr>
 
@@ -1461,7 +1581,7 @@
     </table>
 </section>
 
-            <section>
+            <section data-compodoc="block-accessors">
     <h3 id="accessors">
         Accessors
     </h3>
@@ -1481,7 +1601,7 @@
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="118" class="link-to-prism">projects/netgrif-components-core/src/lib/view/case-view/service/case-view-service.ts:118</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="117" class="link-to-prism">projects/netgrif-components-core/src/lib/view/case-view/service/case-view-service.ts:117</a></div>
                                 </td>
                             </tr>
 
@@ -1503,7 +1623,7 @@
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="122" class="link-to-prism">projects/netgrif-components-core/src/lib/view/case-view/service/case-view-service.ts:122</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="121" class="link-to-prism">projects/netgrif-components-core/src/lib/view/case-view/service/case-view-service.ts:121</a></div>
                                 </td>
                             </tr>
 
@@ -1525,7 +1645,7 @@
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="126" class="link-to-prism">projects/netgrif-components-core/src/lib/view/case-view/service/case-view-service.ts:126</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="125" class="link-to-prism">projects/netgrif-components-core/src/lib/view/case-view/service/case-view-service.ts:125</a></div>
                                 </td>
                             </tr>
 
@@ -1547,7 +1667,7 @@
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="130" class="link-to-prism">projects/netgrif-components-core/src/lib/view/case-view/service/case-view-service.ts:130</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="129" class="link-to-prism">projects/netgrif-components-core/src/lib/view/case-view/service/case-view-service.ts:129</a></div>
                                 </td>
                             </tr>
 
@@ -1569,7 +1689,7 @@
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="134" class="link-to-prism">projects/netgrif-components-core/src/lib/view/case-view/service/case-view-service.ts:134</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="133" class="link-to-prism">projects/netgrif-components-core/src/lib/view/case-view/service/case-view-service.ts:133</a></div>
                                 </td>
                             </tr>
 
@@ -1579,9 +1699,8 @@
     </div>
 
 
-    <div class="tab-pane fade  tab-source-code" id="c-source">
+    <div class="tab-pane fade  tab-source-code" id="source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Inject, Injectable, OnDestroy, Optional} from &#x27;@angular/core&#x27;;
-import {SideMenuService} from &#x27;../../../side-menu/services/side-menu.service&#x27;;
 import {CaseResourceService} from &#x27;../../../resources/engine-endpoint/case-resource.service&#x27;;
 import {BehaviorSubject, Observable, of, Subject} from &#x27;rxjs&#x27;;
 import {HttpParams} from &#x27;@angular/common/http&#x27;;
@@ -1589,12 +1708,10 @@ import {Case} from &#x27;../../../resources/interface/case&#x27;;
 import {LoggerService} from &#x27;../../../logger/services/logger.service&#x27;;
 import {SnackBarService} from &#x27;../../../snack-bar/services/snack-bar.service&#x27;;
 import {SearchService} from &#x27;../../../search/search-service/search.service&#x27;;
-import {SideMenuSize} from &#x27;../../../side-menu/models/side-menu-size&#x27;;
 import {TranslateService} from &#x27;@ngx-translate/core&#x27;;
 import {catchError, concatMap, filter, map, mergeMap, scan, switchMap, tap} from &#x27;rxjs/operators&#x27;;
 import {Pagination} from &#x27;../../../resources/interface/pagination&#x27;;
 import {CaseMetaField} from &#x27;../../../header/case-header/case-menta-enum&#x27;;
-import {NAE_NEW_CASE_COMPONENT} from &#x27;../../../side-menu/content-components/injection-tokens&#x27;;
 import {PageLoadRequestContext} from &#x27;../../abstract/page-load-request-context&#x27;;
 import {Filter} from &#x27;../../../filter/models/filter&#x27;;
 import {ListRange} from &#x27;@angular/cdk/collections&#x27;;
@@ -1616,6 +1733,8 @@ import {EventOutcomeMessageResource} from &#x27;../../../resources/interface/mes
 import {CreateCaseEventOutcome} from &#x27;../../../event/model/event-outcomes/case-outcomes/create-case-event-outcome&#x27;;
 import {PaginationParams} from &#x27;../../../utility/pagination/pagination-params&#x27;;
 import {createSortParam, PaginationSort} from &#x27;../../../utility/pagination/pagination-sort&#x27;;
+import {MatDialog} from &#x27;@angular/material/dialog&#x27;;
+import {NAE_NEW_CASE_DIALOG_COMPONENT} from &#x27;../../../dialog/injection-tokens&#x27;;
 
 @Injectable()
 export class CaseViewService extends AbstractSortableViewComponent implements OnDestroy {
@@ -1632,7 +1751,7 @@ export class CaseViewService extends AbstractSortableViewComponent implements On
     protected _newCaseConfiguration: NewCaseConfiguration;
 
     constructor(protected _allowedNetsService: AllowedNetsService,
-                protected _sideMenuService: SideMenuService,
+                protected _dialog: MatDialog,
                 protected _caseResourceService: CaseResourceService,
                 protected _log: LoggerService,
                 protected _snackBarService: SnackBarService,
@@ -1641,7 +1760,7 @@ export class CaseViewService extends AbstractSortableViewComponent implements On
                 protected _user: UserService,
                 protected _processService: ProcessService,
                 resolver: SearchIndexResolverService,
-                @Optional() @Inject(NAE_NEW_CASE_COMPONENT) protected _newCaseComponent: any,
+                @Optional() @Inject(NAE_NEW_CASE_DIALOG_COMPONENT) protected _newCaseComponent: any,
                 @Optional() @Inject(NAE_NEW_CASE_CONFIGURATION) newCaseConfig: NewCaseConfiguration,
                 protected _permissionService: PermissionService) {
         super(resolver);
@@ -1796,12 +1915,18 @@ export class CaseViewService extends AbstractSortableViewComponent implements On
         isCaseTitleRequired: true
     }): Observable&lt;Case&gt; {
         const myCase &#x3D; new Subject&lt;Case&gt;();
-        this._sideMenuService.open(this._newCaseComponent, SideMenuSize.MEDIUM, {
-            allowedNets$: this.getNewCaseAllowedNets(),
-            newCaseCreationConfiguration
-        }).onClose.subscribe($event &#x3D;&gt; {
-            this._log.debug($event.message, $event.data);
-            if ($event.data) {
+        const dialogRef &#x3D; this._dialog.open(this._newCaseComponent, {
+            width: &#x27;40%&#x27;,
+            minWidth: &#x27;300px&#x27;,
+            panelClass: &quot;dialog-responsive&quot;,
+            data: {
+                allowedNets$: this.getNewCaseAllowedNets(newCaseCreationConfiguration.blockNets),
+                newCaseCreationConfiguration
+            },
+        });
+        dialogRef.afterClosed().subscribe($event &#x3D;&gt; {
+            if ($event?.data) {
+                this._log.debug($event.message, $event.data);
                 this.reload();
                 myCase.next($event.data);
             }
@@ -1810,9 +1935,12 @@ export class CaseViewService extends AbstractSortableViewComponent implements On
         return myCase.asObservable();
     }
 
-    public createDefaultNewCase(): Observable&lt;Case&gt; {
+    public createDefaultNewCase(newCaseCreationConfiguration: NewCaseCreationConfigurationData &#x3D; {
+        enableCaseTitle: true,
+        isCaseTitleRequired: true
+    }): Observable&lt;Case&gt; {
         const myCase &#x3D; new Subject&lt;Case&gt;();
-        this.getNewCaseAllowedNets().subscribe((nets: Array&lt;PetriNetReferenceWithPermissions&gt;) &#x3D;&gt; {
+        this.getNewCaseAllowedNets(newCaseCreationConfiguration.blockNets).subscribe((nets: Array&lt;PetriNetReferenceWithPermissions&gt;) &#x3D;&gt; {
             this._caseResourceService.createCase({
                 title: null,
                 color: &#x27;panel-primary-icon&#x27;,
@@ -1828,15 +1956,17 @@ export class CaseViewService extends AbstractSortableViewComponent implements On
         return myCase;
     }
 
-    public getNewCaseAllowedNets(): Observable&lt;Array&lt;PetriNetReferenceWithPermissions&gt;&gt; {
+    public getNewCaseAllowedNets(blockNets: string[] &#x3D; []): Observable&lt;Array&lt;PetriNetReferenceWithPermissions&gt;&gt; {
         if (this._newCaseConfiguration.useCachedProcesses) {
             return this._allowedNetsService.allowedNets$.pipe(
+                map(net &#x3D;&gt; net.filter(n &#x3D;&gt; blockNets.indexOf(n.identifier) &#x3D;&#x3D;&#x3D; -1)),
                 map(net &#x3D;&gt; net.filter(n &#x3D;&gt; this._permissionService.hasNetPermission(PermissionType.CREATE, n)))
             );
         } else {
             return this._allowedNetsService.allowedNets$.pipe(
                 switchMap(allowedNets &#x3D;&gt; {
                     return this._processService.getNetReferences(allowedNets.map(net &#x3D;&gt; net.identifier)).pipe(
+                        map(net &#x3D;&gt; net.filter(n &#x3D;&gt; blockNets.indexOf(n.identifier) &#x3D;&#x3D;&#x3D; -1)),
                         map(net &#x3D;&gt; net.filter(n &#x3D;&gt; this._permissionService.hasNetPermission(PermissionType.CREATE, n)))
                     );
                 })
@@ -1915,14 +2045,15 @@ export class CaseViewService extends AbstractSortableViewComponent implements On
 
 
 
-                   
+
+
 
 
 
 
                    </div><div class="search-results">
     <div class="has-results">
-        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
         <ul class="search-results-list"></ul>
     </div>
     <div class="no-results">
@@ -1934,6 +2065,15 @@ export class CaseViewService extends AbstractSortableViewComponent implements On
            </div>
        </div>
 
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'injectable';
@@ -1941,10 +2081,23 @@ export class CaseViewService extends AbstractSortableViewComponent implements On
             var MAX_SEARCH_RESULTS = 15;
        </script>
 
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
        <script src="../js/libs/custom-elements.min.js"></script>
        <script src="../js/libs/lit-html.js"></script>
-       
-       <script type="module" src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/menu-wc.js" defer></script>
        <script nomodule src="../js/menu-wc_es5.js" defer></script>
 
        <script src="../js/libs/bootstrap-native.js"></script>

@@ -17,10 +17,9 @@ import {
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {PanelComponentModule} from '../../../../panel/panel.module';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {RouterModule} from '@angular/router';
 import {RouterTestingModule} from '@angular/router/testing';
 import {of} from 'rxjs';
-import {Component} from '@angular/core';
+import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 
 
 describe('CreateCaseButtonComponent', () => {
@@ -35,7 +34,6 @@ describe('CreateCaseButtonComponent', () => {
                 TranslateLibModule,
                 PanelComponentModule,
                 NoopAnimationsModule,
-                RouterModule.forRoot([]),
                 RouterTestingModule.withRoutes([])
             ],
             providers: [
@@ -54,7 +52,8 @@ describe('CreateCaseButtonComponent', () => {
                     deps: [AllowedNetsServiceFactory]
                 }
             ],
-            declarations: [TestWrapperComponent]
+            declarations: [TestWrapperComponent],
+            schemas: [CUSTOM_ELEMENTS_SCHEMA]
         })
             .compileComponents();
     }));

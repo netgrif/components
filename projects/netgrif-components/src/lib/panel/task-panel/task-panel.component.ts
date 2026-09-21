@@ -4,40 +4,55 @@ import {
     AbstractTaskPanelComponent,
     AssignPolicyService,
     AssignTaskService,
+    BOOLEAN_VALUE_LABEL_ENABLED,
     CallChainService,
     CancelTaskService,
+    ChangedFieldsService,
     DataFocusPolicyService,
     DelegateTaskService,
     DisableButtonFuntions,
     FinishPolicyService,
     FinishTaskService,
     LoggerService,
+    NAE_TASK_FORCE_OPEN,
     NAE_TASK_OPERATIONS,
     NAE_TASK_PANEL_DISABLE_BUTTON_FUNCTIONS,
-    BOOLEAN_VALUE_LABEL_ENABLED,
+    OverflowService,
     PaperViewService,
-    SingleTaskContentService,
+    PermissionService,
     SubjectTaskOperations,
     TaskContentService,
     TaskDataService,
     TaskEventService,
     TaskRequestStateService,
     TaskViewService,
-    PermissionService,
-    ChangedFieldsService,
-    OverflowService
+    FrontActionService,
+    NAE_TAB_DATA,
+    InjectedTabData, SimpleFilter,
+    TaskContentServiceFactory,
+    NAE_TASK_CONTENT_SERVICE_TYPE,
+    TaskContentServiceType,
+    UserComparatorService
 } from '@netgrif/components-core';
 import {TaskContentComponent} from '../../task-content/task-content/task-content.component';
 import {TranslateService} from '@ngx-translate/core';
 import {CurrencyPipe} from '@angular/common';
+
+const taskContentServiceFactory = (serviceFactory: TaskContentServiceFactory, serviceType: TaskContentServiceType) => {
+    if (serviceType === TaskContentServiceType.SINGLE) {
+        return serviceFactory.createSingleTaskContentService();
+    }
+    return serviceFactory.createUnlimitedTaskContentService();
+};
 
 @Component({
     selector: 'nc-task-panel',
     templateUrl: './task-panel.component.html',
     styleUrls: ['./task-panel.component.scss'],
     providers: [
-        {provide: TaskContentService, useClass: SingleTaskContentService},
+        {provide: TaskContentService, useFactory: taskContentServiceFactory, deps: [TaskContentServiceFactory, NAE_TASK_CONTENT_SERVICE_TYPE]},
         TaskDataService,
+        FrontActionService,
         TaskEventService,
         AssignTaskService,
         DelegateTaskService,
@@ -75,11 +90,17 @@ export class TaskPanelComponent extends AbstractTaskPanelComponent {
                 protected _currencyPipe: CurrencyPipe,
                 protected _changedFieldsService: ChangedFieldsService,
                 protected _permissionService: PermissionService,
-                @Optional() overflowService: OverflowService) {
+                protected _userComparator: UserComparatorService,
+                @Optional() overflowService: OverflowService,
+                @Optional() @Inject(NAE_TASK_FORCE_OPEN) protected _taskForceOpen: boolean,
+                @Optional() @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabData) {
         super(_taskContentService, _log, _taskViewService, _paperView, _taskEventService, _assignTaskService,
             _delegateTaskService, _cancelTaskService, _finishTaskService, _taskState, _taskDataService,
             _assignPolicyService, _finishPolicyService, _callChain, _taskOperations, _disableFunctions, _translate, _currencyPipe, _changedFieldsService,
-            _permissionService, overflowService);
+            _permissionService, _userComparator, overflowService, _taskForceOpen, injectedTabData);
+        if (_taskForceOpen) {
+            this.hidePanelHeader = true;
+        }
     }
 
     protected createContentPortal(): void {

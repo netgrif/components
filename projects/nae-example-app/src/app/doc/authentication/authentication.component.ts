@@ -15,6 +15,7 @@ export class AuthenticationComponent implements OnInit {
     user: User = null;
     userString = null;
     credentials = {
+        realmId: null,
         username: null,
         password: null
     };

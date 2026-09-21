@@ -20,7 +20,7 @@ import {
     UserPreferenceService,
     UserResourceService
 } from '@netgrif/components-core';
-import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
+import {FlexLayoutModule, FlexModule} from '@ngbracket/ngx-layout';
 import {QuickPanelComponentModule} from '../quick-panel/quick-panel.module';
 import {UserComponentModule} from '../../user/user.module';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
@@ -34,7 +34,7 @@ describe('NavigationDoubleDrawerComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            declarations: [NavigationDrawerComponent, NavigationTreeComponent],
+            declarations: [NavigationDoubleDrawerComponent, NavigationDrawerComponent, NavigationTreeComponent],
             imports: [
                 CommonModule,
                 RouterTestingModule.withRoutes([]),

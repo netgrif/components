@@ -1,5 +1,4 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {AbstractHeaderService} from '../../abstract-header-service';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {HeaderColumn} from '../../models/header-column';
 import {FormControl} from '@angular/forms';
 import {map, startWith} from 'rxjs/operators';
@@ -20,11 +19,9 @@ export interface HeaderOption {
     template: ''
 })
 export abstract class AbstractEditModeComponent extends AbstractHeaderModeComponent implements OnInit, OnDestroy {
-    public formControls: Array<FormControl> = [];
+    public formControls: Array<FormControl<any>> = [];
     public filterOptions: Array<Observable<Array<HeaderOption>>> = [];
     protected subHeader: Subscription;
-
-    @Input() public headerService: AbstractHeaderService;
 
     protected constructor(protected _translate: TranslateService,
                           protected _log: LoggerService) {
@@ -49,7 +46,7 @@ export abstract class AbstractEditModeComponent extends AbstractHeaderModeCompon
         while (this.formControls.length < newCount) {
             const i = this.formControls.length;
             const formControl = new FormControl();
-            formControl.setValue(this.headerService.headerState.selectedHeaders[i]);
+            formControl.setValue(this.headerService.headerState.selectedHeaders[i] ?? this.headerService.headerState.lastSelectedHeaders[i] ?? null);
             this.formControls.push(formControl);
             this.filterOptions.push(formControl.valueChanges.pipe(
                 startWith(''),
@@ -88,6 +85,31 @@ export abstract class AbstractEditModeComponent extends AbstractHeaderModeCompon
 
     public renderSelection = (header) => {
         return header ? this._translate.instant(header.title) : '';
+    }
+
+    public sortingHeaderSelected(newSortingColumn: HeaderColumn | null | undefined): void {
+        if (!this.advanceSortDirection(newSortingColumn)) {
+            return;
+        }
+
+        this.headerService.sortingColumnSelected(newSortingColumn);
+        this.headerService.applySelectedSorts();
+    }
+
+    protected removeHiddenSorts(visibleHeaderCount: number): void {
+        const visibleHeaders = new Set(this.headerService.headerState.selectedHeaders.slice(0, visibleHeaderCount));
+        const hiddenSorts = this.headerService.headerState.selectedSorts
+            .filter(header => !visibleHeaders.has(header));
+
+        if (hiddenSorts.length === 0) {
+            return;
+        }
+
+        hiddenSorts.forEach(header => {
+            header.sortDirection = '';
+            this.headerService.sortingColumnSelected(header);
+        });
+        this.headerService.applySelectedSorts();
     }
 
     private checkImmediateTitle(option: HeaderColumn): boolean {

@@ -37,13 +37,6 @@ describe('UserPreferenceService', () => {
             ],
             declarations: [
             ]
-        }).overrideModule(BrowserDynamicTestingModule, {
-            set: {
-                entryComponents: [
-                    ErrorSnackBarComponent,
-                    SuccessSnackBarComponent
-                ]
-            }
         });
         service = TestBed.inject(UserPreferenceService);
     });

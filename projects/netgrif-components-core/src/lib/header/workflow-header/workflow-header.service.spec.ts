@@ -11,7 +11,6 @@ import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
 import {ViewService} from '../../routing/view-service/view.service';
 import {TestViewService} from '../../utility/tests/test-view-service';
-import {RouterModule} from '@angular/router';
 import {ErrorSnackBarComponent} from '../../snack-bar/components/error-snack-bar/error-snack-bar.component';
 import {SuccessSnackBarComponent} from '../../snack-bar/components/success-snack-bar/success-snack-bar.component';
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
@@ -21,6 +20,10 @@ import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {SnackBarModule} from '../../snack-bar/snack-bar.module';
 import {RouterTestingModule} from '@angular/router/testing';
 import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
+import {ViewIdService} from '../../user/services/view-id.service';
+import {UserPreferenceService} from '../../user/services/user-preference.service';
+import {WorkflowMetaField} from './workflow-meta-enum';
+import {HeaderSortingMode} from '../models/header-sorting-mode';
 
 describe('WorkflowHeaderService', () => {
     let service: WorkflowHeaderService;
@@ -43,20 +46,42 @@ describe('WorkflowHeaderService', () => {
                 {provide: UserResourceService, useClass: MockUserResourceService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: ViewService, useClass: TestViewService},
+                {provide: ViewIdService, useValue: {viewId: 'workflow-view'}},
             ]
-        }).overrideModule(BrowserDynamicTestingModule, {
-            set: {
-                entryComponents: [
-                    ErrorSnackBarComponent,
-                    SuccessSnackBarComponent
-                ]
-            }
         });
+        TestBed.inject(UserPreferenceService).setSorts('workflow-view', [
+            {
+                headerUniqueId: `meta-${WorkflowMetaField.TITLE}`,
+                sortDirection: 'asc'
+            },
+            {
+                headerUniqueId: `meta-${WorkflowMetaField.VERSION}`,
+                sortDirection: 'desc'
+            }
+        ]);
         service = TestBed.inject(WorkflowHeaderService);
     });
 
     it('should be created', () => {
         expect(service).toBeTruthy();
+    });
+
+    it('should load preferred sorts during initialization', () => {
+        expect(service.sortingMode).toBe(HeaderSortingMode.SINGLE);
+        expect(service.headerState.selectedSorts.length).toBe(1);
+        expect(service.headerState.selectedSorts[0].fieldIdentifier).toBe(WorkflowMetaField.TITLE);
+        expect(service.headerState.selectedSorts[0].sortDirection).toBe('asc');
+    });
+
+    it('should replace the active sort in single sorting mode', () => {
+        const previousHeader = service.headerState.selectedSorts[0];
+        const newHeader = service.fieldsGroup[0].fields.find(header => header.fieldIdentifier === WorkflowMetaField.VERSION);
+        newHeader.sortDirection = 'desc';
+
+        service.sortingColumnSelected(newHeader);
+
+        expect(previousHeader.sortDirection).toBe('');
+        expect(service.headerState.selectedSorts).toEqual([newHeader]);
     });
 
     afterEach(() => {

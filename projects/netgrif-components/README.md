@@ -36,7 +36,7 @@ the functionality and compatibility with Application Engine.
 The library has defined peer dependencies that are not installed automatically with npm. You can install dependencies with this command:
 
 ```shell
-npm i -S @angular-material-components/datetime-picker@4 @angular-material-components/moment-adapter@4 @angular/animations@10 @angular/cdk@10 @angular/common@10 @angular/compiler@10 @angular/core@10 @angular/flex-layout@10 @angular/forms@10 @angular/material@10 @angular/material-moment-adapter@10 @angular/platform-browser@10 @angular/platform-browser-dynamic@10 @angular/router@10 @covalent/core@3 @covalent/highlight@3 @covalent/markdown@3 @covalent/text-editor@3 @ngx-translate/core@13 @ngx-translate/http-loader@6 @schematics/angular@10 angular-resizable-element@3 angular-resize-event@2 angular2-hotkeys@2 hammerjs@2 json-schema-to-typescript@8 jszip@3 moment@2 natural-orderby@2 rxjs@6 zone.js@0.10
+npm i -S @angular-material-components/datetime-picker@4 @angular-material-components/moment-adapter@4 @angular/animations@10 @angular/cdk@10 @angular/common@10 @angular/compiler@10 @angular/core@10 @ngbracket/ngx-layout@10 @angular/forms@10 @angular/material@10 @angular/material-moment-adapter@10 @angular/platform-browser@10 @angular/platform-browser-dynamic@10 @angular/router@10 @covalent/core@3 @covalent/highlight@3 @covalent/markdown@3 @covalent/text-editor@3 @ngx-translate/core@13 @ngx-translate/http-loader@6 @schematics/angular@10 angular-resizable-element@3 angular-resize-event@2 angular2-hotkeys@2 hammerjs@2 json-schema-to-typescript@8 jszip@3 moment@2 natural-orderby@2 rxjs@6 zone.js@0.10
 ```
 
 ## Installation

@@ -9,13 +9,64 @@
 
         <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
 	   <link rel="stylesheet" href="../styles/style.css">
-        <link rel="stylesheet" href="../styles/dark.css" media="(prefers-color-scheme: dark)">
+        <link rel="stylesheet" href="../styles/dark.css">
     </head>
     <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
 
-        <div class="navbar navbar-default navbar-fixed-top visible-xs">
-            <a href="../" class="navbar-brand">Netgrif Components Core library Documentation</a>
-            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">Netgrif Components Core library Documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
         </div>
 
         <div class="xs-menu menu" id="mobile-menu">
@@ -24,7 +75,7 @@
 
         <div class="container-fluid main">
            <div class="row main">
-               <div class="hidden-xs menu">
+               <div class="d-none d-md-block menu">
                    <compodoc-menu mode="normal"></compodoc-menu>
                </div>
                <!-- START CONTENT -->
@@ -42,35 +93,42 @@
 
 
 
+
 <ol class="breadcrumb">
-  <li>Interfaces</li>
-  <li
+  <li class="breadcrumb-item">Interfaces</li>
+  <li class="breadcrumb-item"
   >
   FileState</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
-        <li class="active">
-            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        <li class="nav-item">
+            <a href="#info" 
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
         </li>
-        <li >
-            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        <li class="nav-item">
+            <a href="#source" 
+                class="nav-link"
+                
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
         </li>
 </ul>
 
 <div class="tab-content">
-    <div class="tab-pane fade active in" id="c-info">
+    <div class="tab-pane fade active in" id="info">
         <p class="comment">
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>projects/netgrif-components-core/src/lib/data-fields/file-field/abstract-file-field.component.ts</code>
+            <code>projects/netgrif-components-core/src/lib/data-fields/file-field/file-default-field/abstract-file-default-field.component.ts</code>
         </p>
 
 
 
 
-        <section>
+        <section data-compodoc="block-index">
             <h3 id="index">Index</h3>
             <table class="table table-sm table-bordered index-table">
                 <tbody>
@@ -121,7 +179,7 @@
 
 
 
-            <section>
+            <section data-compodoc="block-properties">
                 <h3 id="inputs">Properties</h3>
                     <table class="table table-sm table-bordered">
                         <tbody>
@@ -292,7 +350,7 @@
     </div>
 
 
-    <div class="tab-pane fade  tab-source-code" id="c-source">
+    <div class="tab-pane fade  tab-source-code" id="source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
     AfterViewInit,
     Component,
@@ -303,24 +361,26 @@
     OnInit,
     Optional,
     ViewChild
-} from &#x27;@angular/core&#x27;;
-import {FileField, FilePreviewType} from &#x27;./models/file-field&#x27;;
-import {AbstractDataFieldComponent} from &#x27;../models/abstract-data-field-component&#x27;;
-import {TaskResourceService} from &#x27;../../resources/engine-endpoint/task-resource.service&#x27;;
-import {ProgressType, ProviderProgress} from &#x27;../../resources/resource-provider.service&#x27;;
-import {LoggerService} from &#x27;../../logger/services/logger.service&#x27;;
-import {SnackBarService} from &#x27;../../snack-bar/services/snack-bar.service&#x27;;
-import {TranslateService} from &#x27;@ngx-translate/core&#x27;;
-import {NAE_INFORM_ABOUT_INVALID_DATA} from &#x27;../models/invalid-data-policy-token&#x27;;
-import {DomSanitizer, SafeUrl} from &#x27;@angular/platform-browser&#x27;;
-import {BehaviorSubject, Subscription} from &#x27;rxjs&#x27;;
-import {ResizedEvent} from &#x27;angular-resize-event&#x27;;
-import {take} from &#x27;rxjs/operators&#x27;;
-import {EventOutcomeMessageResource} from &#x27;../../resources/interface/message-resource&#x27;;
-import {EventService} from &#x27;../../event/services/event.service&#x27;;
-import {ChangedFieldsMap} from &#x27;../../event/services/interfaces/changed-fields-map&#x27;;
-import {FileFieldIdBody} from &#x27;../models/file-field-id-body&#x27;;
-import { HttpParams } from &#x27;@angular/common/http&#x27;;
+} from &quot;@angular/core&quot;;
+import {FileField, FilePreviewType} from &quot;../models/file-field&quot;;
+import {DomSanitizer, SafeUrl} from &quot;@angular/platform-browser&quot;;
+import {BehaviorSubject, Subscription} from &quot;rxjs&quot;;
+import {TaskResourceService} from &quot;../../../resources/engine-endpoint/task-resource.service&quot;;
+import {LoggerService} from &quot;../../../logger/services/logger.service&quot;;
+import {SnackBarService} from &quot;../../../snack-bar/services/snack-bar.service&quot;;
+import {TranslateService} from &quot;@ngx-translate/core&quot;;
+import {EventService} from &quot;../../../event/services/event.service&quot;;
+import {FileFieldIdBody} from &quot;../../models/file-field-id-body&quot;;
+import {EventOutcomeMessageResource} from &quot;../../../resources/interface/message-resource&quot;;
+import {ProgressType, ProviderProgress} from &quot;../../../resources/resource-provider.service&quot;;
+import {ChangedFieldsMap} from &quot;../../../event/services/interfaces/changed-fields-map&quot;;
+import {HttpParams} from &quot;@angular/common/http&quot;;
+import {take} from &quot;rxjs/operators&quot;;
+import {ResizedEvent} from &quot;angular-resize-event&quot;;
+import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from &quot;../../models/data-field-portal-data-injection-token&quot;;
+import {FILE_FIELD_HEIGHT, FILE_FIELD_PADDING, PREVIEW, PREVIEW_BUTTON} from &#x27;../models/file-field-constants&#x27;;
+import {FileFieldRequest} from &quot;../../../resources/interface/file-field-request-body&quot;;
+import {AbstractFileFieldDefaultComponent} from &#x27;../../models/abstract-file-field-default-component&#x27;;
 
 export interface FileState {
     progress: number;
@@ -330,21 +390,11 @@ export interface FileState {
     error: boolean;
 }
 
-const preview &#x3D; &#x27;preview&#x27;;
-
-const fieldHeight &#x3D; 75;
-
-const fieldPadding &#x3D; 16;
-
-/**
- * Component that is created in the body of the task panel accord on the Petri Net, which must be bind properties.
- */
 @Component({
-    selector: &#x27;ncc-abstract-file-field&#x27;,
+    selector: &#x27;ncc-abstract-file-default-fied&#x27;,
     template: &#x27;&#x27;
 })
-export abstract class AbstractFileFieldComponent extends AbstractDataFieldComponent implements OnInit, AfterViewInit, OnDestroy {
-
+export abstract class AbstractFileDefaultFieldComponent extends AbstractFileFieldDefaultComponent&lt;FileField&gt; implements OnInit, AfterViewInit, OnDestroy {
     /**
      * The width of the default file preview border in pixels. The &#x60;px&#x60; string is appended in the code.
      */
@@ -359,28 +409,13 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
     public static readonly DEFAULT_PREVIEW_BORDER_COLOR &#x3D; &#x27;black&#x27;;
 
     public state: FileState;
-    /**
-     * Task mongo string id is binding property from parent component.
-     */
-    @Input() public taskId: string;
-    /**
-     * Binding property as instance from parent component.
-     */
-    @Input() public dataField: FileField;
-    /**
-     * File picker element reference from component template that is initialized after view init.
-     */
-    @ViewChild(&#x27;fileUploadInput&#x27;) public fileUploadEl: ElementRef&lt;HTMLInputElement&gt;;
+
     /**
      * Image field view element reference from component template that is initialized after view init.
      */
     @ViewChild(&#x27;imageEl&#x27;) public imageEl: ElementRef;
 
     @ViewChild(&#x27;imageDiv&#x27;) public imageDivEl: ElementRef;
-    /**
-     * If file preview should be displayed
-     */
-    public filePreview &#x3D; false;
     /**
      * If file type can be displayed
      */
@@ -414,6 +449,9 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
      */
     private updatedFieldSubscription: Subscription;
 
+    public isFilePreview &#x3D; false;
+    public isFilePreviewButton &#x3D; false;
+
     /**
      * Only inject services.
      * @param _taskResourceService Provides to download a file from the backend
@@ -421,20 +459,21 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
      * @param _snackbar Snackbar service to notify user
      * @param _translate Translate service for I18N
      * @param _eventService used for parsing of backend response
-     * @param informAboutInvalidData whether the backend should be notified about invalid values.
      * Option injected trough &#x60;NAE_INFORM_ABOUT_INVALID_DATA&#x60; InjectionToken
      * @param _sanitizer Sanitize url of image preview
+     * @param dataFieldPortalData Field and form control data if field is provided with portal
      */
     protected constructor(protected _taskResourceService: TaskResourceService,
                           protected _log: LoggerService,
                           protected _snackbar: SnackBarService,
                           protected _translate: TranslateService,
                           protected _eventService: EventService,
-                          @Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null,
-                          protected _sanitizer: DomSanitizer) {
-        super(informAboutInvalidData);
+                          protected _sanitizer: DomSanitizer,
+                          @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData&lt;FileField&gt;) {
+        super(_log, _snackbar, _translate, dataFieldPortalData);
         this.state &#x3D; this.defaultState;
         this.fullSource &#x3D; new BehaviorSubject&lt;SafeUrl&gt;(null);
+        this.taskId &#x3D; dataFieldPortalData.additionalFieldProperties.taskId as string;
     }
 
     /**
@@ -443,9 +482,8 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
      *  - Display name
      */
     ngOnInit() {
-        super.ngOnInit();
-        this.filePreview &#x3D; this.dataField &amp;&amp; this.dataField.component &amp;&amp; this.dataField.component.name
-            &amp;&amp; this.dataField.component.name &#x3D;&#x3D;&#x3D; preview;
+        this.isFilePreview &#x3D; this.dataField?.component?.name &#x3D;&#x3D;&#x3D; PREVIEW;
+        this.isFilePreviewButton &#x3D; this.dataField?.component?.name &#x3D;&#x3D;&#x3D; PREVIEW_BUTTON;
     }
 
     ngAfterViewInit() {
@@ -454,18 +492,26 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
                 this.upload();
             };
         }
-        if (this.filePreview) {
+        if (this.isFilePreview) {
             if (!!this.imageDivEl) {
                 if (!this.isEmpty()) {
                     this.initializePreviewIfDisplayable();
                 }
             }
         }
+        if (this.isFilePreviewButton) {
+            if (!this.isEmpty()) {
+                this.initializePreviewIfDisplayable();
+            }
+        }
         this.updatedFieldSubscription &#x3D; this.dataField.updated.subscribe(() &#x3D;&gt; {
             this.previewSource &#x3D; undefined;
-            if (!!this.filePreview
-                &amp;&amp; !!this.dataField.value
-                &amp;&amp; !!this.dataField.value.name) {
+            if (!!this.isFilePreview &amp;&amp; !!this.dataField?.value?.name) {
+                this.fileForDownload &#x3D; undefined;
+                this.fileForPreview &#x3D; undefined;
+                this.initializePreviewIfDisplayable();
+            }
+            if (!!this.isFilePreviewButton &amp;&amp; !!this.dataField?.value?.name) {
                 this.fileForDownload &#x3D; undefined;
                 this.fileForPreview &#x3D; undefined;
                 this.initializePreviewIfDisplayable();
@@ -480,7 +526,7 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
     }
 
     public chooseFile() {
-        if (this.state.uploading || this.formControl.disabled) {
+        if (this.state.uploading || this.formControlRef.disabled) {
             return;
         }
         this.fileUploadEl.nativeElement.click();
@@ -502,9 +548,8 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
             this._log.error(&#x27;File cannot be uploaded. No task is set to the field.&#x27;);
             return;
         }
-        if (this.dataField.value &amp;&amp;
-            this.dataField.value.name &amp;&amp;
-            this.fileUploadEl.nativeElement.files.item(0).name &#x3D;&#x3D;&#x3D; this.dataField.value.name) {
+        if (this.dataField.value?.name &amp;&amp;
+            this.fileUploadEl.nativeElement.files.item(0).name &#x3D;&#x3D;&#x3D; this.dataField.value?.name) {
             this._log.error(&#x27;User chose the same file. Uploading skipped&#x27;);
             this._snackbar.openErrorSnackBar(this._translate.instant(&#x27;dataField.snackBar.wontUploadSameFile&#x27;));
             this.fileUploadEl.nativeElement.value &#x3D; &#x27;&#x27;;
@@ -519,15 +564,16 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
             this.fileUploadEl.nativeElement.value &#x3D; &#x27;&#x27;;
             return;
         }
+        if (!this.checkAllowedTypes()) {
+            return;
+        }
         this.state &#x3D; this.defaultState;
         this.state.uploading &#x3D; true;
         const fileFormData &#x3D; new FormData();
         const fileToUpload &#x3D; this.fileUploadEl.nativeElement.files.item(0) as File;
-        const data: FileFieldIdBody &#x3D; {};
-        data[this.resolveParentTaskId()] &#x3D; this.dataField.stringId;
         fileFormData.append(&#x27;file&#x27;, fileToUpload);
-        fileFormData.append(&#x27;data&#x27;, new Blob([JSON.stringify(data)], {type: &#x27;application/json&#x27;}));
-        this._taskResourceService.uploadFile(this.taskId, this.dataField.stringId, fileFormData, false)
+        fileFormData.append(&#x27;data&#x27;, new Blob([JSON.stringify(this.createRequestBody())], {type: &#x27;application/json&#x27;}));
+        this._taskResourceService.uploadFile(this.taskId, fileFormData, false)
             .subscribe((response: EventOutcomeMessageResource) &#x3D;&gt; {
                 if ((response as ProviderProgress).type &amp;&amp; (response as ProviderProgress).type &#x3D;&#x3D;&#x3D; ProgressType.UPLOAD) {
                     this.state.progress &#x3D; (response as ProviderProgress).progress;
@@ -555,12 +601,12 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
                         this.state.error &#x3D; false;
                         this.dataField.downloaded &#x3D; false;
                         this.dataField.value.name &#x3D; fileToUpload.name;
-                        if (this.filePreview) {
+                        if (this.isFilePreview) {
                             this.initializePreviewIfDisplayable();
                         }
                         this.fullSource.next(undefined);
                         this.fileForDownload &#x3D; undefined;
-                        this.formControl.setValue(this.dataField.value.name);
+                        this.formControlRef.setValue(this.dataField.value.name);
                     }
                     this.dataField.touch &#x3D; true;
                     this.dataField.update();
@@ -595,12 +641,13 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
         }
         this.state &#x3D; this.defaultState;
         this.state.downloading &#x3D; true;
-        this._taskResourceService.downloadFile(this.resolveParentTaskId(),
-            this.dataField.stringId).subscribe(response &#x3D;&gt; {
+        let params &#x3D; new HttpParams();
+        params &#x3D; params.set(&quot;fieldId&quot;, this.dataField.stringId);
+        this._taskResourceService.downloadFile(this.resolveParentTaskId(), params).subscribe(response &#x3D;&gt; {
             if (!(response as ProviderProgress).type || (response as ProviderProgress).type !&#x3D;&#x3D; ProgressType.DOWNLOAD) {
                 this._log.debug(&#x60;File [${this.dataField.stringId}] ${this.dataField.value.name} was successfully downloaded&#x60;);
                 this.downloadViaAnchor(response as Blob);
-                if (this.filePreview) {
+                if (this.isFilePreview) {
                     this.initDownloadFile(response);
                 }
                 this.state.downloading &#x3D; false;
@@ -645,22 +692,19 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
     }
 
     public deleteFile() {
-        if (!this.dataField.value || !this.dataField.value.name) {
+        if (!this.dataField.value?.name) {
             return;
         }
         if (!this.taskId) {
             this._log.error(&#x27;File cannot be deleted. No task is set to the field.&#x27;);
             return;
         }
-        let param &#x3D; new HttpParams();
-        param &#x3D; param.set(&quot;parentTaskId&quot;, this.resolveParentTaskId());
 
-        this._taskResourceService.deleteFile(this.taskId,
-            this.dataField.stringId, undefined, param).pipe(take(1)).subscribe(response &#x3D;&gt; {
+        this._taskResourceService.deleteFile(this.taskId, this.createRequestBody()).pipe(take(1)).subscribe(response &#x3D;&gt; {
             if (response.success) {
                 const filename &#x3D; this.dataField.value.name;
                 this.dataField.value &#x3D; {};
-                this.formControl.setValue(&#x27;&#x27;);
+                this.formControlRef.setValue(&#x27;&#x27;);
                 this.dataField.update();
                 this.dataField.downloaded &#x3D; false;
                 this.fullSource.next(undefined);
@@ -668,7 +712,7 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
                 this.previewSource &#x3D; undefined;
                 this.fileForPreview &#x3D; undefined;
                 this._log.debug(&#x60;File [${this.dataField.stringId}] ${filename} was successfully deleted&#x60;);
-                this.formControl.markAsTouched();
+                this.formControlRef.markAsTouched();
             } else {
                 this._log.error(&#x60;Deleting file [${this.dataField.stringId}] ${this.dataField.value.name} has failed!&#x60;, response.error);
                 this._snackbar.openErrorSnackBar(
@@ -679,7 +723,14 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
     }
 
     isEmpty(): boolean {
-        return !this.dataField.value || !this.dataField.value.name;
+        return !this.dataField.value?.name;
+    }
+
+    protected createRequestBody(): FileFieldRequest {
+        return {
+            parentTaskId: this.resolveParentTaskId(),
+            fieldId: this.dataField.stringId
+        };
     }
 
     protected get defaultState(): FileState {
@@ -714,8 +765,9 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
             return;
         }
         this.state.downloading &#x3D; true;
-        this._taskResourceService.downloadFilePreview(this.resolveParentTaskId(), this.dataField.stringId).subscribe(response &#x3D;&gt; {
-            if (response instanceof Blob) {
+        let params &#x3D; new HttpParams()
+        params &#x3D; params.set(&quot;fieldId&quot;, this.dataField.stringId);
+        this._taskResourceService.downloadFilePreview(this.resolveParentTaskId(), params).subscribe(response &#x3D;&gt; {            if (response instanceof Blob) {
                 this._log.debug(&#x60;Preview of file [${this.dataField.stringId}] ${this.dataField.value.name} was successfully downloaded&#x60;);
                 this.fileForPreview &#x3D; new Blob([response], {type: &#x27;application/octet-stream&#x27;});
                 this.previewSource &#x3D; this._sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(this.fileForPreview));
@@ -733,7 +785,7 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
         });
     }
 
-    private checkFileBeforeDownload() {
+    protected checkFileBeforeDownload() {
         if (this.isEmpty()) {
             return false;
         }
@@ -748,8 +800,9 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
         if (!this.checkFileBeforeDownload()) {
             return;
         }
-        this._taskResourceService.downloadFile(this.resolveParentTaskId(), this.dataField.stringId).subscribe(response &#x3D;&gt; {
-            if (!(response as ProviderProgress).type || (response as ProviderProgress).type !&#x3D;&#x3D; ProgressType.DOWNLOAD) {
+        let params &#x3D; new HttpParams();
+        params &#x3D; params.set(&quot;fieldId&quot;, this.dataField.stringId);
+        this._taskResourceService.downloadFile(this.resolveParentTaskId(), params).subscribe(response &#x3D;&gt; {            if (!(response as ProviderProgress).type || (response as ProviderProgress).type !&#x3D;&#x3D; ProgressType.DOWNLOAD) {
                 this._log.debug(&#x60;File [${this.dataField.stringId}] ${this.dataField.value.name} was successfully downloaded&#x60;);
                 this.initDownloadFile(response);
             }
@@ -768,7 +821,7 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
         }
     }
 
-    private initializePreviewIfDisplayable() {
+    protected initializePreviewIfDisplayable() {
         const extension &#x3D; this.dataField.value.name.split(&#x27;.&#x27;).reverse()[0];
         this.isDisplayable &#x3D; Object.values(FilePreviewType).includes(extension as any);
         if (this.isDisplayable) {
@@ -778,29 +831,29 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
     }
 
     public getHeight() {
-        return this.dataField.layout &amp;&amp; this.dataField.layout.rows &amp;&amp; this.dataField.layout.rows !&#x3D;&#x3D; 1 ?
-            (this.dataField.layout.rows) * fieldHeight - fieldPadding : fieldHeight - fieldPadding;
+        return this.dataField.layout?.rows &amp;&amp; this.dataField.layout?.rows !&#x3D;&#x3D; 1 ?
+            (this.dataField.layout.rows) * FILE_FIELD_HEIGHT - FILE_FIELD_PADDING : FILE_FIELD_HEIGHT - FILE_FIELD_PADDING;
     }
 
     public getPreviewBorderWidth(): string {
         if (this.borderPropertyEnabled(&#x27;borderWidth&#x27;)) {
             return this.dataField.component.properties.borderWidth + &#x27;px&#x27;;
         }
-        return &#x60;${AbstractFileFieldComponent.DEFAULT_PREVIEW_BORDER_WIDTH}px&#x60;;
+        return &#x60;${AbstractFileDefaultFieldComponent.DEFAULT_PREVIEW_BORDER_WIDTH}px&#x60;;
     }
 
     public getPreviewBorderStyle(): string {
         if (this.borderPropertyEnabled(&#x27;borderStyle&#x27;)) {
             return this.dataField.component.properties.borderStyle;
         }
-        return AbstractFileFieldComponent.DEFAULT_PREVIEW_BORDER_STYLE;
+        return AbstractFileDefaultFieldComponent.DEFAULT_PREVIEW_BORDER_STYLE;
     }
 
     public getPreviewBorderColor(): string {
         if (this.borderPropertyEnabled(&#x27;borderColor&#x27;)) {
             return this.dataField.component.properties.borderColor;
         }
-        return AbstractFileFieldComponent.DEFAULT_PREVIEW_BORDER_COLOR;
+        return AbstractFileDefaultFieldComponent.DEFAULT_PREVIEW_BORDER_COLOR;
     }
 
     public isBorderLGBTQ(): boolean {
@@ -821,8 +874,12 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
         return !!this.dataField.component &amp;&amp; !!this.dataField.component.properties &amp;&amp; property in this.dataField.component.properties;
     }
 
-    protected resolveParentTaskId(): string {
-        return !!this.dataField.parentTaskId ? this.dataField.parentTaskId : this.taskId;
+    public hasTitle(): boolean {
+        return this.dataField.title !&#x3D;&#x3D; undefined &amp;&amp; this.dataField.title !&#x3D;&#x3D; &#x27;&#x27;;
+    }
+
+    public hasHint(): boolean {
+        return this.dataField.description !&#x3D;&#x3D; undefined &amp;&amp; this.dataField.description !&#x3D;&#x3D; &#x27;&#x27;;
     }
 }
 </code></pre>
@@ -830,14 +887,15 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
 </div>
 
 
-                   
+
+
 
 
 
 
                    </div><div class="search-results">
     <div class="has-results">
-        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
         <ul class="search-results-list"></ul>
     </div>
     <div class="no-results">
@@ -849,6 +907,15 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
            </div>
        </div>
 
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'interface';
@@ -856,10 +923,23 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
             var MAX_SEARCH_RESULTS = 15;
        </script>
 
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
        <script src="../js/libs/custom-elements.min.js"></script>
        <script src="../js/libs/lit-html.js"></script>
-       
-       <script type="module" src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/menu-wc.js" defer></script>
        <script nomodule src="../js/menu-wc_es5.js" defer></script>
 
        <script src="../js/libs/bootstrap-native.js"></script>

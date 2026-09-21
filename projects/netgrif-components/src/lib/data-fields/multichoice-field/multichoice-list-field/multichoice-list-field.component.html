@@ -1,12 +1,12 @@
 <mat-selection-list color="primary"
                     [formControl]="formControlRef"
-                    [required]="multichoiceField.behavior.required">
-    <mat-label class="netgrif-label" *ngIf="!showLargeLayout.value">{{multichoiceField.title}}
-        <nc-required-label *ngIf="multichoiceField.behavior.required" [isIn]="true"></nc-required-label>
+                    [required]="dataField.behavior.required">
+    <mat-label class="netgrif-label" [ngClass]="{'netgrif-label-disabled': formControlRef.disabled}" *ngIf="!showLargeLayout.value">{{dataField.title}}
+        <nc-required-label *ngIf="dataField.behavior.required" [isIn]="true"></nc-required-label>
         <br></mat-label>
-    <mat-list-option checkboxPosition="before" *ngFor="let option of multichoiceField.choices" [value]="option.key">
+    <mat-list-option checkboxPosition="before" *ngFor="let option of dataField.choices" [value]="option.key">
         {{option.value}}
     </mat-list-option>
-    <mat-hint *ngIf="multichoiceField.description !== undefined && multichoiceField.description !== '' && !multichoiceField.isInvalid(formControlRef)">{{multichoiceField.description}}</mat-hint>
-    <mat-error *ngIf="multichoiceField.isInvalid(formControlRef)">{{'dataField.validations.required' | translate}}</mat-error>
+    <mat-hint [ngClass]="{'mat-hint-disabled': formControlRef.disabled}" *ngIf="dataField.description !== undefined && dataField.description !== '' && !dataField.isInvalid(formControlRef)">{{dataField.description}}</mat-hint>
+    <mat-error *ngIf="dataField.isInvalid(formControlRef)">{{'dataField.validations.required' | translate}}</mat-error>
 </mat-selection-list>

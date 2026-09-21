@@ -23,10 +23,14 @@ export function schematicEntryPoint(): Rule {
             const classDeclarations: Array<ts.Node> = findNodes(source, ts.SyntaxKind.ClassDeclaration);
 
             for (const declaration of classDeclarations) {
-                if (declaration.decorators?.length !== 1) {
+                if (!ts.canHaveDecorators(declaration)) {
+                    continue
+                }
+                if (ts.getDecorators(declaration)?.length !== 1) {
                     continue;
                 }
-                const decorator = declaration.decorators[0];
+                const decorators = ts.getDecorators(declaration);
+                const decorator = decorators !== undefined ? decorators[0] : undefined;
                 if (decorator?.expression?.getFirstToken()?.getText() !== 'Component') {
                     continue;
                 }

@@ -1,20 +1,18 @@
 import {NumberField, NumberFieldValidation} from './models/number-field';
 import {TranslateService} from '@ngx-translate/core';
-import {Component, Input} from '@angular/core';
-import {FormControl} from '@angular/forms';
-import {WrappedBoolean} from '../data-field-template/models/wrapped-boolean';
+import {Component, Inject, Optional} from '@angular/core';
+import {AbstractBaseDataFieldComponent} from "../base-component/abstract-base-data-field.component";
+import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../models/data-field-portal-data-injection-token";
 
 @Component({
     selector: 'ncc-abstract-number-errors-field',
     template: ''
 })
-export abstract class AbstractNumberErrorsComponent {
+export abstract class AbstractNumberErrorsComponent extends AbstractBaseDataFieldComponent<NumberField>{
 
-    @Input() showLargeLayout: WrappedBoolean;
-    @Input() formControlRef: FormControl;
-    @Input() numberField: NumberField;
-
-    protected constructor(protected _translate: TranslateService) {
+    protected constructor(protected _translate: TranslateService,
+                          @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<NumberField>) {
+        super(dataFieldPortalData);
     }
 
     getErrorMessage() {
@@ -37,7 +35,7 @@ export abstract class AbstractNumberErrorsComponent {
             return this.resolveErrorMessage(NumberFieldValidation.DECIMAL, this._translate.instant('dataField.validations.decimal'));
         }
         if (this.formControlRef.hasError(NumberFieldValidation.VALID_IN_RANGE)) {
-            const tmp = this.numberField.validations.find(value =>
+            const tmp = this.dataField.validations.find(value =>
                 value.validationRule.includes(NumberFieldValidation.IN_RANGE)
             ).validationRule.split(' ');
             return this.resolveErrorMessage(
@@ -48,7 +46,7 @@ export abstract class AbstractNumberErrorsComponent {
     }
 
     resolveErrorMessage(search: string, generalMessage: string) {
-        const validation = this.numberField.validations.find(value => value.validationRule.includes(search));
+        const validation = this.dataField.validations.find(value => value.validationRule.includes(search));
         if (validation.validationMessage && validation.validationMessage !== '') {
             return validation.validationMessage;
         }

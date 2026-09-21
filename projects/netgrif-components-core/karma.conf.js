@@ -2,7 +2,10 @@
 // https://karma-runner.github.io/1.0/config/configuration-file.html
 
 process = require('process');
-process.env.CHROME_BIN = require('puppeteer').executablePath();
+if (!process.env.CI && !process.env.CHROME_BIN) {
+    process.env.CHROME_BIN = require('puppeteer').executablePath();
+}
+process.setMaxListeners(0);
 
 module.exports = function (config) {
     config.set({
@@ -10,6 +13,7 @@ module.exports = function (config) {
         frameworks: ["jasmine", "@angular-devkit/build-angular"],
         plugins: [
             require("karma-jasmine"),
+            require("karma-webpack"),
             require("karma-firefox-launcher"),
             require("karma-chrome-launcher"),
             require("karma-jasmine-html-reporter"),

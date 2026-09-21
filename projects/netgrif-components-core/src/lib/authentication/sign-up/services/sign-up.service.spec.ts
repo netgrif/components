@@ -6,6 +6,10 @@ import {HttpClientTestingModule, HttpTestingController} from '@angular/common/ht
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterTestingModule} from '@angular/router/testing';
 import {NetgrifApplicationEngine} from '../../../../commons/schema';
+import {ConfigurationResourceService} from '../../../resources/engine-endpoint/configuration-resource.service';
+import {ResourceProvider} from '../../../resources/resource-provider.service';
+import {HttpClient} from '@angular/common/http';
+import {Injectable} from '@angular/core';
 
 describe('SignUpService', () => {
     let service: SignUpService;
@@ -85,6 +89,9 @@ describe('SignUpService', () => {
             TestBed.configureTestingModule({
                 imports: [HttpClientTestingModule, NoopAnimationsModule, RouterTestingModule.withRoutes([])],
                 providers: [
+                    HttpClient,
+                    ResourceProvider,
+                    ConfigurationResourceService,
                     SignUpService,
                     {provide: ConfigurationService, useClass: MissingEndpointsConfigurationService}
                 ]
@@ -118,8 +125,9 @@ describe('SignUpService', () => {
     });
 });
 
+@Injectable()
 class MissingEndpointsConfigurationService extends ConfigurationService {
-    constructor() {
+    constructor(protected configurationResource: ConfigurationResourceService) {
         super({
             extends: 'nae-default',
             providers: {
@@ -135,6 +143,13 @@ class MissingEndpointsConfigurationService extends ConfigurationService {
                 },
                 resources: []
             }
-        } as unknown as NetgrifApplicationEngine);
+        } as unknown as NetgrifApplicationEngine,
+            configurationResource,
+            {
+                application: 'nae',
+                type: 'default',
+                gateway_url: 'http://localhost:8888/api',
+                resolve_configuration: false
+            });
     }
 }

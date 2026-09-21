@@ -16,8 +16,9 @@ import {AuthenticationMethodService} from '../../authentication/services/authent
 import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
 import {MaterialModule} from '../../material/material.module';
-import {TranslateService} from '@ngx-translate/core';
 import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token';
+import {DateAdapter} from '@angular/material/core';
+import {CustomDateAdapter} from './models/custom-date-adapter';
 
 describe('AbstractDateFieldComponent', () => {
     let component: TestDateFieldComponent;
@@ -36,6 +37,7 @@ describe('AbstractDateFieldComponent', () => {
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
+                {provide: DateAdapter, useClass: CustomDateAdapter}
             ],
             declarations: [
                 TestDateFieldComponent,
@@ -53,10 +55,6 @@ describe('AbstractDateFieldComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    it('should get error message', () => {
-        expect(component.getErrorMessage()).toEqual('This is custom message!');
-    });
-
     afterEach(() => {
         TestBed.resetTestingModule();
     });
@@ -67,9 +65,8 @@ describe('AbstractDateFieldComponent', () => {
     template: ''
 })
 class TestDateFieldComponent extends AbstractDateFieldComponent {
-    constructor(translate: TranslateService,
-                @Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
-        super(translate, informAboutInvalidData);
+    constructor(@Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
+        super(informAboutInvalidData);
     }
 }
 

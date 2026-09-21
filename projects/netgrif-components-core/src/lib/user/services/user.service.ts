@@ -1,9 +1,10 @@
 import {Injectable, OnDestroy} from '@angular/core';
+import {ConfigurationService} from "../../configuration/configuration.service";
 import {Observable, ReplaySubject, Subscription} from 'rxjs';
 import {ProcessRole} from '../../resources/interface/process-role';
 import {User} from '../models/user';
 import {Credentials} from '../../authentication/models/credentials';
-import {take, tap} from 'rxjs/operators';
+import {filter, take, tap} from 'rxjs/operators';
 import {AuthenticationService} from '../../authentication/services/authentication/authentication.service';
 import {UserResourceService} from '../../resources/engine-endpoint/user-resource.service';
 import {UserTransformer} from '../../authentication/models/user.transformer';
@@ -28,33 +29,42 @@ export class UserService implements OnDestroy {
     protected _subAnonym: Subscription;
     private _publicLoadCalled: boolean;
 
+    public readonly GLOBAL_ROLE_PREFIX = 'global_';
+
     constructor(protected _authService: AuthenticationService,
                 protected _userResource: UserResourceService,
                 protected _userTransform: UserTransformer,
                 protected _log: LoggerService,
                 protected _session: SessionService,
-                protected _anonymousService: AnonymousService) {
+                protected _anonymousService: AnonymousService,
+                protected _config: ConfigurationService) {
         this._user = this.emptyUser();
         this._loginCalled = false;
         this._userChange$ = new ReplaySubject<User>(1);
         this._anonymousUserChange$ = new ReplaySubject<User>(1);
-        setTimeout(() => {
-            this._subAuth = this._authService.authenticated$.subscribe(auth => {
-                if (auth && !this._loginCalled) {
-                    this.loadUser();
-                } else if (!auth) {
+        this._config.loaded$
+            .pipe(
+                filter(loaded => loaded),
+                take(1)
+            ).subscribe(() => {
+            setTimeout(() => {
+                this._subAuth = this._authService.authenticated$.subscribe(auth => {
+                    if (auth && !this._loginCalled) {
+                        this.loadUser();
+                    } else if (!auth) {
+                        this.clearUser();
+                        this.publishUserChange();
+                    }
+                });
+            });
+            this._subAnonym = this._anonymousService.tokenSet.subscribe(token => {
+                if (token) {
+                    this.loadPublicUser();
+                } else {
                     this.clearUser();
-                    this.publishUserChange();
+                    this.publishAnonymousUserChange();
                 }
             });
-        });
-        this._subAnonym = this._anonymousService.tokenSet.subscribe(token => {
-            if (token) {
-                this.loadPublicUser();
-            } else {
-                this.clearUser();
-                this.publishAnonymousUserChange();
-            }
         });
     }
 
@@ -64,6 +74,10 @@ export class UserService implements OnDestroy {
 
     get user$(): Observable<User> {
         return this._userChange$.asObservable();
+    }
+
+    get anonymousUser(): User {
+        return this.anonymousUser;
     }
 
     get anonymousUser$(): Observable<User> {
@@ -126,16 +140,23 @@ export class UserService implements OnDestroy {
     }
 
     /**
-     * Checks whether the user has role with the specified identifier in a process with the specified identifier (any version)
+     * Checks whether the user has a role with the specified identifier in a process with the specified identifier (any version),
+     * or if the role is global (with prefix 'global_').
      * @param roleIdentifier identifier (import ID) of the role we want to check
      * @param netIdentifier identifier (import ID) of the process the role is defined in
      */
     public hasRoleByIdentifier(roleIdentifier: string, netIdentifier: string): boolean {
         const user = this._user.getSelfOrImpersonated();
-        if (!roleIdentifier || !netIdentifier || !user.roles) {
+        if (!roleIdentifier || !user.roles) {
             return false;
         }
-        return user.roles.some(r => r.netImportId === netIdentifier && r.importId === roleIdentifier);
+
+        return user.roles.some(r => {
+            const matchesRole = r.importId === roleIdentifier;
+            const isGlobalRole = r.importId.startsWith(this.GLOBAL_ROLE_PREFIX);
+            const matchesNet = r.netImportId === netIdentifier;
+            return matchesRole && (isGlobalRole || matchesNet);
+        });
     }
 
     /**
@@ -176,7 +197,7 @@ export class UserService implements OnDestroy {
     }
 
     protected emptyUser() {
-        return new User('', '', '', '', [], [], [], []);
+        return new User('', '', '', '', '', '', [], [], [], []);
     }
 
     protected loadUser(): void {
@@ -211,6 +232,14 @@ export class UserService implements OnDestroy {
 
     public clearUser() {
         this._user = this.emptyUser();
+    }
+
+    public isUserEmpty(user: User): boolean {
+        return !user || (!user.id && user.roles.length === 0);
+    }
+
+    public isCurrentUserEmpty(): boolean {
+        return this.isUserEmpty(this.user)
     }
 
     protected publishUserChange(): void {

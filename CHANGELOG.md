@@ -5,18 +5,215 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres
 to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-Full Changelog: [https://github.com/netgrif/components/commits/v6.3.0](https://github.com/netgrif/components/commits/v6.3.0)
+Full Changelog: [https://github.com/netgrif/components/commits/v6.5.0](https://github.com/netgrif/components/commits/v6.5.0)
 
-## [6.3.0](https://github.com/netgrif/components/releases/tag/v6.3.0) (2022-10-20)
+## [7.0.0](https://github.com/netgrif/components/releases/tag/v7.0.0) (2024-11-22)
+
+### Fixed
+- [NAE-2018] User list input is not showing dialog
+- [NAE-2019] Bugs after merge with 6.4.0
+
+### Changed
+- [NAE-1889] Process list is not refreshed after uploading process file 
+- [NAE-1885] Side panel creates a new case when pressing Enter on date field 
+- [NAE-1687] Factory class as providers 
+- [NAE-1911] Autosave on text area in cooperation with button 
+- [NAE-1497] Frontend actions 
+- [NAE-1915] TaskRef behaviour handling for multiple level 
+- [NAE-1904] Case ref as multichoice and enumeration 
+- [NAE-1908] NAE-1906 Improvements 
+- [NAE-1918] Tags on process resources 
+- [NAE-1921] User field value cannot be cleared 
+- [NAE-1914] revertToPreviousValue - change is always false 
+- [NAE-1925] Panel is not opening 
+- [NAE-1924] Neziadane volanie setData z FE 
+- [NAE-1923] DateTime doesn't have locale and rework validation to isoWeekday 
+- [NAE-1928] Refresh tabs on change 
+- [NAE-1926] Can't close Tab in Tab view 
+- [NAE-1929] Data field type list of strings 
+- [NAE-1933] UserList deleteAll button 
+- [NAE-1939] Problem with Tests 
+- [NAE-1936] Disable create case button using menu items 
+- [NAE-1935] Improved breadcrumbs from menu items 
+- [NAE-1876] Process URI v2 
+- [NAE-1882] Filter folder process 
+- [NAE-1890] Data field component register 
+- [NAE-1901] Taskref rendering update 
+- [NAE-1900] New component design 
+- [NAE-1920]  Injection token NAE_USER_ASSIGN_COMPONENT breaks delegate 
+- [NAE-1879] Language register 
+- [NAE-1905] Add bold on i18n text plainText field 
+- [NAE-1873] Seperator for number field 
+- [NAE-1922] Signature Pad Field 
+- [NAE-1949] Allowed Types for Filefield 
+- [NAE-1813] Field id as path variable in TaskController 
+- [NAE-1957] Allow filter to caseRef field and variants 
+- [NAE-1960] Enumeration Map does not propagate changes when selecting  
+- [NAE-1958] Make component properties changeable 
+- [NAE- 1940] Update to new Angular 
+- [NAE-1983] Public view file handling 
+- [NAE-1999] Broken pagination on paged case view 
+- [NAE-1949] Allowed Types for Filefield 
+- [NAE-2005] Field behavior change does not work correctly with multiple references using taskRef 
+- [NAE-2013] Autocomplete options are set to the first dropdown 
+- [NAE-2013] Autocomplete options are set to the first dropdown 
+- [NAE-2016] Global roles for menu items permissions 
+- [NAE-2018] User list input is not showing dialog 
+- [NAE-2020] Create case error when allowed net blocks are present 
+- [NAE-2021] Outputs for navigation components 
+- [NAE-2022] UI Design Fixes and Improvements 
+- [NAE-2034] Open first view 
+- [NAE-2038] Public View 
+- [NAE-2033] Welcome dashboard 
+- [NAE-2035] Implement Single-Task-View 
+- [NAE-2036] Task-List-View to open Case by link 
+- [NAE-2041] Implementing Ticket View 
+- [NAE-2040] Search in role management 
+- [NAE-2052] Integrate ticket view with menu items 
+- [NAE-2039] Search in workflow view 
+- [NAE-2063] Action API 6.5.0 
+- [NAE-2115] Task search on Search Node #314 
+- [NAE-2119] Fix menuItem 
+- [NAE-2125] Remove URI service usage from admin and menu items #318 
+- [NAE-2116] Frontend remote configuration 
+- [NAE-2085] Refactor User 
+- [NAE-2122] Implement Structured and Efficient Pagination in gRPC 
+- [NAE-2146] Broken hidden menu on frontend 
+- [NAE-2085] Refactor User 
+- [NAE-2118] Implement OpenID Connector Auth for Admin node  
+- [NAE-2165] Broken task list pagination 
+- [NAE-2174] Vanishing menu after few clicks 
+- Refactor case ID usage to replace `stringId` with `id` 
+- [NAE-2188] Wrong remote configuration loading order 
+- [NAE-2197] Wrong elastic sort 
+- [NAE-2205] DefaultCaseRefListViewComponent - headers not displayed when processes exceed single view 
+- [NAE-2202] Post test fixes 
+- [NAE-2218] Misaligned header on case view when displayed below 1920px 
+- [NAE-2224] Title in optional text in case creation button as I18nString 
+- [NAE-2226] Cannot switch between menu items 
+- [NAE-2232] Frontend Actions Task events resolver 
+- [NAE-2233] Fix dashboard menu issue 
+- [NAE-2227] MenuItem default headers not working 
+- [NAE-2234] Fix dashboard menu 
+- [NAE-2217] Single Task View 
+- [NAE-2251] Map field options are not translated 
+- [NAE-2285] Group as a value of userlists 
+- [NAE-2354] Include assignee userRealmId in task response 
+- [NAE-2263] Copy/selection prevention is set to to entire application not just for side menu 
+- [NAE-2435] Enumeration field with no choices does not properly handle validation 
+- [NAE-2416] AbstractFileDefaultFieldComponent does not push upload event
+
+## [6.5.0](https://github.com/netgrif/components/releases/tag/v6.5.0) (2025-02-18)
+### Added
+
+- [NAE-2033] Welcome dashboard
+- [NAE-2041] Implementing Ticket View
+
+### Changed
+
+- [NAE-2051] Implement configurable view in menu items
+- [NAE-2034] Open first view
+- [NAE-2038] Public View
+- [NAE-2035] Implement Single-Task-View
+- [NAE-2036] Task-List-View to open Case by link
+- [NAE-2040] Search in role management
+- [NAE-2052] Integrate ticket view with menu items
+- [NAE-2039] Search in workflow view
+
+## [6.4.0](https://github.com/netgrif/components/releases/tag/v6.4.0) (2024-12-24)
+
+### Fixed
+
+- [NAE-1915] TaskRef behaviour handling for multiple level
+- [NAE-1908] NAE-1906 Improvements
+- [NAE-1925] Panel is not opening
+- [NAE-1924] Unnecessary call for setData from FE
+- [NAE-1901] Taskref rendering update
+- [NAE-1926] Can't close Tab in Tab view
+- [NAE-1939] Problem with Tests
+- [NAE-1960] Enumeration Map does not propagate changes when selecting
+- [NAE-1983] Public view file handling
+- [NAE-1999] Broken pagination on paged case view
+- [NAE-2005] Field behavior change does not work correctly with multiple references using taskRef
+- [NAE-2013] Autocomplete options are set to the first dropdown
+- [NAE-2020] Create case error when allowed net blocks are present
+- [NAE-1948] Bugs after merge to 6.4.0
+- [NAE-2022] UI Design Fixes and Improvements
+
+### Added
+
+- [NAE-1890] Data field component register
+- [NAE-1901] Taskref rendering update
+- [NAE-1904] CaseRef list component
+- [NAE-1497] Frontend Actions
+- [NAE-1918] Tags on process resources
+- [NAE-1876] Process URI v2
+- [NAE-1882] Filter folder process
+- [NAE-1900] New component design
+- [NAE-1928] Refresh tabs on change
+- [NAE-1929] Data field type list of strings
+- [NAE-1936] Disable create case button using menu items
+- [NAE-1935] Improved breadcrumbs from menu items
+- [NAE-1920] Injection token NAE_USER_ASSIGN_COMPONENT breaks delegate
+- [NAE-1684] Frontend component for data field caseRef
+- [NAE-1949] Allowed Types for Filefield
+- [NAE-1813] Field id as path variable in TaskController
+- [NAE-1905] Add bold on i18n text plainText field
+- [NAE-1873] Seperator for number field
+- [NAE-1922] Signature Pad Field
+- [NAE-1957] Allow filter to caseRef field and variants
+- [NAE-1958] Make component properties changeable
+- [NAE-1949] Allowed Types for Filefield
+- [NAE-2016] Global roles for menu items permissions
+- [NAE-2021] Outputs for navigation components
+
+## [6.3.3](https://github.com/netgrif/components/releases/tag/v6.3.3) (2024-01-19)
+
+### Added
+
+- [NAE-1933] UserList deleteAll button
+
+## [6.3.2](https://github.com/netgrif/components/releases/tag/v6.3.2) (2023-07-25)
+
+### Fixed
+
+- [NAE-1911] Autosave on text area in cooperation with button
+- [NAE-1914] revertToPreviousValue - change is always false
+- [NAE-1923] DateTime doesn't have locale and rework validation to isoWeekday
+
+## [6.3.1](https://github.com/netgrif/components/releases/tag/v6.3.1) (2023-07-18)
+
+### Fixed
+
+- [NAE-1885] Side panel creates a new case when pressing Enter on date field
+- [NAE-1889] Process list is not refreshed after uploading process file
+
+### Changed
+
+- [NAE-1687] Factory class as providers
+
+## [6.3.0](https://github.com/netgrif/components/releases/tag/v6.3.0) (2023-05-26)
 
 ### Fixed
 
 - [NAE-1790] Validation message on the date field is not displaying correctly
 - [NAE-1795] Breadcrumbs based on the menu, not on the currently displayed view
 - [NAE-1797] I18N field at asynchronous rendering
+- [NAE-1804] In UserList field can choose one user multiple times
+- [NAE-1823] Error when searching for non-existing tasks
+- [NAE-1825] Fix the upstream dependency conflict
+- [NAE-1827] Dynamic enumeration looses focus after querying for data
+- [NAE-1830] Changing columns in overflow Service deletes all set columns
+- [NAE-1832] Security upgrade moment from 2.24.0 to 2.29.4
+- [NAE-1839] Public view - fields after auto assign are still only visible
+- [NAE-1869] Incorrectly expanded task
+- [NAE-1802] TaskRef-ed fields behavior update unaware of parent task behavior
+- [NAE-1800] Operations on date fields in advanced search are not rendered correctly
 
 ### Changed
 
+- [NAE-1431] Login view redirect configuration
+- [NAE-1725] Login spinner / button spinner
 - [NAE-1674] Uri node cases pagination
 - [NAE-1759] Update documentation of public views, PDF generator and user list
 - [NAE-1762] Public view URL encoding
@@ -24,6 +221,32 @@ Full Changelog: [https://github.com/netgrif/components/commits/v6.3.0](https://g
 ### Added
 
 - [NAE-1678] User impersonation
+- [NAE-1703] Dashboard
+- [NAE-1809] UserList field show selected users
+- [NAE-1835] Change password component
+- [NAE-1841] Idle timer component
+- [NAE-1874] Filtering users based on roles when selecting users for UserListField
+- [NAE-1607] Allowed nets configuration for newly created filter
+- [NAE-1722] Set default view headers with the CreateMenuItem action method
+- [NAE-1711] Dashboard
+
+## [6.2.10](https://github.com/netgrif/components/releases/tag/v6.2.10) (2023-11-07)
+
+### Fixed
+
+- [NAE-1921] User field value cannot be cleared
+
+## [6.2.9](https://github.com/netgrif/components/releases/tag/v6.2.9) (2023-05-04)
+
+### Fixed
+
+- [NAE-1867] Fulltext replaces only first ' '
+
+## [6.2.8](https://github.com/netgrif/components/releases/tag/v6.2.8) (2023-03-22)
+
+### Added
+
+- [NAE-1851] Save selected headers in filter
 
 ## [6.2.7](https://github.com/netgrif/components/releases/tag/v6.2.7) (2022-12-19)
 

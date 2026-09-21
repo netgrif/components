@@ -9,7 +9,7 @@ import {ConfigurationService} from '../../../../configuration/configuration.serv
 import {TestConfigurationService} from '../../../../utility/tests/test-config';
 import {CaseViewService} from '../../service/case-view-service';
 import {SearchService} from '../../../../search/search-service/search.service';
-import {Component, Inject, Optional} from '@angular/core';
+import {Component, CUSTOM_ELEMENTS_SCHEMA, Inject, Optional} from '@angular/core';
 import {AbstractCaseListComponent} from './abstract-case-list.component';
 import {LoggerService} from '../../../../logger/services/logger.service';
 import {AuthenticationMethodService} from '../../../../authentication/services/authentication-method.service';
@@ -49,7 +49,8 @@ describe('AbstractCaseListComponent', () => {
                 },
                 {provide: AllowedNetsService, useFactory: TestCaseViewAllowedNetsFactory, deps: [AllowedNetsServiceFactory]}
             ],
-            declarations: [TestCaseComponent]
+            declarations: [TestCaseComponent],
+            schemas: [CUSTOM_ELEMENTS_SCHEMA]
         }).compileComponents();
     }));
 

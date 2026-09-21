@@ -1,6 +1,6 @@
 <div class="workflow-container full-height" fxLayout="column" fxLayoutAlign="start stretch">
     <div fxLayout="row" fxLayoutAlign="center" class="workflow-header">
-        <nc-header #header fxFlex="100" [hideEditMode]="true" [type]="headerType"></nc-header>
+        <nc-header #header fxFlex="100" [hideHeaderMenu]="true" [type]="headerType"></nc-header>
     </div>
     <div fxLayout="column" fxLayoutAlign="start center" fxFlex class="workflow-panels-container">
         <ng-container *ngIf="workflows$ | async as workflows">

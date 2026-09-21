@@ -228,7 +228,7 @@ export class UserListService implements OnDestroy {
             return of([]);
         }
         this._updateProgress$.on();
-        return forkJoin(selectedUsers.map(user => this._resources.assignRoles(user.id + '', selectedRoles))).pipe(
+        return forkJoin(selectedUsers.map(user => this._resources.assignRoles(user.id, user.realmId, selectedRoles))).pipe(
             tap(messages => {
                 messages.forEach((message, idx) => {
                     if (message.error) {

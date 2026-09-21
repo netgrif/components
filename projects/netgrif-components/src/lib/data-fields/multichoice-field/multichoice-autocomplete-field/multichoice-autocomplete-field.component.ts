@@ -1,5 +1,10 @@
-import { Component} from '@angular/core';
-import {AbstractMultichoiceAutocompleteFieldComponentComponent} from '@netgrif/components-core';
+import {Component, Inject, Optional} from '@angular/core';
+import {
+    AbstractMultichoiceAutocompleteFieldComponentComponent,
+    DATA_FIELD_PORTAL_DATA,
+    DataFieldPortalData,
+    MultichoiceField
+} from '@netgrif/components-core';
 
 @Component({
   selector: 'nc-multichoice-autocomplete-field',
@@ -8,8 +13,8 @@ import {AbstractMultichoiceAutocompleteFieldComponentComponent} from '@netgrif/c
 })
 export class MultichoiceAutocompleteFieldComponent  extends AbstractMultichoiceAutocompleteFieldComponentComponent {
 
-    constructor() {
-        super();
+    constructor(@Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<MultichoiceField>) {
+        super(dataFieldPortalData);
     }
 
 }

@@ -9,7 +9,8 @@
                 "logout": "/logout",
                 "signup": "/signup"
             },
-            "sessionBearer": "x-auth-token"
+            "sessionBearer": "x-auth-token",
+            "sessionTimeout": 900
         },
         "resources": [
             {

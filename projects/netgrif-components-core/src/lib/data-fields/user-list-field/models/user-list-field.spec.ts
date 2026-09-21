@@ -9,7 +9,7 @@ describe('UserListField', () => {
             visible: true,
             editable: true,
             hidden: true
-        }, undefined)).toBeTruthy();
+        }, undefined, undefined)).toBeTruthy();
     });
 
     afterEach(() => {

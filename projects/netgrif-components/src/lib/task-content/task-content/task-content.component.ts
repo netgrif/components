@@ -16,6 +16,8 @@ import {
 })
 export class TaskContentComponent extends AbstractTaskContentComponent {
 
+    public taskContentComponentClass = TaskContentComponent;
+
     constructor(protected _fieldConverter: FieldConverterService,
                 public taskContentService: TaskContentService,
                 protected _paperView: PaperViewService,

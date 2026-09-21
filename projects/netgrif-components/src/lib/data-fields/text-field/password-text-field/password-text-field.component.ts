@@ -1,6 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Inject, Optional} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
-import {AbstractPasswordTextFieldComponent} from '@netgrif/components-core';
+import {
+    AbstractPasswordTextFieldComponent,
+    DATA_FIELD_PORTAL_DATA,
+    DataFieldPortalData, TextField
+} from '@netgrif/components-core';
 
 @Component({
   selector: 'nc-password-text-field',
@@ -11,8 +15,9 @@ export class PasswordTextFieldComponent extends AbstractPasswordTextFieldCompone
 
     hide: boolean;
 
-    constructor(protected _translate: TranslateService) {
-        super(_translate);
+    constructor(protected _translate: TranslateService,
+                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<TextField>) {
+        super(_translate, dataFieldPortalData);
         this.hide = true;
     }
 }

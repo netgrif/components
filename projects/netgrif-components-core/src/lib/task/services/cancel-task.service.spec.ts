@@ -35,6 +35,7 @@ import {createMockNet} from '../../utility/tests/utility/create-mock-net';
 import {ChangedFieldsService} from '../../changed-fields/services/changed-fields.service';
 import {User} from '../../user/models/user';
 import {ProcessRole} from '../../resources/interface/process-role';
+import {FrontActionService} from "../../actions/services/front-action.service";
 
 describe('CancelTaskService', () => {
     let service: CancelTaskService;
@@ -59,6 +60,7 @@ describe('CancelTaskService', () => {
                 TaskDataService,
                 DataFocusPolicyService,
                 ChangedFieldsService,
+                FrontActionService,
                 {provide: TaskContentService, useClass: UnlimitedTaskContentService},
                 {provide: NAE_TASK_OPERATIONS, useClass: SubjectTaskOperations},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
@@ -66,12 +68,6 @@ describe('CancelTaskService', () => {
                 {provide: TaskResourceService, useClass: TestTaskResourceService},
                 {provide: UserService, useClass: TestUserService}
             ]
-        }).overrideModule(BrowserDynamicTestingModule, {
-            set: {
-                entryComponents: [
-                    ErrorSnackBarComponent,
-                ]
-            }
         }).compileComponents();
         service = TestBed.inject(CancelTaskService);
         testTask = {
@@ -80,13 +76,7 @@ describe('CancelTaskService', () => {
             title: '',
             caseColor: '',
             caseTitle: '',
-            user: {
-                id: '',
-                email: 'mail',
-                name: '',
-                surname: '',
-                fullName: ''
-            },
+            assignee: {id: 'id', realmId: 'realmId', fullName: 'Name Name', username: 'username'},
             roles: {
                 role: {
                     assign: true,
@@ -121,7 +111,7 @@ describe('CancelTaskService', () => {
 
     it('should cancel successfully', done => {
         expect(testTask.startDate).toBeTruthy();
-        expect(testTask.user).toBeTruthy();
+        expect(testTask.assignee).toBeTruthy();
         resourceService.response = {
             success: 'success',
             outcome: {
@@ -133,7 +123,7 @@ describe('CancelTaskService', () => {
                     title: '',
                     caseColor: '',
                     caseTitle: '',
-                    user: null,
+                    assignee: null,
                     roles: {
                         role: {
                             assign: true,
@@ -168,7 +158,7 @@ describe('CancelTaskService', () => {
         service.cancel(callChainService.create((result) => {
             expect(result).toBeTrue();
             expect(testTask.startDate).toBeFalsy();
-            expect(testTask.user).toBeFalsy();
+            expect(testTask.assignee).toBeFalsy();
 
             expect(taskEvent).toBeTruthy();
             expect(taskEvent.taskId).toEqual('taskId');
@@ -181,7 +171,7 @@ describe('CancelTaskService', () => {
 
     it('should cancel unsuccessful', done => {
         expect(testTask.startDate).toBeTruthy();
-        expect(testTask.user).toBeTruthy();
+        expect(testTask.assignee).toBeTruthy();
         resourceService.response = {
             error: 'error',
             outcome: {}
@@ -195,7 +185,7 @@ describe('CancelTaskService', () => {
         service.cancel(callChainService.create((result) => {
             expect(result).toBeFalse();
             expect(testTask.startDate).toBeTruthy();
-            expect(testTask.user).toBeTruthy();
+            expect(testTask.assignee).toBeTruthy();
 
             expect(taskEvent).toBeTruthy();
             expect(taskEvent.taskId).toEqual('taskId');
@@ -208,7 +198,7 @@ describe('CancelTaskService', () => {
 
     it('should cancel error', done => {
         expect(testTask.startDate).toBeTruthy();
-        expect(testTask.user).toBeTruthy();
+        expect(testTask.assignee).toBeTruthy();
         resourceService.response = {error: 'throw'};
 
         let taskEvent: TaskEventNotification;
@@ -219,7 +209,7 @@ describe('CancelTaskService', () => {
         service.cancel(callChainService.create((result) => {
             expect(result).toBeFalse();
             expect(testTask.startDate).toBeTruthy();
-            expect(testTask.user).toBeTruthy();
+            expect(testTask.assignee).toBeTruthy();
 
             expect(taskEvent).toBeTruthy();
             expect(taskEvent.taskId).toEqual('taskId');
@@ -251,7 +241,7 @@ class TestTaskResourceService {
 
 class TestUserService {
     public get user() {
-        return new User('id', 'mail', '', '', [], [{stringId: 'role'} as ProcessRole]);
+        return new User('id', 'mail', '', '', '', '',[], [{stringId: 'role'} as ProcessRole]);
     }
 
     public hasRoleById(): boolean {

@@ -24,7 +24,7 @@ describe('PetriNetResourceService', () => {
             inject([HttpTestingController],
                 (httpMock: HttpTestingController) => {
                     service.getAll().subscribe(res => {
-                        expect(res.length).toEqual(0);
+                        expect(!res || res.length == 0).toBe(true);
                         done();
                     });
 

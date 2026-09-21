@@ -1,5 +1,5 @@
 import {NgModule} from '@angular/core';
-import {CommonModule, CurrencyPipe, registerLocaleData} from '@angular/common';
+import {CommonModule, CurrencyPipe, DecimalPipe, registerLocaleData} from '@angular/common';
 import en from '@angular/common/locales/en';
 import sk from '@angular/common/locales/sk';
 import de from '@angular/common/locales/de';
@@ -10,7 +10,7 @@ import de from '@angular/common/locales/de';
     imports: [
         CommonModule
     ],
-    providers: [CurrencyPipe]
+    providers: [CurrencyPipe, DecimalPipe]
 })
 export class CurrencyModule {
 

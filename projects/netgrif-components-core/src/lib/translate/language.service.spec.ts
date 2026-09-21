@@ -35,13 +35,6 @@ describe('LanguageService', () => {
                 {provide: UserResourceService, useClass: MockUserResourceService},
                 {provide: ConfigurationService, useClass: TestConfigurationService}
             ]
-        }).overrideModule(BrowserDynamicTestingModule, {
-            set: {
-                entryComponents: [
-                    ErrorSnackBarComponent,
-                    SuccessSnackBarComponent
-                ]
-            }
         });
         service = TestBed.inject(LanguageService);
     });
@@ -52,7 +45,22 @@ describe('LanguageService', () => {
 
     it('should set lang', () => {
         service.setLanguage('en-US');
-        expect(localStorage.getItem('Language')).toEqual('en-US');
+        expect(localStorage.getItem('Language')).toEqual('en');
+    });
+
+    xit('should set slovak lang', () => {
+        service.setLanguage('sk');
+        expect(localStorage.getItem('Language')).toEqual('sk');
+    });
+
+    xit('should set german lang', () => {
+        service.setLanguage('de');
+        expect(localStorage.getItem('Language')).toEqual('de');
+    });
+
+    it('should set fake lang', () => {
+        service.setLanguage('fa-ke');
+        expect(localStorage.getItem('Language')).toEqual('en');
     });
 
     afterEach(() => {

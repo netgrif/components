@@ -1,0 +1,9 @@
+@use '@angular/material' as mat;
+
+@mixin advanced-search-theme($theme) {
+    $primary: map-get($theme, primary);
+
+    .advanced-search-buttons {
+        color: mat.get-color-from-palette($primary, 500);
+    }
+}

@@ -7,24 +7,26 @@ import {LoggerService} from '../../logger/services/logger.service';
 import {BehaviorSubject, Subscription} from 'rxjs';
 import {ResizeEvent} from 'angular-resizable-element';
 import {UserPreferenceService} from '../../user/services/user-preference.service';
+import {MenuResizeEvent} from '../model/navigation-menu-events';
 
 const DRAWER_DEFAULT_MIN_WIDTH = 200;
 const DRAWER_MAX_WIDTH = 450;
 
 @Component({
     selector: 'ncc-abstract-navigation-drawer',
-    template: ''
+    template: '',
 })
 export abstract class AbstractNavigationDrawerComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
-    @Input('user') public showUser: boolean;
-    @Input('userObject') public user: User;
-    @Input('quickPanel') public showQuickPanel: boolean;
-    @Input('panelItems') public quickPanelItems: Array<any>; // QuickPanelItem
+    @Input() public showUser: boolean;
+    @Input() public user: User;
+    @Input() public showQuickPanel: boolean;
+    @Input() public quickPanelItems: Array<any>; // QuickPanelItem
     @Input() public navigation: boolean;
 
     @Output() public openedChange: EventEmitter<boolean>;
+    @Output() public resized: EventEmitter<MenuResizeEvent>;
 
     @ViewChild('sidenav') protected _sideNav: MatSidenav;
 
@@ -38,13 +40,14 @@ export abstract class AbstractNavigationDrawerComponent implements OnInit, After
     protected _config = {
         mode: 'over',
         opened: true,
-        disableClose: false
+        disableClose: false,
     };
 
     constructor(protected breakpoint: BreakpointObserver,
                 protected _log: LoggerService,
                 protected userPreferenceService: UserPreferenceService) {
         this.openedChange = new EventEmitter<boolean>();
+        this.resized = new EventEmitter<MenuResizeEvent>();
         this._fixed = true;
         this.opened = true;
         this.quickPanelItems = ['language', 'settings', 'logout', 'impersonation'];
@@ -57,7 +60,7 @@ export abstract class AbstractNavigationDrawerComponent implements OnInit, After
 
     ngOnInit(): void {
         this.resolveLayout(this._fixed);
-        this.subBreakpoint = this.breakpoint.observe([Breakpoints.HandsetLandscape]).subscribe( result => {
+        this.subBreakpoint = this.breakpoint.observe([Breakpoints.HandsetLandscape]).subscribe(result => {
             this._log.info('BreakpointObserver matches width of window: ' + this.breakpoint.isMatched('(max-width: 959.99px)'));
             if (this.breakpoint.isMatched('(max-width: 959.99px)')) {
                 this.resolveLayout(false);
@@ -82,6 +85,7 @@ export abstract class AbstractNavigationDrawerComponent implements OnInit, After
     ngOnDestroy(): void {
         this.subBreakpoint.unsubscribe();
         this.openedChange.complete();
+        this.resized.complete();
     }
 
     get config() {
@@ -92,7 +96,7 @@ export abstract class AbstractNavigationDrawerComponent implements OnInit, After
         return this._fixed;
     }
 
-    @Input('fixed')
+    @Input()
     set fixed(value: boolean) {
         this._fixed = value;
         this.resolveLayout(this._fixed);
@@ -123,11 +127,11 @@ export abstract class AbstractNavigationDrawerComponent implements OnInit, After
         this._config = bool ? {
             mode: 'side',
             opened: true,
-            disableClose: true
+            disableClose: true,
         } : {
             mode: 'over',
             opened: false,
-            disableClose: false
+            disableClose: false,
         };
         if (bool && this._sideNav) {
             this._sideNav.open();
@@ -156,5 +160,6 @@ export abstract class AbstractNavigationDrawerComponent implements OnInit, After
         }
         this.userPreferenceService._drawerWidthChanged$.next(this.width);
         this.contentWidth.next(this.width);
+        this.resized.emit({width: this.width});
     }
 }

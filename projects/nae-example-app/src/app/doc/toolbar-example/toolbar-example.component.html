@@ -4,6 +4,6 @@
                        [apiModuleImport]="'ToolbarModule'"></nae-app-documentation>
 
 <ng-template #toolbarExample>
-    <nc-toolbar appName="Example" loggedUser="Anton Mrkvička" [logoSrc]="logoSrc" [logoAlt]="logoAlt"></nc-toolbar>
+    <nc-toolbar [toolbarConfig]="toolbarConfig"></nc-toolbar>
     <p>{{ 'toolbar-example.text' | translate }}</p>
 </ng-template>

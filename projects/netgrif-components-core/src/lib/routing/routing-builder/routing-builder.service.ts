@@ -40,7 +40,6 @@ export class RoutingBuilderService {
                 private _dynamicNavigationRouteService: DynamicNavigationRouteProviderService,
                 @Optional() @Inject(NAE_GROUP_NAVIGATION_COMPONENT_RESOLVER_COMPONENT)
                 private _groupNavigationComponentResolverComponent: Type<AbstractGroupNavigationComponentResolverComponent>) {
-        router.relativeLinkResolution = 'legacy';
         router.config.splice(0, router.config.length);
         for (const [pathSegment, view] of Object.entries(_configService.get().views)) {
             const route = this.constructRouteObject(view, pathSegment);
@@ -154,14 +153,17 @@ export class RoutingBuilderService {
             return this._groupNavigationComponentResolverComponent;
         }
 
-        let className;
+        const className = RoutingBuilderService.parseClassNameFromView(view, configPath);
+        return this._viewService.resolveNameToClass(className);
+    }
+
+    public static parseClassNameFromView(view: View, configPath: string): string {
         if (!!view.layout.componentName) {
-            className = `${classify(view.layout.componentName)}Component`;
+            return `${classify(view.layout.componentName)}Component`;
         } else {
             const classInfo = new ViewClassInfo(configPath, view.layout.name, view.layout.componentName);
-            className = classInfo.className;
+            return classInfo.className;
         }
-        return this._viewService.resolveNameToClass(className);
     }
 
     private defaultRoutesRedirects(): Array<Route> {

@@ -34,6 +34,9 @@ export function localAllowedNetsFactory(factory: AllowedNetsServiceFactory): All
     return factory.createFromArray([UserFilterConstants.FILTER_NET_IDENTIFIER]);
 }
 
+/**
+ * @deprecated
+ * */
 @Component({
     selector: 'nc-save-filter',
     templateUrl: './save-filter.component.html',

@@ -1,4 +1,4 @@
-import {Injectable, OnDestroy} from '@angular/core';
+import {Injectable, Injector, OnDestroy} from '@angular/core';
 import {TaskContentService} from './task-content.service';
 import {Observable, ReplaySubject} from 'rxjs';
 import {Task} from '../../resources/interface/task';
@@ -26,7 +26,8 @@ export class UnlimitedTaskContentService extends TaskContentService implements O
     constructor(_fieldConverterService: FieldConverterService,
                 _snackBarService: SnackBarService,
                 _translate: TranslateService,
-                _logger: LoggerService) {
+                _logger: LoggerService,
+                _injector: Injector) {
         super(_fieldConverterService, _snackBarService, _translate, _logger);
         this._task$ = new ReplaySubject<Task>(1);
     }

@@ -27,6 +27,7 @@ import {UserService} from '../../user/services/user.service';
 import {MockUserService} from '../../utility/tests/mocks/mock-user.service';
 import {User} from '../../user/models/user';
 import {PermissionService} from '../../authorization/permission/permission.service';
+import {FrontActionService} from '../../actions/services/front-action.service';
 
 describe('AssignPolicyService', () => {
     let service: AssignPolicyService;
@@ -51,6 +52,7 @@ describe('AssignPolicyService', () => {
                 AssignTaskService,
                 CancelTaskService,
                 TaskEventService,
+                FrontActionService,
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 FinishPolicyService,
                 FinishTaskService,
@@ -59,8 +61,8 @@ describe('AssignPolicyService', () => {
                 {provide: TaskContentService, useClass: SingleTaskContentService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: NAE_TASK_OPERATIONS, useClass: NullTaskOperations},
-                {provide: UserService, useClass: MockUserService}
-            ]
+                {provide: UserService, useClass: MockUserService},
+            ],
         });
         userService = TestBed.inject(UserService);
         service = TestBed.inject(AssignPolicyService);
@@ -70,12 +72,12 @@ describe('AssignPolicyService', () => {
             title: 'string',
             caseColor: 'string',
             caseTitle: 'string',
-            user: undefined,
+            assignee: undefined,
             userRefs: undefined,
             roles: {
                 assignRole: {
-                    assign: true
-                }
+                    assign: true,
+                },
             },
             startDate: undefined,
             finishDate: undefined,
@@ -86,11 +88,11 @@ describe('AssignPolicyService', () => {
             layout: {
                 cols: undefined,
                 rows: undefined,
-                offset: 0
+                offset: 0,
             },
             dataGroups: [],
             users: {},
-            _links: {}
+            _links: {},
         };
 
         assignSpy = spyOn(TestBed.inject(AssignTaskService), 'assign').and.callThrough();
@@ -102,7 +104,7 @@ describe('AssignPolicyService', () => {
 
     it('should performAssignPolicy', () => {
         (userService as unknown as MockUserService).user =
-            new User('', '', '', '', [], [{stringId: 'assignRole', name: '', importId: ''}]);
+            new User('', '', '', '', '', '', [], [{stringId: 'assignRole', name: '', importId: ''}]);
         service.performAssignPolicy(true);
         expect(assignSpy).toHaveBeenCalled();
     });

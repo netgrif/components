@@ -5,7 +5,6 @@ document.addEventListener('DOMContentLoaded', function () {
     var localContextInUrl = '';
 
     if (COMPODOC_CURRENT_PAGE_CONTEXT !== '') {
-        localContextInUrl = localContextInUrl;
         switch (COMPODOC_CURRENT_PAGE_CONTEXT) {
             case 'additional-page':
                 localContextInUrl = 'additional-documentation';
@@ -78,15 +77,16 @@ document.addEventListener('DOMContentLoaded', function () {
     processMenuLinks(entityLinks);
     var indexLinks = document.querySelectorAll('[data-type="index-link"]');
     processMenuLinks(indexLinks, true);
-    var entityLogos = document.querySelectorAll('[data-type="compodoc-logo"]');
-    var processLogos = function (entityLogo) {
+    var compodocLogos = document.querySelectorAll('[data-type="compodoc-logo"]');
+    var customLogo = document.querySelectorAll('[data-type="custom-logo"]');
+    var processLogos = function (entityLogos) {
         for (var i = 0; i < entityLogos.length; i++) {
             var entityLogo = entityLogos[i];
             if (entityLogo) {
                 var url = entityLogo.getAttribute('data-src');
                 // Dark mode + logo
                 let isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
-                if (isDarkMode) {
+                if (isDarkMode && url.indexOf('compodoc') !== -1) {
                     url = 'images/compodoc-vectorise-inverted.png';
                 }
                 if (url.charAt(0) !== '.') {
@@ -116,7 +116,8 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }
     };
-    processLogos(entityLogos);
+    processLogos(compodocLogos);
+    processLogos(customLogo);
 
     setTimeout(function () {
         document.getElementById('btn-menu').addEventListener('click', function () {
@@ -132,12 +133,16 @@ document.addEventListener('DOMContentLoaded', function () {
         /**
          * Native bootstrap doesn't wait DOMContentLoaded event to start his job, re do it here
          */
-        var Collapses = document.querySelectorAll('[data-toggle="collapse"]');
+        var Collapses = document.querySelectorAll('[data-bs-toggle="collapse"]');
         for (var o = 0, cll = Collapses.length; o < cll; o++) {
             var collapse = Collapses[o],
                 options = {};
             options.duration = collapse.getAttribute('data-duration');
-            new Collapse(collapse, options);
+            const targetId = collapse.getAttribute('data-bs-target');
+            if (targetId !== '') {
+                options.parent = collapse;
+                const c = new BSN.Collapse(targetId, options);
+            }
         }
 
         // collapse menu

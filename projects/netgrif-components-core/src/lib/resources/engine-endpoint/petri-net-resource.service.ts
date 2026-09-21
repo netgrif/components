@@ -33,7 +33,8 @@ export class PetriNetResourceService extends AbstractResourceService {
      */
     public getAll(params?: Params): Observable<Array<PetriNetReference>> {
         return this._resourceProvider.get$('petrinet', this.SERVER_URL, params)
-            .pipe(map(r => this.changeType(r, 'petriNetReferences')));
+            // .pipe(map(r => this.changeType(r, 'petriNetReferences')));
+            .pipe((map((response: any) => response.content)));
     }
 
     /**
@@ -165,6 +166,19 @@ export class PetriNetResourceService extends AbstractResourceService {
      */
     public searchPetriNets(body: PetriNetRequestBody, params?: Params): Observable<Page<PetriNetReference>> {
         return this._resourceProvider.post$('petrinet/search', this.SERVER_URL, body, params)
+            // .pipe(map(r => this.getResourcePage<PetriNetReference>(r, 'petriNetReferences')));
+            .pipe(map(r => this.mapToPage<PetriNetReference>(r)));
+    }
+
+    /**
+     * search PetriNets
+     *
+     * **Request Type:** POST
+     *
+     * **Request URL:** {{baseUrl}}/api/petrinet/search
+     */
+    public searchElasticPetriNets(body: PetriNetRequestBody, params?: Params): Observable<Page<PetriNetReference>> {
+        return this._resourceProvider.post$('petrinet/search_elastic', this.SERVER_URL, body, params)
             .pipe(map(r => this.getResourcePage<PetriNetReference>(r, 'petriNetReferences')));
     }
 

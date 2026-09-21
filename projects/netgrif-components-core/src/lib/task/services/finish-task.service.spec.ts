@@ -34,6 +34,7 @@ import {AssignTaskEventOutcome} from '../../event/model/event-outcomes/task-outc
 import {createMockCase} from '../../utility/tests/utility/create-mock-case';
 import {createMockNet} from '../../utility/tests/utility/create-mock-net';
 import {ChangedFieldsService} from '../../changed-fields/services/changed-fields.service';
+import {FrontActionService} from "../../actions/services/front-action.service";
 
 describe('FinishTaskService', () => {
     let service: FinishTaskService;
@@ -59,18 +60,13 @@ describe('FinishTaskService', () => {
                 DataFocusPolicyService,
                 TaskEventService,
                 ChangedFieldsService,
+                FrontActionService,
                 {provide: TaskContentService, useClass: UnlimitedTaskContentService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: NAE_TASK_OPERATIONS, useClass: NullTaskOperations},
                 {provide: TaskResourceService, useClass: TestTaskResourceService},
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
             ]
-        }).overrideModule(BrowserDynamicTestingModule, {
-            set: {
-                entryComponents: [
-                    ErrorSnackBarComponent,
-                ]
-            }
         }).compileComponents();
         service = TestBed.inject(FinishTaskService);
         testTask = {
@@ -79,7 +75,7 @@ describe('FinishTaskService', () => {
             title: '',
             caseColor: '',
             caseTitle: '',
-            user: undefined,
+            assignee: undefined,
             userRefs: undefined,
             roles: {},
             startDate: [1],
@@ -120,7 +116,7 @@ describe('FinishTaskService', () => {
                     title: '',
                     caseColor: '',
                     caseTitle: '',
-                    user: null,
+                    assignee: null,
                     roles: {
                         role: {
                             assign: true,

@@ -40,7 +40,7 @@ describe('ImpersonationService', () => {
                 {provide: UserService, useClass: TestUserService},
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
-                {provide: ConfigurationService, useClass: TestConfigurationService}]
+                {provide: ConfigurationService, useClass: TestConfigurationService}],
         });
         service = TestBed.inject(ImpersonationService);
         userService = (TestBed.inject(UserService) as any) as TestUserService;
@@ -57,7 +57,7 @@ describe('ImpersonationService', () => {
                     service.impersonating$.subscribe(bool => {
                         expect(bool).toBeTrue();
                         done();
-                    })
+                    });
                     service.impersonateUser('testId');
 
                     const reqLog = httpMock.expectOne('http://localhost:8080/api/impersonate/user/testId');
@@ -65,7 +65,7 @@ describe('ImpersonationService', () => {
 
                     reqLog.flush({});
                 })();
-        }
+        },
     );
 
     it('should impersonate config', (done) => {
@@ -75,7 +75,7 @@ describe('ImpersonationService', () => {
                     service.impersonating$.subscribe(bool => {
                         expect(bool).toBeTrue();
                         done();
-                    })
+                    });
                     service.impersonateByConfig('configId');
 
                     const reqLog = httpMock.expectOne('http://localhost:8080/api/impersonate/config/configId');
@@ -83,7 +83,7 @@ describe('ImpersonationService', () => {
 
                     reqLog.flush({});
                 })();
-        }
+        },
     );
 
     it('should stop impersonating', (done) => {
@@ -95,7 +95,7 @@ describe('ImpersonationService', () => {
                     service.impersonating$.subscribe(bool => {
                         expect(bool).toBeFalse();
                         done();
-                    })
+                    });
                     service.cease();
 
                     const reqLog = httpMock.expectOne('http://localhost:8080/api/impersonate/clear');
@@ -103,7 +103,7 @@ describe('ImpersonationService', () => {
 
                     reqLog.flush({});
                 })();
-        }
+        },
     );
 
     afterEach(inject([HttpTestingController], (mock: HttpTestingController) => {
@@ -117,10 +117,10 @@ class TestUserService {
 
     protected mockUser$ = new ReplaySubject<User>();
 
-    public userObj = new User('id', 'mail', '', '', [], [{stringId: 'role'} as ProcessRole], [], []);
+    public userObj = new User('id', 'mail', '', '', '', '', [], [{stringId: 'role'} as ProcessRole], [], []);
     public userObjAfter = new User(
-        this.userObj.id, this.userObj.email, this.userObj.firstName, this.userObj.lastName, this.userObj.authorities, this.userObj.roles, this.userObj.groups, this.userObj.nextGroups,
-        new User('impId', 'mail', '', '', [], [{stringId: 'role'} as ProcessRole], [], [])
+        this.userObj.id, this.userObj.username, this.userObj.email, this.userObj.realmId, this.userObj.firstName, this.userObj.lastName, this.userObj.authorities, this.userObj.roles, this.userObj.groups, this.userObj.nextGroups,
+        new User('impId', 'mail', '', '', '', '', [], [{stringId: 'role'} as ProcessRole], [], []),
     );
 
     public get user(): User {
@@ -136,7 +136,7 @@ class TestUserService {
     }
 
     public reload(): void {
-        this.mockUser$.next( this.userObjAfter);
+        this.mockUser$.next(this.userObjAfter);
     }
 
     public mimicUserLoaded(): void {

@@ -1,6 +1,6 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {CommonModule, CurrencyPipe} from '@angular/common';
-import {FlexModule} from '@angular/flex-layout';
+import {FlexModule} from '@ngbracket/ngx-layout';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {Component, NO_ERRORS_SCHEMA, Optional} from '@angular/core';
@@ -142,7 +142,7 @@ class TestWrapperComponent {
                 delete: true
             }
         },
-        users: {},
+        actors: {},
         color: 'color',
         creationDate: [],
         lastModified: [],
@@ -163,7 +163,7 @@ class TestWrapperComponent {
             {stringId: 'date', title: 'string', type: 'date', value: [2020, 1, 1, 10, 10]},
             {stringId: 'string', title: 'string', type: 'string', value: 'dasdsadsad'},
             {stringId: 'dateTime', title: 'string', type: 'dateTime', value: [2020, 1, 1, 10, 10]},
-            {stringId: 'enum', title: 'string', type: 'enumeration', value: {defaultValue: 'dasd'}},
+            {stringId: 'enum', title: 'string', type: 'enumeration', value: {defaultValue: 'dasd', translations: {}}},
         ]
     };
 }

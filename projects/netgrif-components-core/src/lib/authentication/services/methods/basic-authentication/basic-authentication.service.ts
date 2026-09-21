@@ -5,8 +5,8 @@ import {AuthenticationMethodService} from '../../authentication-method.service';
 import {Credentials} from '../../../models/credentials';
 import {ConfigurationService} from '../../../../configuration/configuration.service';
 import {UserResource} from '../../../../resources/interface/user-resource';
-import * as Buffer from 'buffer';
-import en from '@angular/common/locales/en';
+import {encodeBase64} from "../../../../utility/base64";
+
 
 @Injectable()
 export class BasicAuthenticationService extends AuthenticationMethodService {
@@ -30,7 +30,7 @@ export class BasicAuthenticationService extends AuthenticationMethodService {
         }
         return this._http.get<UserResource>(url, {
             headers: new HttpHeaders().set('Authorization', 'Basic ' +
-                this.encodeBase64(`${credentials.username}:${credentials.password}`))
+                encodeBase64(`${credentials.username}:${credentials.password}`))
         });
     }
 
@@ -39,15 +39,7 @@ export class BasicAuthenticationService extends AuthenticationMethodService {
         if (!url) {
             return throwError(new Error('Logout URL is not defined in the config [nae.providers.auth.endpoints.logout]'));
         }
-
         return this._http.post(url, {});
     }
 
-    encodeBase64(text: string): string {
-        return Buffer.Buffer.from(text).toString('base64');
-    }
-
-    decodeBase64(encoded: string): string {
-       return Buffer.Buffer.from(encoded, 'base64').toString('utf-8');
-    }
 }

@@ -46,9 +46,9 @@ export class DatafieldMapKey implements SearchAutocompleteOption<string> {
                 return 'check_box';
             case 'number':
                 return 'looks_one';
-            case 'user':
+            case 'actor':
                 return 'person';
-            case 'userList':
+            case 'actorList':
                 return 'people';
             case 'dateTime':
                 return 'schedule';

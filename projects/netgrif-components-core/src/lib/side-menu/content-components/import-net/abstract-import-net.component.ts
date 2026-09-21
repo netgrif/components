@@ -10,6 +10,7 @@ import {FileUploadDataModel} from '../../../data-fields/file-field/models/file-f
 import {Subscription} from 'rxjs';
 import {TranslateService} from '@ngx-translate/core';
 import {PetriNetEventOutcome} from '../../../event/model/event-outcomes/petrinet-outcomes/petri-net-event-outcome';
+import {PathService} from "../../../navigation/service/path.service";
 
 export class FileUploadModel {
     stringId: string;
@@ -42,6 +43,7 @@ export abstract class AbstractImportNetComponent implements AfterViewInit {
 
     constructor(protected _sideMenuControl: SideMenuControl,
                 protected _petriNetResource: PetriNetResourceService,
+                protected _pathService: PathService,
                 protected _log: LoggerService,
                 protected _snackbar: SnackBarService,
                 protected _translate: TranslateService) {

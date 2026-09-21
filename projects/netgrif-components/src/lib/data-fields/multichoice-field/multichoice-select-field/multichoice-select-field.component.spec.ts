@@ -42,7 +42,7 @@ describe('MultichoiceSelectFieldComponent', () => {
 
 @Component({
     selector: 'nc-test-wrapper',
-    template: '<nc-multichoice-select-field [showLargeLayout]="label" [multichoiceField]="field" [formControlRef]="form">' +
+    template: '<nc-multichoice-select-field [showLargeLayout]="label" [dataField]="field" [formControlRef]="form">' +
         '</nc-multichoice-select-field>'
 })
 class TestWrapperComponent {

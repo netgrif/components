@@ -4,27 +4,33 @@ import {DataGroupLayout} from './data-group-layout';
 /**
  * Object from Backend
  */
-export interface DataGroup {
+export interface DataGroup extends ParentDataGroupInformation{
     /**
      * Array [DataField]{@link DataField}
      */
     fields: Array<DataField<any>>;
     /**
-     * Name datagroup
+     * Name of the data group
      */
-    title: string;
+    title?: string;
     /**
-     * Desing alignment
+     * Design alignment
      * ***Example:*** start
      */
     alignment: DataGroupAlignment;
     /**
-     * Desing stretch
+     * Design stretch
      *
      * ***Example:*** true
      */
     stretch: boolean;
     layout?: DataGroupLayout;
+}
+
+/**
+ * An object containing the information about the parent of a data group
+ */
+export interface ParentDataGroupInformation {
     /**
      * String id of parent task, only set if dataGroup is loaded by {@link TaskRefField}
      */

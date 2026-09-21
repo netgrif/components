@@ -1,13 +1,12 @@
 <div fxLayout='column' fxLayoutAlign='start center' fxFlex>
-    <ng-container *ngIf='task$ | async as task'>
+    <ng-container *nccLet="(task$ | async) as task">
 
         <div *ngIf='(loading$ | async) === false && !task' fxLayout='column' fxLayoutAlign='center center'
              fxFlex>
-            <mat-icon color='accent'>check_box</mat-icon>
-            <span class='font-size-20'>{{ 'tasks.view.noTasksSatisfyingThisFilter' | translate }}</span>
+            <div *ngTemplateOutlet ="noTaskSection ?? defaultNoTaskSection"></div>
         </div>
 
-        <cdk-virtual-scroll-viewport itemSize="1" class="task-panel-scroll-container full-width full-height">
+        <div *ngIf="task" class="task-panel-scroll-container full-width full-height">
             <div *ngTemplateOutlet='pageHeader ?? defaultPageHeader'></div>
             <nc-task-panel
                 [textEllipsis]='textEllipsis'
@@ -21,6 +20,9 @@
                 [hidePanelHeader]='hidePanelHeader'
                 [actionButtonTemplates]='actionButtonTemplates'
                 [actionRowJustifyContent]='actionRowJustifyContent'
+                [first]='true'
+                [last]='true'
+                [hideActionRow]="hideActionRow"
                 class='panel-expanded-spacing'>
             </nc-task-panel>
 
@@ -28,16 +30,21 @@
                 <mat-spinner color='primary' diameter='52'></mat-spinner>
             </div>
             <div *ngTemplateOutlet='pageFooter ?? defaultPageFooter'></div>
-        </cdk-virtual-scroll-viewport>
+        </div>
+
+        <ng-template #defaultNoTaskSection>
+            <mat-icon color='accent'>check_box</mat-icon>
+            <span class='font-size-20'>{{ 'tasks.view.noTasksSatisfyingThisFilter' | translate }}</span>
+        </ng-template>
 
         <ng-template #defaultPageHeader>
-            <mat-card class="top-card">
+            <mat-card class="top-card" *ngIf="showPageHeader">
                 <span class="top-card-title"><strong>{{headerTitle ?? (!!task && !!task.task ? task.task.title : '')}}</strong></span>
             </mat-card>
         </ng-template>
 
         <ng-template #defaultPageFooter>
-            <mat-card class='bottom-card footer'>
+            <mat-card class='bottom-card footer' *ngIf="showPageFooter">
                 <span class="bottom-card-title footer-font"><strong>{{footerText ?? 'tasks.footer.defaultText' | translate}}</strong></span>
             </mat-card>
         </ng-template>

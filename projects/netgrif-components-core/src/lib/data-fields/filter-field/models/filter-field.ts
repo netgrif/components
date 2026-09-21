@@ -1,7 +1,7 @@
 import {DataField} from '../../models/abstract-data-field';
 import {Behavior} from '../../models/behavior';
 import {Layout} from '../../models/layout';
-import {Component} from '../../models/component';
+import {Component, ComponentPrefixes} from '../../models/component';
 import {FilterMetadata} from '../../../search/models/persistance/filter-metadata';
 import {Validation} from '../../models/validation';
 
@@ -20,5 +20,9 @@ export class FilterField extends DataField<string> {
 
     get allowedNets(): Array<string> {
         return this._allowedNets;
+    }
+
+    public getTypedComponentType(): string {
+        return ComponentPrefixes.FILTER + this.getComponentType();
     }
 }

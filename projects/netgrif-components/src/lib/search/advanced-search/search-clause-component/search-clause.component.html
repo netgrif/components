@@ -1,10 +1,10 @@
-<div class="clause-body clause-body-color">
-    <div fxLayout="row wrap" fxLayoutAlign="start center">
-        <div *ngFor="let item of getPredicateMap() | keyvalue; trackBy: trackByPredicates; first as first" fxLayout="row" fxLayoutAlign="start center">
-            <div *ngIf="!first" class="bool-operator-margin">{{'search.or' | translate | uppercase}}</div>
-            <nc-search-predicate [predicate]="item.value.wrappedPredicate" [predicateId]="item.key"
-                                 [remove$]="removeChild$" [generator]="item.value.generator" [editable]="editable"></nc-search-predicate>
-        </div>
-        <button *ngIf="editable" mat-stroked-button (click)="addChildPredicate()" class="bool-operator-button">+ {{'search.or' | translate | uppercase}}</button>
+<div fxLayout="row wrap" fxLayoutAlign="start center">
+    <div *ngFor="let item of getPredicateMap() | keyvalue; trackBy: trackByPredicates; first as first" fxLayout="row"
+         fxLayoutAlign="start center">
+        <div *ngIf="!first" class="bool-operator-margin">{{'search.or' | translate | uppercase}}</div>
+        <nc-search-predicate [predicate]="item.value.wrappedPredicate" [predicateId]="item.key"
+                             [remove$]="removeChild$" [generator]="item.value.generator"
+                             [editable]="editable"></nc-search-predicate>
     </div>
+    <button *ngIf="editable" mat-stroked-button (click)="addChildPredicate()" class="bool-operator-margin advanced-search-buttons">+ {{'search.or' | translate | uppercase}}</button>
 </div>

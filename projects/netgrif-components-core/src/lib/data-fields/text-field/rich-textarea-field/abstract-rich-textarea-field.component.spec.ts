@@ -1,4 +1,4 @@
-import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+import {Component, CUSTOM_ELEMENTS_SCHEMA, Inject, Optional} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {AbstractRichTextareaFieldComponent} from './abstract-rich-textarea-field.component';
 import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
@@ -7,7 +7,6 @@ import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {FormControl} from '@angular/forms';
 import {WrappedBoolean} from '../../data-field-template/models/wrapped-boolean';
-import {TextField} from '../models/text-field';
 import {MockAuthenticationMethodService} from '../../../utility/tests/mocks/mock-authentication-method-service';
 import {AuthenticationMethodService} from '../../../authentication/services/authentication-method.service';
 import {AuthenticationService} from '../../../authentication/services/authentication/authentication.service';
@@ -19,6 +18,8 @@ import {TestConfigurationService} from '../../../utility/tests/test-config';
 import {TranslateLibModule} from '../../../translate/translate-lib.module';
 import {CovalentModule} from '../../../covalent/covalent.module';
 import {MaterialModule} from '../../../material/material.module';
+import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
+import {TextAreaField} from "../models/text-area-field";
 
 describe('AbstractRichTextareaFieldComponent', () => {
     let component: TestTextComponent;
@@ -38,7 +39,15 @@ describe('AbstractRichTextareaFieldComponent', () => {
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
-                {provide: ConfigurationService, useClass: TestConfigurationService}
+                {provide: ConfigurationService, useClass: TestConfigurationService},
+                {provide: DATA_FIELD_PORTAL_DATA, useValue: {
+                        dataField: new TextAreaField('', '', 'text', {
+                            editable: true
+                        }, undefined, undefined, undefined, [{validationRule: 'regex 5', validationMessage: 'This is custom message!'}]),
+                        formControlRef: new FormControl(),
+                        showLargeLayout: new WrappedBoolean()
+                    } as DataFieldPortalData<TextAreaField>
+                }
             ],
             declarations: [TestTextComponent, TestWrapperComponent],
             schemas: [CUSTOM_ELEMENTS_SCHEMA]
@@ -67,26 +76,16 @@ describe('AbstractRichTextareaFieldComponent', () => {
     template: ''
 })
 class TestTextComponent extends AbstractRichTextareaFieldComponent {
-    constructor(protected _translate: TranslateService) {
-        super(_translate);
+    constructor(protected _translate: TranslateService,
+                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<TextAreaField>) {
+        super(_translate, dataFieldPortalData);
     }
 }
 
 @Component({
     selector: 'ncc-test-wrapper',
-    template: `<ncc-test-text [showLargeLayout]="label"
-                                 [formControlRef]="formControl"
-                                 [textAreaField]="dataField"></ncc-test-text>`
+    template: '<ncc-test-text></ncc-test-text>'
 })
 class TestWrapperComponent {
-    label = new WrappedBoolean();
-    dataField = new TextField('', '', 'text', {
-        editable: true
-    }, undefined, undefined, undefined, [{validationRule: 'regex 5', validationMessage: 'This is custom message!'}]);
-    formControl = new FormControl();
 
-    constructor() {
-        this.formControl.enable();
-        this.dataField.registerFormControl(this.formControl);
-    }
 }

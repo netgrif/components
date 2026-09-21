@@ -122,8 +122,8 @@ export interface Case {
     /**
      * **Example:** {}
      */
-    users?: UserPermissions;
-    userRefs?: UserRefs;
+    actors?: UserPermissions;
+    actorRefs?: UserRefs;
     /**
      * **Example:** []
      */

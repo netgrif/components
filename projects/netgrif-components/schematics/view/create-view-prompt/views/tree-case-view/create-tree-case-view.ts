@@ -32,7 +32,7 @@ export function createTreeCaseView(tree: Tree, args: CreateViewArguments, addVie
     }));
 
     updateAppModule(tree, view.className, view.fileImportPath, [
-        new ImportToAdd('FlexModule', '@angular/flex-layout'),
+        new ImportToAdd('FlexModule', '@ngbracket/ngx-layout'),
         new ImportToAdd('MatProgressSpinnerModule', '@angular/material/progress-spinner'),
         new ImportToAdd('TreeCaseViewComponentModule', '@netgrif/components')
     ]);
