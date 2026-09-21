@@ -3,7 +3,6 @@ import {ControlPanelButton} from '../../../control-panel/control-panel-button';
 import {ControlPanelIcon} from '../../../control-panel/control-panel-icon';
 import {CanvasTool} from './canvas-tool';
 import {CanvasToolContext} from './canvas-tool-context';
-import {TranslateService} from "@ngx-translate/core";
 
 export class SwitchLabelTool extends CanvasTool {
 
@@ -12,15 +11,14 @@ export class SwitchLabelTool extends CanvasTool {
     public static readonly ICON_OFF = 'label_off';
     private turnedOn = true;
 
-    constructor(context: CanvasToolContext, translateService: TranslateService) {
+    constructor(context: CanvasToolContext) {
         super(
             SwitchLabelTool.ID,
             new ControlPanelButton(
                 new ControlPanelIcon(SwitchLabelTool.ICON_ON, false, true),
-                translateService.instant('builder.modeler.edit-mode.services.showIds'),
+                context.translateService.instant('builder.modeler.edit-mode.services.showIds'),
             ),
             context,
-            translateService
         );
     }
 

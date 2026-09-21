@@ -2,21 +2,19 @@ import {ControlPanelButton} from '../../../control-panel/control-panel-button';
 import {ControlPanelIcon} from '../../../control-panel/control-panel-icon';
 import {CanvasTool} from './canvas-tool';
 import {CanvasToolContext} from './canvas-tool-context';
-import {TranslateService} from "@ngx-translate/core";
 
 export class CreatePlaceTool extends CanvasTool {
 
     public static ID = 'CreatePlaceTool';
 
-    constructor(context: CanvasToolContext, translateService: TranslateService) {
+    constructor(context: CanvasToolContext) {
         super(
             CreatePlaceTool.ID,
             new ControlPanelButton(
                 new ControlPanelIcon('circle', false, true),
-                translateService.instant('builder.modeler.edit-mode.services.place'),
+                context.translateService.instant('builder.modeler.edit-mode.services.place'),
             ),
             context,
-            translateService
         );
     }
 

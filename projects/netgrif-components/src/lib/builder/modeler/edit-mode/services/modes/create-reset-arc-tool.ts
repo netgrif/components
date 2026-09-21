@@ -4,21 +4,19 @@ import {ControlPanelButton} from '../../../control-panel/control-panel-button';
 import {ControlPanelIcon} from '../../../control-panel/control-panel-icon';
 import {CreatePTArc} from './create-ptarc';
 import {CanvasToolContext} from './canvas-tool-context';
-import {TranslateService} from "@ngx-translate/core";
 
 export class CreateResetArcTool extends CreatePTArc {
 
     public static ID = 'CreateResetArcTool';
 
-    constructor(context: CanvasToolContext, translateService: TranslateService) {
+    constructor(context: CanvasToolContext) {
         super(
             CreateResetArcTool.ID,
             new ControlPanelButton(
                 new ControlPanelIcon('resetarc', true),
-                translateService.instant('builder.modeler.edit-mode.services.resetArc'),
+                context.translateService.instant('builder.modeler.edit-mode.services.resetArc'),
             ),
             context,
-            translateService
         );
     }
 

@@ -38,18 +38,19 @@ export abstract class CanvasTool extends CanvasListenerTool {
     public actionMode: ActionsModeService;
     public actionsMasterDetail: ActionsMasterDetailService;
     public builderModeService: BuilderModeService;
+    protected _translateService: TranslateService
 
     protected constructor(
         id: string,
         button: ControlPanelButton,
         protected _context: CanvasToolContext,
-        protected _translateService: TranslateService
     ) {
         super(id, button, _context.modelService, _context.dialog, _context.router, _context.transitionService);
         this._editModeService = _context.editModeService;
         this.actionMode = _context.actionMode;
         this.actionsMasterDetail = _context.actionsMasterDetail;
         this.builderModeService = _context.builderModeService;
+        this._translateService = _context.translateService;
         this.hotkeys.push(new Hotkey('Escape', false, false, false, () => {
             this.closeContextMenu();
             this.reset();

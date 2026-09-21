@@ -8,15 +8,14 @@ import {CanvasPlace} from '../../domain/canvas-place';
 import {CanvasTransition} from '../../domain/canvas-transition';
 import {CanvasTool} from './canvas-tool';
 import {CanvasToolContext} from './canvas-tool-context';
-import {TranslateService} from "@ngx-translate/core";
 
 export abstract class CreateArcTool<T extends CanvasNodeElement<NodeElement, PetriflowNode<SvgNodeElement>>> extends CanvasTool {
 
     private _source: T;
     private _arcLine: SVGElement;
 
-    constructor(_id: string, button: ControlPanelButton, context: CanvasToolContext, translateService: TranslateService) {
-        super(_id, button, context, translateService);
+    constructor(_id: string, button: ControlPanelButton, context: CanvasToolContext) {
+        super(_id, button, context);
     }
 
     abstract startDrawingArc(node: CanvasPlace | CanvasTransition): void;

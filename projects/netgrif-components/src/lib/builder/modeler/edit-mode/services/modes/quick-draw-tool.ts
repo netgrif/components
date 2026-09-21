@@ -13,7 +13,6 @@ import {CanvasPlace} from '../../domain/canvas-place';
 import {CanvasTransition} from '../../domain/canvas-transition';
 import {CanvasTool} from './canvas-tool';
 import {CanvasToolContext} from './canvas-tool-context';
-import {TranslateService} from "@ngx-translate/core";
 
 enum Step {
     PLACE,
@@ -29,15 +28,14 @@ export class QuickDrawTool extends CanvasTool {
     private source: CanvasNodeElement<NodeElement, PetriflowNode<SvgNodeElement>>;
     private arcLine: SVGElement;
 
-    constructor(context: CanvasToolContext, translateService: TranslateService) {
+    constructor(context: CanvasToolContext) {
         super(
             QuickDrawTool.ID,
             new ControlPanelButton(
                 new ControlPanelIcon('bolt'),
-                translateService.instant('builder.modeler.edit-mode.services.fastPN'),
+                context.translateService.instant('builder.modeler.edit-mode.services.fastPN'),
             ),
             context,
-            translateService
         );
     }
 

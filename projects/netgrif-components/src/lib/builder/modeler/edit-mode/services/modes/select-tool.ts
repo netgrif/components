@@ -19,7 +19,6 @@ import {CanvasTool} from './canvas-tool';
 import {CanvasToolContext} from './canvas-tool-context';
 import {Hotkey} from './domain/hotkey';
 import {BuilderMode} from '../../../../services/builder-mode.service';
-import {TranslateService} from "@ngx-translate/core";
 
 export class SelectTool extends CanvasTool {
 
@@ -34,15 +33,14 @@ export class SelectTool extends CanvasTool {
     private arcPointIndex: number;
     private lastClickTimestamp: number = 0;
 
-    constructor(context: CanvasToolContext, translateService: TranslateService) {
+    constructor(context: CanvasToolContext) {
         super(
             SelectTool.ID,
             new ControlPanelButton(
                 new ControlPanelIcon('cursor-default-outline', true),
-                translateService.instant('builder.modeler.edit-mode.services.selectTool'),
+                context.translateService.instant('builder.modeler.edit-mode.services.selectTool'),
             ),
             context,
-            translateService
         );
         this._selectedElements = new CanvasElementCollection();
         this._clipboardElements = new CanvasElementCollection();

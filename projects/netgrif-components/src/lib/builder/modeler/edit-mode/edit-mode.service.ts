@@ -94,27 +94,29 @@ export class EditModeService extends CanvasModeService<CanvasTool> {
             this._tutorialService.modeler,
             this._parentInjector
         );
-        const context = new CanvasToolContext(modelService, dialog, this, router, transitionService, _actionMode, _actionsMasterDetail, _builderModeService, _processActionsTool, _builderIntegrationService, _localStorageService);
+        const context = new CanvasToolContext(modelService, dialog, this, router, transitionService, _actionMode,
+            _actionsMasterDetail, _builderModeService, _processActionsTool, _builderIntegrationService, _localStorageService,
+            _translateService);
         this.switchTools = new ToolGroup<CanvasTool>(
-            new ClearModelTool(context, _translateService),
-            new ResetPositionAndZoomTool(context, _translateService),
-            new GridTool(context, _translateService),
-            new SwitchLabelTool(context, _translateService)
+            new ClearModelTool(context),
+            new ResetPositionAndZoomTool(context),
+            new GridTool(context),
+            new SwitchLabelTool(context)
         );
         this.tools = [
             new ToolGroup<CanvasTool>(
-                new SelectTool(context, _translateService),
-                new QuickDrawTool(context, _translateService),
-                new CreateTransitionTool(context, _translateService),
-                new CreatePlaceTool(context, _translateService),
-                new AddTokenTool(context, _translateService),
-                new RemoveTokenTool(context, _translateService)
+                new SelectTool(context),
+                new QuickDrawTool(context),
+                new CreateTransitionTool(context),
+                new CreatePlaceTool(context),
+                new AddTokenTool(context),
+                new RemoveTokenTool(context)
             ),
             new ToolGroup<CanvasTool>(
-                new CreateRegularArcTool(context, _translateService),
-                new CreateResetArcTool(context, _translateService),
-                new CreateInhibitorArcTool(context, _translateService),
-                new CreateReadArcTool(context, _translateService)
+                new CreateRegularArcTool(context),
+                new CreateResetArcTool(context),
+                new CreateInhibitorArcTool(context),
+                new CreateReadArcTool(context)
             ),
             this.switchTools
         ];
