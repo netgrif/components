@@ -17,7 +17,6 @@ import {PaperComponent} from './paper/paper.component';
 import {MaterialModule} from '@netgrif/components-core';
 import {NgxMatDatetimePickerModule} from "@angular-material-components/datetime-picker";
 import {NgxMatMomentModule} from "@angular-material-components/moment-adapter";
-import {MatNativeDateModule} from "@angular/material/core";
 import { DataFieldsComponentModule } from "../../data-fields/data-fields.module";
 
 @NgModule({
@@ -47,7 +46,6 @@ import { DataFieldsComponentModule } from "../../data-fields/data-fields.module"
         ModelerModule,
         NgxMatDatetimePickerModule,
         NgxMatMomentModule,
-        MatNativeDateModule,
     ]
 })
 export class FormBuilderModule {
