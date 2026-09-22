@@ -2,11 +2,11 @@ import {Operator} from './operator';
 import {Operators} from './operators';
 
 /**
- * A strict less than operator for numeric fields.
+ * A strict less than operator for numeric or string fields.
  */
-export class LessThan extends Operator<number> {
+export class LessThan extends Operator<number | string> {
     constructor() {
-        super(1, '<');
+        super(1, Operators.LESS_THAN, 'lt');
     }
 
     getOperatorNameTemplate(): Array<string> {

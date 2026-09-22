@@ -1,6 +1,5 @@
 import {Injectable, Type} from '@angular/core';
 import {Operator} from '../models/operator/operator';
-import {Operators} from '../models/operator/operators';
 import {OperatorResolverService} from './operator-resolver.service';
 
 /**
@@ -21,10 +20,6 @@ export class OperatorService {
     public getOperator(operatorClass: Type<Operator<any>>): Operator<any> {
         this.createOperatorIfNotInMap(operatorClass);
         return this._operators.get(operatorClass);
-    }
-
-    public getFromMetadata(metadata: Operators | string): Operator<any> {
-        return this.getOperator(this._operatorResolver.toClass(metadata));
     }
 
     private createOperatorIfNotInMap(operatorClass: Type<Operator<any>>): void {

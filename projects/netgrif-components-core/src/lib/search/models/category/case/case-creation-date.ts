@@ -14,6 +14,7 @@ import {Observable, of} from 'rxjs';
 import {MoreThanEqualDate} from '../../operator/more-than-equal-date';
 import {LessThanEqualDate} from '../../operator/less-than-equal-date';
 import {CaseSearch} from './case-search.enum';
+import {ResourceTypeQueryPrefix} from "../resource-type-query-prefix";
 
 export class CaseCreationDate extends NoConfigurationCategory<Moment> {
 
@@ -33,7 +34,8 @@ export class CaseCreationDate extends NoConfigurationCategory<Moment> {
             `${CaseCreationDate._i18n}.name`,
             SearchInputType.DATE,
             logger,
-            operators);
+            operators,
+            ResourceTypeQueryPrefix.CASES);
     }
 
     get inputPlaceholder(): string {

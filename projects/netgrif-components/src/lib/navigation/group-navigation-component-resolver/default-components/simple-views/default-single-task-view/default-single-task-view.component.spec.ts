@@ -8,8 +8,10 @@ import {RouterTestingModule} from "@angular/router/testing";
 import {Observable} from "rxjs";
 import {
     AuthenticationMethodService,
-    ConfigurationService, FilterType,
+    ConfigurationService,
+    FieldTypeResource,
     MaterialModule,
+    FilterType,
     NAE_TAB_DATA, SimpleFilter,
     TestConfigurationService,
     GroupNavigationConstants,
@@ -46,11 +48,7 @@ describe('DefaultSingleTaskViewComponent', () => {
                                   GroupNavigationConstants.ITEM_FIELD_TASK_FILTER,
                                   '',
                                   '',
-                                  {
-                                      filterType: FilterType.TASK,
-                                      predicateMetadata: [],
-                                      searchCategories: []
-                                  },
+                                  FieldTypeResource.CASE_FILTER,
                                   [],
                                   {visible: true},
                                   '',

@@ -14,6 +14,7 @@ import {InRangeDateTime} from '../../operator/in-range-date-time';
 import {LessThanDateTime} from '../../operator/less-than-date-time';
 import {CaseSearch} from './case-search.enum';
 import {NotEqualsDateTime} from '../../operator/not-equals-date-time';
+import {ResourceTypeQueryPrefix} from "../resource-type-query-prefix";
 
 
 export class CaseCreationDateTime extends NoConfigurationCategory<Moment> {
@@ -34,7 +35,8 @@ export class CaseCreationDateTime extends NoConfigurationCategory<Moment> {
             `${CaseCreationDateTime._i18n}.name`,
             SearchInputType.DATE_TIME,
             logger,
-            operators);
+            operators,
+            ResourceTypeQueryPrefix.CASES);
     }
 
     get inputPlaceholder(): string {

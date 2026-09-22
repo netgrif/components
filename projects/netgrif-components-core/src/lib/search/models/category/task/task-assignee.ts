@@ -6,6 +6,7 @@ import {NotEquals} from '../../operator/not-equals';
 import {IsNull} from '../../operator/is-null';
 import {Categories} from '../categories';
 import {NoConfigurationUserAutocompleteCategory} from '../no-configuration-user-autocomplete-category';
+import {ResourceTypeQueryPrefix} from "../resource-type-query-prefix";
 
 
 export class TaskAssignee extends NoConfigurationUserAutocompleteCategory {
@@ -14,12 +15,17 @@ export class TaskAssignee extends NoConfigurationUserAutocompleteCategory {
 
     constructor(operators: OperatorService, logger: LoggerService, optionalDependencies: OptionalDependencies) {
         super(['userId'],
-            [operators.getOperator(Equals), operators.getOperator(NotEquals), operators.getOperator(IsNull)],
+            [
+                operators.getOperator(Equals),
+                operators.getOperator(NotEquals),
+                operators.getOperator(IsNull)
+            ],
             `${TaskAssignee._i18n}.name`,
             logger,
             operators,
             'TaskAssignee',
-            optionalDependencies);
+            optionalDependencies,
+            ResourceTypeQueryPrefix.TASKS);
     }
 
     get inputPlaceholder(): string {

@@ -4,6 +4,8 @@ import {SearchInputType} from '../models/category/search-input-type';
 import {Observable, Subscription} from 'rxjs';
 import {SearchAutocompleteOption} from '../models/category/search-autocomplete-option';
 import {debounceTime} from 'rxjs/operators';
+import moment from "moment/moment";
+import {DATE_FORMAT_STRING, DATE_TIME_FORMAT_STRING} from '../../moment/time-formats'
 
 @Component({
     selector: 'ncc-abstract-search-operand-input',
@@ -119,5 +121,13 @@ export abstract class AbstractSearchOperandInputComponent implements OnInit, OnD
         }
         return this.inputFormControl.value !== undefined
             && this.inputFormControl.value !== null;
+    }
+
+    public formatDate(value: string): string {
+        return moment(value, 'YYYY-MM-DD').format(DATE_FORMAT_STRING);
+    }
+
+    public formatDateTime(value: string): string {
+        return moment(value, 'YYYY-MM-DDTHH:mm:ss').format(DATE_TIME_FORMAT_STRING);
     }
 }

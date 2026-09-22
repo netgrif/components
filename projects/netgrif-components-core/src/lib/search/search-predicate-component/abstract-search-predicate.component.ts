@@ -66,13 +66,6 @@ export abstract class AbstractSearchPredicateComponent implements OnInit, OnDest
                 + ' Behavior in this case is undefined.');
         }
 
-        this.predicate.setMetadataGenerator(() => {
-            if (!!this._selectedCategory) {
-                return this._selectedCategory.createMetadata();
-            }
-            return undefined;
-        });
-
         this.predicate.setFilterTextSegmentsGenerator(() => {
             if (!!this._selectedCategory) {
                 return this._selectedCategory.createFilterTextSegments();
