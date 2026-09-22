@@ -4,12 +4,12 @@ import { ProcessRefDefaultComponent } from './process-ref-default.component';
 import {NavigationComponentModule} from '../../../navigation/navigation.module';
 import {
     ProcessRefField,
-    FilterField, FilterType,
+    FilterField,
     NAE_TAB_DATA,
     NAE_VIEW_ID_SEGMENT,
     OverflowService,
     TestMockDependenciesModule,
-    GroupNavigationConstants,
+    GroupNavigationConstants, FieldTypeResource,
 } from '@netgrif/components-core';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterTestingModule} from '@angular/router/testing';
@@ -49,11 +49,7 @@ describe('ProcessRefDefaultComponent', () => {
                                 `${GroupNavigationConstants.ITEM_FIELD_CASE_FILTER}`,
                                 '',
                                 '',
-                                {
-                                    filterType: FilterType.CASE,
-                                    predicateMetadata: [],
-                                    searchCategories: []
-                                },
+                                FieldTypeResource.CASE_FILTER,
                                 [],
                                 {visible: true},
                                 '',
