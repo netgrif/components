@@ -34,7 +34,7 @@
         "lint": "ng lint",
         "e2e": "ng e2e",
         "ncc:clean": "node projects/netgrif-components-core/src/scripts/delete-local-build-link.js",
-        "ncc:build": "npm run ncc:clean && ng build netgrif-components-core --configuration production && npm run ncc:build-schematics && npm run pfql:build-grammar",
+        "ncc:build": "npm run ncc:clean && npm run pfql:build-grammar && ng build netgrif-components-core --configuration production && npm run ncc:build-schematics",
         "ncc:local-build": "npm run ncc:build && npm i ./dist/netgrif-components-core --save-optional --legacy-peer-deps",
         "ncc:build-schematics": "node projects/netgrif-components-core/src/scripts/build-schematics.js",
         "ncc:lint": "ng lint netgrif-components-core",
