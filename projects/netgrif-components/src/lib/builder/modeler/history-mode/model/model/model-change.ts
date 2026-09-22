@@ -2,7 +2,6 @@ import {PetriNet} from '@netgrif/petriflow';
 import {ElementChange} from '../element-change';
 
 export class ModelChange extends ElementChange<PetriNet> {
-
     constructor(
         originalElement: PetriNet,
         element: PetriNet,

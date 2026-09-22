@@ -522,5 +522,1349 @@
     },
     "export": {
         "errorExportDownload": "File failed to download!"
+    },
+    "builder": {
+        "dialogs": {
+            "arc-edit": {
+                "editArc": "Edit arc",
+                "multiplicity": "Multiplicity",
+                "idRequired": "Id is required",
+                "type": "Type",
+                "multiplicityPositive": "Multiplicity must be a positive integer",
+                "reference": "Reference",
+                "none": "-- None --",
+                "source": "Source",
+                "destination": "Destination",
+                "save": "Save",
+                "dataFields": "Data fields",
+                "places": "Places"
+            },
+            "change-data": {
+                "title": "Change referenced data value",
+                "titleMulti": "Change referenced data values",
+                "valueRequired": "Value is required",
+                "valueNotNegative": "Value can not be a negative number",
+                "noData": "No referenced data found",
+                "save": "Save"
+            },
+            "dead-net": {
+                "title": "No executable task",
+                "message": "There are no executable tasks. Are you sure you want to download the model ?",
+                "cancel": "Cancel",
+                "download": "Download"
+            },
+            "delete": {
+                "title": "Delete confirmation",
+                "message": "Are you sure you want to delete this item?",
+                "cancel": "Cancel",
+                "confirm": "Confirm"
+            },
+            "delete-model": {
+                "title": "Delete model",
+                "message": "Are you sure to delete the model? Any unsaved changes will be lost.",
+                "cancel": "Cancel",
+                "delete": "Delete"
+            },
+            "errors": {
+                "title": "Import result",
+                "errors": "Errors:",
+                "warnings": "Warnings:",
+                "info": "Info:",
+                "close": "Close"
+            },
+            "local-storage-model": {
+                "title": "Continue previous work",
+                "message": "Do you wish to continue work on",
+                "from": "from",
+                "deleteOld": "Delete old work",
+                "load": "Load"
+            },
+            "manage-roles": {
+                "title": "Permissions",
+                "rolePermissions": "Role Permissions",
+                "id": "Id",
+                "perform": "Perform",
+                "delegate": "Delegate",
+                "cancel": "Cancel",
+                "assign": "Assign",
+                "create": "Create",
+                "delete": "Delete",
+                "view": "View",
+                "userListPermissions": "User List Permissions",
+                "changed": "Role assignments has been changed."
+            },
+            "marking-change": {
+                "title": "Change marking of place",
+                "tokens": "Tokens",
+                "tokensRequired": "Number of tokens is required",
+                "tokensNonNegative": "Number of tokens must be a non-negative integer",
+                "save": "Save"
+            },
+            "model-edit": {
+                "title": "Edit model",
+                "idRequired": "Id is required",
+                "version": "Version",
+                "versionFormat": "Version must be in format Major.Minor.Patch",
+                "modelTitle": "Title",
+                "idRequired2": "Id is required",
+                "initials": "Initials",
+                "defaultRole": "Default role",
+                "anonymousRole": "Anonymous role",
+                "defaultCaseName": "Default case name",
+                "tags": "Tags",
+                "key": "Key",
+                "value": "Value",
+                "empty": "Empty",
+                "addTag": "Add tag",
+                "actions": "Actions",
+                "permissions": "Permissions",
+                "save": "Save"
+            },
+            "place-edit": {
+                "title": "Edit place",
+                "id": "Id",
+                "idRequired": "Id is required",
+                "idExists": "Place with given id already exists",
+                "label": "Label",
+                "tokens": "Tokens",
+                "tokensRequired": "Number of tokens is required",
+                "tokensNonNegative": "Number of tokens must be a non-negative integer",
+                "save": "Save"
+            },
+            "place-ref-delete": {
+                "titleSingle": "Delete referenced place",
+                "titleMultiple": "Delete referenced places",
+                "place": "Place",
+                "referencedByArc": "is referenced by arc",
+                "referencedByArcs": "is referenced by arcs",
+                "cancel": "Cancel",
+                "delete": "Delete"
+            },
+            "refactor": {
+                "title": "Refactor Id",
+                "originalId": "Original Id",
+                "newId": "New Id",
+                "newIdRequired": "New Id is required!",
+                "idCharsOnly": "Id can contain only alphanumeric characters, dash or underscore!",
+                "idUnique": "Id must be unique! Selected Id already exists!",
+                "warning": "WARNING! In actions, field Id will be changed only in the declaration part, Id used as string in the actions statement will not be changed.",
+                "close": "Close",
+                "refactor": "Refactor"
+            },
+            "transition-edit": {
+                "trigger-tree": {
+                    "setTriggerType": "Set trigger type",
+                    "setTimeType": "Set time type",
+                    "setDelay": "Set delay",
+                    "setExact": "Set exact",
+                    "toggle": "toggle",
+                    "triggers": "Triggers",
+                    "exact": "Exact",
+                    "delay": "Delay",
+                    "auto": "Auto",
+                    "user": "User",
+                    "time": "Time"
+                },
+                "title": "Edit task",
+                "id": "Id",
+                "idRequired": "Id is required",
+                "idExists": "Transition with given id already exists",
+                "label": "Label",
+                "assignPolicy": "Assign policy",
+                "finishPolicy": "Finish policy",
+                "tags": "Tags",
+                "key": "Key",
+                "value": "Value",
+                "empty": "Empty",
+                "addTag": "Add tag",
+                "form": "Form",
+                "actions": "Actions",
+                "permissions": "Permissions",
+                "save": "Save"
+            }
+        },
+        "form-builder": {
+            "edit-panel": {
+                "numberOfColumns": "Number of columns",
+                "editActions": "Edit Actions",
+                "title": "Title",
+                "message": "Message",
+                "id": "Id",
+                "required": "Required",
+                "immediate": "Immediate",
+                "placeholder": "Placeholder",
+                "description": "Description",
+                "initialValue": "Initial value",
+                "noOptions": "No options",
+                "addOption": "Add option",
+                "addComponent": "Add component",
+                "deleteComponent": "Delete component",
+                "addDataRefComponent": "Add DataRef component",
+                "deleteDataRefComponent": "Delete DataRef component",
+                "componentName": "Component Name",
+                "noProperties": "No properties",
+                "addProperty": "Add property",
+                "copyToDataRef": "Copy to DataRef",
+                "noIcons": "No Icons",
+                "addIcon": "Add Icon",
+                "copyToDataField": "Copy to DataField",
+                "dataFieldActions": "DataField Actions",
+                "template": "Template",
+                "appearance": "Appearance",
+                "fieldOffset": "Field offset"
+            },
+            "field-list": {
+                "dataFields": "Data fields",
+                "existingFields": "Existing fields",
+                "createNewFields": "Create new fields",
+                "back": "Back",
+                "simple": "Simple",
+                "area": "Area",
+                "markdownEditor": "Markdown Editor",
+                "htmlEditor": "HTML Editor",
+                "password": "Password",
+                "signature": "Signature",
+                "decimal": "Decimal",
+                "currency": "Currency",
+                "select": "Select",
+                "list": "List",
+                "stepper": "Stepper",
+                "autocomplete": "Autocomplete",
+                "dynamicAutocomplete": "Dynamic Autocomplete",
+                "icon": "Icon",
+                "caseRef": "Case ref",
+                "slide": "Slide",
+                "raised": "Raised",
+                "stroked": "Stroked",
+                "flat": "Flat",
+                "fab": "FAB",
+                "miniFab": "MiniFAB",
+                "preview": "Preview",
+                "text": "Text",
+                "divider": "Divider",
+                "dashboard": "Dashboard"
+            },
+            "gridster": {
+                "placeholderFor": "Placeholder for",
+                "withId": "with id",
+                "dataRefsChanged": "DataRefs has been changed"
+            },
+            "info-label": {
+                "process": "Process",
+                "task": "Task",
+                "id": "ID",
+                "processIcon": "Process icon",
+                "closeFormBuilder": "Close form builder",
+                "noTransition": "You have no selected transition!"
+            }
+        },
+        "modeler": {
+            "actions-mode": {
+                "action-detail": {
+                    "toggle": "toggle",
+                    "name": "Name",
+                    "scope": "Scope",
+                    "noActionSelected": "No action selected",
+                    "process": "Process",
+                    "namespace": "Namespace",
+                    "actionsChanged": "Actions have been changed."
+                },
+                "action-editor": {
+                    "action-editor": {
+                        "action": "Action",
+                        "functions": "Functions",
+                        "references": "References",
+                        "transitions": "Transitions",
+                        "dataFields": "Data fields",
+                        "behaviours": "Behaviours",
+                        "visible": "visible",
+                        "hidden": "hidden",
+                        "editable": "editable",
+                        "required": "required",
+                        "optional": "optional",
+                        "conditions": "Conditions",
+                        "true": "true",
+                        "false": "false",
+                        "properties": "Properties",
+                        "title": "title",
+                        "color": "color",
+                        "icon": "icon",
+                        "values": "Values",
+                        "emptyValue": "Empty value",
+                        "newVariableOrValue": "New variable or value",
+                        "listOfObjects": "List of objects",
+                        "mapOfObjects": "Map of objects",
+                        "listOfStrings": "List of strings",
+                        "mapOfStrings": "Map of strings",
+                        "types": "Types",
+                        "text": "text",
+                        "number": "number",
+                        "date": "date",
+                        "boolean": "boolean",
+                        "file": "file",
+                        "fileList": "fileList",
+                        "enumeration": "enumeration",
+                        "enumerationMap": "enumeration_map",
+                        "multichoice": "multichoice",
+                        "multichoiceMap": "multichoice_map",
+                        "userList": "userList",
+                        "tabular": "tabular",
+                        "caseRef": "caseRef",
+                        "dateTime": "dateTime",
+                        "button": "button",
+                        "taskRef": "taskRef",
+                        "filter": "filter",
+                        "i18n": "i18n",
+                        "dataSet": "DataSet",
+                        "oneDataInSet": "One data in set",
+                        "twoDataInSet": "Two data in set",
+                        "processInstanceId": "Process Instance Id",
+                        "casePredicates": "Case predicates",
+                        "caseIdEqualsValue": "Case ID equals value",
+                        "caseVisualIdEqualsValue": "Case visual ID equals value",
+                        "processIdentifierEqualsValue": "Process identifier equals value",
+                        "titleEqualsValue": "Title equals value",
+                        "authorsEmailEqualsValue": "Authors email equals value",
+                        "authorsIdEqualsValue": "Authors id equals value",
+                        "authorsFullNameEqualsValue": "Authors full name equals value",
+                        "taskPredicates": "Task predicates",
+                        "taskIdEqualsValue": "Task ID equals value",
+                        "transitionIdEqualsValue": "TransitionId equals value",
+                        "caseIdEqualsValue2": "CaseId equals value",
+                        "caseTitleEqualsValue": "Case title equals value"
+                    },
+                    "action-editor-menu": {
+                        "example": "Example",
+                        "no": "No"
+                    },
+                    "classes": {
+                        "command-action": {
+                            "basicFunctions": {
+                                "label": "Basic functions",
+                                "ifElseStatement": {
+                                    "label": "If/Else Statement",
+                                    "description": "The general working of this statement is that first a condition is evaluated in the if statement. If the condition is true it then executes the statements thereafter and stops before the else condition and exits out of the loop. If the condition is false it then executes the statements in the else statement block and then exits the loop."
+                                },
+                                "nestedIfStatement": {
+                                    "label": "Nested If Statement",
+                                    "description": "The general working of this statement is that first a condition is evaluatedin the if statement. If the condition is true it then executes the statements thereafter and stops before the else condition and exits out of the loop. Ifthe condition is false it then executes the statements in the else if statementsand finally in else block and then exits the loop."
+                                },
+                                "switchStatement": {
+                                    "label": "Switch Statement",
+                                    "description": "Nested if-else statement is so common and is used so often that an easier statement was designed called the switch statement."
+                                },
+                                "whileStatement": {
+                                    "label": "While Statement",
+                                    "description": "The while statement is executed by first evaluating the condition expression (a Boolean value), and if the result is true, then the statements in the while loop are executed. The process is repeated starting from the evaluation of the condition in the while statement. This loop continues until the condition evaluates to false. When the condition becomes false, the loop terminates"
+                                },
+                                "forInStatement": {
+                                    "label": "For-in statement",
+                                    "description": "The for-in statement is used to iterate through a set of values."
+                                },
+                                "groovyTutorial": {
+                                    "label": "Groovy tutorial",
+                                    "header": "Groovy tutorials point",
+                                    "description": "Link to the Groovy Tutorials Point: https://www.tutorialspoint.com/groovy/index.htm"
+                                }
+                            },
+                            "dataFields": {
+                                "label": "Data fields",
+                                "changeValue": {
+                                    "label": "Change value",
+                                    "description": "Sets new value to data field f returned by calculation closure. If the returned value is null, fields value is set to default value. If the returned value is unchanged, fields value is unchanged and actions with a trigger set on given field are not triggered."
+                                },
+                                "changeChoices": {
+                                    "label": "Change choices",
+                                    "description": "Sets a new set of choices to data field f."
+                                },
+                                "changeOptions": {
+                                    "label": "Change options",
+                                    "description": "Sets a new map of options to data field f."
+                                },
+                                "changeAllowedNets": {
+                                    "label": "Change allowed nets",
+                                    "description": "Sets a new map of options to data field f."
+                                },
+                                "changeBehaviour": {
+                                    "label": "Change behaviour",
+                                    "description": "Changes behaviour of given data field f on transition t, if condition returns true"
+                                },
+                                "changeMultipleBehaviour": {
+                                    "label": "Change multiple behaviour",
+                                    "description": "Changes behaviour of given data fields f on tasks t, if condition returns true. Tasks can be referenced by list of transition references, list of task ids or list of task references"
+                                },
+                                "setDataByTransition": {
+                                    "label": "Set data fields by transition",
+                                    "description": "Sets values of data fields on task of transition in current case. Values are mapped to data fields in dataSet using data fields import Id as key."
+                                },
+                                "setDataByTask": {
+                                    "label": "Set data fields by task",
+                                    "description": "Sets values of data fields on task. Values are mapped to data fields in dataSet using data fields import Id as key."
+                                },
+                                "setDataByTransitionId": {
+                                    "label": "Set data fields by transitionId",
+                                    "description": "Sets values of data fields on task identified by transitionId of given case. Values are mapped to data fields in dataSet using data fields import Id as key."
+                                },
+                                "setDataByTaskId": {
+                                    "label": "Set data fields by task",
+                                    "description": "Sets values of data fields on task identified by its Id. Values are mapped to data fields in dataSet using data fields import Id as key."
+                                },
+                                "getDataByTransition": {
+                                    "label": "Get data fields by transition",
+                                    "description": "Gets all data fields on the task of transition in the current case, mapped by its import Id."
+                                },
+                                "getDataByTransitionId": {
+                                    "label": "Get data fields by transitionId",
+                                    "description": "Gets all data fields on the task defined by its transitionId in given case, mapped by its import Id."
+                                },
+                                "getDataByTask": {
+                                    "label": "Get data fields by transition",
+                                    "description": "Gets all data fields on the task, mapped by its import Id."
+                                },
+                                "getDataByTaskId": {
+                                    "label": "Get data fields by transition",
+                                    "description": "Gets all data fields on the task of transition in the current case, mapped by its import Id."
+                                }
+                            },
+                            "processInstances": {
+                                "label": "Process instances / Cases",
+                                "createCaseByIdentifier": {
+                                    "label": "Create a new instance of process using process identifier",
+                                    "description": "Create a new instance of the newest version of process identified by the identifier. If the title, color, author, or locale is not specified then the default value will be used"
+                                },
+                                "createCaseByReference": {
+                                    "label": "Create a new instance of process using process reference",
+                                    "description": "Create a new instance of given process. If the title, color, author, or locale is not specified then the default value will be used"
+                                },
+                                "changeCaseProperty": {
+                                    "label": "Change the property of the case",
+                                    "description": "Changes the property of the current case, the new value is generated by the supplier."
+                                }
+                            },
+                            "tasks": {
+                                "label": "Tasks",
+                                "getTaskId": {
+                                    "label": "Get task Id by transitionId",
+                                    "description": "Returns the task Id if task with given tranisitionId exists in case"
+                                },
+                                "assignTaskByTransitionId": {
+                                    "label": "Assign Task by transitionId",
+                                    "description": "Assign the task with given transitionId of given case given user. If case or user is not specified the default value will be used."
+                                },
+                                "assignTaskByTask": {
+                                    "label": "Assign Task by Task",
+                                    "description": "Assign the task to user. Optional parameter user identifies actor who will perform assign."
+                                },
+                                "assignTaskByTasks": {
+                                    "label": "Assign Task by tasks",
+                                    "description": "Assign the tasks to user."
+                                },
+                                "cancelTaskByTransitionId": {
+                                    "label": "Cancel Task by transitionId",
+                                    "description": "Cancels the task with given transitionId in a case."
+                                },
+                                "cancelTaskByTask": {
+                                    "label": "Cancel Task by task",
+                                    "description": "Cancels the provided task. Optional parameter user identifies actor who will perform cancel."
+                                },
+                                "cancelTasks": {
+                                    "label": "Cancel Tasks",
+                                    "description": "Cancels all the provided tasks. Optional parameter user identifies actor who will perform cancel."
+                                },
+                                "finishTaskByTransitionId": {
+                                    "label": "Finish Task by transitionId",
+                                    "description": "Finish the task in current case with given transitionId. Optional parameter aCase identifies case which the task belongs to. Optional parameter user identifies actor who will perform cancel."
+                                },
+                                "finishTaskByTask": {
+                                    "label": "Finish Task by task",
+                                    "description": "Finish the provided task. Optional parameter user identifies actor who will perform cancel."
+                                },
+                                "finishTasksByList": {
+                                    "label": "Finish Tasks by list of tasks",
+                                    "description": "Finish all the provided tasks. Optional parameter user identifies actor who will perform cancel."
+                                },
+                                "executeTask": {
+                                    "label": "Execute task",
+                                    "description": "Executes task, which is found by its tranitionId. Task is found then assigned, then populated by data and in the end finished by system."
+                                },
+                                "executeTransitions": {
+                                    "label": "Execute transitions",
+                                    "description": "Executes all fireable transitions identified by the transitionId in all case where the predicate returns true. For each task following actions are called: assign to the system user, save new data values, finish. The predicate is a list of Querydsl queries. Every case property can be used in a query. For more info see querydsl doc and QCase javadoc."
+                                }
+                            },
+                            "search": {
+                                "label": "Search",
+                                "findCases": {
+                                    "label": "Find Cases",
+                                    "description": "Finds all the cases that match the given predicate. The predicate is a groovy closure that accepts QCase object and returns QueryDSL Predicate."
+                                },
+                                "findCasesPageable": {
+                                    "label": "Find Cases pageable",
+                                    "description": "Finds all the cases that match the given predicate. The predicate is a groovy closure that accepts QCase object and returns QueryDSL Predicate. Pageable determines the requested page number, page size, sort fields, and sort direction."
+                                },
+                                "findCase": {
+                                    "label": "Find Case",
+                                    "description": "Finds the first case that matches the given predicate. The predicate is a groovy closure that accepts QCase object and returns QueryDSL Predicate."
+                                },
+                                "findTasks": {
+                                    "label": "Find Tasks",
+                                    "description": "Finds all tasks that match the given predicate. The predicate is a groovy closure that accepts QCase object and returns QueryDSL Predicate."
+                                },
+                                "findTasksWithPagination": {
+                                    "label": "Find Tasks with pagination",
+                                    "description": "Finds all tasks that match the given predicate. The predicate is a groovy closure that accepts QCase object and returns QueryDSL Predicate."
+                                },
+                                "findTask": {
+                                    "label": "Find Task",
+                                    "description": "Finds the first task that matches the given predicate. The predicate is a groovy closure that accepts QCase object and returns QueryDSL Predicate."
+                                },
+                                "findTaskById": {
+                                    "label": "Find Task by Id",
+                                    "description": "Finds task with given id"
+                                },
+                                "findCaseElastic": {
+                                    "label": "Find case in Elasticsearch",
+                                    "description": "Search elastic with string query for first occurrence."
+                                },
+                                "findCasesElastic": {
+                                    "label": "Find cases in Elasticsearch",
+                                    "description": "Search elastic with string query."
+                                },
+                                "countCasesElastic": {
+                                    "label": "Count cases in Elasticsearch",
+                                    "description": "Gets the number of cases for a search query."
+                                }
+                            },
+                            "async": {
+                                "label": "Async",
+                                "asyncRun": {
+                                    "label": "Async run with execution of task",
+                                    "description": ""
+                                }
+                            },
+                            "roles": {
+                                "label": "Roles",
+                                "assignRole": {
+                                    "label": "Assign Role",
+                                    "description": "Assigns role identified by roleId to user. User is optional parameter, default value is currently logged user. Returns updated object of user."
+                                },
+                                "assignRoleByImportIdAndIdentifier": {
+                                    "label": "Assign Role by import Id and process identifier",
+                                    "description": "Assigns role identified by its import Id and netId to user. User is optional parameter, default value is currently logged user. Returns updated object of user."
+                                },
+                                "assignRoleByImportIdAndProcess": {
+                                    "label": "Assign Role by import Id and process",
+                                    "description": "Assigns role identified by its import Id and process reference to user. User is optional parameter, default value is currently logged user. Returns updated object of user."
+                                },
+                                "assignRoleByImportIdIdentifierAndVersion": {
+                                    "label": "Assign Role by import Id, process identifier and version",
+                                    "description": "Assigns role identified by its import Id, process identifier, and version to user. User is optional parameter, default value is currently logged user. Returns updated object of user."
+                                },
+                                "removeRole": {
+                                    "label": "Remove Role",
+                                    "description": "Removes role identified by roleId to user. User is optional parameter, default value is currently logged user. Returns updated object of user."
+                                },
+                                "removeRoleByImportIdAndIdentifier": {
+                                    "label": "Remove Role by import Id and process identifier",
+                                    "description": "Removes role identified by its import Id and netId to user. User is optional parameter, default value is currently logged user. Returns updated object of user."
+                                },
+                                "removeRoleByImportIdAndProcess": {
+                                    "label": "Remove Role by import Id and process",
+                                    "description": "Removes role identified by its import Id and process reference to user. User is optional parameter, default value is currently logged user. Returns updated object of user."
+                                },
+                                "removeRoleByImportIdIdentifierAndVersion": {
+                                    "label": "Remove Role by import Id, process identifier and version",
+                                    "description": "Removes role identified by its import Id, process identifier, and version to user. User is optional parameter, default value is currently logged user. Returns updated object of user."
+                                }
+                            },
+                            "users": {
+                                "label": "Users",
+                                "loggedUser": {
+                                    "label": "Logged User",
+                                    "description": "Returns currently logged user."
+                                },
+                                "findByEmail": {
+                                    "label": "Find by email",
+                                    "description": "Returns user with the specified email or null if no user with the email exists."
+                                },
+                                "findById": {
+                                    "label": "Find by Id",
+                                    "description": "Returns user with the specified id or throws IllegalArgumentException if no user with the id exists."
+                                },
+                                "changeEmailByEmail": {
+                                    "label": "Change email",
+                                    "description": "Change the users email"
+                                },
+                                "changeNameByEmail": {
+                                    "label": "Change name",
+                                    "description": "Change the users name"
+                                },
+                                "changeSurnameByEmail": {
+                                    "label": "Change surname",
+                                    "description": "Change the users surname"
+                                },
+                                "changeTelByEmail": {
+                                    "label": "Change telephone number",
+                                    "description": "Change the users telephone number"
+                                },
+                                "changeEmailById": {
+                                    "label": "Change email",
+                                    "description": "Change the users email"
+                                },
+                                "changeNameById": {
+                                    "label": "Change name",
+                                    "description": "Change the users name"
+                                },
+                                "changeSurnameById": {
+                                    "label": "Change surname",
+                                    "description": "Change the users surname"
+                                },
+                                "changeTelById": {
+                                    "label": "Change telephone number",
+                                    "description": "Change the users telephone number"
+                                },
+                                "changeEmailByRef": {
+                                    "label": "Change email",
+                                    "description": "Change the users email"
+                                },
+                                "changeNameByRef": {
+                                    "label": "Change name",
+                                    "description": "Change the users name"
+                                },
+                                "changeSurnameByRef": {
+                                    "label": "Change surname",
+                                    "description": "Change the users surname"
+                                },
+                                "changeTelByRef": {
+                                    "label": "Change tel",
+                                    "description": "Change the users telephone number"
+                                },
+                                "inviteByEmail": {
+                                    "label": "Invite by email",
+                                    "description": "Invites user by email."
+                                },
+                                "inviteByRequest": {
+                                    "label": "Invite by request",
+                                    "description": "Invites user by NewUserRequest object."
+                                },
+                                "deleteUserByEmail": {
+                                    "label": "Delete user by email",
+                                    "description": "Deletes user by email. All tasks assigned to this user will be canceled and cases created by this user will be anonymized."
+                                },
+                                "deleteUserByRef": {
+                                    "label": "Delete user by reference",
+                                    "description": "Deletes user by reference. All tasks assigned to this user will be canceled and cases created by this user will be anonymized."
+                                }
+                            },
+                            "frontendFunctions": {
+                                "label": "Frontend functions",
+                                "reloadTaskData": {
+                                    "label": "Reload task data",
+                                    "description": "Forces web application to reload current task data"
+                                },
+                                "validateTaskData": {
+                                    "label": "Validate task data",
+                                    "description": "Forces web application to validate given task data"
+                                },
+                                "redirectToRoute": {
+                                    "label": "Redirect to route",
+                                    "description": "Redirects user to the given route. Route must be known path of the web application, external URLs will be ignored."
+                                }
+                            },
+                            "pdf": {
+                                "label": "PDF",
+                                "generatePdf1": {
+                                    "label": "Generate PDF",
+                                    "description": "Generates PDF from transition by <transitionId> (transition has to be executable) and saves it to file field by <fileFieldId>"
+                                },
+                                "generatePdf2": {
+                                    "label": "Generate PDF",
+                                    "description": "Generates PDF from transition by <transitionId> (transition has to be executable) and saves it to file field by <fileFieldId>"
+                                },
+                                "generatePdf3": {
+                                    "label": "Generate PDF",
+                                    "description": "Generates PDF from transition <transition> (transition has to be executable) and saves it to file field <datafield>"
+                                },
+                                "generatePdf4": {
+                                    "label": "Generate PDF",
+                                    "description": "Generates PDF from transition by <transitionId> (transition has to be executable) and saves it to file field by <fieldId>. Fields in the excludedFields list will be ignored."
+                                },
+                                "generatePdf5": {
+                                    "label": "Generate PDF",
+                                    "description": "Generates PDF from transition by <transitionId> (transition has to be executable) and saves it to file field by <fieldId>. Fields in the excludedFields list will be ignored."
+                                },
+                                "generatePdfWithTemplate": {
+                                    "label": "Generate PDF",
+                                    "description": "Generates PDF from transition by <transitionId> (transition has to be executable) using PDF template on given path and saves it to file field by <fieldId>."
+                                },
+                                "generatePdfWithLocale": {
+                                    "label": "Generate PDF",
+                                    "description": "Generates PDF from transition by <transitionId> (transition has to be executable) and saves it to file field by <fieldId>. I18n strings are translated using the given locale."
+                                },
+                                "generatePdfWithZoneId": {
+                                    "label": "Generate PDF",
+                                    "description": "Generates PDF from transition by <transitionId> (transition has to be executable) and saves it to file field by <fieldId>. Date and date time fields are formatted with the given ZoneId."
+                                }
+                            },
+                            "email": {
+                                "label": "Email",
+                                "sendEmailPlainText": {
+                                    "label": "Send email",
+                                    "description": "Sends an email to given list of recipients. Body is treated as plain text."
+                                },
+                                "sendEmailWithAttachments": {
+                                    "label": "Send email",
+                                    "description": "Sends an email with attachments to given list of recipients. Body is treated as plain text."
+                                },
+                                "sendMail": {
+                                    "label": "Send email",
+                                    "description": "Sends an email defined by mailDraft object."
+                                }
+                            },
+                            "filters": {
+                                "label": "Filters",
+                                "findFilter": {
+                                    "label": "Find filter",
+                                    "description": "Returns the first filter with the given title"
+                                },
+                                "findFilters": {
+                                    "label": "Find filters",
+                                    "description": "Finds filters using fulltext search."
+                                },
+                                "findAllFilters": {
+                                    "label": "Find all filters",
+                                    "description": "Returns all filters."
+                                },
+                                "exportFilters": {
+                                    "label": "Export filters",
+                                    "description": "Exports filters with provided ids into a file field value"
+                                },
+                                "findDefaultFilters": {
+                                    "label": "Find default filters",
+                                    "description": "Returns default filters of currently logged user."
+                                },
+                                "createCaseFilter": {
+                                    "label": "Create case filter",
+                                    "description": "Creates filter instance of type Case."
+                                },
+                                "createTaskFilter": {
+                                    "label": "Create task filter",
+                                    "description": "Creates filter instance of type Task."
+                                },
+                                "createFilter": {
+                                    "label": "Create filter",
+                                    "description": "Creates filter instance of given type"
+                                },
+                                "changeFilterQuery": {
+                                    "label": "Change filter query",
+                                    "description": "Changes the query of the provided filter instance."
+                                },
+                                "changeFilterVisibility": {
+                                    "label": "Change filter visibility",
+                                    "description": "Changes the visibility of the provided filter instance."
+                                },
+                                "changeFilterAllowedNets": {
+                                    "label": "Change filter allowedNets",
+                                    "description": "Changes the allowed nets of the provided filter instance."
+                                },
+                                "changeFilterMetadata": {
+                                    "label": "Change filter filterMetadata",
+                                    "description": "Changes the metadata of the provided filter instance."
+                                },
+                                "changeFilterTitle": {
+                                    "label": "Change filter title",
+                                    "description": "Changes the title of the provided filter instance."
+                                },
+                                "changeFilterIcon": {
+                                    "label": "Change filter icon",
+                                    "description": "Changes the icon of the provided filter instance."
+                                },
+                                "changeFilterUri": {
+                                    "label": "Change filter uri",
+                                    "description": "Changes the uri of the provided filter instance."
+                                },
+                                "deleteFilter": {
+                                    "label": "Delete filter",
+                                    "description": "Deletes given filter instance"
+                                },
+                                "createFilterInMenu1": {
+                                    "label": "Create filter in menu",
+                                    "description": "Creates filter and preference_item instances with given parameters."
+                                },
+                                "createFilterInMenu2": {
+                                    "label": "Create filter in menu",
+                                    "description": "Creates filter and preference_item instances with given parameters."
+                                }
+                            },
+                            "menuItems": {
+                                "label": "Menu items",
+                                "createMenuItem1": {
+                                    "label": "Create menu item",
+                                    "description": "Creates item in menu with given parameters"
+                                },
+                                "changeMenuItemAllowedRoles": {
+                                    "label": "Change menu item allowedRoles",
+                                    "description": "Changes the allowed roles of the provided menu item instance."
+                                },
+                                "changeMenuItemBannedRoles": {
+                                    "label": "Change menu item bannedRoles",
+                                    "description": "Changes the banned roles of the provided menu item instance."
+                                },
+                                "changeMenuItemCaseDefaultHeaders": {
+                                    "label": "Change menu item caseDefaultHeaders",
+                                    "description": "Changes the case default headers of the provided menu item instance."
+                                },
+                                "changeMenuItemTaskDefaultHeaders": {
+                                    "label": "Change menu item taskDefaultHeaders",
+                                    "description": "Changes the task default headers of the provided menu item instance."
+                                },
+                                "changeMenuItemFilter": {
+                                    "label": "Change menu item filter",
+                                    "description": "Changes the filter of the provided menu item instance."
+                                },
+                                "changeMenuItemUri": {
+                                    "label": "Change menu item uri",
+                                    "description": "Changes the uri of the provided menu item instance."
+                                },
+                                "changeMenuItemMenuIcon": {
+                                    "label": "Change menu item title menuIcon",
+                                    "description": "Changes the menu icon of the provided menu item instance."
+                                },
+                                "changeMenuItemTabIcon": {
+                                    "label": "Change menu item tabIcon",
+                                    "description": "Changes the tab icon of the provided menu item instance."
+                                },
+                                "changeMenuItemRequireTitleInCreation": {
+                                    "label": "Change menu item requireTitleInCreation",
+                                    "description": "Changes the value of require title in creation of the provided menu item instance."
+                                },
+                                "changeMenuItemUseCustomView": {
+                                    "label": "Change menu item useCustomView",
+                                    "description": "Changes the value of use custom view of the provided menu item instance."
+                                },
+                                "changeMenuItemCustomViewSelector": {
+                                    "label": "Change menu item customViewSelector",
+                                    "description": "Changes the custom view selector of the provided menu item instance."
+                                },
+                                "deleteMenuItem": {
+                                    "label": "Delete menu item",
+                                    "description": "Deletes provided menu item."
+                                },
+                                "createMenuItem2": {
+                                    "label": "Create menu item",
+                                    "description": "Creates a new menu item based on provided configuration"
+                                },
+                                "moveMenuItem": {
+                                    "label": "Move menu item",
+                                    "description": "Changes location of menu item. If non-existing location is provided, the new location is created and then the item is moved. Cyclic destination path is forbidden"
+                                },
+                                "duplicateMenuItem": {
+                                    "label": "Duplicate menu item",
+                                    "description": "Duplicates menu item. It creates new preference_item instance with the same dataSet as the provided item instance."
+                                },
+                                "findMenuItem1": {
+                                    "label": "Find menu item",
+                                    "description": "Finds menu item by unique identifier"
+                                },
+                                "findMenuItemByUriAndName": {
+                                    "label": "Find menu item by uri and name",
+                                    "description": "Finds menu item by uri and name in default group."
+                                },
+                                "findMenuItemByUriAndIdentifier": {
+                                    "label": "Find menu item by uri and identifier",
+                                    "description": "Finds menu item by uri and identifier."
+                                },
+                                "existsMenuItem": {
+                                    "label": "Exists menu item",
+                                    "description": "Checks the menu item existence."
+                                },
+                                "getFilterFromMenuItem": {
+                                    "label": "Get filter from menu item",
+                                    "description": "Retrieves filter case from preference_item case."
+                                },
+                                "createOrUpdateMenuItem1": {
+                                    "label": "Create or update menu item",
+                                    "description": "Creates or updates menu item with given identifier."
+                                },
+                                "createOrUpdateMenuItemAndFilter1": {
+                                    "label": "Create or update menu item and filter",
+                                    "description": "Creates or updates menu item with given identifier along with the filter instance. It's safe to use on existing menu item instance, that doesn't contain filter. In such case, missing filter will be created with provided parameters."
+                                },
+                                "createOrUpdateMenuItem2": {
+                                    "label": "Create or update menu item",
+                                    "description": "Creates or updates menu item with given identifier"
+                                },
+                                "createOrUpdateMenuItemAndFilter2": {
+                                    "label": "Create or update menu item and filter",
+                                    "description": "Creates or updates menu item with given identifier along with the filter instance."
+                                },
+                                "createOrIgnoreMenuItem": {
+                                    "label": "Create or ignore menu item",
+                                    "description": "Creates or updates menu item with given identifier."
+                                },
+                                "createOrIgnoreMenuItemAndFilter": {
+                                    "label": "Create or ignore menu item and filter",
+                                    "description": "Creates menu item or ignores it if already exists. If existing item does not contain filter, the filter instance is created by provided parameters."
+                                },
+                                "updateMenuItem": {
+                                    "label": "Create or ignore menu item and filter",
+                                    "description": "Updates existing menu item with provided values."
+                                },
+                                "defaultFilterMetadata": {
+                                    "label": "Default filter metadata",
+                                    "description": "Returns a map with default filter field metadata with given filter type (\"Case\" or \"Task\")."
+                                }
+                            },
+                            "importExport": {
+                                "label": "Import & export",
+                                "exportCasesToFile": {
+                                    "label": "Export cases to file",
+                                    "description": "Exports cases specified by the predicate into a CSV file on given path. Additional configuration and page size can be specified."
+                                },
+                                "exportCasesToStream": {
+                                    "label": "Export cases to stream",
+                                    "description": "Exports cases specified by the predicate into an output stream. Additional configuration and page size can be specified."
+                                },
+                                "exportCasesToFileAsUser": {
+                                    "label": "Export cases to file as user",
+                                    "description": "Exports cases specified by the case search requests into a CSV file on given path. Additional configuration and page size can be specified. Users permissions are used to filter exported cases."
+                                },
+                                "exportCasesToStreamAsUser": {
+                                    "label": "Export cases to stream as user",
+                                    "description": "Exports cases specified by the case search requests into an output stream. Additional configuration and page size can be specified. Users permissions are used to filter exported cases."
+                                },
+                                "exportTasksToFile": {
+                                    "label": "Export tasks to file",
+                                    "description": "Exports tasks specified by the predicate into a CSV file on given path. Additional configuration can be specified."
+                                },
+                                "exportTasksToStream": {
+                                    "label": "Export tasks to stream",
+                                    "description": "Exports tasks specified by the predicate into an output stream. Additional configuration can be specified."
+                                },
+                                "exportTasksToFileAsUser": {
+                                    "label": "Export tasks to file as user",
+                                    "description": "Exports tasks specified by the task search requests into a CSV file on given path. Additional configuration and page size can be specified. Users permissions are used to filter exported tasks."
+                                },
+                                "exportTasksToStreamAsUser": {
+                                    "label": "Export tasks to stream as user",
+                                    "description": "Exports tasks specified by the task search requests into an output stream. Additional configuration and page size can be specified. Users permissions are used to filter exported tasks."
+                                }
+                            },
+                            "uri": {
+                                "label": "Uri",
+                                "getUriNode": {
+                                    "label": "Get Uri node",
+                                    "description": "Retrieves UriNode based on the URI"
+                                },
+                                "createUriNode": {
+                                    "label": "Create Uri node",
+                                    "description": "Creates new UriNode from the URI path, or retrieves existing one."
+                                },
+                                "moveUriNode": {
+                                    "label": "Move Uri node",
+                                    "description": "Moves UriNode to other destination."
+                                },
+                                "makeUrl": {
+                                    "label": "Make url",
+                                    "description": "Creates an URL for the public view of the given process identifier encoded using Base64"
+                                }
+                            },
+                            "customFunctions": {
+                                "label": "Custom functions"
+                            }
+                        }
+                    },
+                    "definitions": {
+                        "declaration-provider": {
+                            "dataVariableId": "ID of DataVariable for declare a variable in Action.",
+                            "transitionId": "ID of Transition for declare a variable in Action."
+                        },
+                        "function-provider": {
+                            "function-provider": {
+                                "taskService": "TaskService",
+                                "dataService": "DataService",
+                                "workflowService": "WorkflowService",
+                                "userService": "UserService",
+                                "petriNetService": "PetriNetService",
+                                "groupService": "GroupService",
+                                "pdfGenerator": "PDF Generator",
+                                "mailService": "MailService",
+                                "useCase": "Current Case",
+                                "copyBehavior": "Copy Behavior",
+                                "makeFieldBehavior": "Set behavior for field on transition according to condition",
+                                "executeByTaskId": "Execute Task by taskId",
+                                "executeTasks": "Execute multiple Tasks and set data",
+                                "executeTask": "Execute Task and set data",
+                                "searchCases": "Search cases and return their stringIDs",
+                                "changeFieldValue": "Change field Value",
+                                "changeFieldChoices": "Change field Choices",
+                                "changeFieldAllowedNets": "Change field AllowedNets",
+                                "changeFieldOptions": "Change field Options",
+                                "psc": "Find pcs by input and closure",
+                                "findCases": "Find cases and return List<Case>",
+                                "findCasesPageable": "Find cases and return List<Case>",
+                                "findCase": "Find case and return it",
+                                "createCaseByIdentifier": "Create case and return it",
+                                "createCaseByNet": "Create case and return it",
+                                "assignTaskByTransitionId": "Assign Task and return it",
+                                "assignTaskByTask": "Assign Task and return it",
+                                "assignTasks": "Assign multiple Tasks",
+                                "cancelTaskByTransitionId": "Cancel Task",
+                                "cancelTaskByTask": "Cancel Task",
+                                "cancelTasks": "Cancel Tasks",
+                                "finishTaskByTransitionId": "Finish Task",
+                                "finishTaskByTask": "Finish Task",
+                                "finishTasks": "Finish Tasks",
+                                "findTasks": "Find Tasks and return List<Task>",
+                                "findTasksPageable": "Find Tasks and return List<Task>",
+                                "findTaskByClosure": "Find Task and return it",
+                                "findTaskByMongoId": "Find Task and return it",
+                                "getTaskId": "Get TaskId from transitionId",
+                                "assignRole": "Assign role to user",
+                                "setDataByTask": "Set data to task",
+                                "setDataByTransition": "Set data by transition",
+                                "setDataByTransitionId": "Set data by transition id and useCase",
+                                "setDataWithPropagationByTransitionId": "Set data by transition id and useCase",
+                                "setDataWithPropagationByTask": "Set data to task",
+                                "setDataWithPropagationByTaskId": "Set data to task",
+                                "getDataByTask": "Get data of task",
+                                "getDataByTransition": "Get data of transition",
+                                "getDataByTransitionId": "Get data of transition",
+                                "loggedUser": "Get logged User",
+                                "generatePDF1": "Generate PDF from transition id, save it to file field by fileFieldId",
+                                "generatePDF2": "Generate PDF from transition id, save it to file field by fileFieldId",
+                                "generatePdfWithTemplate": "Generate PDF with template from transition id, save it to file field by fileFieldId",
+                                "generatePdfWithLocale": "Generate PDF with locale from transition id, save it to file field by fileFieldId",
+                                "generateIntoField": "Generate into field",
+                                "changeCaseProperty": "Change case property",
+                                "saveUseCase": "Save useCase"
+                            }
+                        }
+                    },
+                    "function-editor": {
+                        "functions": "Functions",
+                        "references": "References",
+                        "transitions": "Transitions",
+                        "datafields": "Datafields",
+                        "behaviours": "Behaviours",
+                        "conditions": "Conditions",
+                        "visible": "visible",
+                        "hidden": "hidden",
+                        "editable": "editable",
+                        "required": "required",
+                        "optional": "optional",
+                        "true": "true",
+                        "false": "false",
+                        "properties": "Properties",
+                        "title": "title",
+                        "color": "color",
+                        "icon": "icon",
+                        "values": "Values",
+                        "addNewVariableOrValue": "Add new variable or value",
+                        "listOfObjects": "List of objects",
+                        "mapOfObjects": "Map of objects",
+                        "listOfStrings": "List of strings",
+                        "mapOfStrings": "Map of strings"
+                    },
+                    "transition": "Transition",
+                    "role": "Role",
+                    "caseEvents": "Case events",
+                    "processEvents": "Process events",
+                    "events": "Events",
+                    "dataref": "Dataref"
+                },
+                "action-master": {
+                    "name": "Name",
+                    "scope": "Scope",
+                    "addFunction": "Add function",
+                    "deleteFunction": "Delete function"
+                },
+                "tools": {
+                    "dataVariables": "Data Variables",
+                    "functions": "Functions",
+                    "processAndCase": "Process & Case",
+                    "roles": "Roles",
+                    "transitions": "Transitions"
+                },
+                "actionsEditView": "Actions Edit view"
+            },
+            "components": {
+                "master-detail": {
+                    "firstPage": "First page",
+                    "pageSize": "Page size",
+                    "lastPage": "Last page",
+                    "nextPage": "Next page",
+                    "previousPage": "Previous page",
+                    "of": "of",
+                    "add": "Add"
+                },
+                "material-icon-picker": {
+                    "icon": "Icon",
+                    "none": "-- None --"
+                }
+            },
+            "control-panel": {
+                "importSuccess": "Petri net imported successfully",
+                "exportXml": "Export as XML",
+                "chooseFile": "Choose a file to open",
+                "unknownFileType": "Unknown file type",
+                "redo": "Redo",
+                "exportSvg": "Export as SVG",
+                "undo": "Undo"
+            },
+            "data-mode": {
+                "id": "Id",
+                "title": "Title",
+                "type": "Type",
+                "isImmediate": "Is Immediate?",
+                "placeholder": "Placeholder",
+                "description": "Description",
+                "component": "Component",
+                "addComponent": "Add component",
+                "deleteComponent": "Delete component",
+                "encryption": "Encryption",
+                "componentName": "Component Name",
+                "key": "Key",
+                "value": "Value",
+                "empty": "Empty",
+                "addProperty": "Add property",
+                "initialValue": "Initial value",
+                "none": "None",
+                "isInitDynamic": "Is Init Dynamic?",
+                "allowedNets": "Allowed Nets",
+                "processIdentifier": "Process identifier",
+                "addNet": "Add net",
+                "validations": "Validations",
+                "expression": "Expression",
+                "message": "Message",
+                "addValidation": "Add validation",
+                "options": "Options",
+                "optionKey": "Option key",
+                "optionValue": "Option value",
+                "noOptions": "No options",
+                "addOption": "Add option",
+                "optionsInit": "Options Init",
+                "editActions": "Edit Actions",
+                "noDataSelected": "No data selected",
+                "boolean": "Boolean",
+                "button": "Button",
+                "caseRef": "Case Ref",
+                "processRef": "Process Ref",
+                "date": "Date",
+                "datetime": "Datetime",
+                "enumeration": "Enumeration",
+                "enumerationMap": "Enumeration Map",
+                "file": "File",
+                "fileList": "File List",
+                "caseFilter": "Case Filter",
+                "taskFilter": "Task Filter",
+                "processFilter": "Process Filter",
+                "i18n": "I18n",
+                "multichoice": "Multichoice",
+                "multichoiceMap": "Multichoice Map",
+                "number": "Number",
+                "user": "User",
+                "userList": "User List",
+                "stringCollection": "String Collection",
+                "taskRef": "Task Ref",
+                "text": "Text",
+                "dataVariable": "DataVariable",
+                "hasBeenChanged": "has been changed.",
+                "idHasBeenChangedTo": "ID has been changed to",
+                "andHasBeenChanged": "and has been changed",
+                "hasBeenCreated": "has been created.",
+                "hasBeenDeleted": "has been deleted.",
+                "idLabel": "ID",
+                "name": "Name",
+                "addDataVariable": "Add data variable",
+                "dataEditView": "Data Edit view",
+                "deleteDataField": "Delete data field",
+                "duplicateDataField": "Duplicate data field"
+            },
+            "edit-mode": {
+                "context-menu": {
+                    "deleteBreakpoint": "Delete breakpoint",
+                    "edit": "Edit",
+                    "arc": "Arc",
+                    "hasBeenChanged": "has been changed.",
+                    "editModel": "Edit model",
+                    "modelHasBeenChanged": "Model has been changed.",
+                    "managePermissions": "Manage process permissions",
+                    "place": "Place",
+                    "editForm": "Edit form",
+                    "createNewForm": "Create new form",
+                    "editActions": "Edit Actions",
+                    "editTask": "Edit Task",
+                    "task": "Task",
+                    "permissions": "Permissions",
+                    "delete": "Delete",
+                    "all": "all",
+                    "selectConnectedArcs": "Select connected arcs"
+                },
+                "services": {
+                    "addToken": "Add token",
+                    "tokenAdded": "Token has been added to place",
+                    "deleteModel": "Delete model",
+                    "model": "Model",
+                    "hasBeenDeleted": "has been deleted.",
+                    "new": "New",
+                    "arc": "arc",
+                    "hasBeenCreated": "has been created",
+                    "inhibitorArc": "Inhibitor Arc",
+                    "place": "Place",
+                    "arcLabel": "Arc",
+                    "readArc": "Read Arc",
+                    "resetArc": "Reset Arc",
+                    "transition": "Transition",
+                    "task": "Task",
+                    "fastPN": "Fast PN",
+                    "removeToken": "Remove token",
+                    "tokenRemoved": "Token has been removed from place",
+                    "resetCanvas": "Reset canvas position and zoom",
+                    "selectTool": "Select tool",
+                    "elements": "Elements",
+                    "hasBeenDuplicated": "has been duplicated",
+                    "elementsDeleted": "Elements have been deleted",
+                    "elementsMoved": "Elements have been moved",
+                    "breakpointAdded": "Breakpoint added to arc",
+                    "newModelCreated": "New model has been created.",
+                    "editView": "Edit view",
+                    "breakpointDeleted": "breakpoint has been deleted.",
+                    "hideGrid": "Hide grid",
+                    "showGrid": "Show grid",
+                    "showIds": "Show IDs",
+                    "showLabels": "Show labels"
+                }
+            },
+            "history-mode": {
+                "renderType": "Render type",
+                "sideBySide": "Side by side",
+                "inline": "Inline",
+                "download": "Download",
+                "restore": "Restore",
+                "noHistorySelected": "No history is selected",
+                "model": "Model",
+                "hasBeenChanged": "has been changed",
+                "hasBeenImported": "has been imported",
+                "place": "Place",
+                "hasBeenCreated": "has been created",
+                "hasBeenDeleted": "has been deleted",
+                "hasBeenMovedTo": "has been moved to",
+                "time": "Time",
+                "change": "Change",
+                "history": "History"
+            },
+            "i18n-mode": {
+                "removeLocale": "Remove locale",
+                "addNewLanguage": "Add new language",
+                "addLocale": "Add locale",
+                "translations": "Translations",
+                "translationsChanged": "Translations have been changed.",
+                "languages": "Languages",
+                "stringId": "String Id",
+                "defaultValue": "Default value",
+                "translation": "Translation",
+                "title": "Title",
+                "placeholder": "Placeholder",
+                "description": "Description",
+                "init": "Init",
+                "options": "Options",
+                "validations": "Validations",
+                "defaultCaseName": "Default case name",
+                "message": "Message",
+                "events": "Events",
+                "noLanguageAvailable": "No language available, please add new language",
+                "selectLanguage": "Select language",
+                "modelMetadata": "Model metadata",
+                "modelMetadataHint": "Title, default case name, ...",
+                "tasks": "Tasks",
+                "tasksHint": "Label, event messages, ...",
+                "noTasksInModel": "There are no tasks in the model",
+                "dataVariables": "Data variables",
+                "dataVariablesHint": "Title, placeholder, description, ...",
+                "noDataVariablesInModel": "There are no data variables in the model",
+                "roles": "Roles",
+                "rolesHint": "Name, event message, ...",
+                "noRolesInModel": "There are no roles in the model",
+                "i18nView": "Internationalization view"
+            },
+            "role-mode": {
+                "id": "Id",
+                "idRequired": "Id is required",
+                "idExists": "Role with given id already exists",
+                "title": "Title",
+                "isGlobal": "Is Global",
+                "editActions": "Edit Actions",
+                "noRoleSelected": "No role selected",
+                "role": "Role",
+                "hasBeenChanged": "has been changed.",
+                "deleteRole": "Delete role",
+                "duplicateRole": "Duplicate role",
+                "hasBeenCreated": "has been created.",
+                "hasBeenDeleted": "has been deleted.",
+                "idLabel": "ID",
+                "name": "Name",
+                "addRole": "Add role",
+                "roleEditView": "Role Edit view"
+            },
+            "services": {
+                "contextMenuClosed": "Context menu closed",
+                "newProcess": "New Process",
+                "downloadModel": "Download Model"
+            },
+            "simulation-mode": {
+                "changeData": "Change data",
+                "simulationByEvents": "Simulation by Events",
+                "hideGrid": "Hide grid",
+                "showGrid": "Show grid",
+                "resetCanvas": "Reset canvas position and zoom",
+                "resetSimulation": "Reset simulation",
+                "simulationByTasks": "Simulation by Tasks",
+                "simulationView": "Simulation view",
+                "showIds": "Show IDs",
+                "showLabels": "Show labels"
+            },
+            "task-mode": {
+                "controlTaskView": "Control Task view"
+            },
+            "model": "Model",
+            "hasBeenImported": "has been imported."
+        },
+        "tutorial": {
+            "welcome": "Welcome to the Netgrif Application Builder v2.2.0",
+            "intro": "Netgrif Application Builder (NAB) is the tool for building process driven applications using Petriflow language. NAB is composed of several modules that help you in different stages of application development.",
+            "processModelerTitle": "Process Modeler",
+            "processModeler": "In Process Modeler you can model business processes by defining tasks and their routing. As a modelling formalism for processes Petriflow language uses Petri nets that consist of state variables, tasks and their interconnections. It supports import of processes in BPMN 2.0 and its automatic translation into Petri nets.",
+            "processSimulationTitle": "Process Simulation",
+            "processSimulation": "In Process Simulation you can simulate modeled processes by executing sequences of tasks or task events.",
+            "dataEditorTitle": "Data Editor",
+            "dataEditor": "In Data Editor you can define data variables used in the processes. Petriflow supports all types of data variables you will need for your application, including text, numbers, date, datetime, enumerations and choices, files, images and many others. Validation and initial values of the data variables can be easily specified in Petriflow. Petriflow supports reference to a list of tasks as a data type.",
+            "roleEditorTitle": "Role Editor",
+            "roleEditor": "In Role Editor you can define roles and specify which roles can perform tasks in the process.",
+            "actionsEditorTitle": "Actions Editor",
+            "actionsEditor": "In Action Editor you can program reactions on events of process instances, its tasks and data fields. Actions use Groovy as a programming language. Types of events that you can catch includes construction of the process instance, assignment of a task to a user, cancellation of a task, finish  of a task, and change of a data field value. In actions that react on events, you can trigger events in different process instances and in this way for example create a new instance when you finish a task, to assign a new task to a user when you finish actual task, to recalculate a value of a data field whenever you change another data field, or hide",
+            "internationalizationTitle": "Internationalization",
+            "internationalization": "You can add translations for different languages.",
+            "historyTitle": "History",
+            "history": "You can review recent changes of the model as well as download or revert to previous version of the model.",
+            "modelImportTitle": "Model import",
+            "modelImport": "You can import existing model saved in XML file or transform BPMN file into Petriflow model.",
+            "modelExportTitle": "Model export",
+            "modelExport": "You can export current model as XML file. In simulation mode this will export the simulated model in current state of simulation.",
+            "svgExportTitle": "SVG export",
+            "svgExport": "You can export current model as SVG file. In simulation mode this will export the simulated model exactly as seen on canvas.",
+            "netgrifEtaskTitle": "Netgrif eTask",
+            "netgrifEtask": "You can deploy your Petriflow models in our eTask application after registration.",
+            "netgrifAcademyTitle": "Netgrif Academy",
+            "netgrifAcademy": "Educational videos and tutorials can be found on our Youtube channel.",
+            "netgrifGithubTitle": "Netgrif Github",
+            "netgrifGithub": "Source codes of our community products are available on Github.",
+            "mortgageDemoTitle": "Mortgage demo process",
+            "mortgageDemo": "To load a Mortgage demo process click here.",
+            "bugReportTitle": "Bug report",
+            "bugReport": "You can use our github issue page to report any bug you encounter while using the Netgrif Application Builder."
+        },
+        "newModelCreated": "New model has been created.",
+        "hasBeenImported": "has been imported."
     }
 }

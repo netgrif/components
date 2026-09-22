@@ -1,12 +1,12 @@
-<h1 mat-dialog-title>{{data.type === 'transition' ? 'Transition' : 'Process'}} Permissions</h1>
+<h1 mat-dialog-title>{{data.type === 'transition' ? ('builder.modeler.edit-mode.context-menu.task' | translate) : ('builder.modeler.services.newProcess' | translate)}} {{ 'builder.dialogs.manage-roles.title' | translate }}</h1>
 <div mat-dialog-content>
-    <div> Role Permissions
+    <div> {{ 'builder.dialogs.manage-roles.rolePermissions' | translate }}
         <table mat-table #firstTableSort="matSort" matSort [dataSource]="dataSource" (matSortChange)="sortRoleRefs($event)" class="table-right-padding">
             <caption></caption>
 
             <!-- Id Column -->
             <ng-container matColumnDef="id">
-                <th mat-header-cell id="id" *matHeaderCellDef mat-sort-header fxFlex class="padding-table-header"> Id
+                <th mat-header-cell id="id" *matHeaderCellDef mat-sort-header fxFlex class="padding-table-header"> {{ 'builder.dialogs.manage-roles.id' | translate }}
                 </th>
                 <td mat-cell *matCellDef="let element" fxFlex class="padding-table"> {{element.id}} </td>
             </ng-container>
@@ -14,7 +14,7 @@
             <!-- Perform Column -->
             <ng-container matColumnDef="perform" *ngIf="data.type === 'transition'">
                 <th mat-header-cell id="perform" *matHeaderCellDef mat-sort-header fxFlex class="padding-table-header">
-                    Perform
+                    {{ 'builder.dialogs.manage-roles.perform' | translate }}
                 </th>
                 <td mat-cell *matCellDef="let element" fxFlex fxLayout="row" fxLayoutAlign="start center">
                     <mat-checkbox fxLayoutAlign="start center" class="height-row"
@@ -30,7 +30,7 @@
             <!-- Delegate Column -->
             <ng-container matColumnDef="delegate" *ngIf="data.type === 'transition'">
                 <th mat-header-cell id="delegate" *matHeaderCellDef mat-sort-header fxFlex class="padding-table-header">
-                    Delegate
+                    {{ 'builder.dialogs.manage-roles.delegate' | translate }}
                 </th>
                 <td mat-cell *matCellDef="let element" fxFlex fxLayout="row" fxLayoutAlign="start center">
                     <mat-checkbox fxLayoutAlign="start center" class="height-row"
@@ -46,7 +46,7 @@
             <!-- Cancel Column -->
             <ng-container matColumnDef="cancel" *ngIf="data.type === 'transition'">
                 <th mat-header-cell id="cancel" *matHeaderCellDef mat-sort-header fxFlex class="padding-table-header">
-                    Cancel
+                    {{ 'builder.dialogs.manage-roles.cancel' | translate }}
                 </th>
                 <td mat-cell *matCellDef="let element" fxFlex fxLayout="row" fxLayoutAlign="start center">
                     <mat-checkbox fxLayoutAlign="start center" class="height-row"
@@ -62,7 +62,7 @@
             <!-- Assign Column -->
             <ng-container matColumnDef="assign" *ngIf="data.type === 'transition'">
                 <th mat-header-cell id="assign" *matHeaderCellDef mat-sort-header fxFlex class="padding-table-header">
-                    Assign
+                    {{ 'builder.dialogs.manage-roles.assign' | translate }}
                 </th>
                 <td mat-cell *matCellDef="let element" fxFlex fxLayout="row" fxLayoutAlign="start center">
                     <mat-checkbox fxLayoutAlign="start center" class="height-row"
@@ -78,7 +78,7 @@
             <!-- View Column -->
             <ng-container matColumnDef="view" *ngIf="data.type === 'transition'">
                 <th mat-header-cell id="view" *matHeaderCellDef mat-sort-header fxFlex class="padding-table-header">
-                    View
+                    {{ 'builder.dialogs.manage-roles.view' | translate }}
                 </th>
                 <td mat-cell *matCellDef="let element" fxFlex fxLayout="row" fxLayoutAlign="start center">
                     <mat-checkbox fxLayoutAlign="start center" class="height-row"
@@ -94,7 +94,7 @@
             <!-- Create Column -->
             <ng-container matColumnDef="create" *ngIf="data.type === 'process'">
                 <th mat-header-cell id="create" *matHeaderCellDef mat-sort-header fxFlex class="padding-table-header">
-                    Create
+                    {{ 'builder.dialogs.manage-roles.create' | translate }}
                 </th>
                 <td mat-cell *matCellDef="let element" fxFlex fxLayout="row" fxLayoutAlign="start center">
                     <mat-checkbox fxLayoutAlign="start center" class="height-row"
@@ -110,7 +110,7 @@
             <!-- Delete Column -->
             <ng-container matColumnDef="delete" *ngIf="data.type === 'process'">
                 <th mat-header-cell id="delete" *matHeaderCellDef mat-sort-header fxFlex class="padding-table-header">
-                    Delete
+                    {{ 'builder.dialogs.manage-roles.delete' | translate }}
                 </th>
                 <td mat-cell *matCellDef="let element" fxFlex fxLayout="row" fxLayoutAlign="start center">
                     <mat-checkbox fxLayoutAlign="start center" class="height-row"
@@ -126,7 +126,7 @@
             <!-- Process View Column -->
             <ng-container matColumnDef="view" *ngIf="data.type === 'process'">
                 <th mat-header-cell id="view" *matHeaderCellDef mat-sort-header fxFlex
-                    class="padding-table-header">View
+                    class="padding-table-header">{{ 'builder.dialogs.manage-roles.view' | translate }}
                 </th>
                 <td mat-cell *matCellDef="let element" fxFlex fxLayout="row" fxLayoutAlign="start center">
                     <mat-checkbox fxLayoutAlign="start center" class="height-row"
@@ -146,13 +146,13 @@
         <mat-paginator #matPaginator [pageSize]="defaultPageSize" [pageSizeOptions]="pageSizes"
                        showFirstLastButtons></mat-paginator>
     </div>
-    <div> User List Permissions
+    <div> {{ 'builder.dialogs.manage-roles.userListPermissions' | translate }}
         <table mat-table #secondTableSort="matSort" matSort [dataSource]="usersDataSource" (matSortChange)="sortUserRefs($event)" class="table-right-padding">
             <caption></caption>
 
             <!-- Id Column -->
             <ng-container matColumnDef="id">
-                <th mat-header-cell id="id" *matHeaderCellDef mat-sort-header fxFlex class="padding-table-header"> Id
+                <th mat-header-cell id="id" *matHeaderCellDef mat-sort-header fxFlex class="padding-table-header"> {{ 'builder.dialogs.manage-roles.id' | translate }}
                 </th>
                 <td mat-cell *matCellDef="let element" fxFlex class="padding-table"> {{element.id}} </td>
             </ng-container>
@@ -160,7 +160,7 @@
             <!-- Perform Column -->
             <ng-container matColumnDef="perform" *ngIf="data.type === 'transition'">
                 <th mat-header-cell id="perform" *matHeaderCellDef mat-sort-header fxFlex class="padding-table-header">
-                    Perform
+                    {{ 'builder.dialogs.manage-roles.perform' | translate }}
                 </th>
                 <td mat-cell *matCellDef="let element" fxFlex fxLayout="row" fxLayoutAlign="start center">
                     <mat-checkbox fxLayoutAlign="start center" class="height-row"
@@ -176,7 +176,7 @@
             <!-- Delegate Column -->
             <ng-container matColumnDef="delegate" *ngIf="data.type === 'transition'">
                 <th mat-header-cell id="delegate" *matHeaderCellDef mat-sort-header fxFlex class="padding-table-header">
-                    Delegate
+                    {{ 'builder.dialogs.manage-roles.delegate' | translate }}
                 </th>
                 <td mat-cell *matCellDef="let element" fxFlex fxLayout="row" fxLayoutAlign="start center">
                     <mat-checkbox fxLayoutAlign="start center" class="height-row"
@@ -192,7 +192,7 @@
             <!-- Cancel Column -->
             <ng-container matColumnDef="cancel" *ngIf="data.type === 'transition'">
                 <th mat-header-cell id="cancel" *matHeaderCellDef mat-sort-header fxFlex class="padding-table-header">
-                    Cancel
+                    {{ 'builder.dialogs.manage-roles.cancel' | translate }}
                 </th>
                 <td mat-cell *matCellDef="let element" fxFlex fxLayout="row" fxLayoutAlign="start center">
                     <mat-checkbox fxLayoutAlign="start center" class="height-row"
@@ -208,7 +208,7 @@
             <!-- Assign Column -->
             <ng-container matColumnDef="assign" *ngIf="data.type === 'transition'">
                 <th mat-header-cell id="assign" *matHeaderCellDef mat-sort-header fxFlex class="padding-table-header">
-                    Assign
+                    {{ 'builder.dialogs.manage-roles.assign' | translate }}
                 </th>
                 <td mat-cell *matCellDef="let element" fxFlex fxLayout="row" fxLayoutAlign="start center">
                     <mat-checkbox fxLayoutAlign="start center" class="height-row"
@@ -224,7 +224,7 @@
             <!-- View Column -->
             <ng-container matColumnDef="view" *ngIf="data.type === 'transition'">
                 <th mat-header-cell id="view" *matHeaderCellDef mat-sort-header fxFlex class="padding-table-header">
-                    View
+                    {{ 'builder.dialogs.manage-roles.view' | translate }}
                 </th>
                 <td mat-cell *matCellDef="let element" fxFlex fxLayout="row" fxLayoutAlign="start center">
                     <mat-checkbox fxLayoutAlign="start center" class="height-row"
@@ -240,7 +240,7 @@
             <!-- Create Column -->
             <ng-container matColumnDef="create" *ngIf="data.type === 'process'">
                 <th mat-header-cell id="create" *matHeaderCellDef mat-sort-header fxFlex class="padding-table-header">
-                    Create
+                    {{ 'builder.dialogs.manage-roles.create' | translate }}
                 </th>
                 <td mat-cell *matCellDef="let element" fxFlex fxLayout="row" fxLayoutAlign="start center">
                     <mat-checkbox fxLayoutAlign="start center" class="height-row"
@@ -256,7 +256,7 @@
             <!-- Delete Column -->
             <ng-container matColumnDef="delete" *ngIf="data.type === 'process'">
                 <th mat-header-cell id="delete" *matHeaderCellDef mat-sort-header fxFlex class="padding-table-header">
-                    Delete
+                    {{ 'builder.dialogs.manage-roles.delete' | translate }}
                 </th>
                 <td mat-cell *matCellDef="let element" fxFlex fxLayout="row" fxLayoutAlign="start center">
                     <mat-checkbox fxLayoutAlign="start center" class="height-row"
@@ -272,7 +272,7 @@
             <!-- Process View Column -->
             <ng-container matColumnDef="view" *ngIf="data.type === 'process'">
                 <th mat-header-cell id="view" *matHeaderCellDef mat-sort-header fxFlex
-                    class="padding-table-header"> View
+                    class="padding-table-header"> {{ 'builder.dialogs.manage-roles.view' | translate }}
                 </th>
                 <td mat-cell *matCellDef="let element" fxFlex fxLayout="row" fxLayoutAlign="start center">
                     <mat-checkbox fxLayoutAlign="start center" class="height-row"

@@ -47,6 +47,7 @@ import {CanvasToolContext} from './services/modes/canvas-tool-context';
 import {ProcessActionsTool} from "../actions-mode/tools/process-actions-tool";
 import {BuilderIntegrationService} from "../../services/builder-integration.service";
 import {LocalStorageService} from '../../services/local-storage.service';
+import {TranslateService} from "@ngx-translate/core";
 
 @Injectable()
 export class EditModeService extends CanvasModeService<CanvasTool> implements OnDestroy {
@@ -86,21 +87,24 @@ export class EditModeService extends CanvasModeService<CanvasTool> implements On
         protected _builderIntegrationService: BuilderIntegrationService,
         protected _localStorageService: LocalStorageService,
         private _ngZone: NgZone,
-        @Optional() @Inject(NAE_TAB_DATA) _tabData?: InjectedTabData
+        protected _translateService: TranslateService,
+        @Optional() @Inject(NAE_TAB_DATA) _tabData?: InjectedTabData,
     ) {
         super(_arcFactory, modelService, _canvasService, _tabData);
         this.mode = new Mode(
             'modeler',
             new ControlPanelButton(
                 new ControlPanelIcon('mode_edit_outline'),
-                'Edit view'
+                _translateService.instant('builder.modeler.edit-mode.services.editView')
             ),
             './',
             '/modeler',
             this._tutorialService.modeler,
             this._parentInjector
         );
-        const context = new CanvasToolContext(modelService, dialog, this, router, transitionService, _actionMode, _actionsMasterDetail, _builderModeService, _processActionsTool, _builderIntegrationService, this._ngZone, _localStorageService);
+        const context = new CanvasToolContext(modelService, dialog, this, router, transitionService, _actionMode,
+            _actionsMasterDetail, _builderModeService, _processActionsTool, _builderIntegrationService, this._ngZone,
+            _localStorageService, _translateService);
         this.switchTools = new ToolGroup<CanvasTool>(
             new ClearModelTool(context),
             new ResetPositionAndZoomTool(context),
@@ -293,7 +297,7 @@ export class EditModeService extends CanvasModeService<CanvasTool> implements On
     public removeBreakpoint(arc: CanvasArc, index: number): void {
         this.modelService.removeArcBreakpoint(arc.modelArc, index);
         arc.removeBreakpoint(index);
-        this.historyService.save(`Arc ${arc.id} breakpoint has been deleted.`);
+        this.historyService.save(this._translateService.instant('builder.modeler.edit-mode.services.arcLabel') + ` ${arc.id} ` + this._translateService.instant('builder.modeler.edit-mode.services.breakpointDeleted'));
     }
 
     private updateArc(changedArc: ChangedArc): void {

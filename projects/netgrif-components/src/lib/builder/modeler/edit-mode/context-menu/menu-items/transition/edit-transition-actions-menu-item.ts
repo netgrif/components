@@ -2,13 +2,15 @@ import {CanvasTransition} from '../../../domain/canvas-transition';
 import {CanvasTool} from '../../../services/modes/canvas-tool';
 import {MenuItem} from '../menu-item';
 import {BuilderMode} from "../../../../../services/builder-mode.service";
+import {TranslateService} from "@ngx-translate/core";
 
 export class EditTransitionActionsMenuItem extends MenuItem {
 
     constructor(transition: CanvasTransition,
-                tool: CanvasTool) {
+                tool: CanvasTool,
+                translateService: TranslateService) {
         super(
-            `Edit Actions (${tool.modelService.numberOfTransitionActions(transition.modelTransition)})`,
+            translateService.instant('builder.modeler.edit-mode.context-menu.editActions') + ` (${tool.modelService.numberOfTransitionActions(transition.modelTransition)})`,
             'code',
             () => {
                 tool.actionMode.activate(tool.actionMode.transitionActionsTool);

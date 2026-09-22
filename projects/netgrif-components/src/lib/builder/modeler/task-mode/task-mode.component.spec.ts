@@ -8,6 +8,7 @@ import {CommonModule} from "@angular/common";
 import {NoopAnimationsModule} from "@angular/platform-browser/animations";
 import {HttpClientTestingModule} from "@angular/common/http/testing";
 import {TestMockDependenciesModule} from "@netgrif/components-core";
+import {TranslateService} from "@ngx-translate/core";
 
 xdescribe('TaskModeComponent', () => {
     let component: TaskModeComponent;
@@ -26,6 +27,7 @@ xdescribe('TaskModeComponent', () => {
                 ModelService,
                 ArcFactory,
                 {provide: PetriflowCanvasService, useValue: {}},
+                {provide: TranslateService, useValue: { instant: (key: string) => `translated-${key}` }}
             ],
             schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA],
         });

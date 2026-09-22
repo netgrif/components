@@ -1,7 +1,7 @@
 <div fxLayout="column" fxLayoutAlign="space-around none">
     <div fxFlexFill class="netgrif-input">
         <mat-form-field appearance="outline" fxFlex="25">
-            <mat-label>{{noLocales() ? 'No language available, please add new language' : 'Select language'}}</mat-label>
+            <mat-label>{{noLocales() ? ('builder.modeler.i18n-mode.noLanguageAvailable' | translate) : ('builder.modeler.i18n-mode.selectLanguage' | translate)}}</mat-label>
             <mat-select [(value)]="locale" [disabled]="noLocales()" (selectionChange)="selectLocale()">
                 <mat-option *ngFor="let locale of usedLocales()" [value]="locale">{{locale.prettyName}}</mat-option>
             </mat-select>

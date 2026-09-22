@@ -5,7 +5,7 @@
               [innerHTML]="item.title | safeHtml" mat-menu-item></button>
     </ng-container>
     <ng-template #noItems>
-      <button [disabled]="true" mat-menu-item>No {{ configuration.title }}</button>
+      <button [disabled]="true" mat-menu-item>{{ 'builder.modeler.actions-mode.action-editor.action-editor-menu.no' | translate }} {{ configuration.title }}</button>
     </ng-template>
   </ng-template>
 </mat-menu>

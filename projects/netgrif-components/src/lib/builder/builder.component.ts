@@ -66,6 +66,7 @@ import {TaskModeService} from "./modeler/task-mode/task-mode.service";
 import {LocalStorageService} from "./services/local-storage.service";
 import {PetriflowCanvasService} from '@netgrif/petriflow.svg';
 import {Subscription} from "rxjs";
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
     selector: 'nc-builder',
@@ -144,7 +145,8 @@ export class BuilderComponent implements OnDestroy {
                 protected _builderIntegrationService: BuilderIntegrationService,
                 protected _logger: LoggerService,
                 @Optional() @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabbedBuilderViewData,
-                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<CaseRefField>) {
+                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<CaseRefField>,
+                protected _translateService: TranslateService) {
         this.loading = new LoadingEmitter(true);
         if (injectedTabData !== null && injectedTabData?.processCase) {
             this._builderIntegrationService.isIntegrated = true;
@@ -182,7 +184,7 @@ export class BuilderComponent implements OnDestroy {
             this.resolveRouterModel();
             if (!this.modelService.model) {
                 this.modelService.model = this.modelService.newModel();
-                this.historyService.save(`New model has been created.`);
+                this.historyService.save(_translateService.instant('builder.newModelCreated'));
             }
         }
     }
@@ -232,11 +234,11 @@ export class BuilderComponent implements OnDestroy {
                 const model = this._importService.parseFromXml(data)?.model;
                 if (model) {
                     this.modelService.model = model;
-                    this.historyService.save(`Model ${this.modelService.model.id} has been imported.`);
+                    this.historyService.save(`Model ${this.modelService.model.id} ` + this._translateService.instant('builder.hasBeenImported'));
                 }
             } else if (!this.modelService.model) {
                 this.modelService.model = this.modelService.newModel();
-                this.historyService.save(`New Model has been created.`);
+                this.historyService.save(this._translateService.instant('builder.newModelCreated'));
             }
         } catch (e) {
             console.log(e);

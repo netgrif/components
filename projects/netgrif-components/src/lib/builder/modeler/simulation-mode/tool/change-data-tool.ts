@@ -12,6 +12,7 @@ import {SelectedTransitionService} from '../../selected-transition.service';
 import {ModelService} from '../../services/model/model.service';
 import {SimulationModeService} from '../simulation-mode.service';
 import {SimulationTool} from './simulation-tool';
+import {TranslateService} from "@ngx-translate/core";
 
 export class ChangeDataTool extends SimulationTool {
 
@@ -21,13 +22,14 @@ export class ChangeDataTool extends SimulationTool {
         simulationModeService: SimulationModeService,
         router: Router,
         transitionService: SelectedTransitionService,
+        translateService: TranslateService,
         ngZone?: NgZone
     ) {
         super(
             'change_data',
             new ControlPanelButton(
                 new ControlPanelIcon('all_inbox'),
-                'Change data'
+                translateService.instant('builder.modeler.simulation-mode.changeData')
             ),
             modelService,
             dialog,

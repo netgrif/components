@@ -13,6 +13,7 @@ import {BuilderDialogsModule} from './dialogs/dialogs.module';
 import {FlexLayoutModule} from "@ngbracket/ngx-layout";
 import {ComponentPortal} from '@angular/cdk/portal';
 import {ProcessRefDefaultComponent} from '../data-fields/process-ref/process-ref-default/process-ref-default.component';
+import {TranslateModule} from "@ngx-translate/core";
 
 
 @NgModule({
@@ -33,6 +34,7 @@ import {ProcessRefDefaultComponent} from '../data-fields/process-ref/process-ref
         NgxMatMomentModule,
         MaterialIconPickerComponent,
         FlexLayoutModule,
+        TranslateModule,
     ],
     exports: [BuilderComponent]
 })

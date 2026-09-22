@@ -17,9 +17,9 @@ export class CreateRegularArcTool extends CreateArcTool<CanvasPlace | CanvasTran
             CreateRegularArcTool.ID,
             new ControlPanelButton(
                 new ControlPanelIcon('arc', true),
-                'Arc',
+                context.translateService.instant('builder.modeler.edit-mode.services.arcLabel'),
             ),
-            context
+            context,
         );
     }
 

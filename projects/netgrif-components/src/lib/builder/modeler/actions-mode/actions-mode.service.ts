@@ -11,6 +11,7 @@ import {FunctionsTool} from './tools/functions-tool';
 import {ProcessActionsTool} from './tools/process-actions-tool';
 import {RoleActionsTool} from './tools/role-actions-tool';
 import {TransitionActionsTool} from './tools/transition-actions-tool';
+import {TranslateService} from "@ngx-translate/core";
 
 @Injectable()
 export class ActionsModeService extends ModeService<Tool> {
@@ -22,14 +23,15 @@ export class ActionsModeService extends ModeService<Tool> {
         private _transitionActionsTool: TransitionActionsTool,
         private _roleActionsTool: RoleActionsTool,
         private _processActionsTool: ProcessActionsTool,
-        private _functionsTool: FunctionsTool
+        private _functionsTool: FunctionsTool,
+        private _translateService: TranslateService
     ) {
         super();
         this.mode = new Mode(
             'actions',
             new ControlPanelButton(
                 new ControlPanelIcon('code'),
-                'Actions Edit view'
+                this._translateService.instant('builder.modeler.actions-mode.actionsEditView')
             ),
             './actions',
             '/modeler/actions',

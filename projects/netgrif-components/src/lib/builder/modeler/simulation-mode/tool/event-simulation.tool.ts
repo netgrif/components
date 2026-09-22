@@ -8,6 +8,7 @@ import {SelectedTransitionService} from '../../selected-transition.service';
 import {ModelService} from '../../services/model/model.service';
 import {SimulationModeService} from '../simulation-mode.service';
 import {SimulationTool} from './simulation-tool';
+import {TranslateService} from "@ngx-translate/core";
 
 export class EventSimulationTool extends SimulationTool {
 
@@ -17,13 +18,14 @@ export class EventSimulationTool extends SimulationTool {
         simulationModeService: SimulationModeService,
         router: Router,
         transitionService: SelectedTransitionService,
+        translateService: TranslateService,
         ngZone?: NgZone
     ) {
         super(
             'event_simulation',
             new ControlPanelButton(
                 new ControlPanelIcon('fast_forward', false, true),
-                'Simulation by Events'
+                translateService.instant('builder.modeler.simulation-mode.simulationByEvents')
             ),
             modelService,
             dialog,

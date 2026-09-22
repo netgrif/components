@@ -13,7 +13,7 @@
         <mat-nested-tree-node *matTreeNodeDef="let node; when: isInnerNode" matTreeNodePadding #eventNode>
             <div class="mat-tree-node">
                 <button mat-icon-button matTreeNodeToggle
-                        [attr.aria-label]="'toggle ' + node.name">
+                        [attr.aria-label]="('builder.modeler.actions-mode.action-detail.toggle' | translate) + ' ' + node.name">
                     <mat-icon class="mat-icon-rtl-mirror">
                         {{ treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right' }}
                     </mat-icon>
@@ -28,7 +28,7 @@
         <mat-nested-tree-node *matTreeNodeDef="let node; when: isAddNode" matTreeNodePadding #phaseNode>
             <div class="mat-tree-node">
                 <button mat-icon-button matTreeNodeToggle
-                        [attr.aria-label]="'toggle ' + node.name"
+                        [attr.aria-label]="('builder.modeler.actions-mode.action-detail.toggle' | translate) + ' ' + node.name"
                         [disabled]="!actionsExpandable(node)">
                     <mat-icon class="mat-icon-rtl-mirror">
                         {{ treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right' }}
@@ -51,14 +51,14 @@
             <div fxFlex="2.5"></div>
             <div fxFlex="46.5" fxLayoutAlign="start center">
                 <mat-form-field appearance="outline" fxFlex>
-                    <mat-label>Name</mat-label>
+                    <mat-label>{{ 'builder.modeler.actions-mode.action-detail.name' | translate }}</mat-label>
                     <input matInput [(ngModel)]="this.selectedFn.name" (change)="updateFunctions()">
                 </mat-form-field>
             </div>
             <div fxFlex="2"></div>
             <div fxFlex="46.5">
                 <mat-form-field appearance="outline" fxFlex>
-                    <mat-label>Scope</mat-label>
+                    <mat-label>{{ 'builder.modeler.actions-mode.action-detail.scope' | translate }}</mat-label>
                     <mat-select [(value)]="this.selectedFn.scope">
                         <mat-option *ngFor="let opt of functionScopes"
                                     [value]="opt.value">{{ opt.viewValue }}
@@ -77,5 +77,5 @@
 </div>
 
 <div *ngIf="this.selectedFn === undefined" fxLayoutAlign="center center" class="no-overflow full-width">
-    <span>No action selected</span>
+    <span>{{ 'builder.modeler.actions-mode.action-detail.noActionSelected' | translate }}</span>
 </div>

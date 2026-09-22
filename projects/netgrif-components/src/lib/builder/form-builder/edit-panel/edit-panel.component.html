@@ -1,58 +1,58 @@
 <div class="form netgrif-input builder-field-input">
     <div *ngIf="!isSomeGridsterFieldSelected()">
         <mat-form-field appearance="outline" class="full-width margin-html">
-            <mat-label>Number of columns</mat-label>
+            <mat-label>{{ 'builder.form-builder.edit-panel.numberOfColumns' | translate }}</mat-label>
             <input matInput type="number" [min]="minOfCols" [(ngModel)]="numOfCols" (change)="changeCols($event)">
         </mat-form-field>
 
         <button mat-stroked-button color="primary" class="action-button margin-html" (click)="openTransitionActions()">
             <mat-icon>code</mat-icon>
-            Edit Actions ({{numberOfActions()}})
+            {{ 'builder.form-builder.edit-panel.editActions' | translate }} ({{numberOfActions()}})
         </button>
 
         <h5 class="full-width margin-html">Assign event</h5>
         <mat-form-field appearance="outline" class="full-width margin-html">
-            <mat-label>Title</mat-label>
+            <mat-label>{{ 'builder.form-builder.edit-panel.title' | translate }}</mat-label>
             <input matInput type="text" [(ngModel)]="assignEvent.title.value" (change)="registerChange()">
         </mat-form-field>
         <mat-form-field appearance="outline" class="full-width margin-html">
-            <mat-label>Message</mat-label>
+            <mat-label>{{ 'builder.form-builder.edit-panel.message' | translate }}</mat-label>
             <input matInput type="text" [(ngModel)]="assignEvent.message.value" (change)="registerChange()">
         </mat-form-field>
 
         <h5 class="full-width margin-html">Finish event</h5>
         <mat-form-field appearance="outline" class="full-width margin-html">
-            <mat-label>Title</mat-label>
+            <mat-label>{{ 'builder.form-builder.edit-panel.title' | translate }}</mat-label>
             <input matInput type="text" [(ngModel)]="finishEvent.title.value" (change)="registerChange()">
         </mat-form-field>
         <mat-form-field appearance="outline" class="full-width margin-html">
-            <mat-label>Message</mat-label>
+            <mat-label>{{ 'builder.form-builder.edit-panel.message' | translate }}</mat-label>
             <input matInput type="text" [(ngModel)]="finishEvent.message.value" (change)="registerChange()">
         </mat-form-field>
 
         <h5 class="full-width margin-html">Cancel event</h5>
         <mat-form-field appearance="outline" class="full-width margin-html">
-            <mat-label>Title</mat-label>
+            <mat-label>{{ 'builder.form-builder.edit-panel.title' | translate }}</mat-label>
             <input matInput type="text" [(ngModel)]="cancelEvent.title.value" (change)="registerChange()">
         </mat-form-field>
         <mat-form-field appearance="outline" class="full-width margin-html">
-            <mat-label>Message</mat-label>
+            <mat-label>{{ 'builder.form-builder.edit-panel.message' | translate }}</mat-label>
             <input matInput type="text" [(ngModel)]="cancelEvent.message.value" (change)="registerChange()">
         </mat-form-field>
 
         <h5 class="full-width margin-html">Delegate event</h5>
         <mat-form-field appearance="outline" class="full-width margin-html">
-            <mat-label>Title</mat-label>
+            <mat-label>{{ 'builder.form-builder.edit-panel.title' | translate }}</mat-label>
             <input matInput type="text" [(ngModel)]="delegateEvent.title.value" (change)="registerChange()">
         </mat-form-field>
         <mat-form-field appearance="outline" class="full-width margin-html">
-            <mat-label>Message</mat-label>
+            <mat-label>{{ 'builder.form-builder.edit-panel.message' | translate }}</mat-label>
             <input matInput type="text" [(ngModel)]="delegateEvent.message.value" (change)="registerChange()">
         </mat-form-field>
     </div>
     <div *ngIf="isSomeGridsterFieldSelected()">
         <h4 class="full-width margin-html">
-            Id: {{ dataVariable.id }}
+            {{ 'builder.form-builder.edit-panel.id' | translate }}: {{ dataVariable.id }}
             <button mat-icon-button matTooltip="Refactor field ID"
                     (click)="openRefactorDialog($event, dataVariable)">
                 <mat-icon>edit</mat-icon>
@@ -62,11 +62,11 @@
         <div>
             <mat-slide-toggle [(ngModel)]="dataRef.logic.required" class="full-width margin-html"
                               (change)="notifyGridster()">
-                Required
+                {{ 'builder.form-builder.edit-panel.required' | translate }}
             </mat-slide-toggle>
             <mat-slide-toggle [(ngModel)]="dataRef.logic.immediate" class="full-width margin-html"
                               (change)="notifyGridster()">
-                Immediate
+                {{ 'builder.form-builder.edit-panel.immediate' | translate }}
             </mat-slide-toggle>
             <mat-form-field appearance="outline" class="full-width margin-html">
                 <mat-label>Behavior</mat-label>
@@ -80,25 +80,25 @@
 
         <div>
             <mat-form-field appearance="outline" class="full-width margin-html">
-                <mat-label>Title</mat-label>
+                <mat-label>{{ 'builder.form-builder.edit-panel.title' | translate }}</mat-label>
                 <input matInput type="text" [(ngModel)]="dataVariable.title.value" (change)="notifyGridster()">
             </mat-form-field>
             <mat-form-field appearance="outline" class="full-width margin-html">
-                <mat-label>Placeholder</mat-label>
+                <mat-label>{{ 'builder.form-builder.edit-panel.placeholder' | translate }}</mat-label>
                 <input matInput type="text" [(ngModel)]="dataVariable.placeholder.value" (change)="notifyGridster()">
             </mat-form-field>
             <mat-form-field appearance="outline" class="full-width margin-html">
-                <mat-label>Description</mat-label>
+                <mat-label>{{ 'builder.form-builder.edit-panel.description' | translate }}</mat-label>
                 <textarea matInput [(ngModel)]="dataVariable.desc.value" (change)="notifyGridster()"></textarea>
             </mat-form-field>
             <!--  VALUES  -->
             <mat-form-field appearance="outline" *ngIf="hasTextValue()" class="full-width margin-html">
-                <mat-label>Initial value</mat-label>
+                <mat-label>{{ 'builder.form-builder.edit-panel.initialValue' | translate }}</mat-label>
                 <input matInput type="text" placeholder="" [(ngModel)]="dataVariable.init.value"
                        (change)="notifyGridster()">
             </mat-form-field>
             <mat-form-field appearance="outline" *ngIf="hasOptions()" class="full-width margin-html">
-                <mat-label>Initial value</mat-label>
+                <mat-label>{{ 'builder.form-builder.edit-panel.initialValue' | translate }}</mat-label>
                 <mat-select *ngIf="!hasInits(); else hasInitsItems" [(ngModel)]="dataVariable.init.value"
                             (selectionChange)="notifyGridster()">
                     <mat-option>None</mat-option>
@@ -117,14 +117,14 @@
             </mat-form-field>
             <mat-slide-toggle *ngIf="isBoolean()" [checked]="dataVariable.init.value === 'true'"
                               (change)="setBooleanValue($event); notifyGridster()">
-                Initial value
+                {{ 'builder.form-builder.edit-panel.initialValue' | translate }}
             </mat-slide-toggle>
             <mat-form-field appearance="outline" *ngIf="isNumber()" class="full-width margin-html">
-                <mat-label>Initial value</mat-label>
+                <mat-label>{{ 'builder.form-builder.edit-panel.initialValue' | translate }}</mat-label>
                 <input matInput type="number" [(ngModel)]="dataVariable.init.value" (change)="notifyGridster()">
             </mat-form-field>
             <mat-form-field appearance="outline" *ngIf="isDate()" class="full-width margin-html">
-                <mat-label>Initial value</mat-label>
+                <mat-label>{{ 'builder.form-builder.edit-panel.initialValue' | translate }}</mat-label>
                 <mat-datepicker-toggle matPrefix [for]="datepicker"></mat-datepicker-toggle>
                 <input matInput (dateChange)="notifyGridster(); formatDate();"
                        [matDatepicker]="datepicker"
@@ -135,7 +135,7 @@
                 </mat-datepicker>
             </mat-form-field>
             <mat-form-field appearance="outline" *ngIf="isDatetime()" class="full-width margin-html">
-                <mat-label>Initial value</mat-label>
+                <mat-label>{{ 'builder.form-builder.edit-panel.initialValue' | translate }}</mat-label>
                 <input matInput
                        [ngxMatDatetimePicker]="picker"
                        [(ngModel)]="dataVariable.init.value"
@@ -176,13 +176,13 @@
                     </div>
                     <div fxLayoutAlign="center center" *ngIf="dataVariable.options.length === 0"
                          class="no-options">
-                        <span>No options</span>
+                        <span>{{ 'builder.form-builder.edit-panel.noOptions' | translate }}</span>
                     </div>
                 </div>
                 <button mat-stroked-button color="primary" class="save-button"
                         (click)="addOption(); notifyGridster()">
                     <mat-icon>add</mat-icon>
-                    Add option
+                    {{ 'builder.form-builder.edit-panel.addOption' | translate }}
                 </button>
             </div>
 
@@ -193,12 +193,12 @@
                         class="full-width save-button">
                     <mat-icon *ngIf="dataVariable.component === undefined">add</mat-icon>
                     <mat-icon *ngIf="dataVariable.component !== undefined">delete</mat-icon>
-                    {{ dataVariable.component === undefined ? 'Add component' : 'Delete component' }}
+                    {{ dataVariable.component === undefined ? ('builder.form-builder.edit-panel.addComponent' | translate) : ('builder.form-builder.edit-panel.deleteComponent' | translate) }}
                 </button>
             </div>
             <div *ngIf="dataVariable.component !== undefined" class="full-width">
                 <mat-form-field appearance="outline" class="full-width margin-html">
-                    <mat-label>Component Name</mat-label>
+                    <mat-label>{{ 'builder.form-builder.edit-panel.componentName' | translate }}</mat-label>
                     <input matInput [(ngModel)]="dataVariable.component.name" (change)="setComponent($event);notifyGridster()"
                            [formControl]="componentNameFormCtrl" [matAutocomplete]="componentAutocomplete">
                     <mat-autocomplete #componentAutocomplete="matAutocomplete" (optionSelected)="setComponent($event);notifyGridster()">
@@ -231,18 +231,18 @@
                     </div>
                     <div fxLayoutAlign="center center" *ngIf="dataVariable.component?.properties?.length === 0"
                          class="no-options">
-                        <span>No properties</span>
+                        <span>{{ 'builder.form-builder.edit-panel.noProperties' | translate }}</span>
                     </div>
                 </div>
                 <button mat-stroked-button color="primary" class="button-text save-button"
                         (click)="addProperty(dataVariable.component); notifyGridster()">
                     <mat-icon>add</mat-icon>
-                    Add property
+                    {{ 'builder.form-builder.edit-panel.addProperty' | translate }}
                 </button>
                 <button mat-stroked-button color="primary" class="button-text save-button"
                         (click)="cloneProperty(dataVariable, dataRef, 'component')">
                     <mat-icon>move_down</mat-icon>
-                    Copy to DataRef
+                    {{ 'builder.form-builder.edit-panel.copyToDataRef' | translate }}
                 </button>
                 <div *ngIf="isIconEnumeration(dataVariable.type, dataVariable?.component)">
                     <div *ngIf="dataVariable.component.icons.length > 0; else noIcons">
@@ -264,13 +264,13 @@
                     <ng-template #noIcons>
                         <div fxLayoutAlign="center center"
                              class="no-options">
-                            <span>No Icons</span>
+                            <span>{{ 'builder.form-builder.edit-panel.noIcons' | translate }}</span>
                         </div>
                     </ng-template>
                     <button mat-stroked-button color="primary" class="button-text save-button"
                             (click)="addIcon(gridsterService.selectedDataField.dataVariable.component); notifyGridster()">
                         <mat-icon>add</mat-icon>
-                        Add Icon
+                        {{ 'builder.form-builder.edit-panel.addIcon' | translate }}
                     </button>
                 </div>
             </div>
@@ -282,12 +282,12 @@
                         class="full-width save-button">
                     <mat-icon *ngIf="dataRef.component === undefined">add</mat-icon>
                     <mat-icon *ngIf="dataRef.component !== undefined">delete</mat-icon>
-                    {{ dataRef.component === undefined ? 'Add DataRef component' : 'Delete DataRef component' }}
+                    {{ dataRef.component === undefined ? ('builder.form-builder.edit-panel.addDataRefComponent' | translate) : ('builder.form-builder.edit-panel.deleteDataRefComponent' | translate) }}
                 </button>
             </div>
             <div *ngIf="dataRef.component !== undefined" class="full-width">
                 <mat-form-field appearance="outline" class="full-width">
-                    <mat-label>Component Name</mat-label>
+                    <mat-label>{{ 'builder.form-builder.edit-panel.componentName' | translate }}</mat-label>
                     <input matInput [(ngModel)]="dataRef.component.name" (change)="setDataRefComponent($event);notifyGridster()"
                            [formControl]="dataRefComponentNameFormCtrl" [matAutocomplete]="dataRefComponentAutocomplete">
                     <mat-autocomplete #dataRefComponentAutocomplete="matAutocomplete" (optionSelected)="setComponent($event);notifyGridster()">
@@ -321,18 +321,18 @@
                     <div fxLayoutAlign="center center"
                          *ngIf="dataRef.component?.properties?.length === 0"
                          class="no-options">
-                        <span>No properties</span>
+                        <span>{{ 'builder.form-builder.edit-panel.noProperties' | translate }}</span>
                     </div>
                 </div>
                 <button mat-stroked-button color="primary" class="button-text save-button"
                         (click)="addProperty(gridsterService.selectedDataField.dataRef.component); notifyGridster()">
                     <mat-icon>add</mat-icon>
-                    Add property
+                    {{ 'builder.form-builder.edit-panel.addProperty' | translate }}
                 </button>
                 <button mat-stroked-button color="primary" class="button-text save-button"
                         (click)="cloneProperty(dataRef, dataVariable, 'component')">
                     <mat-icon>move_up</mat-icon>
-                    Copy to DataField
+                    {{ 'builder.form-builder.edit-panel.copyToDataField' | translate }}
                 </button>
                 <div *ngIf="isIconEnumeration(dataVariable.type, dataRef.component)" >
                     <div *ngIf="dataRef.component.icons.length > 0; else noIcons">
@@ -354,7 +354,7 @@
                     <ng-template #noIcons>
                         <div fxLayoutAlign="center center"
                              class="no-options">
-                            <span>No Icons</span>
+                            <span>{{ 'builder.form-builder.edit-panel.noIcons' | translate }}</span>
                         </div>
                     </ng-template>
                 </div>
@@ -364,7 +364,7 @@
                 <button mat-stroked-button color="primary" (click)="openActions()"
                         class="full-width save-button">
                     <mat-icon>code</mat-icon>
-                    Datafield Actions
+                    {{ 'builder.form-builder.edit-panel.dataFieldActions' | translate }}
                 </button>
             </div>
 
@@ -372,7 +372,7 @@
 
             <!--  FIELD OFFSET MANAGEMENT  -->
             <mat-form-field appearance="outline" class="full-width margin-html">
-                <mat-label>Template</mat-label>
+                <mat-label>{{ 'builder.form-builder.edit-panel.template' | translate }}</mat-label>
                 <mat-select [(value)]="dataRef.layout.template" (selectionChange)="notifyGridster()">
                     <mat-option *ngFor="let opt of templates" [value]="opt">
                         {{ opt }}
@@ -381,7 +381,7 @@
             </mat-form-field>
             <mat-form-field appearance="outline" *ngIf="!isBoolean() && !isListOptionsDisplay() && !isFile() && !isFileList()"
                             class="full-width margin-html">
-                <mat-label>Appearance</mat-label>
+                <mat-label>{{ 'builder.form-builder.edit-panel.appearance' | translate }}</mat-label>
                 <mat-select [(value)]="dataRef.layout.appearance" (selectionChange)="notifyGridster()">
                     <mat-option *ngFor="let opt of appearances" [value]="opt">
                         {{ opt }}
@@ -390,7 +390,7 @@
             </mat-form-field>
             <div>
                 <mat-form-field appearance="outline" class="full-width margin-html">
-                    <mat-label>Field offset</mat-label>
+                    <mat-label>{{ 'builder.form-builder.edit-panel.fieldOffset' | translate }}</mat-label>
                     <input matInput type="number"
                            [(ngModel)]="gridsterService.selectedDataField.dataRef.layout.offset"
                            (change)="notifyGridster()">

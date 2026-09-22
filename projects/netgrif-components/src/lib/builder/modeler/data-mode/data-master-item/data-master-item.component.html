@@ -9,13 +9,13 @@
         <span class="text-ellipsis"  matTooltip="{{item.title.value}}">{{ item.title.value }}</span>
     </div>
     <div fxFlex="10">
-        <button mat-icon-button matTooltip="Delete data field" (click)="onDelete($event, item)"
+        <button mat-icon-button matTooltip="{{'builder.modeler.data-mode.deleteDataField' | translate}}" (click)="onDelete($event, item)"
                 [ngClass]="{'data-edit-list-icon-hidden': !showIcons}">
             <mat-icon>delete</mat-icon>
         </button>
     </div>
     <div fxFlex="10">
-        <button mat-icon-button matTooltip="Duplicate data field" (click)="onDuplicate($event, item)"
+        <button mat-icon-button matTooltip="{{'builder.modeler.data-mode.duplicateDataField' | translate}}" (click)="onDuplicate($event, item)"
                 [ngClass]="{'data-edit-list-icon-hidden': !showIcons}">
             <mat-icon>add_to_photos</mat-icon>
         </button>

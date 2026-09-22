@@ -24,6 +24,7 @@ import {ResetSimulationTool} from './tool/reset-simulation.tool';
 import {SimulationTool} from './tool/simulation-tool';
 import {SwitchLabelTool} from './tool/switch-label-tool';
 import {TaskSimulationTool} from './tool/task-simulation.tool';
+import {TranslateService} from "@ngx-translate/core";
 
 @Injectable()
 export class SimulationModeService extends CanvasModeService<SimulationTool> implements OnDestroy {
@@ -59,6 +60,7 @@ export class SimulationModeService extends CanvasModeService<SimulationTool> imp
         transitionService: SelectedTransitionService,
         private tutorialService: TutorialService,
         private parentInjector: Injector,
+        translateService: TranslateService,
         private _ngZone: NgZone,
         @Optional() @Inject(NAE_TAB_DATA) _tabData?: InjectedTabData,
     ) {
@@ -67,6 +69,7 @@ export class SimulationModeService extends CanvasModeService<SimulationTool> imp
         this.mode = new SimulationMode(
             this.tutorialService.simulator,
             this.parentInjector,
+            translateService
         );
         this.onTransitionDraw = (_: CanvasTransition) => {
         };
@@ -85,19 +88,19 @@ export class SimulationModeService extends CanvasModeService<SimulationTool> imp
             }
             return '';
         };
-        this.defaultTool = new TaskSimulationTool(this._modelService, dialog, this, router, transitionService, this._ngZone);
+        this.defaultTool = new TaskSimulationTool(this._modelService, dialog, this, router, transitionService, translateService, this._ngZone);
         this.switchTools = new ToolGroup<SimulationTool>(
-            new ResetSimulationTool(this._modelService, dialog, this, router, transitionService, this._ngZone),
-            new ChangeDataTool(this._modelService, dialog, this, router, transitionService, this._ngZone),
-            new ResetPositionAndZoomTool(this._modelService, dialog, this, router, transitionService, this._ngZone),
-            new GridTool(this._modelService, dialog, this, router, transitionService, this._ngZone),
-            new SwitchLabelTool(this._modelService, dialog, this, router, transitionService, this._ngZone),
+            new ResetSimulationTool(this._modelService, dialog, this, router, transitionService, translateService, this._ngZone),
+            new ChangeDataTool(this._modelService, dialog, this, router, transitionService, translateService, this._ngZone),
+            new ResetPositionAndZoomTool(this._modelService, dialog, this, router, transitionService, translateService, this._ngZone),
+            new GridTool(this._modelService, dialog, this, router, transitionService, translateService, this._ngZone),
+            new SwitchLabelTool(this._modelService, dialog, this, router, transitionService, translateService, this._ngZone),
         );
         this.switchTools.tools.forEach(t => t.bind());
         this.tools = [
             new ToolGroup<SimulationTool>(
                 this.defaultTool,
-                new EventSimulationTool(this._modelService, dialog, this, router, transitionService, this._ngZone),
+                new EventSimulationTool(this._modelService, dialog, this, router, transitionService, translateService, this._ngZone),
             ),
             this.switchTools,
         ];

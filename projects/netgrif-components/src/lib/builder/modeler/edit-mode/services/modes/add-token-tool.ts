@@ -14,9 +14,9 @@ export class AddTokenTool extends CanvasTool {
             AddTokenTool.ID,
             new ControlPanelButton(
                 new ControlPanelIcon('add_circle_outline', false, true),
-                'Add token',
+                context.translateService.instant('builder.modeler.edit-mode.services.addToken'),
             ),
-            context
+            context,
         );
     }
 
@@ -31,6 +31,6 @@ export class AddTokenTool extends CanvasTool {
         const changed = new PlaceChange(place.modelPlace, place.modelPlace, undefined);
         changed.place.marking += 1;
         this.modelService.updatePlace(changed);
-        this.historyService.save(`Token has been added to place ${place.id}.`);
+        this.historyService.save(this._translateService.instant('builder.modeler.edit-mode.services.tokenAdded') + ` ${place.id}.`);
     }
 }

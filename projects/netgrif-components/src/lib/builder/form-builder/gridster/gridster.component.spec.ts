@@ -11,6 +11,7 @@ import {GridsterService} from './gridster.service';
 import {FieldListService} from '../field-list/field-list.service';
 import {GridsterComponent} from './gridster.component';
 import {LocalStorageService} from "../../services/local-storage.service";
+import {TranslateService} from "@ngx-translate/core";
 
 describe('GridsterComponent', () => {
     beforeEach(() => {
@@ -27,6 +28,7 @@ describe('GridsterComponent', () => {
                 ExportService,
                 LocalStorageService,
                 {provide: Router, useValue: {}},
+                {provide: TranslateService, useValue: { instant: (key: string) => `translated-${key}` }}
             ],
             schemas: [NO_ERRORS_SCHEMA],
         });

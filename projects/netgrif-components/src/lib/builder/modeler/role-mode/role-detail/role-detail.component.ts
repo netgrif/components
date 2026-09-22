@@ -10,6 +10,7 @@ import {ModelService} from '../../services/model/model.service';
 import {RoleMasterDetailService} from '../role-master-detail.service';
 import {ChangedRole} from './changed-role';
 import {BuilderMode, BuilderModeService} from "../../../services/builder-mode.service";
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
     selector: 'nc-builder-role-detail',
@@ -29,7 +30,8 @@ export class RoleDetailComponent implements OnDestroy {
         private _actionMode: ActionsModeService,
         private _actionsMasterDetail: ActionsMasterDetailService,
         protected _historyService: HistoryService,
-        protected _builderModeService: BuilderModeService
+        protected _builderModeService: BuilderModeService,
+        protected _translateService: TranslateService
     ) {
         this._masterService.getSelected$().subscribe(item => {
             this.saveChange();
@@ -53,7 +55,7 @@ export class RoleDetailComponent implements OnDestroy {
             return;
         }
         this._modelService.updateRole(this.role);
-        this._historyService.save(`Role ${this.role.id} has been changed.`);
+        this._historyService.save(this._translateService.instant('builder.modeler.role-mode.role') + ` ${this.role.id} ` + this._translateService.instant('builder.modeler.role-mode.hasBeenChanged'));
         this.shouldSave = false;
     }
 

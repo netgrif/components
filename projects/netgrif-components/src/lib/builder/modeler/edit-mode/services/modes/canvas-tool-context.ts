@@ -10,6 +10,7 @@ import {BuilderModeService} from '../../../../services/builder-mode.service';
 import {ProcessActionsTool} from "../../../actions-mode/tools/process-actions-tool";
 import {BuilderIntegrationService} from "../../../../services/builder-integration.service";
 import {LocalStorageService} from '../../../../services/local-storage.service';
+import {TranslateService} from "@ngx-translate/core";
 
 export class CanvasToolContext {
     constructor(
@@ -24,6 +25,7 @@ export class CanvasToolContext {
         public readonly processTool: ProcessActionsTool,
         public readonly builderIntegrationService: BuilderIntegrationService,
         public readonly ngZone: NgZone,
-        public readonly localStorageService: LocalStorageService
+        public readonly localStorageService: LocalStorageService,
+        public readonly translateService: TranslateService,
     ) {}
 }

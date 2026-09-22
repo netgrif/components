@@ -1,13 +1,16 @@
 import {TestBed} from '@angular/core/testing';
-import {ArcType, PetriNet, Place, Transition} from '@netgrif/petriflow';
+import {ArcType, PetriNet} from '@netgrif/petriflow';
 import {ArcFactory} from '../../edit-mode/domain/arc-builders/arc-factory.service';
 import {ModelService} from './model.service';
+import {TranslateService} from "@ngx-translate/core";
 
 describe('ModelService', () => {
     let service: ModelService;
 
     beforeEach(() => {
-        TestBed.configureTestingModule({providers: [ModelService, ArcFactory]});
+        TestBed.configureTestingModule({providers: [ModelService, ArcFactory,
+                {provide: TranslateService, useValue: { instant: (key: string) => `translated-${key}` }}
+            ]});
         service = TestBed.inject(ModelService);
         service.model = service.newModel();
     });

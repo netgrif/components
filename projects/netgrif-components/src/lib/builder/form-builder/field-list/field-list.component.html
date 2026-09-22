@@ -1,10 +1,10 @@
 <mat-list class="noselect fix-datafield-expansion-panel">
-    <h3 class="field-list-heading">Data fields</h3>
+    <h3 class="field-list-heading">{{ 'builder.form-builder.field-list.dataFields' | translate }}</h3>
 
     <mat-expansion-panel #existingFieldPanel class="field-list-expansion-panel expansion-panel-compact">
         <mat-expansion-panel-header class="field-list-expansion-header">
             <mat-panel-title class="field-list-expansion-title">
-                Existing fields
+                {{ 'builder.form-builder.field-list.existingFields' | translate }}
             </mat-panel-title>
         </mat-expansion-panel-header>
         <div fxLayoutAlign="start center" class="netgrif-input builder-field-input existing-field-search">
@@ -44,7 +44,7 @@
     <mat-expansion-panel #newFieldsPanel class="field-list-expansion-panel">
         <mat-expansion-panel-header class="field-list-expansion-header">
             <mat-panel-title class="field-list-expansion-title">
-                Create new fields
+                {{ 'builder.form-builder.field-list.createNewFields' | translate }}
             </mat-panel-title>
         </mat-expansion-panel-header>
 
@@ -72,7 +72,7 @@
     <div class="save-back-div">
         <button mat-stroked-button class="back-button button-text" (click)="backModeler()">
             <mat-icon>keyboard_backspace</mat-icon>
-            <span>Back</span>
+            <span>{{ 'builder.form-builder.field-list.back' | translate }}</span>
         </button>
     </div>
 </mat-list>

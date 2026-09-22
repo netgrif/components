@@ -12,9 +12,9 @@ export class CreatePlaceTool extends CanvasTool {
             CreatePlaceTool.ID,
             new ControlPanelButton(
                 new ControlPanelIcon('circle', false, true),
-                'Place',
+                context.translateService.instant('builder.modeler.edit-mode.services.place'),
             ),
-            context
+            context,
         );
     }
 
@@ -23,7 +23,7 @@ export class CreatePlaceTool extends CanvasTool {
         if (this.isLeftButtonClick(event)) {
             const place = this.editModeService.createPlace(this.mousePosition(event));
             this.bindPlace(place);
-            this.historyService.save(`Place ${place.id} has been created.`);
+            this.historyService.save(this._translateService.instant('builder.modeler.edit-mode.services.place') + ` ${place.id} ` + this._translateService.instant('builder.modeler.edit-mode.services.hasBeenCreated'));
         }
     }
 }

@@ -13,9 +13,9 @@ export class ClearModelTool extends CanvasTool {
             ClearModelTool.ID,
             new ControlPanelButton(
                 new ControlPanelIcon('delete_forever', false, true),
-                'Delete model',
+                context.translateService.instant('builder.modeler.edit-mode.services.deleteModel'),
             ),
-            context
+            context,
         );
     }
 
@@ -26,7 +26,7 @@ export class ClearModelTool extends CanvasTool {
             if (result === true) {
                 const oldId = this.modelService.model.id;
                 this.modelService.model = this.modelService.newModel();
-                this.historyService.save(`Model ${oldId} has been deleted.`);
+                this.historyService.save(this._translateService.instant('builder.modeler.edit-mode.services.model') + ` ${oldId} ` + this._translateService.instant('builder.modeler.edit-mode.services.hasBeenDeleted'));
             }
         });
     }

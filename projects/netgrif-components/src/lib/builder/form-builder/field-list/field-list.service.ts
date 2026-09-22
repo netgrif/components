@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {DataType} from '@netgrif/petriflow';
 import {Subject} from 'rxjs';
 import {GridsterDataField} from '../gridster/classes/gridster-data-field';
+import {TranslateService} from "@ngx-translate/core";
 
 export interface PropertyDef {
     name: string;
@@ -30,407 +31,408 @@ export class FieldListService {
     static DEFAULT_FIELD_COLS = 2;
     static DEFAULT_FIELD_ROWS = 1;
 
-    fieldListArray: Array<DataRefDef> = [
-        {
-            type: DataType.TEXT,
-            components: [
-                {title: 'Simple'},
-                {title: 'Area', name: 'textarea', rows: 2, cols: 4},
-                {title: 'Markdown Editor', name: 'richtextarea', rows: 2, cols: 4},
-                {title: 'HTML Editor', name: 'htmltextarea', rows: 2, cols: 4},
-                {title: 'Password', name: 'password'},
-                {title: 'Signature', name: 'signature'}
-            ]
-        },
-        {
-            type: DataType.NUMBER,
-            components: [
-                {title: 'Simple'},
-                {
-                    title: 'Decimal',
-                    name: 'decimal',
-                    properties: [
-                        {
-                            name: 'digitsInfo',
-                            defaultValue: '1.0-3'
-                        },
-                        {
-                            name: 'locale',
-                            defaultValue: 'sk'
-                        },
-                    ]
-                },
-                {
-                    title: 'Currency',
-                    name: 'currency',
-                    properties: [
-                        {
-                            name: 'code',
-                            defaultValue: 'EUR'
-                        },
-                        {
-                            name: 'fractionSize',
-                            defaultValue: '2'
-                        },
-                        {
-                            name: 'locale',
-                            defaultValue: 'sk'
-                        },
-                    ]
-                }
-            ]
-        },
-        {
-            type: DataType.ENUMERATION,
-            components: [
-                {title: 'Select'},
-                {title: 'List', name: 'list'},
-            ]
-        },
-        {
-            type: DataType.ENUMERATION_MAP,
-            components: [
-                {title: 'Select'},
-                {title: 'List', name: 'list'},
-                {
-                    title: 'Stepper',
-                    name: 'stepper',
-                    properties: [
-                        {
-                            name: 'arrowStepper',
-                            defaultValue: 'true'
-                        }
-                    ]
-                },
-                {
-                    title: 'Autocomplete',
-                    name: 'autocomplete',
-                    properties: [
-                        {
-                            name: 'filter',
-                            defaultValue: 'prefix'
-                        }
-                    ]
-                },
-                {title: 'Dynamic Autocomplete', name: 'autocomplete_dynamic'},
-                {
-                    title: 'Icon',
-                    name: 'icon',
-                    properties: [
-                        {
-                            name: 'horizontal',
-                            defaultValue: 'true'
-                        },
-                        {
-                            name: 'arrow',
-                            defaultValue: 'true'
-                        },
-                        {
-                            name: 'divider',
-                            defaultValue: 'true'
-                        }
-                    ]
-                },
-                {
-                    title: 'Case ref',
-                    name: 'caseref',
-                    showPlaceholder: true,
-                    properties: [
-                        {
-                            name: 'filter',
-                            defaultValue: 'true'
-                        },
-                        {
-                            name: 'filterQuery',
-                            defaultValue: '{}'
-                        },
-                        {
-                            name: 'headers',
-                            defaultValue: 'meta-visualID,meta-mongoID,meta-title,meta-author,meta-creationDate'
-                        },
-                        {
-                            name: 'createCase',
-                            defaultValue: 'true'
-                        },
-                        {
-                            name: 'search',
-                            defaultValue: 'true'
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            type: DataType.MULTICHOICE,
-            components: [
-                {title: 'Select'},
-                {title: 'List', name: 'list'}
-            ]
-        },
-        {
-            type: DataType.MULTICHOICE_MAP,
-            components: [
-                {title: 'Select'},
-                {title: 'List', name: 'list'},
-                {
-                    title: 'Autocomplete',
-                    name: 'autocomplete',
-                    properties: [
-                        {
-                            name: 'filter',
-                            defaultValue: 'prefix'
-                        }
-                    ]
-                },
-                {
-                    title: 'Case ref',
-                    name: 'caseref',
-                    showPlaceholder: true,
-                    properties: [
-                        {
-                            name: 'filter',
-                            defaultValue: 'true'
-                        },
-                        {
-                            name: 'filterQuery',
-                            defaultValue: '{}'
-                        },
-                        {
-                            name: 'headers',
-                            defaultValue: 'meta-visualID,meta-mongoID,meta-title,meta-author,meta-creationDate'
-                        },
-                        {
-                            name: 'createCase',
-                            defaultValue: 'true'
-                        },
-                        {
-                            name: 'search',
-                            defaultValue: 'true'
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            type: DataType.BOOLEAN,
-            components: [
-                {title: 'Slide'}
-            ]
-        },
-        {
-            type: DataType.BUTTON,
-            components: [
-                {title: 'Simple'},
-                {title: 'Raised', name: 'raised'},
-                {title: 'Stroked', name: 'stroked'},
-                {title: 'Flat', name: 'flat'},
-                {title: 'Icon', name: 'icon'},
-                {title: 'FAB', name: 'fab'},
-                {title: 'MiniFAB', name: 'minifab'}
-            ],
-            properties: [
-                {
-                    name: 'dialogText',
-                    defaultValue: ''
-                },
-                {
-                    name: 'dialogTitle',
-                    defaultValue: ''
-                },
-                {
-                    name: 'align',
-                    defaultValue: ''
-                },
-                {
-                    name: 'stretch',
-                    defaultValue: 'true'
-                }
-            ]
-        },
-        {
-            type: DataType.DATE,
-            components: [
-                {title: 'Simple'}
-            ]
-        },
-        {
-            type: DataType.DATETIME,
-            components: [
-                {title: 'Simple'}
-            ]
-        },
-        {
-            type: DataType.FILE,
-            components: [
-                {title: 'Simple'},
-                {
-                    title: 'Preview',
-                    name: 'preview',
-                    properties: [
-                        {
-                            name: 'borderWidth',
-                            defaultValue: '0'
-                        },
-                        {
-                            name: 'borderStyle',
-                            defaultValue: 'none'
-                        },
-                        {
-                            name: 'borderColor',
-                            defaultValue: 'black'
-                        },
-                        {
-                            name: 'borderEnabled',
-                            defaultValue: 'true'
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            type: DataType.FILE_LIST,
-            components: [
-                {title: 'Simple'}
-            ]
-        },
-        {
-            type: DataType.USER,
-            components: [
-                {title: 'Simple'}
-            ]
-        },
-        {
-            type: DataType.USER_LIST,
-            components: [
-                {title: 'Simple'}
-            ]
-        },
-        {
-            type: DataType.CASE_FILTER,
-            components: [
-                {title: 'Simple'},
-            ]
-        },
-        {
-            type: DataType.TASK_FILTER,
-            components: [
-                {title: 'Simple'},
-            ]
-        },
-        {
-            type: DataType.PROCESS_FILTER,
-            components: [
-                {title: 'Simple'},
-            ]
-        },
-        {
-            type: DataType.I18N,
-            components: [
-                {
-                    title: 'Text',
-                    name: 'text',
-                    properties: [
-                        {
-                            name: 'plainText',
-                            defaultValue: 'true'
-                        },
-                        {
-                            name: 'boldText',
-                            defaultValue: 'true'
-                        },
-                        {
-                            name: 'textColor',
-                            defaultValue: 'black'
-                        },
-                        {
-                            name: 'fontSize',
-                            defaultValue: '12'
-                        }
-                    ]
-                },
-                {
-                    title: 'Divider',
-                    name: 'divider',
-                    cols: 4,
-                    properties: [
-                        {
-                            name: 'dividerColor',
-                            defaultValue: 'black'
-                        },
-                        {
-                            name: 'fontSize',
-                            defaultValue: '12'
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            type: DataType.TASK_REF,
-            showPlaceholder: true,
-            components: [
-                {title: 'Simple', cols: 4},
-                {title: 'Dashboard', name: 'dashboard', cols: 4}
-            ]
-        },
-        {
-            type: DataType.PROCESS_REF,
-            showPlaceholder: true,
-            components: [
-                {title: 'Simple', cols: 4},
-            ]
-        },
-        {
-            type: DataType.CASE_REF,
-            showPlaceholder: true,
-            components: [
-                {title: 'Simple'}
-            ],
-            properties: [
-                {
-                    name: 'filter',
-                    defaultValue: 'true'
-                },
-                {
-                    name: 'filterQuery',
-                    defaultValue: '{}'
-                },
-                {
-                    name: 'headers',
-                    defaultValue: 'meta-visualID,meta-mongoID,meta-title,meta-author,meta-creationDate'
-                },
-                {
-                    name: 'createCase',
-                    defaultValue: 'true'
-                },
-                {
-                    name: 'search',
-                    defaultValue: 'true'
-                }
-            ]
-        },
-        {
-            type: DataType.STRING_COLLECTION,
-            components: [
-                {title: 'Simple'}
-            ],
-            properties: [
-                {
-                    name: 'semicolon',
-                    defaultValue: 'true'
-                },
-                {
-                    name: 'comma',
-                    defaultValue: 'true'
-                }
-            ]
-        }
-    ];
+    fieldListArray: Array<DataRefDef>;
 
     public draggedObjectsStream: Subject<GridsterDataField>;
 
-    constructor() {
+    constructor(protected _translateService: TranslateService) {
         this.draggedObjectsStream = new Subject();
+        this.fieldListArray = [
+            {
+                type: DataType.TEXT,
+                components: [
+                    {title: this._translateService.instant('builder.form-builder.field-list.simple')},
+                    {title: this._translateService.instant('builder.form-builder.field-list.area'), name: 'textarea', rows: 2, cols: 4},
+                    {title: this._translateService.instant('builder.form-builder.field-list.markdownEditor'), name: 'richtextarea', rows: 2, cols: 4},
+                    {title: this._translateService.instant('builder.form-builder.field-list.htmlEditor'), name: 'htmltextarea', rows: 2, cols: 4},
+                    {title: this._translateService.instant('builder.form-builder.field-list.password'), name: 'password'},
+                    {title: this._translateService.instant('builder.form-builder.field-list.signature'), name: 'signature'}
+                ]
+            },
+            {
+                type: DataType.NUMBER,
+                components: [
+                    {title: this._translateService.instant('builder.form-builder.field-list.simple')},
+                    {
+                        title: this._translateService.instant('builder.form-builder.field-list.decimal'),
+                        name: 'decimal',
+                        properties: [
+                            {
+                                name: 'digitsInfo',
+                                defaultValue: '1.0-3'
+                            },
+                            {
+                                name: 'locale',
+                                defaultValue: 'sk'
+                            },
+                        ]
+                    },
+                    {
+                        title: this._translateService.instant('builder.form-builder.field-list.currency'),
+                        name: 'currency',
+                        properties: [
+                            {
+                                name: 'code',
+                                defaultValue: 'EUR'
+                            },
+                            {
+                                name: 'fractionSize',
+                                defaultValue: '2'
+                            },
+                            {
+                                name: 'locale',
+                                defaultValue: 'sk'
+                            },
+                        ]
+                    }
+                ]
+            },
+            {
+                type: DataType.ENUMERATION,
+                components: [
+                    {title: this._translateService.instant('builder.form-builder.field-list.select')},
+                    {title: this._translateService.instant('builder.form-builder.field-list.list'), name: 'list'},
+                ]
+            },
+            {
+                type: DataType.ENUMERATION_MAP,
+                components: [
+                    {title: this._translateService.instant('builder.form-builder.field-list.select')},
+                    {title: this._translateService.instant('builder.form-builder.field-list.list'), name: 'list'},
+                    {
+                        title: this._translateService.instant('builder.form-builder.field-list.stepper'),
+                        name: 'stepper',
+                        properties: [
+                            {
+                                name: 'arrowStepper',
+                                defaultValue: 'true'
+                            }
+                        ]
+                    },
+                    {
+                        title: this._translateService.instant('builder.form-builder.field-list.autocomplete'),
+                        name: 'autocomplete',
+                        properties: [
+                            {
+                                name: 'filter',
+                                defaultValue: 'prefix'
+                            }
+                        ]
+                    },
+                    {title: this._translateService.instant('builder.form-builder.field-list.dynamicAutocomplete'), name: 'autocomplete_dynamic'},
+                    {
+                        title: this._translateService.instant('builder.form-builder.field-list.icon'),
+                        name: 'icon',
+                        properties: [
+                            {
+                                name: 'horizontal',
+                                defaultValue: 'true'
+                            },
+                            {
+                                name: 'arrow',
+                                defaultValue: 'true'
+                            },
+                            {
+                                name: 'divider',
+                                defaultValue: 'true'
+                            }
+                        ]
+                    },
+                    {
+                        title: this._translateService.instant('builder.form-builder.field-list.caseRef'),
+                        name: 'caseref',
+                        showPlaceholder: true,
+                        properties: [
+                            {
+                                name: 'filter',
+                                defaultValue: 'true'
+                            },
+                            {
+                                name: 'filterQuery',
+                                defaultValue: '{}'
+                            },
+                            {
+                                name: 'headers',
+                                defaultValue: 'meta-visualID,meta-mongoID,meta-title,meta-author,meta-creationDate'
+                            },
+                            {
+                                name: 'createCase',
+                                defaultValue: 'true'
+                            },
+                            {
+                                name: 'search',
+                                defaultValue: 'true'
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                type: DataType.MULTICHOICE,
+                components: [
+                    {title: this._translateService.instant('builder.form-builder.field-list.select')},
+                    {title: this._translateService.instant('builder.form-builder.field-list.list'), name: 'list'}
+                ]
+            },
+            {
+                type: DataType.MULTICHOICE_MAP,
+                components: [
+                    {title: this._translateService.instant('builder.form-builder.field-list.select')},
+                    {title: this._translateService.instant('builder.form-builder.field-list.list'), name: 'list'},
+                    {
+                        title: this._translateService.instant('builder.form-builder.field-list.autocomplete'),
+                        name: 'autocomplete',
+                        properties: [
+                            {
+                                name: 'filter',
+                                defaultValue: 'prefix'
+                            }
+                        ]
+                    },
+                    {
+                        title: this._translateService.instant('builder.form-builder.field-list.caseRef'),
+                        name: 'caseref',
+                        showPlaceholder: true,
+                        properties: [
+                            {
+                                name: 'filter',
+                                defaultValue: 'true'
+                            },
+                            {
+                                name: 'filterQuery',
+                                defaultValue: '{}'
+                            },
+                            {
+                                name: 'headers',
+                                defaultValue: 'meta-visualID,meta-mongoID,meta-title,meta-author,meta-creationDate'
+                            },
+                            {
+                                name: 'createCase',
+                                defaultValue: 'true'
+                            },
+                            {
+                                name: 'search',
+                                defaultValue: 'true'
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                type: DataType.BOOLEAN,
+                components: [
+                    {title: this._translateService.instant('builder.form-builder.field-list.slide')}
+                ]
+            },
+            {
+                type: DataType.BUTTON,
+                components: [
+                    {title: this._translateService.instant('builder.form-builder.field-list.simple')},
+                    {title: this._translateService.instant('builder.form-builder.field-list.raised'), name: 'raised'},
+                    {title: this._translateService.instant('builder.form-builder.field-list.stroked'), name: 'stroked'},
+                    {title: this._translateService.instant('builder.form-builder.field-list.flat'), name: 'flat'},
+                    {title: this._translateService.instant('builder.form-builder.field-list.icon'), name: 'icon'},
+                    {title: this._translateService.instant('builder.form-builder.field-list.fab'), name: 'fab'},
+                    {title: this._translateService.instant('builder.form-builder.field-list.MiniFAB'), name: 'minifab'}
+                ],
+                properties: [
+                    {
+                        name: 'dialogText',
+                        defaultValue: ''
+                    },
+                    {
+                        name: 'dialogTitle',
+                        defaultValue: ''
+                    },
+                    {
+                        name: 'align',
+                        defaultValue: ''
+                    },
+                    {
+                        name: 'stretch',
+                        defaultValue: 'true'
+                    }
+                ]
+            },
+            {
+                type: DataType.DATE,
+                components: [
+                    {title: this._translateService.instant('builder.form-builder.field-list.simple')}
+                ]
+            },
+            {
+                type: DataType.DATETIME,
+                components: [
+                    {title: this._translateService.instant('builder.form-builder.field-list.simple')}
+                ]
+            },
+            {
+                type: DataType.FILE,
+                components: [
+                    {title: this._translateService.instant('builder.form-builder.field-list.simple')},
+                    {
+                        title: this._translateService.instant('builder.form-builder.field-list.preview'),
+                        name: 'preview',
+                        properties: [
+                            {
+                                name: 'borderWidth',
+                                defaultValue: '0'
+                            },
+                            {
+                                name: 'borderStyle',
+                                defaultValue: 'none'
+                            },
+                            {
+                                name: 'borderColor',
+                                defaultValue: 'black'
+                            },
+                            {
+                                name: 'borderEnabled',
+                                defaultValue: 'true'
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                type: DataType.FILE_LIST,
+                components: [
+                    {title: this._translateService.instant('builder.form-builder.field-list.simple')}
+                ]
+            },
+            {
+                type: DataType.USER,
+                components: [
+                    {title: this._translateService.instant('builder.form-builder.field-list.simple')}
+                ]
+            },
+            {
+                type: DataType.USER_LIST,
+                components: [
+                    {title: this._translateService.instant('builder.form-builder.field-list.simple')}
+                ]
+            },
+            {
+                type: DataType.CASE_FILTER,
+                components: [
+                    {title: this._translateService.instant('builder.form-builder.field-list.simple')},
+                ]
+            },
+            {
+                type: DataType.TASK_FILTER,
+                components: [
+                    {title: this._translateService.instant('builder.form-builder.field-list.simple')},
+                ]
+            },
+            {
+                type: DataType.PROCESS_FILTER,
+                components: [
+                    {title: this._translateService.instant('builder.form-builder.field-list.simple')},
+                ]
+            },
+            {
+                type: DataType.I18N,
+                components: [
+                    {
+                        title: this._translateService.instant('builder.form-builder.field-list.text'),
+                        name: 'text',
+                        properties: [
+                            {
+                                name: 'plainText',
+                                defaultValue: 'true'
+                            },
+                            {
+                                name: 'boldText',
+                                defaultValue: 'true'
+                            },
+                            {
+                                name: 'textColor',
+                                defaultValue: 'black'
+                            },
+                            {
+                                name: 'fontSize',
+                                defaultValue: '12'
+                            }
+                        ]
+                    },
+                    {
+                        title: this._translateService.instant('builder.form-builder.field-list.divider'),
+                        name: 'divider',
+                        cols: 4,
+                        properties: [
+                            {
+                                name: 'dividerColor',
+                                defaultValue: 'black'
+                            },
+                            {
+                                name: 'fontSize',
+                                defaultValue: '12'
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                type: DataType.TASK_REF,
+                showPlaceholder: true,
+                components: [
+                    {title: this._translateService.instant('builder.form-builder.field-list.simple'), cols: 4},
+                    {title: this._translateService.instant('builder.form-builder.field-list.dashboard'), name: 'dashboard', cols: 4}
+                ]
+            },
+            {
+                type: DataType.PROCESS_REF,
+                showPlaceholder: true,
+                components: [
+                    {title: this._translateService.instant('builder.form-builder.field-list.simple'), cols: 4},
+                ]
+            },
+            {
+                type: DataType.CASE_REF,
+                showPlaceholder: true,
+                components: [
+                    {title: this._translateService.instant('builder.form-builder.field-list.simple')}
+                ],
+                properties: [
+                    {
+                        name: 'filter',
+                        defaultValue: 'true'
+                    },
+                    {
+                        name: 'filterQuery',
+                        defaultValue: '{}'
+                    },
+                    {
+                        name: 'headers',
+                        defaultValue: 'meta-visualID,meta-mongoID,meta-title,meta-author,meta-creationDate'
+                    },
+                    {
+                        name: 'createCase',
+                        defaultValue: 'true'
+                    },
+                    {
+                        name: 'search',
+                        defaultValue: 'true'
+                    }
+                ]
+            },
+            {
+                type: DataType.STRING_COLLECTION,
+                components: [
+                    {title: this._translateService.instant('builder.form-builder.field-list.simple')}
+                ],
+                properties: [
+                    {
+                        name: 'semicolon',
+                        defaultValue: 'true'
+                    },
+                    {
+                        name: 'comma',
+                        defaultValue: 'true'
+                    }
+                ]
+            }
+        ];
     }
 
     public getComponentMeta(type: DataType, componentName: string): ComponentDef {

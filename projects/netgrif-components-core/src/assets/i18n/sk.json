@@ -3,7 +3,7 @@
         "menu": {
             "lang": "Jazyk",
             "profile": "Profil",
-            "logout": "Odhlasiť sa",
+            "logout": "Odhlásiť sa",
             "en": "Anglický",
             "sk": "Slovenský",
             "de": "Nemecký",
@@ -101,7 +101,7 @@
             "showcase": "Nebol zvolený mód zobrazenia používateľa!"
         },
         "ldapGroup": {
-            "choose": "Vyhladajte Ldap skupinu",
+            "choose": "Vyhľadajte Ldap skupinu",
             "noUser": "Neexistuje žiadna Ldap skupina",
             "err": "Nepodarilo sa načítať Ldap skupiny"
         },
@@ -521,5 +521,1349 @@
     },
     "export": {
         "errorExportDownload": "Stiahnutie súboru zlyhalo!"
+    },
+    "builder": {
+        "dialogs": {
+            "arc-edit": {
+                "editArc": "Upraviť hranu",
+                "multiplicity": "Multiplicita",
+                "idRequired": "Id je povinné",
+                "type": "Typ",
+                "multiplicityPositive": "Multiplicita musí byť kladné celé číslo",
+                "reference": "Referencia",
+                "none": "-- Žiadne --",
+                "source": "Zdroj",
+                "destination": "Cieľ",
+                "save": "Uložiť",
+                "dataFields": "Dátové polia",
+                "places": "Miesta"
+            },
+            "change-data": {
+                "title": "Zmeniť hodnotu referencovaných dát",
+                "titleMulti": "Zmeniť hodnotu referencovaných dát",
+                "valueRequired": "Hodnota je povinná",
+                "valueNotNegative": "Hodnota nemôže byť záporné číslo",
+                "noData": "Nenašli sa žiadne referencované dáta",
+                "save": "Uložiť"
+            },
+            "dead-net": {
+                "title": "Žiadna spustiteľná úloha",
+                "message": "Neexistujú žiadne spustiteľné úlohy. Naozaj chcete stiahnuť model?",
+                "cancel": "Zrušiť",
+                "download": "Stiahnuť"
+            },
+            "delete": {
+                "title": "Potvrdenie vymazania",
+                "message": "Naozaj chcete vymazať túto položku?",
+                "cancel": "Zrušiť",
+                "confirm": "Potvrdiť"
+            },
+            "delete-model": {
+                "title": "Vymazať model",
+                "message": "Naozaj chcete vymazať model? Všetky neuložené zmeny budú stratené.",
+                "cancel": "Zrušiť",
+                "delete": "Vymazať"
+            },
+            "errors": {
+                "title": "Výsledok importu",
+                "errors": "Chyby:",
+                "warnings": "Upozornenia:",
+                "info": "Info:",
+                "close": "Zatvoriť"
+            },
+            "local-storage-model": {
+                "title": "Pokračovať v predchádzajúcej práci",
+                "message": "Prajete si pokračovať v práci na",
+                "from": "z",
+                "deleteOld": "Vymazať starú prácu",
+                "load": "Načítať"
+            },
+            "manage-roles": {
+                "title": "Oprávnenia",
+                "rolePermissions": "Oprávnenia rolí",
+                "id": "Id",
+                "perform": "Vykonať",
+                "delegate": "Delegovať",
+                "cancel": "Zrušiť",
+                "assign": "Priradiť",
+                "create": "Vytvoriť",
+                "delete": "Vymazať",
+                "view": "Zobraziť",
+                "userListPermissions": "Oprávnenia zoznamu používateľov",
+                "changed": "Priradenia rolí boli zmenené."
+            },
+            "marking-change": {
+                "title": "Zmeniť značkovanie miesta",
+                "tokens": "Značkovanie",
+                "tokensRequired": "Počet značiek je povinný",
+                "tokensNonNegative": "Počet značiek musí byť nezáporné celé číslo",
+                "save": "Uložiť"
+            },
+            "model-edit": {
+                "title": "Upraviť model",
+                "idRequired": "Id je povinné",
+                "version": "Verzia",
+                "versionFormat": "Verzia musí byť vo formáte Major.Minor.Patch",
+                "modelTitle": "Názov",
+                "idRequired2": "Id je povinné",
+                "initials": "Iniciály",
+                "defaultRole": "Predvolená rola",
+                "anonymousRole": "Anonymná rola",
+                "defaultCaseName": "Predvolený názov inštancie",
+                "tags": "Značky",
+                "key": "Kľúč",
+                "value": "Hodnota",
+                "empty": "Prázdne",
+                "addTag": "Pridať značku",
+                "actions": "Akcie",
+                "permissions": "Oprávnenia",
+                "save": "Uložiť"
+            },
+            "place-edit": {
+                "title": "Upraviť miesto",
+                "id": "Id",
+                "idRequired": "Id je povinné",
+                "idExists": "Miesto so zadaným id už existuje",
+                "label": "Popis",
+                "tokens": "Značkovanie",
+                "tokensRequired": "Počet značiek je povinný",
+                "tokensNonNegative": "Počet značiek musí byť nezáporné celé číslo",
+                "save": "Uložiť"
+            },
+            "place-ref-delete": {
+                "titleSingle": "Vymazať referencované miesto",
+                "titleMultiple": "Vymazať referencované miesta",
+                "place": "Miesto",
+                "referencedByArc": "je referencované hranou",
+                "referencedByArcs": "je referencované hranami",
+                "cancel": "Zrušiť",
+                "delete": "Vymazať"
+            },
+            "refactor": {
+                "title": "Refaktorovať Id",
+                "originalId": "Pôvodné Id",
+                "newId": "Nové Id",
+                "newIdRequired": "Nové Id je povinné!",
+                "idCharsOnly": "Id môže obsahovať iba alfanumerické znaky, pomlčku alebo podčiarkovník!",
+                "idUnique": "Id musí byť jedinečné! Zvolené Id už existuje!",
+                "warning": "UPOZORNENIE! V akciách bude Id poľa zmenené iba v časti deklarácie, Id použité ako reťazec vo výraze akcie nebude zmenené.",
+                "close": "Zatvoriť",
+                "refactor": "Refaktorovať"
+            },
+            "transition-edit": {
+                "trigger-tree": {
+                    "setTriggerType": "Nastaviť typ spúšťača",
+                    "setTimeType": "Nastaviť časový typ",
+                    "setDelay": "Nastaviť oneskorenie",
+                    "setExact": "Nastaviť presný čas",
+                    "toggle": "prepnúť",
+                    "triggers": "Spúšťače",
+                    "exact": "Ihneď",
+                    "delay": "Oneskorenie",
+                    "auto": "Auto",
+                    "user": "Používateľ",
+                    "time": "Čas"
+                },
+                "title": "Upraviť úlohu",
+                "id": "Id",
+                "idRequired": "Id je povinné",
+                "idExists": "Prechod so zadaným id už existuje",
+                "label": "Popis",
+                "assignPolicy": "Politika priradenia",
+                "finishPolicy": "Politika dokončenia",
+                "tags": "Značky",
+                "key": "Kľúč",
+                "value": "Hodnota",
+                "empty": "Prázdne",
+                "addTag": "Pridať značku",
+                "form": "Formulár",
+                "actions": "Akcie",
+                "permissions": "Oprávnenia",
+                "save": "Uložiť"
+            }
+        },
+        "form-builder": {
+            "edit-panel": {
+                "numberOfColumns": "Počet stĺpcov",
+                "editActions": "Upraviť akcie",
+                "title": "Názov",
+                "message": "Správa",
+                "id": "Id",
+                "required": "Povinné",
+                "immediate": "Okamžité",
+                "placeholder": "Zástupný text",
+                "description": "Popis",
+                "initialValue": "Počiatočná hodnota",
+                "noOptions": "Žiadne možnosti",
+                "addOption": "Pridať možnosť",
+                "addComponent": "Pridať komponent",
+                "deleteComponent": "Vymazať komponent",
+                "addDataRefComponent": "Pridať DataRef komponent",
+                "deleteDataRefComponent": "Vymazať DataRef komponent",
+                "componentName": "Názov komponentu",
+                "noProperties": "Žiadne vlastnosti",
+                "addProperty": "Pridať vlastnosť",
+                "copyToDataRef": "Kopírovať do DataRef",
+                "noIcons": "Žiadne ikony",
+                "addIcon": "Pridať ikonu",
+                "copyToDataField": "Kopírovať do DataField",
+                "dataFieldActions": "Akcie DataField",
+                "template": "Šablóna",
+                "appearance": "Vzhľad",
+                "fieldOffset": "Odsadenie poľa"
+            },
+            "field-list": {
+                "dataFields": "Dátové polia",
+                "existingFields": "Existujúce polia",
+                "createNewFields": "Vytvoriť nové polia",
+                "back": "Späť",
+                "simple": "Jednoduché",
+                "area": "Oblasť",
+                "markdownEditor": "Markdown editor",
+                "htmlEditor": "HTML editor",
+                "password": "Heslo",
+                "signature": "Podpis",
+                "decimal": "Desatinné",
+                "currency": "Mena",
+                "select": "Výber",
+                "list": "Zoznam",
+                "stepper": "Krokovač",
+                "autocomplete": "Automatické dopĺňanie",
+                "dynamicAutocomplete": "Dynamické automatické dopĺňanie",
+                "icon": "Ikona",
+                "caseRef": "Referencia inštancie",
+                "slide": "Prepínač",
+                "raised": "Vystúpené",
+                "stroked": "Ohraničené",
+                "flat": "Ploché",
+                "fab": "FAB",
+                "miniFab": "MiniFAB",
+                "preview": "Náhľad",
+                "text": "Text",
+                "divider": "Oddeľovač",
+                "dashboard": "Dashboard"
+            },
+            "gridster": {
+                "placeholderFor": "Zástupné miesto pre",
+                "withId": "s id",
+                "dataRefsChanged": "DataRefs boli zmenené"
+            },
+            "info-label": {
+                "process": "Proces",
+                "task": "Úloha",
+                "id": "ID",
+                "processIcon": "Ikona procesu",
+                "closeFormBuilder": "Zavrieť editor formuláru",
+                "noTransition": "Nemáte vybratý žiadny prechod!"
+            }
+        },
+        "modeler": {
+            "actions-mode": {
+                "action-detail": {
+                    "toggle": "prepnúť",
+                    "name": "Názov",
+                    "scope": "Rozsah",
+                    "noActionSelected": "Nie je vybraná žiadna akcia",
+                    "process": "Proces",
+                    "namespace": "Namespace",
+                    "actionsChanged": "Akcie boli zmenené."
+                },
+                "action-editor": {
+                    "action-editor": {
+                        "action": "Akcia",
+                        "functions": "Funkcie",
+                        "references": "Referencie",
+                        "transitions": "Prechody",
+                        "dataFields": "Dátové polia",
+                        "behaviours": "Správania",
+                        "visible": "viditeľné",
+                        "hidden": "skryté",
+                        "editable": "editovateľné",
+                        "required": "povinné",
+                        "optional": "voliteľné",
+                        "conditions": "Podmienky",
+                        "true": "pravda",
+                        "false": "nepravda",
+                        "properties": "Vlastnosti",
+                        "title": "názov",
+                        "color": "farba",
+                        "icon": "ikona",
+                        "values": "Hodnoty",
+                        "emptyValue": "Prázdna hodnota",
+                        "newVariableOrValue": "Nová premenná alebo hodnota",
+                        "listOfObjects": "Zoznam objektov",
+                        "mapOfObjects": "Mapa objektov",
+                        "listOfStrings": "Zoznam reťazcov",
+                        "mapOfStrings": "Mapa reťazcov",
+                        "types": "Typy",
+                        "text": "text",
+                        "number": "number",
+                        "date": "date",
+                        "boolean": "boolean",
+                        "file": "file",
+                        "fileList": "fileList",
+                        "enumeration": "enumeration",
+                        "enumerationMap": "enumeration_map",
+                        "multichoice": "multichoice",
+                        "multichoiceMap": "multichoice_map",
+                        "userList": "userList",
+                        "tabular": "tabular",
+                        "caseRef": "caseRef",
+                        "dateTime": "dateTime",
+                        "button": "button",
+                        "taskRef": "taskRef",
+                        "filter": "filter",
+                        "i18n": "i18n",
+                        "dataSet": "DataSet",
+                        "oneDataInSet": "Jedny dáta v množine",
+                        "twoDataInSet": "Dve dáta v množine",
+                        "processInstanceId": "Id inštancie procesu",
+                        "casePredicates": "Predikáty inštancie",
+                        "caseIdEqualsValue": "ID inštancie sa rovná hodnote",
+                        "caseVisualIdEqualsValue": "Vizuálne ID inštancie sa rovná hodnote",
+                        "processIdentifierEqualsValue": "Identifikátor procesu sa rovná hodnote",
+                        "titleEqualsValue": "Názov sa rovná hodnote",
+                        "authorsEmailEqualsValue": "Email autora sa rovná hodnote",
+                        "authorsIdEqualsValue": "Id autora sa rovná hodnote",
+                        "authorsFullNameEqualsValue": "Celé meno autora sa rovná hodnote",
+                        "taskPredicates": "Predikáty úlohy",
+                        "taskIdEqualsValue": "ID úlohy sa rovná hodnote",
+                        "transitionIdEqualsValue": "Id prechodu sa rovná hodnote",
+                        "caseIdEqualsValue2": "Id inštancie sa rovná hodnote",
+                        "caseTitleEqualsValue": "Názov inštancie sa rovná hodnote"
+                    },
+                    "action-editor-menu": {
+                        "example": "Príklad",
+                        "no": "Žiadne"
+                    },
+                    "classes": {
+                        "command-action": {
+                            "basicFunctions": {
+                                "label": "Základné funkcie",
+                                "ifElseStatement": {
+                                    "label": "Príkaz If/Else",
+                                    "description": "Funguje tak, že najprv sa vyhodnotí podmienka v príkaze if. Ak je podmienka pravdivá, vykonajú sa nasledujúce príkazy a preskočí sa vetva else. Ak je podmienka nepravdivá, vykonajú sa príkazy vo vetve else."
+                                },
+                                "nestedIfStatement": {
+                                    "label": "Vnorený príkaz If",
+                                    "description": "Funguje tak, že najprv sa vyhodnotí podmienka v príkaze if. Ak je podmienka pravdivá, vykonajú sa nasledujúce príkazy a preskočí sa vetva else. Ak je podmienka nepravdivá, vykonajú sa príkazy vo vetve else if a nakoniec vo vetve else."
+                                },
+                                "switchStatement": {
+                                    "label": "Príkaz Switch",
+                                    "description": "Vnorený príkaz if-else je natoľko bežný, že bol navrhnutý jednoduchší príkaz nazývaný switch."
+                                },
+                                "whileStatement": {
+                                    "label": "Príkaz While",
+                                    "description": "Príkaz while sa vykonáva tak, že najprv sa vyhodnotí podmienka (pravdivostná hodnota), a ak je výsledok pravdivý, vykonajú sa príkazy v tele cyklu. Tento proces sa opakuje od vyhodnotenia podmienky. Cyklus pokračuje, kým sa podmienka nevyhodnotí ako nepravdivá."
+                                },
+                                "forInStatement": {
+                                    "label": "Príkaz For-in",
+                                    "description": "Príkaz for-in sa používa na iteráciu cez sadu hodnôt."
+                                },
+                                "groovyTutorial": {
+                                    "label": "Groovy tutoriál",
+                                    "header": "Groovy tutorials point",
+                                    "description": "Odkaz na Groovy návody: https://www.tutorialspoint.com/groovy/index.htm"
+                                }
+                            },
+                            "dataFields": {
+                                "label": "Dátové polia",
+                                "changeValue": {
+                                    "label": "Zmeniť hodnotu",
+                                    "description": "Nastaví novú hodnotu dátovému poľu f vrátenú výpočtovým uzáverom. Ak je vrátená hodnota null, hodnota poľa sa nastaví na predvolenú hodnotu. Ak je vrátená hodnota nezmenená, hodnota poľa sa nezmení a akcie s spúšťačom nastaveným na dané pole sa nespustia."
+                                },
+                                "changeChoices": {
+                                    "label": "Zmeniť možnosti výberu",
+                                    "description": "Nastaví novú sadu možností výberu dátovému poľu f."
+                                },
+                                "changeOptions": {
+                                    "label": "Zmeniť možnosti",
+                                    "description": "Nastaví novú mapu možností dátovému poľu f."
+                                },
+                                "changeAllowedNets": {
+                                    "label": "Zmeniť povolené siete",
+                                    "description": "Nastaví novú mapu možností dátovému poľu f."
+                                },
+                                "changeBehaviour": {
+                                    "label": "Zmeniť správanie",
+                                    "description": "Zmení správanie daného dátového poľa f na prechode t, ak podmienka vráti hodnotu pravda."
+                                },
+                                "changeMultipleBehaviour": {
+                                    "label": "Zmeniť správanie viacerých polí",
+                                    "description": "Zmení správanie daných dátových polí f na úlohách t, ak podmienka vráti hodnotu pravda. Úlohy môžu byť referencované zoznamom referencií prechodu, zoznamom id úloh alebo zoznamom referencií úloh."
+                                },
+                                "setDataByTransition": {
+                                    "label": "Nastaviť dátové polia podľa prechodu",
+                                    "description": "Nastaví hodnoty dátových polí na úlohe prechodu v aktuálnej inštancii. Hodnoty sú mapované na dátové polia v dataSet pomocou importId dátového poľa ako kľúča."
+                                },
+                                "setDataByTask": {
+                                    "label": "Nastaviť dátové polia podľa úlohy",
+                                    "description": "Nastaví hodnoty dátových polí na úlohe. Hodnoty sú mapované na dátové polia v dataSet pomocou importId dátového poľa ako kľúča."
+                                },
+                                "setDataByTransitionId": {
+                                    "label": "Nastaviť dátové polia podľa transitionId",
+                                    "description": "Nastaví hodnoty dátových polí na úlohe identifikovanej transitionId danej inštancie. Hodnoty sú mapované na dátové polia v dataSet pomocou importId dátového poľa ako kľúča."
+                                },
+                                "setDataByTaskId": {
+                                    "label": "Nastaviť dátové polia podľa úlohy",
+                                    "description": "Nastaví hodnoty dátových polí na úlohe identifikovanej jej Id. Hodnoty sú mapované na dátové polia v dataSet pomocou importId dátového poľa ako kľúča."
+                                },
+                                "getDataByTransition": {
+                                    "label": "Získať dátové polia podľa prechodu",
+                                    "description": "Získa všetky dátové polia na úlohe prechodu v aktuálnej inštancii, mapované podľa importId."
+                                },
+                                "getDataByTransitionId": {
+                                    "label": "Získať dátové polia podľa transitionId",
+                                    "description": "Získa všetky dátové polia na úlohe definovanej jej transitionId v danej inštancii, mapované podľa importId."
+                                },
+                                "getDataByTask": {
+                                    "label": "Získať dátové polia podľa prechodu",
+                                    "description": "Získa všetky dátové polia na úlohe, mapované podľa importId."
+                                },
+                                "getDataByTaskId": {
+                                    "label": "Získať dátové polia podľa prechodu",
+                                    "description": "Získa všetky dátové polia na úlohe prechodu v aktuálnej inštancii, mapované podľa importId."
+                                }
+                            },
+                            "processInstances": {
+                                "label": "Inštancie procesov / Inštancie",
+                                "createCaseByIdentifier": {
+                                    "label": "Vytvoriť novú inštanciu procesu pomocou identifikátora procesu",
+                                    "description": "Vytvorí novú inštanciu najnovšej verzie procesu identifikovaného daným identifikátorom. Ak nie je zadaný názov, farba, autor alebo jazyk, použije sa predvolená hodnota."
+                                },
+                                "createCaseByReference": {
+                                    "label": "Vytvoriť novú inštanciu procesu pomocou referencie procesu",
+                                    "description": "Vytvorí novú inštanciu daného procesu. Ak nie je zadaný názov, farba, autor alebo jazyk, použije sa predvolená hodnota."
+                                },
+                                "changeCaseProperty": {
+                                    "label": "Zmeniť vlastnosť inštancie",
+                                    "description": "Zmení vlastnosť aktuálnej inštancie, pričom novú hodnotu generuje dodávateľ."
+                                }
+                            },
+                            "tasks": {
+                                "label": "Úlohy",
+                                "getTaskId": {
+                                    "label": "Získať Id úlohy podľa transitionId",
+                                    "description": "Vráti Id úlohy, ak úloha s daným transitionId existuje v inštancii."
+                                },
+                                "assignTaskByTransitionId": {
+                                    "label": "Priradiť úlohu podľa transitionId",
+                                    "description": "Priradí úlohu s daným transitionId v danej inštancii danému používateľovi. Ak inštancia alebo používateľ nie sú zadaní, použije sa predvolená hodnota."
+                                },
+                                "assignTaskByTask": {
+                                    "label": "Priradiť úlohu podľa úlohy",
+                                    "description": "Priradí úlohu používateľovi. Voliteľný parameter používateľ identifikuje aktéra, ktorý vykoná priradenie."
+                                },
+                                "assignTaskByTasks": {
+                                    "label": "Priradiť úlohu podľa úloh",
+                                    "description": "Priradí úlohy používateľovi."
+                                },
+                                "cancelTaskByTransitionId": {
+                                    "label": "Zrušiť úlohu podľa transitionId",
+                                    "description": "Zruší úlohu s daným transitionId v inštancii."
+                                },
+                                "cancelTaskByTask": {
+                                    "label": "Zrušiť úlohu podľa úlohy",
+                                    "description": "Zruší danú úlohu. Voliteľný parameter používateľ identifikuje aktéra, ktorý vykoná zrušenie."
+                                },
+                                "cancelTasks": {
+                                    "label": "Zrušiť úlohy",
+                                    "description": "Zruší všetky dané úlohy. Voliteľný parameter používateľ identifikuje aktéra, ktorý vykoná zrušenie."
+                                },
+                                "finishTaskByTransitionId": {
+                                    "label": "Dokončiť úlohu podľa transitionId",
+                                    "description": "Dokončí úlohu v aktuálnej inštancii s daným transitionId. Voliteľný parameter aCase identifikuje inštanciu, do ktorej úloha patrí. Voliteľný parameter používateľ identifikuje aktéra."
+                                },
+                                "finishTaskByTask": {
+                                    "label": "Dokončiť úlohu podľa úlohy",
+                                    "description": "Dokončí danú úlohu. Voliteľný parameter používateľ identifikuje aktéra, ktorý vykoná dokončenie."
+                                },
+                                "finishTasksByList": {
+                                    "label": "Dokončiť úlohy podľa zoznamu úloh",
+                                    "description": "Dokončí všetky dané úlohy. Voliteľný parameter používateľ identifikuje aktéra, ktorý vykoná dokončenie."
+                                },
+                                "executeTask": {
+                                    "label": "Vykonať úlohu",
+                                    "description": "Vykoná úlohu, ktorá je nájdená podľa jej transitionId. Úloha je nájdená, potom priradená, naplnená dátami a nakoniec dokončená systémom."
+                                },
+                                "executeTransitions": {
+                                    "label": "Vykonať prechody",
+                                    "description": "Vykoná všetky spustiteľné prechody identifikované transitionId vo všetkých inštanciách, kde predikát vráti hodnotu pravda. Pre každú úlohu sa volajú nasledujúce akcie: priradenie systémovému používateľovi, uloženie nových hodnôt dát, dokončenie."
+                                }
+                            },
+                            "search": {
+                                "label": "Vyhľadávanie",
+                                "findCases": {
+                                    "label": "Nájsť inštancie",
+                                    "description": "Nájde všetky inštancie zodpovedajúce danému predikátu. Predikát je groovy uzáver, ktorý prijíma objekt QCase a vracia QueryDSL Predicate."
+                                },
+                                "findCasesPageable": {
+                                    "label": "Nájsť inštancie so stránkovaním",
+                                    "description": "Nájde všetky inštancie zodpovedajúce danému predikátu so stránkovaním. Predikát je groovy uzáver, ktorý prijíma objekt QCase a vracia QueryDSL Predicate."
+                                },
+                                "findCase": {
+                                    "label": "Nájsť inštanciu",
+                                    "description": "Nájde prvú inštanciu zodpovedajúcu danému predikátu. Predikát je groovy uzáver, ktorý prijíma objekt QCase a vracia QueryDSL Predicate."
+                                },
+                                "findTasks": {
+                                    "label": "Nájsť úlohy",
+                                    "description": "Nájde všetky úlohy zodpovedajúce danému predikátu. Predikát je groovy uzáver, ktorý prijíma objekt QCase a vracia QueryDSL Predicate."
+                                },
+                                "findTasksWithPagination": {
+                                    "label": "Nájsť úlohy so stránkovaním",
+                                    "description": "Nájde všetky úlohy zodpovedajúce danému predikátu so stránkovaním. Predikát je groovy uzáver, ktorý prijíma objekt QCase a vracia QueryDSL Predicate."
+                                },
+                                "findTask": {
+                                    "label": "Nájsť úlohu",
+                                    "description": "Nájde prvú úlohu zodpovedajúcu danému predikátu. Predikát je groovy uzáver, ktorý prijíma objekt QCase a vracia QueryDSL Predicate."
+                                },
+                                "findTaskById": {
+                                    "label": "Nájsť úlohu podľa Id",
+                                    "description": "Nájde úlohu s daným id."
+                                },
+                                "findCaseElastic": {
+                                    "label": "Nájsť inštanciu v Elasticsearch",
+                                    "description": "Vyhľadá v Elasticsearch pomocou reťazcového dopytu prvý výskyt."
+                                },
+                                "findCasesElastic": {
+                                    "label": "Nájsť inštancie v Elasticsearch",
+                                    "description": "Vyhľadá v Elasticsearch pomocou reťazcového dopytu."
+                                },
+                                "countCasesElastic": {
+                                    "label": "Spočítať inštancie v Elasticsearch",
+                                    "description": "Získa počet inštancií pre vyhľadávací dopyt."
+                                }
+                            },
+                            "async": {
+                                "label": "Asynchrónne",
+                                "asyncRun": {
+                                    "label": "Asynchrónne spustenie s vykonaním úlohy",
+                                    "description": ""
+                                }
+                            },
+                            "roles": {
+                                "label": "Roly",
+                                "assignRole": {
+                                    "label": "Priradiť rolu",
+                                    "description": "Priradí rolu identifikovanú roleId používateľovi. Používateľ je voliteľný parameter, predvolená hodnota je aktuálne prihlásený používateľ. Vráti aktualizovaný objekt používateľa."
+                                },
+                                "assignRoleByImportIdAndIdentifier": {
+                                    "label": "Priradiť rolu podľa importId a identifikátora procesu",
+                                    "description": "Priradí rolu identifikovanú jej importId a netId používateľovi. Používateľ je voliteľný parameter, predvolená hodnota je aktuálne prihlásený používateľ. Vráti aktualizovaný objekt používateľa."
+                                },
+                                "assignRoleByImportIdAndProcess": {
+                                    "label": "Priradiť rolu podľa importId a procesu",
+                                    "description": "Priradí rolu identifikovanú jej importId a referenciou procesu používateľovi. Používateľ je voliteľný parameter, predvolená hodnota je aktuálne prihlásený používateľ. Vráti aktualizovaný objekt používateľa."
+                                },
+                                "assignRoleByImportIdIdentifierAndVersion": {
+                                    "label": "Priradiť rolu podľa importId, identifikátora procesu a verzie",
+                                    "description": "Priradí rolu identifikovanú jej importId, identifikátorom procesu a verziou používateľovi. Používateľ je voliteľný parameter, predvolená hodnota je aktuálne prihlásený používateľ. Vráti aktualizovaný objekt používateľa."
+                                },
+                                "removeRole": {
+                                    "label": "Odobrať rolu",
+                                    "description": "Odoberie rolu identifikovanú roleId používateľovi. Používateľ je voliteľný parameter, predvolená hodnota je aktuálne prihlásený používateľ. Vráti aktualizovaný objekt používateľa."
+                                },
+                                "removeRoleByImportIdAndIdentifier": {
+                                    "label": "Odobrať rolu podľa importId a identifikátora procesu",
+                                    "description": "Odoberie rolu identifikovanú jej importId a netId používateľovi. Používateľ je voliteľný parameter, predvolená hodnota je aktuálne prihlásený používateľ. Vráti aktualizovaný objekt používateľa."
+                                },
+                                "removeRoleByImportIdAndProcess": {
+                                    "label": "Odobrať rolu podľa importId a procesu",
+                                    "description": "Odoberie rolu identifikovanú jej importId a referenciou procesu používateľovi. Používateľ je voliteľný parameter, predvolená hodnota je aktuálne prihlásený používateľ. Vráti aktualizovaný objekt používateľa."
+                                },
+                                "removeRoleByImportIdIdentifierAndVersion": {
+                                    "label": "Odobrať rolu podľa importId, identifikátora procesu a verzie",
+                                    "description": "Odoberie rolu identifikovanú jej importId, identifikátorom procesu a verziou používateľovi. Používateľ je voliteľný parameter, predvolená hodnota je aktuálne prihlásený používateľ. Vráti aktualizovaný objekt používateľa."
+                                }
+                            },
+                            "users": {
+                                "label": "Používatelia",
+                                "loggedUser": {
+                                    "label": "Prihlásený používateľ",
+                                    "description": "Vráti aktuálne prihláseného používateľa."
+                                },
+                                "findByEmail": {
+                                    "label": "Nájsť podľa emailu",
+                                    "description": "Vráti používateľa so zadaným emailom alebo null, ak takýto používateľ neexistuje."
+                                },
+                                "findById": {
+                                    "label": "Nájsť podľa Id",
+                                    "description": "Vráti používateľa so zadaným id alebo vyhodí IllegalArgumentException, ak takýto používateľ neexistuje."
+                                },
+                                "changeEmailByEmail": {
+                                    "label": "Zmeniť email",
+                                    "description": "Zmení email používateľa."
+                                },
+                                "changeNameByEmail": {
+                                    "label": "Zmeniť meno",
+                                    "description": "Zmení meno používateľa."
+                                },
+                                "changeSurnameByEmail": {
+                                    "label": "Zmeniť priezvisko",
+                                    "description": "Zmení priezvisko používateľa."
+                                },
+                                "changeTelByEmail": {
+                                    "label": "Zmeniť telefónne číslo",
+                                    "description": "Zmení telefónne číslo používateľa."
+                                },
+                                "changeEmailById": {
+                                    "label": "Zmeniť email",
+                                    "description": "Zmení email používateľa."
+                                },
+                                "changeNameById": {
+                                    "label": "Zmeniť meno",
+                                    "description": "Zmení meno používateľa."
+                                },
+                                "changeSurnameById": {
+                                    "label": "Zmeniť priezvisko",
+                                    "description": "Zmení priezvisko používateľa."
+                                },
+                                "changeTelById": {
+                                    "label": "Zmeniť telefónne číslo",
+                                    "description": "Zmení telefónne číslo používateľa."
+                                },
+                                "changeEmailByRef": {
+                                    "label": "Zmeniť email",
+                                    "description": "Zmení email používateľa."
+                                },
+                                "changeNameByRef": {
+                                    "label": "Zmeniť meno",
+                                    "description": "Zmení meno používateľa."
+                                },
+                                "changeSurnameByRef": {
+                                    "label": "Zmeniť priezvisko",
+                                    "description": "Zmení priezvisko používateľa."
+                                },
+                                "changeTelByRef": {
+                                    "label": "Zmeniť tel.",
+                                    "description": "Zmení telefónne číslo používateľa."
+                                },
+                                "inviteByEmail": {
+                                    "label": "Pozvať podľa emailu",
+                                    "description": "Pozve používateľa podľa emailu."
+                                },
+                                "inviteByRequest": {
+                                    "label": "Pozvať podľa požiadavky",
+                                    "description": "Pozve používateľa pomocou objektu NewUserRequest."
+                                },
+                                "deleteUserByEmail": {
+                                    "label": "Vymazať používateľa podľa emailu",
+                                    "description": "Vymaže používateľa podľa emailu. Všetky úlohy priradené tomuto používateľovi budú zrušené a inštancie vytvorené týmto používateľom budú anonymizované."
+                                },
+                                "deleteUserByRef": {
+                                    "label": "Vymazať používateľa podľa referencie",
+                                    "description": "Vymaže používateľa podľa referencie. Všetky úlohy priradené tomuto používateľovi budú zrušené a inštancie vytvorené týmto používateľom budú anonymizované."
+                                }
+                            },
+                            "frontendFunctions": {
+                                "label": "Frontendové funkcie",
+                                "reloadTaskData": {
+                                    "label": "Znovu načítať dáta úlohy",
+                                    "description": "Prinúti webovú aplikáciu znovu načítať dáta aktuálnej úlohy."
+                                },
+                                "validateTaskData": {
+                                    "label": "Validovať dáta úlohy",
+                                    "description": "Prinúti webovú aplikáciu validovať dáta danej úlohy."
+                                },
+                                "redirectToRoute": {
+                                    "label": "Presmerovať na trasu",
+                                    "description": "Presmeruje používateľa na danú trasu. Trasa musí byť známa cesta webovej aplikácie, externé URL budú ignorované."
+                                }
+                            },
+                            "pdf": {
+                                "label": "PDF",
+                                "generatePdf1": {
+                                    "label": "Generovať PDF",
+                                    "description": "Generuje PDF z prechodu podľa <transitionId> (prechod musí byť spustiteľný) a uloží ho do súborového poľa podľa <fileFieldId>."
+                                },
+                                "generatePdf2": {
+                                    "label": "Generovať PDF",
+                                    "description": "Generuje PDF z prechodu podľa <transitionId> (prechod musí byť spustiteľný) a uloží ho do súborového poľa podľa <fileFieldId>."
+                                },
+                                "generatePdf3": {
+                                    "label": "Generovať PDF",
+                                    "description": "Generuje PDF z prechodu <transition> (prechod musí byť spustiteľný) a uloží ho do súborového poľa <datafield>."
+                                },
+                                "generatePdf4": {
+                                    "label": "Generovať PDF",
+                                    "description": "Generuje PDF z prechodu podľa <transitionId> (prechod musí byť spustiteľný) a uloží ho do súborového poľa podľa <fieldId>. Polia v zozname excludedFields budú ignorované."
+                                },
+                                "generatePdf5": {
+                                    "label": "Generovať PDF",
+                                    "description": "Generuje PDF z prechodu podľa <transitionId> (prechod musí byť spustiteľný) a uloží ho do súborového poľa podľa <fieldId>. Polia v zozname excludedFields budú ignorované."
+                                },
+                                "generatePdfWithTemplate": {
+                                    "label": "Generovať PDF",
+                                    "description": "Generuje PDF z prechodu podľa <transitionId> (prechod musí byť spustiteľný) pomocou PDF šablóny na danej ceste a uloží ho do súborového poľa podľa <fieldId>."
+                                },
+                                "generatePdfWithLocale": {
+                                    "label": "Generovať PDF",
+                                    "description": "Generuje PDF z prechodu podľa <transitionId> (prechod musí byť spustiteľný) a uloží ho do súborového poľa podľa <fieldId>. Reťazce i18n sú preložené pomocou daného jazyka."
+                                },
+                                "generatePdfWithZoneId": {
+                                    "label": "Generovať PDF",
+                                    "description": "Generuje PDF z prechodu podľa <transitionId> (prechod musí byť spustiteľný) a uloží ho do súborového poľa podľa <fieldId>. Dátumové a dátumovo-časové polia sú formátované s daným ZoneId."
+                                }
+                            },
+                            "email": {
+                                "label": "Email",
+                                "sendEmailPlainText": {
+                                    "label": "Odoslať email",
+                                    "description": "Odošle email danému zoznamu príjemcov. Telo správy je spracované ako čistý text."
+                                },
+                                "sendEmailWithAttachments": {
+                                    "label": "Odoslať email",
+                                    "description": "Odošle email s prílohami danému zoznamu príjemcov. Telo správy je spracované ako čistý text."
+                                },
+                                "sendMail": {
+                                    "label": "Odoslať email",
+                                    "description": "Odošle email definovaný objektom mailDraft."
+                                }
+                            },
+                            "filters": {
+                                "label": "Filtre",
+                                "findFilter": {
+                                    "label": "Nájsť filter",
+                                    "description": "Vráti prvý filter s daným názvom."
+                                },
+                                "findFilters": {
+                                    "label": "Nájsť filtre",
+                                    "description": "Nájde filtre pomocou fulltextového vyhľadávania."
+                                },
+                                "findAllFilters": {
+                                    "label": "Nájsť všetky filtre",
+                                    "description": "Vráti všetky filtre."
+                                },
+                                "exportFilters": {
+                                    "label": "Exportovať filtre",
+                                    "description": "Exportuje filtre so zadanými id do hodnoty súborového poľa."
+                                },
+                                "findDefaultFilters": {
+                                    "label": "Nájsť predvolené filtre",
+                                    "description": "Vráti predvolené filtre aktuálne prihláseného používateľa."
+                                },
+                                "createCaseFilter": {
+                                    "label": "Vytvoriť filter inštancií",
+                                    "description": "Vytvorí inštanciu filtra typu Inštancia."
+                                },
+                                "createTaskFilter": {
+                                    "label": "Vytvoriť filter úloh",
+                                    "description": "Vytvorí inštanciu filtra typu Úloha."
+                                },
+                                "createFilter": {
+                                    "label": "Vytvoriť filter",
+                                    "description": "Vytvorí inštanciu filtra daného typu."
+                                },
+                                "changeFilterQuery": {
+                                    "label": "Zmeniť dopyt filtra",
+                                    "description": "Zmení dopyt danej inštancie filtra."
+                                },
+                                "changeFilterVisibility": {
+                                    "label": "Zmeniť viditeľnosť filtra",
+                                    "description": "Zmení viditeľnosť danej inštancie filtra."
+                                },
+                                "changeFilterAllowedNets": {
+                                    "label": "Zmeniť povolené siete filtra",
+                                    "description": "Zmení povolené siete danej inštancie filtra."
+                                },
+                                "changeFilterMetadata": {
+                                    "label": "Zmeniť metadáta filtra",
+                                    "description": "Zmení metadáta danej inštancie filtra."
+                                },
+                                "changeFilterTitle": {
+                                    "label": "Zmeniť názov filtra",
+                                    "description": "Zmení názov danej inštancie filtra."
+                                },
+                                "changeFilterIcon": {
+                                    "label": "Zmeniť ikonu filtra",
+                                    "description": "Zmení ikonu danej inštancie filtra."
+                                },
+                                "changeFilterUri": {
+                                    "label": "Zmeniť URI filtra",
+                                    "description": "Zmení URI danej inštancie filtra."
+                                },
+                                "deleteFilter": {
+                                    "label": "Vymazať filter",
+                                    "description": "Vymaže danú inštanciu filtra."
+                                },
+                                "createFilterInMenu1": {
+                                    "label": "Vytvoriť filter v menu",
+                                    "description": "Vytvorí inštancie filtra a preference_item so zadanými parametrami."
+                                },
+                                "createFilterInMenu2": {
+                                    "label": "Vytvoriť filter v menu",
+                                    "description": "Vytvorí inštancie filtra a preference_item so zadanými parametrami."
+                                }
+                            },
+                            "menuItems": {
+                                "label": "Položky menu",
+                                "createMenuItem1": {
+                                    "label": "Vytvoriť položku menu",
+                                    "description": "Vytvorí položku v menu so zadanými parametrami."
+                                },
+                                "changeMenuItemAllowedRoles": {
+                                    "label": "Zmeniť povolené roly položky menu",
+                                    "description": "Zmení povolené roly danej inštancie položky menu."
+                                },
+                                "changeMenuItemBannedRoles": {
+                                    "label": "Zmeniť zakázané roly položky menu",
+                                    "description": "Zmení zakázané roly danej inštancie položky menu."
+                                },
+                                "changeMenuItemCaseDefaultHeaders": {
+                                    "label": "Zmeniť predvolené hlavičky inštancií položky menu",
+                                    "description": "Zmení predvolené hlavičky inštancií danej inštancie položky menu."
+                                },
+                                "changeMenuItemTaskDefaultHeaders": {
+                                    "label": "Zmeniť predvolené hlavičky úloh položky menu",
+                                    "description": "Zmení predvolené hlavičky úloh danej inštancie položky menu."
+                                },
+                                "changeMenuItemFilter": {
+                                    "label": "Zmeniť filter položky menu",
+                                    "description": "Zmení filter danej inštancie položky menu."
+                                },
+                                "changeMenuItemUri": {
+                                    "label": "Zmeniť URI položky menu",
+                                    "description": "Zmení URI danej inštancie položky menu."
+                                },
+                                "changeMenuItemMenuIcon": {
+                                    "label": "Zmeniť ikonu menu položky menu",
+                                    "description": "Zmení ikonu menu danej inštancie položky menu."
+                                },
+                                "changeMenuItemTabIcon": {
+                                    "label": "Zmeniť ikonu záložky položky menu",
+                                    "description": "Zmení ikonu záložky danej inštancie položky menu."
+                                },
+                                "changeMenuItemRequireTitleInCreation": {
+                                    "label": "Zmeniť požiadavku názvu pri vytváraní položky menu",
+                                    "description": "Zmení hodnotu požiadavky názvu pri vytváraní danej inštancie položky menu."
+                                },
+                                "changeMenuItemUseCustomView": {
+                                    "label": "Zmeniť vlastné zobrazenie položky menu",
+                                    "description": "Zmení hodnotu vlastného zobrazenia danej inštancie položky menu."
+                                },
+                                "changeMenuItemCustomViewSelector": {
+                                    "label": "Zmeniť selektor vlastného zobrazenia položky menu",
+                                    "description": "Zmení selektor vlastného zobrazenia danej inštancie položky menu."
+                                },
+                                "deleteMenuItem": {
+                                    "label": "Vymazať položku menu",
+                                    "description": "Vymaže danú položku menu."
+                                },
+                                "createMenuItem2": {
+                                    "label": "Vytvoriť položku menu",
+                                    "description": "Vytvorí novú položku menu na základe zadanej konfigurácie."
+                                },
+                                "moveMenuItem": {
+                                    "label": "Presunúť položku menu",
+                                    "description": "Zmení umiestnenie položky menu. Ak je zadané neexistujúce umiestnenie, nové umiestnenie sa vytvorí a potom sa položka presunie. Cyklická cieľová cesta je zakázaná."
+                                },
+                                "duplicateMenuItem": {
+                                    "label": "Duplikovať položku menu",
+                                    "description": "Duplikuje položku menu. Vytvorí novú inštanciu preference_item s rovnakým dataSet ako zadaná inštancia položky."
+                                },
+                                "findMenuItem1": {
+                                    "label": "Nájsť položku menu",
+                                    "description": "Nájde položku menu podľa jedinečného identifikátora."
+                                },
+                                "findMenuItemByUriAndName": {
+                                    "label": "Nájsť položku menu podľa URI a názvu",
+                                    "description": "Nájde položku menu podľa URI a názvu v predvolenej skupine."
+                                },
+                                "findMenuItemByUriAndIdentifier": {
+                                    "label": "Nájsť položku menu podľa URI a identifikátora",
+                                    "description": "Nájde položku menu podľa URI a identifikátora."
+                                },
+                                "existsMenuItem": {
+                                    "label": "Existuje položka menu",
+                                    "description": "Skontroluje existenciu položky menu."
+                                },
+                                "getFilterFromMenuItem": {
+                                    "label": "Získať filter z položky menu",
+                                    "description": "Načíta inštanciu filtra z inštancie preference_item."
+                                },
+                                "createOrUpdateMenuItem1": {
+                                    "label": "Vytvoriť alebo aktualizovať položku menu",
+                                    "description": "Vytvorí alebo aktualizuje položku menu so zadaným identifikátorom."
+                                },
+                                "createOrUpdateMenuItemAndFilter1": {
+                                    "label": "Vytvoriť alebo aktualizovať položku menu a filter",
+                                    "description": "Vytvorí alebo aktualizuje položku menu so zadaným identifikátorom spolu s inštanciou filtra. Je bezpečné použiť na existujúcej inštancii položky menu, ktorá neobsahuje filter. V takom prípade sa chýbajúci filter vytvorí so zadanými parametrami."
+                                },
+                                "createOrUpdateMenuItem2": {
+                                    "label": "Vytvoriť alebo aktualizovať položku menu",
+                                    "description": "Vytvorí alebo aktualizuje položku menu so zadaným identifikátorom."
+                                },
+                                "createOrUpdateMenuItemAndFilter2": {
+                                    "label": "Vytvoriť alebo aktualizovať položku menu a filter",
+                                    "description": "Vytvorí alebo aktualizuje položku menu so zadaným identifikátorom spolu s inštanciou filtra."
+                                },
+                                "createOrIgnoreMenuItem": {
+                                    "label": "Vytvoriť alebo ignorovať položku menu",
+                                    "description": "Vytvorí alebo aktualizuje položku menu so zadaným identifikátorom."
+                                },
+                                "createOrIgnoreMenuItemAndFilter": {
+                                    "label": "Vytvoriť alebo ignorovať položku menu a filter",
+                                    "description": "Vytvorí položku menu alebo ju ignoruje, ak už existuje. Ak existujúca položka neobsahuje filter, inštancia filtra sa vytvorí so zadanými parametrami."
+                                },
+                                "updateMenuItem": {
+                                    "label": "Vytvoriť alebo ignorovať položku menu a filter",
+                                    "description": "Aktualizuje existujúcu položku menu so zadanými hodnotami."
+                                },
+                                "defaultFilterMetadata": {
+                                    "label": "Predvolené metadáta filtra",
+                                    "description": "Vráti mapu s predvolenými metadátami poľa filtra pre daný typ filtra (\"Inštancia\" alebo \"Úloha\")."
+                                }
+                            },
+                            "importExport": {
+                                "label": "Import a export",
+                                "exportCasesToFile": {
+                                    "label": "Exportovať inštancie do súboru",
+                                    "description": "Exportuje inštancie špecifikované predikátom do CSV súboru na danej ceste. Môžu byť zadané dodatočná konfigurácia a veľkosť stránky."
+                                },
+                                "exportCasesToStream": {
+                                    "label": "Exportovať inštancie do streamu",
+                                    "description": "Exportuje inštancie špecifikované predikátom do výstupného streamu. Môžu byť zadané dodatočná konfigurácia a veľkosť stránky."
+                                },
+                                "exportCasesToFileAsUser": {
+                                    "label": "Exportovať inštancie do súboru ako používateľ",
+                                    "description": "Exportuje inštancie špecifikované požiadavkami vyhľadávania do CSV súboru na danej ceste. Oprávnenia používateľa sa využívajú na filtrovanie exportovaných inštancií."
+                                },
+                                "exportCasesToStreamAsUser": {
+                                    "label": "Exportovať inštancie do streamu ako používateľ",
+                                    "description": "Exportuje inštancie špecifikované požiadavkami vyhľadávania do výstupného streamu. Oprávnenia používateľa sa využívajú na filtrovanie exportovaných inštancií."
+                                },
+                                "exportTasksToFile": {
+                                    "label": "Exportovať úlohy do súboru",
+                                    "description": "Exportuje úlohy špecifikované predikátom do CSV súboru na danej ceste. Môže byť zadaná dodatočná konfigurácia."
+                                },
+                                "exportTasksToStream": {
+                                    "label": "Exportovať úlohy do streamu",
+                                    "description": "Exportuje úlohy špecifikované predikátom do výstupného streamu. Môže byť zadaná dodatočná konfigurácia."
+                                },
+                                "exportTasksToFileAsUser": {
+                                    "label": "Exportovať úlohy do súboru ako používateľ",
+                                    "description": "Exportuje úlohy špecifikované požiadavkami vyhľadávania do CSV súboru na danej ceste. Oprávnenia používateľa sa využívajú na filtrovanie exportovaných úloh."
+                                },
+                                "exportTasksToStreamAsUser": {
+                                    "label": "Exportovať úlohy do streamu ako používateľ",
+                                    "description": "Exportuje úlohy špecifikované požiadavkami vyhľadávania do výstupného streamu. Oprávnenia používateľa sa využívajú na filtrovanie exportovaných úloh."
+                                }
+                            },
+                            "uri": {
+                                "label": "URI",
+                                "getUriNode": {
+                                    "label": "Získať uzol URI",
+                                    "description": "Načíta UriNode na základe URI."
+                                },
+                                "createUriNode": {
+                                    "label": "Vytvoriť uzol URI",
+                                    "description": "Vytvorí nový UriNode z cesty URI alebo načíta existujúci."
+                                },
+                                "moveUriNode": {
+                                    "label": "Presunúť uzol URI",
+                                    "description": "Presunie UriNode na iné miesto určenia."
+                                },
+                                "makeUrl": {
+                                    "label": "Vytvoriť URL",
+                                    "description": "Vytvorí URL pre verejné zobrazenie daného identifikátora procesu zakódovaného pomocou Base64."
+                                }
+                            },
+                            "customFunctions": {
+                                "label": "Vlastné funkcie"
+                            }
+                        }
+                    },
+                    "definitions": {
+                        "declaration-provider": {
+                            "dataVariableId": "ID dátovej premennej na deklarovanie premennej v akcii.",
+                            "transitionId": "ID prechodu na deklarovanie premennej v akcii."
+                        },
+                        "function-provider": {
+                            "function-provider": {
+                                "taskService": "TaskService",
+                                "dataService": "DataService",
+                                "workflowService": "WorkflowService",
+                                "userService": "UserService",
+                                "petriNetService": "PetriNetService",
+                                "groupService": "GroupService",
+                                "pdfGenerator": "Generátor PDF",
+                                "mailService": "MailService",
+                                "useCase": "Aktuálna inštancia",
+                                "copyBehavior": "Kopírovať správanie",
+                                "makeFieldBehavior": "Nastaviť správanie poľa na prechode podľa podmienky",
+                                "executeByTaskId": "Vykonať úlohu podľa taskId",
+                                "executeTasks": "Vykonať viacero úloh a nastaviť dáta",
+                                "executeTask": "Vykonať úlohu a nastaviť dáta",
+                                "searchCases": "Vyhľadať inštancie a vrátiť ich stringID",
+                                "changeFieldValue": "Zmeniť hodnotu poľa",
+                                "changeFieldChoices": "Zmeniť možnosti výberu poľa",
+                                "changeFieldAllowedNets": "Zmeniť povolené siete poľa",
+                                "changeFieldOptions": "Zmeniť možnosti poľa",
+                                "psc": "Nájsť psc podľa vstupu a uzáveru",
+                                "findCases": "Nájsť inštancie a vrátiť List<Case>",
+                                "findCasesPageable": "Nájsť inštancie a vrátiť List<Case>",
+                                "findCase": "Nájsť inštanciu a vrátiť ju",
+                                "createCaseByIdentifier": "Vytvoriť inštanciu a vrátiť ju",
+                                "createCaseByNet": "Vytvoriť inštanciu a vrátiť ju",
+                                "assignTaskByTransitionId": "Priradiť úlohu a vrátiť ju",
+                                "assignTaskByTask": "Priradiť úlohu a vrátiť ju",
+                                "assignTasks": "Priradiť viacero úloh",
+                                "cancelTaskByTransitionId": "Zrušiť úlohu",
+                                "cancelTaskByTask": "Zrušiť úlohu",
+                                "cancelTasks": "Zrušiť úlohy",
+                                "finishTaskByTransitionId": "Dokončiť úlohu",
+                                "finishTaskByTask": "Dokončiť úlohu",
+                                "finishTasks": "Dokončiť úlohy",
+                                "findTasks": "Nájsť úlohy a vrátiť List<Task>",
+                                "findTasksPageable": "Nájsť úlohy a vrátiť List<Task>",
+                                "findTaskByClosure": "Nájsť úlohu a vrátiť ju",
+                                "findTaskByMongoId": "Nájsť úlohu a vrátiť ju",
+                                "getTaskId": "Získať TaskId z transitionId",
+                                "assignRole": "Priradiť rolu používateľovi",
+                                "setDataByTask": "Nastaviť dáta pre úlohu",
+                                "setDataByTransition": "Nastaviť dáta podľa prechodu",
+                                "setDataByTransitionId": "Nastaviť dáta podľa id prechodu a inštancie",
+                                "setDataWithPropagationByTransitionId": "Nastaviť dáta podľa id prechodu a inštancie",
+                                "setDataWithPropagationByTask": "Nastaviť dáta pre úlohu",
+                                "setDataWithPropagationByTaskId": "Nastaviť dáta pre úlohu",
+                                "getDataByTask": "Získať dáta úlohy",
+                                "getDataByTransition": "Získať dáta prechodu",
+                                "getDataByTransitionId": "Získať dáta prechodu",
+                                "loggedUser": "Získať prihláseného používateľa",
+                                "generatePDF1": "Generovať PDF z id prechodu, uložiť do súborového poľa podľa fileFieldId",
+                                "generatePDF2": "Generovať PDF z id prechodu, uložiť do súborového poľa podľa fileFieldId",
+                                "generatePdfWithTemplate": "Generovať PDF so šablónou z id prechodu, uložiť do súborového poľa podľa fileFieldId",
+                                "generatePdfWithLocale": "Generovať PDF s jazykom z id prechodu, uložiť do súborového poľa podľa fileFieldId",
+                                "generateIntoField": "Generovať do poľa",
+                                "changeCaseProperty": "Zmeniť vlastnosť inštancie",
+                                "saveUseCase": "Uložiť inštanciu"
+                            }
+                        }
+                    },
+                    "function-editor": {
+                        "functions": "Funkcie",
+                        "references": "Referencie",
+                        "transitions": "Prechody",
+                        "datafields": "Dátové polia",
+                        "behaviours": "Správania",
+                        "conditions": "Podmienky",
+                        "visible": "viditeľné",
+                        "hidden": "skryté",
+                        "editable": "editovateľné",
+                        "required": "povinné",
+                        "optional": "voliteľné",
+                        "true": "pravda",
+                        "false": "nepravda",
+                        "properties": "Vlastnosti",
+                        "title": "názov",
+                        "color": "farba",
+                        "icon": "ikona",
+                        "values": "Hodnoty",
+                        "addNewVariableOrValue": "Pridať novú premennú alebo hodnotu",
+                        "listOfObjects": "Zoznam objektov",
+                        "mapOfObjects": "Mapa objektov",
+                        "listOfStrings": "Zoznam reťazcov",
+                        "mapOfStrings": "Mapa reťazcov"
+                    },
+                    "transition": "Prechod",
+                    "role": "Rola",
+                    "caseEvents": "Udalosti inštancie",
+                    "processEvents": "Udalosti procesu",
+                    "events": "Udalosti",
+                    "dataref": "Dataref"
+                },
+                "action-master": {
+                    "name": "Názov",
+                    "scope": "Rozsah",
+                    "addFunction": "Pridať funkciu",
+                    "deleteFunction": "Vymazať funkciu"
+                },
+                "tools": {
+                    "dataVariables": "Dátové premenné",
+                    "functions": "Funkcie",
+                    "processAndCase": "Proces a inštancia",
+                    "roles": "Roly",
+                    "transitions": "Prechody"
+                },
+                "actionsEditView": "Zobrazenie úpravy akcií"
+            },
+            "components": {
+                "master-detail": {
+                    "firstPage": "Prvá strana",
+                    "pageSize": "Veľkosť stránky",
+                    "lastPage": "Posledná strana",
+                    "nextPage": "Ďalšia strana",
+                    "previousPage": "Predchádzajúca strana",
+                    "of": "z",
+                    "add": "Pridať"
+                },
+                "material-icon-picker": {
+                    "icon": "Ikona",
+                    "none": "-- Žiadne --"
+                }
+            },
+            "control-panel": {
+                "importSuccess": "Proces bol úspešne importovaný",
+                "exportXml": "Exportovať ako XML",
+                "chooseFile": "Vyberte súbor na otvorenie",
+                "unknownFileType": "Neznámy typ súboru",
+                "redo": "Znovu vykonať",
+                "exportSvg": "Exportovať ako SVG",
+                "undo": "Späť"
+            },
+            "data-mode": {
+                "id": "Id",
+                "title": "Názov",
+                "type": "Typ",
+                "isImmediate": "Je okamžité?",
+                "placeholder": "Zástupný text",
+                "description": "Popis",
+                "component": "Komponent",
+                "addComponent": "Pridať komponent",
+                "deleteComponent": "Vymazať komponent",
+                "encryption": "Šifrovanie",
+                "componentName": "Názov komponentu",
+                "key": "Kľúč",
+                "value": "Hodnota",
+                "empty": "Prázdne",
+                "addProperty": "Pridať vlastnosť",
+                "initialValue": "Počiatočná hodnota",
+                "none": "Žiadne",
+                "isInitDynamic": "Je inicializácia dynamická?",
+                "allowedNets": "Povolené siete",
+                "processIdentifier": "Identifikátor procesu",
+                "addNet": "Pridať sieť",
+                "validations": "Validácie",
+                "expression": "Výraz",
+                "message": "Správa",
+                "addValidation": "Pridať validáciu",
+                "options": "Možnosti",
+                "optionKey": "Kľúč možnosti",
+                "optionValue": "Hodnota možnosti",
+                "noOptions": "Žiadne možnosti",
+                "addOption": "Pridať možnosť",
+                "optionsInit": "Inicializácia možností",
+                "editActions": "Upraviť akcie",
+                "noDataSelected": "Nie sú vybrané žiadne dáta",
+                "boolean": "Boolean",
+                "button": "Tlačidlo",
+                "caseRef": "Referencia inštancie",
+                "processRef": "Referencia procesu",
+                "date": "Dátum",
+                "datetime": "Dátum a čas",
+                "enumeration": "Enumerácia",
+                "enumerationMap": "Mapa enumerácie",
+                "file": "Súbor",
+                "fileList": "Zoznam súborov",
+                "caseFilter": "Filter inštancií",
+                "taskFilter": "Filter úloh",
+                "processFilter": "Filter procesov",
+                "i18n": "I18n",
+                "multichoice": "Viacnásobný výber",
+                "multichoiceMap": "Mapa viacnásobného výberu",
+                "number": "Číslo",
+                "user": "Používateľ",
+                "userList": "Zoznam používateľov",
+                "stringCollection": "Kolekcia reťazcov",
+                "taskRef": "Referencia úlohy",
+                "text": "Text",
+                "dataVariable": "Dátová premenná",
+                "hasBeenChanged": "bola zmenená.",
+                "idHasBeenChangedTo": "ID bolo zmenené na",
+                "andHasBeenChanged": "a bola zmenená",
+                "hasBeenCreated": "bola vytvorená.",
+                "hasBeenDeleted": "bola vymazaná.",
+                "idLabel": "ID",
+                "name": "Názov",
+                "addDataVariable": "Pridať dátovú premennú",
+                "dataEditView": "Zobrazenie úpravy dát",
+                "deleteDataField": "Vymazať dátové pole",
+                "duplicateDataField": "Duplikovať dátové pole"
+            },
+            "edit-mode": {
+                "context-menu": {
+                    "deleteBreakpoint": "Vymazať bod prerušenia",
+                    "edit": "Upraviť",
+                    "arc": "Hrana",
+                    "hasBeenChanged": "bola zmenená.",
+                    "editModel": "Upraviť model",
+                    "modelHasBeenChanged": "Model bol zmenený.",
+                    "managePermissions": "Spravovať oprávnenia procesu",
+                    "place": "Miesto",
+                    "editForm": "Upraviť formulár",
+                    "createNewForm": "Vytvoriť nový formulár",
+                    "editActions": "Upraviť akcie",
+                    "editTask": "Upraviť úlohu",
+                    "task": "Úloha",
+                    "permissions": "Oprávnenia",
+                    "delete": "Vymazať",
+                    "all": "všetko",
+                    "selectConnectedArcs": "Vybrať prepojené hrany"
+                },
+                "services": {
+                    "addToken": "Pridať značku",
+                    "tokenAdded": "Značka bola pridaná na miesto",
+                    "deleteModel": "Vymazať model",
+                    "model": "Model",
+                    "hasBeenDeleted": "bol vymazaný.",
+                    "new": "Nová",
+                    "arc": "hrana",
+                    "hasBeenCreated": "bola vytvorená",
+                    "inhibitorArc": "Inhibítorová hrana",
+                    "place": "Miesto",
+                    "arcLabel": "Hrana",
+                    "readArc": "Čítacia hrana",
+                    "resetArc": "Resetovacia hrana",
+                    "transition": "Prechod",
+                    "task": "Úloha",
+                    "fastPN": "Rýchla PN",
+                    "removeToken": "Odobrať značku",
+                    "tokenRemoved": "Značka bola odobratá z miesta",
+                    "resetCanvas": "Resetovať pozíciu a priblíženie plátna",
+                    "selectTool": "Vybrať nástroj",
+                    "elements": "Prvky",
+                    "hasBeenDuplicated": "bol duplikovaný",
+                    "elementsDeleted": "Prvky boli vymazané",
+                    "elementsMoved": "Prvky boli presunuté",
+                    "breakpointAdded": "Bod prerušenia bol pridaný na hranu",
+                    "newModelCreated": "Nový model bol vytvorený.",
+                    "editView": "Zobrazenie úpravy",
+                    "breakpointDeleted": "bod prerušenia bol vymazaný.",
+                    "hideGrid": "Schovať mriežku",
+                    "showGrid": "Zobraziť mriežku",
+                    "showIds": "Zobraziť identifikátory",
+                    "showLabels": "Zobraziť štítok"
+                }
+            },
+            "history-mode": {
+                "renderType": "Typ zobrazenia",
+                "sideBySide": "Vedľa seba",
+                "inline": "Vložené",
+                "download": "Stiahnuť",
+                "restore": "Obnoviť",
+                "noHistorySelected": "Nie je vybratá žiadna história",
+                "model": "Model",
+                "hasBeenChanged": "bol zmenený",
+                "hasBeenImported": "bol importovaný",
+                "place": "Miesto",
+                "hasBeenCreated": "bolo vytvorené",
+                "hasBeenDeleted": "bolo vymazané",
+                "hasBeenMovedTo": "bolo presunuté na",
+                "time": "Čas",
+                "change": "Zmena",
+                "history": "História"
+            },
+            "i18n-mode": {
+                "removeLocale": "Odstrániť jazyk",
+                "addNewLanguage": "Pridať nový jazyk",
+                "addLocale": "Pridať jazyk",
+                "translations": "Preklady",
+                "translationsChanged": "Preklady boli zmenené.",
+                "languages": "Jazyky",
+                "stringId": "Id reťazca",
+                "defaultValue": "Predvolená hodnota",
+                "translation": "Preklad",
+                "title": "Názov",
+                "placeholder": "Zástupný text",
+                "description": "Popis",
+                "init": "Inicializácia",
+                "options": "Možnosti",
+                "validations": "Validácie",
+                "defaultCaseName": "Predvolený názov inštancie",
+                "message": "Správa",
+                "events": "Udalosti",
+                "noLanguageAvailable": "Nie je dostupný žiadny jazyk, prosím pridajte nový jazyk",
+                "selectLanguage": "Vybrať jazyk",
+                "modelMetadata": "Metadáta modelu",
+                "modelMetadataHint": "Názov, predvolený názov inštancie, ...",
+                "tasks": "Úlohy",
+                "tasksHint": "Popis, správy udalostí, ...",
+                "noTasksInModel": "V modeli nie sú žiadne úlohy",
+                "dataVariables": "Dátové premenné",
+                "dataVariablesHint": "Názov, zástupný text, popis, ...",
+                "noDataVariablesInModel": "V modeli nie sú žiadne dátové premenné",
+                "roles": "Roly",
+                "rolesHint": "Názov, správa udalosti, ...",
+                "noRolesInModel": "V modeli nie sú žiadne roly",
+                "i18nView": "Zobrazenie internacionalizácie"
+            },
+            "role-mode": {
+                "id": "Id",
+                "idRequired": "Id je povinné",
+                "idExists": "Rola so zadaným id už existuje",
+                "title": "Názov",
+                "isGlobal": "Je globálna",
+                "editActions": "Upraviť akcie",
+                "noRoleSelected": "Nie je vybratá žiadna rola",
+                "role": "Rola",
+                "hasBeenChanged": "bola zmenená.",
+                "deleteRole": "Vymazať rolu",
+                "duplicateRole": "Duplikovať rolu",
+                "hasBeenCreated": "bola vytvorená.",
+                "hasBeenDeleted": "bola vymazaná.",
+                "idLabel": "ID",
+                "name": "Názov",
+                "addRole": "Pridať rolu",
+                "roleEditView": "Zobrazenie úpravy rolí"
+            },
+            "services": {
+                "contextMenuClosed": "Kontextové menu zatvorené",
+                "newProcess": "Nový proces",
+                "downloadModel": "Stiahnuť model"
+            },
+            "simulation-mode": {
+                "changeData": "Zmeniť dáta",
+                "simulationByEvents": "Simulácia podľa udalostí",
+                "hideGrid": "Skryť mriežku",
+                "showGrid": "Zobraziť mriežku",
+                "resetCanvas": "Resetovať pozíciu a priblíženie plátna",
+                "resetSimulation": "Resetovať simuláciu",
+                "simulationByTasks": "Simulácia podľa úloh",
+                "simulationView": "Zobrazenie simulácie",
+                "showIds": "Zobraziť identifikátory",
+                "showLabels": "Zobraziť štítok"
+            },
+            "task-mode": {
+                "controlTaskView": "Zobrazenie ovládania úlohy"
+            },
+            "model": "Model",
+            "hasBeenImported": "bol importovaný."
+        },
+        "tutorial": {
+            "welcome": "Vitajte v Netgrif Application Builder v2.2.0",
+            "intro": "Netgrif Application Builder (NAB) je nástroj na budovanie procesne orientovaných aplikácií pomocou jazyka Petriflow. NAB sa skladá z viacerých modulov, ktoré vám pomáhajú v rôznych fázach vývoja aplikácie.",
+            "processModelerTitle": "Modelovač procesov",
+            "processModeler": "V Modelovači procesov môžete modelovať podnikové procesy definovaním úloh a ich smerovania. Ako formalizmus modelovania procesov využíva jazyk Petriflow Petriho siete, ktoré sa skladajú zo stavových premenných, úloh a ich prepojení. Podporuje import procesov vo formáte BPMN 2.0 a ich automatický preklad do Petriho sietí.",
+            "processSimulationTitle": "Simulácia procesov",
+            "processSimulation": "V Simulácii procesov môžete simulovať modelované procesy vykonávaním sekvencií úloh alebo udalostí úloh.",
+            "dataEditorTitle": "Editor dát",
+            "dataEditor": "V Editore dát môžete definovať dátové premenné používané v procesoch. Petriflow podporuje všetky typy dátových premenných, ktoré budete potrebovať pre svoju aplikáciu, vrátane textu, čísel, dátumu, dátumu a času, enumerácií a výberov, súborov, obrázkov a mnohých ďalších. Validáciu a počiatočné hodnoty dátových premenných možno ľahko špecifikovať v Petriflow. Petriflow podporuje referenciu na zoznam úloh ako dátový typ.",
+            "roleEditorTitle": "Editor rolí",
+            "roleEditor": "V Editore rolí môžete definovať roly a určiť, ktoré roly môžu vykonávať úlohy v procese.",
+            "actionsEditorTitle": "Editor akcií",
+            "actionsEditor": "V Editore akcií môžete programovať reakcie na udalosti inštancií procesov, ich úloh a dátových polí. Akcie používajú Groovy ako programovací jazyk. Medzi typy udalostí, ktoré môžete zachytiť, patria: vytvorenie inštancie procesu, priradenie úlohy používateľovi, zrušenie úlohy, dokončenie úlohy a zmena hodnoty dátového poľa. V akciách reagujúcich na udalosti môžete spúšťať udalosti v rôznych inštanciách procesov a takto napríklad vytvoriť novú inštanciu pri dokončení úlohy, priradiť novú úlohu používateľovi pri dokončení aktuálnej úlohy, prepočítať hodnotu dátového poľa pri zmene iného dátového poľa alebo skryť.",
+            "internationalizationTitle": "Internacionalizácia",
+            "internationalization": "Môžete pridávať preklady pre rôzne jazyky.",
+            "historyTitle": "História",
+            "history": "Môžete prezerať nedávne zmeny modelu, ako aj stiahnuť alebo obnoviť predchádzajúcu verziu modelu.",
+            "modelImportTitle": "Import modelu",
+            "modelImport": "Môžete importovať existujúci model uložený v XML súbore alebo transformovať BPMN súbor do modelu Petriflow.",
+            "modelExportTitle": "Export modelu",
+            "modelExport": "Môžete exportovať aktuálny model ako XML súbor. V režime simulácie sa exportuje simulovaný model v aktuálnom stave simulácie.",
+            "svgExportTitle": "Export SVG",
+            "svgExport": "Môžete exportovať aktuálny model ako SVG súbor. V režime simulácie sa exportuje simulovaný model presne tak, ako je zobrazený na plátne.",
+            "netgrifEtaskTitle": "Netgrif eTask",
+            "netgrifEtask": "Po registrácii môžete nasadiť svoje modely Petriflow v našej aplikácii eTask.",
+            "netgrifAcademyTitle": "Netgrif Academy",
+            "netgrifAcademy": "Vzdelávacie videá a návody nájdete na našom Youtube kanáli.",
+            "netgrifGithubTitle": "Netgrif Github",
+            "netgrifGithub": "Zdrojové kódy našich komunitných produktov sú dostupné na Githube.",
+            "mortgageDemoTitle": "Demo proces Hypotéka",
+            "mortgageDemo": "Pre načítanie demo procesu Hypotéka kliknite sem.",
+            "bugReportTitle": "Nahlásenie chyby",
+            "bugReport": "Na nahlásenie akejkoľvek chyby, ktorú narazíte pri používaní Netgrif Application Builder, môžete použiť našu stránku github issues."
+        },
+        "newModelCreated": "Nový model bol vytvorený.",
+        "hasBeenImported": "bol importovaný."
     }
 }

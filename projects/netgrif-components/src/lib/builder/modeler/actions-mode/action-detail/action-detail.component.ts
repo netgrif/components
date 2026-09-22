@@ -6,7 +6,7 @@ import {HistoryService} from '../../services/history/history.service';
 import {ModelService} from '../../services/model/model.service';
 import {ActionEditorTreeService} from '../action-editor/action-editor-tree.service';
 import {ActionEditorService} from '../action-editor/action-editor.service';
-import {actions} from '../action-editor/classes/command-action';
+import {CommandActions, getActions} from '../action-editor/classes/command-action';
 import {ActionType, ChangeType} from '../action-editor/classes/editable-action';
 import {LeafNode, TreeNode} from '../action-editor/classes/leaf-node';
 import {MasterItem} from '../action-editor/classes/master-item';
@@ -14,6 +14,7 @@ import {ActionsMasterDetailService} from '../actions-master-detail.service';
 import {Scope} from '../actions-mode.component';
 import {ActionsModeService} from '../actions-mode.service';
 import {ActionChangedEvent} from "../action-editor/action-editor-list/action-changed-event";
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'nc-builder-action-detail',
@@ -22,27 +23,32 @@ import {ActionChangedEvent} from "../action-editor/action-editor-list/action-cha
 })
 export class ActionDetailComponent implements OnInit, OnDestroy {
 
-    functionScopes: Array<Scope> = [
-        {viewValue: 'Process', value: FunctionScope.PROCESS},
-        {viewValue: 'Namespace', value: FunctionScope.NAMESPACE},
-    ];
+    functionScopes: Array<Scope>;
     // TREE
     public treeControl = new NestedTreeControl<TreeNode>(node => node.children);
     public dataSource = new MatTreeNestedDataSource<TreeNode>();
     public loading: boolean;
+
+    private _actions: Array<CommandActions>;
 
     constructor(private _modelService: ModelService,
                 private _actionsModeService: ActionsModeService,
                 private actionEditorService: ActionEditorService,
                 private _masterService: ActionsMasterDetailService,
                 private _actionEditorTreeService: ActionEditorTreeService,
-                private _historyService: HistoryService) {
+                private _historyService: HistoryService,
+                private _translateService: TranslateService) {
+        this._actions = getActions(this._translateService);
+        this.functionScopes = [
+            {viewValue: this._translateService.instant('builder.modeler.actions-mode.action-detail.process'), value: FunctionScope.PROCESS},
+            {viewValue: this._translateService.instant('builder.modeler.actions-mode.action-detail.namespace'), value: FunctionScope.NAMESPACE},
+        ];
     }
 
     ngOnInit(): void {
         this._masterService.getSelected$().subscribe(item => {
             if (this.actionEditorService.historySave) {
-                this._historyService.save("Actions have been changed.");
+                this._historyService.save(this._translateService.instant('builder.modeler.actions-mode.action-detail.actionsChanged'));
                 this.actionEditorService.historySave = false;
             }
             if (item instanceof Transition) {
@@ -86,7 +92,7 @@ export class ActionDetailComponent implements OnInit, OnDestroy {
 
     ngOnDestroy() {
         if (this.actionEditorService.historySave) {
-            this._historyService.save("Actions have been changed.");
+            this._historyService.save(this._translateService.instant('builder.modeler.actions-mode.action-detail.actionsChanged'));
             this.actionEditorService.historySave = false;
         }
     }
@@ -160,7 +166,7 @@ export class ActionDetailComponent implements OnInit, OnDestroy {
     }
 
     updateFunctions() {
-        actions[actions.length - 1].actions = this._modelService.model.functions.map(fn => {
+        this._actions[this._actions.length - 1].actions = this._modelService.model.functions.map(fn => {
             return {
                 label: fn.name,
                 action: `${fn.name}()`,

@@ -1,14 +1,14 @@
-<h2 mat-dialog-title>Continue previous work</h2>
+<h2 mat-dialog-title>{{ 'builder.dialogs.local-storage-model.title' | translate }}</h2>
 <mat-dialog-content class="mat-typography padding-top-4px">
-    <span>Do you wish to continue work on "{{data.title}}" [{{data.id}}] from {{data.timestamp}}</span>
+    <span>{{ 'builder.dialogs.local-storage-model.message' | translate }} "{{data.title}}" [{{data.id}}] {{ 'builder.dialogs.local-storage-model.from' | translate }} {{data.timestamp}}</span>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
     <button mat-button [mat-dialog-close]="false" color="warn">
         <mat-icon>delete</mat-icon>
-        <span>Delete old work</span>
+        <span>{{ 'builder.dialogs.local-storage-model.deleteOld' | translate }}</span>
     </button>
     <button mat-button [mat-dialog-close]="true" color="primary">
         <mat-icon>done</mat-icon>
-        <span>Load</span>
+        <span>{{ 'builder.dialogs.local-storage-model.load' | translate }}</span>
     </button>
 </mat-dialog-actions>

@@ -14,9 +14,9 @@ export class RemoveTokenTool extends CanvasTool {
             RemoveTokenTool.ID,
             new ControlPanelButton(
                 new ControlPanelIcon('remove_circle_outline', false, true),
-                'Remove token',
+                context.translateService.instant('builder.modeler.edit-mode.services.removeToken'),
             ),
-            context
+            context,
         );
     }
 
@@ -34,6 +34,6 @@ export class RemoveTokenTool extends CanvasTool {
         const changed = new PlaceChange(place.modelPlace, place.modelPlace, undefined);
         changed.place.marking -= 1;
         this.modelService.updatePlace(changed);
-        this.historyService.save(`Token has been removed from place ${place.id}.`);
+        this.historyService.save(this._translateService.instant('builder.modeler.edit-mode.services.tokenRemoved') + ` ${place.id}.`);
     }
 }

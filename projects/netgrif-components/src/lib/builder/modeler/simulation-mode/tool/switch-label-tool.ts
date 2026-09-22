@@ -8,14 +8,13 @@ import {SelectedTransitionService} from '../../selected-transition.service';
 import {ModelService} from '../../services/model/model.service';
 import {SimulationModeService} from '../simulation-mode.service';
 import {SimulationTool} from './simulation-tool';
+import {TranslateService} from "@ngx-translate/core";
 
 export class SwitchLabelTool extends SimulationTool {
 
     public static readonly ID = 'SwitchLabelTool';
     public static readonly ICON_ON = 'label';
-    public static readonly TOOLTIP_ON = 'Show IDs';
     public static readonly ICON_OFF = 'label_off';
-    public static readonly TOOLTIP_OFF = 'Show labels';
     private turnedOn = true;
 
     constructor(
@@ -24,13 +23,14 @@ export class SwitchLabelTool extends SimulationTool {
         simulationModeService: SimulationModeService,
         router: Router,
         transitionService: SelectedTransitionService,
+        private _translateService: TranslateService,
         ngZone?: NgZone
     ) {
         super(
             SwitchLabelTool.ID,
             new ControlPanelButton(
                 new ControlPanelIcon(SwitchLabelTool.ICON_ON, false, true),
-                SwitchLabelTool.TOOLTIP_ON,
+                _translateService.instant('builder.modeler.simulation-mode.showIds'),
             ),
             modelService,
             dialog,
@@ -45,11 +45,11 @@ export class SwitchLabelTool extends SimulationTool {
         // TODO: NAB-326 abstract class for switches, make sure they turn to default state on canvas render
         if (this.turnedOn) {
             this.icon.name = SwitchLabelTool.ICON_OFF;
-            this.tooltip = SwitchLabelTool.TOOLTIP_OFF;
+            this.tooltip = this._translateService.instant('builder.modeler.simulation-mode.showLabels');
             this.simulationModeService.labelText = (n: NodeElement) => n.id;
         } else {
             this.icon.name = SwitchLabelTool.ICON_ON;
-            this.tooltip = SwitchLabelTool.TOOLTIP_ON;
+            this.tooltip = this._translateService.instant('builder.modeler.simulation-mode.showIds');
             this.simulationModeService.labelText = (n: NodeElement) => n.label.value;
         }
         this.elements.places.forEach(p => {

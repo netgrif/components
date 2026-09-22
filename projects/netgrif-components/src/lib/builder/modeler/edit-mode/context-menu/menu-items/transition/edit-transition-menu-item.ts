@@ -6,12 +6,13 @@ import {
 import {CanvasTransition} from '../../../domain/canvas-transition';
 import {CanvasTool} from '../../../services/modes/canvas-tool';
 import {MenuItem} from '../menu-item';
+import {TranslateService} from "@ngx-translate/core";
 
 export class EditTransitionMenuItem extends MenuItem {
 
-    constructor(transition: CanvasTransition, tool: CanvasTool) {
+    constructor(transition: CanvasTransition, tool: CanvasTool, translateService: TranslateService) {
         super(
-            'Edit Task',
+            translateService.instant('builder.modeler.edit-mode.context-menu.editTask'),
             'edit',
             () => {
                 tool.openDialog(DialogTransitionEditComponent, {
@@ -25,7 +26,7 @@ export class EditTransitionMenuItem extends MenuItem {
                     tool.modelService.updateTransition(editedTransition);
                     tool.bindKeys();
                     if (editedTransition) {
-                        tool.historyService.save(`Task ${transition.id} has been changed.`);
+                        tool.historyService.save(translateService.instant('builder.modeler.edit-mode.context-menu.task') + ` ${transition.id} ` + translateService.instant('builder.modeler.edit-mode.context-menu.hasBeenChanged'));
                     }
                 });
             }
