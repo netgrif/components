@@ -113,6 +113,7 @@ export class DataDetailComponent implements OnDestroy {
             {viewValue: this._translateService.instant('builder.modeler.data-mode.boolean'), value: DataType.BOOLEAN},
             {viewValue: this._translateService.instant('builder.modeler.data-mode.button'), value: DataType.BUTTON},
             {viewValue: this._translateService.instant('builder.modeler.data-mode.caseRef'), value: DataType.CASE_REF},
+            {viewValue: 'Process Ref', value: DataType.PROCESS_REF}, // todo 2477
             {viewValue: this._translateService.instant('builder.modeler.data-mode.date'), value: DataType.DATE},
             {viewValue: this._translateService.instant('builder.modeler.data-mode.datetime'), value: DataType.DATETIME},
             {viewValue: this._translateService.instant('builder.modeler.data-mode.enumeration'), value: DataType.ENUMERATION},

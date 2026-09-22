@@ -2,7 +2,7 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {DefaultSimpleTaskViewComponent} from './default-simple-task-view.component';
 import {NavigationComponentModule} from '../../../../navigation.module';
 import {
-    FilterField, FilterType, TextField, BooleanField, MultichoiceField, EnumerationField, I18nField,
+    FilterField, FieldTypeResource, TextField, BooleanField, MultichoiceField, EnumerationField, I18nField,
     NAE_NAVIGATION_ITEM_TASK_DATA,
     OverflowService,
     TestMockDependenciesModule,
@@ -35,11 +35,7 @@ describe('DefaultSimpleTaskViewComponent', () => {
                                     GroupNavigationConstants.ITEM_FIELD_TASK_FILTER,
                                     '',
                                     '',
-                                    {
-                                        filterType: FilterType.TASK,
-                                        predicateMetadata: [],
-                                        searchCategories: []
-                                    },
+                                    FieldTypeResource.CASE_FILTER,
                                     [],
                                     {visible: true},
                                     '',

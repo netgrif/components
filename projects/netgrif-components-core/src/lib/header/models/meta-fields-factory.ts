@@ -6,7 +6,6 @@ import {WorkflowMetaField} from "../workflow-header/workflow-meta-enum";
 /** Returns meta-headers for case view */
 export function getCaseMetaHeaders(): HeaderColumn[] {
     return [
-        new HeaderColumn(HeaderColumnType.META, CaseMetaField.VISUAL_ID, 'headers.caseMeta.visualID', 'text'),
         new HeaderColumn(HeaderColumnType.META, CaseMetaField.MONGO_ID, 'headers.caseMeta.mongoID', 'text', false),
         new HeaderColumn(HeaderColumnType.META, CaseMetaField.TITLE, 'headers.caseMeta.title', 'text'),
         new HeaderColumn(HeaderColumnType.META, CaseMetaField.AUTHOR, 'headers.caseMeta.author', 'user'),

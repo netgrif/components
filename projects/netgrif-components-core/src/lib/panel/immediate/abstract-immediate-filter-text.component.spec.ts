@@ -46,7 +46,8 @@ class TestImmediateFilterTextComponent extends AbstractImmediateFilterTextCompon
     constructor(parenInjector: Injector) {
         super(parenInjector);
         this.ellipsis = true;
-        this.filterMetadata = {allowedNets: [], filterMetadata: {filterType: FilterType.CASE, predicateMetadata: [], searchCategories: []}};
+        this.query = 'cases: title eq \'awd\'';
+        this.type = 'case';
     }
 
     protected getFilterTextContentComponent(): ComponentType<AbstractImmediateFilterTextContentComponent> {

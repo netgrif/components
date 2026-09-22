@@ -1,3 +1,4 @@
+import {NgZone} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {Router} from '@angular/router';
 import {
@@ -21,7 +22,8 @@ export class ChangeDataTool extends SimulationTool {
         simulationModeService: SimulationModeService,
         router: Router,
         transitionService: SelectedTransitionService,
-        translateService: TranslateService
+        translateService: TranslateService,
+        ngZone?: NgZone
     ) {
         super(
             'change_data',
@@ -33,7 +35,8 @@ export class ChangeDataTool extends SimulationTool {
             dialog,
             simulationModeService,
             router,
-            transitionService
+            transitionService,
+            ngZone
         );
     }
 

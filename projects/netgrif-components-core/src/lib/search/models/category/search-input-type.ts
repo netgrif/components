@@ -3,6 +3,7 @@
  */
 export enum SearchInputType {
     TEXT = 'text',
+    PLAIN_QUERY = 'plain_query',
     AUTOCOMPLETE = 'autocomplete',
     DATE = 'date',
     DATE_TIME = 'dateTime',

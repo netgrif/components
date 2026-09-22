@@ -1,3 +1,4 @@
+import {NgZone} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {Router} from '@angular/router';
 import {NodeElement} from '@netgrif/petriflow';
@@ -22,7 +23,8 @@ export class SwitchLabelTool extends SimulationTool {
         simulationModeService: SimulationModeService,
         router: Router,
         transitionService: SelectedTransitionService,
-        private _translateService: TranslateService
+        private _translateService: TranslateService,
+        ngZone?: NgZone
     ) {
         super(
             SwitchLabelTool.ID,
@@ -34,7 +36,8 @@ export class SwitchLabelTool extends SimulationTool {
             dialog,
             simulationModeService,
             router,
-            transitionService
+            transitionService,
+            ngZone
         );
     }
 

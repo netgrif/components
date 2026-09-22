@@ -1,4 +1,4 @@
-import {Inject, Injectable, OnDestroy, Optional} from '@angular/core';
+import {Inject, Injectable, Injector, OnDestroy, Optional} from '@angular/core';
 import {BooleanOperator} from '../models/boolean-operator';
 import {Filter} from '../../filter/models/filter';
 import {BehaviorSubject, forkJoin, Observable, Subject, Subscription} from 'rxjs';
@@ -7,18 +7,25 @@ import {SimpleFilter} from '../../filter/models/simple-filter';
 import {MergeOperator} from '../../filter/models/merge-operator';
 import {PredicateRemovalEvent} from '../models/predicate-removal-event';
 import {Query} from '../models/query/query';
-import {distinctUntilChanged, map, tap} from 'rxjs/operators';
+import {distinctUntilChanged, filter, map} from 'rxjs/operators';
 import {EditableClausePredicateWithGenerators} from '../models/predicate/editable-clause-predicate-with-generators';
 import {Category} from '../models/category/category';
-import {PredicateTreeMetadata} from '../models/persistance/generator-metadata';
 import {NAE_BASE_FILTER} from '../models/base-filter-injection-token';
 import {BaseFilter} from '../models/base-filter';
 import {LoggerService} from '../../logger/services/logger.service';
 import {CategoryFactory} from '../category-factory/category-factory';
 import {FilterType} from '../../filter/models/filter-type';
 import {LoadingEmitter} from '../../utility/loading-emitter';
-import {FilterMetadata} from '../models/persistance/filter-metadata';
 import {FilterTextSegment} from '../models/persistance/filter-text-segment';
+import {QueryItem, QueryItemType} from "../../pfql/model/query-item-type";
+import {parseQuery} from "../../pfql/pfql-utils";
+import {SimpleExpression} from "../../pfql/model/simple-expression";
+import {ComplexExpression} from "../../pfql/model/complex-expression";
+import {ResourceTypeQueryPrefix} from "../models/category/resource-type-query-prefix";
+import {RawExpression} from "../../pfql/model/raw-expression";
+import {PlainQueryCategory} from "../models/category/plain-query-category";
+import { NAE_IGNORE_NETS_ON_AUTOCOMPLETE_CATEGORY } from "../category-factory/search-categories-injection-token";
+import { PfqlVisitor } from "../../pfql/pfql-visitor";
 
 /**
  * Holds information about the filter that is currently applied to the view component, that provides this services.
@@ -46,12 +53,13 @@ export class SearchService implements OnDestroy {
      * The index of a removed {@link Predicate} is emmited into this stream
      */
     protected _predicateRemoved$: Subject<PredicateRemovalEvent>;
-    protected _loadingFromMetadata$: LoadingEmitter;
+    protected _loadingFromPfql$: LoadingEmitter;
     /**
      * The `rootPredicate` uses this stream to notify the search service about changes to the held query
      */
     private readonly _predicateQueryChanged$: Subject<void>;
     private readonly subFilter: Subscription;
+    private readonly subPredicateChanged: Subscription;
 
     /**
      * The {@link Predicate} tree root uses an [AND]{@link BooleanOperator#AND} operator to combine the Predicates.
@@ -60,10 +68,15 @@ export class SearchService implements OnDestroy {
      * It is required if we want to load predicate filter from saved metadata
      * @param baseFilter Filter that should be applied to the view when no searching is being performed.
      * Injected trough the {@link NAE_BASE_FILTER} injection token.
+     * @param _ignoreNetsOnAutocompleteCategories boolean flag that determines whether net-related categories should be ignored
+     * when providing autocomplete suggestions. Injected through the {@link NAE_IGNORE_NETS_ON_AUTOCOMPLETE_CATEGORY} injection token.
+     * @param _visitor service to parse query tree into QueryItems
      */
     constructor(protected _log: LoggerService,
                 @Optional() protected _categoryFactory: CategoryFactory,
-                @Inject(NAE_BASE_FILTER) baseFilter: BaseFilter) {
+                @Inject(NAE_BASE_FILTER) baseFilter: BaseFilter,
+                @Optional() @Inject(NAE_IGNORE_NETS_ON_AUTOCOMPLETE_CATEGORY) protected _ignoreNetsOnAutocompleteCategories: boolean,
+                @Optional() protected _visitor: PfqlVisitor) {
         if (baseFilter.filter instanceof Filter) {
             this._baseFilter = baseFilter.filter.clone();
         } else if (baseFilter.filter instanceof Observable) {
@@ -76,7 +89,7 @@ export class SearchService implements OnDestroy {
         this._rootPredicate = new EditableClausePredicateWithGenerators(BooleanOperator.AND, this._predicateQueryChanged$, undefined, true);
         this._activeFilter = new BehaviorSubject<Filter>(this._baseFilter);
         this._predicateRemoved$ = new Subject<PredicateRemovalEvent>();
-        this._loadingFromMetadata$ = new LoadingEmitter();
+        this._loadingFromPfql$ = new LoadingEmitter();
 
         if (baseFilter.filter instanceof Observable) {
             this.subFilter = baseFilter.filter.subscribe((filter) => {
@@ -85,7 +98,7 @@ export class SearchService implements OnDestroy {
             });
         }
 
-        this.predicateQueryChanged$.subscribe(() => {
+        this.subPredicateChanged = this.predicateQueryChanged$.pipe(filter(() => !this._loadingFromPfql$.value)).subscribe(() => {
             this.updateActiveFilter();
         });
     }
@@ -97,7 +110,8 @@ export class SearchService implements OnDestroy {
         if (this.subFilter) {
             this.subFilter.unsubscribe();
         }
-        this._loadingFromMetadata$.complete();
+        this.subPredicateChanged?.unsubscribe();
+        this._loadingFromPfql$.complete();
         this._rootPredicate.destroy();
     }
 
@@ -165,28 +179,28 @@ export class SearchService implements OnDestroy {
     }
 
     /**
-     * @returns whether the search service is currently loading its state from metadata or not.
+     * @returns whether the search service is currently loading its state from PFQL query or not.
      *
-     * See [loadFromMetadata()]{@link SearchService#loadFromMetadata}
+     * See [loadFromPfql()]{@link SearchService#loadFromPfql}
      */
-    public get loadingFromMetadata(): boolean {
-        return this._loadingFromMetadata$.value;
+    public get loadingFromPfql(): boolean {
+        return this._loadingFromPfql$.value;
     }
 
     /**
-     * @returns an `Observable` that emits `true` if the search service is currently loading its state from metadata,
+     * @returns an `Observable` that emits `true` if the search service is currently loading its state from PFQL query,
      * emits `false` otherwise.
      *
-     * See [loadFromMetadata()]{@link SearchService#loadFromMetadata}
+     See [loadFromPfql()]{@link SearchService#loadFromPfql}
      */
-    public get loadingFromMetadata$(): Observable<boolean> {
-        return this._loadingFromMetadata$.asObservable();
+    public get loadingFromPfql$(): Observable<boolean> {
+        return this._loadingFromPfql$.asObservable();
     }
 
     /**
      * @returns an Observable that emits whenever the root predicates query changes
      */
-    protected get predicateQueryChanged$(): Observable<Query> {
+    public get predicateQueryChanged$(): Observable<Query> {
         return this._predicateQueryChanged$.asObservable().pipe(
             map(() => this._rootPredicate.query),
             distinctUntilChanged((prev, curr) => prev && prev.equals(curr))
@@ -239,15 +253,18 @@ export class SearchService implements OnDestroy {
      * Removes all {@link Predicate} objects that contribute to the search. Updates the active Filter if it was affected.
      *
      * @param clearHidden whether the hidden predicates should be cleared as well
+     * @param updateActiveFilter whether the filter should be updated
      */
-    public clearPredicates(clearHidden = false): void {
+    public clearPredicates(clearHidden = false, updateActiveFilter = true): void {
         if (this._rootPredicate.getPredicateMap().size > 0) {
             for (const [id, predicate] of this._rootPredicate.getPredicateMap().entries()) {
                 if (clearHidden || predicate.isVisible) {
                     this.removePredicate(id);
                 }
             }
-            this.updateActiveFilter();
+            if (updateActiveFilter) {
+                this.updateActiveFilter();
+            }
         }
     }
 
@@ -314,60 +331,54 @@ export class SearchService implements OnDestroy {
     }
 
     /**
-     * @returns `undefined` if the predicate tree contains no complete query.
-     * Otherwise returns the serialized form of the completed queries in the predicate tree.
+     * Loads a PFQL query string into the search service's predicate tree structure.
+     *
+     * Parses the provided PFQL query and reconstructs the predicate tree from it.
+     * The query resource type must match the filter type of this search service.
+     * All existing predicates (including hidden ones) are cleared before loading the new query.
+     *
+     * @param query the PFQL query string to parse and load into the predicate tree
      */
-    public createPredicateMetadata(): PredicateTreeMetadata | undefined {
-        return this._rootPredicate.createGeneratorMetadata() as PredicateTreeMetadata;
-    }
-
-    /**
-     * Replaces the current predicate filter by the one corresponding to the provided generator metadata.
-     *
-     * The {@link CategoryFactory} instance must be provided for this service if we want to use this method. Logs an error and does nothing.
-     *
-     * The `filterType` of this search service must match the `filterType` of the provided metadata. Otherwise an error is thrown.
-     *
-     * @param metadata the serialized state of the predicate tree that should be restored to this search service
-     */
-    public loadFromMetadata(metadata: FilterMetadata) {
-        if (this._categoryFactory === null) {
-            this._log.error('A CategoryFactory instance must be provided for the SearchService'
-                + ' if you want to reconstruct a predicate filter from saved metadata');
+    public loadFromPfql(query: string) {
+        if (!query) {
+            this._log.warn("No query was provided. Cannot load the filter");
+            return;
+        }
+        if (!this.validateQueryResourceType(query)) {
+            this._log.error("Query resource type is of wrong type");
             return;
         }
 
-        if (metadata.filterType !== this.filterType) {
-            throw Error(`The filter type of the provided metadata (${metadata.filterType
-            }) does not match the filter type of the search service (${this.filterType})!`);
+        this._loadingFromPfql$.on();
+        this.clearPredicates(true, false);
+        const queryItems: Array<QueryItem> = parseQuery(query, this._log, this._visitor);
+        if (!queryItems) {
+            this._log.warn(`Could not parse query '${query}. Clearing the search...`)
+            return;
         }
 
-        this.clearPredicates(true);
-        this._loadingFromMetadata$.on();
-
-        const generatorObservables = [];
-        if (Array.isArray(metadata.predicateMetadata)) {
-            for (const clause of metadata.predicateMetadata) {
-                const branchId = this._rootPredicate.addNewClausePredicate(BooleanOperator.OR);
-                const branchPredicate = (
-                    this._rootPredicate.getPredicateMap().get(branchId)
-                        .getWrappedPredicate() as unknown as EditableClausePredicateWithGenerators
-                );
-                for (const predicate of clause) {
-                    const localBranchReference = branchPredicate;
-                    generatorObservables.push(
-                        this._categoryFactory.getFromMetadata(predicate).pipe(tap(generator => {
-                            localBranchReference.addNewPredicateFromGenerator(generator);
-                        }))
-                    );
-                }
-            }
+        const categoryLoadings$ = this.loadExpressionsIntoPredicate(this.rootPredicate, queryItems);
+        if (categoryLoadings$.length === 0) {
+            this._loadingFromPfql$.off();
+            this.updateActiveFilter();
+            return;
         }
-
-        forkJoin(generatorObservables).subscribe(() => {
-            this._loadingFromMetadata$.off();
+        forkJoin(categoryLoadings$).subscribe(() => {
+            this._loadingFromPfql$.off();
             this.updateActiveFilter();
         });
+    }
+
+    /**
+     * Validates that the resource type prefix in the PFQL query matches the filter type of this search service.
+     *
+     * @param query the PFQL query string to validate
+     * @returns `true` if the query's resource type prefix matches the search service's filter type, `false` otherwise
+     */
+    protected validateQueryResourceType(query: string): boolean {
+        const filterType = this.baseFilter.type;
+        return filterType === FilterType.CASE ? query.startsWith(ResourceTypeQueryPrefix.CASES) || query.startsWith(ResourceTypeQueryPrefix.CASE)
+            : query.startsWith(ResourceTypeQueryPrefix.TASKS) || query.startsWith(ResourceTypeQueryPrefix.TASK);
     }
 
     /**
@@ -375,5 +386,76 @@ export class SearchService implements OnDestroy {
      */
     public createFilterTextSegments(): Array<FilterTextSegment> {
         return this._rootPredicate.createFilterTextSegments();
+    }
+
+    /**
+     * Recursively loads an array of query items (expressions and logical operators) into a predicate node.
+     *
+     * Processes each query item in the array:
+     * - For simple expressions: loads them as individual predicates using {@link loadSimpleExpressionIntoPredicate}
+     * - For complex expressions: recursively processes their nested items
+     * - For raw expressions: loads them as plain query predicates using {@link loadPlainQueryIntoPredicate}
+     * - Logical operators are filtered out and not processed
+     *
+     * @param predicate the predicate node into which the query items should be loaded
+     * @param items array of query items to process and load into the predicate tree
+     * @returns an array of observables that emit when each category's data has been loaded from its expression
+     */
+    protected loadExpressionsIntoPredicate(predicate: EditableClausePredicateWithGenerators, items: Array<QueryItem>): Array<Observable<void>> {
+        const expressions: Array<QueryItem> = items.filter(item => item.type() !== QueryItemType.LOGICAL_OPERATOR);
+        const categoryLoadings$: Array<Observable<void>> = [];
+        for (const expression of expressions) {
+            if (expression.type() === QueryItemType.SIMPLE_EXPRESSION) {
+                const categoryLoading$ = this.loadSimpleExpressionIntoPredicate(predicate, expression as SimpleExpression);
+                categoryLoadings$.push(categoryLoading$);
+            } else if (expression.type() === QueryItemType.COMPLEX_EXPRESSION) {
+                const complexExpression: ComplexExpression = expression as ComplexExpression;
+                const subCategoryLoadings$: Array<Observable<void>> = this.loadExpressionsIntoPredicate(predicate, complexExpression.items);
+                categoryLoadings$.push(...subCategoryLoadings$);
+            } else if (expression.type() === QueryItemType.RAW_EXPRESSION) {
+                const categoryLoading$ = this.loadPlainQueryIntoPredicate(predicate, expression as RawExpression);
+                categoryLoadings$.push(categoryLoading$);
+            }
+        }
+        return categoryLoadings$;
+    }
+
+    /**
+     * Loads a simple PFQL expression into a predicate node.
+     *
+     * Extracts the category from the simple expression, loads the expression data into the category,
+     * and adds the category as a new predicate generator to the given predicate node.
+     *
+     * @param predicate the predicate node into which the simple expression should be loaded
+     * @param simpleExpr the simple expression to load
+     * @returns an observable that emits when the category data has been loaded from the expression
+     */
+    protected loadSimpleExpressionIntoPredicate(predicate: EditableClausePredicateWithGenerators, simpleExpr: SimpleExpression): Observable<void> {
+        const branchId = predicate.addNewClausePredicate(BooleanOperator.OR);
+        const localPredicate = predicate.getPredicateMap().get(branchId).getWrappedPredicate() as unknown as EditableClausePredicateWithGenerators;
+        const category: Category<any> = simpleExpr.category;
+        const categoryLoading$: Observable<void> = category.loadFromPfqlExpression(simpleExpr);
+        localPredicate.addNewPredicateFromGenerator(category);
+        return categoryLoading$;
+    }
+
+    /**
+     * Loads a raw PFQL expression into a predicate node.
+     *
+     * Creates a new clause predicate branch, extracts the plain query category from the raw expression,
+     * loads the expression data into the category, and adds the category as a new predicate generator
+     * to the created branch.
+     *
+     * @param predicate the predicate node into which the raw expression should be loaded
+     * @param expression the raw expression to load
+     * @returns an observable that emits when the category data has been loaded from the expression
+     */
+    protected loadPlainQueryIntoPredicate(predicate: EditableClausePredicateWithGenerators, expression: RawExpression): Observable<void>{
+        const branchId = predicate.addNewClausePredicate(BooleanOperator.OR);
+        const localPredicate = predicate.getPredicateMap().get(branchId).getWrappedPredicate() as unknown as EditableClausePredicateWithGenerators;
+        const category: PlainQueryCategory = expression.category;
+        const categoryLoading$: Observable<void> = category.loadFromPfqlRawExpression(expression);
+        localPredicate.addNewPredicateFromGenerator(category);
+        return categoryLoading$;
     }
 }

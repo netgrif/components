@@ -1,3 +1,4 @@
+import {NgZone} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {Router} from '@angular/router';
 import {ControlPanelButton} from '../../control-panel/control-panel-button';
@@ -18,7 +19,8 @@ export class ResetPositionAndZoomTool extends SimulationTool {
         simulationModeService: SimulationModeService,
         router: Router,
         transitionService: SelectedTransitionService,
-        translateService: TranslateService
+        translateService: TranslateService,
+        ngZone?: NgZone
     ) {
         super(
             ResetPositionAndZoomTool.ID,
@@ -30,7 +32,8 @@ export class ResetPositionAndZoomTool extends SimulationTool {
             dialog,
             simulationModeService,
             router,
-            transitionService
+            transitionService,
+            ngZone
         );
     }
 

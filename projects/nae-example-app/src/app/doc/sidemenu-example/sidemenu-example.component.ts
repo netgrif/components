@@ -3,6 +3,7 @@ import {
     Net,
     SideMenuService,
     SideMenuSize,
+    DeploymentState,
 } from '@netgrif/components-core';
 import {of} from 'rxjs';
 import {NewCaseComponent, UserAssignComponent, FilterSelectorComponent} from '@netgrif/components';
@@ -40,7 +41,8 @@ export class SidemenuExampleComponent implements OnInit {
                 immediateData: [],
                 initials: 'EX',
                 title: 'Example Dummy Process',
-                version: '1.0.0'
+                version: '1.0.0',
+                deploymentState: DeploymentState.DEPLOYED
             }),
                 new Net({
                     stringId: '999',
@@ -52,7 +54,8 @@ export class SidemenuExampleComponent implements OnInit {
                     immediateData: [],
                     initials: 'EXX',
                     title: 'Other Example Dummy Process',
-                    version: '1.0.0'
+                    version: '1.0.0',
+                    deploymentState: DeploymentState.DEPLOYED
                 })])
         });
     }

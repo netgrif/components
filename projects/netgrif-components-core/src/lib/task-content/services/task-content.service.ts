@@ -227,7 +227,8 @@ export abstract class TaskContentService implements OnDestroy {
         Object.keys(chFields).forEach(changedField => {
             if (chFields.taskId === this._task.stringId && this.isFieldInTask(chFields.taskId, changedField)) {
                 this.updateField(chFields, this.taskFieldsIndex[chFields.taskId].fields[changedField], frontendActions);
-            } else if (!!this.getReferencedTaskId(changedField, chFields)) {
+            }
+            if (!!this.getReferencedTaskId(changedField, chFields)) {
                 this.updateField(chFields, this.taskFieldsIndex[this.getReferencedTaskId(changedField, chFields)].fields[changedField], frontendActions, true);
             }
         });

@@ -9,8 +9,6 @@ import {createMockNet} from '../../../../utility/tests/utility/create-mock-net';
 import {filter, take} from 'rxjs/operators';
 import {configureCategory} from '../../../../utility/tests/utility/configure-category';
 import {Equals} from '../../operator/equals';
-import {Categories} from '../categories';
-import {CategoryGeneratorMetadata} from '../../persistance/generator-metadata';
 import {Operator} from '../../operator/operator';
 import {Type} from '@angular/core';
 import {DatafieldMapKey} from '../../datafield-map-key';
@@ -18,6 +16,7 @@ import {SearchAutocompleteOption} from '../search-autocomplete-option';
 import moment from 'moment';
 import {EqualsDate} from '../../operator/equals-date';
 import {EqualsDateTime} from '../../operator/equals-date-time';
+import {DataSimpleExpression} from "../../../../pfql/model/data-simple-expression";
 
 describe('CaseDataset', () => {
     let operatorService: OperatorService;
@@ -30,7 +29,7 @@ describe('CaseDataset', () => {
 
     beforeEach(waitForAsync(async () => {
         allowedNets$ = new ReplaySubject<Array<Net>>(1);
-        category = await new CaseDataset(operatorService, null, createMockDependencies(allowedNets$, operatorService));
+        category = new CaseDataset(operatorService, null, createMockDependencies(allowedNets$, operatorService));
     }));
 
     afterEach(() => {
@@ -66,12 +65,7 @@ describe('CaseDataset', () => {
         });
     });
 
-    it('should not serialize incomplete instance', () => {
-        allowedNets$.next([]);
-        expect(category.createMetadata()).toBeUndefined();
-    });
-
-    describe('serialization / deserialization', () => {
+    describe('loading from pfql', () => {
         beforeEach(() => {
             const data = [
                 {stringId: 'textField', title: 'title', type: 'text'},
@@ -99,158 +93,70 @@ describe('CaseDataset', () => {
             TestBed.resetTestingModule();
         });
 
-        describe('should serialize', () => {
+        describe('should load from pfql', () => {
             it('text field search', (done) => {
                 const v = 'value';
-                serializationTest(done, category, Equals, 'text', v, (metadata) => {
-                    expect(metadata.values).toEqual([v]);
-                }, operatorService);
-            });
-            it('enumeration field search', (done) => {
-                const v = 'value';
-                serializationTest(done, category, Equals, 'enumeration', v, (metadata) => {
-                    expect(metadata.values).toEqual([v]);
-                }, operatorService);
-            });
-            it('enumeration_map field search', (done) => {
-                const v = 'value';
-                serializationTest(done, category, Equals, 'enumeration_map', v, (metadata) => {
-                    expect(metadata.values).toEqual([v]);
-                }, operatorService);
-            });
-            it('multichoice field search', (done) => {
-                const v = 'value';
-                serializationTest(done, category, Equals, 'multichoice', v, (metadata) => {
-                    expect(metadata.values).toEqual([v]);
-                }, operatorService);
-            });
-            it('multichoice_map field search', (done) => {
-                const v = 'value';
-                serializationTest(done, category, Equals, 'multichoice_map', v, (metadata) => {
-                    expect(metadata.values).toEqual([v]);
-                }, operatorService);
-            });
-            it('file field search', (done) => {
-                const v = 'value';
-                serializationTest(done, category, Equals, 'file', v, (metadata) => {
-                    expect(metadata.values).toEqual([v]);
-                }, operatorService);
-            });
-            it('fileList field search', (done) => {
-                const v = 'value';
-                serializationTest(done, category, Equals, 'fileList', v, (metadata) => {
-                    expect(metadata.values).toEqual([v]);
-                }, operatorService);
-            });
-            it('userList field search', (done) => {
-                const v = 'value';
-                serializationTest(done, category, Equals, 'userList', v, (metadata) => {
-                    expect(metadata.values).toEqual([v]);
-                }, operatorService);
-            });
-            it('number field search', (done) => {
-                const v = 10;
-                serializationTest(done, category, Equals, 'number', v, (metadata) => {
-                    expect(metadata.values).toEqual([v]);
-                }, operatorService);
-            });
-            it('boolean field search', (done) => {
-                const v = true;
-                serializationTest(done, category, Equals, 'boolean', v, (metadata) => {
-                    expect(metadata.values).toEqual([v]);
-                }, operatorService);
-            });
-            it('user field search', (done) => {
-                const v = mockUserSearchValue('Test User', '7');
-                serializationTest(done, category, Equals, 'user', v, (metadata) => {
-                    const mockedSerializedValue = mockUserSearchValue('Test User', '7');
-                    delete mockedSerializedValue.icon;
-                    expect(metadata.values).toEqual([mockedSerializedValue]);
-                }, operatorService);
-            });
-            it('date field search', (done) => {
-                const v = moment('2021-03-26');
-                serializationTest(done, category, EqualsDate, 'date', v, (metadata) => {
-                    expect(metadata.values).toEqual([v.valueOf()]);
-                }, operatorService);
-            });
-            it('dateTime field search', (done) => {
-                const v = moment('2021-03-26 12:37');
-                serializationTest(done, category, EqualsDateTime, 'dateTime', v, (metadata) => {
-                    expect(metadata.values).toEqual([v.valueOf()]);
-                }, operatorService);
-            });
-            afterEach(() => {
-                allowedNets$.complete();
-                category.destroy();
-                TestBed.resetTestingModule();
-            });
-        });
-
-        describe('should deserialize', () => {
-            it('text field search', (done) => {
-                const v = 'value';
-                deserializationTest(done, category, Equals, 'text', v, (d, c) => valueObjectsComparison(d, c),
+                loadFromPfqlTest(done, category, Equals, 'text', 'textField', v, (d, c) => valueObjectsComparison(d, c),
                     operatorService, allowedNets$);
             });
             it('enumeration field search', (done) => {
                 const v = 'value';
-                deserializationTest(done, category, Equals, 'enumeration', v, (d, c) => valueObjectsComparison(d, c),
+                loadFromPfqlTest(done, category, Equals, 'enumeration', 'enumerationField', v, (d, c) => valueObjectsComparison(d, c),
                     operatorService, allowedNets$);
             });
             it('enumeration_map field search', (done) => {
                 const v = 'value';
-                deserializationTest(done, category, Equals, 'enumeration_map', v, (d, c) => valueObjectsComparison(d, c),
+                loadFromPfqlTest(done, category, Equals, 'enumeration_map', 'enumeration_mapField', v, (d, c) => valueObjectsComparison(d, c),
                     operatorService, allowedNets$);
             });
             it('multichoice field search', (done) => {
                 const v = 'value';
-                deserializationTest(done, category, Equals, 'multichoice', v, (d, c) => valueObjectsComparison(d, c),
+                loadFromPfqlTest(done, category, Equals, 'multichoice', 'multichoiceField', v, (d, c) => valueObjectsComparison(d, c),
                     operatorService, allowedNets$);
             });
             it('multichoice_map field search', (done) => {
                 const v = 'value';
-                deserializationTest(done, category, Equals, 'multichoice_map', v, (d, c) => valueObjectsComparison(d, c),
+                loadFromPfqlTest(done, category, Equals, 'multichoice_map', 'multichoice_mapField', v, (d, c) => valueObjectsComparison(d, c),
                     operatorService, allowedNets$);
             });
             it('file field search', (done) => {
                 const v = 'value';
-                deserializationTest(done, category, Equals, 'file', v, (d, c) => valueObjectsComparison(d, c),
+                loadFromPfqlTest(done, category, Equals, 'file', 'fileField', v, (d, c) => valueObjectsComparison(d, c),
                     operatorService, allowedNets$);
             });
             it('fileList field search', (done) => {
                 const v = 'value';
-                deserializationTest(done, category, Equals, 'fileList', v, (d, c) => valueObjectsComparison(d, c),
+                loadFromPfqlTest(done, category, Equals, 'fileList', 'fileListField', v, (d, c) => valueObjectsComparison(d, c),
                     operatorService, allowedNets$);
             });
             it('userList field search', (done) => {
                 const v = 'value';
-                deserializationTest(done, category, Equals, 'userList', v, (d, c) => valueObjectsComparison(d, c),
+                loadFromPfqlTest(done, category, Equals, 'userList', 'userListField', v, (d, c) => valueObjectsComparison(d, c),
                     operatorService, allowedNets$);
             });
             it('number field search', (done) => {
                 const v = 10;
-                deserializationTest(done, category, Equals, 'number', v, (d, c) => valueObjectsComparison(d, c),
+                loadFromPfqlTest(done, category, Equals, 'number', 'numberField', v, (d, c) => valueObjectsComparison(d, c),
                     operatorService, allowedNets$);
             });
             it('boolean field search', (done) => {
                 const v = true;
-                deserializationTest(done, category, Equals, 'boolean', v, (d, c) => valueObjectsComparison(d, c),
+                loadFromPfqlTest(done, category, Equals, 'boolean', 'booleanField', v, (d, c) => valueObjectsComparison(d, c),
                     operatorService, allowedNets$);
             });
             it('user field search', (done) => {
                 const v = mockUserSearchValue('Test User', '7');
-                deserializationTest(done, category, Equals, 'user', v, (d, c) => valueObjectsComparison(d, c),
+                loadFromPfqlTest(done, category, Equals, 'user', 'userField', v, (d, c) => valueObjectsComparison(d, c),
                     operatorService, allowedNets$);
             });
             it('date field search', (done) => {
                 const v = moment('2021-03-30');
-                deserializationTest(done, category, EqualsDate, 'date', v, (d, c) => momentObjectsComparison(d, c),
+                loadFromPfqlTest(done, category, EqualsDate, 'date', 'dateField', v, (d, c) => momentObjectsComparison(d, c),
                     operatorService, allowedNets$);
             });
             it('dateTime field search', (done) => {
                 const v = moment('2021-03-30 10:39');
-                deserializationTest(done, category, EqualsDateTime, 'dateTime', v, (d, c) => momentObjectsComparison(d, c),
+                loadFromPfqlTest(done, category, EqualsDateTime, 'dateTime', 'dateTimeField', v, (d, c) => momentObjectsComparison(d, c),
                     operatorService, allowedNets$);
             });
             afterEach(() => {
@@ -262,57 +168,13 @@ describe('CaseDataset', () => {
     });
 });
 
-function serializationTest(done: DoneFn,
-                           category: CaseDataset,
-                           operator: Type<Operator<any>>,
-                           fieldType: string,
-                           value: any,
-                           valueExpectation: (metadata: CategoryGeneratorMetadata) => void,
-                           operatorService: OperatorService) {
-    category.configurationInputs$.pipe(take(1)).subscribe(inputs => {
-        expect(inputs).toBeTruthy();
-        expect(Array.isArray(inputs)).toBeTrue();
-        expect(inputs.length).toBe(1);
-
-        expect(category.hasSelectedDatafields).toBeFalse();
-        expect(category.isOperatorSelected()).toBeFalse();
-        inputs[0].filteredOptions$.pipe(filter(o => o.length > 0), take(1)).subscribe(options => {
-            const option = options.find(o => {
-                const key = DatafieldMapKey.parse(o.value as string);
-                // for search purposes, enumeration and multichoice maps are equivalent to their simpler counterparts
-                if (fieldType === 'enumeration_map') {
-                    fieldType = 'enumeration';
-                } else if (fieldType === 'multichoice_map') {
-                    fieldType = 'multichoice';
-                }
-                return key.type === fieldType;
-            });
-            expect(option).toBeTruthy();
-
-            category.selectDatafields(option.value as string, false);
-            expect(category.hasSelectedDatafields).toBeTrue();
-            expect(category.isOperatorSelected()).toBeFalse();
-
-            configureCategory(category, operatorService, operator, [value]);
-            expect(category.isOperatorSelected()).toBeTrue();
-
-            const metadata = category.createMetadata();
-            expect(metadata).toBeTruthy();
-            valueExpectation(metadata);
-            expect(metadata.category).toBe(Categories.CASE_DATASET);
-            expect(metadata.configuration?.operator).toBe(operatorService.getOperator(operator).serialize());
-
-            done();
-        });
-    });
-}
-
-function deserializationTest(done: DoneFn,
+function loadFromPfqlTest(done: DoneFn,
                              category: CaseDataset,
                              operator: Type<Operator<any>>,
                              fieldType: string,
+                             fieldIdentifier,
                              value: any,
-                             expectDeserializedValueToBeEqual: (deserialized: any, category: any) => void,
+                             expectLoadedValueToBeEqual: (loadingCategory: any, category: any) => void,
                              operatorService: OperatorService,
                              allowedNets$: Observable<Array<Net>>) {
     category.configurationInputs$.pipe(take(1)).subscribe(inputs => {
@@ -336,21 +198,14 @@ function deserializationTest(done: DoneFn,
             category.selectDatafields(option.value as string, false);
             configureCategory(category, operatorService, operator, [value]);
 
-            const metadata = category.createMetadata();
-            expect(metadata).toBeTruthy();
-            const deserialized = new CaseDataset(operatorService, null, createMockDependencies(allowedNets$, operatorService));
-            deserialized.loadFromMetadata(metadata).subscribe(() => {
-                expect(deserialized.hasSelectedDatafields).toBeTrue();
-                expect(deserialized.isOperatorSelected()).toBeTrue();
-                expect(deserialized.providesPredicate).toBeTrue();
+            const loadedCategory = new CaseDataset(operatorService, null, createMockDependencies(allowedNets$, operatorService));
+            const expression = new DataSimpleExpression(fieldIdentifier, operatorService.getOperator(operator), value, category);
+            loadedCategory.loadFromPfqlExpression(expression).subscribe(() => {
+                expect(loadedCategory.hasSelectedDatafields).toBeTrue();
+                expect(loadedCategory.isOperatorSelected()).toBeTrue();
+                expect(loadedCategory.providesPredicate).toBeTrue();
 
-                expectDeserializedValueToBeEqual(deserialized, category);
-
-                const deserializedMetadata = deserialized.createMetadata();
-                expect(deserializedMetadata).toBeTruthy();
-                expect(deserializedMetadata.configuration).toEqual(metadata.configuration);
-                expect(deserializedMetadata.category).toEqual(metadata.category);
-                expect(deserializedMetadata.values).toEqual(metadata.values);
+                expectLoadedValueToBeEqual(loadedCategory, category);
 
                 done();
             });
@@ -358,17 +213,17 @@ function deserializationTest(done: DoneFn,
     });
 }
 
-function valueObjectsComparison(deserialized: any, category: any) {
-    expect(deserialized._operandsFormControls[0].value).toEqual(category._operandsFormControls[0].value);
+function valueObjectsComparison(loadedCategory: any, category: any) {
+    expect(loadedCategory._operandsFormControls[0].value).toEqual(category._operandsFormControls[0].value);
 }
 
-function momentObjectsComparison(deserialized: any, category: any) {
+function momentObjectsComparison(loadedCategory: any, category: any) {
     const originalMoment = (category as any)._operandsFormControls[0].value;
-    const deserializedMoment = (deserialized as any)._operandsFormControls[0].value;
+    const loadedMoment = (loadedCategory as any)._operandsFormControls[0].value;
 
     expect(moment.isMoment(originalMoment)).toBeTrue();
-    expect(moment.isMoment(deserializedMoment)).toBeTrue();
-    expect(deserializedMoment.isSame(originalMoment)).toBeTrue();
+    expect(moment.isMoment(loadedMoment)).toBeTrue();
+    expect(loadedMoment.isSame(originalMoment)).toBeTrue();
 }
 
 function mockUserSearchValue(userName: string, userId: string): SearchAutocompleteOption<Array<string>> {

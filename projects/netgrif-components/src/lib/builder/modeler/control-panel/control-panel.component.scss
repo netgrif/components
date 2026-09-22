@@ -4,3 +4,16 @@ mat-divider.style-fix {
     margin-left: 4px;
     margin-right: 4px;
 }
+
+:host {
+    display: block;
+    width: 100%;
+    min-width: 0;
+}
+
+.control {
+    width: 100%;
+    min-width: 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+}

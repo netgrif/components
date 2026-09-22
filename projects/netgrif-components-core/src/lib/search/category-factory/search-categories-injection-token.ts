@@ -25,3 +25,13 @@ export const NAE_DEFAULT_CASE_SEARCH_CATEGORIES = new InjectionToken<Array<Type<
  * The default search categories can be overridden by providing this injection token with a new set of categories in the `AppComponent`.
  */
 export const NAE_DEFAULT_TASK_SEARCH_CATEGORIES = new InjectionToken<Array<Type<Category<any>>>>('NaeDefaultTaskSearchCategories');
+
+/**
+ * Determines whether nets (process definitions) should be ignored when using autocomplete functionality in search categories.
+ *
+ * When set to `true`, the autocomplete feature will not suggest or include nets in the results.
+ * This is useful when you want to limit autocomplete suggestions to other entity types.
+ *
+ * @default false
+ */
+export const NAE_IGNORE_NETS_ON_AUTOCOMPLETE_CATEGORY = new InjectionToken<boolean>('NaeIgnoreNetsOnAutocompleteCategory')

@@ -7,6 +7,7 @@ import {FormControl} from '@angular/forms';
 import {ConfigurationInput} from '../configuration-input';
 import {OperatorService} from '../../operator-service/operator.service';
 import {FilterTextSegment} from '../persistance/filter-text-segment';
+import {ResourceTypeQueryPrefix} from "./resource-type-query-prefix";
 
 /**
  * A utility class that exists for inheritance by simpler category instances.
@@ -17,10 +18,10 @@ import {FilterTextSegment} from '../persistance/filter-text-segment';
  */
 export abstract class NoConfigurationCategory<T> extends Category<T> {
 
-    protected constructor(elasticKeywords: Array<string>, allowedOperators: Array<Operator<any>>,
+    protected constructor(pfqlKeywords: Array<string>, allowedOperators: Array<Operator<any>>,
                           translationPath: string, inputType: SearchInputType, log: LoggerService,
-                          operatorService: OperatorService) {
-        super(elasticKeywords, allowedOperators, translationPath, inputType, log, operatorService);
+                          operatorService: OperatorService, resourceTypePrefix: ResourceTypeQueryPrefix) {
+        super(pfqlKeywords, allowedOperators, translationPath, inputType, log, operatorService, resourceTypePrefix);
     }
 
     /**

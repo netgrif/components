@@ -13,6 +13,7 @@ import {User} from '../../user/models/user';
 import {AssignPolicy, DataFocusPolicy, FinishPolicy} from '../../task-content/model/policy';
 import {PermissionType} from '../../process/permissions';
 import {Net} from '../../process/net';
+import {DeploymentState} from "../../resources/interface/petri-net-reference";
 
 describe('PermissionService', () => {
     let permissionService: PermissionService;
@@ -271,7 +272,8 @@ describe('PermissionService', () => {
             defaultCaseName: '',
             initials: '',
             version: '',
-            title: ''
+            title: '',
+            deploymentState: DeploymentState.DEPLOYED
         });
         net.permissions = {};
         expect(permissionService.hasNetPermission(PermissionType.CREATE, net)).toBeFalse();

@@ -381,6 +381,13 @@ export class FieldListService {
                 ]
             },
             {
+                type: DataType.PROCESS_REF,
+                showPlaceholder: true,
+                components: [
+                    {title: this._translateService.instant('builder.form-builder.field-list.simple'), cols: 4},
+                ]
+            },
+            {
                 type: DataType.CASE_REF,
                 showPlaceholder: true,
                 components: [
@@ -410,7 +417,7 @@ export class FieldListService {
                 ]
             },
             {
-                type: 'stringCollection' as DataType,
+                type: DataType.STRING_COLLECTION,
                 components: [
                     {title: this._translateService.instant('builder.form-builder.field-list.simple')}
                 ],

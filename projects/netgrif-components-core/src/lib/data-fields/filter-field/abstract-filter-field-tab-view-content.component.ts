@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Inject, Injector} from '@angular/core';
+import { AfterViewInit, Component, Inject, Injector, Optional } from '@angular/core';
 import { ComponentPortal } from '@angular/cdk/portal';
 import { FilterField } from './models/filter-field';
 import { NAE_BASE_FILTER } from '../../search/models/base-filter-injection-token';
@@ -12,6 +12,7 @@ import { NAE_FILTER_FIELD } from './models/filter-field-injection-token';
 import { SearchService } from '../../search/search-service/search.service';
 import { AbstractFilterFieldContentComponent } from './abstract-filter-field-content.component';
 import {ComponentRegistryService} from "../../registry/component-registry.service";
+import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../models/data-field-portal-data-injection-token";
 
 @Component({
     selector: 'ncc-abstract-filter-field-tab-view-content',
@@ -24,8 +25,9 @@ export abstract class AbstractFilterFieldTabViewContentComponent extends Abstrac
     protected constructor(protected registry: ComponentRegistryService,
                           protected injector: Injector,
                           @Inject(NAE_FILTER_FIELD) filterField: FilterField,
-                          searchService: SearchService) {
-        super(filterField, searchService)
+                          searchService: SearchService,
+                          @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<FilterField>) {
+        super(filterField, searchService, dataFieldPortalData)
     }
 
     ngAfterViewInit(): void {
