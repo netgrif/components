@@ -1,9 +1,11 @@
-import {Injectable, Injector} from '@angular/core';
+import {Injectable, Injector, NgZone, Optional, Inject, OnDestroy} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {Router} from '@angular/router';
 import {Arc, BasicSimulation, ImportUtils, PetriNet, Place, Transition} from '@netgrif/petriflow';
 import {PetriflowCanvasService} from '@netgrif/petriflow.svg';
-import {BehaviorSubject} from 'rxjs';
+import {PanzoomOptions} from '@panzoom/panzoom';
+import {BehaviorSubject, Subscription} from 'rxjs';
+import {InjectedTabData, NAE_TAB_DATA} from '@netgrif/components-core';
 import {TutorialService} from '../../tutorial/tutorial-service';
 import {ToolGroup} from '../control-panel/tools/tool-group';
 import {ArcFactory} from '../edit-mode/domain/arc-builders/arc-factory.service';
@@ -24,7 +26,7 @@ import {SwitchLabelTool} from './tool/switch-label-tool';
 import {TaskSimulationTool} from './tool/task-simulation.tool';
 
 @Injectable()
-export class SimulationModeService extends CanvasModeService<SimulationTool> {
+export class SimulationModeService extends CanvasModeService<SimulationTool> implements OnDestroy {
 
     private _simulation: BasicSimulation;
     private _data: Map<string, number>;
@@ -32,6 +34,21 @@ export class SimulationModeService extends CanvasModeService<SimulationTool> {
 // TODO: NAB-326 refactor
     public switchTools: ToolGroup<SimulationTool>;
     private _onTransitionDraw: (t: CanvasTransition) => void;
+    /**
+     * `noBind` is required here: pointer events are wired up manually through {@link CanvasListenerTool}
+     * (same as in edit mode). Without it, Panzoom binds its own raw `document` pointermove/pointerup
+     * listeners outside Angular's knowledge, which run on every mouse movement on the whole page.
+     */
+    public panzoomConfiguration: PanzoomOptions = {
+        canvas: true,
+        contain: 'outside',
+        cursor: 'auto',
+        maxScale: 10,
+        minScale: 0.5,
+        step: 0.2,
+        noBind: true
+    };
+    private _modelSubscription: Subscription;
 
     constructor(
         protected _arcFactory: ArcFactory,
@@ -42,8 +59,10 @@ export class SimulationModeService extends CanvasModeService<SimulationTool> {
         transitionService: SelectedTransitionService,
         private tutorialService: TutorialService,
         private parentInjector: Injector,
+        private _ngZone: NgZone,
+        @Optional() @Inject(NAE_TAB_DATA) _tabData?: InjectedTabData,
     ) {
-        super(_arcFactory, _modelService, _canvasService);
+        super(_arcFactory, _modelService, _canvasService, _tabData);
         this._data = new Map<string, number>();
         this.mode = new SimulationMode(
             this.tutorialService.simulator,
@@ -66,24 +85,24 @@ export class SimulationModeService extends CanvasModeService<SimulationTool> {
             }
             return '';
         };
-        this.defaultTool = new TaskSimulationTool(this._modelService, dialog, this, router, transitionService);
+        this.defaultTool = new TaskSimulationTool(this._modelService, dialog, this, router, transitionService, this._ngZone);
         this.switchTools = new ToolGroup<SimulationTool>(
-            new ResetSimulationTool(this._modelService, dialog, this, router, transitionService),
-            new ChangeDataTool(this._modelService, dialog, this, router, transitionService),
-            new ResetPositionAndZoomTool(this._modelService, dialog, this, router, transitionService),
-            new GridTool(this._modelService, dialog, this, router, transitionService),
-            new SwitchLabelTool(this._modelService, dialog, this, router, transitionService),
+            new ResetSimulationTool(this._modelService, dialog, this, router, transitionService, this._ngZone),
+            new ChangeDataTool(this._modelService, dialog, this, router, transitionService, this._ngZone),
+            new ResetPositionAndZoomTool(this._modelService, dialog, this, router, transitionService, this._ngZone),
+            new GridTool(this._modelService, dialog, this, router, transitionService, this._ngZone),
+            new SwitchLabelTool(this._modelService, dialog, this, router, transitionService, this._ngZone),
         );
         this.switchTools.tools.forEach(t => t.bind());
         this.tools = [
             new ToolGroup<SimulationTool>(
                 this.defaultTool,
-                new EventSimulationTool(this._modelService, dialog, this, router, transitionService),
+                new EventSimulationTool(this._modelService, dialog, this, router, transitionService, this._ngZone),
             ),
             this.switchTools,
         ];
         this.originalModel = new BehaviorSubject<PetriNet>(this._modelService.model.clone());
-        this.originalModel.subscribe(model => {
+        this._modelSubscription = this.originalModel.subscribe(model => {
             this.data = new Map(model.getArcs().filter(a => !!a.reference && !!model.getData(a.reference))
                 .map(a => {
                     const data = model.getData(a.reference);
@@ -95,6 +114,11 @@ export class SimulationModeService extends CanvasModeService<SimulationTool> {
             this.simulation = new BasicSimulation(model, this.data);
             this.renderModel(model);
         });
+    }
+
+    ngOnDestroy(): void {
+        super.ngOnDestroy();
+        this._modelSubscription?.unsubscribe();
     }
 
     renderModel(model: PetriNet = this.originalModel.value) {

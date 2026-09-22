@@ -1,4 +1,4 @@
-import {AfterViewInit, Component} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnDestroy, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
 import {DataGroup, LayoutType} from '@netgrif/petriflow';
 import {ModelerConfig} from '../modeler/modeler-config';
@@ -6,22 +6,25 @@ import {ModelerUtils} from '../modeler/modeler-utils';
 import {SelectedTransitionService} from '../modeler/selected-transition.service';
 import {ModelService} from '../modeler/services/model/model.service';
 import {BuilderMode, BuilderModeService} from "../services/builder-mode.service";
-import {BuilderIntegrationService} from "../services/builder-integration.service";
+import {GridsterService} from './gridster/gridster.service';
 
 @Component({
     selector: 'nc-builder-form-builder',
     templateUrl: './form-builder.component.html',
     styleUrls: ['./form-builder.component.scss']
 })
-export class FormBuilderComponent implements AfterViewInit {
+export class FormBuilderComponent implements AfterViewInit, OnDestroy {
     title = 'form-builder';
     width: number;
+
+    @ViewChild('rightPanel') rightPanel: ElementRef<HTMLDivElement>;
+    private rightPanelResizeObserver: ResizeObserver;
 
     constructor(private router: Router,
                 private modelService: ModelService,
                 private transitionService: SelectedTransitionService,
                 private _builderModeService: BuilderModeService,
-                protected _builderInterationService: BuilderIntegrationService) {
+                private _gridsterService: GridsterService) {
         if (!this.modelService.model) {
             this._builderModeService.mode = BuilderMode.MODELER;
         }
@@ -35,6 +38,14 @@ export class FormBuilderComponent implements AfterViewInit {
 
     ngAfterViewInit(): void {
         ModelerUtils.clearSelection();
+        this.rightPanelResizeObserver = new ResizeObserver(() => {
+            this._gridsterService.options?.api?.optionsChanged();
+        });
+        this.rightPanelResizeObserver.observe(this.rightPanel.nativeElement);
+    }
+
+    ngOnDestroy(): void {
+        this.rightPanelResizeObserver?.disconnect();
     }
 
     onResizeEvent(event: any): void {
@@ -45,9 +56,6 @@ export class FormBuilderComponent implements AfterViewInit {
         } else {
             this.width = event.rectangle.width;
         }
-    }
-
-    isIntegrated(): boolean {
-        return this._builderInterationService.isIntegrated;
+        this._gridsterService.options?.api?.optionsChanged();
     }
 }

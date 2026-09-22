@@ -1,3 +1,4 @@
+import {NgZone} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {Router} from '@angular/router';
 import {ControlPanelButton} from '../../control-panel/control-panel-button';
@@ -20,7 +21,8 @@ export class GridTool extends SimulationTool {
         dialog: MatDialog,
         simulationModeService: SimulationModeService,
         router: Router,
-        transitionService: SelectedTransitionService
+        transitionService: SelectedTransitionService,
+        ngZone?: NgZone
     ) {
         super(
             GridTool.ID,
@@ -32,7 +34,8 @@ export class GridTool extends SimulationTool {
             dialog,
             simulationModeService,
             router,
-            transitionService
+            transitionService,
+            ngZone
         );
     }
 

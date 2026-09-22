@@ -20,16 +20,14 @@ import {of} from 'rxjs';
 import {SimpleFilter} from '../../filter/models/simple-filter';
 import {PetriNetRequestBody} from '../../resources/interface/petri-net-request-body';
 import {TaskSearchRequestBody} from "../../filter/models/task-search-request-body";
-import {
-    MockUserService,
-    User,
-    UserService
-} from "@netgrif/components-core";
 import {Injectable} from "@angular/core";
 import {PfqlVisitor} from "../../pfql/pfql-visitor";
 import {AuthenticationModule} from "../../authentication/authentication.module";
 import {NAE_IGNORE_NETS_ON_AUTOCOMPLETE_CATEGORY} from "../category-factory/search-categories-injection-token";
 import {RouterTestingModule} from "@angular/router/testing";
+import {UserService} from "../../user/services/user.service";
+import {MockUserService} from "../../utility/tests/mocks/mock-user.service";
+import {User} from "../../user/models/user";
 
 describe('SearchService', () => {
     let service: SearchService;

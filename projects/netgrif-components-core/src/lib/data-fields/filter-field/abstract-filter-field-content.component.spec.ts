@@ -8,8 +8,7 @@ import {Subject} from 'rxjs';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {FieldTypeResource} from "../../task-content/model/field-type-resource";
-import {DATA_FIELD_PORTAL_DATA} from "@netgrif/components-core";
-import {DataFieldPortalData} from "../models/data-field-portal-data-injection-token";
+import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../models/data-field-portal-data-injection-token";
 import {FormControl} from "@angular/forms";
 
 describe('AbstractFilterFieldContentComponent', () => {

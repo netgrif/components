@@ -6,6 +6,18 @@
     $warn: map-get($theme, warn);
 
     // BUILDER
+
+    .single-task-fix {
+        .fix-datafield-expansion-panel {
+            .mat-expansion-panel:not(.mat-expanded) > .mat-expansion-panel-content {
+                height: 0 !important;
+            }
+
+            .mat-expansion-panel.mat-expanded > .mat-expansion-panel-content {
+                height: 100% !important;
+            }
+        }
+    }
     .svg-active-stroke {
         stroke:  mat.get-color-from-palette($accent, 500) !important;
     }
@@ -15,6 +27,10 @@
     }
 
     .builder-fix {
+        .info-label-icon {
+            color: mat.get-color-from-palette($primary, 500);
+        }
+
         .app-mat-viewnav {
             background-color: mat.get-color-from-palette($primary, 600) !important;
 
