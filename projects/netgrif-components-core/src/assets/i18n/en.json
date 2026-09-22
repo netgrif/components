@@ -750,8 +750,11 @@
                 "dataRefsChanged": "DataRefs has been changed"
             },
             "info-label": {
+                "process": "Process",
+                "task": "Task",
                 "id": "ID",
-                "label": "Label",
+                "processIcon": "Process icon",
+                "closeFormBuilder": "Close form builder",
                 "noTransition": "You have no selected transition!"
             }
         },
@@ -1646,6 +1649,7 @@
                 "boolean": "Boolean",
                 "button": "Button",
                 "caseRef": "Case Ref",
+                "processRef": "Process Ref",
                 "date": "Date",
                 "datetime": "Datetime",
                 "enumeration": "Enumeration",

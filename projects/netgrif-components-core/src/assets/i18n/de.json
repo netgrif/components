@@ -749,8 +749,11 @@
                 "dataRefsChanged": "DataRefs wurden geändert"
             },
             "info-label": {
+                "process": "Prozess",
+                "task": "Aufgabe",
                 "id": "ID",
-                "label": "Beschriftung",
+                "processIcon": "Prozessikone",
+                "closeFormBuilder": "Formular-Editor schließen",
                 "noTransition": "Sie haben keinen Übergang ausgewählt!"
             }
         },
@@ -1645,6 +1648,7 @@
                 "boolean": "Boolean",
                 "button": "Schaltfläche",
                 "caseRef": "Fall-Referenz",
+                "processRef": "Prozess-Referenz",
                 "date": "Datum",
                 "datetime": "Datum und Uhrzeit",
                 "enumeration": "Enumeration",

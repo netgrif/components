@@ -749,8 +749,11 @@
                 "dataRefsChanged": "DataRefs boli zmenené"
             },
             "info-label": {
+                "process": "Proces",
+                "task": "Úloha",
                 "id": "ID",
-                "label": "Popis",
+                "processIcon": "Ikona procesu",
+                "closeFormBuilder": "Zavrieť editor formuláru",
                 "noTransition": "Nemáte vybratý žiadny prechod!"
             }
         },
@@ -1645,6 +1648,7 @@
                 "boolean": "Boolean",
                 "button": "Tlačidlo",
                 "caseRef": "Referencia inštancie",
+                "processRef": "Referencia procesu",
                 "date": "Dátum",
                 "datetime": "Dátum a čas",
                 "enumeration": "Enumerácia",

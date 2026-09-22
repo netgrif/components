@@ -1,18 +1,18 @@
 <ng-container *ngIf="selectedTransition">
     <div class="info-label-header">
         <div class="info-label-group">
-            <span class="info-label-header-text">Process</span>
+            <span class="info-label-header-text">{{ 'builder.form-builder.info-label.process' | translate }}</span>
         </div>
         <div class="info-label-group">
-            <span class="info-label-header-text">Task</span>
+            <span class="info-label-header-text">{{ 'builder.form-builder.info-label.task' | translate }}</span>
         </div>
         <div class="info-label-group">
-            <span class="info-label-header-text">ID</span>
+            <span class="info-label-header-text">{{ 'builder.form-builder.info-label.id' | translate }}</span>
         </div>
     </div>
     <div class="info-label-panel">
         <div class="info-label-group">
-            <mat-icon *ngIf="model?.icon" class="info-label-icon" aria-label="Process icon">{{ model.icon }}</mat-icon>
+            <mat-icon *ngIf="model?.icon" class="info-label-icon" aria-label="'builder.form-builder.info-label.processIcon' | translate">{{ model.icon }}</mat-icon>
             <span class="info-label-title">{{ model?.title?.value }}</span>
         </div>
         <div class="info-label-group">
@@ -26,28 +26,7 @@
 <div class="info-label-panel" *ngIf="!selectedTransition">
     <span>{{ 'builder.form-builder.info-label.noTransition' | translate }}</span>
     <span fxFlex></span>
-    <button (click)="redirect()" aria-label="Close form builder" mat-icon-button>
+    <button (click)="redirect()" aria-label="'builder.form-builder.info-label.closeFormBuilder' | translate" mat-icon-button>
         <mat-icon>close</mat-icon>
     </button>
 </div>
-
-<!--todo 2477-->
-<!--<mat-toolbar *ngIf="selectedTransition" color="primary">-->
-<!--    <mat-toolbar-row class="margins-sides">-->
-<!--        <mat-icon *ngIf="selectedTransition.icon" aria-label="Transition icon"-->
-<!--                  class="icon">{{ selectedTransition.icon }}-->
-<!--        </mat-icon>-->
-<!--        <span>{{ 'builder.form-builder.info-label.id' | translate }}: {{ selectedTransition.id }}</span>-->
-<!--        <span fxFlex></span>-->
-<!--        <span class="spacer">{{ 'builder.form-builder.info-label.label' | translate }}: {{ selectedTransition.label?.value }}</span>-->
-<!--    </mat-toolbar-row>-->
-<!--</mat-toolbar>-->
-<!--<mat-toolbar *ngIf="!selectedTransition" color="primary">-->
-<!--    <mat-toolbar-row class="margins-sides">-->
-<!--        <span>{{ 'builder.form-builder.info-label.noTransition' | translate }}</span>-->
-<!--        <div fxFlex></div>-->
-<!--        <button (click)="redirect()" aria-label="Close form builder" mat-icon-button>-->
-<!--            <mat-icon>close</mat-icon>-->
-<!--        </button>-->
-<!--    </mat-toolbar-row>-->
-<!--</mat-toolbar>-->
