@@ -5,7 +5,16 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {MatDialog} from "@angular/material/dialog";
 import {HttpClient} from "@angular/common/http";
 import {HistoryService} from "./modeler/services/history/history.service";
-import {CaseResourceService, LoadingEmitter, NAE_TAB_DATA, ImmediateData, DATA_FIELD_PORTAL_DATA, CaseRefField, DataFieldPortalData} from "@netgrif/components-core";
+import {
+    CaseResourceService,
+    LoadingEmitter,
+    NAE_TAB_DATA,
+    ImmediateData,
+    DATA_FIELD_PORTAL_DATA,
+    CaseRefField,
+    DataFieldPortalData,
+    LoggerService
+} from "@netgrif/components-core";
 import {InjectedTabbedBuilderViewData} from "./injected-builder-data";
 import {FieldListService} from './form-builder/field-list/field-list.service';
 import {GridsterService} from './form-builder/gridster/gridster.service';
@@ -133,6 +142,7 @@ export class BuilderComponent implements OnDestroy {
                 public builderModeService: BuilderModeService,
                 protected _caseResourceService: CaseResourceService,
                 protected _builderIntegrationService: BuilderIntegrationService,
+                protected _logger: LoggerService,
                 @Optional() @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabbedBuilderViewData,
                 @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<CaseRefField>) {
         this.loading = new LoadingEmitter(true);
@@ -141,10 +151,15 @@ export class BuilderComponent implements OnDestroy {
             this._builderIntegrationService.processCase = injectedTabData.processCase;
             this.resolveIntegratedMode();
             this._reloadSub = this._builderIntegrationService.reloadCase.subscribe(() => {
-                this._caseResourceService.getOneCase(this._builderIntegrationService.processCase.stringId).subscribe(processCase => {
-                    this._builderIntegrationService.processCase = processCase;
-                    this.resolveIntegratedMode()
-                    this._builderIntegrationService.reloadModes = true;
+                this._caseResourceService.getOneCase(this._builderIntegrationService.processCase.stringId).subscribe({
+                    next: processCase => {
+                        this._builderIntegrationService.processCase = processCase;
+                        this.resolveIntegratedMode()
+                        this._builderIntegrationService.reloadModes = true;
+                    },
+                    error: error => {
+                        this._logger.error('Process case reload failed', error.message);
+                    }
                 })
             });
         } else if (dataFieldPortalData !== null && dataFieldPortalData?.dataField?.value?.length > 0) {
