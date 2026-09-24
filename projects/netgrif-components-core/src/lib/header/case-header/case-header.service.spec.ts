@@ -34,6 +34,11 @@ import {SnackBarModule} from '../../snack-bar/snack-bar.module';
 import {NAE_BASE_FILTER} from '../../search/models/base-filter-injection-token';
 import {AllowedNetsService} from '../../allowed-nets/services/allowed-nets.service';
 import {AllowedNetsServiceFactory} from '../../allowed-nets/services/factory/allowed-nets-service-factory';
+import {ViewIdService} from '../../user/services/view-id.service';
+import {UserPreferenceService} from '../../user/services/user-preference.service';
+import {HeaderSortingMode} from '../models/header-sorting-mode';
+import {Injector} from '@angular/core';
+import {NAE_HEADER_SORTING_MODE} from '../models/header-sorting-mode-injection-token';
 
 describe('CaseHeaderService', () => {
     let service: CaseHeaderService;
@@ -62,6 +67,7 @@ describe('CaseHeaderService', () => {
                 {provide: UserResourceService, useClass: MockUserResourceService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: ViewService, useClass: TestViewService},
+                {provide: ViewIdService, useValue: {viewId: 'case-view'}},
                 {provide: AllowedNetsService, useFactory: TestCaseViewAllowedNetsFactory, deps: [AllowedNetsServiceFactory]}
             ]
         });
@@ -74,6 +80,104 @@ describe('CaseHeaderService', () => {
 
     it('get header type = case', () => {
         expect(service.headerType).toEqual(HeaderType.CASE);
+    });
+
+    it('should use single sorting by default', () => {
+        const firstHeader = service.headerState.selectedHeaders[0];
+        const secondHeader = service.headerState.selectedHeaders[1];
+        firstHeader.sortDirection = 'asc';
+        secondHeader.sortDirection = 'desc';
+
+        service.sortingColumnSelected(firstHeader);
+        service.sortingColumnSelected(secondHeader);
+
+        expect(service.sortingMode).toBe(HeaderSortingMode.SINGLE);
+        expect(firstHeader.sortDirection).toBe('');
+        expect(service.headerState.selectedSorts).toEqual([secondHeader]);
+    });
+
+    it('should use multi sorting when explicitly configured', () => {
+        const injector = Injector.create({
+            providers: [
+                CaseHeaderService,
+                {provide: NAE_HEADER_SORTING_MODE, useValue: HeaderSortingMode.MULTI}
+            ],
+            parent: TestBed.inject(Injector)
+        });
+        const multiService = injector.get(CaseHeaderService);
+        const firstHeader = multiService.headerState.selectedHeaders[0];
+        const secondHeader = multiService.headerState.selectedHeaders[1];
+        firstHeader.sortDirection = 'asc';
+        secondHeader.sortDirection = 'desc';
+
+        multiService.sortingColumnSelected(firstHeader);
+        multiService.sortingColumnSelected(secondHeader);
+
+        expect(multiService.sortingMode).toBe(HeaderSortingMode.MULTI);
+        expect(multiService.headerState.selectedSorts).toEqual([firstHeader, secondHeader]);
+        multiService.ngOnDestroy();
+    });
+
+    it('should replace a logically identical sort represented by another HeaderColumn instance', () => {
+        const injector = Injector.create({
+            providers: [
+                CaseHeaderService,
+                {provide: NAE_HEADER_SORTING_MODE, useValue: HeaderSortingMode.MULTI}
+            ],
+            parent: TestBed.inject(Injector)
+        });
+        const multiService = injector.get(CaseHeaderService);
+        const original = multiService.headerState.selectedHeaders[0];
+        const replacement = new HeaderColumn(
+            original.type,
+            original.fieldIdentifier,
+            original.title,
+            original.fieldType,
+            original.initial,
+            original.petriNetIdentifier
+        );
+        original.sortDirection = 'asc';
+        replacement.sortDirection = 'desc';
+
+        multiService.sortingColumnSelected(original);
+        multiService.sortingColumnSelected(replacement);
+
+        expect(original.sortDirection).toBe('');
+        expect(multiService.headerState.selectedSorts).toEqual([replacement]);
+        multiService.ngOnDestroy();
+    });
+
+    it('should combine multi sorting in edit mode with single sorting in normal mode', () => {
+        const injector = Injector.create({
+            providers: [
+                CaseHeaderService,
+                {provide: NAE_HEADER_SORTING_MODE, useValue: HeaderSortingMode.COMBINED}
+            ],
+            parent: TestBed.inject(Injector)
+        });
+        const combinedService = injector.get(CaseHeaderService);
+        const firstHeader = combinedService.headerState.selectedHeaders[0];
+        const secondHeader = combinedService.headerState.selectedHeaders[1];
+        const thirdHeader = combinedService.headerState.selectedHeaders[2];
+
+        combinedService.changeMode(HeaderMode.EDIT);
+        firstHeader.sortDirection = 'asc';
+        secondHeader.sortDirection = 'desc';
+        combinedService.sortingColumnSelected(firstHeader);
+        combinedService.sortingColumnSelected(secondHeader);
+
+        expect(combinedService.sortingMode).toBe(HeaderSortingMode.COMBINED);
+        expect(combinedService.headerState.selectedSorts).toEqual([firstHeader, secondHeader]);
+
+        combinedService.confirmEditMode();
+        thirdHeader.sortDirection = 'asc';
+        combinedService.sortingColumnSelected(thirdHeader);
+
+        expect(combinedService.headerState.mode).toBe(HeaderMode.SORT);
+        expect(firstHeader.sortDirection).toBe('');
+        expect(secondHeader.sortDirection).toBe('');
+        expect(combinedService.headerState.selectedSorts).toEqual([thirdHeader]);
+        combinedService.ngOnDestroy();
     });
 
     it('set allowed nets', () => {
@@ -98,6 +202,38 @@ describe('CaseHeaderService', () => {
             done();
         });
         service.sortHeaderChanged(0, '', 'asc');
+    });
+
+    it('restores a regular sort after edit mode is cancelled', () => {
+        const sortedHeader = service.headerState.selectedHeaders[0];
+        service.sortHeaderChanged(0, sortedHeader.uniqueId, 'asc');
+
+        expect(service.headerState.selectedSorts).toEqual([sortedHeader]);
+        service.changeMode(HeaderMode.EDIT);
+
+        sortedHeader.sortDirection = 'desc';
+        service.sortingColumnSelected(sortedHeader);
+        service.revertEditMode();
+
+        expect(service.headerState.selectedSorts).toEqual([sortedHeader]);
+        expect(sortedHeader.sortDirection).toBe('asc');
+    });
+
+    it('restores only the first resolvable preference in single sorting mode', () => {
+        const preferences = TestBed.inject(UserPreferenceService);
+        const firstHeader = service.headerState.selectedHeaders[0];
+        const secondHeader = service.headerState.selectedHeaders[1];
+        preferences.setSorts('case-view', [
+            {headerUniqueId: 'meta-missing', sortDirection: 'asc'},
+            {headerUniqueId: firstHeader.uniqueId, sortDirection: 'desc'},
+            {headerUniqueId: secondHeader.uniqueId, sortDirection: 'asc'}
+        ]);
+
+        (service as any).loadSortsFromPreferences();
+
+        expect(service.headerState.selectedSorts).toEqual([firstHeader]);
+        expect(firstHeader.sortDirection).toBe('desc');
+        expect(secondHeader.sortDirection).toBe('');
     });
 
     it('call search input changed', (done) => {
@@ -146,6 +282,73 @@ describe('CaseHeaderService', () => {
         service.changeMode(HeaderMode.EDIT, true);
         service.confirmEditMode();
         expect(service.headerState.mode).toEqual(headerState.mode);
+    });
+
+    it('should ignore an empty sorting column', () => {
+        expect(() => service.sortingColumnSelected(null)).not.toThrow();
+        expect(service.headerState.selectedSorts).toEqual([]);
+    });
+
+    it('should preserve sorting when another displayed occurrence of the header remains', () => {
+        const sortedHeader = service.headerState.selectedHeaders[0];
+        service.headerColumnSelected(1, sortedHeader);
+        sortedHeader.sortDirection = 'asc';
+        service.sortingColumnSelected(sortedHeader);
+
+        service.headerColumnSelected(0, service.fieldsGroup[0].fields[2]);
+
+        expect(sortedHeader.sortDirection).toBe('asc');
+        expect(service.headerState.selectedSorts).toEqual([sortedHeader]);
+    });
+
+    it('should apply temporary sorting without changing persisted preferences', () => {
+        const preferences = TestBed.inject(UserPreferenceService);
+        const setSortsSpy = spyOn(preferences, 'setSorts').and.callThrough();
+        const setHeadersAndSortsSpy = spyOn(preferences, 'setHeadersAndSorts').and.callThrough();
+        const header = service.headerState.selectedHeaders[0];
+        let appliedSorts: Array<HeaderColumn>;
+        service.appliedSorts$.subscribe(sorts => appliedSorts = sorts);
+
+        header.sortDirection = 'asc';
+        service.sortingColumnSelected(header);
+        service.updateSortMode();
+
+        expect(setSortsSpy).not.toHaveBeenCalled();
+        expect(setHeadersAndSortsSpy).not.toHaveBeenCalled();
+        expect(preferences.getSorts('case-view')).toBeUndefined();
+        expect(appliedSorts.length).toBe(1);
+        expect(appliedSorts[0]).not.toBe(header);
+        expect(appliedSorts[0].uniqueId).toBe(header.uniqueId);
+        expect(appliedSorts[0].sortDirection).toBe('asc');
+    });
+
+    it('should apply and persist sorting only after edit mode is confirmed', () => {
+        const preferences = TestBed.inject(UserPreferenceService);
+        const setHeadersAndSortsSpy = spyOn(preferences, 'setHeadersAndSorts').and.callThrough();
+        const header = service.headerState.selectedHeaders[0];
+        const appliedSortsHistory: Array<Array<HeaderColumn>> = [];
+        service.appliedSorts$.subscribe(sorts => appliedSortsHistory.push(sorts));
+        const initialEmissionCount = appliedSortsHistory.length;
+
+        service.changeMode(HeaderMode.EDIT);
+        header.sortDirection = 'desc';
+        service.sortingColumnSelected(header);
+
+        expect(appliedSortsHistory.length).toBe(initialEmissionCount);
+        expect(setHeadersAndSortsSpy).not.toHaveBeenCalled();
+
+        service.confirmEditMode();
+
+        expect(appliedSortsHistory.length).toBe(initialEmissionCount + 1);
+        expect(appliedSortsHistory[appliedSortsHistory.length - 1][0].sortDirection).toBe('desc');
+        expect(setHeadersAndSortsSpy).toHaveBeenCalledWith('case-view', jasmine.any(Array), [{
+            headerUniqueId: header.uniqueId,
+            sortDirection: 'desc'
+        }]);
+        expect(preferences.getSorts('case-view')).toEqual([{
+            headerUniqueId: header.uniqueId,
+            sortDirection: 'desc'
+        }]);
     });
 
     afterEach(() => {

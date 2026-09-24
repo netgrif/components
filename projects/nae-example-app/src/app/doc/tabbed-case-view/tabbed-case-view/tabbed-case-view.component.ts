@@ -14,13 +14,15 @@ import {
     ViewIdService,
     Filter,
     NAE_NEW_CASE_CONFIGURATION,
-    NAE_BASE_FILTER, AllowedNetsServiceFactory, AllowedNetsService, SavedFilterMetadata, OverflowService
+    NAE_BASE_FILTER, AllowedNetsServiceFactory, AllowedNetsService, SavedFilterMetadata, OverflowService,
+    HeaderSortingMode, NAE_HEADER_SORTING_MODE, Case
 } from '@netgrif/components-core';
 import {HeaderComponent} from '@netgrif/components';
 import {Subject} from 'rxjs';
 
 interface ExampleInjectedData extends InjectedTabbedCaseViewData {
     exampleUseCache: boolean;
+    headerSortingMode: HeaderSortingMode;
 }
 
 const localAllowedNetsFactory = (factory: AllowedNetsServiceFactory) => {
@@ -48,6 +50,10 @@ const newCaseConfigFactory = (injectedTabData: ExampleInjectedData) => {
     return {useCachedProcesses: injectedTabData.exampleUseCache};
 };
 
+const headerSortingModeFactory = (injectedTabData: ExampleInjectedData): HeaderSortingMode => {
+    return injectedTabData.headerSortingMode;
+};
+
 @Component({
     selector: 'nae-app-tabbed-case-view',
     templateUrl: './tabbed-case-view.component.html',
@@ -65,7 +71,8 @@ const newCaseConfigFactory = (injectedTabData: ExampleInjectedData) => {
             useFactory: localAllowedNetsFactory,
             deps: [AllowedNetsServiceFactory]},
         {provide: NAE_SEARCH_CATEGORIES, useFactory: defaultCaseSearchCategoriesFactory, deps: [CategoryFactory]},
-        {provide: NAE_NEW_CASE_CONFIGURATION, useFactory: newCaseConfigFactory, deps: [NAE_TAB_DATA]}
+        {provide: NAE_NEW_CASE_CONFIGURATION, useFactory: newCaseConfigFactory, deps: [NAE_TAB_DATA]},
+        {provide: NAE_HEADER_SORTING_MODE, useFactory: headerSortingModeFactory, deps: [NAE_TAB_DATA]}
     ]
 })
 export class TabbedCaseViewComponent extends AbstractTabbedCaseViewComponent implements AfterViewInit {
@@ -84,6 +91,25 @@ export class TabbedCaseViewComponent extends AbstractTabbedCaseViewComponent imp
 
     ngAfterViewInit(): void {
         super.initializeHeader(this.caseHeaderComponent);
+    }
+
+    protected override openTab(openCase: Case): void {
+        const injectedTabData = this._injectedTabData as ExampleInjectedData;
+        injectedTabData.tabViewRef.openTab({
+            label: {
+                text: openCase.title,
+                icon: openCase.icon ? openCase.icon : 'check_box'
+            },
+            canBeClosed: true,
+            tabContentComponent: injectedTabData.tabViewComponent,
+            injectedObject: {
+                baseFilter: new SimpleFilter('', FilterType.TASK, {case: {id: `${openCase.stringId}`}}),
+                allowedNets: [openCase.processIdentifier],
+                headerSortingMode: injectedTabData.headerSortingMode
+            },
+            order: injectedTabData.tabViewOrder,
+            parentUniqueId: injectedTabData.tabUniqueId
+        }, this._autoswitchToTaskTab, this._openExistingTab);
     }
 
     loadFilter(filterData: SavedFilterMetadata) {

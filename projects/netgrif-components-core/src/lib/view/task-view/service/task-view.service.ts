@@ -359,9 +359,9 @@ export class TaskViewService extends AbstractSortableViewComponent implements On
         this.nextPage(range, 0, requestContext);
     }
 
-    protected getMetaFieldSortId(): string {
+    protected getMetaFieldSortId(fieldIdentifier?: string): string {
         // TODO Tasks were not sortable on old frontend sorting might require elastic mapping changes on backend
-        return this._lastHeaderSearchState.fieldIdentifier;
+        return fieldIdentifier || this._lastHeaderSearchState.fieldIdentifier;
     }
 
     protected getDefaultSortParam(): string {

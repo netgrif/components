@@ -7,6 +7,7 @@ import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 import {Observable, Subject, Subscription} from 'rxjs';
 import {TranslateService} from '@ngx-translate/core';
 import {debounceTime} from 'rxjs/operators';
+import {SortingHeader} from "../../resources/interface/sorting-header";
 
 const DRAWER_DEFAULT_WIDTH = 200;
 const DRAWER_DEBOUNCE = 1000;
@@ -37,7 +38,7 @@ export class UserPreferenceService implements OnDestroy {
             if (loggedUser && loggedUser.id !== '') {
                 this._userResourceService.getPreferences().subscribe(prefs => {
                         this._preferences = this._emptyPreferences();
-                        Object.assign(this._preferences, prefs);
+                        Object.assign(this._preferences, prefs.preferences);
                         this._preferencesChanged$.next();
                     }
                 );
@@ -51,7 +52,7 @@ export class UserPreferenceService implements OnDestroy {
             if (loggedUser && loggedUser.id !== '') {
                 this._userResourceService.getPublicPreferences().subscribe(prefs => {
                         this._preferences = this._emptyPreferences();
-                        Object.assign(this._preferences, prefs);
+                        Object.assign(this._preferences, prefs.preferences);
                         this._preferencesChanged$.next();
                         this._anonym = true;
                     }
@@ -93,13 +94,33 @@ export class UserPreferenceService implements OnDestroy {
         return this._preferences.caseFilters[viewId];
     }
 
-    public setHeaders(viewId: string, value: Array<string>): void {
-        this._preferences.headers[viewId] = value;
+    public setHeaders(viewId: string, headers: Array<string>): void {
+        this._preferences.headers[viewId] = headers;
         this._savePreferences();
+    }
+
+    public setHeadersAndSorts(viewId: string, headers: Array<string>, sorts?: Array<SortingHeader>): void {
+        if (!!sorts) {
+            this._preferences.sorts[viewId] = sorts;
+        }
+        this.setHeaders(viewId, headers);
     }
 
     public getHeaders(viewId: string): Array<string> | undefined {
         return this._preferences.headers[viewId];
+    }
+
+    public setSorts(viewId: string, sorts: Array<SortingHeader>): void {
+        this._preferences.sorts[viewId] = sorts;
+    }
+
+    public setSortsAndSave(viewId: string, sorts: Array<SortingHeader>): void {
+        this.setSorts(viewId, sorts);
+        this._savePreferences();
+    }
+
+    public getSorts(viewId: string): Array<SortingHeader> | undefined {
+        return this._preferences.sorts[viewId];
     }
 
     public setLocale(locale: string): void {
@@ -150,7 +171,8 @@ export class UserPreferenceService implements OnDestroy {
             drawerWidth: DRAWER_DEFAULT_WIDTH,
             headers: {},
             caseFilters: {},
-            taskFilters: {}
+            taskFilters: {},
+            sorts: {}
         };
     }
 }

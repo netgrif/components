@@ -240,8 +240,8 @@ export class WorkflowViewService extends AbstractSortableViewComponent implement
         );
     }
 
-    protected getMetaFieldSortId(): string {
-        return this._lastHeaderSearchState.fieldIdentifier;
+    protected getMetaFieldSortId(fieldIdentifier?: string): string {
+        return fieldIdentifier || this._lastHeaderSearchState.fieldIdentifier;
     }
 
     protected getDefaultSortParam(): string {

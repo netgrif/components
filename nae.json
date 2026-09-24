@@ -24,7 +24,7 @@
                 "enable": false,
                 "clientId": "dev-cluster-worker",
                 "redirectUrl": "http://localhost:8081/realms/netgrif-cloud-testing/protocol/openid-connect/auth",
-                "refreshUrl": "http://localhost:8800/api/auth/login",
+                "refreshUrl": "http://localhost:8080/api/auth/login",
                 "scopes": ["openid","email","profile","roles"]
             }
         },
@@ -253,12 +253,29 @@
                     "access": "private",
                     "navigation": {
                         "title": "Custom Task View",
-                        "icon": "article"
+                        "icon": "article",
+                        "order": 5
                     },
                     "routing": {
                         "path": "task-view"
                     },
                     "processUri": "/"
+                },
+                "menu-order-demo-nae-view": {
+                    "component": {
+                        "class": "TaskViewComponent",
+                        "from": "./doc/task-view/task-view.component"
+                    },
+                    "access": "private",
+                    "navigation": {
+                        "title": "NAE JSON View (order 5.5)",
+                        "icon": "data_object",
+                        "order": 5.5
+                    },
+                    "routing": {
+                        "path": "menu-order-demo-nae-view"
+                    },
+                    "processUri": "/menu_test_root/menu_test_order_demo"
                 },
                 "task-list-view": {
                     "component": {
