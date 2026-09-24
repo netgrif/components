@@ -233,7 +233,7 @@ export class FieldListService {
                     {title: this._translateService.instant('builder.form-builder.field-list.flat'), name: 'flat'},
                     {title: this._translateService.instant('builder.form-builder.field-list.icon'), name: 'icon'},
                     {title: this._translateService.instant('builder.form-builder.field-list.fab'), name: 'fab'},
-                    {title: this._translateService.instant('builder.form-builder.field-list.MiniFAB'), name: 'minifab'}
+                    {title: this._translateService.instant('builder.form-builder.field-list.miniFab'), name: 'minifab'}
                 ],
                 properties: [
                     {
