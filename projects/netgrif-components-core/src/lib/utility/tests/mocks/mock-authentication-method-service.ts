@@ -9,6 +9,10 @@ export class MockAuthenticationMethodService extends AuthenticationMethodService
             groups: [], authorities: [], nextGroups: [], processRoles: []});
     }
 
+    loginWithApiToken(_token: string, _realmId?: string): Observable<UserResource> {
+        return this.login({username: '', password: ''});
+    }
+
     logout(): Observable<object> {
         return of(undefined);
     }

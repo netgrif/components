@@ -20,9 +20,7 @@ export class UserPreferenceService implements OnDestroy {
     protected _preferences: Preferences;
     protected _preferencesChanged$: Subject<void>;
     protected _sub: Subscription;
-    protected _subAnonym: Subscription;
     public _drawerWidthChanged$: Subject<number>;
-    protected _anonym: boolean;
 
     constructor(protected _userService: UserService,
                 protected _userResourceService: UserResourceService,
@@ -32,7 +30,6 @@ export class UserPreferenceService implements OnDestroy {
         this._preferences = this._emptyPreferences();
         this._preferencesChanged$ = new Subject<void>();
         this._drawerWidthChanged$ = new Subject<number>();
-        this._anonym = false;
 
         this._sub = this._userService.user$.subscribe(loggedUser => {
             if (loggedUser && loggedUser.id !== '') {
@@ -45,22 +42,6 @@ export class UserPreferenceService implements OnDestroy {
             } else {
                 this._preferences = this._emptyPreferences();
                 this._preferencesChanged$.next();
-            }
-        });
-
-        this._subAnonym = this._userService.anonymousUser$.subscribe(loggedUser => {
-            if (loggedUser && loggedUser.id !== '') {
-                this._userResourceService.getPublicPreferences().subscribe(prefs => {
-                        this._preferences = this._emptyPreferences();
-                        Object.assign(this._preferences, prefs.preferences);
-                        this._preferencesChanged$.next();
-                        this._anonym = true;
-                    }
-                );
-            } else {
-                this._preferences = this._emptyPreferences();
-                this._preferencesChanged$.next();
-                this._anonym = false;
             }
         });
 
@@ -146,15 +127,9 @@ export class UserPreferenceService implements OnDestroy {
     }
 
     protected _savePreferences(): void {
-        if (!this._anonym) {
-            this._userResourceService.setPreferences(this._preferences).subscribe(resultMessage => {
-                this.resultMessage(resultMessage);
-            });
-        } else {
-            this._userResourceService.setPublicPreferences(this._preferences).subscribe(resultMessage => {
-                this.resultMessage(resultMessage);
-            });
-        }
+        this._userResourceService.setPreferences(this._preferences).subscribe(resultMessage => {
+            this.resultMessage(resultMessage);
+        });
     }
 
     protected resultMessage(resultMessage): void {

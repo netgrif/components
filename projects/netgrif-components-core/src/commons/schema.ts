@@ -45,10 +45,19 @@ export interface Auth {
     address: string;
     authentication: string;
     sessionBearer?: string;
+    apiToken?: ApiTokenAuthentication;
     endpoints?: string | { [k: string]: string };
     sso?: Sso;
 
     [k: string]: any;
+}
+
+export interface ApiTokenAuthentication {
+    enabled?: boolean;
+    queryParameter?: string;
+    realmQueryParameter?: string;
+    removeFromUrl?: boolean;
+    allowedPaths?: Array<string>;
 }
 
 export interface Sso {

@@ -55,11 +55,8 @@ export class AssignPolicyService extends TaskHandlingService {
         if (!this._userService.isCurrentUserEmpty()) {
             this.performAssign(taskOpened, afterAction);
         } else {
-            race([
-                this._userService.anonymousUser$,
-                this._userService.user$
-            ])
-                .pipe(filter(user => !this._userService.isUserEmpty(user)))
+            // this._userService.anonymousUser$,
+            this._userService.user$.pipe(filter(user => !this._userService.isUserEmpty(user)))
                 .pipe(take(1))
                 .subscribe(user => this.performAssign(taskOpened, afterAction));
         }

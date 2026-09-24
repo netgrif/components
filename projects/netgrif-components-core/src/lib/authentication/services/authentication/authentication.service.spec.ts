@@ -40,6 +40,14 @@ describe('AuthenticationService', () => {
         });
     });
 
+    it('should login with an API token', (done) => {
+        service.loginWithApiToken('user-id.secret', 'Admin').subscribe(res => {
+            expect(res.id).toEqual('id');
+            expect(service.isAuthenticated).toBe(true);
+            done();
+        });
+    });
+
     afterEach(() => {
         TestBed.resetTestingModule();
     });

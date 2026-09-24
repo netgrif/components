@@ -17,22 +17,12 @@ export class PublicCaseResourceService extends CaseResourceService {
     }
 
     /**
-     * Get all case data
-     * GET
-     * {{baseUrl}}/api/public/case/:id/data
-     */
-    public getCaseData(caseID: string): Observable<EventOutcomeMessageResource> {
-        return this._resourceProvider.get$('public/case/' + caseID + '/data', this.SERVER_URL)
-            .pipe(map(r => this.changeType(r, undefined)));
-    }
-
-    /**
      * Create new case
      * POST
      * {{baseUrl}}/api/workflow/case
      */
     public createCase(body: object): Observable<EventOutcomeMessageResource> {
-        return this._resourceProvider.post$('public/case/', this.SERVER_URL, body)
+        return this._resourceProvider.post$('workflow/public/case/', this.SERVER_URL, body)
             .pipe(map(r => this.changeType(r, undefined)));
     }
 }

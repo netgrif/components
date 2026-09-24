@@ -153,8 +153,8 @@ describe('TaskResourceService', () => {
     it('should getAllTasksByCases', (done) => {
             inject([HttpTestingController],
                 (httpMock: HttpTestingController) => {
-                    service.getAllTasksByCases({}).subscribe(res => {
-                        expect(res.length).toEqual(0);
+                    service.getAllTasksByCases([]).subscribe(res => {
+                        expect(res.content.length).toEqual(0);
                         done();
                     });
 

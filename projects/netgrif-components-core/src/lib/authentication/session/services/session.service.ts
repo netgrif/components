@@ -4,7 +4,7 @@ import {ConfigurationService} from '../../../configuration/configuration.service
 import {NullStorage} from '../null-storage';
 import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import {LoggerService} from '../../../logger/services/logger.service';
-import {catchError, filter, map, take, tap} from 'rxjs/operators';
+import {catchError, filter, finalize, map, take} from 'rxjs/operators';
 import {MessageResource} from '../../../resources/interface/message-resource';
 import {LoadingEmitter} from '../../../utility/loading-emitter';
 import {SessionIdleTimerService} from "./session-idle-timer.service";
@@ -54,6 +54,7 @@ export class SessionService implements OnDestroy {
     ngOnDestroy(): void {
         this._session$.complete();
         this._verifying.complete();
+        this._initialized.complete();
     }
 
     get session$(): Observable<string> {
@@ -61,6 +62,7 @@ export class SessionService implements OnDestroy {
     }
 
     set sessionToken(sessionToken: string) {
+        this.ensureConfigInitialized();
         this._session$.next(sessionToken);
         this._storage.setItem(SessionService.SESSION_TOKEN_STORAGE_KEY,
             btoa(SessionService.SESSION_TOKEN_STORAGE_KEY + ':' + sessionToken));
@@ -131,41 +133,48 @@ export class SessionService implements OnDestroy {
                 observe: 'response'
             }).pipe(
                 catchError(error => {
-                    if (error instanceof HttpErrorResponse && error.status === 401) {
+                    if (error instanceof HttpErrorResponse && error.status === 401 && this.sessionToken === token) {
                         this._log.warn('Authentication token is invalid. Clearing session token');
                         this.clear();
                     }
-                    this._verifying.off();
-                    this.idleTimerService.stopTimer();
-                    this._initialized.on();
                     return throwError(error);
                 }),
                 map(response => {
+                    if (this.sessionToken !== token) {
+                        return this.verified;
+                    }
                     this._log.debug(response.body.success);
                     this._verified = true;
                     this.idleTimerService.resetTimer();
-                    this._initialized.on();
-                    this.sessionToken = token;
+                    this.sessionToken = response.headers.get(this.sessionHeader) || token;
                     return true;
                 }),
-                tap(_ => this._verifying.off())
+                finalize(() => {
+                    this._verifying.off();
+                    this._initialized.on();
+                })
             );
         }
     }
 
     protected load(): string {
         this.ensureConfigInitialized();
+        if (this.verified && this.sessionToken) {
+            this._initialized.on();
+            return this.sessionToken;
+        }
 
-        let token = this._storage.getItem(SessionService.SESSION_TOKEN_STORAGE_KEY);
+        const token = this.resolveToken(this._storage.getItem(SessionService.SESSION_TOKEN_STORAGE_KEY));
         this._verified = false;
         this.idleTimerService.stopTimer();
         if (token) {
-            token = this.resolveToken(token);
             this.sessionToken = token;
-            this.verify(token).pipe(take(1)).subscribe(ver => {
-                this._log.debug('Token ' + token + ' verified status: ' + ver);
+            this.verify(token).pipe(take(1)).subscribe({
+                next: verified => this._log.debug('Stored session verified: ' + verified),
+                error: () => this._log.warn('Stored session could not be restored')
             });
         } else {
+            this.clear();
             this._initialized.on();
         }
         return '';
@@ -184,7 +193,12 @@ export class SessionService implements OnDestroy {
     }
 
     private resolveToken(raw: string): string {
-        return raw ? atob(raw).split(':')[1] : '';
+        try {
+            const [key, token] = raw ? atob(raw).split(':') : [];
+            return key === SessionService.SESSION_TOKEN_STORAGE_KEY ? token || '' : '';
+        } catch {
+            return '';
+        }
     }
 
     private resolveStorage(storage: string): any {

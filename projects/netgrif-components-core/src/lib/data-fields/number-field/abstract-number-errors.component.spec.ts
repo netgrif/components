@@ -70,6 +70,7 @@ describe('AbstractNumberErrorsComponent', () => {
         fixture = TestBed.createComponent(TestWrapperComponent);
         component = fixture.debugElement.children[0].componentInstance;
         TestBed.inject(LanguageService);
+        TestBed.inject(TranslateService).use('en');
         fixture.detectChanges();
     }));
 

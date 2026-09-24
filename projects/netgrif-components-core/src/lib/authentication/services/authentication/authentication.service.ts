@@ -49,6 +49,19 @@ export class AuthenticationService implements OnDestroy {
         );
     }
 
+    loginWithApiToken(token: string, realmId?: string): Observable<User> {
+        return this._auth.loginWithApiToken(token, realmId).pipe(
+            tap((user: UserResource) => {
+                this._authenticated$.next(!!user[AuthenticationService.IDENTIFICATION_ATTRIBUTE]);
+            }),
+            map((user: UserResource) => this._userTransformer.transform(user)),
+            catchError(error => {
+                console.error(error);
+                return of(null);
+            })
+        );
+    }
+
     logout(): Observable<object> {
         return this._auth.logout().pipe(
             tap(() => {

@@ -37,7 +37,7 @@ export class AccessService {
             if (view.access !== 'private') {
                 throw new Error(`Unknown access option '${view.access}'. Only 'public' or 'private' is allowed.`);
             }
-            return !this._userService.user.isEmpty();
+            return !this._userService.user.isEmpty() && !this._userService.user.isAnonymous();
         }
 
         if (!url) {
