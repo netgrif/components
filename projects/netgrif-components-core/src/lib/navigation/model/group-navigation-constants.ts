@@ -156,6 +156,11 @@ export enum GroupNavigationConstants {
     ITEM_FIELD_ID_MENU_ICON = 'menu_icon',
 
     /**
+     * Optional number that defines the ascending position of the item in its menu level.
+     */
+    ITEM_FIELD_ID_ORDER = 'order',
+
+    /**
      * I18n field, that contains labels of menu item
      * */
     ITEM_FIELD_ID_MENU_NAME = 'menu_name',

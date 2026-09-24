@@ -14,3 +14,37 @@
 .cursor-fix {
     cursor: pointer;
 }
+
+.sort-control {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 0 0 4px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+    line-height: 0;
+
+    &:focus-visible {
+        outline: 2px solid currentcolor;
+        outline-offset: 2px;
+    }
+}
+
+/* stylelint-disable-next-line selector-pseudo-element-no-unknown -- required for Angular view encapsulation */
+::ng-deep .header-field-icon-container {
+    .mat-mdc-text-field-wrapper {
+        padding: 0 8px;
+    }
+    .mat-mdc-form-field-subscript-wrapper {
+        display: none;
+    }
+}
+
+.icon-padding-fixed {
+    font-size: 16px;
+    height: 16px;
+    width: 16px;
+}

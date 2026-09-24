@@ -242,6 +242,7 @@ export interface View {
         title?: string;
         icon?: string;
         translate?: boolean;
+        order?: number;
         [k: string]: any;
     };
     children?: Views;

@@ -1,12 +1,9 @@
-import {Component, Input, OnDestroy, OnInit, Type} from '@angular/core';
-import {AbstractHeaderService} from '../../abstract-header-service';
+import {Component, OnDestroy, OnInit, Type} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {debounceTime, map} from 'rxjs/operators';
 import {UserValue} from '../../../data-fields/user-field/models/user-value';
-import {SideMenuService} from '../../../side-menu/services/side-menu.service';
 import {Subscription} from 'rxjs';
 import {AbstractHeaderModeComponent} from '../abstract-header-mode.component';
-import {UserListInjectedData} from '../../../side-menu/content-components/user-assign/model/user-list-injected-data';
 import {MatDialog} from '@angular/material/dialog';
 
 @Component({
@@ -23,9 +20,6 @@ export abstract class AbstractSearchModeComponent extends AbstractHeaderModeComp
     protected subClearHeader: Subscription;
 
     public formControls: Array<FormControl> = [];
-
-    @Input()
-    public headerService: AbstractHeaderService;
 
     constructor(protected _dialog: MatDialog) {
         super();

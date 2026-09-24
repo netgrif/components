@@ -28,6 +28,9 @@ import {LoggerService} from '../../../logger/services/logger.service';
 import {NAE_BASE_FILTER} from '../../../search/models/base-filter-injection-token';
 import {AllowedNetsService} from '../../../allowed-nets/services/allowed-nets.service';
 import {AllowedNetsServiceFactory} from '../../../allowed-nets/services/factory/allowed-nets-service-factory';
+import {UserPreferenceService} from '../../../user/services/user-preference.service';
+import {NAE_HEADER_SORTING_MODE} from '../../models/header-sorting-mode-injection-token';
+import {HeaderSortingMode} from '../../models/header-sorting-mode';
 
 describe('AbstractEditModeComponent', () => {
     let component: TestEditModeComponent;
@@ -59,6 +62,7 @@ describe('AbstractEditModeComponent', () => {
                 {provide: UserResourceService, useClass: MockUserResourceService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: ViewService, useClass: TestViewService},
+                {provide: NAE_HEADER_SORTING_MODE, useValue: HeaderSortingMode.MULTI},
                 {provide: AllowedNetsService, useFactory: TestCaseViewAllowedNetsFactory, deps: [AllowedNetsServiceFactory]}
             ]
         }).compileComponents();
@@ -78,6 +82,44 @@ describe('AbstractEditModeComponent', () => {
     it('should call headerColumnSelected', () => {
         component.headerColumnSelected(0, new HeaderColumn(HeaderColumnType.META, CaseMetaField.AUTHOR, 'Title', 'text'));
         expect(headerSpy).toHaveBeenCalledWith(0, new HeaderColumn(HeaderColumnType.META, CaseMetaField.AUTHOR, 'Title', 'text'));
+    });
+
+    it('should ignore sorting selection for an empty header slot', () => {
+        const sortingSpy = spyOn(TestBed.inject(CaseHeaderService), 'sortingColumnSelected');
+        const applySpy = spyOn(TestBed.inject(CaseHeaderService), 'applySelectedSorts');
+
+        component.sortingHeaderSelected(null);
+
+        expect(sortingSpy).not.toHaveBeenCalled();
+        expect(applySpy).not.toHaveBeenCalled();
+    });
+
+    it('should immediately apply sorting without persisting preferences', () => {
+        const service = TestBed.inject(CaseHeaderService);
+        const preferences = TestBed.inject(UserPreferenceService);
+        const setHeadersAndSortsSpy = spyOn(preferences, 'setHeadersAndSorts');
+        const header = service.headerState.selectedHeaders[0];
+        let appliedSorts: Array<HeaderColumn>;
+        service.appliedSorts$.subscribe(sorts => appliedSorts = sorts);
+
+        component.sortingHeaderSelected(header);
+
+        expect(appliedSorts.length).toBe(1);
+        expect(appliedSorts[0].uniqueId).toBe(header.uniqueId);
+        expect(appliedSorts[0].sortDirection).toBe('asc');
+        expect(setHeadersAndSortsSpy).not.toHaveBeenCalled();
+    });
+
+    it('should expose the multi-sort priority', () => {
+        const service = TestBed.inject(CaseHeaderService);
+        const firstHeader = service.headerState.selectedHeaders[0];
+        const secondHeader = service.headerState.selectedHeaders[1];
+
+        component.sortingHeaderSelected(firstHeader);
+        component.sortingHeaderSelected(secondHeader);
+
+        expect(component.sortingPriority(firstHeader)).toBe(1);
+        expect(component.sortingPriority(secondHeader)).toBe(2);
     });
 
     afterEach(() => {

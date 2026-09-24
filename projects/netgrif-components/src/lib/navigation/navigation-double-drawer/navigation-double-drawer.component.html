@@ -72,7 +72,7 @@
                 <button *ngFor='let item of hiddenCustomItems$ | async; trackBy: itemsTrackBy' mat-menu-item
                         [routerLink]='item.routing.path' routerLinkActive="active-tree-node">
                     <mat-icon>{{ item.navigation.icon }}</mat-icon>
-                    <span>{{ item.navigation.title }}</span>
+                    <span>{{ item.navigation.translate ? (item.navigation.title | translate) : item.navigation.title }}</span>
                 </button>
             </mat-menu>
             <!--            <div fxLayout="row" class="margin-bottom-x2 icon-container" matTooltip="Otvoriť menu"-->
@@ -138,7 +138,9 @@
     <div class="margin-top-x2"></div>
 
     <button *ngFor='let folder of leftItems; trackBy: itemsTrackBy' mat-icon-button (click)="onItemClick(folder)"
-            class="menu-button mat-typography menu-font-color" [matTooltip]="folder.navigation.title" [matTooltipPosition]="'right'"
+            class="menu-button mat-typography menu-font-color"
+            [matTooltip]="folder.navigation.translate ? (folder.navigation.title | translate) : folder.navigation.title"
+            [matTooltipPosition]="'right'"
             [ngClass]="isItemAndPathEqual(folder, currentPath) ? 'rail-selected-color' : 'menu-font-color'" [routerLink]="folder.routing.path"
             routerLinkActive="active">
         <mat-icon>{{ folder.navigation.icon }}</mat-icon>
@@ -164,9 +166,9 @@
         </div>
         <div *ngFor='let item of rightItems$ | async; trackBy: itemsTrackBy' (click)="onItemClick(item)"
              class="tree-node mat-typography mat-body-2" fxLayoutAlign="start center" [routerLink]='item.routing.path'
-             routerLinkActive="active-tree-node">
+            routerLinkActive="active-tree-node">
             <mat-icon class="tree-node-icon">{{ item.navigation.icon }}</mat-icon>
-            <span>{{ item.navigation.title }}</span>
+            <span>{{ item.navigation.translate ? (item.navigation.title | translate) : item.navigation.title }}</span>
             <span class="menu-item-focus-overlay"></span>
         </div>
         <div *ngIf="moreItems.length > 0">

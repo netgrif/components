@@ -372,7 +372,13 @@
         "editMode": "Editationsmodus einschalten",
         "overflowMode": "Tabellenmodus",
         "columnWidth": "Spaltenbreite",
-        "columnCount": "Spaltenanzahl"
+        "columnCount": "Spaltenanzahl",
+        "sortControl": "{{title}} sortieren. Aktuelle Richtung: {{current}}. Aktivieren, um {{next}} einzustellen.",
+        "sortDirections": {
+            "none": "nicht sortiert",
+            "ascending": "aufsteigend",
+            "descending": "absteigend"
+        }
     },
     "panel": {
         "case": {

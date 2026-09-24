@@ -17,6 +17,8 @@ import {HeaderChangeType} from './models/user-changes/header-change-type';
 import {ViewIdService} from '../user/services/view-id.service';
 import {Net} from '../process/net';
 import {OverflowService} from './services/overflow.service';
+import {SortingHeader} from "../resources/interface/sorting-header";
+import {HeaderSortingMode} from './models/header-sorting-mode';
 
 @Injectable()
 export abstract class AbstractHeaderService implements OnDestroy {
@@ -29,9 +31,11 @@ export abstract class AbstractHeaderService implements OnDestroy {
     protected _responsiveHeaders$: BehaviorSubject<boolean>;
     protected _headerState: HeaderState;
     protected _headerChange$: Subject<HeaderChange>;
+    protected _appliedSorts$: ReplaySubject<Array<HeaderColumn>>;
     protected _clearHeaderSearch$: Subject<number>;
     private _initDefaultHeaders: Array<string>;
     private _initializedCount: boolean;
+    private readonly _sortingMode: HeaderSortingMode;
 
     public loading: LoadingEmitter;
     public fieldsGroup: Array<FieldsGroup>;
@@ -40,9 +44,12 @@ export abstract class AbstractHeaderService implements OnDestroy {
                           protected _preferences: UserPreferenceService,
                           protected _logger: LoggerService,
                           @Optional() private _viewIdService: ViewIdService,
-                          @Optional() protected _overflowService: OverflowService) {
+                          @Optional() protected _overflowService: OverflowService,
+                          sortingMode: HeaderSortingMode = HeaderSortingMode.SINGLE) {
+        this._sortingMode = sortingMode ?? HeaderSortingMode.SINGLE;
         this.loading = new LoadingEmitter(true);
         this._headerChange$ = new Subject<HeaderChange>();
+        this._appliedSorts$ = new ReplaySubject<Array<HeaderColumn>>(1);
         this.fieldsGroup = [{groupTitle: 'Meta data', fields: this.createMetaHeaders()}];
         this._headerColumnCount$ = new BehaviorSubject<number>(AbstractHeaderService.DEFAULT_HEADER_COUNT);
         this._responsiveHeaders$ = new BehaviorSubject<boolean>(AbstractHeaderService.DEFAULT_HEADER_RESPONSIVITY);
@@ -56,6 +63,7 @@ export abstract class AbstractHeaderService implements OnDestroy {
 
         this._preferences.preferencesChanged$.subscribe(() => {
             this.loadHeadersFromPreferences();
+            this.loadSortsFromPreferences();
         });
 
         this.initializeHeaderState();
@@ -70,6 +78,18 @@ export abstract class AbstractHeaderService implements OnDestroy {
 
     get selectedHeaders$(): Observable<Array<HeaderColumn>> {
         return this._headerState.selectedHeaders$;
+    }
+
+    get selectedSorts$(): Observable<Array<HeaderColumn>> {
+        return this._headerState.selectedSorts$;
+    }
+
+    get sortingMode(): HeaderSortingMode {
+        return this._sortingMode;
+    }
+
+    get appliedSorts$(): Observable<Array<HeaderColumn>> {
+        return this._appliedSorts$.asObservable();
     }
 
     get headerState(): HeaderStateInterface {
@@ -170,6 +190,7 @@ export abstract class AbstractHeaderService implements OnDestroy {
             this._headerState.updateSelectedHeaders(defaultHeaders);
         }
         this.loadHeadersFromPreferences();
+        this.loadSortsFromPreferences();
     }
 
     /**
@@ -284,6 +305,43 @@ export abstract class AbstractHeaderService implements OnDestroy {
         this._headerState.updateSelectedHeaders(newHeaders);
     }
 
+    protected loadSortsFromPreferences(): void {
+        const viewId = this.getViewId();
+        if (!viewId) {
+            this.applySelectedSorts();
+            return;
+        }
+        const preferredSorts = this._preferences.getSorts(viewId);
+        const headersWithSortState = new Set<HeaderColumn>(this._headerState.selectedSorts);
+        this.fieldsGroup.forEach(fieldGroup => fieldGroup.fields.forEach(header => headersWithSortState.add(header)));
+        headersWithSortState.forEach(header => header.sortDirection = '');
+
+        if (!preferredSorts) {
+            this._headerState.updateSelectedSorts([]);
+            this.applySelectedSorts();
+            return;
+        }
+        const headersByUniqueId = new Map<string, HeaderColumn>();
+        this.fieldsGroup.forEach(fieldGroup => fieldGroup.fields.forEach(header => {
+            if (!headersByUniqueId.has(header.uniqueId)) {
+                headersByUniqueId.set(header.uniqueId, header);
+            }
+        }));
+        const resolvedSorts = preferredSorts
+            .map(preference => ({
+                header: headersByUniqueId.get(preference.headerUniqueId),
+                direction: preference.sortDirection
+            }))
+            .filter((resolved): resolved is {header: HeaderColumn; direction: SortDirection} => !!resolved.header);
+        const applicableSorts = this._sortingMode === HeaderSortingMode.SINGLE
+            ? resolvedSorts.slice(0, 1)
+            : resolvedSorts;
+        applicableSorts.forEach(sort => sort.header.sortDirection = sort.direction);
+        const newSorts = applicableSorts.map(sort => sort.header);
+        this._headerState.updateSelectedSorts(newSorts);
+        this.applySelectedSorts();
+    }
+
     protected abstract createMetaHeaders(): Array<HeaderColumn>;
 
     /**
@@ -294,24 +352,23 @@ export abstract class AbstractHeaderService implements OnDestroy {
      * @param direction Represent one of sort modes: asd, desc and ''
      */
     public sortHeaderChanged(columnIndex: number, active: string, direction: SortDirection): void {
-        let sortChangeDescription: SortChangeDescription;
-        let foundFirstMatch = false; // column can feature in the header in multiple positions => we don't want to send multiple events
-        this.headerState.selectedHeaders.filter(header => !!header).forEach(header => {
-            if (header.uniqueId === active && !foundFirstMatch) {
-                sortChangeDescription = {
-                    sortDirection: direction,
-                    columnType: header.type,
-                    fieldIdentifier: header.fieldIdentifier,
-                    petriNetIdentifier: header.petriNetIdentifier,
-                    columnIdentifier: columnIndex,
-                    fieldType: header.fieldType
-                };
-                header.sortDirection = direction;
-                foundFirstMatch = true;
-            } else {
-                header.sortDirection = '';
-            }
-        });
+        const selectedHeaders = this.headerState.selectedHeaders.filter(header => !!header);
+        const sortingHeader = selectedHeaders.find(header => header.uniqueId === active);
+        const headersWithSortState = new Set<HeaderColumn>([
+            ...selectedHeaders,
+            ...this._headerState.selectedSorts
+        ]);
+        headersWithSortState.forEach(header => header.sortDirection = header === sortingHeader ? direction : '');
+        this._headerState.updateSelectedSorts(sortingHeader && direction ? [sortingHeader] : []);
+
+        const sortChangeDescription: SortChangeDescription = sortingHeader ? {
+            sortDirection: direction,
+            columnType: sortingHeader.type,
+            fieldIdentifier: sortingHeader.fieldIdentifier,
+            petriNetIdentifier: sortingHeader.petriNetIdentifier,
+            columnIdentifier: columnIndex,
+            fieldType: sortingHeader.fieldType
+        } : undefined;
         this._headerChange$.next({
             headerType: this.headerType,
             changeType: HeaderChangeType.SORT,
@@ -348,17 +405,41 @@ export abstract class AbstractHeaderService implements OnDestroy {
     public headerColumnSelected(columnIndex: number, newHeaderColumn: HeaderColumn): void {
         const newHeaders: Array<HeaderColumn> = [];
         newHeaders.push(...this._headerState.selectedHeaders);
-        if (!!newHeaders[columnIndex]) {
-            newHeaders[columnIndex].sortDirection = '';
-            newHeaders[columnIndex].searchInput = undefined;
-        }
+        const previousHeader = newHeaders[columnIndex];
         newHeaders[columnIndex] = newHeaderColumn;
+        if (!!previousHeader && !newHeaders.includes(previousHeader)) {
+            previousHeader.sortDirection = '';
+            previousHeader.searchInput = undefined;
+            this._headerState.updateSelectedSorts(
+                this._headerState.selectedSorts.filter(header => header !== previousHeader)
+            );
+        }
         this._headerState.updateSelectedHeaders(newHeaders);
         this._headerChange$.next({
             headerType: this.headerType,
             changeType: HeaderChangeType.EDIT,
             description: {preferredHeaders: this._headerState.selectedHeaders}
         });
+    }
+
+    public sortingColumnSelected(newHeaderColumn: HeaderColumn | null | undefined): void {
+        if (!newHeaderColumn) {
+            return;
+        }
+
+        const multiSelection = this._sortingMode === HeaderSortingMode.MULTI ||
+            (this._sortingMode === HeaderSortingMode.COMBINED && this._headerState.mode === HeaderMode.EDIT);
+        const newSortingHeaders = multiSelection ?
+            this._headerState.selectedSorts.filter(header => header.uniqueId !== newHeaderColumn.uniqueId) : [];
+        this._headerState.selectedSorts
+            .filter(header => header !== newHeaderColumn &&
+                (!multiSelection || header.uniqueId === newHeaderColumn.uniqueId))
+            .forEach(header => header.sortDirection = '');
+
+        if (!!newHeaderColumn.sortDirection) {
+            newSortingHeaders.push(newHeaderColumn);
+        }
+        this._headerState.updateSelectedSorts(newSortingHeaders);
     }
 
     /**
@@ -389,8 +470,18 @@ export abstract class AbstractHeaderService implements OnDestroy {
         const viewId = this.getViewId();
         if (!!viewId) {
             const headers = this.headerState.selectedHeaders;
-            this._preferences.setHeaders(viewId, headers.map(header => !!header ? header.uniqueId : ''));
+            const sorts = this.headerState.selectedSorts;
+            this._preferences.setHeadersAndSorts(viewId, headers.map(header => !!header ? header.uniqueId : ''), sorts.map(sort => {
+                return {headerUniqueId: sort.uniqueId, sortDirection: sort.sortDirection} as SortingHeader;
+            }));
         }
+        this.applySelectedSorts();
+        this._headerChange$.next(change);
+    }
+
+    public updateSortMode(): void {
+        const change = this.modeChangeAfterSort();
+        this.applySelectedSorts();
         this._headerChange$.next(change);
     }
 
@@ -401,6 +492,7 @@ export abstract class AbstractHeaderService implements OnDestroy {
     public revertEditMode(): void {
         this._headerState.restoreLastState();
         this.restoreLastState();
+        this.applySelectedSorts();
         const change = this.modeChangeAfterEdit();
         this._headerChange$.next({
             headerType: this.headerType,
@@ -412,6 +504,7 @@ export abstract class AbstractHeaderService implements OnDestroy {
 
     ngOnDestroy(): void {
         this._headerChange$.complete();
+        this._appliedSorts$.complete();
         this._clearHeaderSearch$.complete();
         this._headerColumnCount$.complete();
         this._responsiveHeaders$.complete();
@@ -437,6 +530,10 @@ export abstract class AbstractHeaderService implements OnDestroy {
         return this.createModeChange(HeaderMode.EDIT, this._headerState.mode);
     }
 
+    protected modeChangeAfterSort(): HeaderChange {
+        return this.createModeChange(HeaderMode.SORT, this._headerState.mode);
+    }
+
     /**
      * @param oldMode the {@link HeaderMode} that was previously selected
      * @param newMode the {@link HeaderMode} that is selected now
@@ -452,6 +549,19 @@ export abstract class AbstractHeaderService implements OnDestroy {
             },
             headerType: this.headerType
         };
+    }
+
+    /**
+     * Emits a snapshot of the currently selected sorting so registered views can reload without persisting user preferences.
+     */
+    public applySelectedSorts(): void {
+        const appliedSorts = this._headerState.selectedSorts.map(header => {
+            const snapshot = new HeaderColumn(header.type, header.fieldIdentifier, header.title, header.fieldType,
+                header.initial, header.petriNetIdentifier);
+            snapshot.sortDirection = header.sortDirection;
+            return snapshot;
+        });
+        this._appliedSorts$.next(appliedSorts);
     }
 
     /**
