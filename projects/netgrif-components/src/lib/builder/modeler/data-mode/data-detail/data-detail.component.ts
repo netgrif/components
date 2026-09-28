@@ -130,7 +130,7 @@ export class DataDetailComponent implements OnDestroy {
             {viewValue: this._translateService.instant('builder.modeler.data-mode.number'), value: DataType.NUMBER},
             {viewValue: this._translateService.instant('builder.modeler.data-mode.user'), value: DataType.USER},
             {viewValue: this._translateService.instant('builder.modeler.data-mode.userList'), value: DataType.USER_LIST},
-            {viewValue: this._translateService.instant('builder.modeler.data-mode.stringCollection'), value: 'stringCollection'},
+            {viewValue: this._translateService.instant('builder.modeler.data-mode.stringCollection'), value: DataType.STRING_COLLECTION},
             {viewValue: this._translateService.instant('builder.modeler.data-mode.taskRef'), value: DataType.TASK_REF},
             {viewValue: this._translateService.instant('builder.modeler.data-mode.text'), value: DataType.TEXT}
         ];

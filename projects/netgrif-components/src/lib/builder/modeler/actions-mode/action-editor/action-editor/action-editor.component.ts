@@ -246,7 +246,9 @@ export class ActionEditorComponent implements OnInit {
                 new MenuItem('"button"', this._translateService.instant('builder.modeler.actions-mode.action-editor.action-editor.button')),
                 new MenuItem('"taskRef"', this._translateService.instant('builder.modeler.actions-mode.action-editor.action-editor.taskRef')),
                 new MenuItem('"filter"', this._translateService.instant('builder.modeler.actions-mode.action-editor.action-editor.filter')),
-                new MenuItem('"i18n"', this._translateService.instant('builder.modeler.actions-mode.action-editor.action-editor.i18n'))
+                new MenuItem('"i18n"', this._translateService.instant('builder.modeler.actions-mode.action-editor.action-editor.i18n')),
+                new MenuItem('"processRef"', this._translateService.instant('builder.modeler.actions-mode.action-editor.action-editor.processRef')),
+                new MenuItem('"stringCollection"', this._translateService.instant('builder.modeler.actions-mode.action-editor.action-editor.stringCollection'))
             ]
         );
         this.dataSetItemsConfiguration = new MenuItemConfiguration(

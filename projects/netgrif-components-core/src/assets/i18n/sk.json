@@ -814,6 +814,8 @@
                         "taskRef": "taskRef",
                         "filter": "filter",
                         "i18n": "i18n",
+                        "processRef": "processRef",
+                        "stringCollection": "stringCollection",
                         "dataSet": "DataSet",
                         "oneDataInSet": "Jedny dáta v množine",
                         "twoDataInSet": "Dve dáta v množine",

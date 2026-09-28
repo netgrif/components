@@ -50,7 +50,7 @@ export class ModelImportService {
         if (petriNetResult.model !== undefined) {
 
             this.modelService.model = petriNetResult.model;
-            this.historyService.save(this._translateService.instant('builder.modeler.model')` ${this.modelService.model.id} ` + this._translateService.instant('builder.modeler.hasBeenImported'))
+            this.historyService.save(this._translateService.instant('builder.modeler.model') + ` ${this.modelService.model.id} ` + this._translateService.instant('builder.modeler.hasBeenImported'))
             this._builderIntegrationService.setModelData(this.modelService.model);
         }
         this._builderModeService.mode = BuilderMode.MODELER;
