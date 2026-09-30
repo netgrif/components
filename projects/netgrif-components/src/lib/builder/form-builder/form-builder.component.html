@@ -1,21 +1,19 @@
-<mat-sidenav class="app-mat-sidenav" mode="side" fixedInViewport=true disableClose="true" opened [ngClass]="{'integrated-top': isIntegrated()}">
+<div class="form-builder-left-panel">
     <nc-builder-field-list></nc-builder-field-list>
-</mat-sidenav>
+</div>
 
-<nc-builder-info-label></nc-builder-info-label>
-<nc-builder-paper-component>
-</nc-builder-paper-component>
+<div class="form-builder-canvas">
+    <nc-builder-info-label></nc-builder-info-label>
+    <nc-builder-gridster-component></nc-builder-gridster-component>
+</div>
 
-<mat-sidenav mwlResizable
-             (resizing)="onResizeEvent($event)"
-             [style.width.px]="width"
-             fixedInViewport=true
-             disableClose="true"
-             style="max-width: 450px;"
-             class="app-mat-sidenav-right" mode="side" position="end" opened
-             [ngClass]="{'integrated-top': isIntegrated()}">
-    <div fxLayout="row">
+<div #rightPanel
+     mwlResizable
+     (resizing)="onResizeEvent($event)"
+     [style.width.px]="width"
+     class="form-builder-right-panel">
+    <div class="form-builder-right-panel-row" fxLayout="row">
         <div class="handle" mwlResizeHandle [resizeEdges]="{ left: true }"></div>
         <nc-builder-edit-panel fxFlex></nc-builder-edit-panel>
     </div>
-</mat-sidenav>
+</div>

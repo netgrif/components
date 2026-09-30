@@ -14,6 +14,7 @@ import {ModelService} from './modeler/services/model/model.service';
 import {BuilderComponent} from './builder.component';
 import {ConfigurationService, TestConfigurationService} from '@netgrif/components-core';
 import {CommonModule} from "@angular/common";
+import {TranslateService} from "@ngx-translate/core";
 
 describe('BuilderComponent', () => {
     beforeEach(() => {
@@ -32,6 +33,7 @@ describe('BuilderComponent', () => {
                 {provide: Router, useValue: {navigate: () => {}}},
                 {provide: ActivatedRoute, useValue: {queryParams: of({})}},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
+                {provide: TranslateService, useValue: { instant: (key: string) => `translated-${key}` }}
             ],
             schemas: [NO_ERRORS_SCHEMA],
         });

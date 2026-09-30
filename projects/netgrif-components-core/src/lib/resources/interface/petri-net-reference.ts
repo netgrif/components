@@ -48,5 +48,17 @@ export interface PetriNetReference {
      * [ImmediateData]{@link ImmediateData}
      */
     immediateData: Array<ImmediateData>;
+
+    /**
+     * Deployment state of the net
+     */
+    deploymentState: DeploymentState;
+}
+
+export enum DeploymentState {
+    DRAFT = 'DRAFT',
+    DEPLOYED = 'DEPLOYED',
+    ARCHIVED = 'ARCHIVED',
+    TRASH = 'TRASH'
 }
 

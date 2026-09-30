@@ -7,6 +7,7 @@ import {ControlPanelIcon} from '../control-panel/control-panel-icon';
 import {Mode} from '../control-panel/modes/mode';
 import {ModeService} from '../control-panel/modes/mode-component/mode.service';
 import {Tool} from '../control-panel/tools/tool';
+import {TranslateService} from "@ngx-translate/core";
 
 @Injectable()
 export class DataModeService extends ModeService<Tool> {
@@ -15,7 +16,8 @@ export class DataModeService extends ModeService<Tool> {
 
     constructor(
         private _tutorialService: TutorialService,
-        private _parentInjector: Injector
+        private _parentInjector: Injector,
+        private _translateService: TranslateService
     ) {
         super();
         this.event = new EventEmitter();
@@ -24,7 +26,7 @@ export class DataModeService extends ModeService<Tool> {
             'data',
             new ControlPanelButton(
                 new ControlPanelIcon('playlist_add'),
-                'Data Edit view'
+                this._translateService.instant('builder.modeler.data-mode.dataEditView')
             ),
             './data',
             '/modeler/data',

@@ -12,19 +12,19 @@ export class MoreThanDateTime extends Operator<Moment> {
 
     protected moreThan: MoreThan;
 
-    constructor(operators: OperatorService) {
-        super(1);
-        this.moreThan = operators.getOperator(MoreThan) as MoreThan;
+    constructor(protected _operators: OperatorService) {
+        super(1, Operators.MORE_THAN_DATE_TIME);
+        this.moreThan = this._operators.getOperator(MoreThan) as MoreThan;
     }
 
-    createQuery(elasticKeywords: Array<string>, args: Array<Moment>): Query {
+    createQuery(pfqlKeywords: Array<string>, args: Array<Moment>): Query {
         this.checkArgumentsCount(args);
         const arg = moment(args[0]);
         arg.milliseconds(0);
         arg.seconds(0);
         arg.minutes(arg.minutes() + 1);
         arg.milliseconds(-1);
-        return this.moreThan.createQuery(elasticKeywords, [arg.valueOf()]);
+        return this.moreThan.createQuery(pfqlKeywords, [arg.format('YYYY-MM-DDTHH:mm:ss')], false, false);
     }
 
     getOperatorNameTemplate(): Array<string> {

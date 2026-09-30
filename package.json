@@ -34,7 +34,7 @@
         "lint": "ng lint",
         "e2e": "ng e2e",
         "ncc:clean": "node projects/netgrif-components-core/src/scripts/delete-local-build-link.js",
-        "ncc:build": "npm run ncc:clean && ng build netgrif-components-core --configuration production && npm run ncc:build-schematics",
+        "ncc:build": "npm run ncc:clean && npm run pfql:build-grammar && ng build netgrif-components-core --configuration production && npm run ncc:build-schematics",
         "ncc:local-build": "npm run ncc:build && npm i ./dist/netgrif-components-core --save-optional --legacy-peer-deps",
         "ncc:build-schematics": "node projects/netgrif-components-core/src/scripts/build-schematics.js",
         "ncc:lint": "ng lint netgrif-components-core",
@@ -65,7 +65,8 @@
         "project:sonar": "node scripts/sonar-scanner-analysis.js",
         "components:start": "npm run nc:local-build && ng serve",
         "example:start": "ng serve",
-        "example:build": "ng build nae-example-app --configuration production"
+        "example:build": "ng build nae-example-app --configuration production",
+        "pfql:build-grammar": "antlr-ng -Dlanguage=TypeScript -v true -l false -o projects/netgrif-components-core/src/lib/pfql/generated projects/netgrif-components-core/src/lib/pfql/QueryLang.g4"
     },
     "dependencies": {
         "@angular-material-components/datetime-picker": "~16.0.1",
@@ -85,7 +86,7 @@
         "@mdi/angular-material": "^7.2.96",
         "@mdi/font": "^7.4.47",
         "@netgrif/petri.svg": "1.1.1",
-        "@netgrif/petriflow": "2.2.3",
+        "@netgrif/petriflow": "2.2.4",
         "@netgrif/petriflow.svg": "1.1.1",
         "@ngbracket/ngx-layout": "^17.0.1",
         "@ngx-translate/core": "~15.0.0",
@@ -138,6 +139,7 @@
         "@types/node": "~12.12.29",
         "@typescript-eslint/eslint-plugin": "~6.21.0",
         "@typescript-eslint/parser": "~6.21.0",
+        "antlr-ng": "^1.0.0",
         "commander": "~4.1.1",
         "cspell": "~5.18.4",
         "eslint": "~8.12.0",

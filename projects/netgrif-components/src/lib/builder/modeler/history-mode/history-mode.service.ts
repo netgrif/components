@@ -5,20 +5,22 @@ import {ControlPanelIcon} from '../control-panel/control-panel-icon';
 import {Mode} from '../control-panel/modes/mode';
 import {ModeService} from '../control-panel/modes/mode-component/mode.service';
 import {Tool} from '../control-panel/tools/tool';
+import {TranslateService} from "@ngx-translate/core";
 
 @Injectable()
 export class HistoryModeService extends ModeService<Tool> {
 
     constructor(
         private _tutorialService: TutorialService,
-        private _parentInjector: Injector
+        private _parentInjector: Injector,
+        translateService: TranslateService
     ) {
         super();
         this.mode = new Mode(
             'history',
             new ControlPanelButton(
                 new ControlPanelIcon('history'),
-                'History'
+                translateService.instant('builder.modeler.history-mode.history')
             ),
             './history',
             '/modeler/history',

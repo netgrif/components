@@ -11,9 +11,11 @@ import {MockUriResourceService} from '../../utility/tests/mocks/mock-uri-resourc
 import {TestLoggingConfigurationService} from '../../utility/tests/test-logging-config';
 import {UriResourceService} from './uri-resource.service';
 import {UriService} from './uri.service';
+import {SessionService} from '../../authentication/session/services/session.service';
 
 describe('UriService', () => {
     let service: UriService;
+    let sessionService: SessionService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -29,7 +31,9 @@ describe('UriService', () => {
                 {provide: CaseResourceService, useClass: MockCaseResourceService},
             ],
         });
+        sessionService = TestBed.inject(SessionService);
         service = TestBed.inject(UriService);
+        sessionService.setVerifiedToken('sessionToken');
     });
 
     afterEach(() => {

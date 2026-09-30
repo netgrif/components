@@ -1,4 +1,3 @@
-import {FilterMetadataAllowedNets} from '../../search/models/persistance/filter-metadata-allowed-nets';
 
 /**
  * Represents a value featured on a panel
@@ -8,7 +7,8 @@ export interface FeaturedValue {
     icon: string;
     type: string;
     /**
-     * Only for immediate filter fields
+     * The main purpose is to determine whether to display filter by text segments or by plain text. This property can be
+     * used also for other situations where a decision between pretty or raw output is needed
      */
-    filterMetadata?: FilterMetadataAllowedNets;
+    pretty?: boolean;
 }

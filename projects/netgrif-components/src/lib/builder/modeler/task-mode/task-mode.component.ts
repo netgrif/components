@@ -8,7 +8,6 @@ import {
     AbstractTaskViewComponent,
     AllowedNetsServiceFactory,
     ChangedFieldsService,
-    NAE_TAB_DATA,
     TaskViewService,
     SimpleFilter,
     CategoryFactory,
@@ -19,12 +18,11 @@ import {
     TaskEventNotification,
     TaskEvent,
     NAE_DEFAULT_HEADERS
-} from "@netgrif/components-core";
-import {InjectedTabbedBuilderViewData} from "../../injected-builder-data";
+} from '@netgrif/components-core';
 import {BuilderIntegrationService} from "../../services/builder-integration.service";
 
-const baseFilterFactory = (injectedData: InjectedTabbedBuilderViewData) => {
-    const caseId = injectedData?.processCase?.stringId ?? "__EMPTY__"
+const baseFilterFactory = (integrationService: BuilderIntegrationService) => {
+    const caseId = integrationService?.processCase?.stringId ?? "__EMPTY__"
     return {filter: SimpleFilter.fromTaskQuery({case: {id: caseId}, transitionId: ['deploy', 't10', 't11', 't4', 't6', 't9', 'view']})};
 };
 
@@ -52,7 +50,7 @@ const localAllowedNetsFactory = (factory: AllowedNetsServiceFactory) => {
         {
             provide: NAE_BASE_FILTER,
             useFactory: baseFilterFactory,
-            deps: [NAE_TAB_DATA]
+            deps: [BuilderIntegrationService]
         },
         {
             provide: AllowedNetsService,

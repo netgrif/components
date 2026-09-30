@@ -3,18 +3,18 @@
         <div fxFlex="2.5"></div>
 
         <mat-form-field appearance="outline" fxFlex="45">
-            <mat-label>Id</mat-label>
+            <mat-label>{{ 'builder.modeler.role-mode.id' | translate }}</mat-label>
             <input matInput [(ngModel)]="role.role.id" (change)="changeId($event)" [formControl]="roleIdForm">
-            <mat-error *ngIf="roleIdForm.errors && roleIdForm.errors.required">Id is required</mat-error>
+            <mat-error *ngIf="roleIdForm.errors && roleIdForm.errors.required">{{ 'builder.modeler.role-mode.idRequired' | translate }}</mat-error>
             <mat-error *ngIf="roleIdForm.errors && roleIdForm.errors.validUnique">
-                Role with given id already exists
+                {{ 'builder.modeler.role-mode.idExists' | translate }}
             </mat-error>
         </mat-form-field>
 
         <div fxFlex="2.5"></div>
 
         <mat-form-field appearance="outline" fxFlex="45">
-            <mat-label>Title</mat-label>
+            <mat-label>{{ 'builder.modeler.role-mode.title' | translate }}</mat-label>
             <input matInput [ngModel]="role.role.title.value" (change)="changeTitle($event)">
         </mat-form-field>
 
@@ -25,7 +25,7 @@
 
         <div fxFlex="45">
             <mat-checkbox [ngModel]="role.role.global" (change)="changeGlobalFlag($event)">
-                Is Global
+                {{ 'builder.modeler.role-mode.isGlobal' | translate }}
             </mat-checkbox>
         </div>
 
@@ -33,7 +33,7 @@
 
         <button mat-stroked-button color="primary" (click)="openActions()" mat-dialog-close>
             <mat-icon>code</mat-icon>
-            <span>Edit Actions ({{ numberOfActions() }})</span>
+            <span>{{ 'builder.modeler.role-mode.editActions' | translate }} ({{ numberOfActions() }})</span>
         </button>
 
         <div fxFlex></div>
@@ -42,6 +42,6 @@
 
 <ng-template #elseBlock>
     <div fxLayoutAlign="center center" class="height-fix full-width">
-        <span>No role selected</span>
+        <span>{{ 'builder.modeler.role-mode.noRoleSelected' | translate }}</span>
     </div>
 </ng-template>

@@ -7,7 +7,6 @@ import {
     LoggerService,
     NAE_TAB_DATA,
     OverflowService,
-    SavedFilterMetadata,
     SearchService,
     ViewIdService
 } from '@netgrif/components-core';
@@ -41,23 +40,6 @@ export class SingleTabbedCaseViewComponent extends AbstractTabbedCaseViewCompone
 
     ngAfterViewInit(): void {
         super.initializeHeader(this.caseHeaderComponent);
-    }
-
-    loadFilter(filterData: SavedFilterMetadata) {
-        this._injectedTabData.tabViewRef.openTab({
-            label: {
-                text: filterData.filter.title
-            },
-            canBeClosed: true,
-            tabContentComponent: SingleTabbedCaseViewComponent,
-            injectedObject: {...this._injectedTabData, loadFilter: filterData.filter},
-            order: this._injectedTabData.tabViewOrder,
-            parentUniqueId: this._injectedTabData.tabUniqueId
-        }, this._autoswitchToTaskTab, this._openExistingTab);
-    }
-
-    saveFilter(filterData: SavedFilterMetadata) {
-        console.log(filterData);
     }
 
 }

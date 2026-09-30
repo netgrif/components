@@ -7,7 +7,7 @@ import {
     FilterField,
     DataFieldPortalData,
     DATA_FIELD_PORTAL_DATA,
-    FilterType,
+    FieldTypeResource,
     ConfigurationService,
     TestConfigurationService,
     WrappedBoolean
@@ -33,9 +33,7 @@ describe('FilterStringQueryFieldComponent', () => {
             providers: [
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: DATA_FIELD_PORTAL_DATA, useValue: {
-                        dataField: new FilterField('', '', '', {
-                            filterType: FilterType.CASE, predicateMetadata: [], searchCategories: []
-                        }, [], {}, '', ''),
+                        dataField: new FilterField('', '', '', FieldTypeResource.CASE_FILTER, [], {}, '', ''),
                         formControlRef: new FormControl(),
                         showLargeLayout: new WrappedBoolean()
                     } as DataFieldPortalData<FilterField>

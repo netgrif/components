@@ -10,13 +10,14 @@ import {MatFormField, MatInput, MatLabel} from "@angular/material/input";
 import {MatIcon} from "@angular/material/icon";
 import {FlexModule} from "@ngbracket/ngx-layout";
 import {MatOption} from "@angular/material/core";
+import {TranslateModule} from "@ngx-translate/core";
 
 @Component({
     selector: 'nc-builder-material-icon-picker',
     templateUrl: './material-icon-picker.component.html',
     standalone: true,
     styleUrls: ['./material-icon-picker.component.scss'],
-    imports: [FormsModule, ReactiveFormsModule, AsyncPipe, MaterialModule, NgForOf, MatAutocomplete, MatFormField, MatLabel, MatOption, MatIcon, MatAutocompleteTrigger, MatInput, FlexModule]
+    imports: [FormsModule, ReactiveFormsModule, AsyncPipe, MaterialModule, NgForOf, MatAutocomplete, MatFormField, MatLabel, MatOption, MatIcon, MatAutocompleteTrigger, MatInput, FlexModule, TranslateModule]
 })
 export class MaterialIconPickerComponent implements OnInit {
 

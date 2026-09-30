@@ -9,6 +9,7 @@ import {LanguageSelectService} from './language-select.service';
 import {I18nControlService} from "../i18n-control.service";
 import {I18nModeService} from "../i18n-mode.service";
 import {LanguageIconsService} from "@netgrif/components-core";
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
     selector: 'nc-builder-languages',
@@ -28,7 +29,8 @@ export class LanguagesComponent implements OnInit, OnDestroy {
                 protected i18nModeService: I18nModeService,
                 protected _historyService: HistoryService,
                 protected _languageSelect: LanguageSelectService,
-                protected _languageIconsService: LanguageIconsService) {
+                protected _languageIconsService: LanguageIconsService,
+                protected _translateService: TranslateService) {
         this.localeList = Object.keys(this._languageIconsService.languageIcons)
             .filter(key => key !== 'xx' && key !== undefined)
             .map(key => {
@@ -47,7 +49,7 @@ export class LanguagesComponent implements OnInit, OnDestroy {
 
     ngOnDestroy() {
         if (this.historySave) {
-            this._historyService.save("Translations has been changed.");
+            this._historyService.save(this._translateService.instant('builder.modeler.i18n-mode.translationsChanged'));
         }
     }
 

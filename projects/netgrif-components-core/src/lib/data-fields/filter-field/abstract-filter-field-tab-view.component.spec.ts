@@ -2,12 +2,12 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AbstractFilterFieldTabViewComponent } from './abstract-filter-field-tab-view.component';
 import { FilterField } from './models/filter-field';
-import { FilterType } from '../../filter/models/filter-type';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { NAE_FILTER_FIELD } from './models/filter-field-injection-token';
 import { Component, Inject } from '@angular/core';
 import {ComponentRegistryService} from "../../registry/component-registry.service";
+import {FieldTypeResource} from "../../task-content/model/field-type-resource";
 describe('AbstractFilterFieldTabViewComponent', () => {
     let component: TestFilterFieldTabViewComponent;
     let fixture: ComponentFixture<TestFilterFieldTabViewComponent>;
@@ -15,9 +15,7 @@ describe('AbstractFilterFieldTabViewComponent', () => {
     let field: FilterField;
 
     beforeEach(async () => {
-        field = new FilterField('', '', '', {
-            filterType: FilterType.CASE, predicateMetadata: [], searchCategories: []
-        }, [], {}, '', '');
+        field = new FilterField('', '', '', FieldTypeResource.CASE_FILTER, [], {}, '', '');
 
         await TestBed.configureTestingModule({
             imports: [NoopAnimationsModule, HttpClientTestingModule],

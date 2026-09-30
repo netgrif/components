@@ -4,7 +4,7 @@ import {
     AdvancedSearchComponentInitializationService,
     Category, LoggerService,
     NAE_SEARCH_CATEGORIES,
-    CategoryFactory
+    CategoryFactory,
 } from '@netgrif/components-core';
 
 @Component({

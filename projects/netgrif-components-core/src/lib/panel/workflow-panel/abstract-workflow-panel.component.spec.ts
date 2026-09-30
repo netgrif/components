@@ -20,7 +20,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {LoggerService} from '../../logger/services/logger.service';
 import {HeaderColumn, HeaderColumnType} from '../../header/models/header-column';
 import {WorkflowMetaField} from '../../header/workflow-header/workflow-meta-enum';
-import {PetriNetReference} from '../../resources/interface/petri-net-reference';
+import {DeploymentState, PetriNetReference} from '../../resources/interface/petri-net-reference';
 import {RouterTestingModule} from '@angular/router/testing';
 import {WorkflowViewService} from '../../view/workflow-view/workflow-view.service';
 import {take} from 'rxjs/operators';
@@ -136,6 +136,7 @@ class TestWrapperComponent {
         stringId: '',
         title: '',
         version: '',
-        uriNodeId: ''
+        uriNodeId: '',
+        deploymentState: DeploymentState.DEPLOYED
     };
 }

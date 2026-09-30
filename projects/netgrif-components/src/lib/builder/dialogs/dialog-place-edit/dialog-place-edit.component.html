@@ -1,21 +1,21 @@
-<h2 mat-dialog-title>Edit place</h2>
+<h2 mat-dialog-title>{{ 'builder.dialogs.place-edit.title' | translate }}</h2>
 <mat-dialog-content class="netgrif-input padding-top-4px">
     <mat-form-field fxFlex appearance="outline">
-        <mat-label>Id</mat-label>
+        <mat-label>{{ 'builder.dialogs.place-edit.id' | translate }}</mat-label>
         <input type="text" matInput [(ngModel)]="place.place.id" [formControl]="idCtrl">
-        <mat-error *ngIf="idCtrl.errors && idCtrl.errors.required">Id is required</mat-error>
-        <mat-error *ngIf="idCtrl.errors && idCtrl.errors.validUnique">Place with given id already exists</mat-error>
+        <mat-error *ngIf="idCtrl.errors && idCtrl.errors.required">{{ 'builder.dialogs.place-edit.idRequired' | translate }}</mat-error>
+        <mat-error *ngIf="idCtrl.errors && idCtrl.errors.validUnique">{{ 'builder.dialogs.place-edit.idExists' | translate }}</mat-error>
     </mat-form-field>
     <mat-form-field fxFlex appearance="outline">
-        <mat-label>Label</mat-label>
+        <mat-label>{{ 'builder.dialogs.place-edit.label' | translate }}</mat-label>
         <input type="text" matInput [(ngModel)]="place.place.label.value">
     </mat-form-field>
     <mat-form-field fxFlex appearance="outline">
-        <mat-label>Tokens</mat-label>
+        <mat-label>{{ 'builder.dialogs.place-edit.tokens' | translate }}</mat-label>
         <input type="number" min="0" step="1" matInput [(ngModel)]="place.place.marking" [formControl]="markingCtrl">
-        <mat-error *ngIf="markingCtrl.errors && markingCtrl.errors.required">Number of tokens is required</mat-error>
+        <mat-error *ngIf="markingCtrl.errors && markingCtrl.errors.required">{{ 'builder.dialogs.place-edit.tokensRequired' | translate }}</mat-error>
         <mat-error *ngIf="markingCtrl.errors && markingCtrl.errors.validMarking">
-            Number of tokens must be a non-negative integer
+            {{ 'builder.dialogs.place-edit.tokensNonNegative' | translate }}
         </mat-error>
     </mat-form-field>
 </mat-dialog-content>
@@ -23,6 +23,6 @@
     <button mat-flat-button color="primary" [mat-dialog-close]="place"
             [disabled]="markingCtrl.invalid || idCtrl.invalid">
         <mat-icon>done</mat-icon>
-        <span>Save</span>
+        <span>{{ 'builder.dialogs.place-edit.save' | translate }}</span>
     </button>
 </mat-dialog-actions>

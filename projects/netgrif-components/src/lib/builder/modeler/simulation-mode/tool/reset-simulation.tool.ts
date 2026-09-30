@@ -1,3 +1,4 @@
+import {NgZone} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {Router} from '@angular/router';
 import {ControlPanelButton} from '../../control-panel/control-panel-button';
@@ -6,6 +7,7 @@ import {SelectedTransitionService} from '../../selected-transition.service';
 import {ModelService} from '../../services/model/model.service';
 import {SimulationModeService} from '../simulation-mode.service';
 import {SimulationTool} from './simulation-tool';
+import {TranslateService} from "@ngx-translate/core";
 
 export class ResetSimulationTool extends SimulationTool {
 
@@ -14,19 +16,22 @@ export class ResetSimulationTool extends SimulationTool {
         dialog: MatDialog,
         simulationModeService: SimulationModeService,
         router: Router,
-        transitionService: SelectedTransitionService
+        transitionService: SelectedTransitionService,
+        translateService: TranslateService,
+        ngZone?: NgZone
     ) {
         super(
             'reset_simulation',
             new ControlPanelButton(
                 new ControlPanelIcon('restart_alt'),
-                'Reset simulation'
+                translateService.instant('builder.modeler.simulation-mode.resetSimulation')
             ),
             modelService,
             dialog,
             simulationModeService,
             router,
-            transitionService
+            transitionService,
+            ngZone
         );
     }
 

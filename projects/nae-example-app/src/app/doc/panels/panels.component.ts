@@ -5,13 +5,13 @@ import {
     HeaderColumnType,
     PetriNetReference,
     WorkflowMetaField,
-    Author,
     AllowedNetsServiceFactory,
     SimpleFilter,
     CaseViewService,
     AllowedNetsService,
     SearchService,
     NAE_BASE_FILTER,
+    DeploymentState,
     WorkflowViewService
 } from '@netgrif/components-core';
 import {BehaviorSubject} from 'rxjs';
@@ -84,7 +84,8 @@ export class PanelsComponent implements OnInit {
                 email: 'test@netgrif.com',
                 fullName: 'Test Testovič'
             },
-            immediateData: []
+            immediateData: [],
+            deploymentState: DeploymentState.DEPLOYED
         };
         this.featuredFields$ = new BehaviorSubject<Array<HeaderColumn>>([
             new HeaderColumn(HeaderColumnType.META, 'visualId', 'Visual ID', 'text'),

@@ -8,13 +8,14 @@ import {filter, map, startWith, take} from 'rxjs/operators';
 import {AutocompleteOptions} from './autocomplete-options';
 import {FormControl} from '@angular/forms';
 import {OperatorService} from '../../operator-service/operator.service';
+import {ResourceTypeQueryPrefix} from "./resource-type-query-prefix";
 
 /**
  * Represents a Search Category whose values are a known set. The value selection is done with an autocomplete field.
  *
  * @typeparam T type of the object that the autocomplete option values use and in turn is used to generate queries
  */
-export abstract class AutocompleteCategory<T> extends Category<Array<T>> implements AutocompleteOptions {
+export abstract class AutocompleteCategory<T> extends Category<Array<T> | string> implements AutocompleteOptions {
 
     /**
      * Autocomplete categories usually require a map to represent mapping of display names
@@ -31,12 +32,13 @@ export abstract class AutocompleteCategory<T> extends Category<Array<T>> impleme
 
     private readonly _timeoutId: number;
 
-    protected constructor(elasticKeywords: Array<string>,
+    protected constructor(pfqlKeywords: Array<string>,
                           allowedOperators: Array<Operator<any>>,
                           translationPath: string,
                           log: LoggerService,
-                          operatorService: OperatorService) {
-        super(elasticKeywords, allowedOperators, translationPath, SearchInputType.AUTOCOMPLETE, log, operatorService);
+                          operatorService: OperatorService,
+                          resourceTypePrefix: ResourceTypeQueryPrefix) {
+        super(pfqlKeywords, allowedOperators, translationPath, SearchInputType.AUTOCOMPLETE, log, operatorService, resourceTypePrefix);
         this._optionsMap = new Map<string, Array<T>>();
         this._options$ = new BehaviorSubject<Array<SearchAutocompleteOption<Array<T>>>>([]);
         // timeout is used to bypass javascript object initialization bugs.
@@ -134,6 +136,10 @@ export abstract class AutocompleteCategory<T> extends Category<Array<T>> impleme
     }
 
     protected isOperandValueSelected(newValue: SearchAutocompleteOption<Array<T>> | string): boolean {
+        if (this.inputType === SearchInputType.TEXT) {
+            return !!newValue;
+        }
+
         return !(!newValue || typeof newValue === 'string');
     }
 
@@ -145,8 +151,11 @@ export abstract class AutocompleteCategory<T> extends Category<Array<T>> impleme
      * @param value the FormControlValue
      * @returns the value used for query generation
      */
-    protected transformCategoryValue(value: SearchAutocompleteOption<Array<T>>): Array<T> {
-        return value.value;
+    protected transformCategoryValue(value: SearchAutocompleteOption<Array<T>> | string): Array<T> | string {
+        if (this.inputType === SearchInputType.TEXT) {
+            return value as string;
+        }
+        return (value as SearchAutocompleteOption<Array<T>>).value;
     }
 
     protected serializeOperandValue(valueFormControl: FormControl): unknown {

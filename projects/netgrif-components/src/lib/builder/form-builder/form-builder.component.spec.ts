@@ -9,6 +9,7 @@ import {BuilderIntegrationService} from "../services/builder-integration.service
 import {HistoryService} from "../modeler/services/history/history.service";
 import {HttpClientTestingModule} from "@angular/common/http/testing";
 import {RouterTestingModule} from "@angular/router/testing";
+import {TranslateService} from "@ngx-translate/core";
 
 xdescribe('FormBuilderComponent', () => {
     let component: FormBuilderComponent;
@@ -26,7 +27,8 @@ xdescribe('FormBuilderComponent', () => {
                 SelectedTransitionService,
                 {provide: ModelService, useValue: {model: new PetriNet()}},
                 BuilderIntegrationService,
-                HistoryService
+                HistoryService,
+                {provide: TranslateService, useValue: { instant: (key: string) => `translated-${key}` }}
             ],
             schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA],
         }).compileComponents();

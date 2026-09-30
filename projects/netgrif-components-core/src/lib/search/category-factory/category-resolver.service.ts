@@ -5,18 +5,16 @@ import {CaseAuthor} from '../models/category/case/case-author';
 import {CaseCreationDate} from '../models/category/case/case-creation-date';
 import {CaseDataset} from '../models/category/case/case-dataset';
 import {CaseProcess} from '../models/category/case/case-process';
-import {CaseRole} from '../models/category/case/case-role';
 import {CaseSimpleDataset} from '../models/category/case/case-simple-dataset';
-import {CaseTask} from '../models/category/case/case-task';
 import {CaseTitle} from '../models/category/case/case-title';
-import {CaseVisualId} from '../models/category/case/case-visual-id';
 import {CaseStringId} from '../models/category/case/case-string-id';
 import {TaskAssignee} from '../models/category/task/task-assignee';
 import {TaskProcess} from '../models/category/task/task-process';
-import {TaskRole} from '../models/category/task/task-role';
 import {TaskTask} from '../models/category/task/task-task';
 import {CaseCreationDateTime} from '../models/category/case/case-creation-date-time';
 import {CategorySerialisationPair} from './category-serialisation-pair';
+import {CasePlainQuery} from "../models/category/case/case-plain-query";
+import {TaskPlainQuery} from "../models/category/task/task-plain-query";
 
 /**
  * A service that resolves {@link Categories} (or custom string) into a concrete {@link Category} implementation class and vice versa.
@@ -36,7 +34,7 @@ export class CategoryResolverService {
     }
 
     /**
-     * Registers the default class - serialisation pairings for all the {@link Category} classes provided by this library.
+     * Registers the default class - serialization pairings for all the {@link Category} classes provided by this library.
      */
     private registerDefaultPairings(): void {
         [
@@ -57,23 +55,17 @@ export class CategoryResolverService {
                 classReference: CaseProcess,
                 serialized: Categories.CASE_PROCESS
             }, {
-                classReference: CaseRole,
-                serialized: Categories.CASE_ROLE
-            }, {
                 classReference: CaseSimpleDataset,
                 serialized: Categories.CASE_SIMPLE_DATASET
-            }, {
-                classReference: CaseTask,
-                serialized: Categories.CASE_TASK
             }, {
                 classReference: CaseTitle,
                 serialized: Categories.CASE_TITLE
             }, {
-                classReference: CaseVisualId,
-                serialized: Categories.CASE_VISUAL_ID
-            }, {
                 classReference: CaseStringId,
                 serialized: Categories.CASE_STRING_ID
+            }, {
+                classReference: CasePlainQuery,
+                serialized: Categories.CASE_PLAIN_QUERY
             },
             // Task
             {
@@ -83,11 +75,11 @@ export class CategoryResolverService {
                 classReference: TaskProcess,
                 serialized: Categories.TASK_PROCESS
             }, {
-                classReference: TaskRole,
-                serialized: Categories.TASK_ROLE
-            }, {
                 classReference: TaskTask,
                 serialized: Categories.TASK_TASK
+            }, {
+                classReference: TaskPlainQuery,
+                serialized: Categories.TASK_PLAIN_QUERY
             }
         ].forEach(pair => this.registerPair(pair));
     }

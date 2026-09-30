@@ -4,7 +4,7 @@ import {NavigationComponentModule} from '../../../../navigation.module';
 import {
     BooleanField,
     FilterField,
-    FilterType,
+    FieldTypeResource,
     GroupNavigationConstants,
     HeaderMode,
     NAE_NAVIGATION_ITEM_TASK_DATA,
@@ -63,11 +63,7 @@ describe('DefaultTabbedCaseViewComponent', () => {
                                     `${GroupNavigationConstants.ITEM_FIELD_CASE_FILTER}`,
                                     '',
                                     '',
-                                    {
-                                        filterType: FilterType.CASE,
-                                        predicateMetadata: [],
-                                        searchCategories: []
-                                    },
+                                    FieldTypeResource.CASE_FILTER,
                                     [],
                                     {visible: true},
                                     '',

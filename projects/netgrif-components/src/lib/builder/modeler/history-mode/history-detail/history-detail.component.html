@@ -2,20 +2,20 @@
      class="height-fix netgrif-input">
     <div fxFlex fxLayout="row" class="full-width top-padding-8">
         <mat-form-field appearance="outline" fxFlex>
-            <mat-label>Render type</mat-label>
+            <mat-label>{{ 'builder.modeler.history-mode.renderType' | translate }}</mat-label>
             <mat-select [(ngModel)]="editorOptions.renderSideBySide" (selectionChange)="updateEditor()">
-                <mat-option [value]="true">Side by side</mat-option>
-                <mat-option [value]="false">Inline</mat-option>
+                <mat-option [value]="true">{{ 'builder.modeler.history-mode.sideBySide' | translate }}</mat-option>
+                <mat-option [value]="false">{{ 'builder.modeler.history-mode.inline' | translate }}</mat-option>
             </mat-select>
         </mat-form-field>
 
         <button mat-button (click)="download()">
             <mat-icon>download</mat-icon>
-            <span>Download</span>
+            <span>{{ 'builder.modeler.history-mode.download' | translate }}</span>
         </button>
         <button mat-button (click)="revert()">
             <mat-icon>restore</mat-icon>
-            <span>Restore</span>
+            <span>{{ 'builder.modeler.history-mode.restore' | translate }}</span>
         </button>
         <div fxFlex fxFill></div>
     </div>
@@ -26,6 +26,6 @@
 
 <ng-template #elseBlock>
     <div fxLayoutAlign="center center" class="height-fix full-width">
-        <span><strong>No history is selected</strong></span>
+        <span><strong>{{ 'builder.modeler.history-mode.noHistorySelected' | translate }}</strong></span>
     </div>
 </ng-template>

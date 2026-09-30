@@ -4,7 +4,8 @@ import { CaseRefDefaultComponent } from './case-ref-default.component';
 import {NavigationComponentModule} from '../../../navigation/navigation.module';
 import {
     CaseRefField,
-    FilterField, FilterType,
+    FilterField,
+    FieldTypeResource,
     NAE_TAB_DATA,
     NAE_VIEW_ID_SEGMENT,
     OverflowService,
@@ -49,11 +50,7 @@ describe('CaseRefDefaultComponent', () => {
                                 `${GroupNavigationConstants.ITEM_FIELD_CASE_FILTER}`,
                                 '',
                                 '',
-                                {
-                                    filterType: FilterType.CASE,
-                                    predicateMetadata: [],
-                                    searchCategories: []
-                                },
+                                FieldTypeResource.CASE_FILTER,
                                 [],
                                 {visible: true},
                                 '',

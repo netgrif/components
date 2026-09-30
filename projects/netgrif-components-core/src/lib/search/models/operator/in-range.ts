@@ -7,12 +7,12 @@ import {Operators} from './operators';
  */
 export class InRange extends Operator<number> {
     constructor() {
-        super(2);
+        super(2, Operators.IN_RANGE);
     }
 
-    createQuery(elasticKeywords: Array<string>, args: Array<number>): Query {
+    createQuery(pfqlKeywords: Array<string>, args: Array<number>): Query {
         this.checkArgumentsCount(args);
-        return Operator.forEachKeyword(elasticKeywords, keyword => new Query(`(${keyword}:[${args[0]} TO ${args[1]}])`));
+        return Operator.forEachKeyword(pfqlKeywords, keyword => new Query(`${keyword} in (${args[0]} : ${args[1]})`));
     }
 
     getOperatorNameTemplate(): Array<string> {

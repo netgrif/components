@@ -5,7 +5,7 @@ import {
     BooleanField,
     EnumerationField,
     FilterField,
-    FilterType,
+    FieldTypeResource,
     GroupNavigationConstants,
     I18nField,
     LanguageService,
@@ -149,11 +149,7 @@ describe('DefaultTabViewComponent', () => {
                                     GroupNavigationConstants.ITEM_FIELD_TASK_FILTER,
                                     '',
                                     '',
-                                    {
-                                        filterType: FilterType.TASK,
-                                        predicateMetadata: [],
-                                        searchCategories: []
-                                    },
+                                    FieldTypeResource.CASE_FILTER,
                                     [],
                                     {visible: true},
                                     '',
@@ -167,11 +163,7 @@ describe('DefaultTabViewComponent', () => {
                                     GroupNavigationConstants.ITEM_FIELD_CASE_FILTER,
                                     '',
                                     '',
-                                    {
-                                        filterType: FilterType.CASE,
-                                        predicateMetadata: [],
-                                        searchCategories: []
-                                    },
+                                    FieldTypeResource.CASE_FILTER,
                                     [],
                                     {visible: true},
                                     '',

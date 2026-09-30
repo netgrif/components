@@ -15,14 +15,14 @@ export class EqualsDate extends Operator<Moment> {
 
     protected dateRange: InRangeDate;
 
-    constructor(operators: OperatorService) {
-        super(1);
-        this.dateRange = operators.getOperator(InRangeDate) as InRangeDate;
+    constructor(protected _operators: OperatorService) {
+        super(1, Operators.EQUALS_DATE);
+        this.dateRange = this._operators.getOperator(InRangeDate) as InRangeDate;
     }
 
-    createQuery(elasticKeywords: Array<string>, args: Array<Moment>): Query {
+    createQuery(pfqlKeywords: Array<string>, args: Array<Moment>): Query {
         this.checkArgumentsCount(args);
-        return this.dateRange.createQuery(elasticKeywords, [args[0], args[0]]);
+        return this.dateRange.createQuery(pfqlKeywords, [args[0], args[0]]);
     }
 
     getOperatorNameTemplate(): Array<string> {

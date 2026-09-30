@@ -12,9 +12,9 @@ export class ResetPositionAndZoomTool extends CanvasTool {
             ResetPositionAndZoomTool.ID,
             new ControlPanelButton(
                 new ControlPanelIcon('fit_screen', false, true),
-                'Reset canvas position and zoom',
+                context.translateService.instant('builder.modeler.edit-mode.services.resetCanvas'),
             ),
-            context
+            context,
         );
     }
 

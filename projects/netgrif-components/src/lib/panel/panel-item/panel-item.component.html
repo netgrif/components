@@ -10,9 +10,16 @@
               [matTooltipDisabled]='!textEllipsis'
               [matTooltipClass]="'pre-line-dialog'">{{featuredValue.value}}</span>
         <button *ngSwitchCase="'button'" mat-flat-button color='primary'>{{featuredValue.value}}</button>
-        <nc-immediate-filter-text *ngSwitchCase="'filter'"
-                                  [filterMetadata]='featuredValue.filterMetadata'
+        <nc-immediate-filter-text *ngSwitchCase="featuredValue.pretty === true ? 'caseFilter' : '__never__'"
                                   [ellipsis]='textEllipsis'
+                                  [query]='featuredValue.value'
+                                  [type]="'case'"
+                                  class='width-100'>
+        </nc-immediate-filter-text>
+        <nc-immediate-filter-text *ngSwitchCase="featuredValue.pretty === true ? 'taskFilter' : '__never__'"
+                                  [ellipsis]='textEllipsis'
+                                  [query]='featuredValue.value'
+                                  [type]="'task'"
                                   class='width-100'>
         </nc-immediate-filter-text>
     </ng-container>

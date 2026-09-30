@@ -18,7 +18,7 @@ export class UserAutocomplete implements AutocompleteOptions {
 
     public static readonly USER_ME_ICON = 'person_pin_circle'; // person_pin, person_pin_circle
 
-    public static readonly USER_ME_TEMPLATE = '<<me>>';
+    public static readonly USER_ME_TEMPLATE = 'loggedUser.id';
 
     private static readonly _i18n = 'search.category.userMe';
 
@@ -76,6 +76,13 @@ export class UserAutocomplete implements AutocompleteOptions {
     public deserializeOperandValue(savedOption: SearchAutocompleteOption<Array<string>>):
         Observable<SearchAutocompleteOption<Array<string>>> {
         return of({...savedOption, icon: this.isUserMeTemplate(savedOption) ? UserAutocomplete.USER_ME_ICON : UserAutocomplete.USER_ICON});
+    }
+
+    public getOptionFromExpressionValue$(expressionValue: string): Observable<SearchAutocompleteOption<Array<string>>> {
+        return this._userResourceService.getUser(expressionValue).pipe(
+            map(user => {
+                return {text: user.fullName, value: [user.id], icon: UserAutocomplete.USER_ICON};
+            }));
     }
 
     private isUserMeTemplate(option: SearchAutocompleteOption<Array<string>>): boolean {

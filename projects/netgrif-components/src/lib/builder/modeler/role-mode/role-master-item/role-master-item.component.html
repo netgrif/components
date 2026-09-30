@@ -9,13 +9,13 @@
         <span  class="text-ellipsis"  matTooltip="{{item.title.value}}">{{ item.title.value }}</span>
     </div>
     <div fxFlex="10">
-        <button mat-icon-button matTooltip="Delete role" (click)="onDelete($event, item)"
+        <button mat-icon-button matTooltip="{{ 'builder.modeler.role-mode.deleteRole' | translate }}" (click)="onDelete($event, item)"
                 [ngClass]="{'role-edit-list-icon-hidden': !showIcons}">
             <mat-icon>delete</mat-icon>
         </button>
     </div>
     <div fxFlex="10">
-        <button mat-icon-button matTooltip="Duplicate role" (click)="onDuplicate($event, item)"
+        <button mat-icon-button matTooltip="{{ 'builder.modeler.role-mode.duplicateRole' | translate }}" (click)="onDuplicate($event, item)"
                 [ngClass]="{'role-edit-list-icon-hidden': !showIcons}">
             <mat-icon>add_to_photos</mat-icon>
         </button>

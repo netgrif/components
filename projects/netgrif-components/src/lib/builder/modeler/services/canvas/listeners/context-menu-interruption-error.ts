@@ -1,7 +1,9 @@
+import {TranslateService} from "@ngx-translate/core";
+
 export class ContextMenuInterruptionError implements Error {
     private _stack?: string;
 
-    constructor() {
+    constructor(protected _translateService: TranslateService) {
     }
 
     get name(): string {
@@ -9,7 +11,7 @@ export class ContextMenuInterruptionError implements Error {
     }
 
     get message(): string {
-        return 'Context menu closed';
+        return this._translateService.instant('builder.modeler.services.contextMenuClosed');
     }
 
     get stack(): string {

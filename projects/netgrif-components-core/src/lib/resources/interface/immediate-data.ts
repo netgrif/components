@@ -1,4 +1,3 @@
-import {FilterMetadata} from '../../search/models/persistance/filter-metadata';
 import {FormatFilter} from '../../data-fields/models/format-filter';
 import {Component} from '../../data-fields/models/component';
 
@@ -27,10 +26,6 @@ export interface ImmediateData {
      * Only for Fields of type `CaseRef` and `Filter`
      */
     allowedNets?: Array<string>;
-    /**
-     * Only for Fields of type `Filter`
-     */
-    filterMetadata?: FilterMetadata;
     /**
      * Only for Currency Number Fields
      */

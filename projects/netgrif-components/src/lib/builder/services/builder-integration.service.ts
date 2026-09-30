@@ -1,4 +1,4 @@
-import {Injectable} from "@angular/core";
+import {Injectable, OnDestroy} from "@angular/core";
 import {HistoryService} from "../modeler/services/history/history.service";
 import {
     Case,
@@ -10,10 +10,10 @@ import {
 } from "@netgrif/components-core";
 import {ExportService, PetriNet} from "@netgrif/petriflow";
 import {HistoryChange} from "../modeler/services/history/history-change";
-import {Observable, of, Subject} from "rxjs";
+import {Observable, of, Subject, Subscription} from 'rxjs';
 
 @Injectable()
-export class BuilderIntegrationService {
+export class BuilderIntegrationService implements OnDestroy {
     protected _isIntegrated: boolean;
     protected _processCase: Case;
     protected _editTaskId: string;
@@ -23,6 +23,7 @@ export class BuilderIntegrationService {
     protected _reloadCase: Subject<boolean>;
     protected _reloadModes: Subject<boolean>;
     protected _loading: LoadingEmitter;
+    protected _historySub: Subscription;
 
     constructor(protected _historyService: HistoryService,
                 protected _taskResourceService: TaskResourceService,
@@ -32,7 +33,7 @@ export class BuilderIntegrationService {
         this._reloadCase = new Subject<boolean>();
         this._reloadModes = new Subject<boolean>();
         this._loading = new LoadingEmitter();
-        this._historyService.historyChange.subscribe(history => {
+        this._historySub = this._historyService.historyChange.subscribe(history => {
             if (this._isIntegrated && this._editTaskId) {
                 if (!this._isAssigned) {
                     this._taskResourceService.assignTask(this._editTaskId).subscribe(result => {
@@ -46,6 +47,10 @@ export class BuilderIntegrationService {
                 }
             }
         });
+    }
+
+    ngOnDestroy(): any {
+        this._historySub?.unsubscribe();
     }
 
     get isIntegrated(): boolean {

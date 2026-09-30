@@ -16,7 +16,7 @@ import {
     TestMockDependenciesModule,
     TextField,
     I18nField,
-    FilterType,
+    FieldTypeResource,
     AuthenticationModule,
     StringCollectionField,
 } from '@netgrif/components-core';
@@ -105,11 +105,7 @@ describe('SimpleCaseViewComponent', () => {
                                     GroupNavigationConstants.ITEM_FIELD_CASE_FILTER,
                                     '',
                                     '',
-                                    {
-                                        filterType: FilterType.CASE,
-                                        predicateMetadata: [],
-                                        searchCategories: []
-                                    },
+                                    FieldTypeResource.CASE_FILTER,
                                     [],
                                     {visible: true},
                                     '',

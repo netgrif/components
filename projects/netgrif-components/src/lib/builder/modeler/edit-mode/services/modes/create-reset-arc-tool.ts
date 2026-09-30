@@ -14,9 +14,9 @@ export class CreateResetArcTool extends CreatePTArc {
             CreateResetArcTool.ID,
             new ControlPanelButton(
                 new ControlPanelIcon('resetarc', true),
-                'Reset Arc',
+                context.translateService.instant('builder.modeler.edit-mode.services.resetArc'),
             ),
-            context
+            context,
         );
     }
 

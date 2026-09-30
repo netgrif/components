@@ -36,6 +36,7 @@ import {SetDataEventOutcome} from '../../../event/model/event-outcomes/data-outc
 import {AssignTaskEventOutcome} from '../../../event/model/event-outcomes/task-outcomes/assign-task-event-outcome';
 import {CreateCaseEventOutcome} from '../../../event/model/event-outcomes/case-outcomes/create-case-event-outcome';
 import {createMockNet} from '../../../utility/tests/utility/create-mock-net';
+import {DeploymentState} from "../../../resources/interface/petri-net-reference";
 
 
 class MockTreeNode {
@@ -647,7 +648,8 @@ class TreeTestProcessService {
                 fullName: ''
             },
             immediateData: [],
-            uriNodeId: ''
+            uriNodeId: '',
+            deploymentState: DeploymentState.DEPLOYED
         }));
     }
 }

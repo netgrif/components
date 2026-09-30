@@ -5,8 +5,7 @@
 
         <div fxLayout="row" class="max-height" fxLayoutAlign="space-between">
             <div fxLayoutAlign="start center" fxFlex>
-                <nc-search class="search-width search-fix" (filterLoaded)="loadFilter($event)"
-                           (filterSaved)="saveFilter($event)"></nc-search>
+                <nc-search class="search-width search-fix"></nc-search>
             </div>
             <nc-create-case-button fxLayoutAlign="center-center" fxLayout="row"
                                    [newCaseCreationConfig]="newCaseCreationConfig"

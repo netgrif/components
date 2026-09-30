@@ -1,5 +1,6 @@
 import {Net} from './net';
 import {TestBed} from '@angular/core/testing';
+import {DeploymentState} from "../resources/interface/petri-net-reference";
 
 describe('Net', () => {
     it('should create an instance', () => {
@@ -13,7 +14,8 @@ describe('Net', () => {
             createdDate: [2020, 1, 1, 1, 1],
             author: {email: 'mail', fullName: 'name'},
             immediateData: [],
-            uriNodeId: 'string'
+            uriNodeId: 'string',
+            deploymentState: DeploymentState.DEPLOYED
         })).toBeTruthy();
     });
 
@@ -28,7 +30,8 @@ describe('Net', () => {
             createdDate: [2020, 1, 1, 1, 1],
             author: {email: 'mail', fullName: 'name'},
             immediateData: [],
-            uriNodeId: 'string'
+            uriNodeId: 'string',
+            deploymentState: DeploymentState.DEPLOYED
         });
         expect(net.stringId).toEqual('true');
         expect(net.title).toEqual('string');
@@ -42,6 +45,7 @@ describe('Net', () => {
         expect(net.transitions).toEqual([]);
         expect(net.transactions).toEqual([]);
         expect(net.roles).toEqual([]);
+        expect(net.deploymentState).toEqual(DeploymentState.DEPLOYED);
     });
 
     afterEach(() => {

@@ -1,3 +1,4 @@
+import {NgZone} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {Router} from '@angular/router';
 import {BasicSimulation, Place} from '@netgrif/petriflow';
@@ -30,9 +31,10 @@ export abstract class SimulationTool extends CanvasListenerTool {
         dialog: MatDialog,
         simulationModeService: SimulationModeService,
         router: Router,
-        transitionService: SelectedTransitionService
+        transitionService: SelectedTransitionService,
+        ngZone?: NgZone
     ) {
-        super(id, button, modelService, dialog, router, transitionService);
+        super(id, button, modelService, dialog, router, transitionService, ngZone);
         this._simulationModeService = simulationModeService;
     }
 

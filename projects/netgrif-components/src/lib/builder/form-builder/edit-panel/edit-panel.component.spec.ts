@@ -11,6 +11,7 @@ import {ActionsModeService} from '../../modeler/actions-mode/actions-mode.servic
 import {GridsterService} from '../gridster/gridster.service';
 import {FieldListService} from '../field-list/field-list.service';
 import {EditPanelComponent} from './edit-panel.component';
+import {TranslateService} from "@ngx-translate/core";
 
 describe('EditPanelComponent', () => {
     beforeEach(() => {
@@ -27,6 +28,7 @@ describe('EditPanelComponent', () => {
                 {provide: ActionsMasterDetailService, useValue: {}},
                 {provide: MatDialog, useValue: {}},
                 {provide: Router, useValue: {}},
+                {provide: TranslateService, useValue: { instant: (key: string) => `translated-${key}` }}
             ],
             schemas: [NO_ERRORS_SCHEMA],
         });

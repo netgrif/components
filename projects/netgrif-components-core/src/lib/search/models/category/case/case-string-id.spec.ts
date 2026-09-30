@@ -3,9 +3,8 @@ import {OperatorService} from '../../../operator-service/operator.service';
 import {OperatorResolverService} from '../../../operator-service/operator-resolver.service';
 import {configureCategory} from '../../../../utility/tests/utility/configure-category';
 import {Equals} from '../../operator/equals';
-import {Categories} from '../categories';
-import {Operators} from '../../operator/operators';
 import {TestBed} from '@angular/core/testing';
+import {SimpleExpression} from "../../../../pfql/model/simple-expression";
 
 describe('CaseStringId', () => {
     let category: CaseStringId;
@@ -31,39 +30,24 @@ describe('CaseStringId', () => {
         expect(category.isOperatorSelected()).toBeTrue();
     });
 
-    it('should not serialize incomplete instance', () => {
-        expect(category.createMetadata()).toBeUndefined();
-    });
-
-    it('should serialize complete instance', () => {
+    it('should load pfql expression', (done) => {
         configureCategory(category, operatorService, Equals, ['foo']);
 
-        const metadata = category.createMetadata();
-        expect(metadata).toBeTruthy();
-        expect(metadata.values).toEqual(['foo']);
-        expect(metadata.category).toBe(Categories.CASE_STRING_ID);
-        expect(metadata.configuration?.operator).toBe(Operators.EQUALS);
-    });
+        const loadedCategory = new CaseStringId(operatorService, null);
+        const expression = new SimpleExpression(new Equals(), 'foo', category);
+        loadedCategory.loadFromPfqlExpression(expression).subscribe(() => {
+            expect(loadedCategory.isOperatorSelected()).toBeTrue();
+            expect(loadedCategory.providesPredicate).toBeTrue();
 
-    it('should deserialize stored instance', (done) => {
-        configureCategory(category, operatorService, Equals, ['foo']);
-
-        const metadata = category.createMetadata();
-        expect(metadata).toBeTruthy();
-        const deserialized = new CaseStringId(operatorService, null);
-        deserialized.loadFromMetadata(metadata).subscribe(() => {
-            expect(deserialized.isOperatorSelected()).toBeTrue();
-            expect(deserialized.providesPredicate).toBeTrue();
-
-            expect((deserialized as any)._operandsFormControls[0].value).toEqual((category as any)._operandsFormControls[0].value);
-
-            const deserializedMetadata = deserialized.createMetadata();
-            expect(deserializedMetadata).toBeTruthy();
-            expect(deserializedMetadata.configuration).toEqual(metadata.configuration);
-            expect(deserializedMetadata.category).toEqual(metadata.category);
-            expect(deserializedMetadata.values).toEqual(metadata.values);
+            expect((loadedCategory as any)._operandsFormControls[0].value).toEqual((category as any)._operandsFormControls[0].value);
 
             done();
         });
+    });
+
+    it('should generate pfql query', () => {
+        configureCategory(category, operatorService, Equals, ['foo']);
+        const predicate = category.generatePredicate(['6a5dc0cd2d68aa051f92cbe5']);
+        expect(predicate.query.value === `cases: id eq '6a5dc0cd2d68aa051f92cbe5'`).toBeTrue();
     });
 });

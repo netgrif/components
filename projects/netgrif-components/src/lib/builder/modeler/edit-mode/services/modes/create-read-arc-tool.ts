@@ -14,9 +14,9 @@ export class CreateReadArcTool extends CreatePTArc {
             CreateReadArcTool.ID,
             new ControlPanelButton(
                 new ControlPanelIcon('read', true),
-                'Read Arc',
+                context.translateService.instant('builder.modeler.edit-mode.services.readArc'),
             ),
-            context
+            context,
         );
     }
 

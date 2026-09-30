@@ -10,6 +10,8 @@ import {Category} from './category';
 import {Subscription} from 'rxjs';
 import {OperatorService} from '../../operator-service/operator.service';
 import {OptionalDependencies} from '../../category-factory/optional-dependencies';
+import {ResourceTypeQueryPrefix} from "./resource-type-query-prefix";
+import {SearchInputType} from "./search-input-type";
 
 /**
  * A utility class for autocomplete search categories that are net specific, such as searching by roles, or tasks.
@@ -21,13 +23,14 @@ export abstract class NetAttributeAutocompleteCategory extends NoConfigurationAu
     private _allowedNetsSub: Subscription;
     private _destroyed: boolean;
 
-    protected constructor(elasticKeywords: Array<string>,
+    protected constructor(pfqlKeywords: Array<string>,
                           allowedOperators: Array<Operator<any>>,
                           translationPath: string,
                           log: LoggerService,
                           operatorService: OperatorService,
-                          protected _optionalDependencies: OptionalDependencies) {
-        super(elasticKeywords, allowedOperators, translationPath, log, operatorService);
+                          protected _optionalDependencies: OptionalDependencies,
+                          resourceTypePrefix: ResourceTypeQueryPrefix) {
+        super(pfqlKeywords, allowedOperators, translationPath, log, operatorService, resourceTypePrefix);
     }
 
     destroy() {
@@ -74,7 +77,7 @@ export abstract class NetAttributeAutocompleteCategory extends NoConfigurationAu
      *
      *  Currently it can be either the {@link CaseProcess} or the {@link TaskProcess} category class.
      */
-    protected abstract getProcessCategory(): Category<Array<string>>;
+    protected abstract getProcessCategory(): Category<Array<string> | string>;
 
     /**
      * This method should return the appropriate identifier of a PetriNet.
@@ -98,13 +101,18 @@ export abstract class NetAttributeAutocompleteCategory extends NoConfigurationAu
             throw new Error('NetAttributeAutocompleteCategories currently doesn\'t support operators with arity other than 1!');
         }
 
+        if (this.inputType === SearchInputType.TEXT && !!userInput[0]) {
+            return this.selectedOperator.createQuery(this.pfqlKeywords, [userInput[0]]).ensurePrefixAndGet(this._resourceTypePrefix);
+        }
+
         const matchingPairs = userInput[0];
 
         const queries = matchingPairs.map(pair => {
-            const taskQuery = this.selectedOperator.createQuery(this.elasticKeywords, [pair.attributeId]);
+            const taskQuery = this.selectedOperator.createQuery(this.pfqlKeywords, [pair.attributeId]);
             const netQuery = this.getProcessCategory().generatePredicate([[pair.netId]]).query;
             return Query.combineQueries([taskQuery, netQuery], BooleanOperator.AND);
         });
-        return Query.combineQueries(queries, BooleanOperator.OR);
+        const query: Query = Query.combineQueries(queries, BooleanOperator.OR);
+        return query.ensurePrefixAndGet(this._resourceTypePrefix);
     }
 }

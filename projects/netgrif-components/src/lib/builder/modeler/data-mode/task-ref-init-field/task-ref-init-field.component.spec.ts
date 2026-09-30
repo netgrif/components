@@ -6,13 +6,20 @@ import {MatChipsModule} from '@angular/material/chips';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {ModelService} from '../../services/model/model.service';
 import {TaskRefInitFieldComponent} from './task-ref-init-field.component';
+import {TranslateService} from "@ngx-translate/core";
+import {HttpClientTestingModule} from "@angular/common/http/testing";
+import {TranslateLibModule} from "@netgrif/components-core";
 
 describe('TaskRefInitFieldComponent', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             declarations: [TaskRefInitFieldComponent],
-            imports: [ReactiveFormsModule, MatAutocompleteModule, MatChipsModule, NoopAnimationsModule],
-            providers: [{provide: ModelService, useValue: {model: {}}}],
+            imports: [ReactiveFormsModule, MatAutocompleteModule, MatChipsModule, NoopAnimationsModule,
+                TranslateLibModule,
+                HttpClientTestingModule],
+            providers: [{provide: ModelService, useValue: {model: {}}},
+                {provide: TranslateService, useValue: { instant: (key: string) => `translated-${key}` }}
+            ],
             schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA],
         });
     });

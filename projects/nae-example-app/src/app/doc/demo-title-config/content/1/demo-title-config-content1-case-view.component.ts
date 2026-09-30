@@ -12,7 +12,6 @@ import {
     NAE_BASE_FILTER,
     NAE_SEARCH_CATEGORIES,
     NAE_TAB_DATA,
-    SavedFilterMetadata,
     SearchService,
     SimpleFilter,
     AbstractTabbedCaseViewComponent,
@@ -87,23 +86,6 @@ export class DemoTitleConfigContent1CaseViewComponent extends AbstractTabbedCase
 
     ngAfterViewInit(): void {
         super.initializeHeader(this.caseHeaderComponent);
-    }
-
-    loadFilter(filterData: SavedFilterMetadata) {
-        this._injectedTabData.tabViewRef.openTab({
-            label: {
-                text: filterData.filter.title
-            },
-            canBeClosed: true,
-            tabContentComponent: DemoTitleConfigContent1CaseViewComponent,
-            injectedObject: {...this._injectedTabData, loadFilter: filterData.filter},
-            order: this._injectedTabData.tabViewOrder,
-            parentUniqueId: this._injectedTabData.tabUniqueId
-        }, this._autoswitchToTaskTab, this._openExistingTab);
-    }
-
-    saveFilter(filterData: SavedFilterMetadata) {
-        console.log(filterData);
     }
 
 }

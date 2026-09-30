@@ -2,12 +2,13 @@ import {DialogModelEditComponent} from '../../../../../dialogs/dialog-model-edit
 import {ModelChange} from '../../../../history-mode/model/model/model-change';
 import {CanvasTool} from '../../../services/modes/canvas-tool';
 import {MenuItem} from '../menu-item';
+import {TranslateService} from "@ngx-translate/core";
 
 export class EditModelMenuItem extends MenuItem {
 
-    constructor(tool: CanvasTool) {
+    constructor(tool: CanvasTool, translateService: TranslateService) {
         super(
-            'Edit model',
+            translateService.instant('builder.modeler.edit-mode.context-menu.editModel'),
             'edit',
             () => {
                 tool.openDialog(DialogModelEditComponent, {
@@ -21,7 +22,7 @@ export class EditModelMenuItem extends MenuItem {
                     if (changedModel?.model != undefined) {
                         tool.modelService.updateModel(changedModel?.model);
                         if (changedModel?.model) {
-                            tool.historyService.save(`Model has been changed.`);
+                            tool.historyService.save(translateService.instant('builder.modeler.edit-mode.context-menu.modelHasBeenChanged'));
                             tool.context.builderIntegrationService.setModelData(tool.modelService.model);
                         }
                     }

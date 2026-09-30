@@ -8,9 +8,8 @@ import {Net} from '../../../../process/net';
 import {createMockNet} from '../../../../utility/tests/utility/create-mock-net';
 import {configureCategory} from '../../../../utility/tests/utility/configure-category';
 import {Equals} from '../../operator/equals';
-import {Categories} from '../categories';
-import {Operators} from '../../operator/operators';
 import {filter, take} from 'rxjs/operators';
+import {SimpleExpression} from "../../../../pfql/model/simple-expression";
 
 describe('TaskTask', () => {
     let operatorService: OperatorService;
@@ -73,12 +72,7 @@ describe('TaskTask', () => {
         expect(option2.value.some(o => o.attributeId === 'sid3')).toBeTrue();
     });
 
-    it('should not serialize incomplete instance', () => {
-        allowedNets$.next([]);
-        expect(category.createMetadata()).toBeUndefined();
-    });
-
-    it('should serialize complete instance', () => {
+    it('should load pfql expression', (done) => {
         allowedNets$.next([
             createMockNet('', 'A', 'A', undefined, [{title: 'transition1', stringId: 'sid1'}]),
             createMockNet('', 'B', 'B', undefined, [{title: 'transition1', stringId: 'sid2'}]),
@@ -91,46 +85,35 @@ describe('TaskTask', () => {
 
         configureCategory(category, operatorService, Equals, [option]);
 
-        const metadata = category.createMetadata();
-        expect(metadata).toBeTruthy();
-        expect(metadata.values).toEqual([option.text]);
-        expect(metadata.category).toBe(Categories.TASK_TASK);
-        expect(metadata.configuration?.operator).toBe(Operators.EQUALS);
-    });
-
-    it('should deserialize stored instance', (done) => {
-        allowedNets$.next([
-            createMockNet('', 'A', 'A', undefined, [{title: 'transition1', stringId: 'sid1'}]),
-            createMockNet('', 'B', 'B', undefined, [{title: 'transition1', stringId: 'sid2'}]),
-        ]);
-
-        const options = category.options;
-        expect(options.length).toBe(1);
-        const option = options[0];
-        expect(option.text).toBe('transition1');
-
-        configureCategory(category, operatorService, Equals, [option]);
-
-        const metadata = category.createMetadata();
-        expect(metadata).toBeTruthy();
-        const deserialized = new TaskTask(operatorService, null, createMockDependencies(allowedNets$, operatorService));
+        const loadedCategory = new TaskTask(operatorService, null, createMockDependencies(allowedNets$, operatorService));
+        const expression = new SimpleExpression(new Equals(), 'sid1', category);
 
         // wait for autocomplete options to initialize
-        deserialized.options$.pipe(filter(o => o.length > 0), take(1)).subscribe(() => {
-            deserialized.loadFromMetadata(metadata).subscribe(() => {
-                expect(deserialized.isOperatorSelected()).toBeTrue();
-                expect(deserialized.providesPredicate).toBeTrue();
+        loadedCategory.options$.pipe(filter(o => o.length > 0), take(1)).subscribe(() => {
+            loadedCategory.loadFromPfqlExpression(expression).subscribe(() => {
+                expect(loadedCategory.isOperatorSelected()).toBeTrue();
+                expect(loadedCategory.providesPredicate).toBeTrue();
 
-                expect((deserialized as any)._operandsFormControls[0].value).toEqual((category as any)._operandsFormControls[0].value);
-
-                const deserializedMetadata = deserialized.createMetadata();
-                expect(deserializedMetadata).toBeTruthy();
-                expect(deserializedMetadata.configuration).toEqual(metadata.configuration);
-                expect(deserializedMetadata.category).toEqual(metadata.category);
-                expect(deserializedMetadata.values).toEqual(metadata.values);
+                expect((loadedCategory as any)._operandsFormControls[0].value).toEqual((category as any)._operandsFormControls[0].value);
 
                 done();
             });
         });
+    });
+
+
+    it('should generate pfql query', () => {
+        allowedNets$.next([
+            createMockNet('', 'A', 'A', undefined, [{title: 'transition1', stringId: 'sid1'}]),
+        ]);
+
+        const options = category.options;
+        expect(options.length).toBe(1);
+        const option = options[0];
+        expect(option.text).toBe('transition1');
+
+        configureCategory(category, operatorService, Equals, [option]);
+        let predicate = category.generatePredicate([[{netId: 'A', attributeId: 'sid1'}]]);
+        expect(predicate.query.value).toEqual('tasks: (transitionId eq \'sid1\') AND (processId eq \'A\')');
     });
 });

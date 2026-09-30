@@ -3,7 +3,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DefaultCaseRefListViewComponent } from './default-case-ref-list-view.component';
 import {NavigationComponentModule} from '../../../../navigation.module';
 import {
-    FilterField, FilterType,
+    FilterField,
+    FieldTypeResource,
     NAE_TAB_DATA,
     NAE_VIEW_ID_SEGMENT,
     OverflowService,
@@ -51,11 +52,7 @@ describe('DefaultCaseRefListViewComponent', () => {
                                 `${GroupNavigationConstants.ITEM_FIELD_CASE_FILTER}`,
                                 '',
                                 '',
-                                {
-                                    filterType: FilterType.CASE,
-                                    predicateMetadata: [],
-                                    searchCategories: []
-                                },
+                                FieldTypeResource.CASE_FILTER,
                                 [],
                                 {visible: true},
                                 '',

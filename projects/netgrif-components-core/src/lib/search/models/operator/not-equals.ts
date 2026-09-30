@@ -1,7 +1,4 @@
 import {Operator} from './operator';
-import {Equals} from './equals';
-import {OperatorService} from '../../operator-service/operator.service';
-import {Query} from '../query/query';
 import {Operators} from './operators';
 
 /**
@@ -11,20 +8,8 @@ import {Operators} from './operators';
  * For Date needs use {@link NotEqualsDate} instead.
  */
 export class NotEquals extends Operator<string | number> {
-
-    protected equals: Equals;
-
-    constructor(operators: OperatorService) {
-        super(1);
-        this.equals = operators.getOperator(Equals) as Equals;
-    }
-
-    createQuery(elasticKeywords: Array<string>, args: Array<string | number>): Query {
-        const equalsQuery = this.equals.createQuery(elasticKeywords, args);
-        if (equalsQuery.isEmpty) {
-            return equalsQuery;
-        }
-        return new Query(`(!${equalsQuery.value})`);
+    constructor() {
+        super(1, Operators.NOT_EQUALS, 'neq');
     }
 
     getOperatorNameTemplate(): Array<string> {

@@ -12,9 +12,9 @@ export class CreateTransitionTool extends CanvasTool {
             CreateTransitionTool.ID,
             new ControlPanelButton(
                 new ControlPanelIcon('square', false, true),
-                'Transition',
+                context.translateService.instant('builder.modeler.edit-mode.services.transition'),
             ),
-            context
+            context,
         );
     }
 
@@ -23,7 +23,7 @@ export class CreateTransitionTool extends CanvasTool {
         if (this.isLeftButtonClick(event)) {
             const canvasTransition = this.editModeService.createTransition(this.mousePosition(event));
             this.bindTransition(canvasTransition);
-            this.historyService.save(`Task ${canvasTransition.id} has been created.`);
+            this.historyService.save(this._translateService.instant('builder.modeler.edit-mode.services.task') + ` ${canvasTransition.id} ` + this._translateService.instant('builder.modeler.edit-mode.services.hasBeenCreated'));
         }
     }
 }

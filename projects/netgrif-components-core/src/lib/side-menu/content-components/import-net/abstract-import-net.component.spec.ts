@@ -25,12 +25,14 @@ import {UriService} from "../../../navigation/service/uri.service";
 import {AuthenticationModule} from "../../../authentication/authentication.module";
 import {UriResourceService} from "../../../navigation/service/uri-resource.service";
 import {MockUriResourceService} from "../../../utility/tests/mocks/mock-uri-resource.service";
+import {SessionService} from '../../../authentication/session/services/session.service';
 
 describe('AbstractImportNetComponent', () => {
     let component: TestImportComponent;
     let fixture: ComponentFixture<TestImportComponent>;
     let sideMenuCloseSpy: jasmine.Spy;
     let logSpy: jasmine.Spy;
+    let sessionService: SessionService;
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
@@ -62,6 +64,8 @@ describe('AbstractImportNetComponent', () => {
         fixture.detectChanges();
         sideMenuCloseSpy = spyOn(TestBed.inject(NAE_SIDE_MENU_CONTROL), 'close');
         logSpy = spyOn(TestBed.inject(LoggerService), 'info');
+        sessionService = TestBed.inject(SessionService);
+        sessionService.setVerifiedToken('sessionToken');
     });
 
     it('should create', () => {

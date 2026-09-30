@@ -24,6 +24,7 @@ import {ActionGroup} from './classes/action-group';
 import {ActionType, ChangeType, EditableAction} from './classes/editable-action';
 import {MasterItem} from './classes/master-item';
 import {EventType} from './event-type';
+import {TranslateService} from "@ngx-translate/core";
 
 @Injectable()
 export class ActionEditorService {
@@ -35,6 +36,7 @@ export class ActionEditorService {
 
     constructor(
         private _modelService: ModelService,
+        private _translateService: TranslateService
     ) {
         this.editedActions = [];
         this._datarefMap = new Map<string, DataRef>();
@@ -50,7 +52,7 @@ export class ActionEditorService {
         this._currentlyEdited = transition;
 
         // transition actions
-        this.editedActions.push(this.createActionGroup(transition.eventSource.getEvents(), 'Transition', ActionType.TRANSITION));
+        this.editedActions.push(this.createActionGroup(transition.eventSource.getEvents(), this._translateService.instant('builder.modeler.actions-mode.action-editor.transition'), ActionType.TRANSITION));
 
         // dataref actions
         let combinedDataRefs: Array<DataRef> = [];
@@ -75,21 +77,21 @@ export class ActionEditorService {
         this.editedActions.splice(0, this.editedActions.length);
         this._datarefMap.clear();
         this._currentlyEdited = role;
-        this.editedActions.push(this.createActionGroup(role.getEvents(), 'Role', ActionType.ROLE));
+        this.editedActions.push(this.createActionGroup(role.getEvents(), this._translateService.instant('builder.modeler.actions-mode.action-editor.role'), ActionType.ROLE));
     }
 
     public populateEditedActionsFromCaseEvents(item: MasterItem): void {
         this.editedActions.splice(0, this.editedActions.length);
         this._currentlyEdited = item.model;
 
-        this.editedActions.push(this.createActionGroup(item.model.getCaseEvents(), 'Case events', ActionType.CASE));
+        this.editedActions.push(this.createActionGroup(item.model.getCaseEvents(), this._translateService.instant('builder.modeler.actions-mode.action-editor.caseEvents'), ActionType.CASE));
     }
 
     populateEditedActionsFromProcessEvents(item: MasterItem): void {
         this.editedActions.splice(0, this.editedActions.length);
         this._currentlyEdited = item.model;
 
-        this.editedActions.push(this.createActionGroup(item.model.getProcessEvents(), 'Process events', ActionType.PROCESS));
+        this.editedActions.push(this.createActionGroup(item.model.getProcessEvents(), this._translateService.instant('builder.modeler.actions-mode.action-editor.processEvents'), ActionType.PROCESS));
     }
 
     private createActionGroup(events: Array<Event<EventType>>, parentName: string, actionType: ActionType, parentDataRefId?: string): ActionGroup {

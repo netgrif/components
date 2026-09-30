@@ -1,7 +1,8 @@
 import {declarationCompleteProvider} from './declaration-provider';
 import {functionCompletionProposals} from './function-provider';
+import {TranslateService} from "@ngx-translate/core";
 
-export function actionCompletionProvider(model, position, languages) {
+export function actionCompletionProvider(model, position, languages, translateService: TranslateService) {
     // find out if we are completing a property in the 'dependencies' object.
     // const textUntilPosition = model.getValueInRange({startLineNumber: 1, startColumn: 1, endLineNumber: position.lineNumber, endColumn: position.column});
     let definition = true;
@@ -27,7 +28,7 @@ export function actionCompletionProvider(model, position, languages) {
                 endColumn: position.column
             };
             return {
-                suggestions: declarationCompleteProvider(r, languages)
+                suggestions: declarationCompleteProvider(r, languages, translateService)
             }; // CALL RESOLVER OF VARIABLES
         }
         return {suggestions: []};
@@ -40,6 +41,6 @@ export function actionCompletionProvider(model, position, languages) {
         endColumn: word.endColumn
     };
     return {
-        suggestions: functionCompletionProposals(range, languages)
+        suggestions: functionCompletionProposals(range, languages, translateService)
     };
 }

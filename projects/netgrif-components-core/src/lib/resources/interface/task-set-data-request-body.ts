@@ -1,4 +1,3 @@
-import {FilterMetadata} from '../../search/models/persistance/filter-metadata';
 
 /**
  * Describes request body for task setData endpoint.
@@ -31,10 +30,6 @@ export interface TaskSetDataRequestFields {
          * new `allowed nets` (for field types that support this)
          */
         allowedNets?: ReadonlyArray<string>;
-        /**
-         * new `filterMetadata` (for field types that support this)
-         */
-        filterMetadata?: FilterMetadata;
     };
 }
 

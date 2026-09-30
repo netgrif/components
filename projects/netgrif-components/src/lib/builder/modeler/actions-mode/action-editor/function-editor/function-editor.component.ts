@@ -8,7 +8,8 @@ import {ModelService} from '../../../services/model/model.service';
 import {MenuItem} from '../action-editor-menu/action-editor-menu-item/menu-item';
 import {MenuItemConfiguration} from '../action-editor-menu/action-editor-menu-item/menu-item-configuration';
 import {ActionEditorService} from '../action-editor.service';
-import {actions} from '../classes/command-action';
+import {getActions, CommandActions} from '../classes/command-action';
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
     selector: 'nc-builder-function-editor',
@@ -23,6 +24,7 @@ export class FunctionEditorComponent implements OnInit {
     @ViewChild('matButton') private button: MatButton;
     @ViewChild('referencesTrigger') trigger: MatMenuTrigger;
     private _fn: PetriflowFunction;
+    private _actions: Array<CommandActions>;
 
     public editor: any;
     public formControl: FormControl;
@@ -38,11 +40,13 @@ export class FunctionEditorComponent implements OnInit {
 
     constructor(
         private actionEditorService: ActionEditorService,
-        private modelService: ModelService
+        private modelService: ModelService,
+        private _translateService: TranslateService
     ) {
         this.formControl = new FormControl(undefined, {updateOn: 'blur'});
         this.actionChanged = new EventEmitter<string>();
         this.drawerOpened = new EventEmitter<boolean>();
+        this._actions = getActions(this._translateService);
     }
 
     // options: https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.ieditoroptions.html
@@ -83,7 +87,7 @@ export class FunctionEditorComponent implements OnInit {
             this.saveAction(value);
         });
         this.transitionItemsConfiguration = new MenuItemConfiguration(
-            'Transitions',
+            this._translateService.instant('builder.modeler.actions-mode.action-editor.function-editor.transitions'),
             'transition',
             ['<transition>', '<transitionId>'],
             this.editor,
@@ -91,7 +95,7 @@ export class FunctionEditorComponent implements OnInit {
             this.modelService.model.getTransitions().map(t => new MenuItem(t.id, `<b>${t.id}</b> ${t.label?.value}`))
         );
         this.dataFieldItemsConfiguration = new MenuItemConfiguration(
-            'Datafields',
+            this._translateService.instant('builder.modeler.actions-mode.action-editor.function-editor.datafields'),
             'datafield',
             ['<datafield>'],
             this.editor,
@@ -99,28 +103,28 @@ export class FunctionEditorComponent implements OnInit {
             this.modelService.model.getDataSet().map(f => new MenuItem(f.id, `<b>${f.id}</b> ${f.title?.value}`))
         );
         this.behaviourItemsConfiguration = new MenuItemConfiguration(
-            'Behaviours',
+            this._translateService.instant('builder.modeler.actions-mode.action-editor.function-editor.behaviours'),
             'behaviour',
             ['<behaviour>'],
             this.editor,
             this,
             [
-                new MenuItem('visible', 'visible'),
-                new MenuItem('hidden', 'hidden'),
-                new MenuItem('editable', 'editable'),
-                new MenuItem('required', 'required'),
-                new MenuItem('optional', 'optional')
+                new MenuItem('visible', this._translateService.instant('builder.modeler.actions-mode.action-editor.function-editor.visible')),
+                new MenuItem('hidden', this._translateService.instant('builder.modeler.actions-mode.action-editor.function-editor.hidden')),
+                new MenuItem('editable', this._translateService.instant('builder.modeler.actions-mode.action-editor.function-editor.editable')),
+                new MenuItem('required', this._translateService.instant('builder.modeler.actions-mode.action-editor.function-editor.required')),
+                new MenuItem('optional', this._translateService.instant('builder.modeler.actions-mode.action-editor.function-editor.optional'))
             ]
         );
         this.conditionItemsConfiguration = new MenuItemConfiguration(
-            'Conditions',
+            this._translateService.instant('builder.modeler.actions-mode.action-editor.function-editor.conditions'),
             'condition',
             ['<condition>'],
             this.editor,
             this,
             [
-                new MenuItem('true', 'true'),
-                new MenuItem('false', 'false'),
+                new MenuItem('true', this._translateService.instant('builder.modeler.actions-mode.action-editor.function-editor.true')),
+                new MenuItem('false', this._translateService.instant('builder.modeler.actions-mode.action-editor.function-editor.false')),
                 new MenuItem('<datafield>.value == <datafield>.value', '&lt;datafield&gt;.value <b>==</b> &lt;datafield&gt;.value'),
                 new MenuItem('<datafield>.value != <datafield>.value', '&lt;datafield&gt;.value <b>!=</b> &lt;datafield&gt;.value'),
                 new MenuItem('<datafield>.value > <datafield>.value', '&lt;datafield&gt;.value <b>&gt;</b> &lt;datafield&gt;.value'),
@@ -136,19 +140,19 @@ export class FunctionEditorComponent implements OnInit {
             ]
         );
         this.propertyItemsConfiguration = new MenuItemConfiguration(
-            'Properties',
+            this._translateService.instant('builder.modeler.actions-mode.action-editor.function-editor.properties'),
             'property',
             ['<property>'],
             this.editor,
             this,
             [
-                new MenuItem('"title"', 'title'),
-                new MenuItem('"color"', 'color'),
-                new MenuItem('"icon"', 'icon'),
+                new MenuItem('"title"', this._translateService.instant('builder.modeler.actions-mode.action-editor.function-editor.title')),
+                new MenuItem('"color"', this._translateService.instant('builder.modeler.actions-mode.action-editor.function-editor.color')),
+                new MenuItem('"icon"', this._translateService.instant('builder.modeler.actions-mode.action-editor.function-editor.icon')),
             ]
         );
         this.valueItemsConfiguration = new MenuItemConfiguration(
-            'Values',
+            this._translateService.instant('builder.modeler.actions-mode.action-editor.function-editor.values'),
             'value',
             ['<value>', '<choices>', '<options>'],
             this.editor,
@@ -157,13 +161,13 @@ export class FunctionEditorComponent implements OnInit {
                 new MenuItem('<datafield>.value', '&lt;datafield&gt;.value'),
                 new MenuItem('<datafield>.choices', '&lt;datafield&gt;.choices'),
                 new MenuItem('<datafield>.options', '&lt;datafield&gt;.options'),
-                new MenuItem('true', 'true'),
-                new MenuItem('false', 'false'),
-                new MenuItem('', 'Add new variable or value'),
-                new MenuItem('[a,b,c]', 'List of objects'),
-                new MenuItem('[a:a,b:b]', 'Map of objects'),
-                new MenuItem('["a","b","c"]', 'List of strings'),
-                new MenuItem('["a":"a","b":"b"]', 'Map of strings')
+                new MenuItem('true', this._translateService.instant('builder.modeler.actions-mode.action-editor.function-editor.true')),
+                new MenuItem('false', this._translateService.instant('builder.modeler.actions-mode.action-editor.function-editor.false')),
+                new MenuItem('', this._translateService.instant('builder.modeler.actions-mode.action-editor.function-editor.addNewVariableOrValue')),
+                new MenuItem('[a,b,c]', this._translateService.instant('builder.modeler.actions-mode.action-editor.function-editor.listOfObjects')),
+                new MenuItem('[a:a,b:b]', this._translateService.instant('builder.modeler.actions-mode.action-editor.function-editor.mapOfObjects')),
+                new MenuItem('["a","b","c"]', this._translateService.instant('builder.modeler.actions-mode.action-editor.function-editor.listOfStrings')),
+                new MenuItem('["a":"a","b":"b"]', this._translateService.instant('builder.modeler.actions-mode.action-editor.function-editor.mapOfStrings'))
             ]
         );
         this.editorConfigurations = [];
@@ -174,7 +178,7 @@ export class FunctionEditorComponent implements OnInit {
     private saveAction(value: string) {
         this._fn.definition = value;
         this.actionChanged.emit(value);
-        actions[actions.length - 1].actions = this.modelService.model.functions.map(fn => {
+        this._actions[this._actions.length - 1].actions = this.modelService.model.functions.map(fn => {
             return {
                 label: fn.name,
                 action: `${fn.name}()`,

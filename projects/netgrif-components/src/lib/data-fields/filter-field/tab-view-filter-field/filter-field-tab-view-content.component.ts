@@ -1,4 +1,4 @@
-import { Component, Inject, Injector } from '@angular/core';
+import {Component, Inject, Injector, Optional} from '@angular/core';
 import {
     ComponentRegistryService,
     NAE_FILTER_FIELD,
@@ -8,7 +8,7 @@ import {
     NAE_BASE_FILTER,
     AllowedNetsService,
     AllowedNetsServiceFactory,
-    CategoryFactory, NAE_SEARCH_CATEGORIES, CategoryResolverService
+    CategoryFactory, NAE_SEARCH_CATEGORIES, CategoryResolverService, DATA_FIELD_PORTAL_DATA, DataFieldPortalData
 } from '@netgrif/components-core';
 import {
     filterFieldAllowedNetsFactory,
@@ -32,7 +32,8 @@ export class FilterFieldTabViewContentComponent extends AbstractFilterFieldTabVi
     constructor(registry: ComponentRegistryService,
                 injector: Injector,
                 @Inject(NAE_FILTER_FIELD) filterField: FilterField,
-                searchService: SearchService) {
-        super(registry, injector, filterField, searchService)
+                searchService: SearchService,
+                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<FilterField>) {
+        super(registry, injector, filterField, searchService, dataFieldPortalData)
     }
 }

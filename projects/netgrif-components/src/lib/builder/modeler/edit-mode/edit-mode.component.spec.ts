@@ -9,6 +9,7 @@ import {ModelImportService} from '../model-import-service';
 import {ExportService} from '@netgrif/petriflow';
 import {EditModeComponent} from './edit-mode.component';
 import {LocalStorageService} from "../../services/local-storage.service";
+import {TranslateService} from "@ngx-translate/core";
 
 describe('EditModeComponent', () => {
     beforeEach(() => {
@@ -23,6 +24,7 @@ describe('EditModeComponent', () => {
                 {provide: ModelImportService, useValue: {}},
                 {provide: EditModeService, useValue: {}},
                 {provide: MatDialog, useValue: {}},
+                {provide: TranslateService, useValue: { instant: (key: string) => `translated-${key}` }}
             ],
             schemas: [NO_ERRORS_SCHEMA],
         });
