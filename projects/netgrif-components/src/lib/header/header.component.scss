@@ -19,27 +19,30 @@
     flex: 1 1 5%;
 }
 
-.mat-mdc-menu-item-look {
-    user-select: none;
-    cursor: pointer;
-    outline: none;
-    border: none;
-    -webkit-tap-highlight-color: transparent;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: block;
-    line-height: 48px;
-    height: 48px;
+.header-menu-row {
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
     padding: 0 16px;
-    text-align: left;
-    text-decoration: none;
-    max-width: 100%;
-    position: relative;
     font-size: 14px;
+    user-select: none;
 }
 
-.mat-mdc-menu-item-height {
-    min-height: 64px;
-    height: auto;
+.header-menu-toggle {
+    min-height: 48px;
+    cursor: pointer;
+}
+
+.header-menu-field {
+    // fixed, compact width so the fields don't stretch the whole menu
+    width: 100%;
+    min-width: 200px;
+    max-width: 280px;
+    padding-top: 12px;
+    padding-bottom: 4px;
+    cursor: default;
+
+    mat-form-field {
+        width: 100%;
+    }
 }

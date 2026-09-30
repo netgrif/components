@@ -3,7 +3,8 @@
           class="placeholder-text">Placeholder for {{dataField.dataVariable.type}} with id '{{dataField.dataVariable?.id}}'</span>
 
     <nc-data-field-template *ngIf="!fieldListService.isPlaceholderField(dataField)"
-                            [additionalFieldProperties]="{taskId: ''}" [dataField]="engineField" [offset]="0" fxFlex >
+                            [additionalFieldProperties]="{taskId: ''}" [dataField]="engineField" [offset]="0" fxFlex
+                            [ngClass]="{'date-field-fix': isDateField()}">
     </nc-data-field-template>
 </div>
 <div *ngIf="isHidden()" fxLayout="row" fxLayoutAlign="center center" class="gridster-item-content min-row-height hidden-field">

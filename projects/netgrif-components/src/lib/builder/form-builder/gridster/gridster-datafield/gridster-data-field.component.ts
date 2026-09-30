@@ -1,5 +1,5 @@
 import {Component, Input, OnDestroy, OnInit, QueryList, TemplateRef, ViewChildren} from '@angular/core';
-import {DataField, EnumerationField, MultichoiceField} from '@netgrif/components-core';
+import {DataField, EnumerationField, MultichoiceField, DateField, DateTimeField} from '@netgrif/components-core';
 import {DataRefBehavior, DataType, I18nWithDynamic} from '@netgrif/petriflow';
 import moment from 'moment';
 import {Subscription} from 'rxjs';
@@ -74,6 +74,14 @@ export class GridsterDataFieldComponent implements OnInit, OnDestroy {
 
     public isHidden(): boolean {
         return this.dataField.dataRef.logic.behavior === DataRefBehavior.HIDDEN;
+    }
+
+    /**
+     * Mirrors the `date-field-fix` wrapper class applied by `FieldComponentResolverComponent`
+     * in the regular task view, so the datepicker toggle does not overlap the field title.
+     */
+    public isDateField(): boolean {
+        return this.engineField instanceof DateField || this.engineField instanceof DateTimeField;
     }
 
     public name(): string {

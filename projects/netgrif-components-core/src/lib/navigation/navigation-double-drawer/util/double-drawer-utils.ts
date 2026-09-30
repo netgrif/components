@@ -22,7 +22,11 @@ export class DoubleDrawerUtils {
     }
 
     public static isItemAndNodeEqual(item: NavigationItem, node: UriNodeResource): boolean {
-        return item.resource?.immediateData.find(f => f.stringId === GroupNavigationConstants.ITEM_FIELD_ID_NODE_PATH)?.value === node.uriPath;
+        if (!item || !node) {
+            return false;
+        }
+        const itemNodePath = item.resource?.immediateData?.find(f => f.stringId === GroupNavigationConstants.ITEM_FIELD_ID_NODE_PATH)?.value;
+        return !!itemNodePath && itemNodePath === node.uriPath;
     }
 
     public static extractChildCaseIds(item: Case): string[] {
@@ -48,7 +52,7 @@ export class DoubleDrawerUtils {
     }
 
     public static isNodeCorrespondingToItem(node: UriNodeResource, item: NavigationItem): boolean {
-        return item.resource?.immediateData.find(f => f.stringId === GroupNavigationConstants.ITEM_FIELD_ID_NODE_PATH)?.value === node.uriPath
+        return DoubleDrawerUtils.isItemAndNodeEqual(item, node);
     }
 
     public static findTaskIdInCase(useCase: Case, transId: string): string {

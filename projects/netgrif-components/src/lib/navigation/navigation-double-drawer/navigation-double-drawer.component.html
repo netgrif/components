@@ -36,13 +36,15 @@
             <mat-menu #userRailMenu="matMenu">
                 <div mat-menu-item role="menuitem" class="large-menu-item" fxLayout="row" fxFlexAlign="center center"
                      [routerLink]="profileRouterLink" routerLinkActive="active-tree-node">
-                    <mat-icon class="margin-auto" fxFlex>face</mat-icon>
-                    <div class="large-menu-item" fxLayout="column" fxFlexAlign="start center" fxFlex>
-                        <span *ngIf="!user.isImpersonating()" class="large-menu-item-text"
-                              fxFlex="50">{{ user.fullName }}</span>
-                        <span *ngIf="user.isImpersonating()" class="large-menu-item-text"
-                              fxFlex="50">{{ user.fullName }} ({{ user.getSelfOrImpersonated().fullName }})</span>
-                        <span class="large-menu-item-text" style="font-size: 12px;" fxFlex="50">{{ user.email }}</span>
+                    <mat-icon class="user-menu-icon">face</mat-icon>
+                    <div class="large-menu-item user-menu-text" fxLayout="column" fxFlexAlign="start center" fxFlex>
+                        <span *ngIf="!user.isImpersonating()" class="large-menu-item-text text-ellipsis"
+                              fxFlex="50" [matTooltip]="user.fullName">{{ user.fullName }}</span>
+                        <span *ngIf="user.isImpersonating()" class="large-menu-item-text text-ellipsis"
+                              fxFlex="50"
+                              [matTooltip]="user.fullName + ' (' + user.getSelfOrImpersonated().fullName + ')'">{{ user.fullName }} ({{ user.getSelfOrImpersonated().fullName }})</span>
+                        <span class="large-menu-item-text text-ellipsis" style="font-size: 12px;" fxFlex="50"
+                              [matTooltip]="user.email">{{ user.email }}</span>
                     </div>
                 </div>
                 <button *ngIf="includeImpersonation && !user.isImpersonating()" mat-menu-item (click)="impersonate()">
@@ -151,9 +153,10 @@
     <div class="margin-top-x2"></div>
 
     <button *ngFor='let folder of leftItems$ | async; trackBy: itemsTrackBy' mat-icon-button (click)="onItemClick(folder)"
-            class="menu-button mat-typography menu-font-color" [matTooltip]="folder.navigation.title"
+            class="menu-button mat-typography" [matTooltip]="folder.navigation.title"
             [matTooltipPosition]="'right'"
-            [ngClass]="isItemAndNodeEqual(folder, currentNode) ? 'rail-selected-color' : 'menu-font-color'"
+            [ngClass]="isParentOfActiveView(folder) ? 'active-tree-node'
+                       : (isItemAndNodeEqual(folder, currentNode) ? 'rail-selected-color' : 'menu-font-color')"
             [routerLink]='folder.routing.path'
             routerLinkActive="active">
         <mat-icon>{{ folder.navigation.icon }}</mat-icon>
@@ -183,7 +186,7 @@
                  class="tree-node width-menu mat-typography mat-body-2" fxLayoutAlign="start center"  [routerLink]='item.routing.path'
                  routerLinkActive="active-tree-node">
                 <mat-icon class="tree-node-icon">{{ item.navigation.icon }}</mat-icon>
-                <span>{{ item.navigation.title }}</span>
+                <span class="tree-node-title" [matTooltip]="item.navigation.title" matTooltipShowDelay="500">{{ item.navigation.title }}</span>
                 <span class="menu-item-focus-overlay"></span>
             </div>
             <button mat-icon-button *ngIf="editModeEnabled" class="cursor-pointer" [matTooltip]="'dynamicNavigation.editMenuItem' | translate" matTooltipPosition="right" (click)="editMenuItem(item.resource)" fxLayoutAlign="end">
