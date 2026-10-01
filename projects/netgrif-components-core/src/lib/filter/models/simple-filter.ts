@@ -109,4 +109,19 @@ export class SimpleFilter extends Filter {
     getRequestBody(): TaskSearchRequestBody | CaseSearchRequestBody {
         return this.deepCopy(this._filter) as CaseSearchRequestBody | TaskSearchRequestBody;
     }
+
+    // todo 2469
+    public addFullTextFields(fullTextFields: { [fieldId: string]: number; }): void {
+        this._filter.fullTextFields = fullTextFields;
+    }
+
+    // todo 2469
+    public containsFullTextFields(): boolean {
+        return !!this._filter.fullTextFields && Object.keys(this._filter.fullTextFields).length > 0;
+    }
+
+    // todo 2469
+    public getFullTextFields(): {[fieldId: string]: number} {
+        return this._filter.fullTextFields;
+    }
 }

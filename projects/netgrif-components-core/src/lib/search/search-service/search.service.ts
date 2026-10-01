@@ -276,6 +276,9 @@ export class SearchService implements OnDestroy {
     public setFullTextFilter(searchedSubstring: string): void {
         const whiteSpacedSubstring = searchedSubstring?.replace(/ /g, '\\ ');
         this._fullTextFilter = new SimpleFilter('', this._baseFilter.type, {fullText: whiteSpacedSubstring});
+        if (this.baseFilter.containsFullTextFields()) {
+            this._fullTextFilter.addFullTextFields(this.baseFilter.getFullTextFields());
+        }
         this.updateActiveFilter();
     }
 

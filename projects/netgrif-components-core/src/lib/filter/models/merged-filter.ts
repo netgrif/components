@@ -133,4 +133,16 @@ export class MergedFilter extends Filter {
             operation: this._operator
         };
     }
+
+    // todo 2469
+    public addFullTextFields(fullTextFields: { [fieldId: string]: number; }): void {
+        this._filters.forEach(filter => filter.fullTextFields = fullTextFields);
+    }
+
+    public containsFullTextFields(): boolean {
+        return false;
+    }
+    public getFullTextFields(): { [fieldId: string]: number; } {
+        return {};
+    }
 }

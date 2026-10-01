@@ -82,6 +82,21 @@ export abstract class Filter {
     public abstract bodyContainsQuery(): boolean;
 
     /**
+     * todo 2469
+     */
+    public abstract addFullTextFields(fullTextFields: {[fieldId: string]: number}): void;
+
+    /**
+     * todo 2469
+     */
+    public abstract containsFullTextFields(): boolean;
+
+    /**
+     * todo 2469
+     */
+    public abstract getFullTextFields(): {[fieldId: string]: number};
+
+    /**
      * Returns the necessary request params for the filter. Default implementation returns an empty object.
      * The params are added on top of the request when sending it to the backend by the respective service methods.
      * @returns an empty object `{}`
