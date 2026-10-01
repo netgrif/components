@@ -68,7 +68,7 @@ export class FilterExtractionService {
             throw new Error('Filter segment could not be extracted from filter field');
         }
 
-        if (filterType === FilterType.CASE) {
+        if (filterType === FilterType.CASE && !!getFieldIndexFromDataGroups(dataSection, GroupNavigationConstants.ITEM_FIELD_CASE_FULLTEXT_FIELDS)) {
             const fullTextFields: string[] = extractFieldValueFromData<string[]>(dataSection, GroupNavigationConstants.ITEM_FIELD_CASE_FULLTEXT_FIELDS);
             if (!!fullTextFields && fullTextFields.length > 0) {
                 const fullTextFieldsMap: {[fieldId: string]: number} = {};
