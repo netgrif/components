@@ -465,7 +465,7 @@ export class SearchService implements OnDestroy {
         if (this.baseFilter.containsFullTextFields()) {
             this._fullTextFilter?.addFullTextFields(this.baseFilter.getFullTextFields());
         } else {
-            this._fullTextFilter.clearFullTextFields();
+            this._fullTextFilter?.clearFullTextFields();
         }
     }
 }
