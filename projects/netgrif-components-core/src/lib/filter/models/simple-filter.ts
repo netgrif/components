@@ -118,6 +118,13 @@ export class SimpleFilter extends Filter {
     }
 
     /**
+     * See [Filter.clearFullTextFields()]{@link Filter#clearFullTextFields}
+     */
+    public clearFullTextFields(): void {
+        this._filter.fullTextFields = undefined;
+    }
+
+    /**
      * See [Filter.containsFullTextFields()]{@link Filter#containsFullTextFields}
      */
     public containsFullTextFields(): boolean {

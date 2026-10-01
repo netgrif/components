@@ -87,6 +87,11 @@ export abstract class Filter {
     public abstract addFullTextFields(fullTextFields: {[fieldId: string]: number}): void;
 
     /**
+     * Clears full-text fields
+     */
+    public abstract clearFullTextFields(): void;
+
+    /**
      * @returns `true` if the filter contains any full-text field
      */
     public abstract containsFullTextFields(): boolean;

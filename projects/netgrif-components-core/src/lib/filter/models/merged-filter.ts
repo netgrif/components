@@ -142,6 +142,15 @@ export class MergedFilter extends Filter {
     }
 
     /**
+     * See [Filter.clearFullTextFields()]{@link Filter#clearFullTextFields}
+     */
+    public clearFullTextFields(): void {
+        this._filters.forEach(filter => {
+            filter.fullTextFields = undefined;
+        });
+    }
+
+    /**
      * See [Filter.containsFullTextFields()]{@link Filter#containsFullTextFields}
      */
     public containsFullTextFields(): boolean {
