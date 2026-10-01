@@ -147,6 +147,12 @@ describe('SimpleCaseViewComponent', () => {
                                     '',
                                     [],
                                     {visible: true}
+                                ),
+                                new StringCollectionField(
+                                    GroupNavigationConstants.ITEM_FIELD_CASE_FULLTEXT_FIELDS,
+                                    '',
+                                    [],
+                                    {visible: true}
                                 )
                             ]
                         }

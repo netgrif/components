@@ -68,16 +68,18 @@ export class FilterExtractionService {
             throw new Error('Filter segment could not be extracted from filter field');
         }
 
-        const fullTextFields: string[] = extractFieldValueFromData<string[]>(dataSection, GroupNavigationConstants.ITEM_FIELD_CASE_FULLTEXT_FIELDS);
-        if (!!fullTextFields && fullTextFields.length > 0) {
-            const fullTextFieldsMap: {[fieldId: string]: number} = {};
-            fullTextFields.forEach(fieldId => {
-                if (!fieldId) {
-                    return;
-                }
-                fullTextFieldsMap[`dataSet.${fieldId}.fulltextValue`] = 1;
-            });
-            filterSegment.addFullTextFields(fullTextFieldsMap);
+        if (filterType === FilterType.CASE) {
+            const fullTextFields: string[] = extractFieldValueFromData<string[]>(dataSection, GroupNavigationConstants.ITEM_FIELD_CASE_FULLTEXT_FIELDS);
+            if (!!fullTextFields && fullTextFields.length > 0) {
+                const fullTextFieldsMap: {[fieldId: string]: number} = {};
+                fullTextFields.forEach(fieldId => {
+                    if (!fieldId) {
+                        return;
+                    }
+                    fullTextFieldsMap[`dataSet.${fieldId}.fulltextValue`] = 1;
+                });
+                filterSegment.addFullTextFields(fullTextFieldsMap);
+            }
         }
 
         if (!!filterData) {
