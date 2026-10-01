@@ -145,13 +145,24 @@ export class MergedFilter extends Filter {
      * See [Filter.containsFullTextFields()]{@link Filter#containsFullTextFields}
      */
     public containsFullTextFields(): boolean {
-        return false;
+        return this._filters.some(filter => !!filter.fullTextFields && Object.keys(filter.fullTextFields).length > 0);
     }
 
     /**
      * See [Filter.getFullTextFields()]{@link Filter#getFullTextFields}
      */
     public getFullTextFields(): { [fieldId: string]: number; } {
-        return {};
+        const mergedFullTextFields: { [fieldId: string]: number; } = {};
+        this._filters.forEach(filter => {
+            if (!filter.fullTextFields || Object.keys(filter.fullTextFields).length === 0) {
+                return;
+            }
+            for (const [fieldId, weight] of Object.entries(filter.fullTextFields)) {
+                if (!(fieldId in mergedFullTextFields) || (weight as number) < mergedFullTextFields[fieldId]) {
+                    mergedFullTextFields[fieldId] = weight as number;
+                }
+            }
+        });
+        return mergedFullTextFields;
     }
 }
