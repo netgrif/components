@@ -134,14 +134,23 @@ export class MergedFilter extends Filter {
         };
     }
 
-    // todo 2469
+    /**
+     * See [Filter.addFullTextFields()]{@link Filter#addFullTextFields}
+     */
     public addFullTextFields(fullTextFields: { [fieldId: string]: number; }): void {
         this._filters.forEach(filter => filter.fullTextFields = fullTextFields);
     }
 
+    /**
+     * See [Filter.containsFullTextFields()]{@link Filter#containsFullTextFields}
+     */
     public containsFullTextFields(): boolean {
         return false;
     }
+
+    /**
+     * See [Filter.getFullTextFields()]{@link Filter#getFullTextFields}
+     */
     public getFullTextFields(): { [fieldId: string]: number; } {
         return {};
     }

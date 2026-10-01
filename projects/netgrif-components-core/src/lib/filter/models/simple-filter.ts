@@ -110,17 +110,23 @@ export class SimpleFilter extends Filter {
         return this.deepCopy(this._filter) as CaseSearchRequestBody | TaskSearchRequestBody;
     }
 
-    // todo 2469
+    /**
+     * See [Filter.addFullTextFields()]{@link Filter#addFullTextFields}
+     */
     public addFullTextFields(fullTextFields: { [fieldId: string]: number; }): void {
         this._filter.fullTextFields = fullTextFields;
     }
 
-    // todo 2469
+    /**
+     * See [Filter.containsFullTextFields()]{@link Filter#containsFullTextFields}
+     */
     public containsFullTextFields(): boolean {
         return !!this._filter.fullTextFields && Object.keys(this._filter.fullTextFields).length > 0;
     }
 
-    // todo 2469
+    /**
+     * See [Filter.getFullTextFields()]{@link Filter#getFullTextFields}
+     */
     public getFullTextFields(): {[fieldId: string]: number} {
         return this._filter.fullTextFields;
     }

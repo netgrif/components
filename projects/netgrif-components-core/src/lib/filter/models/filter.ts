@@ -82,17 +82,17 @@ export abstract class Filter {
     public abstract bodyContainsQuery(): boolean;
 
     /**
-     * todo 2469
+     * Adds the full-text fields into filter implementation. It can be later used for a search request
      */
     public abstract addFullTextFields(fullTextFields: {[fieldId: string]: number}): void;
 
     /**
-     * todo 2469
+     * @returns `true` if the filter contains any full-text field
      */
     public abstract containsFullTextFields(): boolean;
 
     /**
-     * todo 2469
+     * @returns map of full-text fields loaded in the filter
      */
     public abstract getFullTextFields(): {[fieldId: string]: number};
 

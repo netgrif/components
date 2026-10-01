@@ -69,7 +69,7 @@ export class FilterExtractionService {
         }
 
         const fullTextFields: string[] = extractFieldValueFromData<string[]>(dataSection, GroupNavigationConstants.ITEM_FIELD_CASE_FULLTEXT_FIELDS);
-        if (!!fullTextFields) {
+        if (!!fullTextFields && fullTextFields.length > 0) {
             const fullTextFieldsMap: {[fieldId: string]: number} = {};
             fullTextFields.forEach(fieldId => {
                 if (!fieldId) {
