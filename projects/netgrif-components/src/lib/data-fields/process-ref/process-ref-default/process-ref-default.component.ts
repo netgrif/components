@@ -20,7 +20,7 @@ export class ProcessRefDefaultComponent extends AbstractProcessRefDefaultCompone
 
     constructor(injector: Injector,
                 @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<ProcessRefField>) {
-        super(injector, BuilderComponent, dataFieldPortalData)
+        super(injector, BuilderComponent, dataFieldPortalData);
     }
 
     ngOnInit() {
