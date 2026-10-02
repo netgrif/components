@@ -77,6 +77,10 @@ export interface TaskSearchRequestBody {
     tags?: {
         [key: string]: string
     };
+
+    fullTextFields?: {
+        [fieldId: string]: number
+    };
 }
 
 /**

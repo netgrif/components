@@ -109,4 +109,32 @@ export class SimpleFilter extends Filter {
     getRequestBody(): TaskSearchRequestBody | CaseSearchRequestBody {
         return this.deepCopy(this._filter) as CaseSearchRequestBody | TaskSearchRequestBody;
     }
+
+    /**
+     * See [Filter.addFullTextFields()]{@link Filter#addFullTextFields}
+     */
+    public addFullTextFields(fullTextFields: { [fieldId: string]: number; }): void {
+        this._filter.fullTextFields = fullTextFields;
+    }
+
+    /**
+     * See [Filter.clearFullTextFields()]{@link Filter#clearFullTextFields}
+     */
+    public clearFullTextFields(): void {
+        this._filter.fullTextFields = undefined;
+    }
+
+    /**
+     * See [Filter.containsFullTextFields()]{@link Filter#containsFullTextFields}
+     */
+    public containsFullTextFields(): boolean {
+        return !!this._filter.fullTextFields && Object.keys(this._filter.fullTextFields).length > 0;
+    }
+
+    /**
+     * See [Filter.getFullTextFields()]{@link Filter#getFullTextFields}
+     */
+    public getFullTextFields(): {[fieldId: string]: number} {
+        return this._filter.fullTextFields;
+    }
 }
