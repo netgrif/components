@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Filter} from '../../filter/models/filter';
 import {DataGroup} from '../../resources/interface/data-groups';
-import {extractFilterFromFilterField} from './navigation-item-task-utility-methods';
+import {extractFieldValueFromData, extractFilterFromFilterField} from './navigation-item-task-utility-methods';
 import {getFieldIndexFromDataGroups} from '../../utility/get-field';
 import {FilterRepository} from '../../filter/filter.repository';
 import {LoggerService} from '../../logger/services/logger.service';
@@ -17,6 +17,7 @@ import {BaseAllowedNetsService} from "../../allowed-nets/services/base-allowed-n
 import {ActivatedRoute} from '@angular/router';
 import {SimpleFilter} from '../../filter/models/simple-filter';
 import {FilterType} from "../../filter/models/filter-type";
+import {GroupNavigationConstants} from "../model/group-navigation-constants";
 
 /**
  * This service is able to load the full saved filter including all of its ancestor filters.
@@ -65,6 +66,20 @@ export class FilterExtractionService {
             );
         } catch (e) {
             throw new Error('Filter segment could not be extracted from filter field');
+        }
+
+        if (filterType === FilterType.CASE && !!getFieldIndexFromDataGroups(dataSection, GroupNavigationConstants.ITEM_FIELD_CASE_FULLTEXT_FIELDS)) {
+            const fullTextFields: string[] = extractFieldValueFromData<string[]>(dataSection, GroupNavigationConstants.ITEM_FIELD_CASE_FULLTEXT_FIELDS);
+            if (!!fullTextFields && fullTextFields.length > 0) {
+                const fullTextFieldsMap: {[fieldId: string]: number} = {};
+                fullTextFields.forEach(fieldId => {
+                    if (!fieldId) {
+                        return;
+                    }
+                    fullTextFieldsMap[`dataSet.${fieldId}.fulltextValue`] = 1;
+                });
+                filterSegment.addFullTextFields(fullTextFieldsMap);
+            }
         }
 
         if (!!filterData) {

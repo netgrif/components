@@ -82,6 +82,26 @@ export abstract class Filter {
     public abstract bodyContainsQuery(): boolean;
 
     /**
+     * Adds the full-text fields into filter implementation. It can be later used for a search request
+     */
+    public abstract addFullTextFields(fullTextFields: {[fieldId: string]: number}): void;
+
+    /**
+     * Clears full-text fields
+     */
+    public abstract clearFullTextFields(): void;
+
+    /**
+     * @returns `true` if the filter contains any full-text field
+     */
+    public abstract containsFullTextFields(): boolean;
+
+    /**
+     * @returns map of full-text fields loaded in the filter
+     */
+    public abstract getFullTextFields(): {[fieldId: string]: number};
+
+    /**
      * Returns the necessary request params for the filter. Default implementation returns an empty object.
      * The params are added on top of the request when sending it to the backend by the respective service methods.
      * @returns an empty object `{}`

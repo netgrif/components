@@ -133,4 +133,45 @@ export class MergedFilter extends Filter {
             operation: this._operator
         };
     }
+
+    /**
+     * See [Filter.addFullTextFields()]{@link Filter#addFullTextFields}
+     */
+    public addFullTextFields(fullTextFields: { [fieldId: string]: number; }): void {
+        this._filters.forEach(filter => filter.fullTextFields = fullTextFields);
+    }
+
+    /**
+     * See [Filter.clearFullTextFields()]{@link Filter#clearFullTextFields}
+     */
+    public clearFullTextFields(): void {
+        this._filters.forEach(filter => {
+            filter.fullTextFields = undefined;
+        });
+    }
+
+    /**
+     * See [Filter.containsFullTextFields()]{@link Filter#containsFullTextFields}
+     */
+    public containsFullTextFields(): boolean {
+        return this._filters.some(filter => !!filter.fullTextFields && Object.keys(filter.fullTextFields).length > 0);
+    }
+
+    /**
+     * See [Filter.getFullTextFields()]{@link Filter#getFullTextFields}
+     */
+    public getFullTextFields(): { [fieldId: string]: number; } {
+        const mergedFullTextFields: { [fieldId: string]: number; } = {};
+        this._filters.forEach(filter => {
+            if (!filter.fullTextFields || Object.keys(filter.fullTextFields).length === 0) {
+                return;
+            }
+            for (const [fieldId, weight] of Object.entries(filter.fullTextFields)) {
+                if (!(fieldId in mergedFullTextFields) || (weight as number) < mergedFullTextFields[fieldId]) {
+                    mergedFullTextFields[fieldId] = weight as number;
+                }
+            }
+        });
+        return mergedFullTextFields;
+    }
 }
