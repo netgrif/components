@@ -71,21 +71,23 @@
                             <mat-icon color="warn">close</mat-icon>
                             {{ 'tasks.view.cancel' | translate}}
                         </button>
-                        <div class="mat-menu-item-look" *ngIf="canOverflow && showTableSection">
+                        <mat-divider *ngIf="canOverflow && showTableSection"></mat-divider>
+                        <div class="header-menu-row header-menu-toggle" (click)="clickStop($event)"
+                             *ngIf="canOverflow && showTableSection">
                             <mat-slide-toggle
                                 [formControl]="overflowControl">{{ 'headers.overflowMode' | translate}}</mat-slide-toggle>
                         </div>
-                        <div class="mat-menu-item-look mat-menu-item-height" (click)="clickStop($event)"
+                        <div class="header-menu-row header-menu-field" (click)="clickStop($event)"
                              *ngIf="canOverflow && showTableSection && overflowControl.value">
-                            <mat-form-field appearance="outline">
+                            <mat-form-field appearance="outline" subscriptSizing="dynamic">
                                 <mat-label>{{ 'headers.columnWidth' | translate}}</mat-label>
                                 <input matInput type="number" [formControl]="columnWidthControl">
                                 <mat-error *ngIf="!columnWidthControl.valid">{{getErrorMessageWidth()}}</mat-error>
                             </mat-form-field>
                         </div>
-                        <div class="mat-menu-item-look mat-menu-item-height" (click)="clickStop($event)"
+                        <div class="header-menu-row header-menu-field" (click)="clickStop($event)"
                              *ngIf="canOverflow && showTableSection && overflowControl.value">
-                            <mat-form-field appearance="outline">
+                            <mat-form-field appearance="outline" subscriptSizing="dynamic">
                                 <mat-label>{{ 'headers.columnCount' | translate}}</mat-label>
                                 <input matInput type="number" [formControl]="columnCountControl">
                                 <mat-error *ngIf="!columnCountControl.valid">{{getErrorMessageCount()}}</mat-error>
