@@ -3,15 +3,24 @@ import {
     AbstractProcessRefDefaultComponent,
     DATA_FIELD_PORTAL_DATA,
     DataFieldPortalData,
-    ProcessRefField
+    ProcessRefField,
+    builderViewModeTokenFactory,
+    BUILDER_VIEW_MODE
 } from '@netgrif/components-core';
 import {BuilderComponent} from '../../../builder/builder.component';
 import {Subscription} from 'rxjs';
 
 @Component({
-  selector: 'nc-process-ref-default',
-  templateUrl: './process-ref-default.component.html',
-  styleUrls: ['./process-ref-default.component.scss']
+    selector: 'nc-process-ref-default',
+    templateUrl: './process-ref-default.component.html',
+    styleUrls: ['./process-ref-default.component.scss'],
+    providers: [
+        {
+            provide: BUILDER_VIEW_MODE,
+            useFactory: builderViewModeTokenFactory,
+            deps: [[new Optional(), DATA_FIELD_PORTAL_DATA]]
+        }
+    ]
 })
 export class ProcessRefDefaultComponent extends AbstractProcessRefDefaultComponent implements OnInit, AfterViewInit, OnDestroy {
 

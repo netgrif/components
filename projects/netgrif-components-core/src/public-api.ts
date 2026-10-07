@@ -50,3 +50,4 @@ export * from './lib/actions/public-api';
 export * from './lib/providers/public-api';
 export * from './lib/export/public-api';
 export * from './lib/pfql/public-api';
+export * from './lib/builder/public-api';

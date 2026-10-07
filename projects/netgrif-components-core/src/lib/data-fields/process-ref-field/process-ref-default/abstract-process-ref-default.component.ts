@@ -25,11 +25,4 @@ export abstract class AbstractProcessRefDefaultComponent extends AbstractBaseDat
         });
         this.componentPortal = new ComponentPortal(this.builderComponent, null, portalInjector);
     }
-
-    protected isDataFieldVisible(): boolean {
-        if (!this.dataField) {
-            return false;
-        }
-        return !!(this.dataField as ProcessRefField).behavior?.visible;
-    }
 }
