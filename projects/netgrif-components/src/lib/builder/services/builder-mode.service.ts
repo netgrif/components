@@ -17,6 +17,7 @@ export enum BuilderMode {
 export class BuilderModeService {
 
     private _mode: BehaviorSubject<BuilderMode> = new BehaviorSubject(BuilderMode.MODELER);
+    private _readOnly: boolean = false;
 
     public mode$(): Observable<BuilderMode> {
         return this._mode.asObservable();
@@ -28,5 +29,13 @@ export class BuilderModeService {
 
     set mode(value: BuilderMode) {
         this._mode.next(value);
+    }
+
+    get readOnly(): boolean {
+        return this._readOnly;
+    }
+
+    set readOnly(readOnly: boolean) {
+        this._readOnly = readOnly;
     }
 }

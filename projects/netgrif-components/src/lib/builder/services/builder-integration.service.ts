@@ -5,6 +5,7 @@ import {
     extractFieldValueFromData,
     LoadingEmitter,
     LoggerService,
+    ProcessRefField,
     TaskEventOutcome,
     TaskResourceService
 } from "@netgrif/components-core";
@@ -16,9 +17,10 @@ import {Observable, of, Subject, Subscription} from 'rxjs';
 export class BuilderIntegrationService implements OnDestroy {
     protected _isIntegrated: boolean;
     protected _processCase: Case;
+    protected _dataField: ProcessRefField;
     protected _editTaskId: string;
     protected _isAssigned: boolean;
-    protected _onlyTaskView: boolean;
+    protected _onlyTaskView: boolean; // todo 2489 uz netreba?
 
     protected _reloadCase: Subject<boolean>;
     protected _reloadModes: Subject<boolean>;
@@ -67,6 +69,14 @@ export class BuilderIntegrationService implements OnDestroy {
 
     set processCase(value: Case) {
         this._processCase = value;
+    }
+
+    get dataField(): ProcessRefField {
+        return this._dataField;
+    }
+
+    set dataField(dataField: ProcessRefField) {
+        this._dataField = dataField;
     }
 
     get editTaskId(): string {

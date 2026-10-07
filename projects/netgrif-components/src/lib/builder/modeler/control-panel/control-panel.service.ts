@@ -60,27 +60,20 @@ export class ControlPanelService {
     protected initialize() {
         this._modeRegistry = new ModeRegistry();
         this._globalToolRegistry.reset();
-        if (this._builderIntegrationService.isIntegrated && this._builderIntegrationService.onlyTaskView) {
-            this.initializeOnlyTaskMode();
-        } else {
-            this.initializeNormalMode();
-        }
+        this.initializeMode();
         this._defaultMode = this._builderIntegrationService.isIntegrated ? this._taskModeService.mode : this._editModeService.mode;
 
         this.activate();
-        if (!this._builderIntegrationService.isIntegrated || !this._builderIntegrationService.onlyTaskView) {
+        if (!this._builderModeService.readOnly) {
             this._globalToolRegistry.registerItem(this._importModelTool);
-            this._globalToolRegistry.registerItem(this._exportModelTool);
-            this._globalToolRegistry.registerItem(this._exportSvgTool);
             this._globalToolRegistry.registerItem(this._undoTool);
             this._globalToolRegistry.registerItem(this._redoTool);
-        } else {
-            this._globalToolRegistry.registerItem(this._exportModelTool);
-            this._globalToolRegistry.registerItem(this._exportSvgTool);
         }
+        this._globalToolRegistry.registerItem(this._exportModelTool);
+        this._globalToolRegistry.registerItem(this._exportSvgTool);
     }
 
-    protected initializeNormalMode() {
+    protected initializeMode() {
         if (this._builderIntegrationService.isIntegrated) {
             this.registerMode(this._taskModeService);
         }
@@ -90,12 +83,9 @@ export class ControlPanelService {
         this.registerMode(this._roleModeService);
         this.registerMode(this._actionModeService);
         this.registerMode(this._i18nModeService);
-        this.registerMode(this._historyModeService);
-    }
-
-    protected initializeOnlyTaskMode() {
-        this.registerMode(this._taskModeService);
-        this.registerMode(this._simulationModeService);
+        if (!this._builderModeService.readOnly) {
+            this.registerMode(this._historyModeService);
+        }
     }
 
     // TODO: NAB-326 fix tool vs toolgroup and dividers problem

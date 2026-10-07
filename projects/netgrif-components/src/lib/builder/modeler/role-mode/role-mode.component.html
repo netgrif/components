@@ -1,10 +1,11 @@
 <nc-builder-master-detail [defaultWidth]="35" fxFlex="grow"
-                   [masterItemComponent]="masterItemComponent"
-                   [masterService]="masterService"
-                   [detailComponent]="detailComponent"
-                   [firstColName]="'builder.modeler.role-mode.idLabel' | translate"
-                   [secondColName]="'builder.modeler.role-mode.name' | translate"
-                   [buttonTooltip]="'builder.modeler.role-mode.addRole' | translate"
+                          [masterItemComponent]="masterItemComponent"
+                          [masterService]="masterService"
+                          [detailComponent]="detailComponent"
+                          [firstColName]="'builder.modeler.role-mode.idLabel' | translate"
+                          [secondColName]="'builder.modeler.role-mode.name' | translate"
+                          [buttonTooltip]="'builder.modeler.role-mode.addRole' | translate"
+                          [showAddButton]="!_builderModeService.readOnly"
 >
 </nc-builder-master-detail>
 

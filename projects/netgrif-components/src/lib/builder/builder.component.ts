@@ -1,4 +1,4 @@
-import {Component, Inject, Optional, Type, OnDestroy} from '@angular/core';
+import {Component, Inject, OnDestroy, Optional, Type} from '@angular/core';
 import {BuilderMode, BuilderModeService} from "./services/builder-mode.service";
 import {ModelService} from "./modeler/services/model/model.service";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -6,14 +6,14 @@ import {MatDialog} from "@angular/material/dialog";
 import {HttpClient} from "@angular/common/http";
 import {HistoryService} from "./modeler/services/history/history.service";
 import {
-    CaseResourceService,
-    LoadingEmitter,
-    NAE_TAB_DATA,
-    ImmediateData,
-    DATA_FIELD_PORTAL_DATA,
     CaseRefField,
+    CaseResourceService,
+    DATA_FIELD_PORTAL_DATA,
     DataFieldPortalData,
-    LoggerService
+    ImmediateData,
+    LoadingEmitter,
+    LoggerService,
+    NAE_TAB_DATA, ProcessRefField
 } from "@netgrif/components-core";
 import {InjectedTabbedBuilderViewData} from "./injected-builder-data";
 import {FieldListService} from './form-builder/field-list/field-list.service';
@@ -145,7 +145,7 @@ export class BuilderComponent implements OnDestroy {
                 protected _builderIntegrationService: BuilderIntegrationService,
                 protected _logger: LoggerService,
                 @Optional() @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabbedBuilderViewData,
-                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<CaseRefField>,
+                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<ProcessRefField>,
                 protected _translateService: TranslateService) {
         this.loading = new LoadingEmitter(true);
         if (injectedTabData !== null && injectedTabData?.processCase) {
@@ -156,7 +156,7 @@ export class BuilderComponent implements OnDestroy {
                 this._caseResourceService.getOneCase(this._builderIntegrationService.processCase.stringId).subscribe({
                     next: processCase => {
                         this._builderIntegrationService.processCase = processCase;
-                        this.resolveIntegratedMode()
+                        this.resolveIntegratedMode();
                         this._builderIntegrationService.reloadModes = true;
                     },
                     error: error => {
@@ -166,6 +166,7 @@ export class BuilderComponent implements OnDestroy {
             });
         } else if (dataFieldPortalData !== null && dataFieldPortalData?.dataField?.value?.length > 0) {
             this._builderIntegrationService.isIntegrated = true;
+            this._builderIntegrationService.dataField = dataFieldPortalData.dataField;
             this._caseResourceService.getOneCase(dataFieldPortalData?.dataField?.value[0]).subscribe({next: processCase => {
                 this._builderIntegrationService.processCase = processCase;
                 this.resolveIntegratedMode();
@@ -175,7 +176,7 @@ export class BuilderComponent implements OnDestroy {
             this._reloadSub = this._builderIntegrationService.reloadCase.subscribe(() => {
                 this._caseResourceService.getOneCase(this._builderIntegrationService.processCase?.stringId).subscribe(processCase => {
                     this._builderIntegrationService.processCase = processCase;
-                    this.resolveIntegratedMode()
+                    this.resolveIntegratedMode();
                     this._builderIntegrationService.reloadModes = true;
                 })
             });
@@ -199,9 +200,11 @@ export class BuilderComponent implements OnDestroy {
 
     protected resolveIntegratedMode() {
         if (this._builderIntegrationService.processCase.immediateData.find((data: ImmediateData) => data.stringId === 'state')?.value === 'draft') {
-            const taskId = this._builderIntegrationService.processCase.tasks.find(taskPair => taskPair.transition === 'edit')?.task;
-            this._builderIntegrationService.editTaskId = taskId;
+            this._builderIntegrationService.editTaskId = this._builderIntegrationService.processCase.tasks.find(taskPair => taskPair.transition === 'edit')?.task;
             this._builderIntegrationService.onlyTaskView = false;
+            if (this._builderIntegrationService.dataField?.behavior?.visible) {
+                this.builderModeService.readOnly = true;
+            }
             this._builderIntegrationService.getXml().subscribe(value => {
                 this.parseModel(value, BuilderMode.TASK_MODE);
                 this.loading.off();
@@ -211,6 +214,7 @@ export class BuilderComponent implements OnDestroy {
             })
         } else if (this._builderIntegrationService.processCase.immediateData.find((data: ImmediateData) => data.stringId === 'state')?.value === 'deployed') {
             const taskId = this._builderIntegrationService.processCase.tasks.find(taskPair => taskPair.transition === 'view')?.task;
+            this.builderModeService.readOnly = true;
             this._builderIntegrationService.editTaskId = undefined;
             this._builderIntegrationService.onlyTaskView = true;
             this._builderIntegrationService.getXml(taskId).subscribe(value => {

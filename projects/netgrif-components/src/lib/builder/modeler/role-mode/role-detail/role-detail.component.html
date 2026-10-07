@@ -15,7 +15,7 @@
 
         <mat-form-field appearance="outline" fxFlex="45">
             <mat-label>{{ 'builder.modeler.role-mode.title' | translate }}</mat-label>
-            <input matInput [ngModel]="role.role.title.value" (change)="changeTitle($event)">
+            <input matInput [ngModel]="role.role.title.value" (change)="changeTitle($event)" [disabled]="_builderModeService.readOnly">
         </mat-form-field>
 
         <div fxFlex="2.5"></div>
@@ -24,7 +24,7 @@
         <div fxFlex="2.5"></div>
 
         <div fxFlex="45">
-            <mat-checkbox [ngModel]="role.role.global" (change)="changeGlobalFlag($event)">
+            <mat-checkbox [ngModel]="role.role.global" (change)="changeGlobalFlag($event)" [disabled]="_builderModeService.readOnly">
                 {{ 'builder.modeler.role-mode.isGlobal' | translate }}
             </mat-checkbox>
         </div>

@@ -33,21 +33,31 @@ export class RoleDetailComponent implements OnDestroy {
         protected _builderModeService: BuilderModeService,
         protected _translateService: TranslateService
     ) {
+        this.roleIdForm = new FormControl('', [
+            Validators.required,
+            this.validUnique(),
+        ]);
         this._masterService.getSelected$().subscribe(item => {
             this.saveChange();
             if (item === undefined) {
                 return;
             }
             this.role = new ChangedRole(item.clone());
+            this.disableRoleIdFormControlOnReadOnly();
         });
-        this.roleIdForm = new FormControl('', [
-            Validators.required,
-            this.validUnique(),
-        ]);
+        this.disableRoleIdFormControlOnReadOnly();
     }
 
     ngOnDestroy(): void {
         this.saveChange();
+    }
+
+    private disableRoleIdFormControlOnReadOnly() {
+        if (this._builderModeService.readOnly) {
+            this.roleIdForm.disable();
+        } else {
+            this.roleIdForm.enable();
+        }
     }
 
     private saveChange(): void {

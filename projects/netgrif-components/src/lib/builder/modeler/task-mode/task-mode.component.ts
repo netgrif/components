@@ -17,15 +17,15 @@ import {
     AllowedNetsService,
     TaskEventNotification,
     TaskEvent,
-    NAE_DEFAULT_HEADERS,
-    BUILDER_VIEW_MODE
+    NAE_DEFAULT_HEADERS
 } from '@netgrif/components-core';
 import {BuilderIntegrationService} from "../../services/builder-integration.service";
+import {BuilderModeService} from "../../services/builder-mode.service";
 
-const baseFilterFactory = (integrationService: BuilderIntegrationService, builderViewMode: boolean) => {
+const baseFilterFactory = (integrationService: BuilderIntegrationService, modeService: BuilderModeService) => {
     const caseId = integrationService?.processCase?.stringId ?? "__EMPTY__"
     let transitionIds = ['deploy', 't10', 't11', 't4', 't6', 't9', 'view'];
-    if (!!builderViewMode) {
+    if (modeService.readOnly) {
         transitionIds = ['view'];
     }
     return {filter: SimpleFilter.fromTaskQuery({case: {id: caseId}, transitionId: transitionIds})};
@@ -55,7 +55,7 @@ const localAllowedNetsFactory = (factory: AllowedNetsServiceFactory) => {
         {
             provide: NAE_BASE_FILTER,
             useFactory: baseFilterFactory,
-            deps: [BuilderIntegrationService, BUILDER_VIEW_MODE]
+            deps: [BuilderIntegrationService, BuilderModeService]
         },
         {
             provide: AllowedNetsService,
