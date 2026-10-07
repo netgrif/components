@@ -17,7 +17,7 @@
             <ng-template matExpansionPanelContent>
                 <div fxLayout="row">
                     <div fxFlex fxLayoutGap="3em" fxLayoutAlign="start center">
-                        <button type="button" mat-button (click)="openDrawer()">
+                        <button type="button" mat-button (click)="openDrawer()" *ngIf="!_builderModeService.readOnly">
                             <mat-icon *ngIf="drawer.opened; else closed">
                                 keyboard_arrow_left
                             </mat-icon>
@@ -44,7 +44,8 @@
                         </mat-menu>
                         <button #matButton fxFlexAlign="end center" type="button" mat-button
                                 #referencesTrigger="matMenuTrigger"
-                                [matMenuTriggerFor]="referencesMenu">
+                                [matMenuTriggerFor]="referencesMenu"
+                                [hidden]="_builderModeService.readOnly">
                             <mat-icon>
                                 link
                             </mat-icon>
@@ -66,7 +67,7 @@
                 </div>
             </ng-template>
             <mat-action-row>
-                <button mat-icon-button (click)="openDialog(index)">
+                <button mat-icon-button (click)="openDialog(index)" *ngIf="!_builderModeService.readOnly">
                     <mat-icon>delete</mat-icon>
                 </button>
             </mat-action-row>
