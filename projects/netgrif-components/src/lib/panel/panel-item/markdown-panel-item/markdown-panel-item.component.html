@@ -1,0 +1,8 @@
+<div #content class="panel-text panel-markdown"
+     [ngClass]="{'text-column-ellipsis': data.textEllipsis, 'text-column-word-wrap': !data.textEllipsis}"
+     [matTooltip]="tooltipText"
+     [matTooltipDisabled]="!data.textEllipsis"
+     [matTooltipClass]="'pre-line-dialog'"
+     (click)="handleClick($event)">
+    <td-markdown [content]="data.featuredValue.value"></td-markdown>
+</div>

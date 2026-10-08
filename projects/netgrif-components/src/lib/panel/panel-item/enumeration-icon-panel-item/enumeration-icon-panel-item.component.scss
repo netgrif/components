@@ -1,0 +1,18 @@
+@use '../panel-item-renderer';
+
+.enumeration-icon-panel-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+}
+
+.enumeration-icon-panel-item mat-icon {
+    flex: 0 0 auto;
+}
+
+.enumeration-icon-panel-item > span {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

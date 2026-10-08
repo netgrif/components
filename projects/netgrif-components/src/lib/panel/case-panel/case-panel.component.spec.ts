@@ -29,6 +29,7 @@ import {
     MockAuthenticationMethodService
 } from '@netgrif/components-core';
 import { RouterTestingModule } from '@angular/router/testing';
+import {By} from '@angular/platform-browser';
 
 describe('CasePanelComponent', () => {
     let component: CasePanelComponent;
@@ -72,6 +73,14 @@ describe('CasePanelComponent', () => {
         expect(component).toBeTruthy();
     });
 
+    it('should hide the leading case icon when disabled', () => {
+        fixture.componentInstance.showCasePanelIcon = false;
+        fixture.detectChanges();
+
+        const panelItems = fixture.debugElement.queryAll(By.css('nc-panel-item'));
+        expect(panelItems[0].properties['leadingIconEnabled']).toBeFalse();
+    });
+
     afterEach(() => {
         TestBed.resetTestingModule();
     });
@@ -79,9 +88,10 @@ describe('CasePanelComponent', () => {
 
 @Component({
     selector: 'nc-test-wrapper',
-    template: '<nc-case-panel [selectedHeaders$]="selectedHeaders" [case_]="case_"> </nc-case-panel>'
+    template: '<nc-case-panel [selectedHeaders$]="selectedHeaders" [case_]="case_" [showCasePanelIcon]="showCasePanelIcon"> </nc-case-panel>'
 })
 class TestWrapperComponent {
+    showCasePanelIcon = true;
     selectedHeaders = of([
         new HeaderColumn(HeaderColumnType.META, CaseMetaField.VISUAL_ID, 'string', 'string'),
         new HeaderColumn(HeaderColumnType.META, CaseMetaField.AUTHOR, 'string', 'string'),

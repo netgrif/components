@@ -5,6 +5,7 @@ import {AppComponent} from './app.component';
 import {
     AuthenticationModule,
     ConfigurationService,
+    PanelItemComponentRegistryService,
     CovalentModule,
     ComponentRegistryService,
     DialogModule,
@@ -49,6 +50,7 @@ import {PasswordFormComponent} from './doc/forms/email-form/password-form.compon
 import {RegisterFormComponent} from './doc/forms/register-form/register-form.component';
 import {HeadersComponent} from './doc/headers/headers.component';
 import {PanelsComponent} from './doc/panels/panels.component';
+import {EnumerationValuePanelItemComponent} from './doc/panels/test-enum/enumeration-value-panel-item.component';
 import {DashboardExampleComponent} from './doc/dashboard-example/dashboard-example.component';
 import {FilterRepositoryExampleComponent} from './doc/filter-repository-example/filter-repository-example.component';
 import {ProfileComponent} from './doc/profile/profile.component';
@@ -164,6 +166,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         RegisterFormComponent,
         HeadersComponent,
         PanelsComponent,
+        EnumerationValuePanelItemComponent,
         DashboardExampleComponent,
         FilterRepositoryExampleComponent,
         ProfileComponent,
@@ -285,7 +288,8 @@ export function HttpLoaderFactory(http: HttpClient) {
 })
 export class AppModule {
 
-    constructor(registry: ComponentRegistryService) {
+    constructor(registry: ComponentRegistryService,
+                panelItemRegistry: PanelItemComponentRegistryService) {
         registry.register('email', (injector: Injector) => new ComponentPortal(EmailSubmissionFormComponent, null, injector));
         registry.register('workflow-view', (injector: Injector) => new ComponentPortal(WorkflowViewExampleComponent, null, injector));
         registry.register('task-view', (injector: Injector) => new ComponentPortal(TaskViewComponent, null, injector));
@@ -294,5 +298,11 @@ export class AppModule {
         registry.register(Dashboard.FILTER_TAB_VIEW_ID, (injector: Injector) => new ComponentPortal(FilterFieldTabViewComponent, null, injector));
         registry.registerType(Dashboard.FILTER_CASE_VIEW_ID, FilterFieldTabbedCaseViewComponent);
         registry.registerType(Dashboard.FILTER_TASK_VIEW_ID, FilterFieldTabbedTaskViewComponent);
+
+
+        panelItemRegistry.registerIfAbsent('enumeration', "totok", injector =>
+            new ComponentPortal(EnumerationValuePanelItemComponent, null, injector));
+        panelItemRegistry.registerIfAbsent('enumeration_map', "totok", injector =>
+            new ComponentPortal(EnumerationValuePanelItemComponent, null, injector));
     }
 }
