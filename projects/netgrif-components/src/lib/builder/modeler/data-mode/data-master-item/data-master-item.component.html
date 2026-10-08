@@ -10,13 +10,13 @@
     </div>
     <div fxFlex="10">
         <button mat-icon-button matTooltip="{{'builder.modeler.data-mode.deleteDataField' | translate}}" (click)="onDelete($event, item)"
-                [ngClass]="{'data-edit-list-icon-hidden': !showIcons}">
+                [ngClass]="{'data-edit-list-icon-hidden': !showIcons}" *ngIf="!_builderModeService.readOnly">
             <mat-icon>delete</mat-icon>
         </button>
     </div>
     <div fxFlex="10">
         <button mat-icon-button matTooltip="{{'builder.modeler.data-mode.duplicateDataField' | translate}}" (click)="onDuplicate($event, item)"
-                [ngClass]="{'data-edit-list-icon-hidden': !showIcons}">
+                [ngClass]="{'data-edit-list-icon-hidden': !showIcons}" *ngIf="!_builderModeService.readOnly">
             <mat-icon>add_to_photos</mat-icon>
         </button>
     </div>

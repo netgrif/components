@@ -1,8 +1,9 @@
 import {ComponentType} from '@angular/cdk/overlay';
 import {Component} from '@angular/core';
-import {DataDetailComponent} from './data-detail/data-detail.component';
+import DataDetailComponent from './data-detail/data-detail.component';
 import {DataMasterDetailService} from './data-master-detail.service';
 import {DataMasterItemComponent} from './data-master-item/data-master-item.component';
+import {BuilderModeService} from "../../services/builder-mode.service";
 
 export interface TypeArray {
     viewValue: string;
@@ -16,7 +17,7 @@ export interface TypeArray {
 })
 export class DataModeComponent {
 
-    constructor(protected _masterService: DataMasterDetailService ) {
+    constructor(protected _masterService: DataMasterDetailService, protected _builderModeService: BuilderModeService) {
     }
 
     get detailComponent(): ComponentType<any> {

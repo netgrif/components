@@ -1,8 +1,9 @@
 <nc-builder-master-detail [defaultWidth]="35" fxFlex="grow"
-                   [masterItemComponent]="masterItemComponent"
-                   [masterService]="masterService"
-                   [detailComponent]="detailComponent"
-                   [firstColName]="'builder.modeler.data-mode.idLabel' | translate"
-                   [secondColName]="'builder.modeler.data-mode.name' | translate"
-                   [buttonTooltip]="'builder.modeler.data-mode.addDataVariable' | translate">
+                          [masterItemComponent]="masterItemComponent"
+                          [masterService]="masterService"
+                          [detailComponent]="detailComponent"
+                          [firstColName]="'builder.modeler.data-mode.idLabel' | translate"
+                          [secondColName]="'builder.modeler.data-mode.name' | translate"
+                          [buttonTooltip]="'builder.modeler.data-mode.addDataVariable' | translate"
+                          [showAddButton]="!_builderModeService.readOnly">
 </nc-builder-master-detail>

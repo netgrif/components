@@ -50,7 +50,7 @@ export interface HistoryDataSave {
     templateUrl: './data-detail.component.html',
     styleUrl: './data-detail.component.scss'
 })
-export class DataDetailComponent implements OnDestroy {
+class DataDetailComponent implements OnDestroy {
 
     counterEnumMap = 0;
     formControlRef: FormControl;
@@ -69,11 +69,16 @@ export class DataDetailComponent implements OnDestroy {
         private _actionMode: ActionsModeService,
         private _actionsMasterDetail: ActionsMasterDetailService,
         private _historyService: HistoryService,
-        private _builderModeService: BuilderModeService,
+        protected _builderModeService: BuilderModeService,
         private _translateService: TranslateService
     ) {
         this.formControlRef = new FormControl();
         this.componentNameFormCtrl = new FormControl();
+        if (this._builderModeService.readOnly) {
+            this.componentNameFormCtrl.disable();
+        } else {
+            this.componentNameFormCtrl.enable();
+        }
         this.transitionOptions = this.createTransOptions();
         this._masterService.getSelected$().subscribe(obj => {
             if (this.historyDataSave?.save) {
