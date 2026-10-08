@@ -9,7 +9,8 @@
                 </mat-option>
             </mat-autocomplete>
         </mat-form-field>
-        <button mat-icon-button class="button-line" matTooltip="{{ 'builder.modeler.i18n-mode.addLocale' | translate }}" (click)="addLocal()" [disabled]="invalidLocale()">
+        <button mat-icon-button class="button-line" matTooltip="{{ 'builder.modeler.i18n-mode.addLocale' | translate }}"
+                (click)="addLocal()" [disabled]="invalidLocale() || _builderModeService.readOnly">
             <mat-icon>add</mat-icon>
         </button>
     </div>

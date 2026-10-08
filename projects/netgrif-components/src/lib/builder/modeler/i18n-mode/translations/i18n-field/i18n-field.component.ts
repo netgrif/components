@@ -6,6 +6,7 @@ import {I18nControlService} from "../../i18n-control.service";
 import {MatFormField, MatInput, MatLabel} from "@angular/material/input";
 import {FlexLayoutModule} from "@ngbracket/ngx-layout";
 import {TranslateModule} from "@ngx-translate/core";
+import {BuilderModeService} from "../../../../services/builder-mode.service";
 
 @Component({
     selector: 'nc-builder-i18n-field',
@@ -21,7 +22,7 @@ export class I18nFieldComponent implements OnInit {
     private _translationField: I18nString;
     private _translation: I18nTranslations;
 
-    constructor(protected _i18nModeService: I18nControlService) {
+    constructor(protected _i18nModeService: I18nControlService, protected _builderModeService: BuilderModeService) {
     }
 
     ngOnInit(): void {
