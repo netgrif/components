@@ -37,7 +37,7 @@ export class TaskViewService extends AbstractSortableViewComponent implements On
 
     protected _tasks$: Observable<Array<TaskPanelData>>;
     protected _changedFields$: Subject<ChangedFieldsMap>;
-    protected _requestedPage$: BehaviorSubject<PageLoadRequestContext>;
+    protected _requestedPage$: ReplaySubject<PageLoadRequestContext>;
     protected _loading$: LoadingWithFilterEmitter;
     protected _endOfData: boolean;
     protected _pagination: Pagination;
@@ -64,7 +64,7 @@ export class TaskViewService extends AbstractSortableViewComponent implements On
                 private _userComparator: UserComparatorService,
                 resolver: SearchIndexResolverService,
                 @Optional() @Inject(NAE_PREFERRED_TASK_ENDPOINT) protected readonly _preferredEndpoint: TaskEndpoint = null,
-                @Optional() @Inject(NAE_DYNAMIC_DEFAULT_SORT) protected _dynamicDefaultSort$: Observable<SortChangeDescription>,
+                @Optional() @Inject(NAE_DYNAMIC_DEFAULT_SORT) protected _dynamicDefaultSort$: Observable<SortChangeDescription[]>,
                 @Optional() @Inject(NAE_TASK_VIEW_CONFIGURATION) taskViewConfig: TaskViewConfiguration = null) {
         super(resolver);
         this._tasks$ = new Subject<Array<TaskPanelData>>();
@@ -78,6 +78,7 @@ export class TaskViewService extends AbstractSortableViewComponent implements On
             totalPages: undefined,
             number: -1
         };
+        this._requestedPage$ = new ReplaySubject<PageLoadRequestContext>(1);
         this._panelUpdate$ = new BehaviorSubject<Array<TaskPanelData>>([]);
         this._closeTab$ = new ReplaySubject<void>(1);
         this._preferredEndpoint = taskViewConfig?.preferredEndpoint ?? (this._preferredEndpoint ?? TaskEndpoint.MONGO);
@@ -376,10 +377,22 @@ export class TaskViewService extends AbstractSortableViewComponent implements On
         return params;
     }
 
+   // todo check header sort resolving, this seems not user friendly + probably won't work with userPreferences
     protected requestPageWithDynamicSort(requestContext: PageLoadRequestContext) {
-        if (!!this._dynamicDefaultSort$ && this._lastHeaderSearchState.fieldIdentifier === '') {
-            this._dynamicDefaultSort$.subscribe(sortChangeDesc => {
-                this._lastHeaderSearchState = sortChangeDesc;
+        if (!!this._dynamicDefaultSort$
+            && this._lastHeaderSearchState.fieldIdentifier === ''
+            && this._preferredSortableHeaders.length === 0) {
+            this._dynamicDefaultSort$.pipe(take(1)).subscribe(changes => {
+                if (this._preferredSortableHeaders.length === 0) {
+                    this._lastHeaderSearchState.sortDirection = '';
+                    changes.forEach(
+                        change => this._preferredSortableHeaders.push(
+                            {
+                                propertyId: this.getPreferredSortableFieldIdByFieldIdentifier(change.fieldIdentifier, change.columnType, change.fieldType),
+                                sortDirection: change.sortDirection
+                            }
+                        ));
+                }
                 this.requestNextPage(requestContext);
             });
         } else {
@@ -388,10 +401,6 @@ export class TaskViewService extends AbstractSortableViewComponent implements On
     }
 
     protected requestNextPage(page: PageLoadRequestContext) {
-        if (!this._requestedPage$) {
-            this._requestedPage$ = new BehaviorSubject(page);
-        } else {
-            this._requestedPage$.next(page);
-        }
+        this._requestedPage$.next(page);
     }
 }

@@ -1,13 +1,13 @@
 import {Inject, Injectable, OnDestroy, Optional} from '@angular/core';
 import {CaseResourceService} from '../../../resources/engine-endpoint/case-resource.service';
-import {BehaviorSubject, Observable, of, Subject} from 'rxjs';
+import {ReplaySubject, Observable, of, Subject} from 'rxjs';
 import {HttpParams} from '@angular/common/http';
 import {Case} from '../../../resources/interface/case';
 import {LoggerService} from '../../../logger/services/logger.service';
 import {SnackBarService} from '../../../snack-bar/services/snack-bar.service';
 import {SearchService} from '../../../search/search-service/search.service';
 import {TranslateService} from '@ngx-translate/core';
-import {catchError, concatMap, filter, map, mergeMap, scan, switchMap, tap} from 'rxjs/operators';
+import {catchError, concatMap, filter, map, mergeMap, scan, switchMap, take, tap} from 'rxjs/operators';
 import {Pagination} from '../../../resources/interface/pagination';
 import {CaseMetaField} from '../../../header/case-header/case-menta-enum';
 import {PageLoadRequestContext} from '../../abstract/page-load-request-context';
@@ -49,7 +49,7 @@ export class CaseViewService extends AbstractSortableViewComponent implements On
 
     protected _loading$: LoadingWithFilterEmitter;
     protected _cases$: Observable<Array<Case>>;
-    protected _nextPage$: BehaviorSubject<PageLoadRequestContext>;
+    protected _nextPage$: ReplaySubject<PageLoadRequestContext>;
     protected _endOfData: boolean;
     protected _pagination: Pagination;
     protected _newCaseConfiguration: NewCaseConfiguration;
@@ -85,6 +85,7 @@ export class CaseViewService extends AbstractSortableViewComponent implements On
             totalPages: undefined,
             number: -1
         };
+        this._nextPage$ = new ReplaySubject<PageLoadRequestContext>(1);
         this.requestPageWithDynamicSort(new PageLoadRequestContext(this.activeFilter, Object.assign({}, this._pagination, {number: 0})));
 
         const casesMap = this._nextPage$.pipe(
@@ -362,17 +363,20 @@ export class CaseViewService extends AbstractSortableViewComponent implements On
 
     // todo check header sort resolving, this seems not user friendly + probably won't work with userPreferences
     protected requestPageWithDynamicSort(requestContext: PageLoadRequestContext) {
-        if (!!this._dynamicDefaultSort$ && this._lastHeaderSearchState.fieldIdentifier === '') {
-            this._dynamicDefaultSort$.subscribe(changes => {
-                this._lastHeaderSearchState.sortDirection = '';
-                this._preferredSortableHeaders = [];
-                changes.forEach(
-                    change => this._preferredSortableHeaders.push(
-                        {
-                            propertyId: this.getPreferredSortableFieldIdByFieldIdentifier(change.fieldIdentifier, change.columnType,change.fieldType),
-                            sortDirection: change.sortDirection
-                        }
-                    ));
+        if (!!this._dynamicDefaultSort$
+            && this._lastHeaderSearchState.fieldIdentifier === ''
+            && this._preferredSortableHeaders.length === 0) {
+            this._dynamicDefaultSort$.pipe(take(1)).subscribe(changes => {
+                if (this._preferredSortableHeaders.length === 0) {
+                    this._lastHeaderSearchState.sortDirection = '';
+                    changes.forEach(
+                        change => this._preferredSortableHeaders.push(
+                            {
+                                propertyId: this.getPreferredSortableFieldIdByFieldIdentifier(change.fieldIdentifier, change.columnType, change.fieldType),
+                                sortDirection: change.sortDirection
+                            }
+                        ));
+                }
                 this.requestNextPage(requestContext);
             });
         } else {
@@ -381,10 +385,6 @@ export class CaseViewService extends AbstractSortableViewComponent implements On
     }
 
     protected requestNextPage(page: PageLoadRequestContext) {
-        if (!this._nextPage$) {
-            this._nextPage$ = new BehaviorSubject(page);
-        } else {
-            this._nextPage$.next(page);
-        }
+        this._nextPage$.next(page);
     }
 }

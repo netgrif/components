@@ -24,7 +24,7 @@ import {InjectedTabbedCaseViewDataWithNavigationItemTaskData} from './injected-t
 import {Type} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {SortDirection} from '@angular/material/sort';
-import {Observable, of} from 'rxjs';
+import {forkJoin, Observable, of} from 'rxjs';
 import {map} from 'rxjs/operators';
 
 /**
@@ -99,8 +99,6 @@ function buildDynamicSortChangeDescription$(menuItemData: Array<DataGroup>, proc
         return undefined;
     }
 
-    const processDataCache: Map<string, ImmediateData[]> = new Map<string, ImmediateData[]>;
-
     let activeColumnsRaw: string | undefined;
     let direction: SortDirection = '';
     try {
@@ -122,7 +120,7 @@ function buildDynamicSortChangeDescription$(menuItemData: Array<DataGroup>, proc
         return undefined;
     }
 
-    const result: SortChangeDescription[] = [];
+    const result$: Array<Observable<SortChangeDescription>> = [];
     for (const activeColumn of activeColumns) {
         const firstDashIdx = activeColumn.indexOf('-');
         if (firstDashIdx === -1) {
@@ -142,23 +140,16 @@ function buildDynamicSortChangeDescription$(menuItemData: Array<DataGroup>, proc
         const colIdentifier: string = activeColumn.substring(firstDashIdx + 1, activeColumn.length);
 
         if (!!processIdentifier) {
-            let immediateData: ImmediateData[] = processDataCache.get(processIdentifier);
-            if (!!immediateData) {
-                result.push(createSortChangeDescription(immediateData.find(data => data.stringId === colIdentifier)?.type, colType, colIdentifier, direction));
-                continue;
-            }
-            processService.getNet(processIdentifier).pipe(
-                map(net => {
-                    processDataCache[processIdentifier] = net.immediateData;
-                    result.push(createSortChangeDescription(net.immediateData.find(data => data.stringId === colIdentifier)?.type, colType, colIdentifier, direction));
-                })
-            );
+            result$.push(processService.getNet(processIdentifier).pipe(
+                map(net => createSortChangeDescription(
+                    net?.immediateData?.find(data => data.stringId === colIdentifier)?.type, colType, colIdentifier, direction))
+            ));
         } else {
-            result.push(
-                createSortChangeDescription(determineMetaFieldType(viewType, colIdentifier), colType, colIdentifier, direction));
+            result$.push(of(
+                createSortChangeDescription(determineMetaFieldType(viewType, colIdentifier), colType, colIdentifier, direction)));
         }
     }
-    return of(result);
+    return forkJoin(result$);
 }
 
 function createSortChangeDescription(fieldType: string, colType: HeaderColumnType, colIdentifier: string, direction: SortDirection) {
