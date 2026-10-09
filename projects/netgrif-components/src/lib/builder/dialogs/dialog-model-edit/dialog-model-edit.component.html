@@ -24,16 +24,16 @@
     </mat-form-field>
     <nc-builder-material-icon-picker [(icon)]="model.model.icon"></nc-builder-material-icon-picker>
     <div fxFlex>
-        <mat-slide-toggle fxFlex [(ngModel)]="model.model.defaultRole">
+        <mat-slide-toggle fxFlex [(ngModel)]="model.model.defaultRole" [disabled]="_builderModeService.readOnly">
             {{ 'builder.dialogs.model-edit.defaultRole' | translate }}
         </mat-slide-toggle>
-        <mat-slide-toggle fxFlex [(ngModel)]="model.model.anonymousRole">
+        <mat-slide-toggle fxFlex [(ngModel)]="model.model.anonymousRole" [disabled]="_builderModeService.readOnly">
             {{ 'builder.dialogs.model-edit.anonymousRole' | translate }}
         </mat-slide-toggle>
     </div>
     <mat-form-field fxFlex appearance="outline" class="padding-top">
         <mat-label>{{ 'builder.dialogs.model-edit.defaultCaseName' | translate }}</mat-label>
-        <input type="text" matInput [(ngModel)]="model.model.caseName.value">
+        <input type="text" matInput [(ngModel)]="model.model.caseName.value" [disabled]="_builderModeService.readOnly">
     </mat-form-field>
     <div fxLayoutAlign="center center">
         <span>{{ 'builder.dialogs.model-edit.tags' | translate }}</span>
@@ -45,13 +45,13 @@
                     <div *ngFor="let tag of getTags(); let i = index; trackBy:trackByFn" class="margin-html">
                         <mat-form-field fxFlex="50" appearance="outline" class="margin-right8px">
                             <mat-label>{{ 'builder.dialogs.model-edit.key' | translate }}</mat-label>
-                            <input matInput (change)="setKey($event, tag.key)" type="text" [value]="tag.key">
+                            <input matInput (change)="setKey($event, tag.key)" type="text" [value]="tag.key" [disabled]="_builderModeService.readOnly">
                         </mat-form-field>
                         <mat-form-field fxFlex="50" appearance="outline" class="margin-right8px">
                             <mat-label>{{ 'builder.dialogs.model-edit.value' | translate }}</mat-label>
-                            <input matInput type="text" (change)="setValue($event, tag.key)" [value]="tag.value">
+                            <input matInput type="text" (change)="setValue($event, tag.key)" [value]="tag.value" [disabled]="_builderModeService.readOnly">
                         </mat-form-field>
-                        <button fxFlex mat-icon-button (click)="deleteTag(tag.key)">
+                        <button fxFlex mat-icon-button (click)="deleteTag(tag.key)" *ngIf="!_builderModeService.readOnly">
                             <mat-icon>delete</mat-icon>
                         </button>
                     </div>
@@ -62,7 +62,7 @@
                 </div>
             </div>
             <div fxLayoutAlign="center center" class="margin-html">
-                <button mat-stroked-button class="button-text " (click)="addTag()">
+                <button mat-stroked-button class="button-text " (click)="addTag()" *ngIf="!_builderModeService.readOnly">
                     <mat-icon>add</mat-icon>
                     {{ 'builder.dialogs.model-edit.addTag' | translate }}
                 </button>
@@ -80,7 +80,7 @@
         <span>{{ 'builder.dialogs.model-edit.permissions' | translate }} ({{this.modelService.numberOfPermissions()}})</span>
     </button>
     <button mat-flat-button color="primary" [mat-dialog-close]="{model}"
-            [disabled]="idCtrl.invalid || versionCtrl.invalid || initialsCtrl.invalid || titleCtrl.invalid">
+            [disabled]="idCtrl.invalid || versionCtrl.invalid || initialsCtrl.invalid || titleCtrl.invalid || _builderModeService.readOnly">
         <mat-icon>done</mat-icon>
         <span>{{ 'builder.dialogs.model-edit.save' | translate }}</span>
     </button>

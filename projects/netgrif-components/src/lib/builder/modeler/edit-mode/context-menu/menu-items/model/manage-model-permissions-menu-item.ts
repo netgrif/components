@@ -25,7 +25,8 @@ export class ManageModelPermissionsMenuItem extends MenuItem {
                         userLists: tool.model.getDataSet().filter(item => item.type === DataType.USER_LIST),
                         modelService: tool.modelService,
                         historyService: tool.editModeService.historyService,
-                        localStorageService: tool.context.localStorageService
+                        localStorageService: tool.context.localStorageService,
+                        builderModeService: tool.context.builderModeService
                     }
                 });
             }

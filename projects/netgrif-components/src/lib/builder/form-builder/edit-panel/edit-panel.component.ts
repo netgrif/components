@@ -86,7 +86,7 @@ export class EditPanelComponent implements OnInit, AfterViewInit {
                 private _actionMode: ActionsModeService,
                 private _fieldListService: FieldListService,
                 private _actionsMasterDetail: ActionsMasterDetailService,
-                private _builderModeService: BuilderModeService) {
+                protected _builderModeService: BuilderModeService) {
         // this.transitionOptions = [];
         this.formControlRef = new FormControl();
         this.behaviorOptions = [
@@ -99,6 +99,13 @@ export class EditPanelComponent implements OnInit, AfterViewInit {
     ngOnInit() {
         this.componentNameFormCtrl = new FormControl();
         this.dataRefComponentNameFormCtrl = new FormControl();
+        if (this._builderModeService.readOnly) {
+            this.componentNameFormCtrl.disable();
+            this.dataRefComponentNameFormCtrl.disable();
+        } else {
+            this.componentNameFormCtrl.enable();
+            this.dataRefComponentNameFormCtrl.enable();
+        }
         this.transId = this.transitionService.id;
         if (this.transId === null) {
             this.numOfCols = ModelerConfig.LAYOUT_DEFAULT_COLS;

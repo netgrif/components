@@ -19,7 +19,7 @@
 
         </div>
         <ng-container *ngFor="let item of existingDataFields">
-            <mat-list-item class="field-list-mat-list-item mat-list-item-compact" *ngIf="!isPlaced(item) && containsSearchExpression(item)"
+            <mat-list-item class="field-list-mat-list-item mat-list-item-compact" *ngIf="!_builderModeService.readOnly && !isPlaced(item) && containsSearchExpression(item)"
                            draggable="true"
                            (dragstart)="dragStartHandlerExisting($event, item)"
                            (click)="addExistingField(item)">
@@ -41,7 +41,7 @@
         </ng-container>
     </mat-expansion-panel>
 
-    <mat-expansion-panel #newFieldsPanel class="field-list-expansion-panel">
+    <mat-expansion-panel #newFieldsPanel class="field-list-expansion-panel" *ngIf="!_builderModeService.readOnly">
         <mat-expansion-panel-header class="field-list-expansion-header">
             <mat-panel-title class="field-list-expansion-title">
                 {{ 'builder.form-builder.field-list.createNewFields' | translate }}

@@ -36,7 +36,7 @@ export class DialogTransitionEditComponent implements OnInit {
     private _transitionService: SelectedTransitionService;
     private _actionMode: ActionsModeService;
     private _actionsMasterDetail: ActionsMasterDetailService;
-    private _builderModeService: BuilderModeService;
+    protected _builderModeService: BuilderModeService;
     private _historyService: HistoryService;
     private _localStorageService: LocalStorageService;
 
@@ -58,6 +58,11 @@ export class DialogTransitionEditComponent implements OnInit {
             Validators.required,
             this.validUnique()
         ]);
+        if (this._builderModeService.readOnly) {
+            this.form.disable();
+        } else {
+            this.form.enable();
+        }
     }
 
     ngOnInit(): void {
@@ -100,7 +105,8 @@ export class DialogTransitionEditComponent implements OnInit {
                 userLists: this._modelService.model.getDataSet().filter(item => item.type === DataType.USER_LIST),
                 modelService: this._modelService,
                 historyService: this._historyService,
-                localStorageService: this._localStorageService
+                localStorageService: this._localStorageService,
+                builderModeService: this._builderModeService
             }
         });
     }

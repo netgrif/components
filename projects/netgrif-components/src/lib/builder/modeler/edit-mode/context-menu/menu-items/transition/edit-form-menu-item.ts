@@ -12,7 +12,7 @@ export class EditFormMenuItem extends MenuItem {
             'dashboard',
             () => {
                 tool.transitionService.id = transition.id;
-                tool.builderModeService.mode = BuilderMode.FORM_BUILDER;
+                tool._builderModeService.mode = BuilderMode.FORM_BUILDER;
             }
         );
     }

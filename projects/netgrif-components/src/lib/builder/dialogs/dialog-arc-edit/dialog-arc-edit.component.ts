@@ -8,6 +8,7 @@ import {ModelService} from '../../modeler/services/model/model.service';
 import {ChangedArc} from './changed-arc';
 import {CanvasToolContext} from "../../modeler/edit-mode/services/modes/canvas-tool-context";
 import {TranslateService} from "@ngx-translate/core";
+import {BuilderModeService} from "../../services/builder-mode.service";
 
 export interface ArcEditData {
     context: CanvasToolContext
@@ -51,7 +52,8 @@ export class DialogArcEditComponent implements OnInit {
 
     constructor(
         @Inject(MAT_DIALOG_DATA) public data: ArcEditData,
-        protected _translateService: TranslateService
+        protected _translateService: TranslateService,
+        protected _builderModeService: BuilderModeService
     ) {
         this.modelService = data.context.modelService;
         this.arc = new ChangedArc(undefined, this.modelService.model.getArc(data.arcId).clone());
@@ -60,6 +62,13 @@ export class DialogArcEditComponent implements OnInit {
             Validators.required,
             this.validMultiplicity()
         ]);
+        if (this._builderModeService.readOnly) {
+            this.multiplicityCtrl.disable();
+            this.formControlRef.disable();
+        } else {
+            this.multiplicityCtrl.enable();
+            this.formControlRef.enable();
+        }
     }
 
     ngOnInit(): void {

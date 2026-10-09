@@ -77,7 +77,7 @@ export class EditModeService extends CanvasModeService<CanvasTool> implements On
         dialog: MatDialog,
         router: Router,
         transitionService: SelectedTransitionService,
-        _builderModeService: BuilderModeService,
+        protected _builderModeService: BuilderModeService,
         private _tutorialService: TutorialService,
         private _parentInjector: Injector,
         private _historyService: HistoryService,
@@ -105,29 +105,7 @@ export class EditModeService extends CanvasModeService<CanvasTool> implements On
         const context = new CanvasToolContext(modelService, dialog, this, router, transitionService, _actionMode,
             _actionsMasterDetail, _builderModeService, _processActionsTool, _builderIntegrationService, this._ngZone,
             _localStorageService, _translateService);
-        this.switchTools = new ToolGroup<CanvasTool>(
-            new ClearModelTool(context),
-            new ResetPositionAndZoomTool(context),
-            new GridTool(context),
-            new SwitchLabelTool(context)
-        );
-        this.tools = [
-            new ToolGroup<CanvasTool>(
-                new SelectTool(context),
-                new QuickDrawTool(context),
-                new CreateTransitionTool(context),
-                new CreatePlaceTool(context),
-                new AddTokenTool(context),
-                new RemoveTokenTool(context)
-            ),
-            new ToolGroup<CanvasTool>(
-                new CreateRegularArcTool(context),
-                new CreateResetArcTool(context),
-                new CreateInhibitorArcTool(context),
-                new CreateReadArcTool(context)
-            ),
-            this.switchTools
-        ];
+        this.initializeTools(context);
         this._modelSubscription = this.modelService.model$().subscribe(_ => this.renderModel());
         this._placeSubscription = this.modelService.placeChange.subscribe(value => this.updatePlace(value));
         this._transitionSubscription = this.modelService.transitionChange.subscribe(value => this.updateTransition(value));
@@ -144,6 +122,46 @@ export class EditModeService extends CanvasModeService<CanvasTool> implements On
         this._placeSubscription?.unsubscribe();
         this._transitionSubscription?.unsubscribe();
         this._arcSubscription?.unsubscribe();
+    }
+
+    protected initializeTools(context: CanvasToolContext) {
+        if (this._builderModeService.readOnly) {
+            this.switchTools = new ToolGroup<CanvasTool>(
+                new ResetPositionAndZoomTool(context),
+                new GridTool(context),
+                new SwitchLabelTool(context)
+            );
+            this.tools = [
+                new ToolGroup<CanvasTool>(
+                    new SelectTool(context),
+                ),
+                this.switchTools
+            ];
+        } else {
+            this.switchTools = new ToolGroup<CanvasTool>(
+                new ClearModelTool(context),
+                new ResetPositionAndZoomTool(context),
+                new GridTool(context),
+                new SwitchLabelTool(context)
+            );
+            this.tools = [
+                new ToolGroup<CanvasTool>(
+                    new SelectTool(context),
+                    new QuickDrawTool(context),
+                    new CreateTransitionTool(context),
+                    new CreatePlaceTool(context),
+                    new AddTokenTool(context),
+                    new RemoveTokenTool(context)
+                ),
+                new ToolGroup<CanvasTool>(
+                    new CreateRegularArcTool(context),
+                    new CreateResetArcTool(context),
+                    new CreateInhibitorArcTool(context),
+                    new CreateReadArcTool(context)
+                ),
+                this.switchTools
+            ];
+        }
     }
 
     activate(tool?: CanvasTool) {

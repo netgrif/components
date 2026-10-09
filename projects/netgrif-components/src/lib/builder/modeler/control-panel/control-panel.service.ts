@@ -66,11 +66,13 @@ export class ControlPanelService {
         this.activate();
         if (!this._builderModeService.readOnly) {
             this._globalToolRegistry.registerItem(this._importModelTool);
-            this._globalToolRegistry.registerItem(this._undoTool);
-            this._globalToolRegistry.registerItem(this._redoTool);
         }
         this._globalToolRegistry.registerItem(this._exportModelTool);
         this._globalToolRegistry.registerItem(this._exportSvgTool);
+        if (!this._builderModeService.readOnly) {
+            this._globalToolRegistry.registerItem(this._undoTool);
+            this._globalToolRegistry.registerItem(this._redoTool);
+        }
     }
 
     protected initializeMode() {

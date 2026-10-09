@@ -1,5 +1,5 @@
 import {ComponentType} from '@angular/cdk/overlay';
-import {NgZone} from '@angular/core';
+import {Injector, NgZone} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {Router} from '@angular/router';
 import {PetriNet} from '@netgrif/petriflow';
@@ -22,6 +22,7 @@ import {MouseListener} from './listeners/mouse-listener';
 import {PlaceListener} from './listeners/place-listener';
 import {TransitionListener} from './listeners/transition-listener';
 import {ToolComponent} from "../../control-panel/tools/tool-component/tool.component";
+import { BuilderModeService } from "../../../services/builder-mode.service";
 
 export abstract class CanvasListenerTool extends Tool implements MouseListener, PlaceListener, TransitionListener, ArcListener, KeyListener {
 
@@ -33,6 +34,7 @@ export abstract class CanvasListenerTool extends Tool implements MouseListener, 
     private readonly _transitionService: SelectedTransitionService;
     private readonly _hotkeys: Array<Hotkey>;
     private _mouseDown: PointerEvent;
+    public readonly _builderModeService: BuilderModeService;
 
     protected constructor(
         id: string,
@@ -41,13 +43,15 @@ export abstract class CanvasListenerTool extends Tool implements MouseListener, 
         dialog: MatDialog,
         router: Router,
         transitionService: SelectedTransitionService,
-        private readonly _ngZone?: NgZone
+        private readonly _ngZone?: NgZone,
+        builderModeService?: BuilderModeService
     ) {
         super(id, button, ToolComponent);
         this._modelService = modelService;
         this._dialog = dialog;
         this._router = router;
         this._transitionService = transitionService;
+        this._builderModeService = builderModeService;
         this._hotkeys = new Array<Hotkey>();
         this.hotkeys.push(new Hotkey('+', false, false, false, this.zoom.bind(this, 1)));
         this.hotkeys.push(new Hotkey('-', false, false, false, this.zoom.bind(this, -1)));
@@ -365,7 +369,15 @@ export abstract class CanvasListenerTool extends Tool implements MouseListener, 
 
     openDialog(dialog: ComponentType<any>, config: any, afterClose?: (value: any) => void): void {
         this.beforeDialog();
-        this.dialog.open(dialog, config).afterClosed().subscribe(value => {
+        const finalConfig = this._builderModeService
+            ? {
+                ...config,
+                injector: Injector.create({
+                    providers: [{provide: BuilderModeService, useValue: this._builderModeService}]
+                })
+            }
+            : config;
+        this.dialog.open(dialog, finalConfig).afterClosed().subscribe(value => {
             if (afterClose) {
                 afterClose(value);
             }

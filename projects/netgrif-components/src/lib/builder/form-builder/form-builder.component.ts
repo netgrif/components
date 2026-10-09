@@ -1,5 +1,4 @@
 import {AfterViewInit, Component, ElementRef, OnDestroy, ViewChild} from '@angular/core';
-import {Router} from '@angular/router';
 import {DataGroup, LayoutType} from '@netgrif/petriflow';
 import {ModelerConfig} from '../modeler/modeler-config';
 import {ModelerUtils} from '../modeler/modeler-utils';
@@ -20,10 +19,9 @@ export class FormBuilderComponent implements AfterViewInit, OnDestroy {
     @ViewChild('rightPanel') rightPanel: ElementRef<HTMLDivElement>;
     private rightPanelResizeObserver: ResizeObserver;
 
-    constructor(private router: Router,
-                private modelService: ModelService,
+    constructor(private modelService: ModelService,
                 private transitionService: SelectedTransitionService,
-                private _builderModeService: BuilderModeService,
+                protected _builderModeService: BuilderModeService,
                 private _gridsterService: GridsterService) {
         if (!this.modelService.model) {
             this._builderModeService.mode = BuilderMode.MODELER;

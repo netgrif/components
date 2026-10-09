@@ -40,7 +40,7 @@ export class FieldListComponent implements OnInit, AfterViewInit {
                 private fieldListService: FieldListService,
                 private _snackBar: MatSnackBar,
                 private transitionService: SelectedTransitionService,
-                private _builderModeService: BuilderModeService) {
+                protected _builderModeService: BuilderModeService) {
         if (this.modelService.model === undefined) {
             throw new Error('Model is undefined');
         }

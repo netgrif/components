@@ -10,6 +10,7 @@ import {HistoryService} from '../../modeler/services/history/history.service';
 import {ModelService} from '../../modeler/services/model/model.service';
 import {LocalStorageService} from "../../services/local-storage.service";
 import {TranslateService} from "@ngx-translate/core";
+import {BuilderModeService} from "../../services/builder-mode.service";
 
 export enum RoleRefType {
     TRANSITION = 'transition',
@@ -27,6 +28,7 @@ export interface ManagePermissionData {
     modelService: ModelService;
     historyService: HistoryService;
     localStorageService: LocalStorageService;
+    builderModeService: BuilderModeService;
 }
 
 @Component({
@@ -53,6 +55,7 @@ export class DialogManageRolesComponent implements OnInit, OnDestroy {
     private modelService: ModelService;
     private historyService: HistoryService;
     private _localStorageService: LocalStorageService;
+    protected _builderModeService: BuilderModeService;
 
     constructor(
         @Inject(MAT_DIALOG_DATA) public data: ManagePermissionData,
@@ -61,6 +64,7 @@ export class DialogManageRolesComponent implements OnInit, OnDestroy {
         this.modelService = data.modelService;
         this.historyService = data.historyService;
         this._localStorageService = data.localStorageService;
+        this._builderModeService = data.builderModeService;
         if (this.data.type === RoleRefType.TRANSITION) {
             const arrayRoleRefs = [...this.data.rolesRefs];
             this.addDefaultRoleRefs(arrayRoleRefs);

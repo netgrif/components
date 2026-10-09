@@ -1,9 +1,9 @@
 import {ComponentType} from '@angular/cdk/overlay';
 import {Component} from '@angular/core';
-import DataDetailComponent from './data-detail/data-detail.component';
 import {DataMasterDetailService} from './data-master-detail.service';
 import {DataMasterItemComponent} from './data-master-item/data-master-item.component';
 import {BuilderModeService} from "../../services/builder-mode.service";
+import {DataDetailComponent} from "./data-detail/data-detail.component";
 
 export interface TypeArray {
     viewValue: string;

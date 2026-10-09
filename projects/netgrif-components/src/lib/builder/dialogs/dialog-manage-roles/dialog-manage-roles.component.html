@@ -21,7 +21,8 @@
                                   [checked]="getChecked(element.logic.perform)"
                                   [indeterminate]="getIndeterminate(element.logic.perform)"
                                   (click)="setValue(element.id, 'perform')"
-                                  [ngClass]="{'checkbox-background-warn': getIndeterminate(element.logic.perform), 'checkbox-background-green': getChecked(element.logic.perform)}">
+                                  [ngClass]="{'checkbox-background-warn': getIndeterminate(element.logic.perform), 'checkbox-background-green': getChecked(element.logic.perform)}"
+                                  [disabled]="_builderModeService.readOnly">
                         <span>{{stringValue(element.logic.perform) | titlecase}}</span>
                     </mat-checkbox>
                 </td>
@@ -37,7 +38,8 @@
                                   [checked]="getChecked(element.logic.delegate)"
                                   [indeterminate]="getIndeterminate(element.logic.delegate)"
                                   (click)="setValue(element.id, 'delegate')"
-                                  [ngClass]="{'checkbox-background-warn': getIndeterminate(element.logic.delegate), 'checkbox-background-green': getChecked(element.logic.delegate)}">
+                                  [ngClass]="{'checkbox-background-warn': getIndeterminate(element.logic.delegate), 'checkbox-background-green': getChecked(element.logic.delegate)}"
+                                  [disabled]="_builderModeService.readOnly">
                         <span>{{stringValue(element.logic.delegate) | titlecase}}</span>
                     </mat-checkbox>
                 </td>
@@ -53,7 +55,8 @@
                                   [checked]="getChecked(element.logic.cancel)"
                                   [indeterminate]="getIndeterminate(element.logic.cancel)"
                                   (click)="setValue(element.id, 'cancel')"
-                                  [ngClass]="{'checkbox-background-warn': getIndeterminate(element.logic.cancel), 'checkbox-background-green': getChecked(element.logic.cancel)}">
+                                  [ngClass]="{'checkbox-background-warn': getIndeterminate(element.logic.cancel), 'checkbox-background-green': getChecked(element.logic.cancel)}"
+                                  [disabled]="_builderModeService.readOnly">
                         <span>{{stringValue(element.logic.cancel) | titlecase}}</span>
                     </mat-checkbox>
                 </td>
@@ -69,7 +72,8 @@
                                   [checked]="getChecked(element.logic.assign)"
                                   [indeterminate]="getIndeterminate(element.logic.assign)"
                                   (click)="setValue(element.id, 'assign')"
-                                  [ngClass]="{'checkbox-background-warn': getIndeterminate(element.logic.assign), 'checkbox-background-green': getChecked(element.logic.assign)}">
+                                  [ngClass]="{'checkbox-background-warn': getIndeterminate(element.logic.assign), 'checkbox-background-green': getChecked(element.logic.assign)}"
+                                  [disabled]="_builderModeService.readOnly">
                         <span>{{stringValue(element.logic.assign) | titlecase}}</span>
                     </mat-checkbox>
                 </td>
@@ -85,7 +89,8 @@
                                   [checked]="getChecked(element.logic.view)"
                                   [indeterminate]="getIndeterminate(element.logic.view)"
                                   (click)="setValue(element.id, 'view')"
-                                  [ngClass]="{'checkbox-background-warn': getIndeterminate(element.logic.view), 'checkbox-background-green': getChecked(element.logic.view)}">
+                                  [ngClass]="{'checkbox-background-warn': getIndeterminate(element.logic.view), 'checkbox-background-green': getChecked(element.logic.view)}"
+                                  [disabled]="_builderModeService.readOnly">
                         <span>{{stringValue(element.logic.view) | titlecase}}</span>
                     </mat-checkbox>
                 </td>
@@ -101,7 +106,8 @@
                                   [checked]="getChecked(element.logic.create)"
                                   [indeterminate]="getIndeterminate(element.logic.create)"
                                   (click)="setValue(element.id, 'create')"
-                                  [ngClass]="{'checkbox-background-warn': getIndeterminate(element.logic.create), 'checkbox-background-green': getChecked(element.logic.create)}">
+                                  [ngClass]="{'checkbox-background-warn': getIndeterminate(element.logic.create), 'checkbox-background-green': getChecked(element.logic.create)}"
+                                  [disabled]="_builderModeService.readOnly">
                         <span>{{stringValue(element.logic.create) | titlecase}}</span>
                     </mat-checkbox>
                 </td>
@@ -117,7 +123,8 @@
                                   [checked]="getChecked(element.logic.delete)"
                                   [indeterminate]="getIndeterminate(element.logic.delete)"
                                   (click)="setValue(element.id, 'delete')"
-                                  [ngClass]="{'checkbox-background-warn': getIndeterminate(element.logic.delete), 'checkbox-background-green': getChecked(element.logic.delete)}">
+                                  [ngClass]="{'checkbox-background-warn': getIndeterminate(element.logic.delete), 'checkbox-background-green': getChecked(element.logic.delete)}"
+                                  [disabled]="_builderModeService.readOnly">
                         <span>{{stringValue(element.logic.delete) | titlecase}}</span>
                     </mat-checkbox>
                 </td>
@@ -133,7 +140,8 @@
                                   [checked]="getChecked(element.logic.view)"
                                   [indeterminate]="getIndeterminate(element.logic.view)"
                                   (click)="setValue(element.id, 'view')"
-                                  [ngClass]="{'checkbox-background-warn': getIndeterminate(element.logic.view), 'checkbox-background-green': getChecked(element.logic.view)}">
+                                  [ngClass]="{'checkbox-background-warn': getIndeterminate(element.logic.view), 'checkbox-background-green': getChecked(element.logic.view)}"
+                                  [disabled]="_builderModeService.readOnly">
                         <span>{{stringValue(element.logic.view) | titlecase}}</span>
                     </mat-checkbox>
                 </td>
@@ -167,7 +175,8 @@
                                   [checked]="getChecked(element.logic.perform)"
                                   [indeterminate]="getIndeterminate(element.logic.perform)"
                                   (click)="setUserValue(element.id, 'perform')"
-                                  [ngClass]="{'checkbox-background-warn': getIndeterminate(element.logic.perform), 'checkbox-background-green': getChecked(element.logic.perform)}">
+                                  [ngClass]="{'checkbox-background-warn': getIndeterminate(element.logic.perform), 'checkbox-background-green': getChecked(element.logic.perform)}"
+                                  [disabled]="_builderModeService.readOnly">
                         <span>{{stringValue(element.logic.perform) | titlecase}}</span>
                     </mat-checkbox>
                 </td>
@@ -183,7 +192,8 @@
                                   [checked]="getChecked(element.logic.delegate)"
                                   [indeterminate]="getIndeterminate(element.logic.delegate)"
                                   (click)="setUserValue(element.id, 'delegate')"
-                                  [ngClass]="{'checkbox-background-warn': getIndeterminate(element.logic.delegate), 'checkbox-background-green': getChecked(element.logic.delegate)}">
+                                  [ngClass]="{'checkbox-background-warn': getIndeterminate(element.logic.delegate), 'checkbox-background-green': getChecked(element.logic.delegate)}"
+                                  [disabled]="_builderModeService.readOnly">
                         <span>{{stringValue(element.logic.delegate) | titlecase}}</span>
                     </mat-checkbox>
                 </td>
@@ -199,7 +209,8 @@
                                   [checked]="getChecked(element.logic.cancel)"
                                   [indeterminate]="getIndeterminate(element.logic.cancel)"
                                   (click)="setUserValue(element.id, 'cancel')"
-                                  [ngClass]="{'checkbox-background-warn': getIndeterminate(element.logic.cancel), 'checkbox-background-green': getChecked(element.logic.cancel)}">
+                                  [ngClass]="{'checkbox-background-warn': getIndeterminate(element.logic.cancel), 'checkbox-background-green': getChecked(element.logic.cancel)}"
+                                  [disabled]="_builderModeService.readOnly">
                         <span>{{stringValue(element.logic.cancel) | titlecase}}</span>
                     </mat-checkbox>
                 </td>
@@ -215,7 +226,8 @@
                                   [checked]="getChecked(element.logic.assign)"
                                   [indeterminate]="getIndeterminate(element.logic.assign)"
                                   (click)="setUserValue(element.id, 'assign')"
-                                  [ngClass]="{'checkbox-background-warn': getIndeterminate(element.logic.assign), 'checkbox-background-green': getChecked(element.logic.assign)}">
+                                  [ngClass]="{'checkbox-background-warn': getIndeterminate(element.logic.assign), 'checkbox-background-green': getChecked(element.logic.assign)}"
+                                  [disabled]="_builderModeService.readOnly">
                         <span>{{stringValue(element.logic.assign) | titlecase}}</span>
                     </mat-checkbox>
                 </td>
@@ -231,7 +243,8 @@
                                   [checked]="getChecked(element.logic.view)"
                                   [indeterminate]="getIndeterminate(element.logic.view)"
                                   (click)="setUserValue(element.id, 'view')"
-                                  [ngClass]="{'checkbox-background-warn': getIndeterminate(element.logic.view), 'checkbox-background-green': getChecked(element.logic.view)}">
+                                  [ngClass]="{'checkbox-background-warn': getIndeterminate(element.logic.view), 'checkbox-background-green': getChecked(element.logic.view)}"
+                                  [disabled]="_builderModeService.readOnly">
                         <span>{{stringValue(element.logic.view) | titlecase}}</span>
                     </mat-checkbox>
                 </td>
@@ -247,7 +260,8 @@
                                   [checked]="getChecked(element.logic.create)"
                                   [indeterminate]="getIndeterminate(element.logic.create)"
                                   (click)="setUserValue(element.id, 'create')"
-                                  [ngClass]="{'checkbox-background-warn': getIndeterminate(element.logic.create), 'checkbox-background-green': getChecked(element.logic.create)}">
+                                  [ngClass]="{'checkbox-background-warn': getIndeterminate(element.logic.create), 'checkbox-background-green': getChecked(element.logic.create)}"
+                                  [disabled]="_builderModeService.readOnly">
                         <span>{{stringValue(element.logic.create) | titlecase}}</span>
                     </mat-checkbox>
                 </td>
@@ -263,7 +277,8 @@
                                   [checked]="getChecked(element.logic.delete)"
                                   [indeterminate]="getIndeterminate(element.logic.delete)"
                                   (click)="setUserValue(element.id, 'delete')"
-                                  [ngClass]="{'checkbox-background-warn': getIndeterminate(element.logic.delete), 'checkbox-background-green': getChecked(element.logic.delete)}">
+                                  [ngClass]="{'checkbox-background-warn': getIndeterminate(element.logic.delete), 'checkbox-background-green': getChecked(element.logic.delete)}"
+                                  [disabled]="_builderModeService.readOnly">
                         <span>{{stringValue(element.logic.delete) | titlecase}}</span>
                     </mat-checkbox>
                 </td>
@@ -279,7 +294,8 @@
                                   [checked]="getChecked(element.logic.view)"
                                   [indeterminate]="getIndeterminate(element.logic.view)"
                                   (click)="setUserValue(element.id, 'view')"
-                                  [ngClass]="{'checkbox-background-warn': getIndeterminate(element.logic.view), 'checkbox-background-green': getChecked(element.logic.view)}">
+                                  [ngClass]="{'checkbox-background-warn': getIndeterminate(element.logic.view), 'checkbox-background-green': getChecked(element.logic.view)}"
+                                  [disabled]="_builderModeService.readOnly">
                         <span>{{stringValue(element.logic.view) | titlecase}}</span>
                     </mat-checkbox>
                 </td>

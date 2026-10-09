@@ -50,7 +50,7 @@ export interface HistoryDataSave {
     templateUrl: './data-detail.component.html',
     styleUrl: './data-detail.component.scss'
 })
-class DataDetailComponent implements OnDestroy {
+export class DataDetailComponent implements OnDestroy {
 
     counterEnumMap = 0;
     formControlRef: FormControl;

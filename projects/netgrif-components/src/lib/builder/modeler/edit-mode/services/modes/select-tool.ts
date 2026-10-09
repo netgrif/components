@@ -44,13 +44,15 @@ export class SelectTool extends CanvasTool {
         );
         this._selectedElements = new CanvasElementCollection();
         this._clipboardElements = new CanvasElementCollection();
-        this.hotkeys.push(new Hotkey('c', true, false, false, this.copyElements.bind(this)));
-        this.hotkeys.push(new Hotkey('v', true, false, false, this.pasteElements.bind(this)));
-        this.hotkeys.push(new Hotkey('d', true, false, false, this.duplicateElements.bind(this)));
-        this.hotkeys.push(new Hotkey('a', true, false, false, this.selectAll.bind(this)));
-        this.hotkeys.push(new Hotkey('z', true, false, true, this.redo.bind(this)));
-        this.hotkeys.push(new Hotkey('z', true, false, false, this.undo.bind(this)));
-        this.hotkeys.push(new Hotkey('Delete', false, false, false, this.deleteSelected.bind(this)));
+        if (!this._builderModeService.readOnly) {
+            this.hotkeys.push(new Hotkey('c', true, false, false, this.copyElements.bind(this)));
+            this.hotkeys.push(new Hotkey('v', true, false, false, this.pasteElements.bind(this)));
+            this.hotkeys.push(new Hotkey('d', true, false, false, this.duplicateElements.bind(this)));
+            this.hotkeys.push(new Hotkey('a', true, false, false, this.selectAll.bind(this)));
+            this.hotkeys.push(new Hotkey('z', true, false, true, this.redo.bind(this)));
+            this.hotkeys.push(new Hotkey('z', true, false, false, this.undo.bind(this)));
+            this.hotkeys.push(new Hotkey('Delete', false, false, false, this.deleteSelected.bind(this)));
+        }
     }
 
     bind(): void {
@@ -218,7 +220,7 @@ export class SelectTool extends CanvasTool {
         super.onTransitionUp(event, transition);
         if (this.isDoubleClick(event) && this.isLeftButtonClick(event)) {
             this.transitionService.id = transition.id;
-            this.builderModeService.mode = BuilderMode.FORM_BUILDER;
+            this._builderModeService.mode = BuilderMode.FORM_BUILDER;
             return;
         }
         this.lastClickTimestamp = event.timeStamp;
@@ -280,7 +282,7 @@ export class SelectTool extends CanvasTool {
     }
 
     private onMove(event: PointerEvent): void {
-        if (!this.isLeftButton(event) || this.ctrlDown) {
+        if (!this.isLeftButton(event) || this.ctrlDown || this._builderModeService.readOnly) {
             return;
         }
         if (!!this.lasso) {

@@ -7,6 +7,7 @@ import {GridsterFieldToEngineFieldService} from '../../../modeler/gridster-field
 import {FieldListService} from '../../field-list/field-list.service';
 import {GridsterDataField} from '../classes/gridster-data-field';
 import {GridsterService} from '../gridster.service';
+import {BuilderModeService} from "../../../services/builder-mode.service";
 
 @Component({
     selector: 'nc-builder-gridster-datafield',
@@ -23,7 +24,8 @@ export class GridsterDataFieldComponent implements OnInit, OnDestroy {
 
     constructor(private _gridsterService: GridsterService,
                 private _transformService: GridsterFieldToEngineFieldService,
-                public fieldListService: FieldListService) {
+                public fieldListService: FieldListService,
+                protected _builderModeService: BuilderModeService) {
     }
 
     ngOnDestroy(): void {
@@ -32,6 +34,7 @@ export class GridsterDataFieldComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.engineField = this._transformService.transformDataField(this.dataField);
+        this.engineField.block = this._builderModeService.readOnly;
         this._gridsterSubscription = this._gridsterService.selectedDataFieldChangeStream$().subscribe(this.updateEngineField.bind(this));
         this.engineField.valueChanges().subscribe(value => {
             if (value && value instanceof Array) {
