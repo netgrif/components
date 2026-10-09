@@ -41,6 +41,7 @@ export * from './interface/group';
 export * from './interface/petri-net-request-body';
 export * from './interface/page';
 export * from './interface/preferences';
+export * from './interface/sorting-header';
 export * from './interface/user-resource-small';
 export * from './interface/user-resource';
 export * from './interface/create-case-request-body';
