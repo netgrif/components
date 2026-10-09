@@ -37,6 +37,8 @@ import {PaginationParams} from '../../../utility/pagination/pagination-params';
 import {createSortParam, PaginationSort} from '../../../utility/pagination/pagination-sort';
 import {MatDialog} from '@angular/material/dialog';
 import {NAE_NEW_CASE_DIALOG_COMPONENT} from '../../../dialog/injection-tokens';
+import {NAE_DYNAMIC_DEFAULT_SORT} from '../models/dynamic-default-sort-token';
+import {SortChangeDescription} from '../../../header/models/user-changes/sort-change-description';
 
 @Injectable()
 export class CaseViewService extends AbstractSortableViewComponent implements OnDestroy {
@@ -64,6 +66,7 @@ export class CaseViewService extends AbstractSortableViewComponent implements On
                 protected _processService: ProcessService,
                 resolver: SearchIndexResolverService,
                 @Optional() @Inject(NAE_NEW_CASE_DIALOG_COMPONENT) protected _newCaseComponent: any,
+                @Optional() @Inject(NAE_DYNAMIC_DEFAULT_SORT) protected _dynamicDefaultSort$: Observable<SortChangeDescription[]>,
                 @Optional() @Inject(NAE_NEW_CASE_CONFIGURATION) newCaseConfig: NewCaseConfiguration,
                 protected _permissionService: PermissionService) {
         super(resolver);
@@ -82,9 +85,7 @@ export class CaseViewService extends AbstractSortableViewComponent implements On
             totalPages: undefined,
             number: -1
         };
-        this._nextPage$ = new BehaviorSubject<PageLoadRequestContext>(
-            new PageLoadRequestContext(this.activeFilter, Object.assign({}, this._pagination, {number: 0}))
-        );
+        this.requestPageWithDynamicSort(new PageLoadRequestContext(this.activeFilter, Object.assign({}, this._pagination, {number: 0})));
 
         const casesMap = this._nextPage$.pipe(
             mergeMap(p => this.loadPage(p)),
@@ -213,7 +214,7 @@ export class CaseViewService extends AbstractSortableViewComponent implements On
         if (this.isLoadingRelevantFilter(requestContext) || this._endOfData) {
             return;
         }
-        this._nextPage$.next(requestContext);
+        this.requestPageWithDynamicSort(requestContext);
     }
 
     private isLoadingRelevantFilter(requestContext?: PageLoadRequestContext): boolean {
@@ -228,7 +229,7 @@ export class CaseViewService extends AbstractSortableViewComponent implements On
         const dialogRef = this._dialog.open(this._newCaseComponent, {
             width: '40%',
             minWidth: '300px',
-            panelClass: "dialog-responsive",
+            panelClass: 'dialog-responsive',
             data: {
                 allowedNets$: this.getNewCaseAllowedNets(newCaseCreationConfiguration.blockNets),
                 newCaseCreationConfiguration
@@ -357,5 +358,33 @@ export class CaseViewService extends AbstractSortableViewComponent implements On
      */
     public viewEnabled(aCase: Case): boolean {
         return this._permissionService.hasCasePermission(aCase, PermissionType.VIEW);
+    }
+
+    // todo check header sort resolving, this seems not user friendly + probably won't work with userPreferences
+    protected requestPageWithDynamicSort(requestContext: PageLoadRequestContext) {
+        if (!!this._dynamicDefaultSort$ && this._lastHeaderSearchState.fieldIdentifier === '') {
+            this._dynamicDefaultSort$.subscribe(changes => {
+                this._lastHeaderSearchState.sortDirection = '';
+                this._preferredSortableHeaders = [];
+                changes.forEach(
+                    change => this._preferredSortableHeaders.push(
+                        {
+                            propertyId: this.getPreferredSortableFieldIdByFieldIdentifier(change.fieldIdentifier, change.columnType,change.fieldType),
+                            sortDirection: change.sortDirection
+                        }
+                    ));
+                this.requestNextPage(requestContext);
+            });
+        } else {
+            this.requestNextPage(requestContext);
+        }
+    }
+
+    protected requestNextPage(page: PageLoadRequestContext) {
+        if (!this._nextPage$) {
+            this._nextPage$ = new BehaviorSubject(page);
+        } else {
+            this._nextPage$.next(page);
+        }
     }
 }

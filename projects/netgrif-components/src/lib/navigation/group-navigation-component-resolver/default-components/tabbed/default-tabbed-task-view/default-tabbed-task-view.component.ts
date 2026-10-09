@@ -19,11 +19,13 @@ import {
     NAE_DEFAULT_HEADERS,
     NAE_NAVIGATION_ITEM_TASK_DATA,
     OverflowService,
+    NAE_DYNAMIC_DEFAULT_SORT, ProcessService,
 } from '@netgrif/components-core';
 import {HeaderComponent} from '../../../../../header/header.component';
 import {
     InjectedTabbedTaskViewDataWithNavigationItemTaskData
 } from "../../model/injected-tabbed-task-view-data-with-navigation-item-task-data";
+import {buildDynamicSortChangeDescriptionForTask$} from "../../model/factory-methods";
 
 export function baseFilterFactory(injectedTabData: InjectedTabbedTaskViewDataWithNavigationItemTaskData) {
     return {
@@ -61,6 +63,11 @@ export function baseFilterFactory(injectedTabData: InjectedTabbedTaskViewDataWit
             provide: NAE_DEFAULT_HEADERS,
             useFactory: navigationItemTaskViewDefaultHeadersFactory,
             deps: [[new Optional(), NAE_NAVIGATION_ITEM_TASK_DATA]]
+        },
+        {
+            provide: NAE_DYNAMIC_DEFAULT_SORT,
+            useFactory: buildDynamicSortChangeDescriptionForTask$,
+            deps: [NAE_NAVIGATION_ITEM_TASK_DATA, ProcessService]
         }
     ]
 })

@@ -31,6 +31,7 @@ export * from './abstract/page-load-request-context';
 export * from './case-view/models/autoswitch-token'
 export * from './case-view/models/open-existing-tab-token'
 export * from './case-view/models/new-case-configuration-injection-token';
+export * from './case-view/models/dynamic-default-sort-token';
 export * from './task-view/models/injection-token-task-endpoint';
 export * from './task-view/models/task-view-configuration-injection-token';
 export * from './workflow-view/models/injection-token-workflow-service';
