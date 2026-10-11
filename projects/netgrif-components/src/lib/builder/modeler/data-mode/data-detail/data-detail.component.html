@@ -33,7 +33,7 @@
         <mat-form-field appearance="outline" fxFlex="45">
             <mat-label>{{ 'builder.modeler.data-mode.type' | translate }}</mat-label>
             <mat-select [(value)]="item.type" (selectionChange)="setValue($event,'type')" [disabled]="_builderModeService.readOnly">
-                <mat-option *ngFor="let opt of typeArray" [value]="opt.value">{{ opt.viewValue }}</mat-option>
+                <mat-option *ngFor="let opt of _dataModeService.typeArray" [value]="opt.value">{{ opt.viewValue }}</mat-option>
             </mat-select>
         </mat-form-field>
 

@@ -37,6 +37,7 @@ import {DataFieldUtils} from '../data-field-utils';
 import {ComponentDef, DataRefDef, FieldListService, PropertyDef} from '../field-list/field-list.service';
 import {GridsterService} from '../gridster/gridster.service';
 import {BuilderModeService, BuilderMode} from "../../services/builder-mode.service";
+import {DataModeService} from "../../modeler/data-mode/data-mode.service";
 
 @Component({
     selector: 'nc-builder-edit-panel',
@@ -86,7 +87,8 @@ export class EditPanelComponent implements OnInit, AfterViewInit {
                 private _actionMode: ActionsModeService,
                 private _fieldListService: FieldListService,
                 private _actionsMasterDetail: ActionsMasterDetailService,
-                protected _builderModeService: BuilderModeService) {
+                protected _builderModeService: BuilderModeService,
+                protected _dataModeService: DataModeService) {
         // this.transitionOptions = [];
         this.formControlRef = new FormControl();
         this.behaviorOptions = [

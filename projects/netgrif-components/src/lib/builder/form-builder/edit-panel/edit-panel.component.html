@@ -78,6 +78,12 @@
                 {{ 'builder.form-builder.edit-panel.immediate' | translate }}
             </mat-slide-toggle>
             <mat-form-field appearance="outline" class="full-width margin-html">
+                <mat-label>{{ 'builder.modeler.data-mode.type' | translate }}</mat-label>
+                <mat-select [(value)]="dataVariable.type" [disabled]="true">
+                    <mat-option *ngFor="let opt of _dataModeService.typeArray" [value]="opt.value">{{ opt.viewValue }}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="full-width margin-html">
                 <mat-label>Behavior</mat-label>
                 <mat-select [(value)]="dataRef.logic.behavior" (selectionChange)="notifyGridster()"
                             [disabled]="_builderModeService.readOnly">
