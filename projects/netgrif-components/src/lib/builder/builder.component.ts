@@ -194,14 +194,9 @@ export class BuilderComponent implements OnDestroy {
         this._reloadSub?.unsubscribe();
     }
 
-    public onlyTaskMode() {
-        return this._builderIntegrationService.isIntegrated && this._builderIntegrationService.onlyTaskView;
-    }
-
     protected resolveIntegratedMode() {
         if (this._builderIntegrationService.processCase.immediateData.find((data: ImmediateData) => data.stringId === 'state')?.value === 'draft') {
             this._builderIntegrationService.editTaskId = this._builderIntegrationService.processCase.tasks.find(taskPair => taskPair.transition === 'edit')?.task;
-            this._builderIntegrationService.onlyTaskView = false;
             if (this._builderIntegrationService.dataField?.behavior?.visible) {
                 this.builderModeService.readOnly = true;
             }
@@ -216,7 +211,6 @@ export class BuilderComponent implements OnDestroy {
             const taskId = this._builderIntegrationService.processCase.tasks.find(taskPair => taskPair.transition === 'view')?.task;
             this.builderModeService.readOnly = true;
             this._builderIntegrationService.editTaskId = undefined;
-            this._builderIntegrationService.onlyTaskView = true;
             this._builderIntegrationService.getXml(taskId).subscribe(value => {
                 this.parseModel(value, BuilderMode.TASK_MODE);
                 this.loading.off();
@@ -227,7 +221,6 @@ export class BuilderComponent implements OnDestroy {
         } else {
             this.loading.off();
             this._builderIntegrationService.editTaskId = undefined;
-            this._builderIntegrationService.onlyTaskView = true;
         }
         this.builderModeService.mode = BuilderMode.TASK_MODE;
     }

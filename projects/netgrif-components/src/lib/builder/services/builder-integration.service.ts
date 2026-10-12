@@ -20,7 +20,6 @@ export class BuilderIntegrationService implements OnDestroy {
     protected _dataField: ProcessRefField;
     protected _editTaskId: string;
     protected _isAssigned: boolean;
-    protected _onlyTaskView: boolean; // todo 2489 uz netreba?
 
     protected _reloadCase: Subject<boolean>;
     protected _reloadModes: Subject<boolean>;
@@ -31,7 +30,6 @@ export class BuilderIntegrationService implements OnDestroy {
                 protected _taskResourceService: TaskResourceService,
                 protected _exportService: ExportService,
                 protected _log: LoggerService) {
-        this._onlyTaskView = true;
         this._reloadCase = new Subject<boolean>();
         this._reloadModes = new Subject<boolean>();
         this._loading = new LoadingEmitter();
@@ -85,14 +83,6 @@ export class BuilderIntegrationService implements OnDestroy {
 
     set editTaskId(value: string) {
         this._editTaskId = value;
-    }
-
-    get onlyTaskView(): boolean {
-        return this._onlyTaskView;
-    }
-
-    set onlyTaskView(value: boolean) {
-        this._onlyTaskView = value;
     }
 
     get reloadCase(): Observable<boolean> {
