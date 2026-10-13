@@ -23,6 +23,7 @@ export class GridTool extends CanvasTool {
     onClick(): void {
         super.onClick();
         this.editModeService.canvasService.gridOnOff();
+        this.editModeService.gridChanged$.next();
         let newIcon = GridTool.ICON_OFF;
         let newTooltip = this._translateService.instant('builder.modeler.edit-mode.services.showGrid');
         if (this.editModeService.canvasService.gridConfiguration.enabled) {

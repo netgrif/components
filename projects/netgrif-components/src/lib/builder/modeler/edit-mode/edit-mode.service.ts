@@ -6,7 +6,7 @@ import {Arc, ArcType, NodeElement, Place, Transition} from '@netgrif/petriflow';
 import {PetriflowCanvasService, PetriflowNode} from '@netgrif/petriflow.svg';
 import {InjectedTabData, NAE_TAB_DATA} from '@netgrif/components-core';
 import {PanzoomOptions} from '@panzoom/panzoom';
-import {BehaviorSubject, Subscription} from 'rxjs';
+import {BehaviorSubject, Subject, Subscription} from 'rxjs';
 import {ChangedArc} from '../../dialogs/dialog-arc-edit/changed-arc';
 import {ChangedTransition} from '../../dialogs/dialog-transition-edit/changed-transition';
 import {TutorialService} from '../../tutorial/tutorial-service';
@@ -53,6 +53,7 @@ import {TranslateService} from "@ngx-translate/core";
 export class EditModeService extends CanvasModeService<CanvasTool> implements OnDestroy {
 
     public contextMenuItems: BehaviorSubject<ContextMenu>;
+    public gridChanged$ = new Subject<void>();
     // TODO: NAB-326 refactor
     public switchTools: ToolGroup<CanvasTool>;
     public panzoomConfiguration: PanzoomOptions = {

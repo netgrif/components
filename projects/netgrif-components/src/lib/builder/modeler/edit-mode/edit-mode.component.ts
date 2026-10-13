@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, HostListener, OnDestroy, ViewChild, ChangeDetectionStrategy} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, HostListener, OnDestroy, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {NgxDropzoneChangeEvent} from 'ngx-dropzone';
 import {ModelImportService} from '../model-import-service';
@@ -23,6 +23,7 @@ export class EditModeComponent implements AfterViewInit, OnDestroy {
     @ViewChild('contextMenu') contextMenuComponent: ContextMenuComponent;
 
     private contextMenuSubscription: Subscription;
+    private gridSubscription: Subscription;
 
     constructor(
         private importService: ModelImportService,
@@ -30,8 +31,10 @@ export class EditModeComponent implements AfterViewInit, OnDestroy {
         private _editModeService: EditModeService,
         private historyService: HistoryService,
         public dialog: MatDialog,
-        private _translateService: TranslateService
+        private _translateService: TranslateService,
+        private _cdr: ChangeDetectorRef
     ) {
+        this.gridSubscription = this._editModeService.gridChanged$.subscribe(() => this._cdr.markForCheck());
     }
 
     @HostListener('contextmenu', ['$event'])
@@ -88,6 +91,7 @@ export class EditModeComponent implements AfterViewInit, OnDestroy {
 
     ngOnDestroy(): void {
         this.contextMenuSubscription?.unsubscribe();
+        this.gridSubscription?.unsubscribe();
         this.editModeService.activeTool.unbind();
     }
 
