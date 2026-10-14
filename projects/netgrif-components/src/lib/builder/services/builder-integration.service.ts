@@ -12,6 +12,7 @@ import {
 import {ExportService, PetriNet} from "@netgrif/petriflow";
 import {HistoryChange} from "../modeler/services/history/history-change";
 import {Observable, of, Subject, Subscription} from 'rxjs';
+import {BuilderModeService} from "./builder-mode.service";
 
 @Injectable()
 export class BuilderIntegrationService implements OnDestroy {
@@ -29,12 +30,13 @@ export class BuilderIntegrationService implements OnDestroy {
     constructor(protected _historyService: HistoryService,
                 protected _taskResourceService: TaskResourceService,
                 protected _exportService: ExportService,
-                protected _log: LoggerService) {
+                protected _log: LoggerService,
+                protected _builderModeService: BuilderModeService) {
         this._reloadCase = new Subject<boolean>();
         this._reloadModes = new Subject<boolean>();
         this._loading = new LoadingEmitter();
         this._historySub = this._historyService.historyChange.subscribe(history => {
-            if (this._isIntegrated && this._editTaskId) {
+            if (this._isIntegrated && this._editTaskId && !_builderModeService.readOnly) {
                 if (!this._isAssigned) {
                     this._taskResourceService.assignTask(this._editTaskId).subscribe(result => {
                         if (result.success) {
