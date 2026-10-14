@@ -254,6 +254,7 @@ export class DataFieldsComponentModule {
         registry.register("number-default", (injector: Injector) => new ComponentPortal<any>(NumberDefaultFieldComponent, null, injector));
         registry.register("number-currency", (injector: Injector) => new ComponentPortal<any>(NumberCurrencyFieldComponent, null, injector));
         registry.register("number-decimal", (injector: Injector) => new ComponentPortal<any>(NumberDecimalFieldComponent, null, injector));
+        registry.register("number-formatted", (injector: Injector) => new ComponentPortal<any>(NumberDecimalFieldComponent, null, injector));
         registry.register("text-default", (injector: Injector) => new ComponentPortal<any>(SimpleTextFieldComponent, null, injector));
         registry.register("text-password", (injector: Injector) => new ComponentPortal<any>(PasswordTextFieldComponent, null, injector));
         registry.register("text-textarea", (injector: Injector) => new ComponentPortal<any>(TextareaFieldComponent, null, injector));
