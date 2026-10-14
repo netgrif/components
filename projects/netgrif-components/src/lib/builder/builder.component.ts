@@ -197,9 +197,7 @@ export class BuilderComponent implements OnDestroy {
     protected resolveIntegratedMode() {
         if (this._builderIntegrationService.processCase.immediateData.find((data: ImmediateData) => data.stringId === 'state')?.value === 'draft') {
             this._builderIntegrationService.editTaskId = this._builderIntegrationService.processCase.tasks.find(taskPair => taskPair.transition === 'edit')?.task;
-            if (this._builderIntegrationService.dataField?.behavior?.visible) {
-                this.builderModeService.readOnly = true;
-            }
+            this.builderModeService.readOnly = this._builderIntegrationService.dataField?.behavior?.visible;
             this._builderIntegrationService.getXml().subscribe(value => {
                 this.parseModel(value, BuilderMode.TASK_MODE);
                 this.loading.off();
@@ -219,6 +217,7 @@ export class BuilderComponent implements OnDestroy {
                 this.loading.off();
             })
         } else {
+            this.builderModeService.readOnly = false;
             this.loading.off();
             this._builderIntegrationService.editTaskId = undefined;
         }
