@@ -34,7 +34,7 @@ export class EditModeComponent implements AfterViewInit, OnDestroy {
         private _translateService: TranslateService,
         private _cdr: ChangeDetectorRef
     ) {
-        this.gridSubscription = this._editModeService.gridChanged$.subscribe(() => this._cdr.markForCheck());
+        this.gridSubscription = this._editModeService.gridChanged$?.subscribe(() => this._cdr.markForCheck());
     }
 
     @HostListener('contextmenu', ['$event'])
