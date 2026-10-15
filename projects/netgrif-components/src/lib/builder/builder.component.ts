@@ -195,7 +195,8 @@ export class BuilderComponent implements OnDestroy {
     }
 
     protected resolveIntegratedMode() {
-        if (this._builderIntegrationService.processCase.immediateData.find((data: ImmediateData) => data.stringId === 'state')?.value === 'draft') {
+        const stateFieldValue: string = this._builderIntegrationService.processCase.immediateData.find((data: ImmediateData) => data.stringId === 'state')?.value;
+        if (stateFieldValue === 'draft') {
             this._builderIntegrationService.editTaskId = this._builderIntegrationService.processCase.tasks.find(taskPair => taskPair.transition === 'edit')?.task;
             const isDataFieldVisible: boolean = this._builderIntegrationService.dataField?.behavior?.visible;
             this.builderModeService.readOnly$.next(isDataFieldVisible);
@@ -209,7 +210,7 @@ export class BuilderComponent implements OnDestroy {
                 console.log(error);
                 this.loading.off();
             })
-        } else if (this._builderIntegrationService.processCase.immediateData.find((data: ImmediateData) => data.stringId === 'state')?.value === 'deployed') {
+        } else if (stateFieldValue === 'deployed' || stateFieldValue === 'archived') {
             const taskId = this._builderIntegrationService.processCase.tasks.find(taskPair => taskPair.transition === 'view')?.task;
             this.builderModeService.readOnly$.next(true);
             const isDataFieldVisible: boolean = this._builderIntegrationService.dataField?.behavior?.visible;
