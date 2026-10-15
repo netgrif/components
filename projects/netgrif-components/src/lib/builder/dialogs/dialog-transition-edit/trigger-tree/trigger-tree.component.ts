@@ -5,6 +5,7 @@ import {MatTreeNestedDataSource} from '@angular/material/tree';
 import {DATE_TIME_FORMAT} from '@netgrif/components-core';
 import {Trigger, TriggerType} from '@netgrif/petriflow';
 import {TranslateService} from "@ngx-translate/core";
+import {BuilderModeService} from "../../../services/builder-mode.service";
 
 interface TriggerNode {
     name?: string;
@@ -33,7 +34,7 @@ export class TriggerTreeComponent {
     treeControl = new NestedTreeControl<TriggerNode>(node => node.trigger);
     dataSource = new MatTreeNestedDataSource<TriggerNode>();
 
-    constructor(protected _translateService: TranslateService) {
+    constructor(protected _translateService: TranslateService, protected _builderModeService: BuilderModeService) {
         this.treeData = [{
             name: this._translateService.instant('builder.dialogs.transition-edit.trigger-tree.triggers'),
             trigger: []

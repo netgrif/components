@@ -1,6 +1,5 @@
 <div class="no-overflow" *ngIf="!isFunctionsModeSelected()" fxFlex>
-    <mat-tree class="tree overflow-hidden" [dataSource]="dataSource" [treeControl]="treeControl"
-              >
+    <mat-tree class="tree overflow-hidden" [dataSource]="dataSource" [treeControl]="treeControl">
         <!--  Leaf node template  -->
         <mat-tree-node *matTreeNodeDef="let node; when isLeafNode" #actionNode>
             <div class="mat-tree-node tree-offset">
@@ -35,7 +34,7 @@
                     </mat-icon>
                 </button>
                 <span>{{ node.title }} ({{ node.actionCount.getValue() }})</span>
-                <button mat-icon-button (click)="newAction(node)">
+                <button mat-icon-button (click)="newAction(node)" *ngIf="!_builderModeService.readOnly">
                     <mat-icon>add</mat-icon>
                 </button>
             </div>
@@ -52,14 +51,14 @@
             <div fxFlex="46.5" fxLayoutAlign="start center">
                 <mat-form-field appearance="outline" fxFlex>
                     <mat-label>{{ 'builder.modeler.actions-mode.action-detail.name' | translate }}</mat-label>
-                    <input matInput [(ngModel)]="this.selectedFn.name" (change)="updateFunctions()">
+                    <input matInput [(ngModel)]="this.selectedFn.name" (change)="updateFunctions()" [disabled]="_builderModeService.readOnly">
                 </mat-form-field>
             </div>
             <div fxFlex="2"></div>
             <div fxFlex="46.5">
                 <mat-form-field appearance="outline" fxFlex>
                     <mat-label>{{ 'builder.modeler.actions-mode.action-detail.scope' | translate }}</mat-label>
-                    <mat-select [(value)]="this.selectedFn.scope">
+                    <mat-select [(value)]="this.selectedFn.scope" [disabled]="_builderModeService.readOnly">
                         <mat-option *ngFor="let opt of functionScopes"
                                     [value]="opt.value">{{ opt.viewValue }}
                         </mat-option>

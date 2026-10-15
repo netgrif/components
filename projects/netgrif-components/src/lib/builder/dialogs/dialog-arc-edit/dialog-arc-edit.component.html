@@ -6,7 +6,7 @@
     </mat-form-field>
     <mat-form-field fxFlex appearance="outline">
         <mat-label>{{ 'builder.dialogs.arc-edit.type' | translate}}</mat-label>
-        <mat-select [(ngModel)]="arcType" [disabled]="isTPArc()" (ngModelChange)="onTypeChange($event)">
+        <mat-select [(ngModel)]="arcType" [disabled]="isTPArc() || _builderModeService.readOnly" (ngModelChange)="onTypeChange($event)">
             <mat-select-trigger>
                 {{arcType}}
             </mat-select-trigger>
@@ -47,7 +47,7 @@
     </mat-form-field>
 </mat-dialog-content>
 <mat-dialog-actions>
-    <button mat-flat-button color="primary" [mat-dialog-close]="arc" [disabled]="multiplicityCtrl.invalid">
+    <button mat-flat-button color="primary" [mat-dialog-close]="arc" [disabled]="multiplicityCtrl.invalid || _builderModeService.readOnly">
         <mat-icon>done</mat-icon>
         <span>{{ 'builder.dialogs.arc-edit.save' | translate}}</span>
     </button>

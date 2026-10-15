@@ -12,10 +12,16 @@ import {GridsterService} from '../gridster/gridster.service';
 import {FieldListService} from '../field-list/field-list.service';
 import {EditPanelComponent} from './edit-panel.component';
 import {TranslateService} from "@ngx-translate/core";
+import {DataModeService} from "../../modeler/data-mode/data-mode.service";
+import {TutorialService} from "../../tutorial/tutorial-service";
+import {MortgageService} from "../../modeler/mortgage.service";
+import {HttpClientTestingModule} from "@angular/common/http/testing";
+import {ModelImportService} from "../../modeler/model-import-service";
 
 describe('EditPanelComponent', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
+            imports: [HttpClientTestingModule],
             declarations: [EditPanelComponent],
             providers: [
                 GridsterService,
@@ -28,7 +34,11 @@ describe('EditPanelComponent', () => {
                 {provide: ActionsMasterDetailService, useValue: {}},
                 {provide: MatDialog, useValue: {}},
                 {provide: Router, useValue: {}},
-                {provide: TranslateService, useValue: { instant: (key: string) => `translated-${key}` }}
+                {provide: TranslateService, useValue: { instant: (key: string) => `translated-${key}` }},
+                DataModeService,
+                TutorialService,
+                MortgageService,
+                {provide: ModelImportService, useValue: {}},
             ],
             schemas: [NO_ERRORS_SCHEMA],
         });

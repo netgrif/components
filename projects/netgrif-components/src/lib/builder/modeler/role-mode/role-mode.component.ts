@@ -3,6 +3,7 @@ import {Component} from '@angular/core';
 import {RoleDetailComponent} from './role-detail/role-detail.component';
 import {RoleMasterDetailService} from './role-master-detail.service';
 import {RoleMasterItemComponent} from './role-master-item/role-master-item.component';
+import {BuilderModeService} from "../../services/builder-mode.service";
 
 @Component({
     selector: 'nc-builder-role-mode',
@@ -11,7 +12,7 @@ import {RoleMasterItemComponent} from './role-master-item/role-master-item.compo
 })
 export class RoleModeComponent {
 
-    constructor(protected _masterService: RoleMasterDetailService ) {
+    constructor(protected _masterService: RoleMasterDetailService, protected _builderModeService: BuilderModeService) {
     }
 
     get detailComponent(): ComponentType<any> {

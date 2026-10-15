@@ -6,7 +6,7 @@ import {Arc, ArcType, NodeElement, Place, Transition} from '@netgrif/petriflow';
 import {PetriflowCanvasService, PetriflowNode} from '@netgrif/petriflow.svg';
 import {InjectedTabData, NAE_TAB_DATA} from '@netgrif/components-core';
 import {PanzoomOptions} from '@panzoom/panzoom';
-import {BehaviorSubject, Subscription} from 'rxjs';
+import {BehaviorSubject, Subject, Subscription} from 'rxjs';
 import {ChangedArc} from '../../dialogs/dialog-arc-edit/changed-arc';
 import {ChangedTransition} from '../../dialogs/dialog-transition-edit/changed-transition';
 import {TutorialService} from '../../tutorial/tutorial-service';
@@ -53,6 +53,7 @@ import {TranslateService} from "@ngx-translate/core";
 export class EditModeService extends CanvasModeService<CanvasTool> implements OnDestroy {
 
     public contextMenuItems: BehaviorSubject<ContextMenu>;
+    public gridChanged$ = new Subject<void>();
     // TODO: NAB-326 refactor
     public switchTools: ToolGroup<CanvasTool>;
     public panzoomConfiguration: PanzoomOptions = {
@@ -69,6 +70,7 @@ export class EditModeService extends CanvasModeService<CanvasTool> implements On
     private _placeSubscription: Subscription;
     private _transitionSubscription: Subscription;
     private _arcSubscription: Subscription;
+    private _readOnlySubscription: Subscription;
 
     constructor(
         _arcFactory: ArcFactory,
@@ -77,7 +79,7 @@ export class EditModeService extends CanvasModeService<CanvasTool> implements On
         dialog: MatDialog,
         router: Router,
         transitionService: SelectedTransitionService,
-        _builderModeService: BuilderModeService,
+        protected _builderModeService: BuilderModeService,
         private _tutorialService: TutorialService,
         private _parentInjector: Injector,
         private _historyService: HistoryService,
@@ -105,29 +107,7 @@ export class EditModeService extends CanvasModeService<CanvasTool> implements On
         const context = new CanvasToolContext(modelService, dialog, this, router, transitionService, _actionMode,
             _actionsMasterDetail, _builderModeService, _processActionsTool, _builderIntegrationService, this._ngZone,
             _localStorageService, _translateService);
-        this.switchTools = new ToolGroup<CanvasTool>(
-            new ClearModelTool(context),
-            new ResetPositionAndZoomTool(context),
-            new GridTool(context),
-            new SwitchLabelTool(context)
-        );
-        this.tools = [
-            new ToolGroup<CanvasTool>(
-                new SelectTool(context),
-                new QuickDrawTool(context),
-                new CreateTransitionTool(context),
-                new CreatePlaceTool(context),
-                new AddTokenTool(context),
-                new RemoveTokenTool(context)
-            ),
-            new ToolGroup<CanvasTool>(
-                new CreateRegularArcTool(context),
-                new CreateResetArcTool(context),
-                new CreateInhibitorArcTool(context),
-                new CreateReadArcTool(context)
-            ),
-            this.switchTools
-        ];
+        this.initializeTools(context);
         this._modelSubscription = this.modelService.model$().subscribe(_ => this.renderModel());
         this._placeSubscription = this.modelService.placeChange.subscribe(value => this.updatePlace(value));
         this._transitionSubscription = this.modelService.transitionChange.subscribe(value => this.updateTransition(value));
@@ -144,6 +124,49 @@ export class EditModeService extends CanvasModeService<CanvasTool> implements On
         this._placeSubscription?.unsubscribe();
         this._transitionSubscription?.unsubscribe();
         this._arcSubscription?.unsubscribe();
+        this._readOnlySubscription?.unsubscribe();
+    }
+
+    protected initializeTools(context: CanvasToolContext) {
+        this._readOnlySubscription = this._builderModeService.readOnly$.subscribe(readOnly => {
+            if (readOnly) {
+                this.switchTools = new ToolGroup<CanvasTool>(
+                    new ResetPositionAndZoomTool(context),
+                    new GridTool(context),
+                    new SwitchLabelTool(context)
+                );
+                this.tools = [
+                    new ToolGroup<CanvasTool>(
+                        new SelectTool(context),
+                    ),
+                    this.switchTools
+                ];
+            } else {
+                this.switchTools = new ToolGroup<CanvasTool>(
+                    new ClearModelTool(context),
+                    new ResetPositionAndZoomTool(context),
+                    new GridTool(context),
+                    new SwitchLabelTool(context)
+                );
+                this.tools = [
+                    new ToolGroup<CanvasTool>(
+                        new SelectTool(context),
+                        new QuickDrawTool(context),
+                        new CreateTransitionTool(context),
+                        new CreatePlaceTool(context),
+                        new AddTokenTool(context),
+                        new RemoveTokenTool(context)
+                    ),
+                    new ToolGroup<CanvasTool>(
+                        new CreateRegularArcTool(context),
+                        new CreateResetArcTool(context),
+                        new CreateInhibitorArcTool(context),
+                        new CreateReadArcTool(context)
+                    ),
+                    this.switchTools
+                ];
+            }
+        });
     }
 
     activate(tool?: CanvasTool) {

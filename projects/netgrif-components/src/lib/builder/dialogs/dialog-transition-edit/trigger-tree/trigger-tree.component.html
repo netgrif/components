@@ -3,7 +3,7 @@
         <div class="tree-offset netgrif-input">
             <mat-form-field appearance="outline">
                 <mat-label>{{ 'builder.dialogs.transition-edit.trigger-tree.setTriggerType' | translate }}</mat-label>
-                <mat-select [(ngModel)]="node.type" (selectionChange)="emitChanges()">
+                <mat-select [(ngModel)]="node.type" (selectionChange)="emitChanges()" [disabled]="_builderModeService.readOnly">
                     <mat-option *ngFor="let opt of typeOptions" [value]="opt.key">
                         {{opt.value}}
                     </mat-option>
@@ -12,7 +12,7 @@
             <br *ngIf="node.type === 'time'">
             <mat-form-field appearance="outline" *ngIf="node.type === 'time'">
                 <mat-label>{{ 'builder.dialogs.transition-edit.trigger-tree.setTimeType' | translate }}</mat-label>
-                <mat-select [(ngModel)]="node.option" (selectionChange)="makeChangeOption($event, node)">
+                <mat-select [(ngModel)]="node.option" (selectionChange)="makeChangeOption($event, node)" [disabled]="_builderModeService.readOnly">
                     <mat-option *ngFor="let opt of optionOptions" [value]="opt.key">
                         {{opt.value}}
                     </mat-option>
@@ -21,7 +21,7 @@
             <br *ngIf="node.type === 'time'">
             <mat-form-field appearance="outline" *ngIf="node.option === 'delay' && node.type === 'time'">
                 <mat-label>{{ 'builder.dialogs.transition-edit.trigger-tree.setDelay' | translate }}</mat-label>
-                <input matInput type="text" [(ngModel)]="node.delay" (change)="emitChanges()" placeholder="Ex. PT5D">
+                <input matInput type="text" [(ngModel)]="node.delay" (change)="emitChanges()" placeholder="Ex. PT5D" [disabled]="_builderModeService.readOnly">
             </mat-form-field>
             <div *ngIf="node.option === 'exact' && node.type === 'time'">
                 <mat-form-field appearance="outline">
@@ -29,7 +29,8 @@
                            [ngxMatDatetimePicker]="picker"
                            [placeholder]="'builder.dialogs.transition-edit.trigger-tree.setExact' | translate"
                            [(ngModel)]="node.exact"
-                           (ngModelChange)="emitChanges()">
+                           (ngModelChange)="emitChanges()"
+                           [disabled]="_builderModeService.readOnly">
                     <mat-datepicker-toggle matPrefix [for]="picker"></mat-datepicker-toggle>
                     <ngx-mat-datetime-picker #picker
                                              [showSpinners]="true"
@@ -58,7 +59,7 @@
                 <div fxLayoutAlign="start center" class="height-tree">
                     <span>{{node.name}}</span>
                 </div>
-                <button mat-icon-button (click)="addNewItem(node)">
+                <button mat-icon-button (click)="addNewItem(node)" *ngIf="!_builderModeService.readOnly">
                     <mat-icon>add</mat-icon>
                 </button>
             </div>
@@ -79,7 +80,7 @@
             <div fxLayoutAlign="start center" class="height-tree">
                 <span>{{node.name}}</span>
             </div>
-            <button mat-icon-button (click)="removeItem(node)">
+            <button mat-icon-button (click)="removeItem(node)" *ngIf="!_builderModeService.readOnly">
                 <mat-icon>remove</mat-icon>
             </button>
             <ul [class.tree-invisible]="!treeControl.isExpanded(node)">

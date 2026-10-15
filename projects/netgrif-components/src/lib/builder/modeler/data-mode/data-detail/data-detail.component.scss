@@ -116,7 +116,8 @@
 }
 
 .height-fix {
-    height: calc(100vh - 42px);
+    min-height: 100%;
+    overflow: visible;
 }
 
 .full-width {

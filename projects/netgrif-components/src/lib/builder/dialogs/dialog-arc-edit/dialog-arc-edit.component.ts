@@ -8,6 +8,7 @@ import {ModelService} from '../../modeler/services/model/model.service';
 import {ChangedArc} from './changed-arc';
 import {CanvasToolContext} from "../../modeler/edit-mode/services/modes/canvas-tool-context";
 import {TranslateService} from "@ngx-translate/core";
+import {BuilderModeService} from "../../services/builder-mode.service";
 
 export interface ArcEditData {
     context: CanvasToolContext
@@ -48,18 +49,28 @@ export class DialogArcEditComponent implements OnInit {
         [XmlArcType.INHIBITOR, 'radio_button_unchecked'],
     ]);
     private modelService: ModelService;
+    protected _builderModeService: BuilderModeService;
+    protected _translateService: TranslateService;
 
     constructor(
         @Inject(MAT_DIALOG_DATA) public data: ArcEditData,
-        protected _translateService: TranslateService
     ) {
         this.modelService = data.context.modelService;
+        this._builderModeService = data.context.builderModeService;
+        this._translateService = data.context.translateService;
         this.arc = new ChangedArc(undefined, this.modelService.model.getArc(data.arcId).clone());
         this.formControlRef = new FormControl('');
         this.multiplicityCtrl = new FormControl('', [
             Validators.required,
             this.validMultiplicity()
         ]);
+        if (this._builderModeService.readOnly) {
+            this.multiplicityCtrl.disable();
+            this.formControlRef.disable();
+        } else {
+            this.multiplicityCtrl.enable();
+            this.formControlRef.enable();
+        }
     }
 
     ngOnInit(): void {

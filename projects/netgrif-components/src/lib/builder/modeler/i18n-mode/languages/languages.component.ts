@@ -10,6 +10,7 @@ import {I18nControlService} from "../i18n-control.service";
 import {I18nModeService} from "../i18n-mode.service";
 import {LanguageIconsService} from "@netgrif/components-core";
 import {TranslateService} from "@ngx-translate/core";
+import {BuilderModeService} from "../../../services/builder-mode.service";
 
 @Component({
     selector: 'nc-builder-languages',
@@ -30,7 +31,8 @@ export class LanguagesComponent implements OnInit, OnDestroy {
                 protected _historyService: HistoryService,
                 protected _languageSelect: LanguageSelectService,
                 protected _languageIconsService: LanguageIconsService,
-                protected _translateService: TranslateService) {
+                protected _translateService: TranslateService,
+                protected _builderModeService: BuilderModeService) {
         this.localeList = Object.keys(this._languageIconsService.languageIcons)
             .filter(key => key !== 'xx' && key !== undefined)
             .map(key => {
@@ -38,6 +40,11 @@ export class LanguagesComponent implements OnInit, OnDestroy {
             const locale = Locales.list.find(l => l.languageCode === key);
             return new Locale(key, lang.languageName, key, locale?.country ?? key, locale?.countryCode ?? key);
         });
+        if (this._builderModeService.readOnly) {
+            this.newLocaleFormControl.disable();
+        } else {
+            this.newLocaleFormControl.enable();
+        }
     }
 
     ngOnInit(): void {
