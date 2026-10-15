@@ -49,6 +49,9 @@ export class ControlPanelService implements OnDestroy {
         private _builderModeService: BuilderModeService,
         private _builderIntegrationService: BuilderIntegrationService
     ) {
+        this._readOnlySubscription = this._builderModeService.readOnly$.subscribe(() => {
+            this.initialize();
+        });
         this._modeSubscription = this._builderModeService.mode$().subscribe(mode => {
             const navigatedMode = this._modeRegistry.getItem(mode);
             if (!!navigatedMode) {
@@ -56,9 +59,6 @@ export class ControlPanelService implements OnDestroy {
             }
         });
         this._reloadModeSubscription = this._builderIntegrationService.reloadModes.subscribe(() => {
-            this.initialize();
-        })
-        this._readOnlySubscription = this._builderModeService.readOnly$.subscribe(() => {
             this.initialize();
         })
     }
