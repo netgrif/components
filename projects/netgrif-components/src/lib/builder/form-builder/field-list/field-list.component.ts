@@ -70,7 +70,7 @@ export class FieldListComponent implements OnInit, AfterViewInit {
     ngAfterViewInit(): void {
         if (this.existingDataFields && this.existingDataFields.length !== 0) {
             this.openPanel(this.existingFieldsPanel);
-        } else {
+        } else if (!!this.newFieldsPanel) {
             this.openPanel(this.newFieldsPanel);
         }
     }

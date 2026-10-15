@@ -471,6 +471,9 @@ export class SelectTool extends CanvasTool {
     }
 
     moveSelected(): void {
+        if (this._builderModeService.readOnly) {
+            return;
+        }
         this.selectedElements.places.forEach(p => this.editModeService.movePlace(p));
         this.selectedElements.transitions.forEach(t => this.editModeService.moveTransition(t));
         this.selectedElements.arcs.forEach(a => {

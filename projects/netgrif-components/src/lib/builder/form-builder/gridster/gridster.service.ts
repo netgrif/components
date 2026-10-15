@@ -30,6 +30,7 @@ import {ModelService} from '../../modeler/services/model/model.service';
 import {DataFieldUtils} from '../data-field-utils';
 import {FieldListService, PropertyDef} from '../field-list/field-list.service';
 import {GridsterDataField} from './classes/gridster-data-field';
+import {BuilderModeService} from "../../services/builder-mode.service";
 
 @Injectable()
 export class GridsterService {
@@ -45,7 +46,7 @@ export class GridsterService {
     private _optionChanged: Subject<void>;
     private _historySave: boolean;
 
-    constructor(private modelService: ModelService, private transitionService: SelectedTransitionService) {
+    constructor(private modelService: ModelService, private transitionService: SelectedTransitionService, private _builderModeService: BuilderModeService) {
         this._options = {
             gridType: GridType.VerticalFixed,
             compactType: CompactType.None,
@@ -78,10 +79,10 @@ export class GridsterService {
             emptyCellDragMaxRows: 50,
             ignoreMarginInRow: false,
             draggable: {
-                enabled: true,
+                enabled: !_builderModeService.readOnly,
             },
             resizable: {
-                enabled: true,
+                enabled: !_builderModeService.readOnly,
             },
             swap: false,
             pushItems: true,
@@ -110,6 +111,11 @@ export class GridsterService {
         this._optionChanged = new Subject<void>();
         this._optionChanged.pipe(debounceTime(300)).subscribe(() => {
             this._options?.api?.optionsChanged();
+        });
+        this._builderModeService.readOnly$.subscribe((readOnly) => {
+            this._options.draggable.enabled = !readOnly;
+            this._options.resizable.enabled = !readOnly;
+            this._options?.api?.optionsChanged()
         });
     }
 

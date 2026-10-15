@@ -49,13 +49,15 @@ export class DialogArcEditComponent implements OnInit {
         [XmlArcType.INHIBITOR, 'radio_button_unchecked'],
     ]);
     private modelService: ModelService;
+    protected _builderModeService: BuilderModeService;
+    protected _translateService: TranslateService;
 
     constructor(
         @Inject(MAT_DIALOG_DATA) public data: ArcEditData,
-        protected _translateService: TranslateService,
-        protected _builderModeService: BuilderModeService
     ) {
         this.modelService = data.context.modelService;
+        this._builderModeService = data.context.builderModeService;
+        this._translateService = data.context.translateService;
         this.arc = new ChangedArc(undefined, this.modelService.model.getArc(data.arcId).clone());
         this.formControlRef = new FormControl('');
         this.multiplicityCtrl = new FormControl('', [
