@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Injectable, OnDestroy} from '@angular/core';
 import {
   Appearance,
   Component,
@@ -22,7 +22,7 @@ import {
   GridsterItemComponentInterface,
   GridType,
 } from 'angular-gridster2';
-import {BehaviorSubject, Observable, ReplaySubject, Subject} from 'rxjs';
+import {BehaviorSubject, Observable, ReplaySubject, Subject, Subscription} from 'rxjs';
 import {debounceTime} from 'rxjs/operators';
 import {ModelerConfig} from '../../modeler/modeler-config';
 import {SelectedTransitionService} from '../../modeler/selected-transition.service';
@@ -33,7 +33,7 @@ import {GridsterDataField} from './classes/gridster-data-field';
 import {BuilderModeService} from "../../services/builder-mode.service";
 
 @Injectable()
-export class GridsterService {
+export class GridsterService implements OnDestroy {
     public static readonly EXISTING_FIELD = 'existingField';
 
     private _options: GridsterConfig;
@@ -45,6 +45,7 @@ export class GridsterService {
     private _onNewFieldPlaced: ReplaySubject<DataVariable>;
     private _optionChanged: Subject<void>;
     private _historySave: boolean;
+    private _readOnlySub: Subscription;
 
     constructor(private modelService: ModelService, private transitionService: SelectedTransitionService, private _builderModeService: BuilderModeService) {
         this._options = {
@@ -112,11 +113,15 @@ export class GridsterService {
         this._optionChanged.pipe(debounceTime(300)).subscribe(() => {
             this._options?.api?.optionsChanged();
         });
-        this._builderModeService.readOnly$.subscribe((readOnly) => {
+        this._readOnlySub = this._builderModeService.readOnly$.subscribe((readOnly) => {
             this._options.draggable.enabled = !readOnly;
             this._options.resizable.enabled = !readOnly;
             this._options?.api?.optionsChanged()
         });
+    }
+
+    ngOnDestroy(): void {
+        this._readOnlySub.unsubscribe();
     }
 
     get options(): GridsterConfig { return this._options; }
