@@ -197,7 +197,11 @@ export class BuilderComponent implements OnDestroy {
     protected resolveIntegratedMode() {
         if (this._builderIntegrationService.processCase.immediateData.find((data: ImmediateData) => data.stringId === 'state')?.value === 'draft') {
             this._builderIntegrationService.editTaskId = this._builderIntegrationService.processCase.tasks.find(taskPair => taskPair.transition === 'edit')?.task;
-            this.builderModeService.readOnly = this._builderIntegrationService.dataField?.behavior?.visible;
+            const isDataFieldVisible: boolean = this._builderIntegrationService.dataField?.behavior?.visible;
+            this.builderModeService.readOnly$.next(isDataFieldVisible);
+            if (isDataFieldVisible) {
+                this._builderIntegrationService.allowedTransIds = ['view'];
+            }
             this._builderIntegrationService.getXml().subscribe(value => {
                 this.parseModel(value, BuilderMode.TASK_MODE);
                 this.loading.off();
@@ -207,7 +211,11 @@ export class BuilderComponent implements OnDestroy {
             })
         } else if (this._builderIntegrationService.processCase.immediateData.find((data: ImmediateData) => data.stringId === 'state')?.value === 'deployed') {
             const taskId = this._builderIntegrationService.processCase.tasks.find(taskPair => taskPair.transition === 'view')?.task;
-            this.builderModeService.readOnly = true;
+            this.builderModeService.readOnly$.next(true);
+            const isDataFieldVisible: boolean = this._builderIntegrationService.dataField?.behavior?.visible;
+            if (isDataFieldVisible) {
+                this._builderIntegrationService.allowedTransIds = ['view'];
+            }
             this._builderIntegrationService.editTaskId = undefined;
             this._builderIntegrationService.getXml(taskId).subscribe(value => {
                 this.parseModel(value, BuilderMode.TASK_MODE);
@@ -217,7 +225,7 @@ export class BuilderComponent implements OnDestroy {
                 this.loading.off();
             })
         } else {
-            this.builderModeService.readOnly = false;
+            this.builderModeService.readOnly$.next(false);
             this.loading.off();
             this._builderIntegrationService.editTaskId = undefined;
         }

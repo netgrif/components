@@ -21,6 +21,7 @@ export class BuilderIntegrationService implements OnDestroy {
     protected _dataField: ProcessRefField;
     protected _editTaskId: string;
     protected _isAssigned: boolean;
+    protected _allowedTransIds: Array<string> = ['deploy', 't10', 't11', 't4', 't6', 't9', 'view'];
 
     protected _reloadCase: Subject<boolean>;
     protected _reloadModes: Subject<boolean>;
@@ -105,6 +106,14 @@ export class BuilderIntegrationService implements OnDestroy {
 
     get loading$(): Observable<boolean> {
         return this._loading.asObservable();
+    }
+
+    set allowedTransIds(value: Array<string>) {
+        this._allowedTransIds = value;
+    }
+
+    get allowedTransIds(): Array<string> {
+        return this._allowedTransIds;
     }
 
     public isLoading(): boolean {

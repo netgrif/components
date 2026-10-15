@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Injectable, OnDestroy} from '@angular/core';
 import {ActionsModeService} from '../actions-mode/actions-mode.service';
 import {DataModeService} from '../data-mode/data-mode.service';
 import {EditModeService} from '../edit-mode/edit-mode.service';
@@ -19,13 +19,17 @@ import {Tool} from './tools/tool';
 import {BuilderModeService} from "../../services/builder-mode.service";
 import {TaskModeService} from "../task-mode/task-mode.service";
 import {BuilderIntegrationService} from "../../services/builder-integration.service";
+import {Subscription} from "rxjs";
 
 @Injectable()
-export class ControlPanelService {
+export class ControlPanelService implements OnDestroy {
 
     private _modeRegistry: ModeRegistry;
     private _activeMode: Mode;
     private _defaultMode: Mode;
+    private _modeSubscription: Subscription;
+    private _reloadModeSubscription: Subscription;
+    private _readOnlySubscription: Subscription;
 
     constructor(
         private _editModeService: EditModeService,
@@ -45,14 +49,16 @@ export class ControlPanelService {
         private _builderModeService: BuilderModeService,
         private _builderIntegrationService: BuilderIntegrationService
     ) {
-        this.initialize();
-        this._builderModeService.mode$().subscribe(mode => {
+        this._modeSubscription = this._builderModeService.mode$().subscribe(mode => {
             const navigatedMode = this._modeRegistry.getItem(mode);
             if (!!navigatedMode) {
                 this.activate(navigatedMode);
             }
         });
-        this._builderIntegrationService.reloadModes.subscribe(() => {
+        this._reloadModeSubscription = this._builderIntegrationService.reloadModes.subscribe(() => {
+            this.initialize();
+        })
+        this._readOnlySubscription = this._builderModeService.readOnly$.subscribe(() => {
             this.initialize();
         })
     }
@@ -90,12 +96,17 @@ export class ControlPanelService {
         }
     }
 
+    ngOnDestroy(): void {
+        this._modeSubscription?.unsubscribe();
+        this._reloadModeSubscription?.unsubscribe();
+        this._readOnlySubscription?.unsubscribe();
+    }
+
     // TODO: NAB-326 fix tool vs toolgroup and dividers problem
     private registerMode(modeService: ModeService<Tool>) {
         const mode = modeService.mode;
-        if (!(mode.tools.getToolPortals()?.length > 0)) {
-            modeService.tools.forEach(g => g.tools.forEach(t => mode.tools.registerItem(t, modeService)));
-        }
+        mode.resetTools();
+        modeService.tools.forEach(g => g.tools.forEach(t => mode.tools.registerItem(t, modeService)));
         this._modeRegistry.registerItem(mode);
     }
 

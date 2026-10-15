@@ -32,7 +32,7 @@ export abstract class CanvasListenerTool extends Tool implements MouseListener, 
     private readonly _dialog: MatDialog;
     private readonly _router: Router;
     private readonly _transitionService: SelectedTransitionService;
-    private readonly _hotkeys: Array<Hotkey>;
+    protected _hotkeys: Array<Hotkey>;
     private _mouseDown: PointerEvent;
     public readonly _builderModeService: BuilderModeService;
 
@@ -52,6 +52,10 @@ export abstract class CanvasListenerTool extends Tool implements MouseListener, 
         this._router = router;
         this._transitionService = transitionService;
         this._builderModeService = builderModeService;
+        this.initializeHotkeys();
+    }
+
+    protected initializeHotkeys() {
         this._hotkeys = new Array<Hotkey>();
         this.hotkeys.push(new Hotkey('+', false, false, false, this.zoom.bind(this, 1)));
         this.hotkeys.push(new Hotkey('-', false, false, false, this.zoom.bind(this, -1)));

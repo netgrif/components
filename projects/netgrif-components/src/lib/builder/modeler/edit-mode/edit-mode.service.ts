@@ -70,6 +70,7 @@ export class EditModeService extends CanvasModeService<CanvasTool> implements On
     private _placeSubscription: Subscription;
     private _transitionSubscription: Subscription;
     private _arcSubscription: Subscription;
+    private _readOnlySubscription: Subscription;
 
     constructor(
         _arcFactory: ArcFactory,
@@ -123,46 +124,49 @@ export class EditModeService extends CanvasModeService<CanvasTool> implements On
         this._placeSubscription?.unsubscribe();
         this._transitionSubscription?.unsubscribe();
         this._arcSubscription?.unsubscribe();
+        this._readOnlySubscription?.unsubscribe();
     }
 
     protected initializeTools(context: CanvasToolContext) {
-        if (this._builderModeService.readOnly) {
-            this.switchTools = new ToolGroup<CanvasTool>(
-                new ResetPositionAndZoomTool(context),
-                new GridTool(context),
-                new SwitchLabelTool(context)
-            );
-            this.tools = [
-                new ToolGroup<CanvasTool>(
-                    new SelectTool(context),
-                ),
-                this.switchTools
-            ];
-        } else {
-            this.switchTools = new ToolGroup<CanvasTool>(
-                new ClearModelTool(context),
-                new ResetPositionAndZoomTool(context),
-                new GridTool(context),
-                new SwitchLabelTool(context)
-            );
-            this.tools = [
-                new ToolGroup<CanvasTool>(
-                    new SelectTool(context),
-                    new QuickDrawTool(context),
-                    new CreateTransitionTool(context),
-                    new CreatePlaceTool(context),
-                    new AddTokenTool(context),
-                    new RemoveTokenTool(context)
-                ),
-                new ToolGroup<CanvasTool>(
-                    new CreateRegularArcTool(context),
-                    new CreateResetArcTool(context),
-                    new CreateInhibitorArcTool(context),
-                    new CreateReadArcTool(context)
-                ),
-                this.switchTools
-            ];
-        }
+        this._readOnlySubscription = this._builderModeService.readOnly$.subscribe(readOnly => {
+            if (readOnly) {
+                this.switchTools = new ToolGroup<CanvasTool>(
+                    new ResetPositionAndZoomTool(context),
+                    new GridTool(context),
+                    new SwitchLabelTool(context)
+                );
+                this.tools = [
+                    new ToolGroup<CanvasTool>(
+                        new SelectTool(context),
+                    ),
+                    this.switchTools
+                ];
+            } else {
+                this.switchTools = new ToolGroup<CanvasTool>(
+                    new ClearModelTool(context),
+                    new ResetPositionAndZoomTool(context),
+                    new GridTool(context),
+                    new SwitchLabelTool(context)
+                );
+                this.tools = [
+                    new ToolGroup<CanvasTool>(
+                        new SelectTool(context),
+                        new QuickDrawTool(context),
+                        new CreateTransitionTool(context),
+                        new CreatePlaceTool(context),
+                        new AddTokenTool(context),
+                        new RemoveTokenTool(context)
+                    ),
+                    new ToolGroup<CanvasTool>(
+                        new CreateRegularArcTool(context),
+                        new CreateResetArcTool(context),
+                        new CreateInhibitorArcTool(context),
+                        new CreateReadArcTool(context)
+                    ),
+                    this.switchTools
+                ];
+            }
+        });
     }
 
     activate(tool?: CanvasTool) {

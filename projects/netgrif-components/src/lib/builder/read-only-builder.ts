@@ -9,7 +9,7 @@ export const readOnlyBuilder: FrontActionDefinition = {
     call: (injector: Injector, frontAction: FrontAction) => {
         const builderModeService = injector.get(BuilderModeService);
         if (!!builderModeService) {
-            builderModeService.readOnly = true;
+            builderModeService.readOnly$.next(true);
         }
     }
 }

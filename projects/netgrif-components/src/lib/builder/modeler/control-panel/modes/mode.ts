@@ -11,15 +11,19 @@ export class Mode extends Identifiable {
     private _routerLink: string;
     private _url: string
     private _tutorialStep: TutorialStep;
-    private readonly _tools: ToolRegistry;
+    private _tools: ToolRegistry;
 
-    constructor(id: string, button: ControlPanelButton, routerLink: string, url: string, tutorialStep: TutorialStep, injector: Injector) {
+    constructor(id: string, button: ControlPanelButton, routerLink: string, url: string, tutorialStep: TutorialStep, protected _injector: Injector) {
         super(id);
         this._button = button;
         this._routerLink = routerLink;
         this._url = url;
         this._tutorialStep = tutorialStep;
-        this._tools = new ToolRegistry(injector);
+        this._tools = new ToolRegistry(_injector);
+    }
+
+    public resetTools(): void {
+        this._tools = new ToolRegistry(this._injector);
     }
 
     public activate(): void {

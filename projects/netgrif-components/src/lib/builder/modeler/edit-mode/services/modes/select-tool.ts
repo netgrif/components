@@ -32,6 +32,15 @@ export class SelectTool extends CanvasTool {
     private lastDragPoint: DOMPoint;
     private arcPointIndex: number;
     private lastClickTimestamp: number = 0;
+    private readonly additionalHotKeys: Array<Hotkey> = [
+        new Hotkey('c', true, false, false, this.copyElements.bind(this)),
+        new Hotkey('v', true, false, false, this.pasteElements.bind(this)),
+        new Hotkey('d', true, false, false, this.duplicateElements.bind(this)),
+        new Hotkey('a', true, false, false, this.selectAll.bind(this)),
+        new Hotkey('z', true, false, true, this.redo.bind(this)),
+        new Hotkey('z', true, false, false, this.undo.bind(this)),
+        new Hotkey('Delete', false, false, false, this.deleteSelected.bind(this))
+    ];
 
     constructor(context: CanvasToolContext) {
         super(
@@ -44,15 +53,13 @@ export class SelectTool extends CanvasTool {
         );
         this._selectedElements = new CanvasElementCollection();
         this._clipboardElements = new CanvasElementCollection();
-        if (!this._builderModeService.readOnly) {
-            this.hotkeys.push(new Hotkey('c', true, false, false, this.copyElements.bind(this)));
-            this.hotkeys.push(new Hotkey('v', true, false, false, this.pasteElements.bind(this)));
-            this.hotkeys.push(new Hotkey('d', true, false, false, this.duplicateElements.bind(this)));
-            this.hotkeys.push(new Hotkey('a', true, false, false, this.selectAll.bind(this)));
-            this.hotkeys.push(new Hotkey('z', true, false, true, this.redo.bind(this)));
-            this.hotkeys.push(new Hotkey('z', true, false, false, this.undo.bind(this)));
-            this.hotkeys.push(new Hotkey('Delete', false, false, false, this.deleteSelected.bind(this)));
-        }
+        this._builderModeService.readOnly$.subscribe((readOnly) => {
+            if (!readOnly) {
+                this.hotkeys.push(...this.additionalHotKeys);
+            } else if (this.hotkeys.includes(this.additionalHotKeys[0])) {
+                super.initializeHotkeys();
+            }
+        });
     }
 
     bind(): void {
