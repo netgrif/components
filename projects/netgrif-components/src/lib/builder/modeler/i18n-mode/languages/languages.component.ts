@@ -114,6 +114,7 @@ export class LanguagesComponent implements OnInit, OnDestroy {
     }
 
     selectLocale(locale) {
+        this.i18nControlService.updateI18ns();
         this._languageSelect.locale = locale;
         this.i18nModeService.activate(this.i18nModeService.translationsTool);
     }
