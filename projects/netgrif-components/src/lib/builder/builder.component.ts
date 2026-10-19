@@ -196,8 +196,9 @@ export class BuilderComponent implements OnDestroy {
 
     protected resolveIntegratedMode() {
         const stateFieldValue: string = this._builderIntegrationService.processCase.immediateData.find((data: ImmediateData) => data.stringId === 'state')?.value;
+        const taskId = this._builderIntegrationService.processCase.tasks.find(taskPair => taskPair.transition === 'form')?.task;
         if (stateFieldValue === 'draft') {
-            this._builderIntegrationService.editTaskId = this._builderIntegrationService.processCase.tasks.find(taskPair => taskPair.transition === 'edit')?.task;
+            this._builderIntegrationService.editTaskId = taskId;
             const isDataFieldVisible: boolean = this._builderIntegrationService.dataField?.behavior?.visible;
             this.builderModeService.readOnly$.next(isDataFieldVisible);
             if (isDataFieldVisible) {
@@ -211,7 +212,6 @@ export class BuilderComponent implements OnDestroy {
                 this.loading.off();
             })
         } else if (stateFieldValue === 'deployed' || stateFieldValue === 'archived') {
-            const taskId = this._builderIntegrationService.processCase.tasks.find(taskPair => taskPair.transition === 'view')?.task;
             this.builderModeService.readOnly$.next(true);
             const isDataFieldVisible: boolean = this._builderIntegrationService.dataField?.behavior?.visible;
             if (isDataFieldVisible) {
