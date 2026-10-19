@@ -43,10 +43,10 @@ export class NumberFormatter {
             return null;
         }
         const num = typeof value === 'number' ? value : Number(value);
-        if (isNaN(num)) {
+        if (Number.isNaN(num)) {
             return null;
         }
-        if (!isFinite(num)) {
+        if (!Number.isFinite(num)) {
             return (num < 0 ? '-' : '') + '∞';
         }
 

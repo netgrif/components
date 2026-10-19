@@ -73,9 +73,9 @@ export abstract class AbstractNumberDecimalFieldComponent extends AbstractNumber
             return value;
         }
         if (this.isFormattedComponent()) {
-            return this.transformFormatted(parseFloat(value));
+            return this.transformFormatted(Number.parseFloat(value));
         }
-        return this.transformWithDecimalPipe(parseFloat(value));
+        return this.transformWithDecimalPipe(Number.parseFloat(value));
     }
 
     /**
@@ -90,9 +90,20 @@ export abstract class AbstractNumberDecimalFieldComponent extends AbstractNumber
 
     /**
      * Transformation of the `formatted` component using the {@link NumberFormatter}.
+     * If the resolved `digitsInfo` is malformed, a warning is logged and the {@link DEFAULT_NUMBER_FORMAT} `digitsInfo`
+     * is used instead, while the resolved separators are preserved.
      */
     protected transformFormatted(value: number): string {
-        return new NumberFormatter(this.resolveNumberFormat()).format(value);
+        const format = this.resolveNumberFormat();
+        let formatter: NumberFormatter;
+        try {
+            formatter = new NumberFormatter(format);
+        } catch (e) {
+            this._log?.warn(`Invalid digitsInfo '${format.digitsInfo}' of number field '${this.dataField.stringId}',`
+                + ` default digitsInfo '${DEFAULT_NUMBER_FORMAT.digitsInfo}' is used instead.`, e);
+            formatter = new NumberFormatter({...format, digitsInfo: DEFAULT_NUMBER_FORMAT.digitsInfo});
+        }
+        return formatter.format(value);
     }
 
     /**
