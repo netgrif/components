@@ -50,7 +50,9 @@
             "cancel": "Cancel",
             "noData": "This task has no data. Finish to continue.",
             "redirecting": "Redirecting...",
-            "closeTab": "Close"
+            "closeTab": "Close",
+            "pinTab": "Pin tab",
+            "unpinTab": "Unpin tab"
         },
         "footer": {
             "defaultText": "NETGRIF, s.r.o. © 2022"

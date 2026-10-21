@@ -50,7 +50,9 @@
             "cancel": "Zrušiť",
             "noData": "Táto úloha nemá žiadne údaje. Stlačte dokončiť pre pokračovanie.",
             "redirecting": "Presmerovanie...",
-            "closeTab": "Zavrieť"
+            "closeTab": "Zavrieť",
+            "pinTab": "Pripnúť kartu",
+            "unpinTab": "Odopnúť kartu"
         },
         "footer": {
             "defaultText": "NETGRIF, s.r.o. © 2022"

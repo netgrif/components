@@ -18,6 +18,7 @@ import {TestConfigurationService} from '../../utility/tests/test-config';
 import {TestViewService} from '../../utility/tests/test-view-service';
 import {MockUserResourceService} from '../../utility/tests/mocks/mock-user-resource.service';
 import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
+import {NAE_TAB_PINNING_ENABLED} from '../tab-pinning-injection-token/tab-pinning-injection-token';
 
 describe('AbstractTabViewComponent', () => {
     let component: TestTabComponent;
@@ -45,18 +46,49 @@ describe('AbstractTabViewComponent', () => {
             ]
         }).compileComponents();
 
-        fixture = TestBed.createComponent(TestWrapperComponent);
-        component = fixture.debugElement.children[0].componentInstance;
-        fixture.detectChanges();
     }));
 
     it('should create', () => {
+        createComponent();
         expect(component).toBeTruthy();
+        expect(component.tabView.openedTabs[0].pinnable).toBeFalse();
+    });
+
+    it('should enable pinning for one view', () => {
+        fixture = TestBed.createComponent(TestWrapperComponent);
+        fixture.componentInstance.pinningEnabled = true;
+        fixture.detectChanges();
+        component = fixture.debugElement.children[0].componentInstance;
+
+        expect(component.tabView.openedTabs[0].pinnable).toBeTrue();
+    });
+
+    it('should enable pinning globally', () => {
+        TestBed.overrideProvider(NAE_TAB_PINNING_ENABLED, {useValue: true});
+        createComponent();
+
+        expect(component.tabView.openedTabs[0].pinnable).toBeTrue();
+    });
+
+    it('should allow a view to disable globally enabled pinning', () => {
+        TestBed.overrideProvider(NAE_TAB_PINNING_ENABLED, {useValue: true});
+        fixture = TestBed.createComponent(TestWrapperComponent);
+        fixture.componentInstance.pinningEnabled = false;
+        fixture.detectChanges();
+        component = fixture.debugElement.children[0].componentInstance;
+
+        expect(component.tabView.openedTabs[0].pinnable).toBeFalse();
     });
 
     afterEach(() => {
         TestBed.resetTestingModule();
     });
+
+    function createComponent(): void {
+        fixture = TestBed.createComponent(TestWrapperComponent);
+        fixture.detectChanges();
+        component = fixture.debugElement.children[0].componentInstance;
+    }
 });
 
 
@@ -72,16 +104,17 @@ class TestTabComponent extends AbstractTabViewComponent {
 
 @Component({
     selector: 'ncc-test-wrapper',
-    template: '<ncc-test-tabs [initialTabs]="tabs"></ncc-test-tabs>'
+    template: '<ncc-test-tabs [initialTabs]="tabs" [pinningEnabled]="pinningEnabled"></ncc-test-tabs>'
 })
 class TestWrapperComponent {
+    pinningEnabled: boolean | undefined;
     tabs: Array<TabContent> = [
         {
             label: {
                 text: 'tab title',
                 icon: 'home'
             },
-            canBeClosed: false,
+            canBeClosed: true,
             tabContentComponent: TestComponent
         }
     ];

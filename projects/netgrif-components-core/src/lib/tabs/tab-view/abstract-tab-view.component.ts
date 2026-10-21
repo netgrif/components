@@ -1,10 +1,12 @@
 import {Component, Injector, Input, OnDestroy, OnInit} from '@angular/core';
-import {TabContent} from '../interfaces';
+import {TabContent, TabPersistenceAdapter} from '../interfaces';
 import {TabView} from '../classes/tab-view';
 import {ViewService} from '../../routing/view-service/view.service';
 import {LoggerService} from '../../logger/services/logger.service';
 import {ReplaySubject} from 'rxjs';
 import {take} from 'rxjs/operators';
+import {TabPersistenceService} from '../services/tab-persistence.service';
+import {NAE_TAB_PINNING_ENABLED} from '../tab-pinning-injection-token/tab-pinning-injection-token';
 
 /**
  * Component that renders a tab view.
@@ -29,6 +31,12 @@ export abstract class AbstractTabViewComponent implements OnInit, OnDestroy {
 
     @Input() public align = 'start';
 
+    @Input() public persistenceKey: string;
+
+    @Input() public persistenceAdapter: TabPersistenceAdapter;
+
+    @Input() public pinningEnabled: boolean | undefined;
+
     public offset = '';
 
     /**
@@ -41,11 +49,25 @@ export abstract class AbstractTabViewComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        this.tabView = new TabView(this._viewService, this._logger, this.initialTabs, this._injector);
+        const pinningEnabled = this.pinningEnabled ?? this._injector.get(NAE_TAB_PINNING_ENABLED);
+        const persistence = this.persistenceKey ? {
+            key: this.persistenceKey,
+            service: this._injector.get(TabPersistenceService),
+            adapter: this.persistenceAdapter
+        } : undefined;
+        this.tabView = new TabView(
+            this._viewService,
+            this._logger,
+            this.initialTabs ?? [],
+            this._injector,
+            persistence,
+            pinningEnabled
+        );
     }
 
     ngOnDestroy(): void {
-        this.tabView.openedTabs.forEach(tab => tab.destroy());
+        this.tabView?.persist();
+        this.tabView?.openedTabs.forEach(tab => tab.destroy());
     }
 
     badgeHidden(tab: TabContent) {

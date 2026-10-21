@@ -54,6 +54,43 @@ export interface TabContent {
      * a unique ID of tab, from which we open current tab. Initial tabs and case tabs dont have those property.
      */
     parentUniqueId?: string;
+    parentPersistenceId?: string;
+    persistence?: TabPersistenceMetadata;
+    pinned?: boolean;
+    pinnable?: boolean;
+}
+
+export interface TabPersistenceMetadata {
+    id: string;
+    type: string;
+    payload?: unknown;
+}
+
+export interface PersistedTabState {
+    persistence: TabPersistenceMetadata;
+    label?: {
+        icon?: string;
+        text?: string;
+    };
+    order: number;
+    pinned: boolean;
+    parentPersistenceId?: string;
+    initial: boolean;
+}
+
+export interface PersistedTabViewState {
+    version: number;
+    selectedTabId?: string;
+    tabs: Array<PersistedTabState>;
+}
+
+export interface TabRestoreContext {
+    initialTabs: ReadonlyArray<TabContent>;
+    restoredTabs: ReadonlyArray<TabContent>;
+}
+
+export interface TabPersistenceAdapter {
+    restore(state: PersistedTabState, context: TabRestoreContext): TabContent | undefined;
 }
 
 
@@ -148,6 +185,18 @@ export interface TabViewInterface {
      * See [TabView.closeTabUniqueId]{@link TabView#closeTabUniqueId}
      */
     closeTabUniqueId(uniqueId: string, force?: boolean): void;
+
+    pinTabIndex?(index: number): void;
+
+    unpinTabIndex?(index: number): void;
+
+    toggleTabPinIndex?(index: number): void;
+
+    pinTabUniqueId?(uniqueId: string): void;
+
+    unpinTabUniqueId?(uniqueId: string): void;
+
+    toggleTabPinUniqueId?(uniqueId: string): void;
 }
 
 /**
