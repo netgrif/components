@@ -15,7 +15,7 @@
                  [ngClass]="{'panel-header-padding': !textEllipsis && field.type !== 'button'}">
                 <nc-panel-item
                     [leadingIcon]="case_.icon"
-                    [leadingIconEnabled]="i === 0"
+                    [leadingIconEnabled]="showCasePanelIcon && i === 0"
                     [featuredValue]="field"
                     [textEllipsis]="textEllipsis">
                 </nc-panel-item>

@@ -1,9 +1,10 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { Component} from '@angular/core';
+import {Component, Injector} from '@angular/core';
 import { AbstractPanelItemComponent } from './abstract-panel-item.component';
 import { FeaturedValue } from '../abstract/featured-value';
+import {PanelItemComponentRegistryService} from './panel-item-component-registry.service';
 
 describe('AbstractPanelItemComponent', () => {
     let component: TestPanelItemComponent;
@@ -46,8 +47,8 @@ describe('AbstractPanelItemComponent', () => {
     template: ''
 })
 class TestPanelItemComponent extends AbstractPanelItemComponent {
-    constructor() {
-        super();
+    constructor(registry: PanelItemComponentRegistryService, injector: Injector) {
+        super(registry, injector);
         this.leadingIcon = 'label';
         this.leadingIconEnabled = true;
         this.textEllipsis = true;

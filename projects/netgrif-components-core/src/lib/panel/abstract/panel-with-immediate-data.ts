@@ -26,57 +26,69 @@ export abstract class AbstractPanelWithImmediateDataComponent extends AbstractPa
 
     protected parseImmediateValue(immediate: ImmediateData): FeaturedValue {
         if (immediate && immediate.value !== undefined || immediate && immediate.type === 'button') {
+            let featuredValue: FeaturedValue;
             switch (immediate.type) {
                 case 'date':
-                    return {
+                    featuredValue = {
                         value: toMoment(immediate.value as NaeDate).format(DATE_FORMAT_STRING),
                         icon: 'event',
                         type: immediate.type
                     };
+                    break;
                 case 'dateTime':
-                    return {
+                    featuredValue = {
                         value: toMoment(immediate.value as NaeDate).format(DATE_TIME_FORMAT_STRING),
                         icon: 'event',
                         type: immediate.type
                     };
+                    break;
                 case 'enumeration':
-                    return {value: this.getTranslation(immediate.value), icon: undefined, type: immediate.type};
+                    featuredValue = {value: this.getTranslation(immediate.value), icon: undefined, type: immediate.type};
+                    break;
                 case 'multichoice':
-                    return {
+                    featuredValue = {
                         value: immediate.value.map(it => this.getTranslation(it)).join(', '),
                         icon: undefined,
                         type: immediate.type
                     };
+                    break;
                 case 'enumeration_map':
-                    return {
+                    featuredValue = {
                         value: this.getTranslation(immediate.options[immediate.value]),
                         icon: undefined,
                         type: immediate.type
                     };
+                    break;
                 case 'multichoice_map':
-                    return {
+                    featuredValue = {
                         value: immediate.value.map(it =>
                             this.getTranslation(immediate.options[it])).join(', '),
                         icon: undefined,
                         type: immediate.type
                     };
+                    break;
                 case 'file':
-                    return {value: immediate.value?.name, icon: 'insert_drive_file', type: immediate.type};
+                    featuredValue = {value: immediate.value?.name, icon: 'insert_drive_file', type: immediate.type};
+                    break;
                 case 'fileList':
-                    return {
+                    featuredValue = {
                         value: immediate.value?.namesPaths.map(obj => obj.name).join(', '),
                         icon: 'file_copy',
                         type: immediate.type
                     };
+                    break;
                 case 'actorList':
-                    return {value: immediate.value?.actorValues?.map(obj => obj.fullName).join(', '), icon: 'account_circle', type: immediate.type};
+                    featuredValue = {value: immediate.value?.actorValues?.map(obj => obj.fullName).join(', '), icon: 'account_circle', type: immediate.type};
+                    break;
                 case 'actor':
-                    return {value: immediate.value?.fullName, icon: 'account_circle', type: immediate.type};
+                    featuredValue = {value: immediate.value?.fullName, icon: 'account_circle', type: immediate.type};
+                    break;
                 case 'boolean':
-                    return {
+                    featuredValue = {
                         value: this._translate.instant('dataField.values.boolean.' + immediate.value),
                         icon: undefined, type: immediate.type
                     };
+                    break;
                 case 'button':
                     let buttonValue: string;
                     if ((immediate as any).placeholder?.defaultValue !== undefined) {
@@ -86,28 +98,35 @@ export abstract class AbstractPanelWithImmediateDataComponent extends AbstractPa
                     } else {
                         buttonValue = this._translate.instant('dialog.submit');
                     }
-                    return {
+                    featuredValue = {
                         value: buttonValue,
                         icon: undefined,
                         type: immediate.type
                     };
+                    break;
                 case 'filter':
-                    return {
+                    featuredValue = {
                         value: undefined, icon: undefined, type: immediate.type,
                         filterMetadata: {filterMetadata: immediate.filterMetadata, allowedNets: immediate.allowedNets}
                     };
+                    break;
                 case 'number':
                     if (immediate.format !== undefined) {
-                        return this.formatCurrencyPipe(immediate.value, immediate.format.code, immediate.format.fractionSize,
+                        featuredValue = this.formatCurrencyPipe(immediate.value, immediate.format.code, immediate.format.fractionSize,
                             immediate.format.locale, immediate.type);
                     } else if (immediate.component?.name === 'currency') {
-                        return this.formatCurrencyPipe(immediate.value, immediate.component.properties['code'],
+                        featuredValue = this.formatCurrencyPipe(immediate.value, immediate.component.properties['code'],
                             immediate.component.properties['fractionSize'], immediate.component.properties['locale'], immediate.type);
+                    } else {
+                        featuredValue = {value: immediate.value, icon: undefined, type: immediate.type};
                     }
-                    return {value: immediate.value, icon: undefined, type: immediate.type};
+                    break;
                 default:
-                    return {value: immediate.value, icon: undefined, type: immediate.type};
+                    featuredValue = {value: immediate.value, icon: undefined, type: immediate.type};
             }
+            featuredValue.component = immediate.component;
+            featuredValue.rawValue = immediate.value;
+            return featuredValue;
         } else {
             return {value: '', icon: '', type: ''};
         }

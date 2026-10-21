@@ -1,0 +1,8 @@
+@use '../panel-item-renderer';
+
+.panel-markdown ::ng-deep td-markdown,
+.panel-markdown ::ng-deep td-markdown > div,
+.panel-markdown ::ng-deep td-markdown p {
+    display: inline;
+    margin: 0;
+}

@@ -58,7 +58,8 @@ export class TabbedViewsExampleComponent {
                     tabViewComponent: TabbedTaskViewComponent,
                     tabViewOrder: 0,
                     exampleUseCache: false,
-                    headerSortingMode: HeaderSortingMode.MULTI
+                    headerSortingMode: HeaderSortingMode.MULTI,
+                    showCasePanelIcon: false
                 }
             },
             {

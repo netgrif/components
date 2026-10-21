@@ -388,6 +388,15 @@ export abstract class DataField<T> {
         return this.component?.name ?? DEFAULT;
     }
 
+    public getTypedDefaultComponentType(): string {
+        const componentType = this.getComponentType();
+        const typedComponentType = this.getTypedComponentType();
+        if (componentType === DEFAULT || !typedComponentType.endsWith(componentType)) {
+            return typedComponentType;
+        }
+        return `${typedComponentType.slice(0, -componentType.length)}${DEFAULT}`;
+    }
+
     public abstract getTypedComponentType(): string;
 
     public destroy(): void {
