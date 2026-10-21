@@ -1,4 +1,4 @@
-import {TabContent, TabLabel} from '../interfaces';
+import {TabContent, TabLabel, TabPersistenceMetadata} from '../interfaces';
 import {ComponentPortal} from '@angular/cdk/portal';
 import {Type} from '@angular/core';
 import {BehaviorSubject, Observable, Subject} from 'rxjs';
@@ -39,6 +39,10 @@ export class OpenedTab implements TabContent {
      * See [TabContent.parentUniqueId]{@link TabContent#parentUniqueId}.
      */
     public parentUniqueId = undefined;
+    public parentPersistenceId = undefined;
+    public persistence: TabPersistenceMetadata | undefined;
+    public pinned = false;
+    public pinnable: boolean;
     /**
      * Reference to the component portal that is used to display the tab content
      */
@@ -59,6 +63,7 @@ export class OpenedTab implements TabContent {
     public tabClosed$: Subject<void>;
 
     protected _label$: TabLabelStream;
+    private _text: string | undefined;
 
     /**
      * @param tabContent - content of the tab
@@ -66,8 +71,11 @@ export class OpenedTab implements TabContent {
      */
     constructor(tabContent: TabContent, public uniqueId: string) {
         Object.assign(this, tabContent);
+        this.pinned = tabContent.pinned ?? false;
+        this.pinnable = tabContent.pinnable ?? tabContent.canBeClosed;
         this.tabSelected$ = new BehaviorSubject<boolean>(false);
         this.tabClosed$ = new Subject();
+        this._text = this.label?.text;
         this._label$ = new TabLabelStream(this.label?.icon, this.label?.text)
     }
 
@@ -76,6 +84,7 @@ export class OpenedTab implements TabContent {
     }
 
     public setText(text: string) {
+        this._text = text;
         this._label$.text$.next(text);
     }
 
@@ -89,6 +98,10 @@ export class OpenedTab implements TabContent {
 
     public getText$(): Observable<string> {
         return this._label$.text$.asObservable();
+    }
+
+    public getText(): string | undefined {
+        return this._text;
     }
 
     /**

@@ -16,10 +16,13 @@ import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-au
 import {RouterTestingModule} from '@angular/router/testing';
 import {SimpleFilter} from '../../filter/models/simple-filter';
 import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
+import {TabSessionPersistenceService} from '../services/tab-session-persistence.service';
+import {PersistedTabState, TabPersistenceAdapter, TabRestoreContext} from '../interfaces';
 
 describe('TabView', () => {
     let viewService: ViewService;
     let logger: LoggerService;
+    let persistence: TabSessionPersistenceService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -38,6 +41,8 @@ describe('TabView', () => {
         });
         viewService = TestBed.inject(ViewService);
         logger = TestBed.inject(LoggerService);
+        persistence = TestBed.inject(TabSessionPersistenceService);
+        persistence.clear();
     });
 
     it('should create an instance', () => {
@@ -187,7 +192,199 @@ describe('TabView', () => {
         tabs.closeTabIndex(0);
     });
 
+    it('should pin and unpin a pinnable tab', () => {
+        const tabView = new TabView(viewService, logger, [{
+            canBeClosed: true,
+            tabContentComponent: TabTestComponent
+        }], undefined, undefined, true);
+
+        tabView.pinTabIndex(0);
+        expect(tabView.openedTabs[0].pinned).toBeTrue();
+        expect(() => tabView.closeTabIndex(0)).toThrowError(`Tab at index 0 can't be closed`);
+
+        tabView.unpinTabUniqueId(tabView.openedTabs[0].uniqueId);
+        tabView.closeTabIndex(0);
+        expect(tabView.openedTabs.length).toEqual(0);
+    });
+
+    it('should disable pinning by default', () => {
+        const tabView = new TabView(viewService, logger, [{
+            canBeClosed: true,
+            pinnable: true,
+            tabContentComponent: TabTestComponent
+        }], undefined);
+
+        expect(tabView.openedTabs[0].pinnable).toBeFalse();
+        expect(() => tabView.pinTabIndex(0)).toThrowError(`Tab at index 0 can't be pinned`);
+    });
+
+    it('should restore tabs only in their persistence scope', () => {
+        const initialTab = () => ({
+            canBeClosed: false,
+            tabContentComponent: TabTestComponent,
+            persistence: {id: 'root', type: 'initial'}
+        });
+        const adapter: TabPersistenceAdapter = {
+            restore: (state: PersistedTabState, context: TabRestoreContext) => ({
+                canBeClosed: true,
+                tabContentComponent: TabTestComponent,
+                label: state.label
+            })
+        };
+        const first = new TabView(viewService, logger, [initialTab()], undefined, {
+            key: 'view-a',
+            service: persistence,
+            adapter
+        }, true);
+        const dynamicId = first.openTab({
+            label: {text: 'Case'},
+            canBeClosed: true,
+            tabContentComponent: TabTestComponent,
+            parentUniqueId: first.openedTabs[0].uniqueId,
+            persistence: {id: 'case:1', type: 'case'}
+        }, true);
+        first.pinTabUniqueId(dynamicId);
+
+        const restored = new TabView(viewService, logger, [initialTab()], undefined, {
+            key: 'view-a',
+            service: persistence,
+            adapter
+        }, true);
+        expect(restored.openedTabs.length).toEqual(2);
+        expect(restored.openedTabs[1].pinned).toBeTrue();
+        expect(restored.selectedIndex.value).toEqual(1);
+        expect(restored.openedTabs[1].parentUniqueId).toEqual(restored.openedTabs[0].uniqueId);
+
+        const isolated = new TabView(viewService, logger, [initialTab()], undefined, {
+            key: 'view-b',
+            service: persistence,
+            adapter
+        }, true);
+        expect(isolated.openedTabs.length).toEqual(1);
+    });
+
+    it('should persist only pinned dynamic tabs and remove them after unpin', () => {
+        const tabView = new TabView(viewService, logger, [{
+            canBeClosed: false,
+            tabContentComponent: TabTestComponent,
+            persistence: {id: 'root', type: 'initial'}
+        }], undefined, {
+            key: 'view-a',
+            service: persistence,
+            adapter: {
+                restore: () => undefined
+            }
+        }, true);
+        const dynamicId = tabView.openTab({
+            canBeClosed: true,
+            tabContentComponent: TabTestComponent,
+            persistence: {id: 'case:1', type: 'case'}
+        }, true);
+
+        expect(persistence.load('view-a')).toBeUndefined();
+
+        tabView.pinTabUniqueId(dynamicId);
+
+        expect(persistence.load('view-a')?.tabs.map(tab => tab.persistence.id)).toEqual(['case:1']);
+
+        tabView.unpinTabUniqueId(dynamicId);
+
+        expect(tabView.openedTabs.length).toEqual(2);
+        expect(persistence.load('view-a')).toBeUndefined();
+    });
+
+    it('should ignore unpinned dynamic tabs from an existing session state', () => {
+        persistence.save('view-a', {
+            version: TabSessionPersistenceService.STATE_VERSION,
+            selectedTabId: 'case:1',
+            tabs: [{
+                persistence: {id: 'root', type: 'initial'},
+                order: 0,
+                pinned: false,
+                initial: true
+            }, {
+                persistence: {id: 'case:1', type: 'case'},
+                order: 0,
+                pinned: false,
+                initial: false
+            }]
+        });
+        const restore = jasmine.createSpy('restore');
+
+        const tabView = new TabView(viewService, logger, [{
+            canBeClosed: false,
+            tabContentComponent: TabTestComponent,
+            persistence: {id: 'root', type: 'initial'}
+        }], undefined, {
+            key: 'view-a',
+            service: persistence,
+            adapter: {restore}
+        }, true);
+
+        expect(tabView.openedTabs.length).toEqual(1);
+        expect(tabView.selectedIndex.value).toEqual(0);
+        expect(restore).not.toHaveBeenCalled();
+        expect(persistence.load('view-a')).toBeUndefined();
+    });
+
+    it('should discard persisted pinned tabs when pinning is disabled', () => {
+        persistence.save('view-a', {
+            version: TabSessionPersistenceService.STATE_VERSION,
+            selectedTabId: 'case:1',
+            tabs: [{
+                persistence: {id: 'case:1', type: 'case'},
+                order: 0,
+                pinned: true,
+                initial: false
+            }]
+        });
+        const restore = jasmine.createSpy('restore');
+
+        const tabView = new TabView(viewService, logger, [{
+            canBeClosed: false,
+            tabContentComponent: TabTestComponent,
+            persistence: {id: 'root', type: 'initial'}
+        }], undefined, {
+            key: 'view-a',
+            service: persistence,
+            adapter: {restore}
+        });
+
+        expect(tabView.openedTabs.length).toEqual(1);
+        expect(restore).not.toHaveBeenCalled();
+        expect(persistence.load('view-a')).toBeUndefined();
+    });
+
+    it('should restore a selected non-default initial tab without storing initial tabs', () => {
+        const initialTabs = () => [{
+            canBeClosed: false,
+            tabContentComponent: TabTestComponent,
+            persistence: {id: 'root', type: 'initial'}
+        }, {
+            canBeClosed: false,
+            tabContentComponent: TabTestComponent,
+            persistence: {id: 'secondary', type: 'initial'}
+        }];
+        const first = new TabView(viewService, logger, initialTabs(), undefined, {
+            key: 'view-a',
+            service: persistence
+        });
+
+        first.switchToTabIndex(1);
+
+        expect(persistence.load('view-a')?.tabs).toEqual([]);
+        expect(persistence.load('view-a')?.selectedTabId).toEqual('secondary');
+
+        const restored = new TabView(viewService, logger, initialTabs(), undefined, {
+            key: 'view-a',
+            service: persistence
+        });
+
+        expect(restored.selectedIndex.value).toEqual(1);
+    });
+
     afterEach(() => {
+        persistence.clear();
         TestBed.resetTestingModule();
     });
 });

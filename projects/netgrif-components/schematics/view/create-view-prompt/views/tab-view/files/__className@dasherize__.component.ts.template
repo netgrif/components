@@ -15,6 +15,8 @@ import {NAE_VIEW_ID_SEGMENT, ViewIdService} from '@netgrif/components-core';
 })
 export class <%= classify(className) %>Component {
 
+    persistenceKey = '<%= persistenceKey %>';
+
     tabs = [<% for(let tab of tabs) { %>
         {<% if (tab.icon !== undefined || tab.text !== undefined) { %>
             label: {<% if (tab.icon !== undefined) { %>
@@ -22,6 +24,7 @@ export class <%= classify(className) %>Component {
                 text: '<%= tab.text %>',<% } %>
             },<% } %>
             canBeClosed: <%= tab.canBeDeleted %>,
+            persistence: {id: '<%= tab.persistenceId %>', type: 'initial'},
             tabContentComponent: <%= tab.tabContentComponent %>,<% if (tab.order !== undefined) { %>
             order: <%= tab.order %>,<% } %><% if (!!tab.injectedObject) { %>
             injectedObject: {

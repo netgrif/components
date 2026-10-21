@@ -4,6 +4,7 @@ export interface TabViewParams {
 }
 
 export interface EmbeddedView {
+    id?: string;
     view?: {
         name: string,
         params?: {[k: string]: any},
