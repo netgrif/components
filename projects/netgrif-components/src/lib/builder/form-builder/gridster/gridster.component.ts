@@ -25,7 +25,7 @@ export class GridsterComponent implements OnInit, OnDestroy {
                 private router: Router,
                 private transitionService: SelectedTransitionService,
                 private historyService: HistoryService,
-                private _builderModeService: BuilderModeService,
+                protected _builderModeService: BuilderModeService,
                 protected _translateService: TranslateService) {
     }
 

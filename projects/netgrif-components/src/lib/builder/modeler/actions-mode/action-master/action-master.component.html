@@ -16,7 +16,8 @@
             <div mat-subheader class="header-action">
                 <p fxFlex="40"><strong>{{ 'builder.modeler.actions-mode.action-master.name' | translate }}</strong></p>
                 <p fxFlex>{{ 'builder.modeler.actions-mode.action-master.scope' | translate }}</p>
-                <button mat-icon-button class="button-line" matTooltip="{{ 'builder.modeler.actions-mode.action-master.addFunction' | translate }}" (click)="create()">
+                <button mat-icon-button class="button-line" matTooltip="{{ 'builder.modeler.actions-mode.action-master.addFunction' | translate }}"
+                        (click)="create()" *ngIf="!_builderModeService.readOnly">
                     <mat-icon>add</mat-icon>
                 </button>
             </div>

@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Injectable, OnDestroy} from '@angular/core';
 import {ActionsModeService} from '../actions-mode/actions-mode.service';
 import {DataModeService} from '../data-mode/data-mode.service';
 import {EditModeService} from '../edit-mode/edit-mode.service';
@@ -19,13 +19,17 @@ import {Tool} from './tools/tool';
 import {BuilderModeService} from "../../services/builder-mode.service";
 import {TaskModeService} from "../task-mode/task-mode.service";
 import {BuilderIntegrationService} from "../../services/builder-integration.service";
+import {Subscription} from "rxjs";
 
 @Injectable()
-export class ControlPanelService {
+export class ControlPanelService implements OnDestroy {
 
     private _modeRegistry: ModeRegistry;
     private _activeMode: Mode;
     private _defaultMode: Mode;
+    private _modeSubscription: Subscription;
+    private _reloadModeSubscription: Subscription;
+    private _readOnlySubscription: Subscription;
 
     constructor(
         private _editModeService: EditModeService,
@@ -45,14 +49,16 @@ export class ControlPanelService {
         private _builderModeService: BuilderModeService,
         private _builderIntegrationService: BuilderIntegrationService
     ) {
-        this.initialize();
-        this._builderModeService.mode$().subscribe(mode => {
+        this._readOnlySubscription = this._builderModeService.readOnly$.subscribe(() => {
+            this.initialize();
+        });
+        this._modeSubscription = this._builderModeService.mode$().subscribe(mode => {
             const navigatedMode = this._modeRegistry.getItem(mode);
             if (!!navigatedMode) {
                 this.activate(navigatedMode);
             }
         });
-        this._builderIntegrationService.reloadModes.subscribe(() => {
+        this._reloadModeSubscription = this._builderIntegrationService.reloadModes.subscribe(() => {
             this.initialize();
         })
     }
@@ -60,27 +66,22 @@ export class ControlPanelService {
     protected initialize() {
         this._modeRegistry = new ModeRegistry();
         this._globalToolRegistry.reset();
-        if (this._builderIntegrationService.isIntegrated && this._builderIntegrationService.onlyTaskView) {
-            this.initializeOnlyTaskMode();
-        } else {
-            this.initializeNormalMode();
-        }
+        this.initializeMode();
         this._defaultMode = this._builderIntegrationService.isIntegrated ? this._taskModeService.mode : this._editModeService.mode;
 
         this.activate();
-        if (!this._builderIntegrationService.isIntegrated || !this._builderIntegrationService.onlyTaskView) {
+        if (!this._builderModeService.readOnly) {
             this._globalToolRegistry.registerItem(this._importModelTool);
-            this._globalToolRegistry.registerItem(this._exportModelTool);
-            this._globalToolRegistry.registerItem(this._exportSvgTool);
+        }
+        this._globalToolRegistry.registerItem(this._exportModelTool);
+        this._globalToolRegistry.registerItem(this._exportSvgTool);
+        if (!this._builderModeService.readOnly) {
             this._globalToolRegistry.registerItem(this._undoTool);
             this._globalToolRegistry.registerItem(this._redoTool);
-        } else {
-            this._globalToolRegistry.registerItem(this._exportModelTool);
-            this._globalToolRegistry.registerItem(this._exportSvgTool);
         }
     }
 
-    protected initializeNormalMode() {
+    protected initializeMode() {
         if (this._builderIntegrationService.isIntegrated) {
             this.registerMode(this._taskModeService);
         }
@@ -90,20 +91,22 @@ export class ControlPanelService {
         this.registerMode(this._roleModeService);
         this.registerMode(this._actionModeService);
         this.registerMode(this._i18nModeService);
-        this.registerMode(this._historyModeService);
+        if (!this._builderModeService.readOnly) {
+            this.registerMode(this._historyModeService);
+        }
     }
 
-    protected initializeOnlyTaskMode() {
-        this.registerMode(this._taskModeService);
-        this.registerMode(this._simulationModeService);
+    ngOnDestroy(): void {
+        this._modeSubscription?.unsubscribe();
+        this._reloadModeSubscription?.unsubscribe();
+        this._readOnlySubscription?.unsubscribe();
     }
 
     // TODO: NAB-326 fix tool vs toolgroup and dividers problem
     private registerMode(modeService: ModeService<Tool>) {
         const mode = modeService.mode;
-        if (!(mode.tools.getToolPortals()?.length > 0)) {
-            modeService.tools.forEach(g => g.tools.forEach(t => mode.tools.registerItem(t, modeService)));
-        }
+        mode.resetTools();
+        modeService.tools.forEach(g => g.tools.forEach(t => mode.tools.registerItem(t, modeService)));
         this._modeRegistry.registerItem(mode);
     }
 

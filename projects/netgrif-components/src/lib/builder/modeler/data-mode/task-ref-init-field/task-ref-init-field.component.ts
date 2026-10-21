@@ -4,6 +4,7 @@ import {MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
 import {MatChipInputEvent} from '@angular/material/chips';
 import {DataVariable, I18nWithDynamic, Transition} from '@netgrif/petriflow';
 import {ModelService} from '../../services/model/model.service';
+import {BuilderModeService} from "../../../services/builder-mode.service";
 
 @Component({
   selector: 'nc-builder-task-ref-init-field',
@@ -16,7 +17,7 @@ export class TaskRefInitFieldComponent {
     taskRefFormControl: FormControl;
     @ViewChild('taskRefInput') taskRefInput: ElementRef<HTMLInputElement>;
 
-    constructor(private _modelService: ModelService) {
+    constructor(private _modelService: ModelService, protected _builderModeService: BuilderModeService) {
         this.taskRefFormControl = new FormControl('');
     }
 

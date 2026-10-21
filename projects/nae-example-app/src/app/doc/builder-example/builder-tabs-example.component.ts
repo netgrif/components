@@ -11,7 +11,7 @@ import {TranslateService} from "@ngx-translate/core";
     templateUrl: './builder-tabs-example.component.html',
     styleUrls: ['./builder-tabs-example.component.scss'],
     providers: [
-        {provide: NAE_VIEW_ID_SEGMENT, useValue: 'all-cases'},
+        {provide: NAE_VIEW_ID_SEGMENT, useValue: 'builder-tabs'},
         {provide: NAE_TASK_FORCE_OPEN, useValue: false},
         ViewIdService
     ]

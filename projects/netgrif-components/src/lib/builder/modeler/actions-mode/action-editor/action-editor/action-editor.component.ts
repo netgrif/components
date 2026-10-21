@@ -13,6 +13,7 @@ import {ChangeType, EditableAction} from '../classes/editable-action';
 import {LeafNode} from '../classes/leaf-node';
 import {ActionChangedEvent} from "../action-editor-list/action-changed-event";
 import {TranslateService} from "@ngx-translate/core";
+import {BuilderModeService} from "../../../../services/builder-mode.service";
 
 @Component({
     selector: 'nc-builder-action-editor',
@@ -57,25 +58,28 @@ export class ActionEditorComponent implements OnInit {
     public DATA_EVENT_TYPES = ['set', 'get'];
     public PHASE_TYPES = ['pre', 'post'];
 
+    public editorOptions: object;
+
     constructor(
         private actionEditorService: ActionEditorService,
         private modelService: ModelService,
         private deleteDialog: MatDialog,
-        private _translateService: TranslateService
+        private _translateService: TranslateService,
+        protected _builderModeService: BuilderModeService
     ) {
         this.formControl = new FormControl(undefined, {updateOn: 'blur'});
         this.actionChanged = new EventEmitter<ActionChangedEvent>();
         this.drawerOpened = new EventEmitter<boolean>();
+        // options: https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.ieditoroptions.html
+        this.editorOptions = {
+            language: 'petriflow',
+            scrollBeyondLastLine: false,
+            automaticLayout: true,
+            wordWrap: 'off',
+            colorDecorators: true,
+            readOnly: this._builderModeService.readOnly
+        };
     }
-
-    // options: https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.ieditoroptions.html
-    editorOptions = {
-        language: 'petriflow',
-        scrollBeyondLastLine: false,
-        automaticLayout: true,
-        wordWrap: 'off',
-        colorDecorators: true
-    };
 
     onInit(editorObject) {
         this.editor = editorObject;

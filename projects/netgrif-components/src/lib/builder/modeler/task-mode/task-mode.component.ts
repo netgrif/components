@@ -23,7 +23,7 @@ import {BuilderIntegrationService} from "../../services/builder-integration.serv
 
 const baseFilterFactory = (integrationService: BuilderIntegrationService) => {
     const caseId = integrationService?.processCase?.stringId ?? "__EMPTY__"
-    return {filter: SimpleFilter.fromTaskQuery({case: {id: caseId}, transitionId: ['deploy', 't10', 't11', 't4', 't6', 't9', 'view']})};
+    return {filter: SimpleFilter.fromTaskQuery({case: {id: caseId}, transitionId: integrationService?.allowedTransIds})};
 };
 
 const localAllowedNetsFactory = (factory: AllowedNetsServiceFactory) => {

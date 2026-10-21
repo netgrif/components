@@ -16,7 +16,7 @@ export class EditTransitionActionsMenuItem extends MenuItem {
                 tool.actionMode.activate(tool.actionMode.transitionActionsTool);
                 tool.actionsMasterDetail.select(transition.modelTransition);
                 tool.transitionService.id = transition.id;
-                tool.builderModeService.mode = BuilderMode.ACTION_MODE;
+                tool._builderModeService.mode = BuilderMode.ACTION_MODE;
             }
         );
     }

@@ -4,8 +4,8 @@
 }
 
 .no-overflow {
-    height: calc(100vh - 42px);
-    overflow: auto;
+    min-height: 100%;
+    overflow: visible;
 }
 
 .tree-node-invisible {
@@ -29,7 +29,8 @@
 }
 
 .mat-tree-node {
-    overflow-x: hidden !important;
+    overflow-x: clip !important;
+    overflow-y: visible !important;
 }
 
 .margin-top6px {

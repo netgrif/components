@@ -15,6 +15,7 @@ import {Scope} from '../actions-mode.component';
 import {ActionsModeService} from '../actions-mode.service';
 import {ActionChangedEvent} from "../action-editor/action-editor-list/action-changed-event";
 import {TranslateService} from "@ngx-translate/core";
+import {BuilderModeService} from "../../../services/builder-mode.service";
 
 @Component({
   selector: 'nc-builder-action-detail',
@@ -37,7 +38,8 @@ export class ActionDetailComponent implements OnInit, OnDestroy {
                 private _masterService: ActionsMasterDetailService,
                 private _actionEditorTreeService: ActionEditorTreeService,
                 private _historyService: HistoryService,
-                private _translateService: TranslateService) {
+                private _translateService: TranslateService,
+                protected _builderModeService: BuilderModeService) {
         this._actions = getActions(this._translateService);
         this.functionScopes = [
             {viewValue: this._translateService.instant('builder.modeler.actions-mode.action-detail.process'), value: FunctionScope.PROCESS},

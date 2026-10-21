@@ -5,6 +5,7 @@ import {RoleModeComponent} from './role-mode.component';
 import {TranslateService} from "@ngx-translate/core";
 import {HttpClientTestingModule} from "@angular/common/http/testing";
 import {TranslateLibModule} from "@netgrif/components-core";
+import {BuilderModeService} from "../../services/builder-mode.service";
 
 describe('RoleModeComponent', () => {
     beforeEach(() => {
@@ -14,8 +15,10 @@ describe('RoleModeComponent', () => {
                 HttpClientTestingModule,
             ],
             declarations: [RoleModeComponent],
-            providers: [{provide: RoleMasterDetailService, useValue: {}},
-                {provide: TranslateService, useValue: { instant: (key: string) => `translated-${key}` }}
+            providers: [
+                {provide: RoleMasterDetailService, useValue: {}},
+                {provide: TranslateService, useValue: { instant: (key: string) => `translated-${key}` }},
+                BuilderModeService
             ],
             schemas: [NO_ERRORS_SCHEMA],
         });
