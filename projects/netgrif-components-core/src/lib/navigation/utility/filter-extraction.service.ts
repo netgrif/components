@@ -76,7 +76,13 @@ export class FilterExtractionService {
                     if (!fieldId) {
                         return;
                     }
-                    fullTextFieldsMap[`dataSet.${fieldId}.fulltextValue`] = 1;
+                    let suffix: string = '';
+                    if (fieldId.includes('.keyword')) {
+                        const splitFieldId = fieldId.split('.', 2);
+                        fieldId = splitFieldId[0];
+                        suffix = '.keyword';
+                    }
+                    fullTextFieldsMap[`dataSet.${fieldId}.fulltextValue` + suffix] = 1;
                 });
                 filterSegment.addFullTextFields(fullTextFieldsMap);
             }
