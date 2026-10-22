@@ -76,11 +76,11 @@ export class FilterExtractionService {
                     if (!fieldId) {
                         return;
                     }
+                    const keywordSuffix = '.keyword';
                     let suffix: string = '';
-                    if (fieldId.includes('.keyword')) {
-                        const splitFieldId = fieldId.split('.', 2);
-                        fieldId = splitFieldId[0];
-                        suffix = '.keyword';
+                    if (fieldId.endsWith(keywordSuffix)) {
+                        fieldId = fieldId.slice(0, -keywordSuffix.length);
+                        suffix = keywordSuffix;
                     }
                     fullTextFieldsMap[`dataSet.${fieldId}.fulltextValue` + suffix] = 1;
                 });
