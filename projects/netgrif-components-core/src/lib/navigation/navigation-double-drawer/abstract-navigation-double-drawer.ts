@@ -1,10 +1,10 @@
 import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
 import {Component, EventEmitter, Inject, Input, OnDestroy, OnInit, Output, TemplateRef} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute, IsActiveMatchOptions, NavigationEnd, Router} from '@angular/router';
 import {TranslateService} from '@ngx-translate/core';
 import {ResizeEvent} from 'angular-resizable-element';
-import {Observable, Subscription} from 'rxjs';
-import {filter, take, switchMap} from 'rxjs/operators';
+import {combineLatest, Observable, Subscription} from 'rxjs';
+import {filter, take, switchMap, startWith} from 'rxjs/operators';
 import {AccessService} from '../../authorization/permission/access.service';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {ImpersonationUserSelectService} from '../../impersonation/services/impersonation-user-select.service';
@@ -96,6 +96,25 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
     protected itemClickedSub: Subscription;
     protected itemLoadedSub: Subscription;
     protected rightItemsSub: Subscription;
+    protected activeParentSub: Subscription;
+
+    /**
+     * Id of the left side item (parent folder), whose child view is currently rendered by the router.
+     * Undefined when none of the displayed child views matches the active route.
+     * */
+    protected _activeParentItemId: string;
+
+    /**
+     * Route matching rules used to resolve the active child view. They mirror the defaults of
+     * `routerLinkActive` (without `[routerLinkActiveOptions]="{exact: true}"`), so that the parent
+     * folder is highlighted for exactly the same routes as its child item.
+     * */
+    protected readonly activeMatchOptions: IsActiveMatchOptions = {
+        paths: 'subset',
+        queryParams: 'subset',
+        fragment: 'ignored',
+        matrixParams: 'ignored',
+    };
 
     protected constructor(protected _router: Router,
                           protected _activatedRoute: ActivatedRoute,
@@ -140,6 +159,15 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
             }
         });
 
+        this.activeParentSub = combineLatest([
+            this._router.events.pipe(filter(event => event instanceof NavigationEnd), startWith(null)),
+            this.leftItems$,
+            this.rightItems$,
+            this.moreItems$,
+        ]).subscribe(() => {
+            this._activeParentItemId = this.resolveActiveParentItemId();
+        });
+
         if (this.canApplyAutoSelect()) {
             this.rightItemsSub = this.rightItems$.pipe(
                 filter(rightItems => rightItems.length > 0),
@@ -166,6 +194,7 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
         this.itemClickedSub.unsubscribe();
         this.itemLoadedSub.unsubscribe();
         this.rightItemsSub?.unsubscribe();
+        this.activeParentSub?.unsubscribe();
     }
 
     public get currentNode(): UriNodeResource {
@@ -347,6 +376,51 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
 
     public isItemAndNodeEqual(item: NavigationItem, node: UriNodeResource): boolean {
         return DoubleDrawerUtils.isItemAndNodeEqual(item, node);
+    }
+
+    /**
+     * Resolves whether the given left side item is the parent folder of the view that is currently
+     * rendered by the router. Used to highlight the parent of the selected view the same way the
+     * selected view itself is highlighted by `routerLinkActive`.
+     *
+     * @param item an item of the left side menu
+     * @returns true if one of the currently displayed children of the item is the active route
+     * */
+    public isParentOfActiveView(item: NavigationItem): boolean {
+        return !!item && !!this._activeParentItemId && item.id === this._activeParentItemId;
+    }
+
+    /**
+     * Resolves whether the item's view is the one currently rendered by the router.
+     *
+     * @param item any navigation item holding a routing path
+     * */
+    public isItemRouteActive(item: NavigationItem): boolean {
+        const path = item?.routing?.path;
+        if (!path) {
+            return false;
+        }
+        // the url tree is built the same way `routerLink` builds it in the template,
+        // so both absolute and route relative paths are resolved identically
+        return this._router.isActive(
+            this._router.createUrlTree([path], {relativeTo: this._activatedRoute}),
+            this.activeMatchOptions,
+        );
+    }
+
+    /**
+     * The right side items (including the ones hidden behind the "load more" button) are the children of
+     * [currentNode]{@link AbstractNavigationDoubleDrawerComponent#currentNode}. Their parent folder on the
+     * left side is therefore the left item that corresponds to the current node.
+     *
+     * @returns the id of the left side item whose child view is active, or undefined if no child view is active
+     * */
+    protected resolveActiveParentItemId(): string | undefined {
+        const children = [...(this.rightItems ?? []), ...(this.moreItems ?? [])];
+        if (!children.some(child => this.isItemRouteActive(child))) {
+            return undefined;
+        }
+        return this.leftItems?.find(item => this.isItemAndNodeEqual(item, this.currentNode))?.id;
     }
 
     public setMenuEditMode(newVal: boolean): void {

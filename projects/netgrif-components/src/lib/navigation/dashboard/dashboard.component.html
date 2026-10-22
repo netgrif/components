@@ -10,7 +10,10 @@
                     <mat-card-content fxLayout="column" fxLayoutAlign="center center" class="card-content">
                         <mat-icon *ngIf="!getItemExternalIcon(item)" class="card-icon" [ngStyle]="{'color': getItemIconColor(item)}">{{ getItemIcon(item) }}</mat-icon>
                         <img *ngIf="getItemExternalIcon(item)" class="card-icon" src="{{getItemIcon(item)}}" alt="{{getItemName(item)}}">
-                        <div class="card-main-text" [ngStyle]="{'color': getItemFontColor(item), 'font-weight': getItemFontWeight(item)}">{{ getItemName(item) }}</div>
+                        <div class="card-main-text"
+                             [ngStyle]="{'color': getItemFontColor(item), 'font-weight': getItemFontWeight(item)}"
+                             [matTooltip]="getItemName(item)"
+                             matTooltipShowDelay="500">{{ getItemName(item) }}</div>
                     </mat-card-content>
                 </div>
             </ng-template>
