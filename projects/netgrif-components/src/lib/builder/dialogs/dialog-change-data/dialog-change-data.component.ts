@@ -1,5 +1,5 @@
 import {Component, Inject} from '@angular/core';
-import {FormArray, ValidatorFn, Validators} from '@angular/forms';
+import {FormArray, FormControl, ValidatorFn, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 
 export interface DataSet {
