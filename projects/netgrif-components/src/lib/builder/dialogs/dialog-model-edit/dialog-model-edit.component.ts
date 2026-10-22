@@ -1,7 +1,6 @@
 import {Component, Inject} from '@angular/core';
 import {FormControl, ValidatorFn, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialog} from '@angular/material/dialog';
-import {Router} from '@angular/router';
 import {DataType} from '@netgrif/petriflow';
 import {ActionsModeService} from '../../modeler/actions-mode/actions-mode.service';
 import {ProcessActionsTool} from '../../modeler/actions-mode/tools/process-actions-tool';
@@ -35,7 +34,7 @@ export class DialogModelEditComponent {
     public modelService: ModelService;
     private _actionMode: ActionsModeService;
     private _processTool: ProcessActionsTool;
-    private _builderModeService: BuilderModeService;
+    protected _builderModeService: BuilderModeService;
     private historyService: HistoryService;
     private _localStorageService: LocalStorageService;
 
@@ -58,6 +57,18 @@ export class DialogModelEditComponent {
         ]);
         this.titleCtrl = new FormControl('', [Validators.required]);
         this.initialsCtrl = new FormControl('', [Validators.required]);
+
+        if (this._builderModeService.readOnly) {
+            this.idCtrl.disable();
+            this.versionCtrl.disable();
+            this.titleCtrl.disable();
+            this.initialsCtrl.disable();
+        } else {
+            this.idCtrl.enable();
+            this.versionCtrl.enable();
+            this.titleCtrl.enable();
+            this.initialsCtrl.enable();
+        }
     }
 
     openPermissions() {
@@ -72,7 +83,8 @@ export class DialogModelEditComponent {
                 userLists: this.modelService.model.getDataSet().filter(item => item.type === DataType.USER_LIST),
                 modelService: this.modelService,
                 historyService: this.historyService,
-                localStorageService: this._localStorageService
+                localStorageService: this._localStorageService,
+                builderModeService: this._builderModeService
             }
         });
     }

@@ -121,6 +121,15 @@
         width: 24px;
         font-size: 24px;
         margin-right: 4px;
+        flex-shrink: 0; // prevents icon from shrinking when title is long
+    }
+
+    .tree-node-title {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        min-width: 0;   // required for ellipsis to work inside flex container
+        flex: 1;        // take remaining space, but not more than available
     }
 
     .tree-node-label {
@@ -227,8 +236,27 @@
     line-height: 64px;
 }
 
+.user-menu-icon {
+    flex: 0 0 auto;
+    margin: auto 16px auto 0;
+}
+
+.user-menu-text {
+    flex: 1 1 0;
+    min-width: 0;
+    overflow: hidden;
+}
+
 .large-menu-item-text {
     line-height: 32px;
+}
+
+.text-ellipsis {
+    display: block;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .cursor-pointer {

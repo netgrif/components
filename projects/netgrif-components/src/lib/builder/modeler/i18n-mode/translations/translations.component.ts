@@ -85,6 +85,7 @@ export class TranslationsComponent implements OnInit, OnDestroy {
     }
 
     selectLocale() {
+        this.i18nService.updateI18ns();
         this._translation = this.modelService.model.getI18n(this.locale?.languageCode);
     }
 

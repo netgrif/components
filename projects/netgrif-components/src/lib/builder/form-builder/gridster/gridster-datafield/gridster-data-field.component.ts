@@ -1,5 +1,5 @@
 import {Component, Input, OnDestroy, OnInit, QueryList, TemplateRef, ViewChildren} from '@angular/core';
-import {DataField, EnumerationField, MultichoiceField} from '@netgrif/components-core';
+import {DataField, EnumerationField, MultichoiceField, DateField, DateTimeField} from '@netgrif/components-core';
 import {DataRefBehavior, DataType, I18nWithDynamic} from '@netgrif/petriflow';
 import moment from 'moment';
 import {Subscription} from 'rxjs';
@@ -7,6 +7,7 @@ import {GridsterFieldToEngineFieldService} from '../../../modeler/gridster-field
 import {FieldListService} from '../../field-list/field-list.service';
 import {GridsterDataField} from '../classes/gridster-data-field';
 import {GridsterService} from '../gridster.service';
+import {BuilderModeService} from "../../../services/builder-mode.service";
 
 @Component({
     selector: 'nc-builder-gridster-datafield',
@@ -23,7 +24,8 @@ export class GridsterDataFieldComponent implements OnInit, OnDestroy {
 
     constructor(private _gridsterService: GridsterService,
                 private _transformService: GridsterFieldToEngineFieldService,
-                public fieldListService: FieldListService) {
+                public fieldListService: FieldListService,
+                protected _builderModeService: BuilderModeService) {
     }
 
     ngOnDestroy(): void {
@@ -32,6 +34,7 @@ export class GridsterDataFieldComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.engineField = this._transformService.transformDataField(this.dataField);
+        this.engineField.block = this._builderModeService.readOnly;
         this._gridsterSubscription = this._gridsterService.selectedDataFieldChangeStream$().subscribe(this.updateEngineField.bind(this));
         this.engineField.valueChanges().subscribe(value => {
             if (value && value instanceof Array) {
@@ -74,6 +77,14 @@ export class GridsterDataFieldComponent implements OnInit, OnDestroy {
 
     public isHidden(): boolean {
         return this.dataField.dataRef.logic.behavior === DataRefBehavior.HIDDEN;
+    }
+
+    /**
+     * Mirrors the `date-field-fix` wrapper class applied by `FieldComponentResolverComponent`
+     * in the regular task view, so the datepicker toggle does not overlap the field title.
+     */
+    public isDateField(): boolean {
+        return this.engineField instanceof DateField || this.engineField instanceof DateTimeField;
     }
 
     public name(): string {

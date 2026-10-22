@@ -8,7 +8,7 @@
     </mat-form-field>
     <mat-form-field fxFlex appearance="outline">
         <mat-label>{{ 'builder.dialogs.place-edit.label' | translate }}</mat-label>
-        <input type="text" matInput [(ngModel)]="place.place.label.value">
+        <input type="text" matInput [(ngModel)]="place.place.label.value" [disabled]="_builderModeService.readOnly">
     </mat-form-field>
     <mat-form-field fxFlex appearance="outline">
         <mat-label>{{ 'builder.dialogs.place-edit.tokens' | translate }}</mat-label>
@@ -21,7 +21,7 @@
 </mat-dialog-content>
 <mat-dialog-actions>
     <button mat-flat-button color="primary" [mat-dialog-close]="place"
-            [disabled]="markingCtrl.invalid || idCtrl.invalid">
+            [disabled]="markingCtrl.invalid || idCtrl.invalid || _builderModeService.readOnly">
         <mat-icon>done</mat-icon>
         <span>{{ 'builder.dialogs.place-edit.save' | translate }}</span>
     </button>

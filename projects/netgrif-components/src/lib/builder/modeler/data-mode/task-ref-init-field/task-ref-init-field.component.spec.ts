@@ -9,6 +9,7 @@ import {TaskRefInitFieldComponent} from './task-ref-init-field.component';
 import {TranslateService} from "@ngx-translate/core";
 import {HttpClientTestingModule} from "@angular/common/http/testing";
 import {TranslateLibModule} from "@netgrif/components-core";
+import {BuilderModeService} from "../../../services/builder-mode.service";
 
 describe('TaskRefInitFieldComponent', () => {
     beforeEach(() => {
@@ -18,7 +19,8 @@ describe('TaskRefInitFieldComponent', () => {
                 TranslateLibModule,
                 HttpClientTestingModule],
             providers: [{provide: ModelService, useValue: {model: {}}},
-                {provide: TranslateService, useValue: { instant: (key: string) => `translated-${key}` }}
+                {provide: TranslateService, useValue: { instant: (key: string) => `translated-${key}` }},
+                BuilderModeService
             ],
             schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA],
         });
