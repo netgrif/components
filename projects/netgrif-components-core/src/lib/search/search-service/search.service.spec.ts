@@ -194,9 +194,9 @@ describe('SearchService', () => {
                     // empty filter
                     done();
                 } else {
-                    expect(!Array.isArray((filter.getRequestBody as CaseSearchRequestBody)?.process)).toBeTrue();
+                    expect(!Array.isArray((filter.getRequestBody() as CaseSearchRequestBody)?.process)).toBeTrue();
                     expect(
-                        ((filter.getRequestBody as CaseSearchRequestBody)?.process as PetriNetRequestBody)?.identifier === '__EMPTY__'
+                        ((filter.getRequestBody() as CaseSearchRequestBody)?.process as PetriNetRequestBody)?.identifier === '__EMPTY__'
                     ).toBeTrue();
                 }
             });

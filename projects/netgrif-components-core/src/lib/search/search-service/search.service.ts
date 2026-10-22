@@ -94,6 +94,7 @@ export class SearchService implements OnDestroy {
         if (baseFilter.filter instanceof Observable) {
             this.subFilter = baseFilter.filter.subscribe((filter) => {
                 this._baseFilter = filter.clone();
+                this.loadFullTextFieldsFromBaseFilter();
                 this.updateActiveFilter();
             });
         }
@@ -276,6 +277,7 @@ export class SearchService implements OnDestroy {
     public setFullTextFilter(searchedSubstring: string): void {
         const whiteSpacedSubstring = searchedSubstring?.replace(/ /g, '\\ ');
         this._fullTextFilter = new SimpleFilter('', this._baseFilter.type, {fullText: whiteSpacedSubstring});
+        this.loadFullTextFieldsFromBaseFilter();
         this.updateActiveFilter();
     }
 
@@ -457,5 +459,13 @@ export class SearchService implements OnDestroy {
         const categoryLoading$: Observable<void> = category.loadFromPfqlRawExpression(expression);
         localPredicate.addNewPredicateFromGenerator(category);
         return categoryLoading$;
+    }
+
+    protected loadFullTextFieldsFromBaseFilter(): void {
+        if (this.baseFilter.containsFullTextFields()) {
+            this._fullTextFilter?.addFullTextFields(this.baseFilter.getFullTextFields());
+        } else {
+            this._fullTextFilter?.clearFullTextFields();
+        }
     }
 }

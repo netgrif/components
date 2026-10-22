@@ -281,4 +281,9 @@ export enum GroupNavigationConstants {
      */
     ITEM_FIELD_VIEW_CONFIGURATION_TYPE = "view_configuration_type",
 
+    /**
+     * String collection field, containing field ids to consider in full-text search
+     */
+    ITEM_FIELD_CASE_FULLTEXT_FIELDS = "case_fulltext_fields",
+
 }

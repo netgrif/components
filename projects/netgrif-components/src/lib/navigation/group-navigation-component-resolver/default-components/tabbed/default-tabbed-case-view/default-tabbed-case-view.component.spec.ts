@@ -105,6 +105,12 @@ describe('DefaultTabbedCaseViewComponent', () => {
                                     '',
                                     [],
                                     {visible: true}
+                                ),
+                                new StringCollectionField(
+                                    GroupNavigationConstants.ITEM_FIELD_CASE_FULLTEXT_FIELDS,
+                                    '',
+                                    [],
+                                    {visible: true}
                                 )
                             ]
                         }]
@@ -160,6 +166,12 @@ describe('DefaultTabbedCaseViewComponent', () => {
                                 ),
                                 new StringCollectionField(
                                     GroupNavigationConstants.ITEM_FIELD_TASK_ALLOWED_NETS,
+                                    '',
+                                    [],
+                                    {visible: true}
+                                ),
+                                new StringCollectionField(
+                                    GroupNavigationConstants.ITEM_FIELD_CASE_FULLTEXT_FIELDS,
                                     '',
                                     [],
                                     {visible: true}
