@@ -1,7 +1,7 @@
 import {NGX_MAT_DATE_FORMATS} from '@angular-material-components/datetime-picker';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
-import {AfterViewInit, Component, HostListener, OnInit} from '@angular/core';
+import {AfterViewInit, Component, HostListener, OnDestroy, OnInit} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
 import {MAT_DATE_FORMATS} from '@angular/material/core';
@@ -25,7 +25,7 @@ import {
   TransitionEvent,
   TransitionEventType,
 } from '@netgrif/petriflow';
-import {Observable} from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
 import {map, startWith, tap} from 'rxjs/operators';
 import {DialogRefactorComponent} from '../../dialogs/dialog-refactor/dialog-refactor.component';
 import {ActionsMasterDetailService} from '../../modeler/actions-mode/actions-master-detail.service';
@@ -37,6 +37,7 @@ import {DataFieldUtils} from '../data-field-utils';
 import {ComponentDef, DataRefDef, FieldListService, PropertyDef} from '../field-list/field-list.service';
 import {GridsterService} from '../gridster/gridster.service';
 import {BuilderModeService, BuilderMode} from "../../services/builder-mode.service";
+import {DataModeService} from "../../modeler/data-mode/data-mode.service";
 
 @Component({
     selector: 'nc-builder-edit-panel',
@@ -64,7 +65,7 @@ import {BuilderModeService, BuilderMode} from "../../services/builder-mode.servi
         {provide: MAT_DATE_FORMATS, useValue: DATE_FORMAT}
     ]
 })
-export class EditPanelComponent implements OnInit, AfterViewInit {
+export class EditPanelComponent implements OnInit, AfterViewInit, OnDestroy {
     numOfCols: number;
     minOfCols: number;
     hover: boolean;
@@ -78,6 +79,7 @@ export class EditPanelComponent implements OnInit, AfterViewInit {
 
     componentNameFormCtrl: FormControl;
     dataRefComponentNameFormCtrl: FormControl;
+    readOnlySub: Subscription;
 
     constructor(public gridsterService: GridsterService,
                 public modelService: ModelService,
@@ -86,7 +88,8 @@ export class EditPanelComponent implements OnInit, AfterViewInit {
                 private _actionMode: ActionsModeService,
                 private _fieldListService: FieldListService,
                 private _actionsMasterDetail: ActionsMasterDetailService,
-                private _builderModeService: BuilderModeService) {
+                protected _builderModeService: BuilderModeService,
+                protected _dataModeService: DataModeService) {
         // this.transitionOptions = [];
         this.formControlRef = new FormControl();
         this.behaviorOptions = [
@@ -99,6 +102,15 @@ export class EditPanelComponent implements OnInit, AfterViewInit {
     ngOnInit() {
         this.componentNameFormCtrl = new FormControl();
         this.dataRefComponentNameFormCtrl = new FormControl();
+        this.readOnlySub = this._builderModeService.readOnly$.subscribe(readOnly => {
+            if (readOnly) {
+                this.componentNameFormCtrl.disable();
+                this.dataRefComponentNameFormCtrl.disable();
+            } else {
+                this.componentNameFormCtrl.enable();
+                this.dataRefComponentNameFormCtrl.enable();
+            }
+        })
         this.transId = this.transitionService.id;
         if (this.transId === null) {
             this.numOfCols = ModelerConfig.LAYOUT_DEFAULT_COLS;
@@ -144,6 +156,10 @@ export class EditPanelComponent implements OnInit, AfterViewInit {
             startWith(''),
             map(value => this._filter(value))
         );
+    }
+
+    ngOnDestroy(): void {
+        this.readOnlySub.unsubscribe();
     }
 
     get transition(): Transition {

@@ -40,7 +40,7 @@ export class FieldListComponent implements OnInit, AfterViewInit {
                 private fieldListService: FieldListService,
                 private _snackBar: MatSnackBar,
                 private transitionService: SelectedTransitionService,
-                private _builderModeService: BuilderModeService) {
+                protected _builderModeService: BuilderModeService) {
         if (this.modelService.model === undefined) {
             throw new Error('Model is undefined');
         }
@@ -70,7 +70,7 @@ export class FieldListComponent implements OnInit, AfterViewInit {
     ngAfterViewInit(): void {
         if (this.existingDataFields && this.existingDataFields.length !== 0) {
             this.openPanel(this.existingFieldsPanel);
-        } else {
+        } else if (!!this.newFieldsPanel) {
             this.openPanel(this.newFieldsPanel);
         }
     }

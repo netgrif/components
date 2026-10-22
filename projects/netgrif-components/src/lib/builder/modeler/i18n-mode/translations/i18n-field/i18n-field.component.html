@@ -13,6 +13,6 @@
     <div fxFlex="1"></div>
     <mat-form-field appearance="outline" fxFlex="29" *ngIf="translationField">
         <mat-label>{{ 'builder.modeler.i18n-mode.translation' | translate }}</mat-label>
-        <input matInput [(ngModel)]="translationField.value" (change)="changeTranslation()">
+        <input matInput [(ngModel)]="translationField.value" (change)="changeTranslation()" [disabled]="_builderModeService.readOnly">
     </mat-form-field>
 </div>

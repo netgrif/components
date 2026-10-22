@@ -4,7 +4,7 @@
         @for (init of taskRef.inits; track $index) {
             <mat-chip-row (removed)="removeInit($index)">
                 {{ prettyTask(init?.value) }}
-                <button matChipRemove>
+                <button matChipRemove *ngIf="!_builderModeService.readOnly">
                     <mat-icon>cancel</mat-icon>
                 </button>
             </mat-chip-row>
@@ -17,6 +17,7 @@
         [matChipInputFor]="chipGrid"
         [matAutocomplete]="auto"
         (matChipInputTokenEnd)="addInit($event)"
+        [disabled]="_builderModeService.readOnly"
     />
     <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectInit($event)">
         @for (task of tasks; track task) {

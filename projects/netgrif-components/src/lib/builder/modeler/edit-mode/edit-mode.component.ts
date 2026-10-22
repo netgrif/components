@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, HostListener, OnDestroy, ViewChild, ChangeDetectionStrategy} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, HostListener, OnDestroy, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {NgxDropzoneChangeEvent} from 'ngx-dropzone';
 import {ModelImportService} from '../model-import-service';
@@ -9,6 +9,7 @@ import {ContextMenu} from './context-menu/context-menu';
 import {ContextMenuComponent} from './context-menu/context-menu.component';
 import {EditModeService} from './edit-mode.service';
 import {TranslateService} from "@ngx-translate/core";
+import {Subscription} from "rxjs";
 
 @Component({
     selector: 'nc-builder-edit-mode',
@@ -21,14 +22,19 @@ export class EditModeComponent implements AfterViewInit, OnDestroy {
     @ViewChild('contextMenu', {read: ElementRef}) contextMenu: ElementRef;
     @ViewChild('contextMenu') contextMenuComponent: ContextMenuComponent;
 
+    private contextMenuSubscription: Subscription;
+    private gridSubscription: Subscription;
+
     constructor(
         private importService: ModelImportService,
         private _modelService: ModelService,
         private _editModeService: EditModeService,
         private historyService: HistoryService,
         public dialog: MatDialog,
-        private _translateService: TranslateService
+        private _translateService: TranslateService,
+        private _cdr: ChangeDetectorRef
     ) {
+        this.gridSubscription = this._editModeService.gridChanged$?.subscribe(() => this._cdr.markForCheck());
     }
 
     @HostListener('contextmenu', ['$event'])
@@ -39,7 +45,7 @@ export class EditModeComponent implements AfterViewInit, OnDestroy {
 
     ngAfterViewInit() {
         ModelerUtils.clearSelection();
-        this._editModeService.contextMenuItems.subscribe(menu => {
+        this.contextMenuSubscription = this._editModeService.contextMenuItems.subscribe(menu => {
             if (!menu) {
                 this.contextMenu.nativeElement.style.visibility = 'hidden';
                 return;
@@ -64,15 +70,28 @@ export class EditModeComponent implements AfterViewInit, OnDestroy {
     }
 
     private checkPosition(menu: ContextMenu): void {
-        const area = document.getElementById('modeler_area');
+        const host: HTMLElement = this.contextMenu.nativeElement;
+        const menuElement = (host.firstElementChild ?? host) as HTMLElement;
+        const area = (host.closest('#modeler_area') ?? document.getElementById('modeler_area')) as HTMLElement;
         const areaBounds = area.getBoundingClientRect();
-        this.contextMenu.nativeElement.style.top = (((menu.position.y + this.contextMenu.nativeElement.firstChild.offsetHeight - areaBounds.y) > area.offsetHeight)
-            ? (areaBounds.y + area.offsetHeight - this.contextMenu.nativeElement.firstChild.offsetHeight) : (menu.position.y)) + 'px';
-        this.contextMenu.nativeElement.style.left = (((menu.position.x + this.contextMenu.nativeElement.firstChild.offsetWidth - areaBounds.x) > area.offsetWidth)
-            ? (areaBounds.x + area.offsetWidth - this.contextMenu.nativeElement.firstChild.offsetWidth) : (menu.position.x)) + 'px';
+
+        host.style.left = '0px';
+        host.style.top = '0px';
+        const origin = host.getBoundingClientRect();
+
+        const width = menuElement.offsetWidth;
+        const height = menuElement.offsetHeight;
+
+        const x = Math.max(areaBounds.left, Math.min(menu.position.x, areaBounds.right - width));
+        const y = Math.max(areaBounds.top, Math.min(menu.position.y, areaBounds.bottom - height));
+
+        host.style.left = (x - origin.left) + 'px';
+        host.style.top = (y - origin.top) + 'px';
     }
 
     ngOnDestroy(): void {
+        this.contextMenuSubscription?.unsubscribe();
+        this.gridSubscription?.unsubscribe();
         this.editModeService.activeTool.unbind();
     }
 
