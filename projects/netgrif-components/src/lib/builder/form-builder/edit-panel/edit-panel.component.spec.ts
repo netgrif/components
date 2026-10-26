@@ -13,6 +13,7 @@ import {FieldListService} from '../field-list/field-list.service';
 import {EditPanelComponent} from './edit-panel.component';
 import {TranslateService} from "@ngx-translate/core";
 import {DataModeService} from "../../modeler/data-mode/data-mode.service";
+import {DataMasterDetailService} from "../../modeler/data-mode/data-master-detail.service";
 import {TutorialService} from "../../tutorial/tutorial-service";
 import {MortgageService} from "../../modeler/mortgage.service";
 import {HttpClientTestingModule} from "@angular/common/http/testing";
@@ -36,6 +37,7 @@ describe('EditPanelComponent', () => {
                 {provide: Router, useValue: {}},
                 {provide: TranslateService, useValue: { instant: (key: string) => `translated-${key}` }},
                 DataModeService,
+                {provide: DataMasterDetailService, useValue: {}},
                 TutorialService,
                 MortgageService,
                 {provide: ModelImportService, useValue: {}},

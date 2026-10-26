@@ -18,6 +18,7 @@ import {NgxMatDatetimePickerModule} from "@angular-material-components/datetime-
 import {NgxMatMomentModule} from "@angular-material-components/moment-adapter";
 import { DataFieldsComponentModule } from "../../data-fields/data-fields.module";
 import {TranslateModule} from "@ngx-translate/core";
+import {CommentEditorComponent} from "../modeler/components/comment-editor/comment-editor.component";
 
 @NgModule({
     declarations: [
@@ -46,6 +47,7 @@ import {TranslateModule} from "@ngx-translate/core";
         NgxMatDatetimePickerModule,
         NgxMatMomentModule,
         TranslateModule,
+        CommentEditorComponent,
     ]
 })
 export class FormBuilderModule {

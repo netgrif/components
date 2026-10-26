@@ -1865,6 +1865,11 @@
             "bugReportTitle": "Fehler melden",
             "bugReport": "Sie können unsere Github-Issues-Seite nutzen, um Fehler zu melden, die Sie bei der Verwendung des Netgrif Application Builders entdecken."
         },
+        "comment": {
+            "title": "Kommentar",
+            "dataRefTitle": "DataRef-Kommentar",
+            "empty": "Kein Kommentar"
+        },
         "newModelCreated": "Neues Modell wurde erstellt.",
         "hasBeenImported": "wurde importiert."
     }
