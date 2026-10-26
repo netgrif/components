@@ -27,6 +27,7 @@ export abstract class PageMasterComponent extends AbstractMasterComponent implem
         } else if (this._allData.length === 0) {
             this.masterService.select(undefined);
         }
+        this.showSelectedPage();
 
         this.masterService.getCreateEvent$().subscribe(newItem => {
             this.updateData();
@@ -110,6 +111,17 @@ export abstract class PageMasterComponent extends AbstractMasterComponent implem
         const firstCut = this.pageIndex * this.pageSize;
         const secondCut = firstCut + this.pageSize;
         this._pageData = this._allData.slice(firstCut, secondCut);
+    }
+
+    /**
+     * Moves the paginator to the page with the selected item, e.g. when the item was selected from another view.
+     */
+    protected showSelectedPage(): void {
+        const index = this._allData.indexOf(this.masterService.getSelected());
+        if (index >= 0) {
+            this.pageIndex = Math.floor(index / this.pageSize);
+            this.updatePage();
+        }
     }
 
     protected initializeAndSort() {

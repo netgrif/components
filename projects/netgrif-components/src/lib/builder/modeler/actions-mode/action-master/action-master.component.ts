@@ -36,6 +36,7 @@ export class ActionMasterComponent extends PageMasterComponent implements OnInit
             } else if (this._allData.length === 0) {
                 this.masterService.select(undefined);
             }
+            this.showSelectedPage();
         });
     }
 

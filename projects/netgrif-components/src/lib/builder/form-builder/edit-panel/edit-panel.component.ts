@@ -38,6 +38,7 @@ import {ComponentDef, DataRefDef, FieldListService, PropertyDef} from '../field-
 import {GridsterService} from '../gridster/gridster.service';
 import {BuilderModeService, BuilderMode} from "../../services/builder-mode.service";
 import {DataModeService} from "../../modeler/data-mode/data-mode.service";
+import {DataMasterDetailService} from "../../modeler/data-mode/data-master-detail.service";
 
 @Component({
     selector: 'nc-builder-edit-panel',
@@ -89,7 +90,8 @@ export class EditPanelComponent implements OnInit, AfterViewInit, OnDestroy {
                 private _fieldListService: FieldListService,
                 private _actionsMasterDetail: ActionsMasterDetailService,
                 protected _builderModeService: BuilderModeService,
-                protected _dataModeService: DataModeService) {
+                protected _dataModeService: DataModeService,
+                protected _dataMasterDetail: DataMasterDetailService) {
         // this.transitionOptions = [];
         this.formControlRef = new FormControl();
         this.behaviorOptions = [
@@ -594,5 +596,11 @@ export class EditPanelComponent implements OnInit, AfterViewInit, OnDestroy {
             return;
         }
         target[property] = source[property].clone();
+    }
+
+    openDataEditView() {
+        this._dataModeService.activate();
+        this._dataMasterDetail.select(this.gridsterService.selectedDataField.dataVariable);
+        this._builderModeService.mode = BuilderMode.DATA_MODE;
     }
 }

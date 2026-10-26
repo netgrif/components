@@ -45,6 +45,7 @@
         <mat-label>{{ 'builder.dialogs.arc-edit.destination' | translate}}</mat-label>
         <input type="text" matInput value="{{arc.arc.destination.label?.value}} [{{arc.arc.destination.id}}]" disabled>
     </mat-form-field>
+    <nc-builder-comment-editor [(comment)]="arc.arc.comment"></nc-builder-comment-editor>
 </mat-dialog-content>
 <mat-dialog-actions>
     <button mat-flat-button color="primary" [mat-dialog-close]="arc" [disabled]="multiplicityCtrl.invalid || _builderModeService.readOnly">
