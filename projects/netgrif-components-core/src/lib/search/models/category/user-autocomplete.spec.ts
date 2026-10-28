@@ -152,7 +152,7 @@ class MockUserResourceService {
             fullName: `${user.name} ${user.surname}`,
             groups: [],
             authorities: [],
-            nextGroups: [],
+            groupIds: [],
             processRoles: [],
         }))));
     }

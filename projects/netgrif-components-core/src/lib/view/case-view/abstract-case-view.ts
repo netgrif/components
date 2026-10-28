@@ -28,7 +28,7 @@ export abstract class AbstractCaseViewComponent extends AbstractViewWithHeadersC
 
     protected constructor(protected _caseViewService: CaseViewService,
                           protected _overflowService?: OverflowService,
-                          protected _authority: Array<Authority> = [{authority: 'ROLE_USER'}],
+                          protected _authority: Array<Authority> = [{name: "ROLE_USER", authority: 'ROLE_USER'}],
                           @Optional() @Inject(NAE_NEW_CASE_CREATION_CONFIGURATION_DATA) protected _newCaseCreationConfig: NewCaseCreationConfigurationData = {
                               enableCaseTitle: true,
                               isCaseTitleRequired: true

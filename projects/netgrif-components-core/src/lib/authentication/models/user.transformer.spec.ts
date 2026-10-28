@@ -19,9 +19,9 @@ describe('UserTransformer', () => {
             lastName: 'string',
             fullName: 'string string',
             groups: [],
-            authorities: [{authority: 'ADMIN'}],
+            authorities: [{name: 'ADMIN', authority: 'ADMIN'}],
             processRoles: [{stringId: 'string', description: 'desc', name: 'name', importId: 'importId'}],
-            nextGroups: [],
+            groupIds: [],
             _links: {},
         }).fullName).toEqual('string string');
     });
