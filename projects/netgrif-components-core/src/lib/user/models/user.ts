@@ -1,6 +1,6 @@
 import {ProcessRole} from '../../resources/interface/process-role';
 import {IUser} from './iuser';
-import {Group} from "../../resources/interface/group";
+import {Group} from '../../resources/interface/group';
 
 /**
  * The user object that is used by the frontend in its logic.

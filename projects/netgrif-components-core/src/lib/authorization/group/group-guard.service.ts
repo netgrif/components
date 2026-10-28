@@ -37,7 +37,7 @@ export class GroupGuardService implements CanActivate {
             } else {
                 allowedGroups = [view.access.group];
             }
-            const groupOfUser = this._userService.user.groups.map(group => group.displayName);
+            const groupOfUser = this._userService.user.groups?.map(group => group.displayName) ?? [];
 
             return allowedGroups.some(groupTitle => {
                 return groupOfUser.includes(groupTitle);

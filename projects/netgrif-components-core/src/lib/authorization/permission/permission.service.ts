@@ -113,7 +113,7 @@ export class PermissionService {
             const processedActorIds: Array<string> = [];
             Object.keys(users).forEach(actorId => {
                 if (userPermValue === false || processedActorIds.includes(actorId)
-                    || actorId !== loggedUser.id && !loggedUser.groupIds.includes(actorId)) {
+                    || actorId !== loggedUser.id && !(loggedUser.groupIds?.includes(actorId) ?? false)) {
                     return;
                 }
                 let currentUserPermission: boolean = this.getPermissionByUserOrGroup(users, permission, loggedUser);

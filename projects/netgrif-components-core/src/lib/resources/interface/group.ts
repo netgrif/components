@@ -1,5 +1,5 @@
-import {ProcessRole} from "./process-role";
-import {Authority} from "./authority";
+import {ProcessRole} from './process-role';
+import {Authority} from './authority';
 
 export interface GroupsInterface {
     groups: [];
