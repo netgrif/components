@@ -93,7 +93,7 @@ export class PublicTaskResourceService extends TaskResourceService {
     public rawGetData(taskId: string, params?: Params): Observable<EventOutcomeMessageResource> {
         if (!params) {
             params = new HttpParams();
-            params = params.set('fields', 'outcomes,outcome,task(stringId),data,data');
+            params = params.set('fields', 'outcomes,outcome,task(stringId),data');
         }
         return this._provider.get$('public/task/' + taskId + '/data', this.SERVER_URL, params)
             .pipe(map(r => this.changeType(r, 'dataGroups')));
@@ -107,7 +107,7 @@ export class PublicTaskResourceService extends TaskResourceService {
     public setData(taskId: string, body: TaskSetDataRequestBody, params?: Params): Observable<EventOutcomeMessageResource> {
         if (!params) {
             params = new HttpParams();
-            params = params.set('fields', 'outcomes,outcome,task(stringId),data,data');
+            params = params.set('fields', 'outcomes,outcome,task(stringId),data');
         }
         return this._provider.post$('public/task/' + taskId + '/data', this.SERVER_URL, body, params)
             .pipe(map(r => this.changeType(r, undefined)));

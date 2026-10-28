@@ -6,7 +6,6 @@ import {SimpleFilter} from '../../filter/models/simple-filter';
 import {FilterType} from '../../filter/models/filter-type';
 import {TaskResourceService} from './task-resource.service';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {HttpParams} from "@angular/common/http";
 
 describe('TaskResourceService', () => {
     let service: TaskResourceService;
@@ -58,13 +57,15 @@ describe('TaskResourceService', () => {
     it('should assignTask', (done) => {
             inject([HttpTestingController],
                 (httpMock: HttpTestingController) => {
-                    service.assignTask('id', new HttpParams()).subscribe(res => {
+                    service.assignTask('id').subscribe(res => {
                         expect(res.success).toEqual('Success');
                         done();
                     });
 
-                    const reqLog = httpMock.expectOne('http://localhost:8080/api/task/assign/id');
+                    const reqLog = httpMock.expectOne('http://localhost:8080/api/task/assign/id?fields=outcomes,outcome,task(stringId)');
                     expect(reqLog.request.method).toEqual('GET');
+                    expect(reqLog.request.params.has('fields')).toBeTrue();
+                    expect(reqLog.request.params.get('fields')).toEqual('outcomes,outcome,task(stringId)');
 
                     reqLog.flush({success: 'Success'});
                 })();
@@ -74,13 +75,15 @@ describe('TaskResourceService', () => {
     it('should cancelTask', (done) => {
             inject([HttpTestingController],
                 (httpMock: HttpTestingController) => {
-                    service.cancelTask('id', new HttpParams()).subscribe(res => {
+                    service.cancelTask('id').subscribe(res => {
                         expect(res.success).toEqual('Success');
                         done();
                     });
 
-                    const reqLog = httpMock.expectOne('http://localhost:8080/api/task/cancel/id');
+                    const reqLog = httpMock.expectOne('http://localhost:8080/api/task/cancel/id?fields=outcomes,outcome,task(stringId)');
                     expect(reqLog.request.method).toEqual('GET');
+                    expect(reqLog.request.params.has('fields')).toBeTrue();
+                    expect(reqLog.request.params.get('fields')).toEqual('outcomes,outcome,task(stringId)');
 
                     reqLog.flush({success: 'Success'});
                 })();
@@ -90,13 +93,15 @@ describe('TaskResourceService', () => {
     it('should delegateTask', (done) => {
             inject([HttpTestingController],
                 (httpMock: HttpTestingController) => {
-                    service.delegateTask('id', {userId: 5}, new HttpParams()).subscribe(res => {
+                    service.delegateTask('id', {userId: 5}).subscribe(res => {
                         expect(res.success).toEqual('Success');
                         done();
                     });
 
-                    const reqLog = httpMock.expectOne('http://localhost:8080/api/task/delegate/id');
+                    const reqLog = httpMock.expectOne('http://localhost:8080/api/task/delegate/id?fields=outcomes,outcome,task(stringId)');
                     expect(reqLog.request.method).toEqual('POST');
+                    expect(reqLog.request.params.has('fields')).toBeTrue();
+                    expect(reqLog.request.params.get('fields')).toEqual('outcomes,outcome,task(stringId)');
 
                     reqLog.flush({success: 'Success'});
                 })();
@@ -106,13 +111,15 @@ describe('TaskResourceService', () => {
     it('should finishTask', (done) => {
             inject([HttpTestingController],
                 (httpMock: HttpTestingController) => {
-                    service.finishTask('id', new HttpParams()).subscribe(res => {
+                    service.finishTask('id').subscribe(res => {
                         expect(res.success).toEqual('Success');
                         done();
                     });
 
-                    const reqLog = httpMock.expectOne('http://localhost:8080/api/task/finish/id');
+                    const reqLog = httpMock.expectOne('http://localhost:8080/api/task/finish/id?fields=outcomes,outcome,task(stringId)');
                     expect(reqLog.request.method).toEqual('GET');
+                    expect(reqLog.request.params.has('fields')).toBeTrue();
+                    expect(reqLog.request.params.get('fields')).toEqual('outcomes,outcome,task(stringId)');
 
                     reqLog.flush({success: 'Success'});
                 })();
@@ -218,13 +225,15 @@ describe('TaskResourceService', () => {
     it('should getData', (done) => {
             inject([HttpTestingController],
                 (httpMock: HttpTestingController) => {
-                    service.getData('id', new HttpParams()).subscribe(res => {
+                    service.getData('id').subscribe(res => {
                         expect(res.length).toEqual(0);
                         done();
                     });
 
-                    const reqLog = httpMock.expectOne('http://localhost:8080/api/task/id/data');
+                    const reqLog = httpMock.expectOne('http://localhost:8080/api/task/id/data?fields=outcomes,task(stringId),data');
                     expect(reqLog.request.method).toEqual('GET');
+                    expect(reqLog.request.params.has('fields')).toBeTrue();
+                    expect(reqLog.request.params.get('fields')).toEqual('outcomes,task(stringId),data');
 
                     reqLog.flush({
                         success: 'Get data groups successful',
@@ -243,13 +252,15 @@ describe('TaskResourceService', () => {
     it('should setData', (done) => {
             inject([HttpTestingController],
                 (httpMock: HttpTestingController) => {
-                    service.setData('id', {}, new HttpParams()).subscribe(res => {
+                    service.setData('id', {}).subscribe(res => {
                         expect(res.outcome).toBeTruthy();
                         done();
                     });
 
-                    const reqLog = httpMock.expectOne('http://localhost:8080/api/task/id/data');
+                    const reqLog = httpMock.expectOne('http://localhost:8080/api/task/id/data?fields=outcomes,outcome,case(stringId),task(stringId),changedFields');
                     expect(reqLog.request.method).toEqual('POST');
+                    expect(reqLog.request.params.has('fields')).toBeTrue();
+                    expect(reqLog.request.params.get('fields')).toEqual('outcomes,outcome,case(stringId),task(stringId),changedFields');
 
                     reqLog.flush({outcome: {}});
                 })();

@@ -206,7 +206,7 @@ export class TaskResourceService extends AbstractResourceService implements Coun
     public rawGetData(taskId: string, params?: Params): Observable<EventOutcomeMessageResource> {
         if (!params) {
             params = new HttpParams();
-            params = params.set('fields', 'outcomes,task(stringId),data');
+            params = params.set('fields', 'outcomes,outcome,task(stringId),data');
         }
         return this._resourceProvider.get$('task/' + taskId + "/data", this.SERVER_URL, params)
             .pipe(map(r => this.changeType(r, undefined)));
