@@ -230,10 +230,10 @@ describe('TaskResourceService', () => {
                         done();
                     });
 
-                    const reqLog = httpMock.expectOne('http://localhost:8080/api/task/id/data?fields=outcomes,task(stringId),data');
+                    const reqLog = httpMock.expectOne('http://localhost:8080/api/task/id/data?fields=outcomes,outcome,task(stringId),data');
                     expect(reqLog.request.method).toEqual('GET');
                     expect(reqLog.request.params.has('fields')).toBeTrue();
-                    expect(reqLog.request.params.get('fields')).toEqual('outcomes,task(stringId),data');
+                    expect(reqLog.request.params.get('fields')).toEqual('outcomes,outcome,task(stringId),data');
 
                     reqLog.flush({
                         success: 'Get data groups successful',
