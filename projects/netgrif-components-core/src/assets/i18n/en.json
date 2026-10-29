@@ -389,7 +389,8 @@
             "title": "Title",
             "version": "Version",
             "author": "Author",
-            "upload": "Upload date"
+            "upload": "Upload date",
+            "publicUrl": "Public URL"
         }
     },
     "profile": {
@@ -422,7 +423,6 @@
             "noLdapGroupsWereFound": "No LDAP group was found",
             "listTitle": "LDAP groups",
             "count": "Number of groups"
-
         },
         "process-list": {
             "newestVersion": "Newest version",
@@ -464,6 +464,8 @@
     "workflow": {
         "delete": "delete",
         "download": "download",
+        "goToPublicView": "Go to public view",
+        "builderRedirect": "Open in Builder",
         "dialog": {
             "header": "Are you sure you want to delete the process '{{name}}' with version '{{version}}'?",
             "content": "Doing so will remove all cases created from this process!",
@@ -475,7 +477,8 @@
             "deleteInProgress": "The process has been marked for deletion, the deletion is now underway",
             "deleteError": "Process could not be deleted",
             "uploadFailed": "Process file could not be uploaded.",
-            "uploadSuccess": "Process file uploaded successfully"
+            "uploadSuccess": "Process file uploaded successfully",
+            "publicUrlCopied": "Public URL copied to clipboard"
         }
     },
     "legal": {
