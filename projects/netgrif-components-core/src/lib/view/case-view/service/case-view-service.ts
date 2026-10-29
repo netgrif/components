@@ -1,13 +1,13 @@
 import {Inject, Injectable, OnDestroy, Optional} from '@angular/core';
 import {CaseResourceService} from '../../../resources/engine-endpoint/case-resource.service';
-import {BehaviorSubject, Observable, of, Subject} from 'rxjs';
+import {ReplaySubject, Observable, of, Subject} from 'rxjs';
 import {HttpParams} from '@angular/common/http';
 import {Case} from '../../../resources/interface/case';
 import {LoggerService} from '../../../logger/services/logger.service';
 import {SnackBarService} from '../../../snack-bar/services/snack-bar.service';
 import {SearchService} from '../../../search/search-service/search.service';
 import {TranslateService} from '@ngx-translate/core';
-import {catchError, concatMap, filter, map, mergeMap, scan, switchMap, tap} from 'rxjs/operators';
+import {catchError, concatMap, filter, map, mergeMap, scan, switchMap, take, tap} from 'rxjs/operators';
 import {Pagination} from '../../../resources/interface/pagination';
 import {CaseMetaField} from '../../../header/case-header/case-menta-enum';
 import {PageLoadRequestContext} from '../../abstract/page-load-request-context';
@@ -37,6 +37,8 @@ import {PaginationParams} from '../../../utility/pagination/pagination-params';
 import {createSortParam, PaginationSort} from '../../../utility/pagination/pagination-sort';
 import {MatDialog} from '@angular/material/dialog';
 import {NAE_NEW_CASE_DIALOG_COMPONENT} from '../../../dialog/injection-tokens';
+import {NAE_DYNAMIC_DEFAULT_SORT} from '../models/dynamic-default-sort-token';
+import {SortChangeDescription} from '../../../header/models/user-changes/sort-change-description';
 
 @Injectable()
 export class CaseViewService extends AbstractSortableViewComponent implements OnDestroy {
@@ -47,7 +49,7 @@ export class CaseViewService extends AbstractSortableViewComponent implements On
 
     protected _loading$: LoadingWithFilterEmitter;
     protected _cases$: Observable<Array<Case>>;
-    protected _nextPage$: BehaviorSubject<PageLoadRequestContext>;
+    protected _nextPage$: ReplaySubject<PageLoadRequestContext>;
     protected _endOfData: boolean;
     protected _pagination: Pagination;
     protected _newCaseConfiguration: NewCaseConfiguration;
@@ -64,6 +66,7 @@ export class CaseViewService extends AbstractSortableViewComponent implements On
                 protected _processService: ProcessService,
                 resolver: SearchIndexResolverService,
                 @Optional() @Inject(NAE_NEW_CASE_DIALOG_COMPONENT) protected _newCaseComponent: any,
+                @Optional() @Inject(NAE_DYNAMIC_DEFAULT_SORT) protected _dynamicDefaultSort$: Observable<SortChangeDescription[]>,
                 @Optional() @Inject(NAE_NEW_CASE_CONFIGURATION) newCaseConfig: NewCaseConfiguration,
                 protected _permissionService: PermissionService) {
         super(resolver);
@@ -82,9 +85,8 @@ export class CaseViewService extends AbstractSortableViewComponent implements On
             totalPages: undefined,
             number: -1
         };
-        this._nextPage$ = new BehaviorSubject<PageLoadRequestContext>(
-            new PageLoadRequestContext(this.activeFilter, Object.assign({}, this._pagination, {number: 0}))
-        );
+        this._nextPage$ = new ReplaySubject<PageLoadRequestContext>(1);
+        this.requestPageWithDynamicSort(new PageLoadRequestContext(this.activeFilter, Object.assign({}, this._pagination, {number: 0})));
 
         const casesMap = this._nextPage$.pipe(
             mergeMap(p => this.loadPage(p)),
@@ -213,7 +215,7 @@ export class CaseViewService extends AbstractSortableViewComponent implements On
         if (this.isLoadingRelevantFilter(requestContext) || this._endOfData) {
             return;
         }
-        this._nextPage$.next(requestContext);
+        this.requestPageWithDynamicSort(requestContext);
     }
 
     private isLoadingRelevantFilter(requestContext?: PageLoadRequestContext): boolean {
@@ -228,7 +230,7 @@ export class CaseViewService extends AbstractSortableViewComponent implements On
         const dialogRef = this._dialog.open(this._newCaseComponent, {
             width: '40%',
             minWidth: '300px',
-            panelClass: "dialog-responsive",
+            panelClass: 'dialog-responsive',
             data: {
                 allowedNets$: this.getNewCaseAllowedNets(newCaseCreationConfiguration.blockNets),
                 newCaseCreationConfiguration
@@ -357,5 +359,32 @@ export class CaseViewService extends AbstractSortableViewComponent implements On
      */
     public viewEnabled(aCase: Case): boolean {
         return this._permissionService.hasCasePermission(aCase, PermissionType.VIEW);
+    }
+
+    // todo check header sort resolving, this seems not user friendly + probably won't work with userPreferences
+    protected requestPageWithDynamicSort(requestContext: PageLoadRequestContext) {
+        if (!!this._dynamicDefaultSort$
+            && this._lastHeaderSearchState.fieldIdentifier === ''
+            && this._preferredSortableHeaders.length === 0) {
+            this._dynamicDefaultSort$.pipe(take(1)).subscribe(changes => {
+                if (this._preferredSortableHeaders.length === 0) {
+                    this._lastHeaderSearchState.sortDirection = '';
+                    changes.forEach(
+                        change => this._preferredSortableHeaders.push(
+                            {
+                                propertyId: this.getPreferredSortableFieldIdByFieldIdentifier(change.fieldIdentifier, change.columnType, change.fieldType),
+                                sortDirection: change.sortDirection
+                            }
+                        ));
+                }
+                this.requestNextPage(requestContext);
+            });
+        } else {
+            this.requestNextPage(requestContext);
+        }
+    }
+
+    protected requestNextPage(page: PageLoadRequestContext) {
+        this._nextPage$.next(page);
     }
 }

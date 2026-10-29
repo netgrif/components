@@ -4,6 +4,7 @@ export * from './header-sorting-mode';
 export * from './header-sorting-mode-injection-token';
 export * from './header-type';
 export * from './default-headers-token';
+export * from './meta-fields-factory';
 
 export * from './user-changes/header-change';
 export * from './user-changes/header-change-description';

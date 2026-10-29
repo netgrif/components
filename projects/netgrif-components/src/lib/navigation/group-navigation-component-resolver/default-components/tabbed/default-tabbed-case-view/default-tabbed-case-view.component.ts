@@ -28,12 +28,15 @@ import {
     navigationItemCaseViewDefaultHeadersFactory,
     NAE_NAVIGATION_ITEM_TASK_DATA,
     OverflowService,
+    NAE_DYNAMIC_DEFAULT_SORT,
+    ProcessService,
 } from '@netgrif/components-core';
 import {HeaderComponent} from '../../../../../header/header.component';
 import {
     InjectedTabbedCaseViewDataWithNavigationItemTaskData
 } from '../../model/injected-tabbed-case-view-data-with-navigation-item-task-data';
 import {
+    buildDynamicSortChangeDescriptionForCase$,
     filterCaseTabbedDataAllowedNetsServiceFactory,
     filterCaseTabbedDataFilterFactory,
     filterCaseTabbedDataSearchCategoriesFactory
@@ -69,6 +72,11 @@ import {ActivatedRoute} from '@angular/router';
             provide: NAE_DEFAULT_HEADERS,
             useFactory: navigationItemCaseViewDefaultHeadersFactory,
             deps: [NAE_NAVIGATION_ITEM_TASK_DATA]
+        },
+        {
+            provide: NAE_DYNAMIC_DEFAULT_SORT,
+            useFactory: buildDynamicSortChangeDescriptionForCase$,
+            deps: [NAE_NAVIGATION_ITEM_TASK_DATA, ProcessService]
         }
     ]
 })

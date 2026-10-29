@@ -108,20 +108,24 @@ export abstract class AbstractSortableViewComponent implements OnDestroy {
     }
 
     protected getPreferredSortableFieldId(column: HeaderColumn): string {
-        if (column.type === HeaderColumnType.META) {
-            return this.getMetaFieldSortId(column.fieldIdentifier);
+        return this.getPreferredSortableFieldIdByFieldIdentifier(column.fieldIdentifier, column.type, column.fieldType);
+    }
+
+    protected getPreferredSortableFieldIdByFieldIdentifier(fieldIdentifier: string, columnType: HeaderColumnType, fieldType: string): string {
+        if (columnType === HeaderColumnType.META) {
+            return this.getMetaFieldSortId(fieldIdentifier);
         } else {
-            switch (column.fieldType) {
+            switch (fieldType) {
                 case 'number':
-                    return this._resolver.getIndex(column.fieldIdentifier, SearchIndex.NUMBER);
+                    return this._resolver.getIndex(fieldIdentifier, SearchIndex.NUMBER);
                 case 'date':
                 case 'dateTime':
-                    return this._resolver.getIndex(column.fieldIdentifier, SearchIndex.TIMESTAMP);
+                    return this._resolver.getIndex(fieldIdentifier, SearchIndex.TIMESTAMP);
                 case 'actor':
                 case 'actorList':
-                    return this._resolver.getIndex(column.fieldIdentifier, SearchIndex.FULL_NAME, true);
+                    return this._resolver.getIndex(fieldIdentifier, SearchIndex.FULL_NAME, true);
                 default:
-                    return this._resolver.getIndex(column.fieldIdentifier, SearchIndex.FULLTEXT, true);
+                    return this._resolver.getIndex(fieldIdentifier, SearchIndex.FULLTEXT, true);
             }
         }
     }
