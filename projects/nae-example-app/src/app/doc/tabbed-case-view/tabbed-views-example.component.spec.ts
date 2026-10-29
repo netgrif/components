@@ -34,7 +34,8 @@ describe('TabViewExampleComponent', () => {
         }));
         expect(component.tabs[1].injectedObject).toEqual(jasmine.objectContaining({
             exampleUseCache: false,
-            headerSortingMode: HeaderSortingMode.MULTI
+            headerSortingMode: HeaderSortingMode.MULTI,
+            showCasePanelIcon: false
         }));
         expect(component.tabs[2].injectedObject).toEqual(jasmine.objectContaining({
             exampleUseCache: true,

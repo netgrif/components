@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { AbstractPanelItemComponent } from '@netgrif/components-core';
+import {Component, Injector} from '@angular/core';
+import {AbstractPanelItemComponent, PanelItemComponentRegistryService} from '@netgrif/components-core';
 
 @Component({
   selector: 'nc-panel-item',
@@ -8,7 +8,7 @@ import { AbstractPanelItemComponent } from '@netgrif/components-core';
 })
 export class PanelItemComponent extends AbstractPanelItemComponent {
 
-  constructor() {
-      super();
+  constructor(registry: PanelItemComponentRegistryService, injector: Injector) {
+      super(registry, injector);
   }
 }
