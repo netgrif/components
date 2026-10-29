@@ -1327,7 +1327,12 @@
         },
         "dataFields": {
             "template": "material",
-            "appearance": "outline"
+            "appearance": "outline",
+            "defaultNumberFormat": {
+                "decimalSeparator": ".",
+                "groupSeparator": " ",
+                "digitsInfo": "1.2-2"
+            }
         },
         "legal": {
             "termsOfService": "https://netgrif.com/",
