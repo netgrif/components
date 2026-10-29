@@ -77,7 +77,8 @@ export function createTabView(
         dasherize: strings.dasherize,
         classify: strings.classify,
         modulePath: createRelativePath(view.fileImportPath, './app.module'),
-        viewIdSegment: getViewIdSegmentFromPath(args.path)
+        viewIdSegment: getViewIdSegmentFromPath(args.path),
+        persistenceKey: args.path
     }));
 
     updateAppModule(tree, view.className, view.fileImportPath, [
@@ -152,6 +153,7 @@ function processEmbeddedView(embeddedView: EmbeddedView,
     if (embeddedView.order !== undefined) {
         tabTemplate.order = embeddedView.order;
     }
+    tabTemplate.persistenceId = embeddedView.id ?? `initial:${viewNumber}`;
 
     result.tabTemplates.push(tabTemplate);
 }

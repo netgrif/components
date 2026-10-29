@@ -41,4 +41,14 @@ describe('TabViewExampleComponent', () => {
             headerSortingMode: HeaderSortingMode.COMBINED
         }));
     });
+
+    it('should configure session persistence', () => {
+        expect(component.persistenceKey).toBe('nae-example:tabbed-views');
+        expect(component.persistenceAdapter).toBeDefined();
+        expect(component.tabs.map(tab => tab.persistence?.id)).toEqual([
+            'cache-enabled-single',
+            'cache-disabled-multi',
+            'cache-enabled-combined'
+        ]);
+    });
 });

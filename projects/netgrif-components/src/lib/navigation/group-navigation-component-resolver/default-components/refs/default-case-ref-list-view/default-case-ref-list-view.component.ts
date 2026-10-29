@@ -39,6 +39,7 @@ import {
 import {
     DefaultTabbedSingleTaskViewComponent
 } from "../../tabbed/default-tabbed-single-task-view/default-tabbed-single-task-view.component";
+import {defaultTaskTabPersistence} from '../../tabbed/default-tab-view/default-tab-persistence-metadata';
 
 const localAllowedNetsFactory = (factory: AllowedNetsServiceFactory, allowedNets: Array<string>) => {
     if (allowedNets?.length > 0) {
@@ -130,27 +131,37 @@ export class DefaultCaseRefListViewComponent extends AbstractCaseViewComponent i
         } else {
             baseFilter = new SimpleFilter('', FilterType.TASK, {case: {id: `${openCase.stringId}`}});
         }
+        const injectedObject = {
+            allowedNets: [openCase.processIdentifier],
+            navigationItemTaskData: this._injectedTabData.navigationItemTaskData,
+            searchTypeConfiguration: {
+                initialSearchMode: SearchMode.FULLTEXT,
+                showSearchToggleButton: true
+            },
+            showMoreMenu: true,
+            headersChangeable: true,
+            headersMode: ['sort', 'edit'],
+            allowTableMode: true,
+            defaultHeadersMode: 'sort'
+        };
         this._injectedTabData.tabViewRef.openTab({
             label: {
                 text: openCase.title,
                 icon: openCase.icon ? openCase.icon : 'check_box'
             },
             canBeClosed: true,
+            pinnable: true,
             tabContentComponent: this._openSingleTask ? DefaultTabbedSingleTaskViewComponent : DefaultTabbedTaskViewComponent,
             injectedObject: {
-                baseFilter: baseFilter,
-                allowedNets: [openCase.processIdentifier],
-                navigationItemTaskData: this._injectedTabData.navigationItemTaskData,
-                searchTypeConfiguration: {
-                    initialSearchMode: SearchMode.FULLTEXT,
-                    showSearchToggleButton: true
-                },
-                showMoreMenu: true,
-                headersChangeable: true,
-                headersMode: ['sort', 'edit'],
-                allowTableMode: true,
-                defaultHeadersMode: 'sort'
+                ...injectedObject,
+                baseFilter
             },
+            persistence: defaultTaskTabPersistence(
+                openCase.stringId,
+                this._openSingleTask ? 'single-task' : 'task',
+                baseFilter,
+                injectedObject
+            ),
             order: this._injectedTabData['tabViewOrder'],
             parentUniqueId: this._injectedTabData.tabUniqueId
         }, true, true);

@@ -1,4 +1,11 @@
-import {InjectedTabData, TabContent, TabViewInterface} from '../interfaces';
+import {
+    InjectedTabData,
+    PersistedTabState,
+    PersistedTabViewState,
+    TabContent,
+    TabPersistenceAdapter,
+    TabViewInterface
+} from '../interfaces';
 import {OpenedTab} from './opened-tab';
 import {Injector, StaticProvider} from '@angular/core';
 import {ComponentPortal} from '@angular/cdk/portal';
@@ -12,6 +19,13 @@ import {MatTabChangeEvent} from '@angular/material/tabs';
 import {IncrementingCounter} from '../../utility/incrementing-counter';
 import {NAE_VIEW_ID_SEGMENT} from '../../user/models/view-id-injection-tokens';
 import {FormControl} from '@angular/forms';
+import {TabPersistenceService} from '../services/tab-persistence.service';
+
+export interface TabViewPersistenceOptions {
+    key: string;
+    service: TabPersistenceService;
+    adapter?: TabPersistenceAdapter;
+}
 
 /**
  * Holds the logic for tab management in {@link AbstractTabViewComponent}.
@@ -38,6 +52,8 @@ export class TabView implements TabViewInterface {
 
     private _pendingTabUniqueId: string | undefined;
 
+    private readonly _persistence?: TabViewPersistenceOptions;
+
     /**
      * @ignore
      * Holds a reference to an object that hides some public attributes and methods from tabs.
@@ -48,7 +64,13 @@ export class TabView implements TabViewInterface {
         switchToTabIndex: (index: number) => this.switchToTabIndex(index),
         switchToTabUniqueId: (uniqueId: string) => this.switchToTabUniqueId(uniqueId),
         closeTabIndex: (index: number, force = false) => this.closeTabIndex(index, force),
-        closeTabUniqueId: (uniqueId: string, force = false) => this.closeTabUniqueId(uniqueId, force)
+        closeTabUniqueId: (uniqueId: string, force = false) => this.closeTabUniqueId(uniqueId, force),
+        pinTabIndex: (index: number) => this.pinTabIndex(index),
+        unpinTabIndex: (index: number) => this.unpinTabIndex(index),
+        toggleTabPinIndex: (index: number) => this.toggleTabPinIndex(index),
+        pinTabUniqueId: (uniqueId: string) => this.pinTabUniqueId(uniqueId),
+        unpinTabUniqueId: (uniqueId: string) => this.unpinTabUniqueId(uniqueId),
+        toggleTabPinUniqueId: (uniqueId: string) => this.toggleTabPinUniqueId(uniqueId)
     };
 
     /**
@@ -61,22 +83,36 @@ export class TabView implements TabViewInterface {
     constructor(private _viewService: ViewService,
                 private _logger: LoggerService,
                 private _initialTabs: Array<TabContent>,
-                private _parentInjector: Injector) {
-        this._initialTabs.forEach(tab => {
+                private _parentInjector: Injector,
+                persistence?: TabViewPersistenceOptions,
+                private readonly _pinningEnabled = false) {
+        this._persistence = persistence?.key ? persistence : undefined;
+        this._initialTabs.forEach((tab, index) => {
             if (tab.order === undefined) {
                 tab.order = 0;
             }
             tab.initial = true;
+            if (!tab.persistence) {
+                tab.persistence = {
+                    id: `initial:${index}`,
+                    type: 'initial'
+                };
+            }
         });
         this.selectedIndex = new FormControl(0);
 
-        // orderBy is a stable sort
-        // Native javascript implementation has undefined stability and it depends on it's implementation (browser)
-        this.openedTabs = orderBy(this._initialTabs, v => v.order, 'asc').map(tabData =>
-            new OpenedTab(tabData, `${this.uniqueIdCounter.next()}`));
-        if (this.openedTabs.length > 0) {
-            this.openedTabs[0].tabSelected$.next(true);
+        const persistedState = this._persistence?.service.load(this._persistence.key);
+        const restoredTabs = this.restoreTabs(persistedState);
+        this.openedTabs = orderBy([...this._initialTabs, ...restoredTabs], v => v.order, 'asc').map(tabData =>
+            this.createOpenedTab(tabData));
+        this.restoreParentIds();
+        const persistedIndex = this.openedTabs.findIndex(tab => tab.persistence?.id === persistedState?.selectedTabId);
+        const selectedIndex = persistedIndex === -1 ? 0 : persistedIndex;
+        this.selectedIndex.setValue(selectedIndex);
+        if (this.openedTabs[selectedIndex]) {
+            this.openedTabs[selectedIndex].tabSelected$.next(true);
         }
+        this.persist();
     }
 
     /**
@@ -99,7 +135,7 @@ export class TabView implements TabViewInterface {
             delete tabContent.initial;
         }
 
-        const newTab = new OpenedTab(tabContent, `${this.uniqueIdCounter.next()}`);
+        const newTab = this.createOpenedTab(tabContent);
         const indexExisting = this.findIndexExistingTab(newTab);
         if (indexExisting === -1 || !openExisting) {
             return this.openNewTab(newTab, autoswitch);
@@ -160,6 +196,7 @@ export class TabView implements TabViewInterface {
         if (autoswitch || this.openedTabs.length === 1) {
             this.setTabIndexWithNotification(index);
         }
+        this.persist();
         return newTab.uniqueId;
     }
 
@@ -185,9 +222,10 @@ export class TabView implements TabViewInterface {
     }
 
     private setTabIndexWithNotification(index: number): void {
-        this.openedTabs[this.selectedIndex.value].tabSelected$.next(false);
+        this.openedTabs[this.selectedIndex.value]?.tabSelected$.next(false);
         this.selectedIndex.setValue(index);
         this.openedTabs[this.selectedIndex.value].tabSelected$.next(true);
+        this.persist();
     }
 
     /**
@@ -224,7 +262,8 @@ export class TabView implements TabViewInterface {
      */
     protected closeTab(index: number, force: boolean, error: string): void {
         this.checkIndexRange(index);
-        if (!force && !this.openedTabs[index].canBeClosed) {
+        const wasSelected = index === this.selectedIndex.value;
+        if (!force && (!this.openedTabs[index].canBeClosed || this.openedTabs[index].pinned)) {
             throw new Error(error);
         }
         if (index === this.selectedIndex.value && this.openedTabs[index].parentUniqueId &&
@@ -239,7 +278,48 @@ export class TabView implements TabViewInterface {
         deleted[0].destroy();
         if (index < this.selectedIndex.value) {
             this.selectedIndex.setValue(this.selectedIndex.value - 1);
+        } else if (this.selectedIndex.value >= this.openedTabs.length) {
+            this.selectedIndex.setValue(Math.max(0, this.openedTabs.length - 1));
         }
+        if (wasSelected) {
+            this.openedTabs[this.selectedIndex.value]?.tabSelected$.next(true);
+        }
+        this.persist();
+    }
+
+    public pinTabIndex(index: number): void {
+        this.setPinned(index, true);
+    }
+
+    public unpinTabIndex(index: number): void {
+        this.setPinned(index, false);
+    }
+
+    public toggleTabPinIndex(index: number): void {
+        this.checkIndexRange(index);
+        this.setPinned(index, !this.openedTabs[index].pinned);
+    }
+
+    public pinTabUniqueId(uniqueId: string): void {
+        this.pinTabIndex(this.getTabIndex(uniqueId));
+    }
+
+    public unpinTabUniqueId(uniqueId: string): void {
+        this.unpinTabIndex(this.getTabIndex(uniqueId));
+    }
+
+    public toggleTabPinUniqueId(uniqueId: string): void {
+        this.toggleTabPinIndex(this.getTabIndex(uniqueId));
+    }
+
+    private setPinned(index: number, pinned: boolean): void {
+        this.checkIndexRange(index);
+        const tab = this.openedTabs[index];
+        if (!tab.pinnable) {
+            throw new Error(`Tab at index ${index} can't be pinned`);
+        }
+        tab.pinned = pinned;
+        this.persist();
     }
 
     /**
@@ -254,8 +334,14 @@ export class TabView implements TabViewInterface {
             Object.assign(tab.injectedObject, {
                 tabUniqueId: tab.uniqueId,
                 tabViewRef: Object.assign({
-                    setIcon: t => tab.setIcon(t),
-                    setText: t => tab.setText(t),
+                    setIcon: t => {
+                        tab.setIcon(t);
+                        this.persist();
+                    },
+                    setText: t => {
+                        tab.setText(t);
+                        this.persist();
+                    },
                     getIcon$: () => tab.getIcon$(),
                     getText$: () => tab.getText$(),
                 }, this.tabViewInterface),
@@ -305,6 +391,7 @@ export class TabView implements TabViewInterface {
                 tab.tabSelected$.next(true);
             }
             this.selectedIndex.setValue(index);
+            this.persist();
         }
 
         setTimeout(() => {
@@ -334,5 +421,104 @@ export class TabView implements TabViewInterface {
         if (index < 0 || index >= this.openedTabs.length) {
             throw new Error(`No tab with index ${index} exists`);
         }
+    }
+
+    public persist(): void {
+        if (!this._persistence) {
+            return;
+        }
+        const tabs = this.openedTabs
+            .filter(tab => tab.pinned)
+            .map(tab => this.persistTab(tab))
+            .filter((tab): tab is PersistedTabState => !!tab);
+        const selectedTab = this.openedTabs[this.selectedIndex.value];
+        const selectedTabId = selectedTab?.persistence?.id
+            && (selectedTab.pinned || (selectedTab.initial && this.selectedIndex.value !== 0))
+            ? selectedTab.persistence.id
+            : undefined;
+        this._persistence.service.save(this._persistence.key, {
+            version: TabPersistenceService.STATE_VERSION,
+            selectedTabId,
+            tabs
+        });
+    }
+
+    private persistTab(tab: OpenedTab): PersistedTabState | undefined {
+        if (!tab.persistence) {
+            return undefined;
+        }
+        try {
+            JSON.stringify(tab.persistence);
+        } catch (error) {
+            this._logger.warn(`Tab '${tab.persistence.id}' has non-serializable persistence metadata`, error);
+            return undefined;
+        }
+        const parent = tab.parentUniqueId
+            ? this.openedTabs.find(candidate => candidate.uniqueId === tab.parentUniqueId)
+            : undefined;
+        return {
+            persistence: tab.persistence,
+            label: {
+                icon: tab.getIcon(),
+                text: tab.getText()
+            },
+            order: tab.order,
+            pinned: tab.pinned,
+            parentPersistenceId: parent?.persistence?.id ?? tab.parentPersistenceId,
+            initial: tab.initial
+        };
+    }
+
+    private restoreTabs(state: PersistedTabViewState | undefined): Array<TabContent> {
+        if (!state || !this._pinningEnabled) {
+            return [];
+        }
+        const initialById = new Map(this._initialTabs.map(tab => [tab.persistence?.id, tab]));
+        state.tabs.filter(tab => tab.initial).forEach(persisted => {
+            const initial = initialById.get(persisted.persistence.id);
+            if (initial) {
+                initial.pinned = persisted.pinned;
+            }
+        });
+        if (!this._persistence.adapter) {
+            return [];
+        }
+        const restoredTabs = [];
+        state.tabs.filter(tab => !tab.initial && tab.pinned).forEach(tab => {
+            try {
+                const restored = this._persistence.adapter.restore(tab, {
+                    initialTabs: this._initialTabs,
+                    restoredTabs
+                });
+                if (restored) {
+                    restored.persistence = tab.persistence;
+                    restored.pinned = tab.pinned;
+                    restored.parentPersistenceId = tab.parentPersistenceId;
+                    restored.order = tab.order;
+                    restoredTabs.push(restored);
+                }
+            } catch (error) {
+                this._logger.warn(`Tab '${tab.persistence.id}' could not be restored`, error);
+            }
+        });
+        return restoredTabs;
+    }
+
+    private createOpenedTab(tab: TabContent): OpenedTab {
+        const pinnable = this._pinningEnabled && (tab.pinnable ?? tab.canBeClosed);
+        return new OpenedTab({
+            ...tab,
+            pinnable,
+            pinned: pinnable && (tab.pinned ?? false)
+        }, `${this.uniqueIdCounter.next()}`);
+    }
+
+    private restoreParentIds(): void {
+        this.openedTabs.forEach(tab => {
+            if (!tab.parentPersistenceId) {
+                return;
+            }
+            tab.parentUniqueId = this.openedTabs.find(parent => parent.persistence?.id === tab.parentPersistenceId)?.uniqueId;
+        });
     }
 }
