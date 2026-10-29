@@ -389,7 +389,8 @@
             "title": "Netzname",
             "version": "Version",
             "author": "Netzauthor",
-            "upload": "Hochladungsdatum"
+            "upload": "Hochladungsdatum",
+            "publicUrl": "Öffentliche URL"
         }
     },
     "profile": {
@@ -463,6 +464,8 @@
     "workflow": {
         "delete": "löschen",
         "download": "herunterladen",
+        "goToPublicView": "Öffentliche URL",
+        "builderRedirect": "Öffnen in Builder",
         "dialog": {
             "header": "Sind Sie sicher, dass Sie den Prozess '{{name}}' mit Version '{{version}}' löschen wollen?",
             "content": "Alle Fälle aus diesem Prozess werden gleichzeitig gelöscht!",
@@ -474,7 +477,8 @@
             "deleteInProgress": "Der ausgewählte Prozess wird jetzt gelöscht",
             "deleteError": "Prozess konnte nicht gelöscht werden",
             "uploadFailed": "Prozessdatei konnte nicht hochgeladen werden.",
-            "uploadSuccess": "Prozessdatei erfolgreich hochgeladen"
+            "uploadSuccess": "Prozessdatei erfolgreich hochgeladen",
+            "publicUrlCopied": "Öffentliche URL kopiert"
         }
     },
     "legal": {

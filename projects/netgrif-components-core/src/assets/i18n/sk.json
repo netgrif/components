@@ -389,7 +389,8 @@
             "title": "Názov",
             "version": "Verzia",
             "author": "Autor",
-            "upload": "Dátum nahratia"
+            "upload": "Dátum nahratia",
+            "publicUrl": "Verejná URL"
         }
     },
     "profile": {
@@ -463,6 +464,8 @@
     "workflow": {
         "delete": "zmazať",
         "download": "stiahnuť",
+        "goToPublicView": "Prejsť na verejnú stránku",
+        "builderRedirect": "Otvoriť v Builderi",
         "dialog": {
             "header": "Ste si istý, že chcete vymazať proces '{{name}}' verzia '{{version}}'?",
             "content": "Spolu s procesom budú vymazané aj všetky prípady z neho vytvorené!",
@@ -474,7 +477,8 @@
             "deleteInProgress": "Proces bol označený na vymazanie, momentálne prebieha mazanie procesu",
             "deleteError": "Proces sa nepodarilo zmazať",
             "uploadFailed": "Súbor procesu sa nepodarilo nahrať.",
-            "uploadSuccess": "Súbor procesu bol úspešne nahraný"
+            "uploadSuccess": "Súbor procesu bol úspešne nahraný",
+            "publicUrlCopied": "Verejná URL bola skopírovaná do schránky"
         }
     },
     "legal": {

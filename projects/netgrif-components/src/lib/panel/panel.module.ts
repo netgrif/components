@@ -30,6 +30,7 @@ import {
     SideMenuMultiUserAssignComponentModule
 } from "../side-menu/content-components/multi-user-assign/side-menu-multi-user-assign-component.module";
 import {MatExpansionModule} from '@angular/material/expansion';
+import {MatAnchor, MatButton} from "@angular/material/button";
 
 @NgModule({
     declarations: [
@@ -57,7 +58,9 @@ import {MatExpansionModule} from '@angular/material/expansion';
         CurrencyModule,
         MatExpansionModule,
         SideMenuMultiUserAssignComponentModule,
-        UtilityModule
+        UtilityModule,
+        MatButton,
+        MatAnchor
     ],
     exports: [
         PanelComponent,
