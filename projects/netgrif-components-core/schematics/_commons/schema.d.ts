@@ -47,9 +47,18 @@ export interface Auth {
     sessionBearer?: string;
     jwtEnabled?: boolean;
     jwtBearer?: string;
+    apiToken?: ApiTokenAuthentication;
     endpoints?: string | { [k: string]: string };
 
     [k: string]: any;
+}
+
+export interface ApiTokenAuthentication {
+    enabled?: boolean;
+    queryParameter?: string;
+    realmQueryParameter?: string;
+    removeFromUrl?: boolean;
+    allowedPaths?: Array<string>;
 }
 
 export interface Resource {

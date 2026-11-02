@@ -27,10 +27,10 @@ export class PublicPetriNetResourceService extends PetriNetResourceService {
      *
      * **Request Type:** GET
      *
-     * **Request URL:** {{baseUrl}}/api/public/petrinet/{id}
+     * **Request URL:** {{baseUrl}}/api/petrinet/public/{id}
      */
     public getOneById(netId: string, params?: Params): Observable<PetriNet> {
-        return this.provider.get$('public/petrinet/' + netId, this.SERVER_URL, params)
+        return this.provider.get$('petrinet/public/' + netId, this.SERVER_URL, params)
             .pipe(map(r => this.changeType(r, undefined)));
     }
 
@@ -39,10 +39,10 @@ export class PublicPetriNetResourceService extends PetriNetResourceService {
      *
      * **Request Type:** GET
      *
-     * **Request URL:** {{baseUrl}}/api/public/petrinet/{identifier}/{version}
+     * **Request URL:** {{baseUrl}}/api/petrinet/public/{identifier}/{version}
      */
     public getOne(identifier: string, version: string, params?: Params): Observable<PetriNetReference> {
-        return this.provider.get$('public/petrinet/' + btoa(identifier) + '/' + version, this.SERVER_URL, params)
+        return this.provider.get$('petrinet/public/' + btoa(identifier) + '/' + version, this.SERVER_URL, params)
             .pipe(map(r => this.changeType(r, 'petriNetReferences')));
     }
 
@@ -54,7 +54,7 @@ export class PublicPetriNetResourceService extends PetriNetResourceService {
      * **Request URL:** {{baseUrl}}/api/petrinet/search
      */
     public searchPetriNets(body: PetriNetRequestBody, params?: Params): Observable<Page<PetriNetReference>> {
-        return this._resourceProvider.post$('public/petrinet/search', this.SERVER_URL, body, params)
+        return this._resourceProvider.post$('petrinet/public/search', this.SERVER_URL, body, params)
             // .pipe(map(r => this.getResourcePage<PetriNetReference>(r, 'petriNetReferences')));
             .pipe(map(r => this.mapToPage<PetriNetReference>(r)));
     }
@@ -67,7 +67,7 @@ export class PublicPetriNetResourceService extends PetriNetResourceService {
      * **Request URL:** {{baseUrl}}/api/petrinet/{id}/roles
      */
     public getPetriNetRoles(netId: string, params?: Params): Observable<RolesAndPermissions> {
-        return this._resourceProvider.get$('public/petrinet/' + netId + '/roles', this.SERVER_URL, params)
+        return this._resourceProvider.get$('petrinet/public/' + netId + '/roles', this.SERVER_URL, params)
             .pipe(map(r => this.changeType(r, 'processRoles')));
     }
 
@@ -79,7 +79,7 @@ export class PublicPetriNetResourceService extends PetriNetResourceService {
      * **Request URL:** {{baseUrl}}/api/petrinet/{id}/transactions
      */
     public getPetriNetTransactions(netId: string, params?: Params): Observable<Array<Transaction>> {
-        return this._resourceProvider.get$('public/petrinet/' + netId + '/transactions', this.SERVER_URL, params)
+        return this._resourceProvider.get$('petrinet/public/' + netId + '/transactions', this.SERVER_URL, params)
             .pipe(map(r => this.changeType(r, 'transactions')));
     }
 
@@ -91,7 +91,7 @@ export class PublicPetriNetResourceService extends PetriNetResourceService {
      * **Request URL:** {{baseUrl}}/api/petrinet/data
      */
     public getDataPetriNet(body: object): Observable<any> {  // TODO: response
-        return this._resourceProvider.post$('public/petrinet/data', this.SERVER_URL, body)
+        return this._resourceProvider.post$('petrinet/public/data', this.SERVER_URL, body)
             .pipe(map(r => this.changeType(r, undefined)));
     }
 
@@ -103,7 +103,7 @@ export class PublicPetriNetResourceService extends PetriNetResourceService {
      * **Request URL:** {{baseUrl}}/api/petrinet/transitions
      */
     public getPetriNetTransitions(netId: string): Observable<Array<Transition>> {
-        return this._resourceProvider.get$('public/petrinet/transitions', this.SERVER_URL, new HttpParams().set('ids', netId))
+        return this._resourceProvider.get$('petrinet/public/transitions', this.SERVER_URL, new HttpParams().set('ids', netId))
             .pipe(map(r => this.changeType(r, 'transitionReferences')));
     }
 }
