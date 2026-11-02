@@ -465,6 +465,7 @@
         "delete": "delete",
         "download": "download",
         "goToPublicView": "Go to public view",
+        "copyPublicUrl": "Copy public URL",
         "builderRedirect": "Open in Builder",
         "dialog": {
             "header": "Are you sure you want to delete the process '{{name}}' with version '{{version}}'?",
@@ -478,7 +479,8 @@
             "deleteError": "Process could not be deleted",
             "uploadFailed": "Process file could not be uploaded.",
             "uploadSuccess": "Process file uploaded successfully",
-            "publicUrlCopied": "Public URL copied to clipboard"
+            "publicUrlCopied": "Public URL copied to clipboard",
+            "publicUrlCopyFailed": "Public URL has failed to be copied to clipboard"
         }
     },
     "legal": {

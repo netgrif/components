@@ -465,6 +465,7 @@
         "delete": "zmazať",
         "download": "stiahnuť",
         "goToPublicView": "Prejsť na verejnú stránku",
+        "copyPublicUrl": "Skopírovať verejnú URL",
         "builderRedirect": "Otvoriť v Builderi",
         "dialog": {
             "header": "Ste si istý, že chcete vymazať proces '{{name}}' verzia '{{version}}'?",
@@ -478,7 +479,8 @@
             "deleteError": "Proces sa nepodarilo zmazať",
             "uploadFailed": "Súbor procesu sa nepodarilo nahrať.",
             "uploadSuccess": "Súbor procesu bol úspešne nahraný",
-            "publicUrlCopied": "Verejná URL bola skopírovaná do schránky"
+            "publicUrlCopied": "Verejná URL bola skopírovaná do schránky",
+            "publicUrlCopyFailed": "Verejná URL sa nepodarila skopírovať do schránky"
         }
     },
     "legal": {

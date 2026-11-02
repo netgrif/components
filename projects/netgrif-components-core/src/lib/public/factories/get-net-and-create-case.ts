@@ -6,6 +6,8 @@ import {mergeMap} from 'rxjs/operators';
 import {TranslateService} from '@ngx-translate/core';
 import {CreateCaseEventOutcome} from '../../event/model/event-outcomes/case-outcomes/create-case-event-outcome';
 import {PublicTaskLoadingService} from '../../view/task-view/service/public-task-loading.service';
+import {decodeBase64} from "../../utility/base64";
+
 
 export const getNetAndCreateCase = (router: Router,
                                     route: ActivatedRoute,
@@ -14,7 +16,10 @@ export const getNetAndCreateCase = (router: Router,
                                     snackBarService: SnackBarService,
                                     translate: TranslateService,
                                     publicTaskLoadingService: PublicTaskLoadingService) => {
-    process.getNet(atob(route.snapshot.paramMap.get('petriNetId'))).pipe(mergeMap(net => {
+    const routeParam = route.snapshot.paramMap.get('petriNetId');
+    const decodedIdentifier = decodeBase64(routeParam);
+
+    process.getNet(decodedIdentifier).pipe(mergeMap(net => {
         if (net) {
             publicTaskLoadingService.setLoading$(true);
             const newCase = {

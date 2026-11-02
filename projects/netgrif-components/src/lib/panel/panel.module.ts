@@ -25,7 +25,7 @@ import {
 } from './immediate/immediate-filter-text-content/immediate-filter-text-content.component';
 import {PanelItemComponent} from './panel-item/panel-item.component';
 import {TaskListPaginationComponent} from '../view/task-view/task-panel-list-pagination/task-list-pagination.component';
-import { SingleTaskComponent } from './task-panel-single/single-task.component';
+import {SingleTaskComponent} from './task-panel-single/single-task.component';
 import {
     SideMenuMultiUserAssignComponentModule
 } from "../side-menu/content-components/multi-user-assign/side-menu-multi-user-assign-component.module";
@@ -59,8 +59,6 @@ import {MatAnchor, MatButton} from "@angular/material/button";
         MatExpansionModule,
         SideMenuMultiUserAssignComponentModule,
         UtilityModule,
-        MatButton,
-        MatAnchor
     ],
     exports: [
         PanelComponent,

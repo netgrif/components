@@ -19,6 +19,8 @@ import {ProgressType, ProviderProgress} from '../../resources/resource-provider.
 import {OverflowService} from '../../header/services/overflow.service';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {SnackBarService} from "../../snack-bar/services/snack-bar.service";
+import {encodeBase64} from "../../utility/base64";
+
 
 export interface WorkflowPanelContent {
     netIdentifier: TextField;
@@ -155,9 +157,18 @@ export abstract class AbstractWorkflowPanelComponent extends AbstractPanelWithHe
      * @return {void} This method does not return a value.
      */
     public copyToClipboard(content: string) {
-        navigator.clipboard.writeText(content).then(() => {
-            this._snackbar.openSuccessSnackBar(this._translate.instant('workflow.snackBar.publicUrlCopied'));
-        });
+        if (!navigator.clipboard) {
+            console.warn('Clipboard API is not supported in this browser');
+            return;
+        }
+        navigator.clipboard.writeText(content).then(
+            () => {
+                this._snackbar.openSuccessSnackBar(this._translate.instant('workflow.snackBar.publicUrlCopied'));
+            },
+            (error) => {
+                this._snackbar.openWarningSnackBar(this._translate.instant('workflow.snackBar.publicUrlCopyFailed'));
+                console.error('Failed to copy to clipboard:', error);
+            });
     }
 
     /**
@@ -165,8 +176,8 @@ export abstract class AbstractWorkflowPanelComponent extends AbstractPanelWithHe
      */
     protected createPanelContent(): WorkflowPanelContent {
         let publicUrl = '';
-        let encodedIdentifier = btoa(this.workflow.identifier);
-        encodedIdentifier = encodedIdentifier.endsWith('=') ? encodedIdentifier.substring(0, encodedIdentifier.length - 1) : encodedIdentifier;
+        let encodedIdentifier = encodeBase64(this.workflow.identifier);
+        encodedIdentifier = encodedIdentifier.replace(/=+$/, '');
         publicUrl = `${this.publicViewUrl}/${encodedIdentifier}`;
         return {
             netIdentifier: new TextField('', this._translate.instant(this.TRANSLATION_NET),

@@ -48,13 +48,18 @@
                                                 [dataField]="panelContent.uploaded">
                         </nc-data-field-template>
                     </div>
-                    <div fxLayout="row" fxLayoutAlign="start start" fxFlex="50">
-                        <nc-data-field-template *ngIf="!!publicViewUrl"
-                                                [dataField]="panelContent.publicUrl"
+                    <div fxLayout="row" fxLayoutAlign="start start" fxFlex="50" *ngIf="!!publicViewUrl">
+                        <nc-data-field-template [dataField]="panelContent.publicUrl"
                                                 (click)="copyToClipboard(panelContent.publicUrl.value)"
                                                 fxFlex>
                         </nc-data-field-template>
                         <div class="mat-form-field-wrapper">
+                            <button mat-icon-button color="primary" type="button"
+                                    [attr.aria-label]="'workflow.copyPublicUrl' | translate"
+                                    [matTooltip]="'workflow.copyPublicUrl' | translate | uppercase"
+                                    (click)="copyToClipboard(panelContent.publicUrl.value)">
+                                <mat-icon>content_copy</mat-icon>
+                            </button>
                             <a mat-icon-button color="primary" href='{{panelContent.publicUrl.value}}' target="_blank"
                                [matTooltip]="'workflow.goToPublicView' | translate | uppercase">
                                 <mat-icon>exit_to_app</mat-icon>

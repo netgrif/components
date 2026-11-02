@@ -465,6 +465,7 @@
         "delete": "löschen",
         "download": "herunterladen",
         "goToPublicView": "Öffentliche URL",
+        "copyPublicUrl": "Öffentliche URL kopieren",
         "builderRedirect": "Öffnen in Builder",
         "dialog": {
             "header": "Sind Sie sicher, dass Sie den Prozess '{{name}}' mit Version '{{version}}' löschen wollen?",
@@ -478,7 +479,8 @@
             "deleteError": "Prozess konnte nicht gelöscht werden",
             "uploadFailed": "Prozessdatei konnte nicht hochgeladen werden.",
             "uploadSuccess": "Prozessdatei erfolgreich hochgeladen",
-            "publicUrlCopied": "Öffentliche URL kopiert"
+            "publicUrlCopied": "Öffentliche URL kopiert",
+            "publicUrlCopyFailed": "Öffentliche URL konnte nicht kopiert werden"
         }
     },
     "legal": {
