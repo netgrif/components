@@ -176,6 +176,20 @@
                 },
                 "dataFields": {
                     "properties": {
+                        "defaultNumberFormat": {
+                            "properties": {
+                                "decimalSeparator": {
+                                    "type": "string"
+                                },
+                                "digitsInfo": {
+                                    "type": "string"
+                                },
+                                "groupSeparator": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        },
                         "appearance": {
                             "type": "string"
                         },
