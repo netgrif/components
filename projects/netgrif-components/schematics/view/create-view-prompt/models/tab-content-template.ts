@@ -5,6 +5,7 @@ export class TabContentTemplate {
     public canBeDeleted = true;
     public order: number | undefined;
     public injectedObject: any;
+    public persistenceId: string;
 
     constructor(public tabContentComponent: string) {}
 

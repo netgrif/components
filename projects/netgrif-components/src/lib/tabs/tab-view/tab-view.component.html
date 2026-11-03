@@ -13,7 +13,17 @@
                     <span class="custom-badge" [matBadge]="(badgeCount(tab) | async)"
                           [matBadgeHidden]="(badgeHidden(tab) | async)">{{((tab.getText$() | async) | translate) + ((badgeHidden(tab) | async) ? '' : offset)}}</span>
                 </div>
-                <button mat-icon-button *ngIf="tab.canBeClosed" (click)="tabView.closeTabIndex(i)">
+                <button mat-icon-button *ngIf="tab.pinnable"
+                        [attr.aria-label]="(tab.pinned ? 'tasks.view.unpinTab' : 'tasks.view.pinTab') | translate"
+                        [matTooltip]="(tab.pinned ? 'tasks.view.unpinTab' : 'tasks.view.pinTab') | translate"
+                        (click)="tabView.toggleTabPinIndex(i); $event.stopPropagation()">
+                    <mat-icon [class.unpinned-tab-icon]="!tab.pinned"
+                              [ngClass]="{'icon-tab-color': i === tabView.selectedIndex.value}">push_pin</mat-icon>
+                </button>
+                <button mat-icon-button *ngIf="tab.canBeClosed && !tab.pinned"
+                        [attr.aria-label]="'tasks.view.closeTab' | translate"
+                        [matTooltip]="'tasks.view.closeTab' | translate"
+                        (click)="tabView.closeTabIndex(i); $event.stopPropagation()">
                     <mat-icon [ngClass]="{'icon-tab-color': i === tabView.selectedIndex.value}">clear</mat-icon>
                 </button>
             </div>
