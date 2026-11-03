@@ -74,6 +74,8 @@ export * from './models/abstract-data-field';
 export * from './text-field/models/text-area-field';
 export * from './text-field/models/text-field';
 export * from './number-field/models/number-field';
+export * from './number-field/models/number-format';
+export * from './number-field/models/number-formatter';
 export * from './enumeration-field/models/enumeration-field';
 export * from './multichoice-field/models/multichoice-field';
 export * from './boolean-field/models/boolean-field';
