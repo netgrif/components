@@ -5,6 +5,7 @@ import {MatIcon} from '@angular/material/icon';
 import {TranslateModule} from '@ngx-translate/core';
 import EasyMDE from 'easymde';
 import * as marked from 'marked';
+import {Subscription} from 'rxjs';
 import {BuilderModeService} from '../../../services/builder-mode.service';
 
 /**
@@ -23,14 +24,17 @@ export class CommentEditorComponent implements OnDestroy {
     @Output() commentChange: EventEmitter<string> = new EventEmitter<string>();
     @Input() title = 'builder.comment.title';
     protected _comment = '';
-    protected _readOnly: boolean;
+    protected _readOnly = false;
+    protected _builderReadOnly: boolean;
+    protected _readOnlySub: Subscription;
     protected _expanded = false;
     protected _rendered = false;
     protected _easyMDE: EasyMDE;
     protected _settingValue = false;
 
     constructor(protected _builderModeService: BuilderModeService, protected _sanitizer: DomSanitizer) {
-        this._readOnly = this._builderModeService.readOnly;
+        // builder can switch to read-only while the editor is displayed (e.g. integrated case)
+        this._readOnlySub = this._builderModeService.readOnly$.subscribe(readOnly => this._builderReadOnly = readOnly);
     }
 
     @Input()
@@ -49,11 +53,11 @@ export class CommentEditorComponent implements OnDestroy {
 
     @Input()
     set readOnly(value: boolean) {
-        this._readOnly = value || this._builderModeService.readOnly;
+        this._readOnly = value;
     }
 
     get readOnly(): boolean {
-        return this._readOnly;
+        return this._readOnly || this._builderReadOnly;
     }
 
     @Input()
@@ -78,6 +82,9 @@ export class CommentEditorComponent implements OnDestroy {
     set editor(element: ElementRef | undefined) {
         if (element && !this._easyMDE) {
             this.createEditor(element.nativeElement);
+        } else if (!element && this._easyMDE) {
+            // textarea was removed after switching to read-only
+            this.destroyEditor();
         }
     }
 
@@ -98,11 +105,8 @@ export class CommentEditorComponent implements OnDestroy {
     }
 
     ngOnDestroy(): void {
-        if (this._easyMDE) {
-            this._easyMDE.codemirror.off('change', this.onEditorChange);
-            this._easyMDE.cleanup();
-            this._easyMDE = undefined;
-        }
+        this._readOnlySub.unsubscribe();
+        this.destroyEditor();
     }
 
     protected createEditor(textarea: HTMLTextAreaElement): void {
@@ -122,6 +126,14 @@ export class CommentEditorComponent implements OnDestroy {
             previewRender: (text: string) => this.render(text)
         });
         this._easyMDE.codemirror.on('change', this.onEditorChange);
+    }
+
+    protected destroyEditor(): void {
+        if (this._easyMDE) {
+            this._easyMDE.codemirror.off('change', this.onEditorChange);
+            this._easyMDE.cleanup();
+            this._easyMDE = undefined;
+        }
     }
 
     protected onEditorChange = (): void => {

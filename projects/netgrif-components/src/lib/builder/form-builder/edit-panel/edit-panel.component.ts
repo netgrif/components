@@ -161,7 +161,7 @@ export class EditPanelComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        this.readOnlySub.unsubscribe();
+        this.readOnlySub?.unsubscribe();
     }
 
     get transition(): Transition {
