@@ -65,6 +65,7 @@ export abstract class AbstractSortableViewComponent implements OnDestroy {
             }
             if (isModeChange || header.changeType === HeaderChangeType.SORT || header.changeType === HeaderChangeType.SEARCH) {
                 if (header.changeType === HeaderChangeType.SORT) {
+                    this._preferredSortableHeaders = [];
                     this._lastHeaderSearchState = header.description as SortChangeDescription;
                 }
                 // TODO we might not need to search all the time, do some filtering
