@@ -339,6 +339,7 @@ export interface Services {
     routing?: {
         defaultRedirect?: string;
         wildcardRedirect?: string;
+        publicViewPath?: string;
     };
     dataFields?: {
         template?: string,
@@ -362,6 +363,10 @@ export interface Services {
     };
     doubleDrawer?: {
         url: string,
+    };
+    builder?: {
+        url: string,
+        openProcessFromFile?: boolean
     }
 
     [k: string]: any;
