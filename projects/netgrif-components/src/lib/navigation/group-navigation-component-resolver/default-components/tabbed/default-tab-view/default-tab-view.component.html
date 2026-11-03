@@ -1,3 +1,7 @@
 <div fxLayout="column" fxLayoutAlign="start stretch" class="full-height">
-    <nc-tab-view [initialTabs]="tabs" stretch="false" class="full-height block"></nc-tab-view>
+    <nc-tab-view [initialTabs]="tabs"
+                 [persistenceKey]="persistenceKey"
+                 [persistenceAdapter]="persistenceAdapter"
+                 stretch="false"
+                 class="full-height block"></nc-tab-view>
 </div>

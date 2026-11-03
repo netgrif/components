@@ -1,13 +1,14 @@
 import {Credentials} from '../../models/credentials';
-import {Injectable, OnDestroy} from '@angular/core';
+import {Injectable, OnDestroy, Optional} from '@angular/core';
 import {AuthenticationMethodService} from '../authentication-method.service';
 import {BehaviorSubject, Observable, of, Subscription} from 'rxjs';
 import {ConfigurationService} from '../../../configuration/configuration.service';
-import {catchError, filter, map, take, tap} from 'rxjs/operators';
+import {catchError, filter, finalize, map, take, tap} from 'rxjs/operators';
 import {User} from '../../../user/models/user';
 import {UserTransformer} from '../../models/user.transformer';
 import {SessionService} from '../../session/services/session.service';
 import {UserResource} from '../../../resources/interface/user-resource';
+import {TabPersistenceService} from '../../../tabs/services/tab-persistence.service';
 
 @Injectable({
     providedIn: 'root'
@@ -22,7 +23,8 @@ export class AuthenticationService implements OnDestroy {
     constructor(protected _auth: AuthenticationMethodService,
                 protected _config: ConfigurationService,
                 protected _sessionService: SessionService,
-                protected _userTransformer: UserTransformer) {
+                protected _userTransformer: UserTransformer,
+                @Optional() protected _tabSessionPersistence?: TabPersistenceService) {
         this._config.loaded$
             .pipe(
                 filter(loaded => loaded),
@@ -58,7 +60,8 @@ export class AuthenticationService implements OnDestroy {
             catchError(error => {
                 console.error(error);
                 return of(error);
-            })
+            }),
+            finalize(() => this._tabSessionPersistence?.clear())
         );
     }
 
