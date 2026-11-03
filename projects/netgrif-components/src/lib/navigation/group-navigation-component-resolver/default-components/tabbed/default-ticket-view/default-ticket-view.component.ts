@@ -26,6 +26,7 @@ import {map} from 'rxjs/operators';
 import {
     InjectedTabbedTicketViewDataWithNavigationItemTaskData
 } from "../../model/injected-tabbed-ticket-view-data-with-navigation-item-task-data";
+import {defaultTaskTabPersistence} from '../default-tab-view/default-tab-persistence-metadata';
 
 export interface TicketItem {
     id: string;
@@ -169,17 +170,23 @@ export class DefaultTicketViewComponent implements OnInit {
 
     protected openTab(openCase: Case) {
         const transId: string = extractFieldValueFromData(this._injectedTabData.navigationItemTaskData, "transition_id")
+        const baseFilter = new SimpleFilter('', FilterType.TASK, {case: {id: `${openCase.stringId}`}, transitionId: transId});
+        const injectedObject = {
+            allowedNets: [openCase.processIdentifier]
+        };
         this._injectedTabData.tabViewRef.openTab({
             label: {
                 text: openCase.title,
                 icon: openCase.icon ? openCase.icon : 'check_box'
             },
             canBeClosed: true,
+            pinnable: true,
             tabContentComponent: this._injectedTabData.tabViewComponent,
             injectedObject: {
-                baseFilter: new SimpleFilter('', FilterType.TASK, {case: {id: `${openCase.stringId}`}, transitionId: transId}),
-                allowedNets: [openCase.processIdentifier]
+                ...injectedObject,
+                baseFilter
             },
+            persistence: defaultTaskTabPersistence(openCase.stringId, 'single-task', baseFilter, injectedObject),
             order: this._injectedTabData.tabViewOrder,
             parentUniqueId: this._injectedTabData.tabUniqueId
         }, this._autoswitchToTaskTab, this._openExistingTab);
