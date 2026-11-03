@@ -18,6 +18,7 @@
             {{ 'builder.dialogs.place-edit.tokensNonNegative' | translate }}
         </mat-error>
     </mat-form-field>
+    <nc-builder-comment-editor [(comment)]="place.place.comment"></nc-builder-comment-editor>
 </mat-dialog-content>
 <mat-dialog-actions>
     <button mat-flat-button color="primary" [mat-dialog-close]="place"

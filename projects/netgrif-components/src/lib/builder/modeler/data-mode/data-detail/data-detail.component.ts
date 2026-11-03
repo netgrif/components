@@ -239,6 +239,11 @@ export class DataDetailComponent implements OnDestroy {
         this.historyDataSave.save = true;
     }
 
+    setComment(comment: string): void {
+        this.item.comment = comment;
+        this.historyDataSave.save = true;
+    }
+
     setBooleanValue(event) {
         this.item.init.value = event.checked.toString();
     }

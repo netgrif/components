@@ -1865,6 +1865,11 @@
             "bugReportTitle": "Nahlásenie chyby",
             "bugReport": "Na nahlásenie akejkoľvek chyby, ktorú narazíte pri používaní Netgrif Application Builder, môžete použiť našu stránku github issues."
         },
+        "comment": {
+            "title": "Komentár",
+            "dataRefTitle": "Komentár DataRef",
+            "empty": "Bez komentára"
+        },
         "newModelCreated": "Nový model bol vytvorený.",
         "hasBeenImported": "bol importovaný."
     }

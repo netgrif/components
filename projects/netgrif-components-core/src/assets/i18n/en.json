@@ -1866,6 +1866,11 @@
             "bugReportTitle": "Bug report",
             "bugReport": "You can use our github issue page to report any bug you encounter while using the Netgrif Application Builder."
         },
+        "comment": {
+            "title": "Comment",
+            "dataRefTitle": "DataRef Comment",
+            "empty": "No comment"
+        },
         "newModelCreated": "New model has been created.",
         "hasBeenImported": "has been imported."
     }
