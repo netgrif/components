@@ -484,7 +484,8 @@ export class TabView implements TabViewInterface {
             return [];
         }
         const restoredTabs = [];
-        state.tabs.filter(tab => !tab.initial && tab.pinned).forEach(tab => {
+        const tabsToRestore = this.orderTabsForRestore(state.tabs.filter(tab => !tab.initial && tab.pinned));
+        tabsToRestore.forEach(tab => {
             try {
                 const restored = this._persistence.adapter.restore(tab, {
                     initialTabs: this._initialTabs,
@@ -502,6 +503,31 @@ export class TabView implements TabViewInterface {
             }
         });
         return restoredTabs;
+    }
+
+    private orderTabsForRestore(tabs: Array<PersistedTabState>): Array<PersistedTabState> {
+        const tabsById = new Map(tabs.map(tab => [tab.persistence.id, tab]));
+        const visiting = new Set<string>();
+        const visited = new Set<string>();
+        const orderedTabs: Array<PersistedTabState> = [];
+
+        const visit = (tab: PersistedTabState): void => {
+            const id = tab.persistence.id;
+            if (visited.has(id) || visiting.has(id)) {
+                return;
+            }
+            visiting.add(id);
+            const parent = tab.parentPersistenceId ? tabsById.get(tab.parentPersistenceId) : undefined;
+            if (parent) {
+                visit(parent);
+            }
+            visiting.delete(id);
+            visited.add(id);
+            orderedTabs.push(tab);
+        };
+
+        tabs.forEach(visit);
+        return orderedTabs;
     }
 
     private createOpenedTab(tab: TabContent): OpenedTab {

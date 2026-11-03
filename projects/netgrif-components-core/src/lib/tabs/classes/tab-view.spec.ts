@@ -263,6 +263,48 @@ describe('TabView', () => {
         expect(isolated.openedTabs.length).toEqual(1);
     });
 
+    it('should restore a parent before its child regardless of persisted order', () => {
+        persistence.save('view-a', {
+            version: TabSessionPersistenceService.STATE_VERSION,
+            tabs: [{
+                persistence: {id: 'filter:1', type: 'filter'},
+                order: 0,
+                pinned: true,
+                parentPersistenceId: 'case:1',
+                initial: false
+            }, {
+                persistence: {id: 'case:1', type: 'case'},
+                order: 0,
+                pinned: true,
+                initial: false
+            }]
+        });
+        const restoreOrder: Array<string> = [];
+        const adapter: TabPersistenceAdapter = {
+            restore: (state: PersistedTabState, context: TabRestoreContext) => {
+                restoreOrder.push(state.persistence.id);
+                if (state.persistence.id === 'filter:1'
+                    && !context.restoredTabs.some(tab => tab.persistence?.id === state.parentPersistenceId)) {
+                    return undefined;
+                }
+                return {
+                    canBeClosed: true,
+                    tabContentComponent: TabTestComponent
+                };
+            }
+        };
+
+        const restored = new TabView(viewService, logger, [], undefined, {
+            key: 'view-a',
+            service: persistence,
+            adapter
+        }, true);
+
+        expect(restoreOrder).toEqual(['case:1', 'filter:1']);
+        expect(restored.openedTabs.map(tab => tab.persistence?.id)).toEqual(['case:1', 'filter:1']);
+        expect(restored.openedTabs[1].parentUniqueId).toEqual(restored.openedTabs[0].uniqueId);
+    });
+
     it('should persist only pinned dynamic tabs and remove them after unpin', () => {
         const tabView = new TabView(viewService, logger, [{
             canBeClosed: false,
