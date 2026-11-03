@@ -100,7 +100,6 @@ import {ResetPasswordFormComponent} from './doc/forms/reset-password-form/reset-
 import {PublicTaskViewComponent} from './doc/public-task-view/public-task-view.component';
 import {PublicWorkflowViewComponent} from './doc/public-workflow-view/public-workflow-view.component';
 import {PublicResolverComponent} from './doc/public-resolver/public-resolver.component';
-import {GroupViewComponent} from './doc/group-view/group-view.component';
 import {
     DemoTitleConfigContent0TaskViewComponent
 } from './doc/demo-title-config/content/0/demo-title-config-content0-task-view.component';
@@ -115,7 +114,6 @@ import {
 } from './doc/demo-title-config/content/3/demo-title-config-content3-case-view.component';
 import {TitleConfigComponent} from './doc/demo-title-config/title-config.component';
 import {ExampleRedirectComponent} from './doc/redirect/example-redirect.component';
-import {ActiveGroupComponent} from './doc/active-group/active-group.component';
 import {WrapperEmptyViewComponent} from './views/wrapper/wrapper-empty-view.component';
 import {DoubleDrawerExampleComponent} from './doc/double-drawer-example/double-drawer-example.component';
 import {PublicSingleTaskViewComponent} from './doc/public-single-task-view/public-single-task-view.component';
@@ -179,14 +177,12 @@ export function HttpLoaderFactory(http: HttpClient) {
         PublicTaskViewComponent,
         PublicWorkflowViewComponent,
         PublicResolverComponent,
-        GroupViewComponent,
         ExampleRedirectComponent,
         DemoTitleConfigContent0TaskViewComponent,
         DemoTitleConfigContent1CaseViewComponent,
         DemoTitleConfigContent2CaseViewComponent,
         DemoTitleConfigContent3CaseViewComponent,
         TitleConfigComponent,
-        ActiveGroupComponent,
         WrapperEmptyViewComponent,
         DoubleDrawerExampleComponent,
         PublicSingleTaskViewComponent,
