@@ -66,7 +66,6 @@ export abstract class AbstractTabViewComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        this.tabView?.persist();
         this.tabView?.openedTabs.forEach(tab => tab.destroy());
     }
 

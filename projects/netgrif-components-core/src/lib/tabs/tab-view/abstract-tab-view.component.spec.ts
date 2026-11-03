@@ -80,6 +80,15 @@ describe('AbstractTabViewComponent', () => {
         expect(component.tabView.openedTabs[0].pinnable).toBeFalse();
     });
 
+    it('should not persist tabs when the view is destroyed', () => {
+        createComponent();
+        const persist = spyOn(component.tabView, 'persist');
+
+        fixture.destroy();
+
+        expect(persist).not.toHaveBeenCalled();
+    });
+
     afterEach(() => {
         TestBed.resetTestingModule();
     });

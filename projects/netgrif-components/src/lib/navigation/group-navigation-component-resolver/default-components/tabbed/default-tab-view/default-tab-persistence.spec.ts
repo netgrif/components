@@ -67,4 +67,32 @@ describe('DefaultTabPersistenceAdapter', () => {
         expect((restored.injectedObject as any).navigationItemTaskData).toEqual(['current']);
         expect((restored.injectedObject as any).filterCase).toEqual({stringId: '1'});
     });
+
+    it('should restore a filter tab whose parent was also restored', () => {
+        const state: PersistedTabState = {
+            persistence: {
+                id: 'filter:1',
+                type: DEFAULT_FILTER_TAB_TYPE,
+                payload: {filterCase: {stringId: '1'}}
+            },
+            parentPersistenceId: 'case:1',
+            order: 1,
+            pinned: true,
+            initial: false
+        };
+
+        const restored = adapter.restore(state, {
+            initialTabs: [],
+            restoredTabs: [{
+                canBeClosed: true,
+                tabContentComponent: DefaultTabbedTaskViewComponent,
+                persistence: {id: 'case:1', type: DEFAULT_TASK_TAB_TYPE},
+                injectedObject: {navigationItemTaskData: ['restored']}
+            }]
+        });
+
+        expect(restored.tabContentComponent).toBe(DefaultTabbedCaseViewComponent);
+        expect((restored.injectedObject as any).navigationItemTaskData).toEqual(['restored']);
+        expect((restored.injectedObject as any).filterCase).toEqual({stringId: '1'});
+    });
 });

@@ -76,6 +76,7 @@ export function createTabView(
         imports: tabViews.tabViewImports,
         dasherize: strings.dasherize,
         classify: strings.classify,
+        stringLiteral: (value: string) => JSON.stringify(value),
         modulePath: createRelativePath(view.fileImportPath, './app.module'),
         viewIdSegment: getViewIdSegmentFromPath(args.path),
         persistenceKey: args.path

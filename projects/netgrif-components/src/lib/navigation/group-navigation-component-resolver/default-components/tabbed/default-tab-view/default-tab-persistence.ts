@@ -56,7 +56,8 @@ export class DefaultTabPersistenceAdapter implements TabPersistenceAdapter {
 
     private restoreFilterTab(state: PersistedTabState, context: TabRestoreContext): TabContent | undefined {
         const payload = state.persistence.payload as DefaultFilterTabPayload;
-        const parent = context.initialTabs.find(tab => tab.persistence?.id === state.parentPersistenceId);
+        const parent = [...context.initialTabs, ...context.restoredTabs]
+            .find(tab => tab.persistence?.id === state.parentPersistenceId);
         if (!payload?.filterCase || !parent?.injectedObject) {
             return undefined;
         }
