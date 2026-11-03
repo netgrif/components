@@ -1,8 +1,16 @@
 import {Component} from '@angular/core';
 import {MatDialog} from "@angular/material/dialog";
 import {ActivatedRoute, Router} from "@angular/router";
-import {AbstractWorkflowViewComponent,
-    LoggerService, Net, PetriNetResourceServiceProvider, ProcessService, ProcessServiceProvider, WorkflowViewService } from '@netgrif/components-core';
+import {
+    AbstractWorkflowViewComponent,
+    LoggerService,
+    Net,
+    PetriNetResourceServiceProvider,
+    ProcessService,
+    ProcessServiceProvider,
+    WorkflowViewService,
+    encodeBase64
+} from '@netgrif/components-core';
 
 @Component({
     selector: 'nc-default-public-workflow-view',
@@ -25,7 +33,9 @@ export class DefaultPublicWorkflowViewComponent extends AbstractWorkflowViewComp
     }
 
     handleClick(workflow: Net) {
-        this._router.navigate([this._route.snapshot.url.join('/') + '/' + btoa(workflow.identifier)]);
+        let encodedIdentifier = encodeBase64(workflow.identifier);
+        encodedIdentifier = encodedIdentifier.replace(/=+$/, '');
+        this._router.navigate([this._route.snapshot.url.join('/') + '/' + encodedIdentifier]);
     }
 
 }

@@ -17,6 +17,10 @@ import {FeaturedValue} from '../abstract/featured-value';
 import {PetriNetResourceService} from '../../resources/engine-endpoint/petri-net-resource.service';
 import {ProgressType, ProviderProgress} from '../../resources/resource-provider.service';
 import {OverflowService} from '../../header/services/overflow.service';
+import {ConfigurationService} from '../../configuration/configuration.service';
+import {SnackBarService} from "../../snack-bar/services/snack-bar.service";
+import {encodeBase64} from "../../utility/base64";
+
 
 export interface WorkflowPanelContent {
     netIdentifier: TextField;
@@ -24,6 +28,7 @@ export interface WorkflowPanelContent {
     version: TextField;
     author: TextField;
     uploaded: DateTimeField;
+    publicUrl: TextField;
 }
 
 @Component({
@@ -39,12 +44,15 @@ export abstract class AbstractWorkflowPanelComponent extends AbstractPanelWithHe
     @Input() public last: boolean;
     public panelRef: MatExpansionPanel;
     public panelContent: WorkflowPanelContent;
+    public builderUrl: string;
+    public publicViewUrl: string;
     private _subscription: Subscription;
     private readonly TRANSLATION_NET = 'panel.workflow.net';
     private readonly TRANSLATION_TITLE = 'panel.workflow.title';
     private readonly TRANSLATION_VERSION = 'panel.workflow.version';
     private readonly TRANSLATION_AUTHOR = 'panel.workflow.author';
     private readonly TRANSLATION_UPLOAD = 'panel.workflow.upload';
+    private readonly TRANSLATION_PUBLIC_URL = 'panel.workflow.publicUrl';
 
     protected dataFieldsBehaviour: Behavior = {visible: true, editable: false};
 
@@ -52,6 +60,8 @@ export abstract class AbstractWorkflowPanelComponent extends AbstractPanelWithHe
                           protected _translate: TranslateService,
                           protected _workflowService: WorkflowViewService,
                           protected _petriNetResource: PetriNetResourceService,
+                          protected _config: ConfigurationService,
+                          protected _snackbar: SnackBarService,
                           @Optional() protected _overflowService: OverflowService) {
         super(_overflowService);
 
@@ -61,11 +71,26 @@ export abstract class AbstractWorkflowPanelComponent extends AbstractPanelWithHe
             this.panelContent.version.title = this._translate.instant(this.TRANSLATION_VERSION);
             this.panelContent.author.title = this._translate.instant(this.TRANSLATION_AUTHOR);
             this.panelContent.uploaded.title = this._translate.instant(this.TRANSLATION_UPLOAD);
+            this.panelContent.publicUrl.title = this._translate.instant(this.TRANSLATION_PUBLIC_URL);
         });
+        const publicViewPath = _config.getConfigurationSubtree(['services', 'routing'])?.publicViewPath;
+        if (publicViewPath) {
+            const location = window.location;
+            this.publicViewUrl = location.protocol + '//' + location.host + '/' + publicViewPath;
+        }
     }
 
     ngOnInit(): void {
         super.ngOnInit();
+
+        const builderConfig = this._config.getConfigurationSubtree(['services', 'builder']);
+        if (builderConfig) {
+            this.builderUrl = builderConfig.url + '/modeler';
+            if (!!builderConfig?.openProcessFromFile) {
+                this.builderUrl += '?process=' + this.workflow.identifier;
+            }
+        }
+
         this.panelContent = this.createPanelContent();
     }
 
@@ -119,16 +144,41 @@ export abstract class AbstractWorkflowPanelComponent extends AbstractPanelWithHe
 
         const url = window.URL.createObjectURL(blob);
         a.href = url;
-        a.download = this.workflow.identifier;
+        a.download = this.workflow.identifier + ".xml";
         a.click();
         window.URL.revokeObjectURL(url);
         document.body.removeChild(a);
     }
 
     /**
+     * Copies the provided content to the clipboard and displays a success snackbar notification.
+     *
+     * @param {string} content - The content to be copied to the clipboard.
+     * @return {void} This method does not return a value.
+     */
+    public copyToClipboard(content: string) {
+        if (!navigator.clipboard) {
+            console.warn('Clipboard API is not supported in this browser');
+            return;
+        }
+        navigator.clipboard.writeText(content).then(
+            () => {
+                this._snackbar.openSuccessSnackBar(this._translate.instant('workflow.snackBar.publicUrlCopied'));
+            },
+            (error) => {
+                this._snackbar.openWarningSnackBar(this._translate.instant('workflow.snackBar.publicUrlCopyFailed'));
+                console.error('Failed to copy to clipboard:', error);
+            });
+    }
+
+    /**
      * Populate data fields group for every petri net model
      */
     protected createPanelContent(): WorkflowPanelContent {
+        let publicUrl = '';
+        let encodedIdentifier = encodeBase64(this.workflow.identifier);
+        encodedIdentifier = encodedIdentifier.replace(/=+$/, '');
+        publicUrl = `${this.publicViewUrl}/${encodedIdentifier}`;
         return {
             netIdentifier: new TextField('', this._translate.instant(this.TRANSLATION_NET),
                 this.workflow.identifier, this.dataFieldsBehaviour),
@@ -139,7 +189,9 @@ export abstract class AbstractWorkflowPanelComponent extends AbstractPanelWithHe
             author: new TextField('', this._translate.instant(this.TRANSLATION_AUTHOR),
                 this.workflow.author.fullName, this.dataFieldsBehaviour),
             uploaded: new DateTimeField('', this._translate.instant(this.TRANSLATION_UPLOAD),
-                toMoment(this.workflow.createdDate), this.dataFieldsBehaviour)
+                toMoment(this.workflow.createdDate), this.dataFieldsBehaviour),
+            publicUrl: new TextField('', this._translate.instant(this.TRANSLATION_PUBLIC_URL),
+                publicUrl, this.dataFieldsBehaviour),
         };
     }
 

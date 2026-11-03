@@ -25,8 +25,9 @@ import {RouterTestingModule} from '@angular/router/testing';
 import {WorkflowViewService} from '../../view/workflow-view/workflow-view.service';
 import {take} from 'rxjs/operators';
 import {PetriNetResourceService} from '../../resources/engine-endpoint/petri-net-resource.service';
-import { MockPetrinetResourceService } from '../../utility/tests/mocks/mock-petrinet-resource.service';
-import { OverflowService } from '../../header/services/overflow.service';
+import {MockPetrinetResourceService} from '../../utility/tests/mocks/mock-petrinet-resource.service';
+import {OverflowService} from '../../header/services/overflow.service';
+import {SnackBarService} from "../../snack-bar/services/snack-bar.service";
 
 describe('AbstractWorkflowPanelComponent', () => {
     let component: TestWorkflowPanelComponent;
@@ -103,12 +104,14 @@ describe('AbstractWorkflowPanelComponent', () => {
 })
 class TestWorkflowPanelComponent extends AbstractWorkflowPanelComponent {
 
-      constructor(log: LoggerService,
-                  translate: TranslateService,
-                  workflowService: WorkflowViewService,
-                  petriNetResource: PetriNetResourceService,
-                  overflowService: OverflowService) {
-        super(log, translate, workflowService, petriNetResource, overflowService);
+    constructor(log: LoggerService,
+                translate: TranslateService,
+                workflowService: WorkflowViewService,
+                petriNetResource: PetriNetResourceService,
+                configuration: ConfigurationService,
+                snackbar: SnackBarService,
+                overflowService: OverflowService) {
+        super(log, translate, workflowService, petriNetResource, configuration, snackbar, overflowService);
     }
 }
 
