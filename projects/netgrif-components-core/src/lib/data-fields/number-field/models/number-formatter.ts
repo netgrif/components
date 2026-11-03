@@ -141,6 +141,9 @@ export class NumberFormatter {
             integerLen = numStr.length;
         }
 
+        for (i = 0; numStr.charAt(i) === '0'; i++) {
+        }
+
         if (i === (zeros = numStr.length)) {
             digits = [0];
             integerLen = 1;
