@@ -7,6 +7,7 @@ import {AuthenticationMethodService} from "../../../authentication/services/auth
 import {ConfigurationService} from "../../../configuration/configuration.service";
 import {UserTransformer} from "../../../authentication/models/user.transformer";
 import {SessionService} from "../../../authentication/session/services/session.service";
+import {TabPersistenceService} from '../../../tabs/services/tab-persistence.service';
 
 @Injectable()
 export class MockAuthenticationService extends AuthenticationService {
@@ -14,8 +15,9 @@ export class MockAuthenticationService extends AuthenticationService {
     constructor(protected _auth: AuthenticationMethodService,
                 protected _config: ConfigurationService,
                 protected _sessionService: SessionService,
-                protected _userTransformer: UserTransformer) {
-        super(_auth, _config, _sessionService, _userTransformer);
+                protected _userTransformer: UserTransformer,
+                protected _tabSessionPersistence: TabPersistenceService) {
+        super(_auth, _config, _sessionService, _userTransformer, _tabSessionPersistence);
     }
 
 
