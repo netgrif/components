@@ -1349,11 +1349,17 @@
         },
         "routing": {
             "defaultRedirect": "authentication",
-            "wildcardRedirect": "authentication"
+            "wildcardRedirect": "authentication",
+            "publicViewPath": "process"
         },
         "dataFields": {
             "template": "material",
-            "appearance": "outline"
+            "appearance": "outline",
+            "defaultNumberFormat": {
+                "decimalSeparator": ".",
+                "groupSeparator": " ",
+                "digitsInfo": "1.2-2"
+            }
         },
         "legal": {
             "termsOfService": "https://netgrif.com/",
@@ -1364,6 +1370,10 @@
         },
         "doubleDrawer": {
             "url": "drawer-double"
+        },
+        "builder": {
+            "url": "http://localhost:4300",
+            "openProcessFromFile": true
         }
     }
 }

@@ -9,19 +9,22 @@ import {NAE_VIEW_ID_SEGMENT, ViewIdService} from '@netgrif/components-core';
     styleUrls: ['./<%= dasherize(className) %>.component.scss'],
     providers: [
         {   provide: NAE_VIEW_ID_SEGMENT,
-            useValue: '<%= viewIdSegment %>'},
+            useValue: <%= stringLiteral(viewIdSegment) %>},
         ViewIdService,
     ]
 })
 export class <%= classify(className) %>Component {
 
+    persistenceKey = <%= stringLiteral(persistenceKey) %>;
+
     tabs = [<% for(let tab of tabs) { %>
         {<% if (tab.icon !== undefined || tab.text !== undefined) { %>
             label: {<% if (tab.icon !== undefined) { %>
-                icon: '<%= tab.icon %>',<% } if (tab.text !== undefined) { %>
-                text: '<%= tab.text %>',<% } %>
+                icon: <%= stringLiteral(tab.icon) %>,<% } if (tab.text !== undefined) { %>
+                text: <%= stringLiteral(tab.text) %>,<% } %>
             },<% } %>
             canBeClosed: <%= tab.canBeDeleted %>,
+            persistence: {id: <%= stringLiteral(tab.persistenceId) %>, type: 'initial'},
             tabContentComponent: <%= tab.tabContentComponent %>,<% if (tab.order !== undefined) { %>
             order: <%= tab.order %>,<% } %><% if (!!tab.injectedObject) { %>
             injectedObject: {

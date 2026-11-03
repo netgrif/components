@@ -50,7 +50,9 @@
             "cancel": "Stornieren",
             "noData": "Diese Aufgabe hat keine Dateien. Schließen Sie die Aufgabe ab, um fortzufahren.",
             "redirecting": "Umleiten...",
-            "closeTab": "Schließen"
+            "closeTab": "Schließen",
+            "pinTab": "Tab anheften",
+            "unpinTab": "Tab lösen"
         },
         "footer": {
             "defaultText": "NETGRIF, s.r.o. © 2022"
@@ -389,7 +391,8 @@
             "title": "Netzname",
             "version": "Version",
             "author": "Netzauthor",
-            "upload": "Hochladungsdatum"
+            "upload": "Hochladungsdatum",
+            "publicUrl": "Öffentliche URL"
         }
     },
     "profile": {
@@ -463,6 +466,9 @@
     "workflow": {
         "delete": "löschen",
         "download": "herunterladen",
+        "goToPublicView": "Öffentliche URL",
+        "copyPublicUrl": "Öffentliche URL kopieren",
+        "builderRedirect": "Öffnen in Builder",
         "dialog": {
             "header": "Sind Sie sicher, dass Sie den Prozess '{{name}}' mit Version '{{version}}' löschen wollen?",
             "content": "Alle Fälle aus diesem Prozess werden gleichzeitig gelöscht!",
@@ -474,7 +480,9 @@
             "deleteInProgress": "Der ausgewählte Prozess wird jetzt gelöscht",
             "deleteError": "Prozess konnte nicht gelöscht werden",
             "uploadFailed": "Prozessdatei konnte nicht hochgeladen werden.",
-            "uploadSuccess": "Prozessdatei erfolgreich hochgeladen"
+            "uploadSuccess": "Prozessdatei erfolgreich hochgeladen",
+            "publicUrlCopied": "Öffentliche URL kopiert",
+            "publicUrlCopyFailed": "Öffentliche URL konnte nicht kopiert werden"
         }
     },
     "legal": {

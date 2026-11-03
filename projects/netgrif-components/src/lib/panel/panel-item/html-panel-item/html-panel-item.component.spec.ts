@@ -47,6 +47,15 @@ describe('HtmlPanelItemComponent', () => {
         expect(fixture.debugElement.query(By.directive(MatTooltip))).toBeNull();
     });
 
+    it('should render the hexadecimal space entity as a space', () => {
+        fixture.componentInstance.data.featuredValue.value = 'Before&#x20;After';
+        fixture.detectChanges();
+
+        const content: HTMLElement = fixture.nativeElement.querySelector('.panel-html');
+
+        expect(content.textContent).toBe('Before After');
+    });
+
     it('should isolate link clicks from the case panel', () => {
         const anchor: HTMLAnchorElement = fixture.nativeElement.querySelector('a');
         const event = new MouseEvent('click', {bubbles: true, cancelable: true});
