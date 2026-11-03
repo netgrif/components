@@ -1333,7 +1333,8 @@
         },
         "routing": {
             "defaultRedirect": "authentication",
-            "wildcardRedirect": "authentication"
+            "wildcardRedirect": "authentication",
+            "publicViewPath": "process"
         },
         "dataFields": {
             "template": "material",
@@ -1353,6 +1354,10 @@
         },
         "doubleDrawer": {
             "url": "drawer-double"
+        },
+        "builder": {
+            "url": "http://localhost:4300",
+            "openProcessFromFile": true
         }
     }
 }

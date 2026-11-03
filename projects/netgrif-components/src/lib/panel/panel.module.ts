@@ -40,6 +40,7 @@ import {HtmlPanelItemComponent} from './panel-item/html-panel-item/html-panel-it
 import {
     EnumerationIconPanelItemComponent
 } from './panel-item/enumeration-icon-panel-item/enumeration-icon-panel-item.component';
+import {MatAnchor, MatButton} from "@angular/material/button";
 
 @NgModule({
     declarations: [
@@ -72,7 +73,9 @@ import {
         SideMenuMultiUserAssignComponentModule,
         UtilityModule,
         CovalentModule,
-        PortalModule
+        PortalModule,
+        MatButton,
+        MatAnchor
     ],
     exports: [
         PanelComponent,
