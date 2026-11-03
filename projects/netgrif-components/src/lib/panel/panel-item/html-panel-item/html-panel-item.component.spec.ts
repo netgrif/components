@@ -58,6 +58,14 @@ describe('HtmlPanelItemComponent', () => {
         expect(stopPropagation).toHaveBeenCalled();
     });
 
+    it('should not stop propagation for non-link content clicks', () => {
+        const content: HTMLElement = fixture.nativeElement.querySelector('.panel-html');
+        const event = new MouseEvent('click', {bubbles: true, cancelable: true});
+        const stopPropagation = spyOn(event, 'stopPropagation');
+            content.dispatchEvent(event);
+            expect(stopPropagation).not.toHaveBeenCalled();
+    });
+
     it('should constrain rendered content to one clipped line in ellipsis mode', () => {
         const content: HTMLElement = fixture.nativeElement.querySelector('.panel-text');
         const paragraph: HTMLElement = fixture.nativeElement.querySelector('p');
