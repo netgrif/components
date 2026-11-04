@@ -1,6 +1,21 @@
+:host {
+    display: block;
+    min-width: 0;
+    max-width: 100%;
+    overflow: hidden;
+}
+
 .text-column-margin {
+    width: calc(100% - 15px);
+    min-width: 0;
+    max-width: calc(100% - 15px);
     margin-right: 15px;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
     line-height: 24px;
+    letter-spacing: 0.1px;
+    overflow: hidden;
 }
 
 .panel-icon {
@@ -8,13 +23,17 @@
 }
 
 .text-column-ellipsis {
+    max-width: 100%;
+    max-height: 24px;
     white-space: nowrap !important;
     overflow: hidden !important;
     text-overflow: ellipsis !important;
 }
 
 .text-column-word-wrap {
+    max-width: 100%;
     word-break: break-word !important;
+    overflow-wrap: anywhere;
     white-space: pre-line !important;
 }
 
@@ -25,13 +44,3 @@
 .width-100 {
     width: 100%;
 }
-
-.panel-text {
-    font-style: normal;
-    font-weight: 500;
-    font-size: 14px;
-    line-height: 20px;
-    letter-spacing: 0.1px;
-
-}
-

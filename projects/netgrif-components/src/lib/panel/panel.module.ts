@@ -1,4 +1,4 @@
-import {NgModule} from '@angular/core';
+import {Injector, NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {PanelComponent} from './panel.component';
 import {FlexModule} from '@ngbracket/ngx-layout';
@@ -12,7 +12,9 @@ import {
     SnackBarModule,
     TranslateLibModule,
     CurrencyModule,
-    UtilityModule
+    UtilityModule,
+    CovalentModule,
+    PanelItemComponentRegistryService
 } from '@netgrif/components-core';
 import {TaskContentComponentModule} from '../task-content/task-content.module';
 import {PublicWorkflowPanelComponent} from './public-workflow-panel/public-workflow-panel.component';
@@ -30,7 +32,14 @@ import {
     SideMenuMultiUserAssignComponentModule
 } from "../side-menu/content-components/multi-user-assign/side-menu-multi-user-assign-component.module";
 import {MatExpansionModule} from '@angular/material/expansion';
-import {MatAnchor, MatButton} from "@angular/material/button";
+import {ComponentPortal, PortalModule} from '@angular/cdk/portal';
+import {
+    MarkdownPanelItemComponent
+} from './panel-item/markdown-panel-item/markdown-panel-item.component';
+import {HtmlPanelItemComponent} from './panel-item/html-panel-item/html-panel-item.component';
+import {
+    EnumerationIconPanelItemComponent
+} from './panel-item/enumeration-icon-panel-item/enumeration-icon-panel-item.component';
 
 @NgModule({
     declarations: [
@@ -43,6 +52,9 @@ import {MatAnchor, MatButton} from "@angular/material/button";
         ImmediateFilterTextComponent,
         ImmediateFilterTextContentComponent,
         PanelItemComponent,
+        MarkdownPanelItemComponent,
+        HtmlPanelItemComponent,
+        EnumerationIconPanelItemComponent,
         TaskListPaginationComponent,
         SingleTaskComponent
     ],
@@ -59,6 +71,8 @@ import {MatAnchor, MatButton} from "@angular/material/button";
         MatExpansionModule,
         SideMenuMultiUserAssignComponentModule,
         UtilityModule,
+        CovalentModule,
+        PortalModule
     ],
     exports: [
         PanelComponent,
@@ -74,4 +88,14 @@ import {MatAnchor, MatButton} from "@angular/material/button";
     ]
 })
 export class PanelComponentModule {
+    constructor(registry: PanelItemComponentRegistryService) {
+        registry.registerIfAbsent('text', 'richtextarea', (injector: Injector) =>
+            new ComponentPortal(MarkdownPanelItemComponent, null, injector));
+        registry.registerIfAbsent('text', 'htmltextarea', (injector: Injector) =>
+            new ComponentPortal(HtmlPanelItemComponent, null, injector));
+        registry.registerIfAbsent('enumeration', 'icon', (injector: Injector) =>
+            new ComponentPortal(EnumerationIconPanelItemComponent, null, injector));
+        registry.registerIfAbsent('enumeration_map', 'icon', (injector: Injector) =>
+            new ComponentPortal(EnumerationIconPanelItemComponent, null, injector));
+    }
 }
