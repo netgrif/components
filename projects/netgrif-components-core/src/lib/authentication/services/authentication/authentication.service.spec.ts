@@ -7,9 +7,13 @@ import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {RouterTestingModule} from '@angular/router/testing';
 import {MockAuthenticationMethodService} from '../../../utility/tests/mocks/mock-authentication-method-service';
+import {throwError} from 'rxjs';
+import {TabSessionPersistenceService} from '../../../tabs/services/tab-session-persistence.service';
 
 describe('AuthenticationService', () => {
     let service: AuthenticationService;
+    let authenticationMethod: AuthenticationMethodService;
+    let tabPersistence: TabSessionPersistenceService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -19,17 +23,34 @@ describe('AuthenticationService', () => {
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
             ]});
         service = TestBed.inject(AuthenticationService);
+        authenticationMethod = TestBed.inject(AuthenticationMethodService);
+        tabPersistence = TestBed.inject(TabSessionPersistenceService);
     });
 
     it('should be created', () => {
         expect(service).toBeTruthy();
     });
 
-    it('should logout', (done) => {
+    it('should logout', () => {
+        const clear = spyOn(tabPersistence, 'clear');
+        let result: object;
+
         service.logout().subscribe(res => {
-            expect(res).toEqual(undefined);
-            done();
+            result = res;
         });
+
+        expect(result).toEqual(undefined);
+        expect(clear).toHaveBeenCalled();
+    });
+
+    it('should clear persisted tabs when logout fails', () => {
+        spyOn(console, 'error');
+        spyOn(authenticationMethod, 'logout').and.returnValue(throwError(() => new Error('Logout failed')));
+        const clear = spyOn(tabPersistence, 'clear');
+
+        service.logout().subscribe();
+
+        expect(clear).toHaveBeenCalled();
     });
 
     it('should login', (done) => {

@@ -34,11 +34,22 @@ describe('TabViewExampleComponent', () => {
         }));
         expect(component.tabs[1].injectedObject).toEqual(jasmine.objectContaining({
             exampleUseCache: false,
-            headerSortingMode: HeaderSortingMode.MULTI
+            headerSortingMode: HeaderSortingMode.MULTI,
+            showCasePanelIcon: false
         }));
         expect(component.tabs[2].injectedObject).toEqual(jasmine.objectContaining({
             exampleUseCache: true,
             headerSortingMode: HeaderSortingMode.COMBINED
         }));
+    });
+
+    it('should configure session persistence', () => {
+        expect(component.persistenceKey).toBe('nae-example:tabbed-views');
+        expect(component.persistenceAdapter).toBeDefined();
+        expect(component.tabs.map(tab => tab.persistence?.id)).toEqual([
+            'cache-enabled-single',
+            'cache-disabled-multi',
+            'cache-enabled-combined'
+        ]);
     });
 });

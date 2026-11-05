@@ -1,0 +1,25 @@
+:host {
+    display: block;
+    min-width: 0;
+    width: 100%;
+    overflow: hidden;
+}
+
+.panel-text {
+    display: block;
+    min-width: 0;
+    max-width: 100%;
+    width: 100%;
+
+    &.text-column-ellipsis {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    &.text-column-word-wrap {
+        overflow-wrap: anywhere;
+        white-space: pre-line;
+        word-break: break-word;
+    }
+}

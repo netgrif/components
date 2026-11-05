@@ -15,7 +15,8 @@ import {
     FilterExtractionService,
     GroupNavigationConstants,
     hasView,
-    I18nFieldValue
+    I18nFieldValue,
+    TabPersistenceAdapter
 } from '@netgrif/components-core';
 import {DefaultTabbedCaseViewComponent} from '../default-tabbed-case-view/default-tabbed-case-view.component';
 import {DefaultTabbedTaskViewComponent} from '../default-tabbed-task-view/default-tabbed-task-view.component';
@@ -27,6 +28,7 @@ import {
 } from "../default-tabbed-single-task-view/default-tabbed-single-task-view.component";
 import {Subscription} from 'rxjs';
 import {TabViewComponent} from '../../../../../tabs/tab-view/tab-view.component';
+import {DefaultTabPersistenceAdapter} from './default-tab-persistence';
 
 @Component({
     selector: 'nc-default-tab-view',
@@ -40,6 +42,8 @@ import {TabViewComponent} from '../../../../../tabs/tab-view/tab-view.component'
 export class DefaultTabViewComponent implements OnDestroy {
 
     tabs: Array<TabContent>;
+    persistenceKey: string;
+    persistenceAdapter: TabPersistenceAdapter = new DefaultTabPersistenceAdapter();
     @ViewChild(TabViewComponent) protected tabViewComponent: TabViewComponent;
     protected languageChangeSubscription: Subscription;
 
@@ -48,6 +52,8 @@ export class DefaultTabViewComponent implements OnDestroy {
                 protected extractionService: FilterExtractionService,
                 protected activatedRoute: ActivatedRoute) {
         this.tabs = this.getTabs();
+        const navigationItemId = this.activatedRoute.snapshot.paramMap.get(GroupNavigationConstants.GROUP_NAVIGATION_ROUTER_PARAM);
+        this.persistenceKey = `group-navigation:${navigationItemId}:default-tab-view`;
         this.languageChangeSubscription = this.translationService.onLangChange.subscribe(() => {
             this.refreshTabTitle();
         });
@@ -145,6 +151,7 @@ export class DefaultTabViewComponent implements OnDestroy {
             {
                 label: {text: labelData.name, icon: labelData.icon},
                 canBeClosed: false,
+                persistence: {id: 'root', type: 'initial'},
                 tabContentComponent: DefaultTabbedCaseViewComponent,
                 injectedObject: {
                     tabViewComponent: chainedViewComponent,
@@ -193,6 +200,7 @@ export class DefaultTabViewComponent implements OnDestroy {
             {
                 label: {text: labelData.name, icon: labelData.icon},
                 canBeClosed: false,
+                persistence: {id: 'root', type: 'initial'},
                 tabContentComponent: DefaultTabbedTaskViewComponent,
                 injectedObject: {
                     navigationItemTaskData: this._navigationItemTaskData,
@@ -219,6 +227,7 @@ export class DefaultTabViewComponent implements OnDestroy {
             {
                 label: {text: labelData.name, icon: labelData.icon},
                 canBeClosed: false,
+                persistence: {id: 'root', type: 'initial'},
                 tabContentComponent: DefaultTicketViewComponent,
                 injectedObject: {
                     navigationItemTaskData: this._navigationItemTaskData,

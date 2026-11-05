@@ -57,13 +57,41 @@ export class PanelsComponent implements OnInit {
             processIdentifier: 'net',
             title: 'Case title',
             icon: 'nature',
-            immediateData: [],
             color: 'purple',
             creationDate: [2020, 4, 6, 13, 37],
             author: {
                 email: 'example@example.com',
                 fullName: 'Net Grif',
             },
+            immediateData: [
+                {
+                    stringId: 'enum_status',
+                    title: 'Enum value',
+                    type: 'enumeration',
+                    value: {defaultValue: 'Approved', translations: {}},
+                    component: {
+                        name: 'value',
+                        properties: {
+                            'Approved-background': '#bde3fb',
+                            'Approved-color': '#0790FF',
+                        }
+                    }
+                },
+                {
+                    stringId: 'icon_status',
+                    title: 'Icon',
+                    type: 'enumeration',
+                    value: {defaultValue: 'Approval', translations: {}},
+                    component: {
+                        name: 'icon',
+                        optionIcons: [
+                            {key: 'Preparation', type: 'material', value: 'schedule'},
+                            {key: 'Approved', type: 'material', value: 'check_circle'},
+                            {key: 'Approval', type: 'material', value: 'verified'}
+                        ]
+                    }
+                }
+            ],
             resetArcTokens: null,
             stringId: null,
             petriNetId: null,
@@ -88,8 +116,9 @@ export class PanelsComponent implements OnInit {
         this.featuredFields$ = new BehaviorSubject<Array<HeaderColumn>>([
             new HeaderColumn(HeaderColumnType.META, 'visualId', 'Visual ID', 'text'),
             new HeaderColumn(HeaderColumnType.META, 'title', 'Title', 'text'),
+            new HeaderColumn(HeaderColumnType.IMMEDIATE, 'enum_status', 'Enum value', 'enumeration', true, 'net'),
+            new HeaderColumn(HeaderColumnType.IMMEDIATE, 'icon_status', 'Icon', 'enumeration', true, 'net'),
             new HeaderColumn(HeaderColumnType.META, 'author', 'Author', 'text'),
-            new HeaderColumn(HeaderColumnType.META, 'creationDate', 'Creation date', 'text'),
         ]);
         this.workflowFields$ = new BehaviorSubject<Array<HeaderColumn>>([
             new HeaderColumn(HeaderColumnType.META, WorkflowMetaField.INITIALS, 'Initials', 'text'),

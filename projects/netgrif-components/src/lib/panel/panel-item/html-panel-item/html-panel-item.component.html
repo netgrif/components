@@ -1,0 +1,5 @@
+<span #content class="panel-text panel-html"
+     [ngClass]="{'text-column-ellipsis': data.textEllipsis, 'text-column-word-wrap': !data.textEllipsis}"
+     [innerHTML]="data.featuredValue.value"
+     (click)="handleClick($event)">
+</span>

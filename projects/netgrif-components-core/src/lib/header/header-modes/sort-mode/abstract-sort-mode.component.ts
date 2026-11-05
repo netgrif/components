@@ -10,7 +10,7 @@ import {HeaderColumn} from "../../models/header-column";
 })
 export abstract class AbstractSortModeComponent extends AbstractHeaderModeComponent {
 
-    constructor() {
+    protected constructor() {
         super();
     }
 
