@@ -1,0 +1,7 @@
+<span class="panel-text enumeration-value-panel-item"
+      [ngClass]="{'text-column-ellipsis': data.textEllipsis, 'text-column-word-wrap': !data.textEllipsis}"
+      [style.backgroundColor]="backgroundColor"
+      [style.color]="color"
+      [matTooltip]="data.featuredValue.value"
+      [matTooltipDisabled]="!data.textEllipsis"
+      [matTooltipClass]="'pre-line-dialog'">{{data.featuredValue.value}}</span>

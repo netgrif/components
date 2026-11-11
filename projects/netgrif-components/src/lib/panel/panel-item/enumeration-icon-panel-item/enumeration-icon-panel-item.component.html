@@ -1,0 +1,9 @@
+<span class="panel-text enumeration-icon-panel-item"
+      [ngClass]="{'text-column-ellipsis': data.textEllipsis, 'text-column-word-wrap': !data.textEllipsis}"
+      [matTooltip]="data.featuredValue.value"
+      [matTooltipDisabled]="!data.textEllipsis"
+      [matTooltipClass]="'pre-line-dialog'">
+    <mat-icon *ngIf="icon?.type === 'material'">{{icon?.value}}</mat-icon>
+    <mat-icon *ngIf="icon?.type === 'svg'" [svgIcon]="icon?.value"></mat-icon>
+    <span>{{data.featuredValue.value}}</span>
+</span>

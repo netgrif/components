@@ -330,21 +330,6 @@
                     },
                     "processUri": "/test"
                 },
-                "hidden-active-group": {
-                    "component": {
-                        "class": "ActiveGroupComponent",
-                        "from": "./doc/active-group/active-group.component"
-                    },
-                    "access": "private",
-                    "navigation": {
-                        "title": "Active group view",
-                        "icon": "coronavirus",
-                        "hidden": false
-                    },
-                    "routing": {
-                        "path": "active-group"
-                    }
-                },
                 "demo-breadcrumbs": {
                     "component": {
                         "class": "BreadcrumbsExampleComponent",
@@ -877,17 +862,6 @@
                 }
             }
         },
-        "demo-active-group": {
-            "component": {
-                "class": "ActiveGroupComponent",
-                "from": "./doc/active-group/active-group.component"
-            },
-            "access": "private",
-            "navigation": true,
-            "routing": {
-                "path": "active-group"
-            }
-        },
         "dashboard": {
             "layout": {
                 "name": "dashboard",
@@ -1359,11 +1333,17 @@
         },
         "routing": {
             "defaultRedirect": "authentication",
-            "wildcardRedirect": "authentication"
+            "wildcardRedirect": "authentication",
+            "publicViewPath": "process"
         },
         "dataFields": {
             "template": "material",
-            "appearance": "outline"
+            "appearance": "outline",
+            "defaultNumberFormat": {
+                "decimalSeparator": ".",
+                "groupSeparator": " ",
+                "digitsInfo": "1.2-2"
+            }
         },
         "legal": {
             "termsOfService": "https://netgrif.com/",
@@ -1374,6 +1354,10 @@
         },
         "doubleDrawer": {
             "url": "drawer-double"
+        },
+        "builder": {
+            "url": "http://localhost:4300",
+            "openProcessFromFile": true
         }
     }
 }

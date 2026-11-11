@@ -356,7 +356,6 @@ class TestTreeComponent extends AbstractNavigationTreeComponent {
                 log: LoggerService,
                 userService: UserService,
                 accessService: AccessService,
-                activeGroupService: ActiveGroupService,
                 taskResourceService: TaskResourceService,
                 languageService: LanguageService,
                 navigationRouteProvider: DynamicNavigationRouteProviderService) {
@@ -366,7 +365,6 @@ class TestTreeComponent extends AbstractNavigationTreeComponent {
             log,
             userService,
             accessService,
-            activeGroupService,
             taskResourceService,
             languageService,
             navigationRouteProvider

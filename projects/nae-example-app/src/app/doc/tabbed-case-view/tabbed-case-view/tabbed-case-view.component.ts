@@ -15,14 +15,19 @@ import {
     Filter,
     NAE_NEW_CASE_CONFIGURATION,
     NAE_BASE_FILTER, AllowedNetsServiceFactory, AllowedNetsService, SavedFilterMetadata, OverflowService,
-    HeaderSortingMode, NAE_HEADER_SORTING_MODE, Case
+    HeaderSortingMode, NAE_HEADER_SORTING_MODE, Case, CasePanelConfiguration, NAE_CASE_PANEL_CONFIGURATION
 } from '@netgrif/components-core';
 import {HeaderComponent} from '@netgrif/components';
 import {Subject} from 'rxjs';
+import {
+    tabbedViewsFilterTabPersistence,
+    tabbedViewsTaskTabPersistence
+} from '../tabbed-views-persistence-metadata';
 
 interface ExampleInjectedData extends InjectedTabbedCaseViewData {
     exampleUseCache: boolean;
     headerSortingMode: HeaderSortingMode;
+    showCasePanelIcon?: boolean;
 }
 
 const localAllowedNetsFactory = (factory: AllowedNetsServiceFactory) => {
@@ -54,6 +59,10 @@ const headerSortingModeFactory = (injectedTabData: ExampleInjectedData): HeaderS
     return injectedTabData.headerSortingMode;
 };
 
+const casePanelConfigurationFactory = (injectedTabData: ExampleInjectedData): CasePanelConfiguration => {
+    return {showCasePanelIcon: injectedTabData.showCasePanelIcon ?? true};
+};
+
 @Component({
     selector: 'nae-app-tabbed-case-view',
     templateUrl: './tabbed-case-view.component.html',
@@ -72,7 +81,8 @@ const headerSortingModeFactory = (injectedTabData: ExampleInjectedData): HeaderS
             deps: [AllowedNetsServiceFactory]},
         {provide: NAE_SEARCH_CATEGORIES, useFactory: defaultCaseSearchCategoriesFactory, deps: [CategoryFactory]},
         {provide: NAE_NEW_CASE_CONFIGURATION, useFactory: newCaseConfigFactory, deps: [NAE_TAB_DATA]},
-        {provide: NAE_HEADER_SORTING_MODE, useFactory: headerSortingModeFactory, deps: [NAE_TAB_DATA]}
+        {provide: NAE_HEADER_SORTING_MODE, useFactory: headerSortingModeFactory, deps: [NAE_TAB_DATA]},
+        {provide: NAE_CASE_PANEL_CONFIGURATION, useFactory: casePanelConfigurationFactory, deps: [NAE_TAB_DATA]}
     ]
 })
 export class TabbedCaseViewComponent extends AbstractTabbedCaseViewComponent implements AfterViewInit {
@@ -95,18 +105,27 @@ export class TabbedCaseViewComponent extends AbstractTabbedCaseViewComponent imp
 
     protected override openTab(openCase: Case): void {
         const injectedTabData = this._injectedTabData as ExampleInjectedData;
+        const baseFilter = new SimpleFilter('', FilterType.TASK, {case: {id: `${openCase.stringId}`}});
+        const allowedNets = [openCase.processIdentifier];
         injectedTabData.tabViewRef.openTab({
             label: {
                 text: openCase.title,
                 icon: openCase.icon ? openCase.icon : 'check_box'
             },
             canBeClosed: true,
+            pinnable: true,
             tabContentComponent: injectedTabData.tabViewComponent,
             injectedObject: {
-                baseFilter: new SimpleFilter('', FilterType.TASK, {case: {id: `${openCase.stringId}`}}),
-                allowedNets: [openCase.processIdentifier],
+                baseFilter,
+                allowedNets,
                 headerSortingMode: injectedTabData.headerSortingMode
             },
+            persistence: tabbedViewsTaskTabPersistence(
+                openCase.stringId,
+                baseFilter,
+                allowedNets,
+                injectedTabData.headerSortingMode
+            ),
             order: injectedTabData.tabViewOrder,
             parentUniqueId: injectedTabData.tabUniqueId
         }, this._autoswitchToTaskTab, this._openExistingTab);
@@ -118,8 +137,10 @@ export class TabbedCaseViewComponent extends AbstractTabbedCaseViewComponent imp
                 text: filterData.filter.title
             },
             canBeClosed: true,
+            pinnable: true,
             tabContentComponent: TabbedCaseViewComponent,
             injectedObject: {...this._injectedTabData, loadFilter: filterData.filter},
+            persistence: tabbedViewsFilterTabPersistence(filterData.filterCaseId, filterData.filter),
             order: this._injectedTabData.tabViewOrder,
             parentUniqueId: this._injectedTabData.tabUniqueId
         }, this._autoswitchToTaskTab, this._openExistingTab);

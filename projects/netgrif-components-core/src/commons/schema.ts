@@ -348,10 +348,20 @@ export interface Services {
     routing?: {
         defaultRedirect?: string;
         wildcardRedirect?: string;
+        publicViewPath?: string;
     };
     dataFields?: {
         template?: string,
-        appearance?: string
+        appearance?: string,
+        /**
+         * Default number format of number fields with the `formatted` component.
+         * Used for each attribute that is not defined in the component properties of the field.
+         */
+        defaultNumberFormat?: {
+            decimalSeparator?: string,
+            groupSeparator?: string,
+            digitsInfo?: string
+        }
     };
     legal: {
         termsOfService: string,
@@ -362,6 +372,10 @@ export interface Services {
     };
     doubleDrawer?: {
         url: string,
+    };
+    builder?: {
+        url: string,
+        openProcessFromFile?: boolean
     }
 
     [k: string]: any;

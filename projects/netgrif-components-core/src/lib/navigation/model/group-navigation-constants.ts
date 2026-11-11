@@ -141,6 +141,26 @@ export enum GroupNavigationConstants {
     ITEM_FIELD_ID_TASK_DEFAULT_HEADERS = 'default_headers',
 
     /**
+     * Text field, which contains unique ids of header columns for sorting separated by comma for case view
+     */
+    ITEM_FIELD_CASE_HEADERS_SORT_MODE_ACTIVE = 'headers_sort_mode_active',
+
+    /**
+     * Enumeration map field, which contains default direction for sorting for case view
+     */
+    ITEM_FIELD_CASE_HEADERS_SORT_MODE_DIRECTION = 'headers_sort_mode_direction',
+
+    /**
+     * Text field, which contains unique ids of header columns for sorting separated by comma for task view
+     */
+    ITEM_FIELD_TASK_HEADERS_SORT_MODE_ACTIVE = 'headers_sort_mode_active',
+
+    /**
+     * Enumeration map field, which contains default direction for sorting for task view
+     */
+    ITEM_FIELD_TASK_HEADERS_SORT_MODE_DIRECTION = 'headers_sort_mode_direction',
+
+    /**
      * MultichoiceMap field, that contains allowed roles as value
      * */
     ITEM_FIELD_ID_ALLOWED_ROLES = 'allowed_roles',

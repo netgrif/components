@@ -1,4 +1,4 @@
-import {Component, Input, Optional} from '@angular/core';
+import {Component, inject, Input, Optional} from '@angular/core';
 import {Observable} from 'rxjs';
 import {Case} from '../../resources/interface/case';
 import {toMoment} from '../../resources/types/nae-date-type';
@@ -21,6 +21,7 @@ import {CurrencyPipe} from '@angular/common';
 import {PermissionService} from '../../authorization/permission/permission.service';
 import {PermissionType} from '../../process/permissions';
 import {FormControl} from '@angular/forms';
+import {NAE_CASE_PANEL_CONFIGURATION} from './case-panel-configuration-injection-token';
 
 @Component({
     selector: 'ncc-abstract-case-panel',
@@ -28,13 +29,14 @@ import {FormControl} from '@angular/forms';
 })
 export abstract class AbstractCasePanelComponent extends AbstractPanelWithImmediateDataComponent {
 
+    private readonly _casePanelConfiguration = inject(NAE_CASE_PANEL_CONFIGURATION);
 
     @Input() public case_: Case;
     @Input() public approval: boolean;
     @Input() responsiveBody = true;
     @Input() first: boolean;
     @Input() last: boolean;
-    @Input() showCasePanelIcon = true;
+    @Input() showCasePanelIcon = this._casePanelConfiguration.showCasePanelIcon;
     @Input() showDeleteMenu = false;
     @Input() textEllipsis = false;
     protected _approvalFormControl: FormControl<boolean | string>;

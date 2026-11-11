@@ -33,8 +33,12 @@ export class PublicTaskResourceService extends TaskResourceService {
      * GET
      */
     // {{baseUrl}}/api/task/public/assign/:id
-    public assignTask(taskId: string): Observable<EventOutcomeMessageResource> {
-        return this._provider.get$('task/public/assign/' + taskId, this.SERVER_URL)
+    public assignTask(taskId: string, params?: Params): Observable<EventOutcomeMessageResource> {
+        if (!params) {
+            params = new HttpParams();
+            params = params.set('fields', 'outcomes,outcome,task(stringId),data');
+        }
+        return this._provider.get$('task/public/assign/' + taskId, this.SERVER_URL, params)
             .pipe(map(r => this.changeType(r, undefined)));
     }
 
@@ -42,9 +46,13 @@ export class PublicTaskResourceService extends TaskResourceService {
      * Cancel task
      * GET
      */
-    // {{baseUrl}}/api/task/public/cancel/:id
-    public cancelTask(taskId: string): Observable<EventOutcomeMessageResource> {
-        return this._provider.get$('task/public/cancel/' + taskId, this.SERVER_URL)
+    // {{baseUrl}}/api/public/task/cancel/:id
+    public cancelTask(taskId: string, params?: Params): Observable<EventOutcomeMessageResource> {
+        if (!params) {
+            params = new HttpParams();
+            params = params.set('fields', 'outcomes,outcome,task(stringId),data');
+        }
+        return this._provider.get$('task/public/cancel/' + taskId, this.SERVER_URL, params)
             .pipe(map(r => this.changeType(r, undefined)));
     }
 
@@ -53,8 +61,12 @@ export class PublicTaskResourceService extends TaskResourceService {
      * GET
      */
     // {{baseUrl}}/api/task/public/finish/:id
-    public finishTask(taskId: string): Observable<EventOutcomeMessageResource> {
-        return this._provider.get$('task/public/finish/' + taskId, this.SERVER_URL)
+    public finishTask(taskId: string, params?: Params): Observable<EventOutcomeMessageResource> {
+        if (!params) {
+            params = new HttpParams();
+            params = params.set('fields', 'outcomes,outcome,task(stringId),data');
+        }
+        return this._provider.get$('task/public/finish/' + taskId, this.SERVER_URL, params)
             .pipe(map(r => this.changeType(r, undefined)));
     }
 
@@ -87,8 +99,12 @@ export class PublicTaskResourceService extends TaskResourceService {
      * @returns the raw backend response without any additional processing
      */
     // {{baseUrl}}/api/task/public/:id/data
-    public rawGetData(taskId: string): Observable<EventOutcomeMessageResource> {
-        return this._provider.get$('task/public/' + taskId + '/data', this.SERVER_URL)
+    public rawGetData(taskId: string, params?: Params): Observable<EventOutcomeMessageResource> {
+        if (!params) {
+            params = new HttpParams();
+            params = params.set('fields', 'outcomes,outcome,task(stringId),data');
+        }
+        return this._provider.get$('public/task/' + taskId + '/data', this.SERVER_URL, params)
             .pipe(map(r => this.changeType(r, 'dataGroups')));
     }
 
@@ -97,8 +113,12 @@ export class PublicTaskResourceService extends TaskResourceService {
      * POST
      */
     // {{baseUrl}}/api/task/public/:id/data
-    public setData(taskId: string, body: TaskSetDataRequestBody): Observable<EventOutcomeMessageResource> {
-        return this._provider.post$('task/public/' + taskId + '/data', this.SERVER_URL, body)
+    public setData(taskId: string, body: TaskSetDataRequestBody, params?: Params): Observable<EventOutcomeMessageResource> {
+        if (!params) {
+            params = new HttpParams();
+            params = params.set('fields', 'outcomes,outcome,task(stringId),data');
+        }
+        return this._provider.post$('task/public/' + taskId + '/data', this.SERVER_URL, body, params)
             .pipe(map(r => this.changeType(r, undefined)));
     }
 
