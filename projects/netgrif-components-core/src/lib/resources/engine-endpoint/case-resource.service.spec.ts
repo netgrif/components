@@ -80,8 +80,10 @@ describe('CaseResourceService', () => {
                         done();
                     });
 
-                    const reqLog = httpMock.expectOne('http://localhost:8080/api/workflow/case/id');
+                    const reqLog = httpMock.expectOne('http://localhost:8080/api/workflow/case/id?fields=outcomes,case(stringId)');
                     expect(reqLog.request.method).toEqual('DELETE');
+                    expect(reqLog.request.params.has('fields')).toBeTrue();
+                    expect(reqLog.request.params.get('fields')).toEqual('outcomes,case(stringId)');
 
                     reqLog.flush({success: 'Done'});
                 })();
@@ -118,8 +120,10 @@ describe('CaseResourceService', () => {
                         done();
                     });
 
-                    const reqLog = httpMock.expectOne('http://localhost:8080/api/workflow/case/');
+                    const reqLog = httpMock.expectOne('http://localhost:8080/api/workflow/case/?fields=outcomes,case');
                     expect(reqLog.request.method).toEqual('POST');
+                    expect(reqLog.request.params.has('fields')).toBeTrue();
+                    expect(reqLog.request.params.get('fields')).toEqual('outcomes,case');
 
                     reqLog.flush({
                         outcome: {

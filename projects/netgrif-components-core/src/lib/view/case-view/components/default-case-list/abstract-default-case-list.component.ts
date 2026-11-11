@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Inject, Input, OnDestroy, Optional, Output} from '@angular/core';
+import {Component, EventEmitter, inject, Inject, Input, OnDestroy, Optional, Output} from '@angular/core';
 import {Observable, Subject, Subscription} from 'rxjs';
 import {Case} from '../../../../resources/interface/case';
 import {HeaderColumn} from '../../../../header/models/header-column';
@@ -9,6 +9,7 @@ import {InjectedTabData} from '../../../../tabs/interfaces';
 import {ActivatedRoute} from '@angular/router';
 import {filter, takeUntil} from 'rxjs/operators';
 import {TabbedVirtualScrollComponent} from '../../../../panel/abstract/tabbed-virtual-scroll.component';
+import {NAE_CASE_PANEL_CONFIGURATION} from '../../../../panel/case-panel/case-panel-configuration-injection-token';
 
 @Component({
     selector: 'ncc-abstract-default-case-list',
@@ -16,10 +17,12 @@ import {TabbedVirtualScrollComponent} from '../../../../panel/abstract/tabbed-vi
 })
 export abstract class AbstractDefaultCaseListComponent extends TabbedVirtualScrollComponent implements OnDestroy {
 
+    private readonly _casePanelConfiguration = inject(NAE_CASE_PANEL_CONFIGURATION);
+
     @Input() selectedHeaders$: Observable<Array<HeaderColumn>>;
     @Input() responsiveBody = true;
     @Output() caseClick: EventEmitter<Case>;
-    @Input() showCasePanelIcon = true;
+    @Input() showCasePanelIcon = this._casePanelConfiguration.showCasePanelIcon;
     @Input() showDeleteMenu = false;
     @Input() textEllipsis = false;
     @Input() width: string;

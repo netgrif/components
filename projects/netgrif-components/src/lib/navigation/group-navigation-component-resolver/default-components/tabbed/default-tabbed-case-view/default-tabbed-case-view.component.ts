@@ -28,17 +28,27 @@ import {
     navigationItemCaseViewDefaultHeadersFactory,
     NAE_NAVIGATION_ITEM_TASK_DATA,
     OverflowService,
+    NAE_DYNAMIC_DEFAULT_SORT,
+    ProcessService,
 } from '@netgrif/components-core';
 import {HeaderComponent} from '../../../../../header/header.component';
 import {
     InjectedTabbedCaseViewDataWithNavigationItemTaskData
 } from '../../model/injected-tabbed-case-view-data-with-navigation-item-task-data';
 import {
+    buildDynamicSortChangeDescriptionForCase$,
     filterCaseTabbedDataAllowedNetsServiceFactory,
     filterCaseTabbedDataFilterFactory,
     filterCaseTabbedDataSearchCategoriesFactory
 } from '../../model/factory-methods';
 import {ActivatedRoute} from '@angular/router';
+import {
+    defaultFilterTabPersistence,
+    defaultTaskTabPersistence
+} from '../default-tab-view/default-tab-persistence-metadata';
+import {
+    DefaultTabbedSingleTaskViewComponent
+} from '../default-tabbed-single-task-view/default-tabbed-single-task-view.component';
 
 @Component({
     selector: 'nc-default-tabbed-case-view',
@@ -69,6 +79,11 @@ import {ActivatedRoute} from '@angular/router';
             provide: NAE_DEFAULT_HEADERS,
             useFactory: navigationItemCaseViewDefaultHeadersFactory,
             deps: [NAE_NAVIGATION_ITEM_TASK_DATA]
+        },
+        {
+            provide: NAE_DYNAMIC_DEFAULT_SORT,
+            useFactory: buildDynamicSortChangeDescriptionForCase$,
+            deps: [NAE_NAVIGATION_ITEM_TASK_DATA, ProcessService]
         }
     ]
 })
@@ -127,32 +142,43 @@ export class DefaultTabbedCaseViewComponent extends AbstractTabbedCaseViewCompon
                 text: filterData.filter.title
             },
             canBeClosed: true,
+            pinnable: true,
             tabContentComponent: DefaultTabbedCaseViewComponent,
             injectedObject: {...this._injectedTabData, filterCase: filterData.filterCase},
+            persistence: defaultFilterTabPersistence(filterData.filterCaseId, filterData.filterCase),
             order: this._injectedTabData.tabViewOrder,
             parentUniqueId: this._injectedTabData.tabUniqueId
         }, this._autoswitchToTaskTab, this._openExistingTab);
     }
 
     protected openTab(openCase: Case) {
+        const baseFilter = this.resolveFilter(openCase);
+        const component = this._injectedTabData.tabViewComponent === DefaultTabbedSingleTaskViewComponent
+            ? 'single-task'
+            : 'task';
+        const injectedObject = {
+            allowedNets: this.resolveAllowedNets(openCase),
+            navigationItemTaskData: this._injectedTabData.navigationItemTaskData,
+            searchTypeConfiguration: this._injectedTabData.taskViewSearchTypeConfiguration,
+            showMoreMenu: this._injectedTabData.taskViewShowMoreMenu,
+            headersChangeable: this._injectedTabData.taskViewHeadersChangeable,
+            headersMode: this._injectedTabData.taskViewHeadersMode,
+            allowTableMode: this._injectedTabData.taskViewAllowTableMode,
+            defaultHeadersMode: this._injectedTabData.taskViewDefaultHeadersMode
+        };
         this._injectedTabData.tabViewRef.openTab({
             label: {
                 text: openCase.title,
                 icon: openCase.icon ? openCase.icon : 'check_box'
             },
             canBeClosed: true,
+            pinnable: true,
             tabContentComponent: this._injectedTabData.tabViewComponent,
             injectedObject: {
-                baseFilter: this.resolveFilter(openCase),
-                allowedNets: this.resolveAllowedNets(openCase),
-                navigationItemTaskData: this._injectedTabData.navigationItemTaskData,
-                searchTypeConfiguration: this._injectedTabData.taskViewSearchTypeConfiguration,
-                showMoreMenu: this._injectedTabData.taskViewShowMoreMenu,
-                headersChangeable: this._injectedTabData.taskViewHeadersChangeable,
-                headersMode: this._injectedTabData.taskViewHeadersMode,
-                allowTableMode: this._injectedTabData.taskViewAllowTableMode,
-                defaultHeadersMode: this._injectedTabData.taskViewDefaultHeadersMode
+                ...injectedObject,
+                baseFilter
             },
+            persistence: defaultTaskTabPersistence(openCase.stringId, component, baseFilter, injectedObject),
             order: this._injectedTabData.tabViewOrder,
             parentUniqueId: this._injectedTabData.tabUniqueId
         }, this._autoswitchToTaskTab, this._openExistingTab);

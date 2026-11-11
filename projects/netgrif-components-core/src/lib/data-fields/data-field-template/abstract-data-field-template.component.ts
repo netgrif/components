@@ -8,7 +8,6 @@ import {FormControl} from "@angular/forms";
 import {ComponentPortal} from "@angular/cdk/portal";
 import {ComponentRegistryService} from "../../registry/component-registry.service";
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../models/data-field-portal-data-injection-token";
-import {ButtonField} from '../button-field/models/button-field';
 
 /**
  * Provides a responsive layout to data fields where their appearance can change based on the width of space they have available.
@@ -128,11 +127,12 @@ export abstract class AbstractDataFieldTemplateComponent implements OnInit {
 
 
     public hasComponent(): boolean {
-        return this._componentRegistry.contains(this.dataField.getTypedComponentType());
+        return this.resolveRegisteredComponentType(this.dataField) !== undefined;
     }
 
     public resolveComponentPortal(dataField: DataField<any>, showLargeLayout: WrappedBoolean, formControlRef: FormControl, additionalFieldProperties?: {[k:string]: string | number}): ComponentPortal<any> {
-        if (this.hasComponent()) {
+        const componentType = this.resolveRegisteredComponentType(dataField);
+        if (componentType) {
             const portalInjector = Injector.create({
                 providers: [
                     {
@@ -146,9 +146,18 @@ export abstract class AbstractDataFieldTemplateComponent implements OnInit {
                     }],
                 parent: this.injector
             });
-            return this._componentRegistry.get(this.dataField.getTypedComponentType(), portalInjector);
+            return this._componentRegistry.get(componentType, portalInjector);
         }
         return undefined;
+    }
+
+    protected resolveRegisteredComponentType(dataField: DataField<any>): string | undefined {
+        const componentType = dataField.getTypedComponentType();
+        if (this._componentRegistry.contains(componentType)) {
+            return componentType;
+        }
+        const defaultComponentType = dataField.getTypedDefaultComponentType();
+        return this._componentRegistry.contains(defaultComponentType) ? defaultComponentType : undefined;
     }
 
     /**

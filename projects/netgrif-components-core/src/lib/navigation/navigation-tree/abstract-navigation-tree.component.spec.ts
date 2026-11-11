@@ -23,7 +23,6 @@ import {UserTransformer} from '../../authentication/models/user.transformer';
 import {SessionService} from '../../authentication/session/services/session.service';
 import {User} from '../../user/models/user';
 import {AnonymousService} from '../../authentication/anonymous/anonymous.service';
-import {ActiveGroupService} from '../../groups/services/active-group.service';
 import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
 import {LanguageService} from '../../translate/language.service';
 import {
@@ -357,7 +356,6 @@ class TestTreeComponent extends AbstractNavigationTreeComponent {
                 log: LoggerService,
                 userService: UserService,
                 accessService: AccessService,
-                activeGroupService: ActiveGroupService,
                 taskResourceService: TaskResourceService,
                 languageService: LanguageService,
                 navigationRouteProvider: DynamicNavigationRouteProviderService) {
@@ -367,7 +365,6 @@ class TestTreeComponent extends AbstractNavigationTreeComponent {
             log,
             userService,
             accessService,
-            activeGroupService,
             taskResourceService,
             languageService,
             navigationRouteProvider

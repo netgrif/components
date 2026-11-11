@@ -28,6 +28,8 @@ import {TaskViewConfiguration} from '../models/task-view-configuration';
 import {ChangedFieldsMap} from '../../../event/services/interfaces/changed-fields-map';
 import {PaginationParams} from '../../../utility/pagination/pagination-params';
 import {createSortParam, PaginationSort} from '../../../utility/pagination/pagination-sort';
+import {NAE_DYNAMIC_DEFAULT_SORT} from '../../case-view/models/dynamic-default-sort-token';
+import {SortChangeDescription} from '../../../header/models/user-changes/sort-change-description';
 
 
 @Injectable()
@@ -35,7 +37,7 @@ export class TaskViewService extends AbstractSortableViewComponent implements On
 
     protected _tasks$: Observable<Array<TaskPanelData>>;
     protected _changedFields$: Subject<ChangedFieldsMap>;
-    protected _requestedPage$: BehaviorSubject<PageLoadRequestContext>;
+    protected _requestedPage$: ReplaySubject<PageLoadRequestContext>;
     protected _loading$: LoadingWithFilterEmitter;
     protected _endOfData: boolean;
     protected _pagination: Pagination;
@@ -62,6 +64,7 @@ export class TaskViewService extends AbstractSortableViewComponent implements On
                 private _userComparator: UserComparatorService,
                 resolver: SearchIndexResolverService,
                 @Optional() @Inject(NAE_PREFERRED_TASK_ENDPOINT) protected readonly _preferredEndpoint: TaskEndpoint = null,
+                @Optional() @Inject(NAE_DYNAMIC_DEFAULT_SORT) protected _dynamicDefaultSort$: Observable<SortChangeDescription[]>,
                 @Optional() @Inject(NAE_TASK_VIEW_CONFIGURATION) taskViewConfig: TaskViewConfiguration = null) {
         super(resolver);
         this._tasks$ = new Subject<Array<TaskPanelData>>();
@@ -75,9 +78,7 @@ export class TaskViewService extends AbstractSortableViewComponent implements On
             totalPages: undefined,
             number: -1
         };
-        this._requestedPage$ = new BehaviorSubject<PageLoadRequestContext>(
-            new PageLoadRequestContext(this.activeFilter, Object.assign({}, this._pagination, {number: 0}))
-        );
+        this._requestedPage$ = new ReplaySubject<PageLoadRequestContext>(1);
         this._panelUpdate$ = new BehaviorSubject<Array<TaskPanelData>>([]);
         this._closeTab$ = new ReplaySubject<void>(1);
         this._preferredEndpoint = taskViewConfig?.preferredEndpoint ?? (this._preferredEndpoint ?? TaskEndpoint.MONGO);
@@ -87,6 +88,8 @@ export class TaskViewService extends AbstractSortableViewComponent implements On
         this._subSearch = this._searchService.activeFilter$.subscribe(() => {
             this.reload();
         });
+
+        this.requestPageWithDynamicSort(new PageLoadRequestContext(this.activeFilter, Object.assign({}, this._pagination, {number: 0})));
 
         const tasksMap$ = this._requestedPage$.pipe(
             mergeMap(p => this.loadPage(p)),
@@ -307,7 +310,7 @@ export class TaskViewService extends AbstractSortableViewComponent implements On
         }
 
         if (renderedRange.end === totalLoaded) {
-            this._requestedPage$.next(requestContext);
+            this.requestPageWithDynamicSort(requestContext);
         }
     }
 
@@ -321,7 +324,7 @@ export class TaskViewService extends AbstractSortableViewComponent implements On
         if (this.isLoadingRelevantFilter(requestContext) || this._endOfData) {
             return;
         }
-        this._requestedPage$.next(requestContext);
+        this.requestPageWithDynamicSort(requestContext);
     }
 
     private isLoadingRelevantFilter(requestContext?: PageLoadRequestContext): boolean {
@@ -372,5 +375,32 @@ export class TaskViewService extends AbstractSortableViewComponent implements On
         params = params.set(PaginationParams.PAGE_SIZE, `${pagination.size}`);
         params = params.set(PaginationParams.PAGE_NUMBER, `${pagination.number}`);
         return params;
+    }
+
+   // todo check header sort resolving, this seems not user friendly + probably won't work with userPreferences
+    protected requestPageWithDynamicSort(requestContext: PageLoadRequestContext) {
+        if (!!this._dynamicDefaultSort$
+            && this._lastHeaderSearchState.fieldIdentifier === ''
+            && this._preferredSortableHeaders.length === 0) {
+            this._dynamicDefaultSort$.pipe(take(1)).subscribe(changes => {
+                if (this._preferredSortableHeaders.length === 0) {
+                    this._lastHeaderSearchState.sortDirection = '';
+                    changes.forEach(
+                        change => this._preferredSortableHeaders.push(
+                            {
+                                propertyId: this.getPreferredSortableFieldIdByFieldIdentifier(change.fieldIdentifier, change.columnType, change.fieldType),
+                                sortDirection: change.sortDirection
+                            }
+                        ));
+                }
+                this.requestNextPage(requestContext);
+            });
+        } else {
+            this.requestNextPage(requestContext);
+        }
+    }
+
+    protected requestNextPage(page: PageLoadRequestContext) {
+        this._requestedPage$.next(page);
     }
 }

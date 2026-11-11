@@ -9,6 +9,7 @@ import {
 import {TabbedCaseViewComponent} from './tabbed-case-view/tabbed-case-view.component';
 import {TabbedTaskViewComponent} from './tabbed-task-view/tabbed-task-view.component';
 import {ReplaySubject} from 'rxjs';
+import {TabbedViewsPersistenceAdapter} from './tabbed-views-persistence-adapter';
 
 @Component({
     selector: 'nae-app-tabbed-views-example',
@@ -25,6 +26,8 @@ export class TabbedViewsExampleComponent {
     readonly DESCRIPTION = 'Ukážka integracie case-tab-task view';
 
     tabs: Array<TabContent>;
+    readonly persistenceKey = 'nae-example:tabbed-views';
+    readonly persistenceAdapter = new TabbedViewsPersistenceAdapter();
 
     constructor() {
         const stream = new ReplaySubject<number>(1);
@@ -38,6 +41,7 @@ export class TabbedViewsExampleComponent {
                     count: stream
                 },
                 canBeClosed: false,
+                persistence: {id: 'cache-enabled-single', type: 'initial'},
                 tabContentComponent: TabbedCaseViewComponent,
                 injectedObject: {
                     tabViewComponent: TabbedTaskViewComponent,
@@ -53,12 +57,14 @@ export class TabbedViewsExampleComponent {
                     count: streamTest
                 },
                 canBeClosed: false,
+                persistence: {id: 'cache-disabled-multi', type: 'initial'},
                 tabContentComponent: TabbedCaseViewComponent,
                 injectedObject: {
                     tabViewComponent: TabbedTaskViewComponent,
                     tabViewOrder: 0,
                     exampleUseCache: false,
-                    headerSortingMode: HeaderSortingMode.MULTI
+                    headerSortingMode: HeaderSortingMode.MULTI,
+                    showCasePanelIcon: false
                 }
             },
             {
@@ -67,6 +73,7 @@ export class TabbedViewsExampleComponent {
                     icon: 'storage'
                 },
                 canBeClosed: false,
+                persistence: {id: 'cache-enabled-combined', type: 'initial'},
                 tabContentComponent: TabbedCaseViewComponent,
                 injectedObject: {
                     tabViewComponent: TabbedTaskViewComponent,

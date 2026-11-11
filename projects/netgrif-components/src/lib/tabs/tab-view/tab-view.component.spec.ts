@@ -20,6 +20,7 @@ import {
 } from '@netgrif/components-core';
 import {RouterModule} from '@angular/router';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {TranslateService} from '@ngx-translate/core';
 
 describe('TabViewComponent', () => {
     let component: TabViewComponent;
@@ -51,6 +52,17 @@ describe('TabViewComponent', () => {
         })
             .compileComponents();
 
+        const translate = TestBed.inject(TranslateService);
+        translate.setTranslation('en', {
+            tasks: {
+                view: {
+                    closeTab: 'Close',
+                    pinTab: 'Pin tab',
+                    unpinTab: 'Unpin tab'
+                }
+            }
+        });
+        translate.use('en');
         fixture = TestBed.createComponent(TestWrapperComponent);
         component = fixture.debugElement.children[0].componentInstance;
         fixture.detectChanges();
@@ -60,6 +72,22 @@ describe('TabViewComponent', () => {
         expect(component).toBeTruthy();
     });
 
+    it('should delegate pin changes to the core tab view', () => {
+        const pinButton = Array.from(fixture.nativeElement.querySelectorAll('button'))
+            .find((button: HTMLElement) => button.querySelector('mat-icon')?.textContent.trim() === 'push_pin') as HTMLButtonElement;
+
+        expect(pinButton.getAttribute('aria-label')).toBe('Pin tab');
+        const closeButton = Array.from(fixture.nativeElement.querySelectorAll('button'))
+            .find((button: HTMLElement) => button.querySelector('mat-icon')?.textContent.trim() === 'clear') as HTMLButtonElement;
+        expect(closeButton.getAttribute('aria-label')).toBe('Close');
+
+        pinButton.click();
+        fixture.detectChanges();
+
+        expect(component.tabView.openedTabs[0].pinned).toBeTrue();
+        expect(pinButton.getAttribute('aria-label')).toBe('Unpin tab');
+    });
+
     afterEach(() => {
         TestBed.resetTestingModule();
     });
@@ -67,7 +95,7 @@ describe('TabViewComponent', () => {
 
 @Component({
     selector: 'nc-test-wrapper',
-    template: '<nc-tab-view [initialTabs]="tabs"></nc-tab-view>'
+    template: '<nc-tab-view [initialTabs]="tabs" [pinningEnabled]="true"></nc-tab-view>'
 })
 class TestWrapperComponent {
     tabs: Array<TabContent> = [
@@ -76,7 +104,7 @@ class TestWrapperComponent {
                 text: 'tab title',
                 icon: 'home'
             },
-            canBeClosed: false,
+            canBeClosed: true,
             tabContentComponent: TestComponent
         }
     ];
