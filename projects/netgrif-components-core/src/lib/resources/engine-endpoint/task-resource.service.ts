@@ -157,9 +157,9 @@ export class TaskResourceService extends AbstractResourceService implements Coun
      * POST
      */
     // {{baseUrl}}/api/task/case
-    public getAllTasksByCases(body: object): Observable<Array<Task>> { // TODO: ??
-        return this._resourceProvider.post$('task/case', this.SERVER_URL, body)
-            .pipe(map(r => this.changeType(r, 'tasks')));
+    public getAllTasksByCases(caseIds: string[]): Observable<Page<Task>> {
+        return this._resourceProvider.post$('task/case', this.SERVER_URL, caseIds)
+            .pipe(map(r => this.getResourcePage<Task>(r, 'tasks')));
     }
 
     /**
@@ -337,7 +337,7 @@ export class TaskResourceService extends AbstractResourceService implements Coun
      */
     public deleteFile(taskId: string, body?: FileFieldRequest): Observable<MessageResource> {
         const url = `task/${taskId}/file${body?.fileName ? '/named' : ''}`;
-        return this._resourceProvider.delete$(url, this.SERVER_URL, {}, {}, 'json', body).pipe(
+        return this._resourceProvider.delete$(url , this.SERVER_URL, {}, {}, 'json', body).pipe(
             map(r => this.changeType(r, undefined))
         );
     }

@@ -17,7 +17,8 @@ describe('ProxyAuthenticationService', () => {
                 auth: {
                     authentication: 'basic',
                     address: 'http://localhost:8080',
-                    endpoints: {login: '/api/auth/login'}
+                    endpoints: {login: '/api/auth/login'},
+                    apiToken: {}
                 }
             }
         } as any,
@@ -57,6 +58,21 @@ describe('ProxyAuthenticationService', () => {
 
         tick();
 
+        expect(response).toBeTruthy();
+    }));
+
+    it('authenticates an API token with bearer and realm headers', fakeAsync(() => {
+        let response: any;
+
+        service.loginWithApiToken('user-id.secret', 'Admin').subscribe(res => response = res);
+
+        const req = httpMock.expectOne('http://localhost:8080/api/auth/login');
+        expect(req.request.method).toBe('GET');
+        expect(req.request.headers.get('Authorization')).toBe('Bearer user-id.secret');
+        expect(req.request.headers.get('X-Realm-ID')).toBe('Admin');
+        req.flush({id: '1', name: 'User'});
+
+        tick();
         expect(response).toBeTruthy();
     }));
 });
