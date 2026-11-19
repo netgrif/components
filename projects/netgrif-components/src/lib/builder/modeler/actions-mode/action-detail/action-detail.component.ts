@@ -88,6 +88,8 @@ export class ActionDetailComponent implements OnInit, OnDestroy {
                 const role = this._modelService.model.getRole(item.id);
                 this.actionEditorService.populateEditedActionsFromRole(role);
                 this.dataSource.data = this._actionEditorTreeService.createRoleTreeStructure(this.actionEditorService.editedActions[0].editableActions, (leaf: TreeNode, actionCount: number) => this.collapseParentCallback(leaf, actionCount));
+            } else {
+                this.dataSource.data = [];
             }
         })
     }
@@ -161,6 +163,10 @@ export class ActionDetailComponent implements OnInit, OnDestroy {
 
     get selectedFn(): PetriflowFunction {
         return this._masterService.getSelected() as PetriflowFunction;
+    }
+
+    hasSelection(): boolean {
+        return this._masterService.getSelected() !== undefined && this._masterService.getSelected() !== null;
     }
 
     isFunctionSelected(): boolean {

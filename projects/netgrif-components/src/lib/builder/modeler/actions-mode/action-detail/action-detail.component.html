@@ -1,4 +1,4 @@
-<div class="no-overflow" *ngIf="!isFunctionsModeSelected()" fxFlex>
+<div class="no-overflow" *ngIf="!isFunctionsModeSelected() && hasSelection()" fxFlex>
     <mat-tree class="tree overflow-hidden" [dataSource]="dataSource" [treeControl]="treeControl">
         <!--  Leaf node template  -->
         <mat-tree-node *matTreeNodeDef="let node; when isLeafNode" #actionNode>
@@ -75,6 +75,6 @@
     </div>
 </div>
 
-<div *ngIf="this.selectedFn === undefined" fxLayoutAlign="center center" class="no-overflow full-width">
+<div *ngIf="!hasSelection()" fxLayoutAlign="center center" class="no-overflow full-width">
     <span>{{ 'builder.modeler.actions-mode.action-detail.noActionSelected' | translate }}</span>
 </div>
