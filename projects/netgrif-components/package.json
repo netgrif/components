@@ -64,7 +64,6 @@
         "ngx-monaco-editor-v2": "^17.0.1",
         "hammerjs": "~2.0.8",
         "json-schema-to-typescript": "~8.1.0",
-        "jszip": "~3.2.2",
         "moment": "~2.29.4",
         "natural-orderby": "~2.0.3",
         "xml-formatter": "^3.6.2",

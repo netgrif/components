@@ -56,7 +56,6 @@
         "angular2-hotkeys": "~16.0.0",
         "hammerjs": "~2.0.8",
         "json-schema-to-typescript": "~8.1.0",
-        "jszip": "~3.2.2",
         "moment": "~2.29.4",
         "natural-orderby": "~2.0.3",
         "rxjs": "~6.6.7",
