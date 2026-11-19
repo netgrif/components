@@ -11,7 +11,8 @@ import {
     AuthenticationMethodService,
     NAE_TAB_DATA,
     SimpleFilter,
-    FilterType
+    FilterType,
+    TaskResourceService
 } from '@netgrif/components-core';
 import {
     HeaderComponentModule,

@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {FilterRepository, MergeOperator} from '@netgrif/components-core';
 
 @Component({
@@ -6,7 +6,7 @@ import {FilterRepository, MergeOperator} from '@netgrif/components-core';
     templateUrl: './filter-repository-example.component.html',
     styleUrls: ['./filter-repository-example.component.scss']
 })
-export class FilterRepositoryExampleComponent implements OnInit {
+export class FilterRepositoryExampleComponent {
 
     public readonly TITLE = 'Filter Repository example';
     public readonly DESCRIPTION = '';
@@ -27,9 +27,6 @@ export class FilterRepositoryExampleComponent implements OnInit {
                 filterRepository.getFilter('data-cases'), MergeOperator.AND
             ).getRequestBody()
         );
-    }
-
-    ngOnInit(): void {
     }
 
 }

@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {RedirectService, User} from '@netgrif/components-core';
 
 @Component({
@@ -6,15 +6,12 @@ import {RedirectService, User} from '@netgrif/components-core';
     templateUrl: './login-form.component.html',
     styleUrls: ['./login-form.component.scss']
 })
-export class LoginFormComponent implements OnInit {
+export class LoginFormComponent {
 
     readonly TITLE = 'Login form';
     readonly DESCRIPTION = 'Ukážka login form...';
 
     constructor(private redirectService: RedirectService) {
-    }
-
-    ngOnInit(): void {
     }
 
     onLogin(user: User) {

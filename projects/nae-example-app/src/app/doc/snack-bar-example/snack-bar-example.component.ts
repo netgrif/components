@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {SnackBarService} from '@netgrif/components-core';
 
 @Component({
@@ -6,14 +6,11 @@ import {SnackBarService} from '@netgrif/components-core';
     templateUrl: './snack-bar-example.component.html',
     styleUrls: ['./snack-bar-example.component.scss']
 })
-export class SnackBarExampleComponent implements OnInit {
+export class SnackBarExampleComponent {
     readonly TITLE = 'Snack bar';
     readonly DESCRIPTION = 'Ukážka použitia snack baru...';
 
     constructor(private snackBarService: SnackBarService) {
-    }
-
-    ngOnInit(): void {
     }
 
     info() {

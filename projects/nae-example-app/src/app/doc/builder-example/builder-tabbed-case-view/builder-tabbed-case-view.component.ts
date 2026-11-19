@@ -25,7 +25,7 @@ const localAllowedNetsFactory = (factory: AllowedNetsServiceFactory) => {
 };
 
 @Component({
-    selector: 'nae-tabbed-builder-case-view',
+    selector: 'nae-app-tabbed-builder-case-view',
     templateUrl: './builder-tabbed-case-view.component.html',
     styleUrls: ['./builder-tabbed-case-view.component.scss'],
     providers: [

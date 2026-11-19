@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {NavigationStart, Router} from '@angular/router';
 
 @Component({
@@ -6,7 +6,7 @@ import {NavigationStart, Router} from '@angular/router';
     templateUrl: './navigation-example.component.html',
     styleUrls: ['./navigation-example.component.scss']
 })
-export class NavigationExampleComponent implements OnInit {
+export class NavigationExampleComponent {
     public viewPath: string;
     public parentUrl: string;
 
@@ -27,9 +27,6 @@ export class NavigationExampleComponent implements OnInit {
         });
         // this.viewPath = 'demo-navigation-test';
         // this.parentUrl = '/navigation-test';
-    }
-
-    ngOnInit(): void {
     }
 
 }

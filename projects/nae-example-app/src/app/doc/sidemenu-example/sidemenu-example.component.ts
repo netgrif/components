@@ -1,4 +1,4 @@
-import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
+import {Component, TemplateRef, ViewChild} from '@angular/core';
 import {
     Net,
     SideMenuService,
@@ -13,16 +13,13 @@ import {NewCaseComponent, UserAssignComponent, FilterSelectorComponent} from '@n
     templateUrl: './sidemenu-example.component.html',
     styleUrls: ['./sidemenu-example.component.scss']
 })
-export class SidemenuExampleComponent implements OnInit {
+export class SidemenuExampleComponent {
     readonly TITLE = 'SideMenu';
     readonly DESCRIPTION = 'Ukážka použitia SideMenu...';
 
     @ViewChild('templatePortal') templatePortal: TemplateRef<any>;
 
     constructor(private sideMenuService: SideMenuService) {
-    }
-
-    ngOnInit(): void {
     }
 
     public toggleSideMenu() {

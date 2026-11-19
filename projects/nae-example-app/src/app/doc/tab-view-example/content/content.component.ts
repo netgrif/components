@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, Inject} from '@angular/core';
 import {InjectedTabData, NAE_TAB_DATA} from '@netgrif/components-core';
 
 @Component({
@@ -6,7 +6,7 @@ import {InjectedTabData, NAE_TAB_DATA} from '@netgrif/components-core';
   templateUrl: './content.component.html',
   styleUrls: ['./content.component.scss']
 })
-export class ContentComponent implements OnInit {
+export class ContentComponent {
 
   constructor(@Inject(NAE_TAB_DATA) public injected: InjectedTabData & {text: string}) {
       injected.tabSelected$.subscribe(switchType => {
@@ -19,9 +19,6 @@ export class ContentComponent implements OnInit {
       injected.tabClosed$.subscribe(() => {
           console.log(`Tab with id ${injected.tabUniqueId} closed`);
       });
-  }
-
-  ngOnInit(): void {
   }
 
   currentIndex(): void {

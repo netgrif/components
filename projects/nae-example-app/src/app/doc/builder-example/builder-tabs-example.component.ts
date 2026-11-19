@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {NAE_TASK_FORCE_OPEN, NAE_VIEW_ID_SEGMENT, TabContent, ViewIdService} from '@netgrif/components-core';
 import {BuilderTabbedCaseViewComponent} from './builder-tabbed-case-view/builder-tabbed-case-view.component';
 import {
@@ -7,7 +7,7 @@ import {
 import {TranslateService} from "@ngx-translate/core";
 
 @Component({
-    selector: 'nae-tabbed-builder-view-example',
+    selector: 'nae-app-tabbed-builder-view-example',
     templateUrl: './builder-tabs-example.component.html',
     styleUrls: ['./builder-tabs-example.component.scss'],
     providers: [
@@ -16,7 +16,7 @@ import {TranslateService} from "@ngx-translate/core";
         ViewIdService
     ]
 })
-export class BuilderTabsExampleComponent implements OnInit {
+export class BuilderTabsExampleComponent {
 
     tabs: Array<TabContent>;
 
@@ -36,9 +36,6 @@ export class BuilderTabsExampleComponent implements OnInit {
                 }
             }
         ];
-    }
-
-    ngOnInit(): void {
     }
 
 }

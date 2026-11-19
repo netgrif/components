@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {ToolbarConfig} from '@netgrif/components-core';
 
@@ -7,7 +7,7 @@ import {ToolbarConfig} from '@netgrif/components-core';
     templateUrl: './toolbar-example.component.html',
     styleUrls: ['./toolbar-example.component.scss']
 })
-export class ToolbarExampleComponent implements OnInit {
+export class ToolbarExampleComponent {
     readonly TITLE = 'Toolbar';
     readonly DESCRIPTION = 'Ukážka toolbaru...';
 
@@ -24,8 +24,5 @@ export class ToolbarExampleComponent implements OnInit {
     };
 
     constructor(public translate: TranslateService) {
-    }
-
-    ngOnInit(): void {
     }
 }

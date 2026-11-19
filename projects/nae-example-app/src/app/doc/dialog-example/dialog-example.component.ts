@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {DialogService} from '@netgrif/components-core';
 
 @Component({
@@ -6,16 +6,13 @@ import {DialogService} from '@netgrif/components-core';
     templateUrl: './dialog-example.component.html',
     styleUrls: ['./dialog-example.component.scss']
 })
-export class DialogExampleComponent implements OnInit {
+export class DialogExampleComponent {
     readonly TITLE = 'Dialog';
     readonly DESCRIPTION = 'Ukážka použitia dialogu...';
     public questionResult: boolean;
     public answerResult: string;
 
     constructor(private dialogService: DialogService) {
-    }
-
-    ngOnInit(): void {
     }
 
     simple(title: string, message: string) {

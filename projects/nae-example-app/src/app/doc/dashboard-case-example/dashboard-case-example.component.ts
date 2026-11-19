@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {
     AllowedNetsService,
     AllowedNetsServiceFactory,
@@ -78,7 +78,7 @@ const baseFilterFactory = (filterRepository: FilterRepository, userService: User
         }
     ]
 })
-export class DashboardCaseExampleComponent implements OnInit {
+export class DashboardCaseExampleComponent {
 
     public tabs = [];
 
@@ -101,9 +101,6 @@ export class DashboardCaseExampleComponent implements OnInit {
                 }
             },
         ]
-    }
-
-    ngOnInit(): void {
     }
 
 }
