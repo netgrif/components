@@ -4,7 +4,7 @@ import {FieldConverterService} from '../../../task-content/services/field-conver
 import {ConfigurationService} from '../../../configuration/configuration.service';
 import {Params, ProviderProgress, ResourceProvider} from '../../resource-provider.service';
 import {LoggerService} from '../../../logger/services/logger.service';
-import {Observable} from 'rxjs';
+import {Observable, of} from 'rxjs';
 import {filter, map} from 'rxjs/operators';
 import {FilterType} from '../../../filter/models/filter-type';
 import {Filter} from '../../../filter/models/filter';
@@ -37,6 +37,11 @@ export class PublicTaskResourceService extends TaskResourceService {
         params ??= this.getFieldsParams('publicTask.assign', undefined);
         return this._provider.get$('public/task/assign/' + taskId, this.SERVER_URL, params)
             .pipe(map(r => this.changeType(r, undefined)));
+    }
+
+    public delegateTask(taskId: string, body: object, params?: HttpParams): Observable<EventOutcomeMessageResource> {
+        this._logger.warn('Delegate task is not supported on public view');
+        return of({});
     }
 
     /**
