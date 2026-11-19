@@ -3,6 +3,7 @@ import {ConfigurationService} from '../../configuration/configuration.service';
 import {Page} from '../interface/page';
 import {Pagination} from '../interface/pagination';
 import {PaginationParams} from '../../utility/pagination/pagination-params';
+import {HttpParams} from "@angular/common/http";
 
 /**
  * The class that contains behavior common to all resource services.
@@ -121,5 +122,11 @@ export abstract class AbstractResourceService {
                 number: response.number
             }
         };
+    }
+
+    protected getFieldsParams(key: string, defaultFields?: string): HttpParams | undefined {
+        const configured = this.configurationService.getConfigurationSubtree(['services', 'requests', 'fields', key]);
+        const value = typeof configured === 'string' ? configured : defaultFields;
+        return value ? new HttpParams().set('fields', value) : undefined;
     }
 }
