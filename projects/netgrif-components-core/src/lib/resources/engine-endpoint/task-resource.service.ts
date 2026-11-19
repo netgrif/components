@@ -62,10 +62,7 @@ export class TaskResourceService extends AbstractResourceService implements Coun
      */
     // {{baseUrl}}/api/task/assign/:id
     public assignTask(taskId: string, params?: HttpParams): Observable<EventOutcomeMessageResource> {
-        if (!params) {
-            params = new HttpParams();
-            params = params.set('fields', 'outcomes,outcome,task(stringId)');
-        }
+        params ??= this.getFieldsParams('task.assign', undefined);
         return this._resourceProvider.get$('task/assign/' + taskId, this.SERVER_URL, params)
             .pipe(map(r => this.changeType(r, undefined)));
     }
@@ -76,10 +73,7 @@ export class TaskResourceService extends AbstractResourceService implements Coun
      */
     // {{baseUrl}}/api/task/cancel/:id
     public cancelTask(taskId: string, params?: Params): Observable<EventOutcomeMessageResource> {
-        if (!params) {
-            params = new HttpParams();
-            params = params.set('fields', 'outcomes,outcome,task(stringId)');
-        }
+        params ??= this.getFieldsParams('task.cancel', undefined);
         return this._resourceProvider.get$('task/cancel/' + taskId, this.SERVER_URL, params)
             .pipe(map(r => this.changeType(r, undefined)));
     }
@@ -90,10 +84,7 @@ export class TaskResourceService extends AbstractResourceService implements Coun
      */
     // {{baseUrl}}/api/task/delegate/:id
     public delegateTask(taskId: string, body: object, params?: HttpParams): Observable<EventOutcomeMessageResource> {
-        if (!params) {
-            params = new HttpParams();
-            params = params.set('fields', 'outcomes,outcome,task(stringId)');
-        }
+        params ??= this.getFieldsParams('task.delegate', undefined);
         return this._resourceProvider.post$('task/delegate/' + taskId, this.SERVER_URL, body, params, {'Content-Type': 'text/plain'})
             .pipe(map(r => this.changeType(r, undefined)));
     }
@@ -104,10 +95,7 @@ export class TaskResourceService extends AbstractResourceService implements Coun
      */
     // {{baseUrl}}/api/task/finish/:id
     public finishTask(taskId: string, params?: Params): Observable<EventOutcomeMessageResource> {
-        if (!params) {
-            params = new HttpParams();
-            params = params.set('fields', 'outcomes,outcome,task(stringId)');
-        }
+        params ??= this.getFieldsParams('task.finish', undefined);
         return this._resourceProvider.get$('task/finish/' + taskId, this.SERVER_URL, params)
             .pipe(map(r => this.changeType(r, undefined)));
     }
@@ -204,10 +192,7 @@ export class TaskResourceService extends AbstractResourceService implements Coun
      */
     // {{baseUrl}}/api/task/:id/data
     public rawGetData(taskId: string, params?: Params): Observable<EventOutcomeMessageResource> {
-        if (!params) {
-            params = new HttpParams();
-            params = params.set('fields', 'outcomes,outcome,task(stringId),data');
-        }
+        params ??= this.getFieldsParams('task.getData', undefined);
         return this._resourceProvider.get$('task/' + taskId + "/data", this.SERVER_URL, params)
             .pipe(map(r => this.changeType(r, undefined)));
     }
@@ -275,10 +260,7 @@ export class TaskResourceService extends AbstractResourceService implements Coun
      */
     // {{baseUrl}}/api/task/:id/data
     public setData(taskId: string, body: TaskSetDataRequestBody, params?: Params): Observable<EventOutcomeMessageResource> {
-        if (!params) {
-            params = new HttpParams();
-            params = params.set('fields', 'outcomes,outcome,case(stringId),task(stringId),changedFields');
-        }
+        params ??= this.getFieldsParams('task.setData', undefined);
         return this._resourceProvider.post$('task/' + taskId + "/data", this.SERVER_URL, body, params)
             .pipe(map(r => this.changeType(r, undefined)));
     }
