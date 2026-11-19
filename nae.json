@@ -1359,7 +1359,6 @@
                 "task.setData": null,
                 "publicTask.assign": null,
                 "publicTask.cancel": null,
-                "publicTask.delegate": null,
                 "publicTask.finish": null,
                 "publicTask.getData": null,
                 "publicTask.setData": null,

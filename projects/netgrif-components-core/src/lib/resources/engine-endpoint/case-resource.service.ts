@@ -72,7 +72,7 @@ export class CaseResourceService extends AbstractResourceService implements Coun
     public deleteCase(caseID: string, deleteSubtree = false, params?: HttpParams): Observable<EventOutcomeMessageResource> {
         params ??= this.getFieldsParams('case.delete', undefined);
         if (deleteSubtree) {
-            params = params.set('deleteSubtree', deleteSubtree.toString());
+            params = (params ?? new HttpParams()).set('deleteSubtree', deleteSubtree.toString());
         }
         return this._resourceProvider.delete$('workflow/case/' + caseID, this.SERVER_URL, params)
             .pipe(map(r => this.changeType(r, undefined)));
