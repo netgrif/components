@@ -1,17 +1,7 @@
-<mat-list-item class="item-bottom-border" fxFlex
-               [ngClass]="{'item-selected': selected === item, 'item-actual': isActual()}"
-               (click)="select()">
-    <div fxFlex="40" fxLayoutAlign="start center">
-        <span  class="text-ellipsis" matTooltip="{{item.time.toLocaleTimeString()}}">
-            {{ item.time.toLocaleTimeString() }}
-        </span>
-    </div>
-    <div fxFlex="60" fxLayoutAlign="start center">
-        <mat-icon *ngIf="isActual()" class="actual-item-badge">beenhere</mat-icon>
-        <span  class="text-ellipsis" matTooltip="{{item.message}}">
-            {{ item.message }}
-        </span>
-    </div>
+<mat-list-item class="master-row" [class.item-selected]="selected === item" [class.item-actual]="isActual()" (click)="select()">
+    @if (isActual()) {
+    <mat-icon matListItemIcon class="actual-item-badge">beenhere</mat-icon>
+    }
+    <span matListItemTitle>{{ item.message }}</span>
+    <span matListItemLine>{{ item.time.toLocaleTimeString() }}</span>
 </mat-list-item>
-
-

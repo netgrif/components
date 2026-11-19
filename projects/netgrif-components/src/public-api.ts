@@ -22,3 +22,4 @@ export * from './lib/routing/public-api';
 export * from './lib/filter-field-content/public-api';
 export * from './lib/dialog/public-api';
 export * from './lib/builder/public-api';
+export * from './lib/theming/public-api';

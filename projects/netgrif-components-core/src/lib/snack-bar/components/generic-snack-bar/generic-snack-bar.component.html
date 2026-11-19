@@ -1,8 +1,12 @@
-<div fxLayout="row" fxLayoutAlign="start center" class="snack-bar-container">
-    <mat-icon color="accent" class="snack-bar-icon-margin">{{data.matIconName}}</mat-icon>
-    <span>{{data.message}}</span>
+<div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
+    <mat-icon color="accent">{{
+        data.matIconName
+    }}</mat-icon>
+    <span>{{ data.message }}</span>
     <div fxFlex></div>
-    <button *ngIf="data.closable" mat-icon-button (click)="onDismiss()">
-        <mat-icon class="snack-bar-close-icon">close</mat-icon>
+    @if (data.closable) {
+    <button mat-icon-button matSnackBarAction (click)="onDismiss()">
+        <mat-icon>close</mat-icon>
     </button>
+    }
 </div>

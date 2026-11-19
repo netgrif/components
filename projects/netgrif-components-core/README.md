@@ -30,26 +30,51 @@ but with no html or css parts.
 
 ## Requirements
 
-The Library is implemented as Angular library. With Angular dependencies there are several others to complement functionality and range of components available for
-NAE based applications.
+The libraries are Angular libraries built on Angular Material (Material 3). They require:
 
-The library has defined peer dependencies that are not installed automatically with npm. You can install dependencies with this command:
+| Name | Version |
+|------|---------|
+| [Node.js](https://nodejs.org) | 22.22+ or 24.15+ |
+| [Angular](https://angular.dev) | 22 |
+| [TypeScript](https://www.typescriptlang.org) | 6.0 |
+
+The libraries have peer dependencies that are not installed automatically with npm. You can install them with this command:
 
 ```shell
-npm i -S @angular-material-components/datetime-picker@4 @angular-material-components/moment-adapter@4 @angular/animations@10 @angular/cdk@10 @angular/common@10 @angular/compiler@10 @angular/core@10 @ngbracket/ngx-layout@10 @angular/forms@10 @angular/material@10 @angular/material-moment-adapter@10 @angular/platform-browser@10 @angular/platform-browser-dynamic@10 @angular/router@10 @covalent/core@3 @covalent/highlight@3 @covalent/markdown@3 @covalent/text-editor@3 @ngx-translate/core@13 @ngx-translate/http-loader@6 @schematics/angular@10 angular-resizable-element@3 angular-resize-event@2 angular2-hotkeys@2 hammerjs@2 json-schema-to-typescript@8 jszip@3 moment@2 natural-orderby@2 rxjs@6 zone.js@0.10
+npm i -S @angular/animations@"~22.2.3" @angular/cdk@"~22.2.4" @angular/common@"~22.2.3" @angular/compiler@"~22.2.3" @angular/core@"~22.2.3" @angular/forms@"~22.2.3" @angular/material@"~22.2.4" @angular/material-moment-adapter@"~22.2.4" @angular/platform-browser@"~22.2.3" @angular/platform-browser-dynamic@"~22.2.3" @angular/router@"~22.2.3" @material/material-color-utilities@"^0.4.0" @netgrif/petri.svg@"1.1.1" @netgrif/petriflow@"2.2.4" @netgrif/petriflow.svg@"1.1.1" @ngbracket/ngx-layout@"^22.0.2" @ngx-translate/core@"~15.0.0" @ngx-translate/http-loader@"~8.0.0" @panzoom/panzoom@"~4.5.1" @swimlane/ngx-charts@"^25.0.3" angular-gridster2@"~22.0.0" angular-resizable-element@"^8.0.3" angular2-hotkeys@"~16.0.0" antlr4ng@"^3.0.16" easymde@"~2.16.1" escape-string-regexp@"^4.0.0" hammerjs@"~2.0.8" jszip@"~3.2.2" marked@"~4.0.12" moment@"~2.29.4" monaco-editor@"^0.56.0" natural-orderby@"~2.0.3" ngx-monaco-editor-v2@"^22.0.5" ngx-quill@"^31.0.1" quill@"^2.0.0" rxjs@"~7.8.1" semver@"^7.6.0" xml-formatter@"^3.6.2" zone.js@"~0.15.1"
 ```
 
 ## Installation
 
-To install the library just type:
+To install complete NAE frontend experience you must install the core library and components library:
 
 ```shell
-npm i -S @netgrif/components-core
+npm i -S @netgrif/components-core @netgrif/components
 ```
 
-With only the core library you can implement own web components, with custom design, with compatibility to NAE applications.
+If you want to develop own set of NAE components, just install the core library, and you can start developing.
 
-If you don't want to create own implementation of web components, check out our default set of components in [@netgrif/components](https://github.com/netgrif/components/blob/master/projects/netgrif-components/README.md) library.
+## Theming
+
+The components use the Material 3 system tokens (`--mat-sys-*`). Include the theme of the library in the global stylesheet of the application:
+
+```scss
+@use '@netgrif/components/theming' as nae;
+
+@include nae.theme();                                    // Netgrif brand palettes
+// @include nae.theme($primary: my.$primary-palette);    // own palettes from `ng generate @angular/material:theme-color`
+```
+
+The theme is required, Material 2 themes (`nae-lib-theme()`, `mat.m2-*`) are not supported. Besides the system tokens
+it emits the few global state classes the components rely on (case color, active indicator, builder canvas states).
+
+and provide the Material defaults the design is built for:
+
+```typescript
+providers: [provideNaeMaterialDefaults({iconFontSet: 'material-symbols-rounded'})]
+```
+
+Dashboard chart cards use `@swimlane/ngx-charts`, which still needs `provideAnimationsAsync()` from `@angular/platform-browser/animations/async`.
 
 ## Usage and configuration
 

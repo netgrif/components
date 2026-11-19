@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Inject, Input, OnDestroy, Optional, Output} from '@angular/core';
+import {Component, EventEmitter, Inject, Input, OnDestroy, Optional, Output, ChangeDetectionStrategy} from '@angular/core';
 import {Observable, Subject, Subscription} from 'rxjs';
 import {Case} from '../../../../resources/interface/case';
 import {HeaderColumn} from '../../../../header/models/header-column';
@@ -12,7 +12,9 @@ import {TabbedVirtualScrollComponent} from '../../../../panel/abstract/tabbed-vi
 
 @Component({
     selector: 'ncc-abstract-default-case-list',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractDefaultCaseListComponent extends TabbedVirtualScrollComponent implements OnDestroy {
 

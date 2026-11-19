@@ -1,18 +1,21 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Observable} from 'rxjs';
+import {Component, EventEmitter, Input, OnInit, Output, ChangeDetectionStrategy} from '@angular/core';
+import {Observable, ReplaySubject} from 'rxjs';
 import {
     Case,
     CaseViewService,
     NewCaseCreationConfigurationData,
     NewCaseButtonConfiguration,
-    LoadingEmitter
+    LoadingEmitter,
+    PetriNetReferenceWithPermissions
 } from '@netgrif/components-core';
-import {map} from "rxjs/operators";
+import {map, shareReplay, switchMap, take} from "rxjs/operators";
 
 @Component({
     selector: 'nc-create-case-button',
     templateUrl: './create-case-button.component.html',
-    styleUrls: ['./create-case-button.component.scss']
+    styleUrls: ['./create-case-button.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class CreateCaseButtonComponent implements OnInit {
 
@@ -23,6 +26,10 @@ export class CreateCaseButtonComponent implements OnInit {
     protected _resolvedCaseButtonTitle: string;
     protected _resolvedCaseButtonIcon: string;
     protected _loading: LoadingEmitter;
+    /** the button is shown when a process allows creating a case (created once, the template binds it) */
+    protected _showCreateButton$: Observable<boolean>;
+    /** the blocked processes the visibility was created for: other ones (a new configuration) create it again */
+    protected _showCreateButtonKey: string;
 
     constructor(protected _caseViewService: CaseViewService) {
         this._loading = new LoadingEmitter();
@@ -48,28 +55,60 @@ export class CreateCaseButtonComponent implements OnInit {
         }
     }
 
+    /**
+     * The same observable on every call: a new one for every change detection made the `async` pipe of the template
+     * subscribe again and load the processes again.
+     */
     public shouldShowCreateButton(): Observable<boolean> {
         const blockNets = this.newCaseCreationConfig?.blockNets || [];
-        return this._caseViewService.getNewCaseAllowedNets(blockNets).pipe(
-            map(allowedNets => allowedNets.length > 0)
-        );
+        const key = blockNets.join(',');
+        if (!this._showCreateButton$ || this._showCreateButtonKey !== key) {
+            this._showCreateButtonKey = key;
+            this._showCreateButton$ = this._caseViewService.getNewCaseAllowedNets(blockNets).pipe(
+                map(allowedNets => allowedNets.length > 0),
+                shareReplay({bufferSize: 1, refCount: true})
+            );
+        }
+        return this._showCreateButton$;
     }
 
+    /**
+     * Creates a case: right away when there is nothing to fill in (one allowed process, and the title is turned off by the
+     * configuration or the process names the case itself), otherwise in the new case dialog.
+     */
     public createNewCase(): Observable<Case> {
-        let myCase: Observable<Case>;
         this._loading.on();
-        if (this.newCaseCreationConfig.enableCaseTitle === false && this._caseViewService.getAllowedNetsCount() === 1) {
-            myCase = this._caseViewService.createDefaultNewCase(this.newCaseCreationConfig);
-        } else {
-            myCase = this._caseViewService.createNewCase(this.newCaseCreationConfig);
-        }
-        myCase.subscribe(kaze => {
-            if (this._caseViewService.viewEnabled(kaze)) {
-                this.caseCreatedEvent.next(kaze);
+        const myCase = new ReplaySubject<Case>(1);
+        this._caseViewService.getNewCaseAllowedNets(this.newCaseCreationConfig?.blockNets).pipe(
+            take(1),
+            switchMap(nets => this.createsWithoutDialog(nets)
+                ? this._caseViewService.createDefaultNewCase(this.newCaseCreationConfig, nets)
+                : this._caseViewService.createNewCase(this.newCaseCreationConfig, nets)),
+        ).subscribe({
+            next: kaze => {
+                if (this._caseViewService.viewEnabled(kaze)) {
+                    this.caseCreatedEvent.next(kaze);
+                }
+                myCase.next(kaze);
+            },
+            error: error => {
+                this._loading.off();
+                myCase.error(error);
+            },
+            complete: () => {
+                this._loading.off();
+                myCase.complete();
             }
-        }, error => {},() => this._loading.off());
+        });
+        return myCase.asObservable();
+    }
 
-        return myCase;
+    /** nothing to fill in the new case dialog: one allowed process, the title turned off or the default case name of the process */
+    protected createsWithoutDialog(nets: Array<PetriNetReferenceWithPermissions>): boolean {
+        if (nets?.length !== 1) {
+            return false;
+        }
+        return this.newCaseCreationConfig?.enableCaseTitle === false || !!nets[0].defaultCaseName?.trim();
     }
 
 }

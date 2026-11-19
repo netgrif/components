@@ -1,20 +1,44 @@
-<div fxLayout="column" class="height-fix pag-density" matSort (matSortChange)="sortData($event)">
-    <div mat-subheader class="header">
-        <p fxFlex="40" mat-sort-header="{{firstColName | lowercase}}"><strong>{{firstColName}}</strong></p>
-        <p fxFlex mat-sort-header="{{secondColName | lowercase}}">{{secondColName}}</p>
-        <div class="button-wrap" *ngIf="showAddButton">
-            <button mat-icon-button class="button-line" matTooltip="{{buttonTooltip !== undefined ? buttonTooltip : 'builder.modeler.components.master-detail.add' | translate}}" (click)="create()">
-                <mat-icon>add</mat-icon>
+<div class="master">
+    <div class="master-toolbar">
+        @if (showAddButton) {
+        <button mat-flat-button (click)="create()">
+            <mat-icon>add</mat-icon>
+            {{ buttonTooltip !== undefined ? buttonTooltip : ("builder.modeler.components.master-detail.add" | translate) }}
+        </button>
+        }
+        <span class="spacer"></span>
+        @if (sortable) {
+        <button mat-icon-button [matMenuTriggerFor]="sortMenu" [matTooltip]="'builder.modeler.components.master-detail.sort' | translate">
+            <mat-icon>sort</mat-icon>
+        </button>
+        <mat-menu #sortMenu="matMenu" xPosition="before">
+            <button mat-menu-item (click)="sortBy('name')">
+                <mat-icon>{{ sortIcon("name") }}</mat-icon>
+                <span>{{ secondColName }}</span>
             </button>
-        </div>
+            <button mat-menu-item (click)="sortBy('id')">
+                <mat-icon>{{ sortIcon("id") }}</mat-icon>
+                <span>{{ firstColName }}</span>
+            </button>
+        </mat-menu>
+        }
     </div>
-    <mat-action-list class="height-max" >
-        <nc-builder-main-master-item *ngFor="let item of pageData"
-                              [item]="item"
-                              [masterItemComponent]="masterItemComponent"
-                              [masterService]="masterService" ></nc-builder-main-master-item>
+    <mat-action-list class="list">
+        @for (item of pageData; track item) {
+        <nc-builder-main-master-item
+            [item]="item"
+            [masterItemComponent]="masterItemComponent"
+            [masterService]="masterService"
+        ></nc-builder-main-master-item>
+        }
     </mat-action-list>
-    <mat-paginator fxFlex class="footer" [length]="totalSize" [pageSize]="pageSize" [pageIndex]="pageIndex"
-                   [pageSizeOptions]="pageSizeOptions" (page)="onPageChanged($event)" showFirstLastButtons="false">
+    <mat-paginator
+        [length]="totalSize"
+        [pageSize]="pageSize"
+        [pageIndex]="pageIndex"
+        [pageSizeOptions]="pageSizeOptions"
+        (page)="onPageChanged($event)"
+        showFirstLastButtons="false"
+    >
     </mat-paginator>
 </div>

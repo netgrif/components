@@ -1,10 +1,8 @@
 import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 
 import {EnumerationIconFieldComponent} from './enumeration-icon-field.component';
-import {AngularResizeEventModule} from 'angular-resize-event';
-import {BrowserAnimationsModule, NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
+import {Component, CUSTOM_ELEMENTS_SCHEMA, ChangeDetectionStrategy} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {
     EnumerationField,
@@ -13,6 +11,7 @@ import {
     TranslateLibModule,
     WrappedBoolean
 } from '@netgrif/components-core';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('EnumerationIconFieldComponent', () => {
     let component: EnumerationIconFieldComponent;
@@ -20,16 +19,19 @@ describe('EnumerationIconFieldComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
+            declarations: [
+                EnumerationIconFieldComponent,
+                TestWrapperComponent
+            ],
+            schemas: [CUSTOM_ELEMENTS_SCHEMA],
             imports: [
                 MaterialModule,
-                AngularResizeEventModule,
-                BrowserAnimationsModule,
                 TranslateLibModule,
-                HttpClientTestingModule,
-                NoopAnimationsModule
             ],
-            declarations: [ EnumerationIconFieldComponent, TestWrapperComponent],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA]
+            providers: [
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
+            ]
         })
             .compileComponents();
         fixture = TestBed.createComponent(TestWrapperComponent);
@@ -49,7 +51,9 @@ describe('EnumerationIconFieldComponent', () => {
 @Component({
     selector: 'nc-test-wrapper',
     template: '<nc-enumeration-icon-field [showLargeLayout]="label" [dataField]="field" [formControlRef]="form">' +
-        '</nc-enumeration-icon-field>'
+        '</nc-enumeration-icon-field>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestWrapperComponent {
     label = new WrappedBoolean();

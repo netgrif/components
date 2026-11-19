@@ -19,12 +19,11 @@ import {
     UserResourceService,
     WrappedBoolean
 } from "@netgrif/components-core";
-import {AngularResizeEventModule} from "angular-resize-event";
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {HttpClientTestingModule} from "@angular/common/http/testing";
+import {provideHttpClientTesting} from "@angular/common/http/testing";
 import {CUSTOM_ELEMENTS_SCHEMA} from "@angular/core";
 import {FileListFieldComponent} from "../file-list-field.component";
 import {FormControl} from "@angular/forms";
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('FileListDefaultFieldComponent', () => {
   let component: FileListDefaultFieldComponent;
@@ -32,11 +31,13 @@ describe('FileListDefaultFieldComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+        schemas: [CUSTOM_ELEMENTS_SCHEMA],
+        declarations: [
+            FileListFieldComponent,
+            FileListDefaultFieldComponent
+        ],
         imports: [
             MaterialModule,
-            AngularResizeEventModule,
-            BrowserAnimationsModule,
-            HttpClientTestingModule,
             TranslateLibModule,
             SnackBarModule
         ],
@@ -58,12 +59,9 @@ describe('FileListDefaultFieldComponent', () => {
                     showLargeLayout: new WrappedBoolean(),
                     additionalFieldProperties: {taskId: '0'}
                 } as DataFieldPortalData<FileListField>
-            }
-        ],
-        schemas: [CUSTOM_ELEMENTS_SCHEMA],
-        declarations: [
-            FileListFieldComponent,
-            FileListDefaultFieldComponent
+            },
+            provideHttpClient(withXhr(), withInterceptorsFromDi()),
+            provideHttpClientTesting()
         ],
     })
     .compileComponents();

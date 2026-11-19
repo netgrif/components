@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, Inject, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {
     AbstractTabbedSingleTaskViewComponent,
@@ -64,7 +64,9 @@ const localAllowedNetsFactory = (factory: AllowedNetsServiceFactory) => {
         TaskEventService,
         {provide: NAE_TASK_OPERATIONS, useClass: SubjectTaskOperations},
         AsyncPipe
-    ]
+    ],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class DefaultTabbedSingleTaskViewComponent extends AbstractTabbedSingleTaskViewComponent implements OnInit {
 

@@ -1,0 +1,89 @@
+<h2 mat-dialog-title>{{ 'appearance.title' | translate }}</h2>
+<mat-dialog-content>
+    <h3 class="mat-title-small">{{ 'appearance.color' | translate }}</h3>
+    <div class="swatches">
+        @for (color of presets; track color) {
+        <button class="swatch" type="button"
+                [style.background]="color"
+                [class.selected]="color === settings.seed"
+                [attr.aria-label]="color"
+                (click)="selectSeed(color)">
+            @if (color === settings.seed) {
+            <mat-icon>check</mat-icon>
+            }
+        </button>
+        }
+    </div>
+
+    <div class="picker">
+        <div class="preview" [style.background]="settings.seed ?? '#2497f2'"></div>
+        <div class="sliders">
+            <span class="mat-label-large">{{ 'appearance.hue' | translate }}</span>
+            <div class="track" [style.background]="hueGradient">
+                <mat-slider min="0" max="360" step="1" discrete>
+                    <input matSliderThumb [value]="hue" (input)="setHue(+$any($event.target).value)">
+                </mat-slider>
+            </div>
+            <span class="mat-label-large">{{ 'appearance.chroma' | translate }}</span>
+            <div class="track" [style.background]="chromaGradient">
+                <mat-slider min="0" [max]="maxChroma" step="1" discrete>
+                    <input matSliderThumb [value]="chroma" (input)="setChroma(+$any($event.target).value)">
+                </mat-slider>
+            </div>
+        </div>
+        <mat-form-field subscriptSizing="dynamic">
+            <mat-label>Hex</mat-label>
+            <input matInput [value]="settings.seed ?? ''" placeholder="#2497f2" (change)="selectHex($any($event.target).value)">
+        </mat-form-field>
+    </div>
+
+    <ng-template #options let-group>
+        <mat-chip-listbox [value]="settings[group.key]" (change)="setOption(group.key, $event.value)">
+            @for (value of group.values; track value; let i = $index) {
+            <mat-chip-option [value]="value">{{ group.labels[i] | translate }}</mat-chip-option>
+            }
+        </mat-chip-listbox>
+    </ng-template>
+
+    <h3 class="mat-title-small">{{ 'appearance.variantTitle' | translate }}</h3>
+    <ng-container *ngTemplateOutlet="options; context: { $implicit: variants }"></ng-container>
+
+    <h3 class="mat-title-small">{{ 'appearance.contrastTitle' | translate }}</h3>
+    <ng-container *ngTemplateOutlet="options; context: { $implicit: contrasts }"></ng-container>
+
+    <mat-divider></mat-divider>
+
+    <h3 class="mat-title-small">{{ 'appearance.cornersTitle' | translate }}</h3>
+    <ng-container *ngTemplateOutlet="options; context: { $implicit: corners }"></ng-container>
+
+    <h3 class="mat-title-small">{{ 'appearance.densityTitle' | translate }}</h3>
+    <div class="density">
+        <mat-slider min="0" max="5" step="1" discrete showTickMarks [displayWith]="densityLabel">
+            <input matSliderThumb [value]="densityLevel" (valueChange)="setDensity($event)"
+                   [attr.aria-label]="'appearance.densityTitle' | translate">
+        </mat-slider>
+        <div class="density-ends mat-label-medium">
+            <span>{{ 'appearance.density.default' | translate }}</span>
+            <span>{{ 'appearance.density.compact' | translate }}</span>
+        </div>
+    </div>
+
+    <h3 class="mat-title-small">{{ 'appearance.flatTitle' | translate }}</h3>
+    <ng-container *ngTemplateOutlet="options; context: { $implicit: elevations }"></ng-container>
+
+    <mat-divider></mat-divider>
+
+    <h3 class="mat-title-small">{{ 'appearance.fontTitle' | translate }}</h3>
+    <ng-container *ngTemplateOutlet="options; context: { $implicit: fonts }"></ng-container>
+
+    <h3 class="mat-title-small">{{ 'appearance.textSize' | translate }}</h3>
+    <mat-chip-listbox [value]="settings.textScale" (change)="setOption('textScale', $event.value)">
+        @for (scale of textScales; track scale) {
+        <mat-chip-option [value]="scale">{{ (scale * 100).toFixed(0) }} %</mat-chip-option>
+        }
+    </mat-chip-listbox>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button (click)="reset()">{{ 'appearance.reset' | translate }}</button>
+    <button mat-flat-button mat-dialog-close>{{ 'dialog.close' | translate }}</button>
+</mat-dialog-actions>

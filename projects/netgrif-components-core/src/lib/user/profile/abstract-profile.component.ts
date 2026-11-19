@@ -1,11 +1,13 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {User} from '../models/user';
 import {UserService} from '../services/user.service';
 import {Subscription} from 'rxjs';
 
 @Component({
     selector: 'ncc-abstract-profile',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractProfileComponent implements OnInit, OnDestroy {
 

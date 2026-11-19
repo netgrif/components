@@ -1,4 +1,4 @@
-import {Component, Inject, Optional} from '@angular/core';
+import {Component, Inject, Optional, ChangeDetectionStrategy} from '@angular/core';
 import {
     AbstractEnumerationAutocompleteDynamicFieldComponent,
     DATA_FIELD_PORTAL_DATA,
@@ -10,7 +10,8 @@ import {TranslateService} from '@ngx-translate/core';
 @Component({
   selector: 'nc-enumeration-autocomplete-dynamic-field',
   templateUrl: './enumeration-autocomplete-dynamic-field.component.html',
-  styleUrls: ['./enumeration-autocomplete-dynamic-field.component.scss']
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class EnumerationAutocompleteDynamicFieldComponent extends AbstractEnumerationAutocompleteDynamicFieldComponent {
 

@@ -1,28 +1,31 @@
 // Karma configuration file, see link for more information
 // https://karma-runner.github.io/1.0/config/configuration-file.html
+// Used by the @angular/build:karma builder (angular.json). The builder sets basePath to its temporary build output
+// and adds the compiled spec files itself, so every output path below has to be absolute.
 
-process = require('process');
+const path = require('path');
+const process = require('process');
 if (!process.env.CI && !process.env.CHROME_BIN) {
     process.env.CHROME_BIN = require('puppeteer').executablePath();
 }
 process.setMaxListeners(0);
 require('events').EventEmitter.defaultMaxListeners = 20;
 
-module.exports = function(config) {
+const outputDir = path.join(__dirname, '../../coverage/netgrif-components');
+
+module.exports = function (config) {
     config.set({
-        basePath: "",
-        frameworks: ["jasmine", "@angular-devkit/build-angular"],
+        frameworks: ['jasmine'],
         plugins: [
-            require("karma-jasmine"),
-            require("karma-firefox-launcher"),
-            require("karma-chrome-launcher"),
-            require("karma-jasmine-html-reporter"),
-            require("karma-coverage-istanbul-reporter"),
-            require("karma-mocha-reporter"),
-            require("karma-nyan-reporter"),
-            require("karma-junit-reporter"),
-            require("karma-sonarqube-unit-reporter"),
-            require("@angular-devkit/build-angular/plugins/karma"),
+            require('karma-jasmine'),
+            require('karma-firefox-launcher'),
+            require('karma-chrome-launcher'),
+            require('karma-jasmine-html-reporter'),
+            require('karma-coverage-istanbul-reporter'),
+            require('karma-mocha-reporter'),
+            require('karma-nyan-reporter'),
+            require('karma-junit-reporter'),
+            require('karma-sonarqube-unit-reporter'),
         ],
 
         client: {
@@ -33,9 +36,8 @@ module.exports = function(config) {
         },
 
         coverageIstanbulReporter: {
-            dir: require("path").join(__dirname, "../../coverage/netgrif-components"),
-            reports: ["html", "text-summary", "json-summary", "lcov"],
-            fixWebpackSourcePaths: true,
+            dir: outputDir,
+            reports: ['html', 'text-summary', 'json-summary', 'lcov'],
         },
         nyanReporter: {
             suppressErrorReport: false, // default is false
@@ -44,9 +46,9 @@ module.exports = function(config) {
             renderOnRunCompleteOnly: true, // default is false
         },
         junitReporter: {
-            outputDir: "../../coverage/netgrif-components/", // results will be saved as $outputDir/$browserName.xml
-            outputFile: "JUNITX-test-report.xml", // if included, results will be saved as $outputDir/$browserName/$outputFile
-            suite: "", // suite will become the package name attribute in xml testsuite element
+            outputDir, // results will be saved as $outputDir/$browserName.xml
+            outputFile: 'JUNITX-test-report.xml', // if included, results will be saved as $outputDir/$browserName/$outputFile
+            suite: '', // suite will become the package name attribute in xml testsuite element
             useBrowserName: false, // add browser name to report and classes names
             nameFormatter: undefined, // function (browser, result) to customize the name attribute in xml testcase element
             classNameFormatter: undefined, // function (browser, result) to customize the classname attribute in xml testcase element
@@ -55,7 +57,8 @@ module.exports = function(config) {
         },
         sonarQubeUnitReporter: {
             sonarQubeVersion: 'LATEST',
-            outputFile: '../../coverage/netgrif-components/sonarqube-unit-report.xml',
+            outputDir, // relative paths would resolve against the builder's temporary basePath
+            outputFile: 'sonarqube-unit-report.xml',
             useBrowserName: false
         },
 
@@ -73,14 +76,13 @@ module.exports = function(config) {
             }
         },
 
-        reporters: ["progress", "kjhtml", "coverage-istanbul", "nyan", "junit", "sonarqubeUnit"],
+        reporters: ['progress', 'kjhtml', 'coverage-istanbul', 'nyan', 'junit', 'sonarqubeUnit'],
         port: 9876,
         colors: true,
         logLevel: config.LOG_INFO,
-        autoWatch: true,
+        // run once headless by default (angular.json "watch": false), use `ng test <project> --watch --browsers=Chrome` to debug
         browsers: ['ChromeHeadlessCI'],
-        // browsers: ['Chrome'],
-        singleRun: true,
         restartOnFileChange: true,
+        browserNoActivityTimeout: 60000
     });
 };

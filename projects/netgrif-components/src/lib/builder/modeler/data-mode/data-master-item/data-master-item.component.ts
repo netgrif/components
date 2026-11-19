@@ -1,4 +1,4 @@
-import {Component, Inject} from '@angular/core';
+import {Component, Inject, ChangeDetectionStrategy} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {DataVariable} from '@netgrif/petriflow';
 import {DialogDeleteComponent} from '../../../dialogs/dialog-delete/dialog-delete.component';
@@ -9,7 +9,9 @@ import {BuilderModeService} from "../../../services/builder-mode.service";
 @Component({
     selector: 'nc-builder-data-master-item',
     templateUrl: './data-master-item.component.html',
-    styleUrl: './data-master-item.component.scss'
+    styleUrl: './data-master-item.component.scss',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class DataMasterItemComponent {
 

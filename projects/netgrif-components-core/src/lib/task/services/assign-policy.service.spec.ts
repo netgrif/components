@@ -1,11 +1,10 @@
 import {TestBed} from '@angular/core/testing';
 import {AssignPolicyService} from './assign-policy.service';
 import {TaskDataService} from './task-data.service';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {TaskRequestStateService} from './task-request-state.service';
 import {TranslateModule} from '@ngx-translate/core';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
 import {MaterialModule} from '../../material/material.module';
@@ -28,6 +27,7 @@ import {MockUserService} from '../../utility/tests/mocks/mock-user.service';
 import {User} from '../../user/models/user';
 import {PermissionService} from '../../authorization/permission/permission.service';
 import {FrontActionService} from "../../actions/services/front-action.service";
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('AssignPolicyService', () => {
     let service: AssignPolicyService;
@@ -37,10 +37,8 @@ describe('AssignPolicyService', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
-                NoopAnimationsModule,
                 TranslateModule,
                 TranslateLibModule,
-                HttpClientTestingModule,
                 MaterialModule,
             ],
             providers: [
@@ -61,7 +59,9 @@ describe('AssignPolicyService', () => {
                 {provide: TaskContentService, useClass: SingleTaskContentService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: NAE_TASK_OPERATIONS, useClass: NullTaskOperations},
-                {provide: UserService, useClass: MockUserService}
+                {provide: UserService, useClass: MockUserService},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
             ]
         });
         userService = TestBed.inject(UserService);

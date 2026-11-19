@@ -1,3 +1,6 @@
+/**
+ * @deprecated the side menu is deprecated, the library opens dialogs instead (`DialogComponentsModule`)
+ */
 export enum SideMenuSize {
     SMALL = 'side-menu-width-small',
     MEDIUM = 'side-menu-width-medium',

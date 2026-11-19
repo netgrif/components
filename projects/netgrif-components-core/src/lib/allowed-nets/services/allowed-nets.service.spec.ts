@@ -2,13 +2,13 @@ import {TestBed} from '@angular/core/testing';
 import {AllowedNetsService} from './allowed-nets.service';
 import {TestNoAllowedNetsFactory} from '../../utility/tests/test-factory-methods';
 import {AllowedNetsServiceFactory} from './factory/allowed-nets-service-factory';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
 import {Injectable} from '@angular/core';
 import {of} from 'rxjs';
 import {ProcessService} from '../../process/process.service';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('AllowedNetsService', () => {
     let service: AllowedNetsService;
@@ -19,8 +19,6 @@ describe('AllowedNetsService', () => {
         beforeEach(() => {
             TestBed.configureTestingModule({
                 imports: [
-                    HttpClientTestingModule,
-                    NoopAnimationsModule
                 ],
                 providers: [
                     {provide: ConfigurationService, useClass: TestConfigurationService},
@@ -28,7 +26,9 @@ describe('AllowedNetsService', () => {
                         provide: AllowedNetsService,
                         useFactory: TestNoAllowedNetsFactory,
                         deps: [AllowedNetsServiceFactory]
-                    }
+                    },
+                    provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                    provideHttpClientTesting()
                 ]
             });
             service = TestBed.inject(AllowedNetsService);
@@ -47,7 +47,6 @@ describe('AllowedNetsService', () => {
         beforeEach(() => {
             TestBed.configureTestingModule({
                 imports: [
-                    HttpClientTestingModule
                 ],
                 providers: [
                     {provide: ConfigurationService, useClass: TestConfigurationService},
@@ -56,7 +55,9 @@ describe('AllowedNetsService', () => {
                         useFactory: TestNoAllowedNetsFactory,
                         deps: [AllowedNetsServiceFactory]
                     },
-                    {provide: ProcessService, useClass: MockProcessService}
+                    {provide: ProcessService, useClass: MockProcessService},
+                    provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                    provideHttpClientTesting()
                 ]
             });
             service = TestBed.inject(AllowedNetsService);

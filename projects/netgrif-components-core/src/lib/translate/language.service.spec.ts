@@ -1,7 +1,7 @@
 import {TestBed} from '@angular/core/testing';
 import {LanguageService} from './language.service';
 import {MaterialModule} from '../material/material.module';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {TranslateLibModule} from './translate-lib.module';
 import {AuthenticationMethodService} from '../authentication/services/authentication-method.service';
 import {AuthenticationService} from '../authentication/services/authentication/authentication.service';
@@ -13,9 +13,9 @@ import {TestConfigurationService} from '../utility/tests/test-config';
 import {ErrorSnackBarComponent} from '../snack-bar/components/error-snack-bar/error-snack-bar.component';
 import {SuccessSnackBarComponent} from '../snack-bar/components/success-snack-bar/success-snack-bar.component';
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {MockAuthenticationMethodService} from '../utility/tests/mocks/mock-authentication-method-service';
 import {SnackBarModule} from '../snack-bar/snack-bar.module';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('LanguageService', () => {
     let service: LanguageService;
@@ -24,19 +24,24 @@ describe('LanguageService', () => {
         TestBed.configureTestingModule({
             imports: [
                 MaterialModule,
-                HttpClientTestingModule,
                 TranslateLibModule,
-                NoopAnimationsModule,
                 SnackBarModule
             ],
             providers: [
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
-                {provide: ConfigurationService, useClass: TestConfigurationService}
+                {provide: ConfigurationService, useClass: TestConfigurationService},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
             ]
         });
         service = TestBed.inject(LanguageService);
+    });
+
+    afterEach(() => {
+        // other specs expect the default (english) translations
+        service.setLanguage('en-US');
     });
 
     it('should be created', () => {
@@ -48,12 +53,12 @@ describe('LanguageService', () => {
         expect(localStorage.getItem('Language')).toEqual('en');
     });
 
-    xit('should set slovak lang', () => {
+    it('should set slovak lang', () => {
         service.setLanguage('sk');
         expect(localStorage.getItem('Language')).toEqual('sk');
     });
 
-    xit('should set german lang', () => {
+    it('should set german lang', () => {
         service.setLanguage('de');
         expect(localStorage.getItem('Language')).toEqual('de');
     });

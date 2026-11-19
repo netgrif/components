@@ -1,8 +1,6 @@
 import {ComponentFixture, TestBed, waitForAsync} from "@angular/core/testing";
 import {MaterialModule} from "../../../material/material.module";
-import {AngularResizeEventModule} from "angular-resize-event";
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {HttpClientTestingModule} from "@angular/common/http/testing";
+import {provideHttpClientTesting} from "@angular/common/http/testing";
 import {TranslateLibModule} from "../../../translate/translate-lib.module";
 import {SnackBarModule} from "../../../snack-bar/snack-bar.module";
 import {SideMenuService} from "../../../side-menu/services/side-menu.service";
@@ -15,7 +13,7 @@ import {UserResourceService} from "../../../resources/engine-endpoint/user-resou
 import {MockUserResourceService} from "../../../utility/tests/mocks/mock-user-resource.service";
 import {ConfigurationService} from "../../../configuration/configuration.service";
 import {TestConfigurationService} from "../../../utility/tests/test-config";
-import {Component, CUSTOM_ELEMENTS_SCHEMA, Inject, Optional} from "@angular/core";
+import {Component, CUSTOM_ELEMENTS_SCHEMA, Inject, Optional, ChangeDetectionStrategy} from "@angular/core";
 import {BrowserDynamicTestingModule} from "@angular/platform-browser-dynamic/testing";
 import {ErrorSnackBarComponent} from "../../../snack-bar/components/error-snack-bar/error-snack-bar.component";
 import {SuccessSnackBarComponent} from "../../../snack-bar/components/success-snack-bar/success-snack-bar.component";
@@ -28,6 +26,7 @@ import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-fie
 import {AbstractFileListDefaultFieldComponent} from "./abstract-file-list-default-field.component";
 import {FormControl} from "@angular/forms";
 import {WrappedBoolean} from "../../data-field-template/models/wrapped-boolean";
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('AbstractFileListDefaultFieldComponent', () => {
     let component: TestFileListComponent;
@@ -35,11 +34,10 @@ describe('AbstractFileListDefaultFieldComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
+            schemas: [CUSTOM_ELEMENTS_SCHEMA],
+            declarations: [TestWrapperComponent, TestFileListComponent],
             imports: [
                 MaterialModule,
-                AngularResizeEventModule,
-                BrowserAnimationsModule,
-                HttpClientTestingModule,
                 TranslateLibModule,
                 SnackBarModule
             ],
@@ -62,12 +60,9 @@ describe('AbstractFileListDefaultFieldComponent', () => {
                         showLargeLayout: new WrappedBoolean(),
                         additionalFieldProperties: {taskId: '0'}
                     } as DataFieldPortalData<FileListField>
-                }
-            ],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA],
-            declarations: [
-                TestWrapperComponent,
-                TestFileListComponent
+                },
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
             ],
         }).compileComponents();
         fixture = TestBed.createComponent(TestWrapperComponent);
@@ -86,7 +81,9 @@ describe('AbstractFileListDefaultFieldComponent', () => {
 
 @Component({
     selector: 'ncc-test-filelist',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestFileListComponent extends AbstractFileListDefaultFieldComponent {
     constructor(taskResourceService: TaskResourceService,
@@ -101,7 +98,9 @@ class TestFileListComponent extends AbstractFileListDefaultFieldComponent {
 
 @Component({
     selector: 'ncc-test-wrapper',
-    template: '<ncc-test-filelist></ncc-test-filelist>'
+    template: '<ncc-test-filelist></ncc-test-filelist>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestWrapperComponent {
 }

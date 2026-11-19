@@ -1,7 +1,7 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {DashboardContentComponent} from './dashboard-content.component';
 import {DashboardComponentModule} from '../dashboard.module';
-import {Component} from '@angular/core';
+import {Component, ChangeDetectionStrategy} from '@angular/core';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {ConfigurationService, DashboardParams, TestConfigurationService} from '@netgrif/components-core';
@@ -36,7 +36,9 @@ describe('DashboardContentComponent', () => {
 
 @Component({
     selector: 'nc-test-wrapper',
-    template: '<nc-dashboard-content [params]="params"></nc-dashboard-content>'
+    template: '<nc-dashboard-content [params]="params"></nc-dashboard-content>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestWrapperComponent {
     public params: DashboardParams = {

@@ -1,10 +1,10 @@
 import {AbstractSearchOperandInputComponent} from './abstract-search-operand-input.component';
-import {Component} from '@angular/core';
+import {Component, ChangeDetectionStrategy} from '@angular/core';
 import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 import {FormControl} from '@angular/forms';
 import {SearchInputType} from '../models/category/search-input-type';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('AbstractSearchOperandInputComponent', () => {
     let component: TestSearchOperandInputComponent;
@@ -12,10 +12,14 @@ describe('AbstractSearchOperandInputComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
-            imports: [NoopAnimationsModule, HttpClientTestingModule],
             declarations: [
                 TestSearchOperandInputComponent,
                 TestWrapperComponent
+            ],
+            imports: [],
+            providers: [
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
             ]
         }).compileComponents();
     }));
@@ -37,7 +41,9 @@ describe('AbstractSearchOperandInputComponent', () => {
 
 @Component({
     selector: 'ncc-search-operand-input',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestSearchOperandInputComponent extends AbstractSearchOperandInputComponent {
     constructor() {
@@ -48,7 +54,9 @@ class TestSearchOperandInputComponent extends AbstractSearchOperandInputComponen
 @Component({
     selector: 'ncc-test-wrapper',
     template: '<ncc-search-operand-input [inputFormControl]="formControl" [inputType]="searchInputType.TEXT" [first]="true">' +
-        '</ncc-search-operand-input>'
+        '</ncc-search-operand-input>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestWrapperComponent {
 

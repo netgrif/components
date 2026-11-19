@@ -1,4 +1,4 @@
-import {Component, Injector} from '@angular/core';
+import {Component, Injector, ChangeDetectionStrategy} from '@angular/core';
 import {
     AbstractGroupNavigationComponentResolverComponent,
     GroupNavigationComponentResolverService,
@@ -9,7 +9,9 @@ import {ActivatedRoute, Router} from '@angular/router';
 @Component({
     selector: 'nc-group-navigation-component-resolver',
     templateUrl: './group-navigation-component-resolver.component.html',
-    styleUrls: ['./group-navigation-component-resolver.component.scss']
+    styleUrls: ['./group-navigation-component-resolver.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class GroupNavigationComponentResolverComponent extends AbstractGroupNavigationComponentResolverComponent {
 

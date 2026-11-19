@@ -1,31 +1,37 @@
-<div *ngIf="getSelected() !== undefined; else elseBlock" fxFlex fxLayout="column" fxLayoutAlign="start start"
-     class="height-fix netgrif-input">
-    <div fxFlex fxLayout="row" class="full-width top-padding-8">
-        <mat-form-field appearance="outline" fxFlex>
-            <mat-label>{{ 'builder.modeler.history-mode.renderType' | translate }}</mat-label>
+@if (getSelected() !== undefined) {
+<div class="history-detail">
+    <header class="detail-header">
+        <div class="detail-heading">
+            <h2 class="detail-title">{{ getSelected().message }}</h2>
+            <span class="detail-id">{{ getSelected().time.toLocaleString() }}</span>
+        </div>
+        <mat-form-field class="render-type" subscriptSizing="dynamic">
+            <mat-label>{{ "builder.modeler.history-mode.renderType" | translate }}</mat-label>
             <mat-select [(ngModel)]="editorOptions.renderSideBySide" (selectionChange)="updateEditor()">
-                <mat-option [value]="true">{{ 'builder.modeler.history-mode.sideBySide' | translate }}</mat-option>
-                <mat-option [value]="false">{{ 'builder.modeler.history-mode.inline' | translate }}</mat-option>
+                <mat-option [value]="true">{{ "builder.modeler.history-mode.sideBySide" | translate }}</mat-option>
+                <mat-option [value]="false">{{ "builder.modeler.history-mode.inline" | translate }}</mat-option>
             </mat-select>
         </mat-form-field>
-
         <button mat-button (click)="download()">
             <mat-icon>download</mat-icon>
-            <span>{{ 'builder.modeler.history-mode.download' | translate }}</span>
+            {{ "builder.modeler.history-mode.download" | translate }}
         </button>
-        <button mat-button (click)="revert()">
+        <button mat-stroked-button (click)="revert()">
             <mat-icon>restore</mat-icon>
-            <span>{{ 'builder.modeler.history-mode.restore' | translate }}</span>
+            {{ "builder.modeler.history-mode.restore" | translate }}
         </button>
-        <div fxFlex fxFill></div>
-    </div>
-    <ngx-monaco-diff-editor class="full-height-monaco" fxFill (onInit)="onEditorInit($event)"
-                            [options]="editorOptions" [originalModel]="originalModel"
-                            [modifiedModel]="modifiedModel"></ngx-monaco-diff-editor>
+    </header>
+    <ngx-monaco-diff-editor
+        class="diff-editor"
+        (onInit)="onEditorInit($event)"
+        [options]="editorOptions"
+        [originalModel]="originalModel"
+        [modifiedModel]="modifiedModel"
+    ></ngx-monaco-diff-editor>
 </div>
-
-<ng-template #elseBlock>
-    <div fxLayoutAlign="center center" class="height-fix full-width">
-        <span><strong>{{ 'builder.modeler.history-mode.noHistorySelected' | translate }}</strong></span>
-    </div>
-</ng-template>
+} @else {
+<div class="nae-empty-state" role="status">
+    <mat-icon class="nae-empty-state-icon">history</mat-icon>
+    <span class="nae-empty-state-title">{{ "builder.modeler.history-mode.noHistorySelected" | translate }}</span>
+</div>
+}

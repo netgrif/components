@@ -1,201 +1,55 @@
-// HORIZONTAL DEFAULT
-.horizontal-stepper {
-    display: flex;
+@use '@angular/material' as mat;
+@use '../../field-label' as label;
+
+@include label.styles;
+
+:host {
+    display: block;
 }
 
-.horizontal-step-header {
-    box-sizing: border-box;
+.stepper-field {
+    display: flex;
     flex-direction: column;
-    height: auto;
-    padding: 24px;
-    overflow: hidden;
-    outline: none;
-    position: relative;
-    -webkit-tap-highlight-color: transparent;
+    min-width: 0;
+}
+
+.display-stepper ::ng-deep .mat-step-header {
+    pointer-events: none;
+}
+
+.display-stepper {
+    @include mat.stepper-overrides((
+        container-color: transparent,
+    ));
+}
+
+.display-stepper ::ng-deep .mat-vertical-content,
+.display-stepper ::ng-deep .mat-horizontal-content-container {
+    padding: 0;
+}
+
+.arrow-stepper {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
+    gap: 4px;
 }
 
-.horizontal-step-header:not(:first-child)::before {
-    left: 0;
-}
-
-.horizontal-step-header:not(:last-child)::after {
-    right: 0;
-}
-
-.horizontal-step-header:not(:last-child)::after,
-.horizontal-step-header:not(:first-child)::before {
-    border-top-width: 1px;
-    border-top-style: solid;
-    content: "";
-    display: inline-block;
-    height: 0;
-    position: absolute;
-    width: calc(50% - 20px);
-    top: 36px;
-}
-
-.horizontal-state {
-    color: white;
-    border-radius: 50%;
-    height: 24px;
-    width: 24px;
-    flex-shrink: 0;
-    position: relative;
-}
-
-.horizontal-state-label {
-    display: inline-block;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    min-width: 36px;
-    vertical-align: middle;
-    padding: 16px 0 0 0;
-    text-align: center;
-    width: 100%;
-    word-wrap: break-word;
-}
-
-.horizontal-line {
-    position: relative;
-    top: 36px;
-    border-top-width: 1px;
-    border-top-style: solid;
-    flex: auto;
-    height: 0;
-    min-width: 12px;
-}
-
-.horizontal-step {
-    flex: auto;
-    display: flex;
-}
-
-// VERTICAL DEFAULT
-
-.vertical-step-header {
-    box-sizing: border-box;
+.arrow-stepper-vertical {
     flex-direction: column;
-    height: auto;
-    padding: 24px;
-    overflow: hidden;
-    outline: none;
-    position: relative;
-    -webkit-tap-highlight-color: transparent;
-    display: flex;
-    align-items: center;
-}
+    align-items: stretch;
 
-.vertical-step-header:first-child::before {
-    top: 44px;
-}
-
-.vertical-step-header:not(:first-child)::before {
-    top: 0;
-}
-
-.vertical-step-header:not(:last-child)::after {
-    bottom: 0;
-}
-
-.vertical-step-header:not(:last-child)::after,
-.vertical-step-header:not(:first-child)::before {
-    border-left-width: 1px;
-    border-left-style: solid;
-    content: "";
-    display: inline-block;
-    width: 0;
-    position: absolute;
-    height: calc(50% - 20px);
-    left: 36px;
-}
-
-.vertical-state {
-    color: white;
-    border-radius: 50%;
-    height: 24px;
-    width: 24px;
-    flex-shrink: 0;
-    position: relative;
-}
-
-.vertical-state-label {
-    display: inline-block;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    min-width: 36px;
-    vertical-align: middle;
-    text-align: center;
-    width: 100%;
-    word-wrap: break-word;
-    white-space: break-spaces;
-}
-
-.vertical-line {
-    position: relative;
-    border-left-width: 1px;
-    border-left-style: solid;
-    flex: auto;
-    height: 0;
-    margin: 0 36px;
-    min-height: 12px;
-}
-
-.vertical-step {
-    flex: auto;
-    display: flex;
-}
-
-// ARROW STEPPER
-
-.stepper-label {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: inline-block;
-    max-width: 100%;
-}
-
-.stepper-tooltip-text {
-    color: #FFFFFF;
-    padding: 10px 15px;
-}
-
-.stepper-min-height {
-    border-radius: 10px;
-    min-height: 70px;
-    background-color: #F9F9F9;
-    padding: 0 32px;
-}
-
-.stepper-arrow-text {
-    font-weight: 500;
-    font-size: 16px;
-    letter-spacing: -0.2;
-    line-height: 24px;
-    color: #64748B;
-    cursor: pointer;
-    text-align: center;
-}
-
-.stepper-disabled {
-    cursor: unset !important;
-}
-
-.stepper-disabled .stepper-arrow-text {
-    color: #94A3B8;
-    cursor: alias;
-}
-
-.touch-action-enabled {
-    touch-action: auto !important;
-    -webkit-user-drag: auto !important;
-}
-
-@media only screen and (max-width: 959px) {
-    .stepper-arrow-text {
-        word-break: break-word;
+    .arrow-separator {
+        align-self: center;
     }
 }
 
+.arrow-step-selected {
+    background: var(--mat-sys-secondary-container);
+    color: var(--mat-sys-on-secondary-container);
+    font-weight: 600;
+}
+
+.arrow-separator {
+    color: var(--mat-sys-on-surface-variant);
+}

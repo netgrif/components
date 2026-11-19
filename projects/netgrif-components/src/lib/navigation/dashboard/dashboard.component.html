@@ -1,22 +1,31 @@
-<div class="height-100" fxLayout="column" >
+<div fxLayout="column" fxFill>
     <nc-toolbar [toolbarConfig]="toolbarConfig"></nc-toolbar>
-    <div fxLayout="column" fxFlex="100" fxLayoutAlign="center center" class="background-dashboard">
-        <div class="cards-container" fxLayout="row wrap" fxLayoutAlign="center center" fxFlex="100">
-            <div *ngIf="loading$ | async" fxLayout="column" fxLayoutAlign="center center" class="margin-top-default">
-                <mat-spinner color="primary" diameter="60" mode="indeterminate"></mat-spinner>
-            </div>
-            <ng-template ngFor let-item [ngForOf]="dashboardItems">
-                <div fxLayout="column" fxLayoutAlign="end center" class="dashboard-card" (click)="navigate(item)">
-                    <mat-card-content fxLayout="column" fxLayoutAlign="center center" class="card-content">
-                        <mat-icon *ngIf="!getItemExternalIcon(item)" class="card-icon" [ngStyle]="{'color': getItemIconColor(item)}">{{ getItemIcon(item) }}</mat-icon>
-                        <img *ngIf="getItemExternalIcon(item)" class="card-icon" src="{{getItemIcon(item)}}" alt="{{getItemName(item)}}">
-                        <div class="card-main-text"
-                             [ngStyle]="{'color': getItemFontColor(item), 'font-weight': getItemFontWeight(item)}"
-                             [matTooltip]="getItemName(item)"
-                             matTooltipShowDelay="500">{{ getItemName(item) }}</div>
-                    </mat-card-content>
-                </div>
-            </ng-template>
+    @if (loading$ | async) {
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    }
+    <div class="tiles" fxLayout="row wrap" fxLayoutAlign="center start" fxLayoutGap="16px grid">
+        @for (item of dashboardItems; track item?.stringId ?? $index) {
+        <div fxFlex="280px">
+            <mat-card appearance="outlined" (click)="navigate(item)">
+                <mat-card-content fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="16px">
+                    @if (getItemExternalIcon(item)) {
+                    <img src="{{ getItemIcon(item) }}" alt="{{ getItemName(item) }}" height="64"/>
+                    } @else {
+                    <mat-icon [ngStyle]="{ color: getItemIconColor(item) }">{{ getItemIcon(item) }}</mat-icon>
+                    }
+                    <span class="mat-headline-small tile-label"
+                          [ngStyle]="{ color: getItemFontColor(item), 'font-weight': getItemFontWeight(item) }"
+                          [matTooltip]="getItemName(item)"
+                          matTooltipShowDelay="500">{{ getItemName(item) }}</span>
+                </mat-card-content>
+            </mat-card>
         </div>
+        }
     </div>
+    @if ((loading$ | async) === false && dashboardItems.length === 0) {
+    <div class="nae-empty-state" role="status">
+        <mat-icon class="nae-empty-state-icon">dashboard</mat-icon>
+        <span class="nae-empty-state-title">{{ "dashboard.noItems" | translate }}</span>
+    </div>
+    }
 </div>

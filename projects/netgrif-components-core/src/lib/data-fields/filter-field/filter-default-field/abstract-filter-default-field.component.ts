@@ -1,4 +1,6 @@
-import {Component, ComponentRef, Inject, Injector, OnDestroy, OnInit, Optional, StaticProvider} from "@angular/core";
+import {Component, ComponentRef, Inject, Injector, OnDestroy, OnInit, Optional, StaticProvider,
+    ChangeDetectionStrategy
+} from "@angular/core";
 import {ComponentPortal, ComponentType} from "@angular/cdk/portal";
 import {AbstractFilterFieldContentComponent} from "../abstract-filter-field-content.component";
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
@@ -13,7 +15,9 @@ import {skip} from "rxjs/operators";
 
 @Component({
     selector: 'ncc-abstract-filter-default-field',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractFilterDefaultFieldComponent extends AbstractBaseDataFieldComponent<FilterField> implements OnInit, OnDestroy {
 
@@ -29,7 +33,15 @@ export abstract class AbstractFilterDefaultFieldComponent extends AbstractBaseDa
 
     ngOnInit() {
         const providers: Array<StaticProvider> = [
-            {provide: NAE_FILTER_FIELD, useValue: this.dataField}
+            {provide: NAE_FILTER_FIELD, useValue: this.dataField},
+            {
+                provide: DATA_FIELD_PORTAL_DATA,
+                useValue: {
+                    dataField: this.dataField,
+                    formControlRef: this.formControlRef,
+                    showLargeLayout: this.showLargeLayout
+                } as DataFieldPortalData<FilterField>
+            }
         ];
         const injector = Injector.create({providers, parent: this._parentInjector});
         this.portal = new ComponentPortal(this.getFilterContentComponent(), null, injector);

@@ -1,0 +1,14 @@
+<div class="view">
+    <div class="search-row">
+        <button mat-icon-button (click)="back()" matTooltip="Back to the cases" aria-label="Back to the cases">
+            <mat-icon>arrow_back</mat-icon>
+        </button>
+        <nc-search class="search"></nc-search>
+    </div>
+    <!-- nc-task-list scrolls by itself (virtual scroll), it fills the rest of the view -->
+    <div class="list-column">
+        <nc-header #header type="task"></nc-header>
+        <nc-task-list class="virtual-list" [tasks$]="tasks$" [loading$]="loading$" [allowMultiOpen]="false"
+                      [selectedHeaders$]="selectedHeaders$" [textEllipsis]="true"></nc-task-list>
+    </div>
+</div>

@@ -1,24 +1,12 @@
 .case-view-container {
     margin: 8px;
     height: calc(100% - 16px);
-    overflow: auto
-}
-
-.case-view-search-container {
-    padding: 8px 8px;
+    overflow: auto;
 }
 
 .case-header-padding {
     padding-bottom: 8px;
     padding-top: 8px;
-}
-
-.font-size-20 {
-    font-size: 20px;
-}
-
-.search-width {
-    width: 100%;
 }
 
 .full-height {
@@ -30,18 +18,11 @@
 }
 
 .transform-div {
-    transform:rotateX(180deg);
-    -ms-transform:rotateX(180deg); /* IE 9 */
-    -webkit-transform:rotateX(180deg);
+    transform: rotateX(180deg);
 }
 
 .custom-scrollbar {
-
-    &::-webkit-scrollbar {
-        width: 15px;
-        height: 15px;
-        cursor: pointer;
-    }
+    scrollbar-color: var(--mat-sys-outline-variant) transparent;
 }
 
 .max-width-fix {

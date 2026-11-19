@@ -1,11 +1,11 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {Component} from '@angular/core';
+import {Component, ChangeDetectionStrategy} from '@angular/core';
 import {AbstractMultiUserAssignItemComponent} from './abstract-multi-user-assign-item.component';
 import {UserValue} from '../../../../../data-fields/user-field/models/user-value';
 import {TranslateLibModule} from '../../../../../translate/translate-lib.module';
 import {MaterialModule} from '../../../../../material/material.module';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('AbstractMultiUserAssignItemComponent', () => {
     let component: TestUserComponent;
@@ -13,15 +13,14 @@ describe('AbstractMultiUserAssignItemComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
+            declarations: [TestUserComponent, TestWrapperComponent],
             imports: [
                 MaterialModule,
-                TranslateLibModule,
-                NoopAnimationsModule,
-                HttpClientTestingModule
+                TranslateLibModule
             ],
-            declarations: [
-                TestUserComponent,
-                TestWrapperComponent
+            providers: [
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
             ]
         }).compileComponents();
         fixture = TestBed.createComponent(TestWrapperComponent);
@@ -40,7 +39,9 @@ describe('AbstractMultiUserAssignItemComponent', () => {
 
 @Component({
     selector: 'ncc-test-user',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestUserComponent extends AbstractMultiUserAssignItemComponent {
     constructor() {
@@ -50,7 +51,9 @@ class TestUserComponent extends AbstractMultiUserAssignItemComponent {
 
 @Component({
     selector: 'ncc-test-wrapper',
-    template: '<ncc-test-user [user]="user"></ncc-test-user>'
+    template: '<ncc-test-user [user]="user"></ncc-test-user>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestWrapperComponent {
     user = new UserValue('0', '', '', '');

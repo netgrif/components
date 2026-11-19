@@ -1,6 +1,5 @@
 import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, HostListener, OnDestroy, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
-import {NgxDropzoneChangeEvent} from 'ngx-dropzone';
 import {ModelImportService} from '../model-import-service';
 import {ModelerUtils} from '../modeler-utils';
 import {HistoryService} from '../services/history/history.service';
@@ -16,6 +15,7 @@ import {Subscription} from "rxjs";
     templateUrl: './edit-mode.component.html',
     styleUrls: ['./edit-mode.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false,
 })
 export class EditModeComponent implements AfterViewInit, OnDestroy {
 
@@ -92,11 +92,16 @@ export class EditModeComponent implements AfterViewInit, OnDestroy {
     ngOnDestroy(): void {
         this.contextMenuSubscription?.unsubscribe();
         this.gridSubscription?.unsubscribe();
-        this.editModeService.activeTool.unbind();
+        this.editModeService.activeTool?.unbind();
     }
 
-    onDropZone($event: NgxDropzoneChangeEvent) {
-        $event.addedFiles[0]?.text()?.then(originFile => {
+    onDropZone($event: DragEvent) {
+        $event.preventDefault();
+        const file = $event.dataTransfer?.files?.[0];
+        if (!file?.name.toLowerCase().endsWith('.xml')) {
+            return;
+        }
+        file.text().then(originFile => {
             this.importService.importFromXml(originFile);
         });
     }

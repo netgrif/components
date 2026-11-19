@@ -1,7 +1,6 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {Component} from '@angular/core';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
+import {Component, ChangeDetectionStrategy} from '@angular/core';
 import {MaterialModule} from '../../../../material/material.module';
 import {TranslateLibModule} from '../../../../translate/translate-lib.module';
 import {CaseTreeService} from '../case-tree.service';
@@ -10,6 +9,7 @@ import {ConfigurationService} from '../../../../configuration/configuration.serv
 import {TestConfigurationService} from '../../../../utility/tests/test-config';
 import {AbstractRemoveNodeComponent} from './abstract-remove-node.component';
 import {CaseTreeNode} from '../model/case-tree-node';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('AbstractRemoveNodeComponent', () => {
     let component: TestRemoveComponent;
@@ -17,20 +17,17 @@ describe('AbstractRemoveNodeComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
+            declarations: [TestComponent, TestRemoveComponent],
             imports: [
                 MaterialModule,
-                NoopAnimationsModule,
-                HttpClientTestingModule,
                 TranslateLibModule
             ],
             providers: [
                 CaseTreeService,
                 TreeCaseViewService,
-                {provide: ConfigurationService, useClass: TestConfigurationService}
-            ],
-            declarations: [
-                TestComponent,
-                TestRemoveComponent
+                {provide: ConfigurationService, useClass: TestConfigurationService},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
             ]
         }).compileComponents();
     }));
@@ -52,7 +49,9 @@ describe('AbstractRemoveNodeComponent', () => {
 
 @Component({
     selector: 'ncc-test-remove',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestRemoveComponent extends AbstractRemoveNodeComponent {
     constructor(protected _treeService: CaseTreeService) {
@@ -62,7 +61,9 @@ class TestRemoveComponent extends AbstractRemoveNodeComponent {
 
 @Component({
     selector: 'ncc-test-wrapper',
-    template: '<ncc-test-remove [node]="node"></ncc-test-remove>'
+    template: '<ncc-test-remove [node]="node"></ncc-test-remove>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestComponent {
     node = new CaseTreeNode(undefined, undefined);

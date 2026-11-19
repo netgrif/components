@@ -1,4 +1,4 @@
-<nc-data-field-template *ngIf="!dataField.behavior.hidden"
-                        [dataField]="dataField"
-                        [offset]="taskOffset">
+@if (!dataField.behavior.hidden) {
+<nc-data-field-template [dataField]="dataField" [offset]="taskOffset">
 </nc-data-field-template>
+}

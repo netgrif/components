@@ -1,4 +1,4 @@
-import {AfterViewChecked, Component, Input, ViewChild} from '@angular/core';
+import {AfterViewChecked, Component, Input, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {MatMenu, MatMenuTrigger} from '@angular/material/menu';
 import {ActionItemProviderService} from '../../action-item-provider.service';
 import {MenuItem} from './menu-item';
@@ -8,7 +8,9 @@ import {MenuItemConfiguration} from './menu-item-configuration';
     selector: 'nc-builder-action-editor-menu-item',
     templateUrl: './action-editor-menu-item.component.html',
     styleUrls: ['./action-editor-menu-item.component.scss'],
-    exportAs: 'menuInOtherComponent'
+    exportAs: 'menuInOtherComponent',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class ActionEditorMenuItemComponent implements AfterViewChecked {
 

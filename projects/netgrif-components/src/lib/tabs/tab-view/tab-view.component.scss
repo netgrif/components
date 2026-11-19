@@ -1,27 +1,51 @@
-.icon-margin-right {
-    margin-right: 5px;
-}
-
-.full-height {
+:host {
+    display: block;
     height: 100%;
 }
 
-.full-width {
-    width: 100%;
+.tab-body {
+    height: 100%;
+}
+
+.icon-margin-right {
+    margin-right: 8px;
+}
+
+.tab-close {
+    --mat-icon-button-state-layer-size: 24px;
+    --mat-icon-button-icon-size: 18px;
+    width: 24px;
+    height: 24px;
+    margin-left: 4px;
+    margin-right: -8px;
+    padding: 0;
+
+    mat-icon {
+        width: 18px;
+        height: 18px;
+        font-size: 18px;
+    }
 }
 
 .tab-group {
     height: 100%;
 }
 
-.mat-mdc-badge-content {
-    top: -3px !important;
-    right: -24px !important;
+.tab-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    min-width: 16px;
+    height: 16px;
+    margin-left: 4px;
+    padding: 0 4px;
+    border-radius: var(--mat-sys-corner-full);
+    background: var(--mat-sys-error);
+    color: var(--mat-sys-on-error);
+    font: var(--mat-sys-label-small);
 }
 
-.custom-badge {
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 20px;
-    letter-spacing: 0.25px;
+.nae-tab-fill-height ::ng-deep .mat-mdc-tab-body-wrapper {
+    flex: 1 1 100%;
 }

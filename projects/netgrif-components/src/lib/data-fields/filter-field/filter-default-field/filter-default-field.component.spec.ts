@@ -8,13 +8,13 @@ import {
     TestConfigurationService, WrappedBoolean
 } from "@netgrif/components-core";
 import {AdvancedSearchComponentModule} from "../../../search/advanced-search/advanced-search.module";
-import {HttpClientTestingModule} from "@angular/common/http/testing";
+import {provideHttpClientTesting} from "@angular/common/http/testing";
 import {DataFieldTemplateComponent} from "../../data-field-template/data-field-template.component";
 import {RequiredLabelComponent} from "../../required-label/required-label.component";
 import {FilterFieldComponent} from "../filter-field.component";
 import {FilterFieldContentComponent} from "../filter-field-content/filter-field-content.component";
 import {FormControl} from "@angular/forms";
-import {NoopAnimationsModule} from "@angular/platform-browser/animations";
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('FilterDefaultFieldComponent', () => {
   let component: FilterDefaultFieldComponent;
@@ -22,11 +22,16 @@ describe('FilterDefaultFieldComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+        declarations: [
+            DataFieldTemplateComponent,
+            RequiredLabelComponent,
+            FilterFieldComponent,
+            FilterFieldContentComponent,
+            FilterDefaultFieldComponent
+        ],
         imports: [
             MaterialModule,
-            AdvancedSearchComponentModule,
-            HttpClientTestingModule,
-            NoopAnimationsModule,
+            AdvancedSearchComponentModule
         ],
         providers: [
             {provide: ConfigurationService, useClass: TestConfigurationService},
@@ -35,14 +40,9 @@ describe('FilterDefaultFieldComponent', () => {
                     formControlRef: new FormControl(),
                     showLargeLayout: new WrappedBoolean()
                 } as DataFieldPortalData<FilterField>
-            }
-        ],
-        declarations: [
-            DataFieldTemplateComponent,
-            RequiredLabelComponent,
-            FilterFieldComponent,
-            FilterFieldContentComponent,
-            FilterDefaultFieldComponent
+            },
+            provideHttpClient(withXhr(), withInterceptorsFromDi()),
+            provideHttpClientTesting()
         ]
     })
     .compileComponents();

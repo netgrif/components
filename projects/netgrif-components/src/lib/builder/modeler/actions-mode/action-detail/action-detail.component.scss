@@ -1,38 +1,123 @@
 
-.margin-top32px {
-    margin-top: 32px;
-}
-
 .no-overflow {
     min-height: 100%;
     overflow: visible;
 }
 
-.tree-node-invisible {
-    display: none;
+:host {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
 }
 
-.tree-offset {
-    margin-left: 16px;
+.actions {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
 }
 
-.full-width {
-    width: 100%;
+.event-content {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 16px;
 }
 
-.editor-list-area-padding {
-    padding: 8px;
+.count-badge,
+.chip-count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    min-width: 16px;
+    height: 16px;
+    margin-left: 8px;
+    padding: 0 4px;
+    border-radius: var(--mat-sys-corner-full);
+    background: var(--mat-sys-primary);
+    color: var(--mat-sys-on-primary);
+    font: var(--mat-sys-label-small);
 }
 
-.tree {
-    background-color: #fafafa;
+.dataref-chips {
+    display: block;
 }
 
-.mat-tree-node {
-    overflow-x: clip !important;
-    overflow-y: visible !important;
+.action-card {
+    border: 1px solid var(--mat-sys-outline-variant);
+    border-radius: var(--mat-sys-corner-medium);
+    background: var(--mat-sys-surface);
 }
 
-.margin-top6px {
-    margin-top: 6px;
+.card-header {
+    display: flex;
+    align-items: center;
+    padding: 12px 16px 4px;
+}
+
+.card-title {
+    margin: 0;
+    color: var(--mat-sys-on-surface);
+    font: var(--mat-sys-title-small);
+    letter-spacing: var(--mat-sys-title-small-tracking);
+}
+
+.phase {
+    padding: 4px 8px 4px 16px;
+}
+
+.phase + .phase {
+    border-top: 1px solid var(--mat-sys-outline-variant);
+}
+
+.phase-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 48px;
+}
+
+.phase-title {
+    color: var(--mat-sys-on-surface);
+    font: var(--mat-sys-label-large);
+    letter-spacing: var(--mat-sys-label-large-tracking);
+}
+
+.phase-empty {
+    color: var(--mat-sys-on-surface-variant);
+    font: var(--mat-sys-body-medium);
+}
+
+.spacer {
+    flex: 1 1 auto;
+}
+
+.phase nc-builder-action-editor-list {
+    display: block;
+    padding: 0 8px 12px 0;
+}
+
+.no-selection {
+    flex: 1 1 auto;
+}
+
+.function-detail {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    gap: 8px;
+    min-height: 0;
+    padding: 16px;
+}
+
+.function-fields {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 0 16px;
+}
+
+.function-editor {
+    display: block;
+    flex: 1 1 auto;
+    min-height: 0;
 }

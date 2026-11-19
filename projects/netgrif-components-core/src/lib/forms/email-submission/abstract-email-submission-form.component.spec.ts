@@ -1,13 +1,13 @@
 import {waitForAsync, ComponentFixture, TestBed, inject} from '@angular/core/testing';
 import {FlexLayoutModule} from '@ngbracket/ngx-layout';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
+import {HttpTestingController, provideHttpClientTesting} from '@angular/common/http/testing';
 import {FormBuilder} from '@angular/forms';
-import {Component} from '@angular/core';
+import {Component, ChangeDetectionStrategy} from '@angular/core';
 import {AbstractEmailSubmissionFormComponent} from './abstract-email-submission-form.component';
 import {MaterialModule} from '../../material/material.module';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
 import {LoadingEmitter} from '../../utility/loading-emitter';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('AbstractEmailSubmissionFormComponent ', () => {
     let component: TestPassFormComponent;
@@ -15,15 +15,16 @@ describe('AbstractEmailSubmissionFormComponent ', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
+            declarations: [TestPassFormComponent],
             imports: [
                 MaterialModule,
                 FlexLayoutModule,
-                NoopAnimationsModule,
-                TranslateLibModule,
-                HttpClientTestingModule
+                TranslateLibModule
             ],
-            declarations: [TestPassFormComponent],
-            providers: [FormBuilder]
+            providers: [FormBuilder,
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
+            ]
         }).compileComponents();
 
         fixture = TestBed.createComponent(TestPassFormComponent);
@@ -51,7 +52,9 @@ describe('AbstractEmailSubmissionFormComponent ', () => {
 
 @Component({
     selector: 'ncc-test-password',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestPassFormComponent extends AbstractEmailSubmissionFormComponent {
     constructor(formBuilder: FormBuilder) {

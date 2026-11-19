@@ -1,0 +1,27 @@
+@mixin styles {
+    .field-title {
+        display: block;
+        margin-bottom: 8px;
+        color: var(--mat-sys-on-surface-variant);
+        font: var(--mat-sys-body-medium);
+        letter-spacing: var(--mat-sys-body-medium-tracking);
+        overflow-wrap: anywhere;
+    }
+
+    .field-supporting {
+        display: block;
+        margin-top: 4px;
+        color: var(--mat-sys-on-surface-variant);
+        font: var(--mat-sys-body-small);
+        letter-spacing: var(--mat-sys-body-small-tracking);
+        overflow-wrap: anywhere;
+
+        &.indented {
+            padding: 0 16px;
+        }
+
+        &.error {
+            color: var(--mat-sys-error);
+        }
+    }
+}

@@ -1,7 +1,6 @@
 import {TestBed} from '@angular/core/testing';
 import {AssignTaskService} from './assign-task.service';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {MaterialModule} from '../../material/material.module';
 import {TranslateModule} from '@ngx-translate/core';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
@@ -37,6 +36,7 @@ import {createMockTask} from '../../utility/tests/utility/create-mock-task';
 import {createMockTaskOutcome} from '../../utility/tests/utility/create-mock-task-outcome';
 import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 import {FrontActionService} from "../../actions/services/front-action.service";
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('AssignTaskService', () => {
     let service: AssignTaskService;
@@ -48,11 +48,9 @@ describe('AssignTaskService', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
-                HttpClientTestingModule,
                 MaterialModule,
                 TranslateModule,
                 TranslateLibModule,
-                NoopAnimationsModule,
                 SnackBarModule
             ],
             providers: [
@@ -68,6 +66,8 @@ describe('AssignTaskService', () => {
                 {provide: NAE_TASK_OPERATIONS, useClass: NullTaskOperations},
                 {provide: TaskResourceService, useClass: TestTaskResourceService},
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting(),
             ]
         }).compileComponents();
         service = TestBed.inject(AssignTaskService);

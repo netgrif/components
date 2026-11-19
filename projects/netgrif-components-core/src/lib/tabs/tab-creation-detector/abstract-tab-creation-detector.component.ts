@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, ChangeDetectionStrategy} from '@angular/core';
 
 /**
  * @ignore
@@ -8,7 +8,9 @@ import {Component, Input, OnInit} from '@angular/core';
  */
 @Component({
     selector: 'ncc-abstract-tab-creation-detector',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractTabCreationDetectorComponent implements OnInit {
 

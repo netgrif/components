@@ -3,7 +3,6 @@ import {TestBed} from '@angular/core/testing';
 import {ChangedFieldsService} from './changed-fields.service';
 import {createMockTask} from '../../utility/tests/utility/create-mock-task';
 import {ChangedFields} from '../../data-fields/models/changed-fields';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {ChangedFieldsMap} from '../../event/services/interfaces/changed-fields-map';
 
 describe('ChangedFieldsService', () => {
@@ -11,7 +10,7 @@ describe('ChangedFieldsService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopAnimationsModule],
+            imports: [],
             providers: [
                 ChangedFieldsService
             ]

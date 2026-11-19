@@ -1,9 +1,8 @@
 import {TestBed} from '@angular/core/testing';
 import {DelegateTaskService} from './delegate-task.service';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {MaterialModule} from '../../material/material.module';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
 import {TaskRequestStateService} from './task-request-state.service';
@@ -18,13 +17,14 @@ import {TaskDataService} from './task-data.service';
 import {DataFocusPolicyService} from './data-focus-policy.service';
 import {ChangedFieldsService} from '../../changed-fields/services/changed-fields.service';
 import {FrontActionService} from "../../actions/services/front-action.service";
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('DelegateTaskService', () => {
     let service: DelegateTaskService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopAnimationsModule, HttpClientTestingModule, MaterialModule, TranslateLibModule],
+            imports: [ MaterialModule, TranslateLibModule],
             providers: [
                 DelegateTaskService,
                 TaskRequestStateService,
@@ -37,6 +37,8 @@ describe('DelegateTaskService', () => {
                 {provide: NAE_TASK_OPERATIONS, useClass: SubjectTaskOperations},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting(),
             ]
         });
         service = TestBed.inject(DelegateTaskService);

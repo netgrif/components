@@ -1,4 +1,4 @@
-import {Component, Inject, Injector, Input, OnDestroy, OnInit, Self, SkipSelf, Type} from '@angular/core';
+import {Component, Inject, Injector, Input, OnDestroy, OnInit, Self, SkipSelf, Type, ChangeDetectionStrategy} from '@angular/core';
 import {
     AbstractTaskRefDashboardTileComponent,
     CallChainService,
@@ -22,7 +22,9 @@ import {ComponentPortal} from '@angular/cdk/portal';
     providers: [
         FrontActionService,
         {provide: TaskContentService, useClass: UnlimitedTaskContentService}
-    ]
+    ],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class TaskRefDashboardTileComponent extends AbstractTaskRefDashboardTileComponent implements OnInit, OnDestroy {
 

@@ -7,11 +7,11 @@ import {ConfigurationService} from '../../../configuration/configuration.service
 import {TestConfigurationService} from '../../../utility/tests/test-config';
 import {SnackBarModule} from '../../../snack-bar/snack-bar.module';
 import {TranslateLibModule} from '../../../translate/translate-lib.module';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {MaterialModule} from '../../../material/material.module';
-import {Component, Inject} from '@angular/core';
+import {Component, Inject, ChangeDetectionStrategy} from '@angular/core';
 import {AbstractUserAssignComponent} from './abstract-user-assign.component';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('AbstractUserAssignComponent', () => {
     let component: TestUserComponent;
@@ -19,10 +19,9 @@ describe('AbstractUserAssignComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
+            declarations: [TestUserComponent],
             imports: [
                 MaterialModule,
-                NoopAnimationsModule,
-                HttpClientTestingModule,
                 TranslateLibModule,
                 SnackBarModule
             ],
@@ -30,10 +29,9 @@ describe('AbstractUserAssignComponent', () => {
                 UserListService,
                 {provide: NAE_SIDE_MENU_CONTROL, useValue: new SideMenuControl(() => {
                     }, new Observable<boolean>(), null)},
-                {provide: ConfigurationService, useClass: TestConfigurationService}
-            ],
-            declarations: [
-                TestUserComponent
+                {provide: ConfigurationService, useClass: TestConfigurationService},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
             ]
         }).compileComponents();
     }));
@@ -55,7 +53,9 @@ describe('AbstractUserAssignComponent', () => {
 
 @Component({
     selector: 'ncc-test-user',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestUserComponent extends AbstractUserAssignComponent {
     constructor(@Inject(NAE_SIDE_MENU_CONTROL) protected _sideMenuControl: SideMenuControl) {

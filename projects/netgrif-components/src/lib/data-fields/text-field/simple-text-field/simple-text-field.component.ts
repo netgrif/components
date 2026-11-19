@@ -1,4 +1,4 @@
-import {Component, Inject, Optional} from '@angular/core';
+import {Component, Inject, Optional, ChangeDetectionStrategy} from '@angular/core';
 import {
     AbstractSimpleTextFieldComponent,
     DATA_FIELD_PORTAL_DATA,
@@ -10,7 +10,8 @@ import {TranslateService} from '@ngx-translate/core';
 @Component({
     selector: 'nc-simple-text-field',
     templateUrl: './simple-text-field.component.html',
-    styleUrls: ['./simple-text-field.component.scss']
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class SimpleTextFieldComponent extends AbstractSimpleTextFieldComponent {
     constructor(protected _translate: TranslateService,

@@ -1,28 +1,25 @@
+@use '../../../dialog/dialog';
+
+@include dialog.styles;
+
 .paragraph {
-  margin-bottom: 12px;
+    margin-bottom: 12px;
 }
 
 .error {
-  color: red;
+    color: var(--mat-sys-error);
 }
 
 .warning {
-  color: darkgoldenrod;
+    color: var(--mat-sys-tertiary);
 }
 
 .info {
-  color: #0f4c81;
+    color: var(--mat-sys-primary);
 }
 
 h3 {
-  vertical-align: top;
-  display: inline-flex;
-}
-
-mat-icon {
-  padding-right: 5px;
-}
-
-.padding-top-4px {
-    padding-top: 4px !important;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }

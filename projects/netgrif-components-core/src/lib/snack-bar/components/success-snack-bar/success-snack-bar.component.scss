@@ -1,3 +1,7 @@
+@use '../snack-bar';
+
 .success-color {
-    color: #2ac262;
+    color: light-dark(#2ac262, #1b7a3e);
 }
+
+@include snack-bar.close-action;

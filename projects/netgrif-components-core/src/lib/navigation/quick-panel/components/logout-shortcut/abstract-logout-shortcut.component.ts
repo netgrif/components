@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Output} from '@angular/core';
+import {Component, EventEmitter, Output, ChangeDetectionStrategy} from '@angular/core';
 import {UserService} from '../../../../user/services/user.service';
 import {LoggerService} from '../../../../logger/services/logger.service';
 import {ConfigurationService} from '../../../../configuration/configuration.service';
@@ -7,6 +7,8 @@ import {Router} from '@angular/router';
 @Component({
     selector: 'ncc-abstract-logout-shortcut',
     template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false,
 })
 export abstract class AbstractLogoutShortcutComponent {
 

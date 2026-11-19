@@ -3,20 +3,21 @@ import {FieldConverterService} from './field-converter.service';
 import {TemplateAppearance} from '../../data-fields/models/template-appearance';
 import {MaterialAppearance} from '../../data-fields/models/material-appearance';
 import moment from 'moment';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {DataFieldResource} from '../model/resource-interface';
 import {FieldAlignment} from '../../resources/interface/field-alignment';
 import {FieldTypeResource} from '../model/field-type-resource';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('FieldConvertorService', () => {
     let service: FieldConverterService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                NoopAnimationsModule,
-                HttpClientTestingModule
+            imports: [],
+            providers: [
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
             ]
         });
         service = TestBed.inject(FieldConverterService);

@@ -1,10 +1,9 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {MatExpansionModule} from '@angular/material/expansion';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {CommonModule} from '@angular/common';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {RouterTestingModule} from '@angular/router/testing';
-import {Component, Inject, Optional} from '@angular/core';
+import {Component, Inject, Optional, ChangeDetectionStrategy} from '@angular/core';
 import {of} from 'rxjs';
 import {AbstractTaskListComponent} from './abstract-task-list.component';
 import {AssignPolicy, DataFocusPolicy, FinishPolicy} from '../../task-content/model/policy';
@@ -30,7 +29,7 @@ import {AllowedNetsService} from '../../allowed-nets/services/allowed-nets.servi
 import {AllowedNetsServiceFactory} from '../../allowed-nets/services/factory/allowed-nets-service-factory';
 import {ActivatedRoute} from '@angular/router';
 import {LanguageService} from "../../translate/language.service";
-
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('AbstractTaskListComponent', () => {
     let component: TestTaskListComponent;
@@ -38,16 +37,14 @@ describe('AbstractTaskListComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
+            declarations: [TestTaskListComponent, TestWrapperComponent],
             imports: [
                 MatExpansionModule,
                 MaterialModule,
-                NoopAnimationsModule,
                 CommonModule,
-                HttpClientTestingModule,
                 TranslateLibModule,
                 RouterTestingModule.withRoutes([])
             ],
-            declarations: [TestTaskListComponent, TestWrapperComponent],
             providers: [
                 TaskViewService,
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
@@ -60,7 +57,9 @@ describe('AbstractTaskListComponent', () => {
                 },
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: TaskResourceService, useClass: MyResources},
-                {provide: AllowedNetsService, useFactory: TestTaskViewAllowedNetsFactory, deps: [AllowedNetsServiceFactory]}
+                {provide: AllowedNetsService, useFactory: TestTaskViewAllowedNetsFactory, deps: [AllowedNetsServiceFactory]},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
             ]
         })
             .compileComponents();
@@ -81,7 +80,9 @@ describe('AbstractTaskListComponent', () => {
 
 @Component({
     selector: 'ncc-test-task-list',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestTaskListComponent extends AbstractTaskListComponent {
     constructor(protected _taskViewService: TaskViewService,
@@ -95,7 +96,9 @@ class TestTaskListComponent extends AbstractTaskListComponent {
 
 @Component({
     selector: 'ncc-test-wrapper',
-    template: '<ncc-test-task-list [tasks$]="taskPanels"></ncc-test-task-list>'
+    template: '<ncc-test-task-list [tasks$]="taskPanels"></ncc-test-task-list>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestWrapperComponent {
     taskPanels = of([]);

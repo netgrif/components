@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Inject, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, Inject, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {
     NAE_SIDE_MENU_CONTROL,
     AbstractUserImpersonateComponent,
@@ -51,7 +51,9 @@ function localAllowedNetsFactory(factory: AllowedNetsServiceFactory): AllowedNet
                 `${UserImpersonationConstants.IMPERSONATION_CONFIG_NET_IDENTIFIER}-${UserImpersonationConstants.IMPERSONATION_CONFIG_FIELD_ROLES}`,
                 `${UserImpersonationConstants.IMPERSONATION_CONFIG_NET_IDENTIFIER}-${UserImpersonationConstants.IMPERSONATION_CONFIG_FIELD_AUTHS}`,
             ]}
-    ]
+    ],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class UserImpersonateComponent extends AbstractUserImpersonateComponent implements AfterViewInit {
 

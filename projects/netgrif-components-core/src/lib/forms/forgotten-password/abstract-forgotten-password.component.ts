@@ -7,12 +7,14 @@ import {UserRegistrationRequest} from '../../authentication/sign-up/models/user-
 import {Observable} from 'rxjs';
 import {MessageResource} from '../../resources/interface/message-resource';
 import {TranslateService} from '@ngx-translate/core';
-import {Component, Inject, Input, OnDestroy, Optional} from '@angular/core';
+import {Component, Inject, Input, OnDestroy, Optional, ChangeDetectionStrategy} from '@angular/core';
 import {NAE_MIN_PASSWORD_LENGTH} from "../min-password-length-token";
 
 @Component({
     selector: 'ncc-abstract-forgotten-password',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractForgottenPasswordComponent extends AbstractRegistrationComponent implements OnDestroy {
 

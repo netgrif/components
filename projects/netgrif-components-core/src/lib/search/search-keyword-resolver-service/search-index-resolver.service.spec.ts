@@ -1,14 +1,18 @@
 import {TestBed} from '@angular/core/testing';
 import {SearchIndexResolverService} from './search-index-resolver.service';
 import {SearchIndex} from '../models/search-index';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('SearchIndexResolverService', () => {
     let service: SearchIndexResolverService;
 
     beforeEach(() => {
-        TestBed.configureTestingModule({imports: [NoopAnimationsModule, HttpClientTestingModule]});
+        TestBed.configureTestingModule({imports: [],
+            providers: [
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
+            ]});
         service = TestBed.inject(SearchIndexResolverService);
     });
 

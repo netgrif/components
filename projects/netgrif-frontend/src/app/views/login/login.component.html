@@ -1,0 +1,32 @@
+<nc-authentication-overlay>
+    <!-- Material 3 login page (the same layout as the Keycloak login theme of Netgrif): brand pane on large screens,
+         top bar with the language, the form in a card -->
+    <div class="login-page">
+        <aside class="hero" aria-hidden="true">
+            <img class="hero-logo" src="assets/netgrif_logo_white.svg" alt="">
+        </aside>
+        <main class="login-main">
+            <div class="topbar">
+                <img class="topbar-logo" src="assets/netgrif_logo.svg" alt="Netgrif">
+                <button mat-button class="language" [matMenuTriggerFor]="languageMenu" [attr.aria-label]="'toolbar.menu.lang' | translate">
+                    <mat-icon>translate</mat-icon>
+                    {{ currentLanguage() | uppercase }}
+                    <mat-icon iconPositionEnd>arrow_drop_down</mat-icon>
+                </button>
+                <mat-menu #languageMenu="matMenu" xPosition="before">
+                    @for (lang of languages(); track lang) {
+                    <button mat-menu-item (click)="setLanguage(lang)">
+                        <mat-icon>{{ lang === currentLanguage() ? 'check' : '' }}</mat-icon>
+                        <span>{{ "toolbar.menu." + lang | translate }}</span>
+                    </button>
+                    }
+                </mat-menu>
+            </div>
+            <section class="login-card">
+                <h1 class="headline">{{ "forms.login.title" | translate }}</h1>
+                <p class="subtitle">{{ "forms.login.subtitle" | translate }}</p>
+                <nc-login-form (login)="onLogin($event)"></nc-login-form>
+            </section>
+        </main>
+    </div>
+</nc-authentication-overlay>

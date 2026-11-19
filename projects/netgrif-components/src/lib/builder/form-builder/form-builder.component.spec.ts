@@ -7,19 +7,21 @@ import {SelectedTransitionService} from '../modeler/selected-transition.service'
 import {FormBuilderComponent} from './form-builder.component';
 import {BuilderIntegrationService} from "../services/builder-integration.service";
 import {HistoryService} from "../modeler/services/history/history.service";
-import {HttpClientTestingModule} from "@angular/common/http/testing";
+import {GridsterService} from './gridster/gridster.service';
+import {provideHttpClientTesting} from "@angular/common/http/testing";
 import {RouterTestingModule} from "@angular/router/testing";
 import {TranslateService} from "@ngx-translate/core";
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
-xdescribe('FormBuilderComponent', () => {
+describe('FormBuilderComponent', () => {
     let component: FormBuilderComponent;
     let fixture: ComponentFixture<FormBuilderComponent>;
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
             declarations: [FormBuilderComponent],
+            schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA],
             imports: [
-                HttpClientTestingModule,
                 RouterTestingModule.withRoutes([]),
             ],
             providers: [
@@ -28,9 +30,12 @@ xdescribe('FormBuilderComponent', () => {
                 {provide: ModelService, useValue: {model: new PetriNet()}},
                 BuilderIntegrationService,
                 HistoryService,
-                {provide: TranslateService, useValue: { instant: (key: string) => `translated-${key}` }}
+                // provided by nc-builder in the application
+                GridsterService,
+                {provide: TranslateService, useValue: { instant: (key: string) => `translated-${key}` }},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
             ],
-            schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA],
         }).compileComponents();
         fixture = TestBed.createComponent(FormBuilderComponent);
         component = fixture.componentInstance;

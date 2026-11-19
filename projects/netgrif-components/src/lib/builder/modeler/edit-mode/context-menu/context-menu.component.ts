@@ -1,11 +1,13 @@
-import {ChangeDetectorRef, Component} from '@angular/core';
+import {ChangeDetectorRef, Component, ChangeDetectionStrategy} from '@angular/core';
 import {EditModeService} from '../edit-mode.service';
 import {MenuItem} from './menu-items/menu-item';
 
 @Component({
     selector: 'nc-builder-context-menu',
     templateUrl: './context-menu.component.html',
-    styleUrls: ['./context-menu.component.scss']
+    styleUrls: ['./context-menu.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class ContextMenuComponent {
 

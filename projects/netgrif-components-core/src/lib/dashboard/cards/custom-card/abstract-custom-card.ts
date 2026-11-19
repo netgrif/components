@@ -1,4 +1,4 @@
-import {Component, Injector, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, Injector, Input, OnDestroy, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {Filter} from '../../../filter/models/filter';
 import {CustomCard} from '../model/custom-dashboard-model/custom-card';
 import {DashboardResourceService} from '../../../resources/engine-endpoint/dashboard-resource.service';
@@ -12,7 +12,9 @@ import {Color} from "@swimlane/ngx-charts";
 
 @Component({
     selector: 'ncc-abstract-custom-card',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractCustomCardComponent implements OnInit, OnDestroy {
 

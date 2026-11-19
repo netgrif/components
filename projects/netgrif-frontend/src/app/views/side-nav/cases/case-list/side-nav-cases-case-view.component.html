@@ -1,0 +1,19 @@
+<div class="view">
+    <!-- search and the create button in one row, the button wraps under the search on a narrow view -->
+    <div class="search-row">
+        <nc-search class="search"></nc-search>
+        <nc-create-case-button [newCaseCreationConfig]="newCaseCreationConfig"
+                               (caseCreatedEvent)="handleCaseClick($event)"></nc-create-case-button>
+    </div>
+    <!-- header and rows scroll together, the paginator stays below them -->
+    <nc-case-list-paginator class="list"
+                            [selectedHeaders$]="selectedHeaders$"
+                            [width]="getWidth()"
+                            [responsiveBody]="true"
+                            [textEllipsis]="true"
+                            [redirectEnabled]="true"
+                            (caseClick)="handleCaseClick($event)">
+        <nc-header #header ncListHeader [type]="headerType" [maxHeaderColumns]="5" [responsiveHeaders]="true"
+                   [style.width]="getWidth()"></nc-header>
+    </nc-case-list-paginator>
+</div>

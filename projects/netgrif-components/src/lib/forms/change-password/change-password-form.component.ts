@@ -1,4 +1,4 @@
-import {Component, Inject, OnDestroy, Optional} from "@angular/core";
+import {Component, Inject, OnDestroy, Optional, ChangeDetectionStrategy} from "@angular/core";
 import {
     AbstractChangePasswordComponent,
     ProfileService,
@@ -14,7 +14,9 @@ import {Subscription} from "rxjs";
 @Component({
     selector: 'nc-change-password-form',
     templateUrl: './change-password-form.component.html',
-    styleUrls: ['./change-password-form.component.scss']
+    styleUrls: ['./change-password-form.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class ChangePasswordFormComponent extends AbstractChangePasswordComponent implements OnDestroy {
 

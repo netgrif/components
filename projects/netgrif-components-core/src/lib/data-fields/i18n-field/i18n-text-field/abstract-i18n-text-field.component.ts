@@ -1,4 +1,4 @@
-import {Component, Inject, OnDestroy, OnInit, Optional} from '@angular/core';
+import {Component, Inject, OnDestroy, OnInit, Optional, ChangeDetectionStrategy} from '@angular/core';
 import {DEFAULT_LANGUAGE_CODE, I18nField} from '../models/i18n-field';
 import {TranslateService} from '@ngx-translate/core';
 import {DomSanitizer} from '@angular/platform-browser';
@@ -11,7 +11,9 @@ import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-fie
 
 @Component({
     selector: 'ncc-abstract-i18n-text-field',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractI18nTextFieldComponent extends AbstractI18nErrorsComponent implements OnInit, OnDestroy {
 
@@ -117,6 +119,7 @@ export abstract class AbstractI18nTextFieldComponent extends AbstractI18nErrorsC
         this.filledShown = !this.filledShown;
     }
 
+    /** @deprecated the M3 templates truncate the texts with CSS (ellipsis) */
     public getCutProperty(i18nLabel): string {
         if (this.labelWidth !== i18nLabel.offsetWidth) {
             this.labelWidth = i18nLabel.offsetWidth;

@@ -1,0 +1,33 @@
+@mixin styles {
+    :host {
+        display: block;
+    }
+
+    .mat-mdc-list-item.master-row {
+        height: auto;
+        min-height: var(--mat-list-list-item-two-line-container-height, 64px);
+        padding-top: 4px;
+        padding-bottom: 4px;
+        border-radius: var(--mat-sys-corner-large);
+    }
+
+    .supporting {
+        font-family: monospace;
+    }
+
+    .row-actions {
+        display: flex;
+        align-items: center;
+        visibility: hidden;
+    }
+
+    .master-row:hover .row-actions,
+    .master-row:focus-within .row-actions,
+    .master-row.item-selected .row-actions {
+        visibility: visible;
+    }
+
+    .actual-item-badge {
+        color: var(--mat-sys-primary);
+    }
+}

@@ -1,8 +1,7 @@
 import {waitForAsync, ComponentFixture, TestBed, inject} from '@angular/core/testing';
 import {FlexLayoutModule} from '@ngbracket/ngx-layout';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
-import {Component, Inject, NO_ERRORS_SCHEMA, Optional} from '@angular/core';
+import {HttpTestingController, provideHttpClientTesting} from '@angular/common/http/testing';
+import {Component, Inject, NO_ERRORS_SCHEMA, Optional, ChangeDetectionStrategy} from '@angular/core';
 import {MaterialModule} from '../../material/material.module';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
 import {SignUpService} from '../../authentication/sign-up/services/sign-up.service';
@@ -16,6 +15,7 @@ import {NullAuthenticationService} from '../../authentication/services/methods/n
 import {MockSignUpService} from '../../utility/tests/mocks/mock-sign-up.service';
 import {TranslateService} from '@ngx-translate/core';
 import {NAE_MIN_PASSWORD_LENGTH} from "../min-password-length-token";
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('AbstractRegistrationPanelComponent', () => {
     let component: TestRegFormComponent;
@@ -24,20 +24,20 @@ describe('AbstractRegistrationPanelComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
+            declarations: [TestRegFormComponent],
+            schemas: [NO_ERRORS_SCHEMA],
             imports: [
                 MaterialModule,
                 FlexLayoutModule,
-                NoopAnimationsModule,
-                HttpClientTestingModule,
                 TranslateLibModule
             ],
-            declarations: [TestRegFormComponent],
             providers: [
                 {provide: SignUpService, useClass: MockSignUpService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
-                {provide: AuthenticationMethodService, useClass: NullAuthenticationService}
-            ],
-            schemas: [NO_ERRORS_SCHEMA]
+                {provide: AuthenticationMethodService, useClass: NullAuthenticationService},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
+            ]
         })
             .compileComponents();
     }));
@@ -81,7 +81,9 @@ describe('AbstractRegistrationPanelComponent', () => {
 
 @Component({
     selector: 'ncc-test-reg',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestRegFormComponent extends AbstractRegistrationFormComponent {
     constructor(formBuilder: FormBuilder, signupService: SignUpService, log: LoggerService, translate: TranslateService, @Optional() @Inject(NAE_MIN_PASSWORD_LENGTH)  minPasswordLength) {

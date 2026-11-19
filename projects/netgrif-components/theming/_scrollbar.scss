@@ -1,0 +1,57 @@
+
+$size: 8px;
+$gap: 4px;
+$box: $size + $gap;
+$radius: 4px;
+
+/// @param {Length} $track-offset-top - start of the track, e.g. below a sticky header
+@mixin list-scrollbar($track-offset-top: 0px) {
+    box-sizing: border-box;
+    scrollbar-gutter: stable;
+    width: calc(100% + #{$box});
+    margin-right: -$box;
+
+    @supports not selector(::-webkit-scrollbar) {
+        scrollbar-color: var(--mat-sys-outline) transparent;
+        scrollbar-width: thin;
+    }
+
+    &::-webkit-scrollbar {
+        width: $box;
+        height: $box;
+        background-color: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: var(--mat-sys-outline);
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+        background-color: var(--mat-sys-on-surface-variant);
+    }
+
+    &::-webkit-scrollbar-track,
+    &::-webkit-scrollbar-thumb {
+        background-clip: padding-box;
+    }
+
+    &::-webkit-scrollbar-track:vertical,
+    &::-webkit-scrollbar-thumb:vertical {
+        border-left: $gap solid transparent;
+        border-radius: #{$radius + $gap} #{$radius} #{$radius} #{$radius + $gap} / #{$radius};
+    }
+
+    &::-webkit-scrollbar-track:horizontal,
+    &::-webkit-scrollbar-thumb:horizontal {
+        border-top: $gap solid transparent;
+        border-radius: #{$radius} / #{$radius + $gap} #{$radius + $gap} #{$radius} #{$radius};
+    }
+
+    &::-webkit-scrollbar-track:vertical {
+        margin-top: $track-offset-top;
+    }
+
+    &::-webkit-scrollbar-corner {
+        background-color: transparent;
+    }
+}

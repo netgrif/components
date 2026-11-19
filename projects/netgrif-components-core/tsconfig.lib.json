@@ -7,10 +7,6 @@
         "declaration": true,
         "inlineSources": true,
         "types": [],
-        "lib": [
-            "dom",
-            "es2018"
-        ],
         "allowSyntheticDefaultImports": true,
         "resolveJsonModule": true,
         "esModuleInterop": true
@@ -19,12 +15,12 @@
         "skipTemplateCodegen": true,
         "strictMetadataEmit": true,
         "enableResourceInlining": true,
-        "fullTemplateTypeCheck": true
+        "fullTemplateTypeCheck": true,
+        "strictTemplates": false
     },
     "exclude": [
         "src/test.ts",
-        "**/*.spec.ts",
-        "schematics/**"
+        "**/*.spec.ts"
     ],
     "typedocOptions": {
         "exclude": "**/*.spec.ts",

@@ -1,14 +1,14 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {FilterFieldContentComponent} from './filter-field-content.component';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {
     ConfigurationService, TestConfigurationService, FilterField, FieldTypeResource, NAE_FILTER_FIELD,
     DefaultSearchCategoriesModule, UserService, MockUserService, User, AuthenticationModule
 } from '@netgrif/components-core';
 import {AdvancedSearchComponentModule} from '../../../search/advanced-search/advanced-search.module';
-import {NoopAnimationsModule} from "@angular/platform-browser/animations";
-import {Injectable} from "@angular/core";
-import {RouterTestingModule} from "@angular/router/testing";
+import {Injectable} from '@angular/core';
+import {RouterTestingModule} from '@angular/router/testing';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('FilterFieldContentComponent', () => {
     let component: FilterFieldContentComponent;
@@ -18,11 +18,10 @@ describe('FilterFieldContentComponent', () => {
         const field = new FilterField('', '', '', FieldTypeResource.CASE_FILTER, [], {}, '', '');
 
         await TestBed.configureTestingModule({
+            declarations: [FilterFieldContentComponent],
             imports: [
                 AdvancedSearchComponentModule,
-                HttpClientTestingModule,
                 DefaultSearchCategoriesModule,
-                NoopAnimationsModule,
                 AuthenticationModule,
                 RouterTestingModule.withRoutes([]),
             ],
@@ -30,9 +29,8 @@ describe('FilterFieldContentComponent', () => {
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: NAE_FILTER_FIELD, useValue: field},
                 {provide: UserService, useClass: CustomMockUserService},
-            ],
-            declarations: [
-                FilterFieldContentComponent
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
             ]
         }).compileComponents();
     });

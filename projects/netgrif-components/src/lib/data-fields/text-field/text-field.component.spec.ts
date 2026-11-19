@@ -1,15 +1,14 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {AngularResizeEventModule} from 'angular-resize-event';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {DataFieldTemplateComponent} from '../data-field-template/data-field-template.component';
-import {Component, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA} from '@angular/core';
+import {Component, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA, ChangeDetectionStrategy} from '@angular/core';
 import {SimpleTextFieldComponent} from './simple-text-field/simple-text-field.component';
 import {TextareaFieldComponent} from './textarea-field/textarea-field.component';
 import {RichTextareaFieldComponent} from './rich-textarea-field/rich-textarea-field.component';
 import {TextFieldComponent} from './text-field.component';
 import {CovalentModule, MaterialModule, TextField, TranslateLibModule} from '@netgrif/components-core';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('TextFieldComponent', () => {
     let component: TextFieldComponent;
@@ -17,8 +16,6 @@ describe('TextFieldComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
-            imports: [MaterialModule, AngularResizeEventModule, NoopAnimationsModule,
-                CovalentModule, TranslateLibModule, HttpClientTestingModule],
             declarations: [
                 DataFieldTemplateComponent,
                 SimpleTextFieldComponent,
@@ -26,7 +23,16 @@ describe('TextFieldComponent', () => {
                 RichTextareaFieldComponent,
                 TestWrapperComponent
             ],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
+            schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
+            imports: [
+                MaterialModule,
+                CovalentModule,
+                TranslateLibModule
+            ],
+            providers: [
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
+            ]
         }).compileComponents();
         fixture = TestBed.createComponent(TestWrapperComponent);
         component = fixture.debugElement.children[0].componentInstance;
@@ -44,7 +50,9 @@ describe('TextFieldComponent', () => {
 
 @Component({
     selector: 'nc-test-wrapper',
-    template: '<nc-text-field [dataField]="field"></nc-text-field>'
+    template: '<nc-text-field [dataField]="field"></nc-text-field>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestWrapperComponent {
     field = new TextField('', '', '', {

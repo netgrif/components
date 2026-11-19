@@ -1,12 +1,12 @@
 import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 
 import { DefaultPublicResolverComponent } from './default-public-resolver.component';
-import {HttpClientTestingModule} from "@angular/common/http/testing";
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {provideHttpClientTesting} from "@angular/common/http/testing";
 import {RouterTestingModule} from "@angular/router/testing";
 import {AuthenticationMethodService,
     ConfigurationService, MaterialModule, MockAuthenticationMethodService,
     TestConfigurationService, TranslateLibModule, UserService } from '@netgrif/components-core';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('DefaultPublicResolverComponent', () => {
     let component: DefaultPublicResolverComponent;
@@ -16,16 +16,16 @@ describe('DefaultPublicResolverComponent', () => {
         TestBed.configureTestingModule({
             declarations: [DefaultPublicResolverComponent],
             imports: [
-                HttpClientTestingModule,
                 MaterialModule,
-                BrowserAnimationsModule,
                 RouterTestingModule.withRoutes([]),
                 TranslateLibModule
             ],
             providers: [
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
-                UserService
+                UserService,
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
             ]
         })
             .compileComponents();

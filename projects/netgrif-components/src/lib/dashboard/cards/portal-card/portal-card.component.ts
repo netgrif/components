@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Injector, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Injector, Input, OnInit, Output, ChangeDetectionStrategy} from '@angular/core';
 import {AbstractCustomCardComponent, DashboardEventContent, DashboardResourceService} from '@netgrif/components-core';
 import {TranslateService} from '@ngx-translate/core';
 import {ComponentPortal, Portal} from '@angular/cdk/portal';
@@ -7,7 +7,8 @@ import {AggregationResult, LoggerService} from '@netgrif/components-core';
 @Component({
     selector: 'nc-portal-card',
     templateUrl: './portal-card.component.html',
-    styleUrls: ['./portal-card.component.scss']
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class PortalCardComponent extends AbstractCustomCardComponent implements OnInit {
 

@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, ChangeDetectionStrategy} from '@angular/core';
 import {Locale} from '../../classes/locale';
 import {SafeHtml} from "@angular/platform-browser";
 import {LanguageIconsService} from "@netgrif/components-core";
@@ -7,6 +7,8 @@ import {LanguageIconsService} from "@netgrif/components-core";
     selector: 'nc-builder-flag',
     templateUrl: './flag.component.html',
     styleUrls: ['./flag.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false,
 })
 export class FlagComponent {
 

@@ -1,12 +1,11 @@
 import {AbstractRoleAssignmentComponent} from './abstract-role-assignment.component';
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {MaterialModule} from '../../material/material.module';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
-import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+import {Component, CUSTOM_ELEMENTS_SCHEMA, ChangeDetectionStrategy} from '@angular/core';
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
 import {SnackBarModule} from '../../snack-bar/snack-bar.module';
 import {ErrorSnackBarComponent} from '../../snack-bar/components/error-snack-bar/error-snack-bar.component';
@@ -18,6 +17,7 @@ import {RouterTestingModule} from '@angular/router/testing';
 import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
 import {AuthenticationService} from '../../authentication/services/authentication/authentication.service';
 import {MockAuthenticationService} from '../../utility/tests/mocks/mock-authentication.service';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('AbstractRoleAssignment', () => {
     let component: TestRoleAssignmentComponent;
@@ -25,9 +25,9 @@ describe('AbstractRoleAssignment', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
+            schemas: [CUSTOM_ELEMENTS_SCHEMA],
+            declarations: [TestRoleAssignmentComponent],
             imports: [
-                NoopAnimationsModule,
-                HttpClientTestingModule,
                 MaterialModule,
                 TranslateLibModule,
                 SnackBarModule,
@@ -37,11 +37,9 @@ describe('AbstractRoleAssignment', () => {
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
-                RoleAssignmentService
-            ],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA],
-            declarations: [
-                TestRoleAssignmentComponent
+                RoleAssignmentService,
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
             ],
         }).compileComponents();
     }));
@@ -64,6 +62,8 @@ describe('AbstractRoleAssignment', () => {
 @Component({
     selector: 'ncc-test-role-assignment',
     template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false,
 })
 class TestRoleAssignmentComponent extends AbstractRoleAssignmentComponent {
     constructor(protected _service: RoleAssignmentService, protected _userService: UserService) {

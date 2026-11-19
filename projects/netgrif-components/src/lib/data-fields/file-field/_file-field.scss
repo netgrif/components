@@ -1,0 +1,192 @@
+@mixin styles {
+    :host {
+        display: block;
+        min-height: calc(var(--mat-form-field-container-height, 56px) + 20px);
+    }
+
+    .file-field {
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+    }
+
+    .file-body {
+        display: flex;
+        align-items: flex-start;
+        gap: 16px;
+        min-width: 0;
+    }
+
+    .file-column {
+        display: flex;
+        flex: 1 1 auto;
+        flex-direction: column;
+        min-width: 0;
+    }
+
+    .file-outline {
+        box-sizing: border-box;
+        flex: 0 0 auto;
+        min-width: 0;
+        margin: 0;
+        padding: 0 4px 0 12px;
+        border: 1px solid var(--mat-sys-outline);
+        border-radius: var(--mat-sys-corner-extra-small);
+        transition: border-color 120ms, background-color 120ms;
+
+        legend {
+            max-width: calc(100% - 16px);
+            padding: 0 4px;
+            overflow: hidden;
+            color: var(--mat-sys-on-surface-variant);
+            font: var(--mat-sys-body-small);
+            letter-spacing: var(--mat-sys-body-small-tracking);
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        .required {
+            margin-left: 1px;
+        }
+
+        &:hover {
+            border-color: var(--mat-sys-on-surface);
+        }
+    }
+
+    .file-outline:has(> legend) {
+        margin-top: -8px;
+    }
+
+    .empty .file-outline {
+        border-style: dashed;
+    }
+
+    .drag-over .file-outline {
+        border: 2px solid var(--mat-sys-primary);
+        background: color-mix(in srgb, var(--mat-sys-primary) 8%, transparent);
+
+        legend {
+            color: var(--mat-sys-primary);
+        }
+    }
+
+    .invalid .file-outline {
+        border-color: var(--mat-sys-error);
+
+        legend {
+            color: var(--mat-sys-error);
+        }
+    }
+
+    .disabled .file-outline {
+        border-color: color-mix(in srgb, var(--mat-sys-on-surface) 12%, transparent);
+
+        legend,
+        .file-line {
+            color: color-mix(in srgb, var(--mat-sys-on-surface) 38%, transparent);
+        }
+    }
+
+    .file-line {
+        box-sizing: border-box;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        min-height: calc(var(--mat-form-field-container-height, 56px) - 2px);
+        color: var(--mat-sys-on-surface);
+        font: var(--mat-sys-body-large);
+        letter-spacing: var(--mat-sys-body-large-tracking);
+        min-width: 0;
+    }
+
+    .file-outline > legend + .file-line {
+        min-height: calc(var(--mat-form-field-container-height, 56px) - 9px);
+    }
+
+    .file-line + .file-line {
+        border-top: 1px solid var(--mat-sys-outline-variant);
+    }
+
+    .drop {
+        color: var(--mat-sys-on-surface-variant);
+        cursor: pointer;
+
+        &:focus-visible {
+            outline: 2px solid var(--mat-sys-primary);
+            outline-offset: -2px;
+            border-radius: var(--mat-sys-corner-extra-small);
+        }
+    }
+
+    .disabled .drop {
+        cursor: default;
+    }
+
+    .lead-icon {
+        flex: 0 0 auto;
+        color: var(--mat-sys-on-surface-variant);
+    }
+
+    .file-icon {
+        flex: 0 0 auto;
+        color: var(--mat-sys-primary);
+    }
+
+    .drop-text {
+        flex: 1 1 auto;
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .browse {
+        padding: 0;
+        border: 0;
+        background: none;
+        color: var(--mat-sys-primary);
+        font: inherit;
+        text-decoration: underline;
+        text-underline-offset: 2px;
+        cursor: pointer;
+    }
+
+    .file-name {
+        flex: 1 1 auto;
+        min-width: 0;
+        padding: 0;
+        overflow: hidden;
+        border: 0;
+        background: none;
+        color: inherit;
+        font: inherit;
+        text-align: start;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        cursor: pointer;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+
+    .file-actions {
+        display: flex;
+        flex: 0 0 auto;
+    }
+
+    .supporting {
+        padding: 4px 16px 0;
+        color: var(--mat-sys-on-surface-variant);
+        font: var(--mat-sys-body-small);
+        letter-spacing: var(--mat-sys-body-small-tracking);
+
+        &.error {
+            color: var(--mat-sys-error);
+        }
+    }
+
+    mat-progress-bar {
+        margin-top: 2px;
+    }
+}

@@ -1,0 +1,45 @@
+:host {
+    display: block;
+    max-width: 1400px;
+    padding: 24px;
+}
+
+.header p {
+    max-width: 760px;
+    color: var(--mat-sys-on-surface-variant);
+}
+
+section {
+    margin-top: 24px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 16px;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 16px;
+    border-radius: var(--mat-sys-corner-medium);
+    border: 1px solid var(--mat-sys-outline-variant);
+    background: var(--mat-sys-surface-container-low);
+    color: var(--mat-sys-on-surface);
+    text-decoration: none;
+    transition: background-color 150ms;
+
+    &:hover {
+        background: var(--mat-sys-surface-container-high);
+    }
+
+    mat-icon {
+        color: var(--mat-sys-primary);
+    }
+}
+
+.description {
+    color: var(--mat-sys-on-surface-variant);
+}

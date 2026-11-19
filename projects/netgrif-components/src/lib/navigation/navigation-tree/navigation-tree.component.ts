@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, ChangeDetectionStrategy} from '@angular/core';
 import {Router} from '@angular/router';
 import {
     AbstractNavigationTreeComponent, AccessService,
@@ -14,7 +14,9 @@ import {
 @Component({
     selector: 'nc-navigation-tree',
     templateUrl: './navigation-tree.component.html',
-    styleUrls: ['./navigation-tree.component.scss']
+    styleUrls: ['./navigation-tree.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class NavigationTreeComponent extends AbstractNavigationTreeComponent {
 

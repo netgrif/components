@@ -1,12 +1,3 @@
-.events {
-  margin-left: 16px;
-}
+@use '../translation-group';
 
-.margin-none {
-    margin: 0;
-}
-
-mat-divider {
-    margin-top: 2px;
-    margin-bottom: 2px;
-}
+@include translation-group.styles;

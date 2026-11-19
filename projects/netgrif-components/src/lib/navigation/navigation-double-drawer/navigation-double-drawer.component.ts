@@ -1,4 +1,5 @@
-import {Component, Inject} from '@angular/core';
+import {Component, Inject, ChangeDetectionStrategy, inject, OnDestroy, OnInit} from '@angular/core';
+import {Subscription} from 'rxjs';
 import {ActivatedRoute, Router} from '@angular/router';
 import {BreakpointObserver} from '@angular/cdk/layout';
 import {
@@ -12,6 +13,8 @@ import {
     AbstractNavigationDoubleDrawerComponent,
     DynamicNavigationRouteProviderService,
     AccessService,
+    AppearanceService,
+    darkColorScheme$,
     ImpersonationUserSelectService,
     ImpersonationService,
     CaseResourceService,
@@ -19,43 +22,19 @@ import {
     DoubleDrawerNavigationService,
     NAE_TASK_VIEW_COMPONENT
 } from '@netgrif/components-core';
-import {animate, state, style, transition, trigger} from "@angular/animations";
 import {TranslateService} from "@ngx-translate/core";
 import {MatDialog} from "@angular/material/dialog";
 import {ComponentType} from "@angular/cdk/portal";
+import {AppearanceDialogComponent} from './appearance-dialog/appearance-dialog.component';
 
 @Component({
     selector: 'nc-navigation-double-drawer',
     templateUrl: './navigation-double-drawer.component.html',
     styleUrls: ['./navigation-double-drawer.component.scss'],
-    animations: [
-        trigger('sectionExpansion', [
-            state('expanded, void', style({
-                height: '*',
-                visibility: 'visible'
-            })),
-            state('collapsed', style({
-                height: '0px',
-                visibility: 'hidden'
-            })),
-            transition('expanded <=> collapsed, void => expanded', [
-                animate('225ms cubic-bezier(0.4,0.0,0.2,1)')
-            ])
-        ]),
-        trigger('indicatorRotate', [
-            state('expanded, void', style({
-                transform: 'rotate(180deg)'
-            })),
-            state('collapsed', style({
-                transform: 'rotate(0deg)'
-            })),
-            transition('expanded <=> collapsed, void => expanded', [
-                animate('225ms cubic-bezier(0.4,0.0,0.2,1)')
-            ])
-        ])
-    ]
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
-export class NavigationDoubleDrawerComponent extends AbstractNavigationDoubleDrawerComponent {
+export class NavigationDoubleDrawerComponent extends AbstractNavigationDoubleDrawerComponent implements OnInit, OnDestroy {
 
     public isSectionOpen = {
         folders: true,
@@ -92,4 +71,45 @@ export class NavigationDoubleDrawerComponent extends AbstractNavigationDoubleDra
         this.isSectionOpen[section] = !this.isSectionOpen[section];
     }
 
+    private readonly _appearance = inject(AppearanceService);
+    /** the light / dark mode in effect, kept up to date (the template reads it instead of querying it every check) */
+    public darkMode = this._appearance.isDarkMode();
+    protected _darkModeSub: Subscription = darkColorScheme$().subscribe(dark => this.darkMode = dark);
+    private readonly _matDialog = inject(MatDialog);
+
+    public ngOnInit(): void {
+        super.ngOnInit();
+    }
+
+    public openAppearance(): void {
+        this._matDialog.open(AppearanceDialogComponent, { width: '560px' });
+    }
+
+    public languages(): Array<string> {
+        return this._languageService.getTranslations().map(trans => trans.key);
+    }
+
+    public currentLanguage(): string {
+        return this._languageService.getLanguage();
+    }
+
+    public setLanguage(lang: string): void {
+        this._languageService.setLanguage(lang, true);
+    }
+
+    /**
+     * Dark mode is the user's choice (class on html) or the OS preference.
+     */
+    public isDarkMode(): boolean {
+        return this.darkMode;
+    }
+
+    public ngOnDestroy(): void {
+        super.ngOnDestroy();
+        this._darkModeSub.unsubscribe();
+    }
+
+    public toggleDarkMode(): void {
+        this._appearance.toggleDarkMode();
+    }
 }

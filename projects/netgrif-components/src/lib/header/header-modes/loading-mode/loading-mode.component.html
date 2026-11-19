@@ -1,15 +1,13 @@
-<div fxFlex="100" fxLayout="row" fxLayoutAlign=" center">
-    <div *ngFor="let header of headerService.headerState.selectedHeaders$ | async; let i = index" fxFlex
-         [fxHide.lt-xl]="i >= 4 && this.headerService.responsiveHeaders && !this.headerService.overflowMode"
-         [fxHide.lt-lg]="i >= 3 && this.headerService.responsiveHeaders && !this.headerService.overflowMode"
-         [fxHide.lt-md]="i >= 2 && this.headerService.responsiveHeaders && !this.headerService.overflowMode"
-         [fxHide.lt-sm]="i >= 1 && this.headerService.responsiveHeaders && !this.headerService.overflowMode"
-         [ngStyle]="{'min-width': getMinWidth()}">
-        <div class="phl-item">
-            <div class="phl-row" fxLayoutAlign="start center">
-                <div class="phl-col">
-                </div>
-            </div>
-        </div>
+<div fxFlex fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px" role="progressbar" aria-busy="true">
+    @for (header of headerService.headerState.selectedHeaders$ | async; track $index; let i = $index) {
+    <div fxFlex class="table-column"
+         [fxHide.lt-xl]="i >= 4 && headerService.responsiveHeaders && !headerService.overflowMode"
+         [fxHide.lt-lg]="i >= 3 && headerService.responsiveHeaders && !headerService.overflowMode"
+         [fxHide.lt-md]="i >= 2 && headerService.responsiveHeaders && !headerService.overflowMode"
+         [fxHide.lt-sm]="i >= 1 && headerService.responsiveHeaders && !headerService.overflowMode">
+        <div class="skeleton"></div>
     </div>
+    } @empty {
+    <mat-progress-bar fxFlex mode="indeterminate"></mat-progress-bar>
+    }
 </div>

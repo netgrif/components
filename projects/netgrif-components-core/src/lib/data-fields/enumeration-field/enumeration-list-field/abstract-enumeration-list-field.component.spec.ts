@@ -1,8 +1,6 @@
 import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
-import {AngularResizeEventModule} from 'angular-resize-event';
-import {BrowserAnimationsModule, NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {Component, CUSTOM_ELEMENTS_SCHEMA, Inject, Optional} from '@angular/core';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
+import {Component, CUSTOM_ELEMENTS_SCHEMA, Inject, Optional, ChangeDetectionStrategy} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {MaterialModule} from '../../../material/material.module';
 import {TranslateLibModule} from '../../../translate/translate-lib.module';
@@ -11,6 +9,7 @@ import {WrappedBoolean} from '../../data-field-template/models/wrapped-boolean';
 import {EnumerationField} from '../models/enumeration-field';
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
 import {DynamicEnumerationField} from "../models/dynamic-enumeration-field";
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('AbstractEnumerationListFieldComponent', () => {
     let component: TestEnumListComponent;
@@ -18,13 +17,11 @@ describe('AbstractEnumerationListFieldComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
+            declarations: [TestEnumListComponent, TestWrapperComponent],
+            schemas: [CUSTOM_ELEMENTS_SCHEMA],
             imports: [
                 MaterialModule,
-                AngularResizeEventModule,
-                BrowserAnimationsModule,
-                TranslateLibModule,
-                HttpClientTestingModule,
-                NoopAnimationsModule
+                TranslateLibModule
             ],
             providers: [
                 {provide: DATA_FIELD_PORTAL_DATA, useValue: {
@@ -38,10 +35,10 @@ describe('AbstractEnumerationListFieldComponent', () => {
                         formControlRef: new FormControl(),
                         showLargeLayout: new WrappedBoolean()
                     } as DataFieldPortalData<EnumerationField>
-                }
-            ],
-            declarations: [TestEnumListComponent, TestWrapperComponent],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA]
+                },
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
+            ]
         })
             .compileComponents();
 
@@ -61,7 +58,9 @@ describe('AbstractEnumerationListFieldComponent', () => {
 
 @Component({
     selector: 'ncc-test-enum-list',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestEnumListComponent extends AbstractEnumerationListFieldComponent {
     constructor(@Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<DynamicEnumerationField>) {
@@ -71,7 +70,9 @@ class TestEnumListComponent extends AbstractEnumerationListFieldComponent {
 
 @Component({
     selector: 'ncc-test-wrapper',
-    template: '<ncc-test-enum-list></ncc-test-enum-list>'
+    template: '<ncc-test-enum-list></ncc-test-enum-list>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestWrapperComponent {
 }

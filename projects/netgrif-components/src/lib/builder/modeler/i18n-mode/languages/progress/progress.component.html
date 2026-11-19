@@ -1,8 +1,12 @@
-<div class="card" fxLayout="row" fxLayoutAlign="start center">
-    <nc-builder-flag class="select" [locale]="locale" (click)="emitSelectLocale()"></nc-builder-flag>
-    <span class="select" fxFlex (click)="emitSelectLocale()">{{locale.prettyName}}</span>
-    <button mat-icon-button class="button-line" matTooltip="{{ 'builder.modeler.i18n-mode.removeLocale' | translate }}"
-            (click)="removeLocale()" *ngIf="!_builderModeService.readOnly">
+<div class="item">
+    <button type="button" class="select" (click)="emitSelectLocale()">
+        <nc-builder-flag class="flag" [locale]="locale"></nc-builder-flag>
+        <span class="name">{{ locale.prettyName }}</span>
+        <mat-icon class="chevron">chevron_right</mat-icon>
+    </button>
+    @if (!_builderModeService.readOnly) {
+    <button mat-icon-button type="button" matTooltip="{{ 'builder.modeler.i18n-mode.removeLocale' | translate }}" (click)="removeLocale()">
         <mat-icon>delete</mat-icon>
     </button>
+    }
 </div>

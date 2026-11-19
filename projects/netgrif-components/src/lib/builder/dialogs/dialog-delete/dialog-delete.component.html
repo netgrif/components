@@ -1,8 +1,8 @@
 <h2 mat-dialog-title>{{ 'builder.dialogs.delete.title' | translate }}</h2>
-<mat-dialog-content class="mat-typography padding-top-4px">
-    <h3>{{ 'builder.dialogs.delete.message' | translate }}</h3>
+<mat-dialog-content class="dialog-column">
+    <p class="supporting-text">{{ 'builder.dialogs.delete.message' | translate }}</p>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
     <button [mat-dialog-close]="false" mat-button>{{ 'builder.dialogs.delete.cancel' | translate }}</button>
-    <button [mat-dialog-close]="true" cdkFocusInitial mat-button>{{ 'builder.dialogs.delete.confirm' | translate }}</button>
+    <button [mat-dialog-close]="true" cdkFocusInitial mat-flat-button>{{ 'builder.dialogs.delete.confirm' | translate }}</button>
 </mat-dialog-actions>

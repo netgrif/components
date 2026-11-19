@@ -1,8 +1,6 @@
 import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
-import {AngularResizeEventModule} from 'angular-resize-event';
-import {BrowserAnimationsModule, NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {Component, CUSTOM_ELEMENTS_SCHEMA, Inject, Optional} from '@angular/core';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
+import {Component, CUSTOM_ELEMENTS_SCHEMA, Inject, Optional, ChangeDetectionStrategy} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {MaterialModule} from '../../../material/material.module';
 import {TranslateLibModule} from '../../../translate/translate-lib.module';
@@ -10,6 +8,7 @@ import {AbstractMultichoiceListFieldComponent} from './abstract-multichoice-list
 import {WrappedBoolean} from '../../data-field-template/models/wrapped-boolean';
 import {MultichoiceField} from '../models/multichoice-field';
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('AbstractMultichoiceListFieldComponent', () => {
     let component: TestEnumComponent;
@@ -17,13 +16,11 @@ describe('AbstractMultichoiceListFieldComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
+            declarations: [TestEnumComponent, TestWrapperComponent],
+            schemas: [CUSTOM_ELEMENTS_SCHEMA],
             imports: [
                 MaterialModule,
-                AngularResizeEventModule,
-                BrowserAnimationsModule,
-                TranslateLibModule,
-                HttpClientTestingModule,
-                NoopAnimationsModule
+                TranslateLibModule
             ],
             providers: [
                 {provide: DATA_FIELD_PORTAL_DATA, useValue: {
@@ -37,10 +34,10 @@ describe('AbstractMultichoiceListFieldComponent', () => {
                         formControlRef: new FormControl(),
                         showLargeLayout: new WrappedBoolean()
                     } as DataFieldPortalData<MultichoiceField>
-                }
-            ],
-            declarations: [TestEnumComponent, TestWrapperComponent],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA]
+                },
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
+            ]
         })
             .compileComponents();
 
@@ -60,7 +57,9 @@ describe('AbstractMultichoiceListFieldComponent', () => {
 
 @Component({
     selector: 'ncc-test-enum',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestEnumComponent extends AbstractMultichoiceListFieldComponent {
     constructor(@Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<MultichoiceField>) {
@@ -70,7 +69,9 @@ class TestEnumComponent extends AbstractMultichoiceListFieldComponent {
 
 @Component({
     selector: 'ncc-test-wrapper',
-    template: '<ncc-test-enum></ncc-test-enum>'
+    template: '<ncc-test-enum></ncc-test-enum>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestWrapperComponent {
 

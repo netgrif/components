@@ -2,10 +2,10 @@ import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {EmailSubmissionFormComponent} from './email-submission-form.component';
 import {FormBuilder} from '@angular/forms';
 import {FlexLayoutModule} from '@ngbracket/ngx-layout';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ConfigurationService, MaterialModule, TestConfigurationService, TranslateLibModule} from '@netgrif/components-core';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {LegalNoticeModule} from '../../legal/legal-notice/legal-notice.module';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('EmailSubmissionFormComponent', () => {
     let component: EmailSubmissionFormComponent;
@@ -13,18 +13,18 @@ describe('EmailSubmissionFormComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
+            declarations: [EmailSubmissionFormComponent],
             imports: [
                 MaterialModule,
                 FlexLayoutModule,
-                BrowserAnimationsModule,
                 TranslateLibModule,
-                HttpClientTestingModule,
                 LegalNoticeModule
             ],
-            declarations: [EmailSubmissionFormComponent],
             providers: [
                 FormBuilder,
-                {provide: ConfigurationService, useClass: TestConfigurationService}
+                {provide: ConfigurationService, useClass: TestConfigurationService},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
             ]
         })
             .compileComponents();

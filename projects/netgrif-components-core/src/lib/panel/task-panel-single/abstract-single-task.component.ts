@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Inject, Input, OnDestroy, Optional, Output, TemplateRef } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, OnDestroy, Optional, Output, TemplateRef, ChangeDetectionStrategy } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { TaskPanelData } from '../task-panel-list/task-panel-data/task-panel-data';
 import { MatExpansionPanel } from '@angular/material/expansion';
@@ -12,7 +12,9 @@ import { ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'ncc-abstract-single-task',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractSingleTaskComponent implements OnDestroy {
 

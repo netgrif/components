@@ -1,4 +1,4 @@
-import {Component, Input, Optional} from '@angular/core';
+import {Component, Input, Optional, ChangeDetectionStrategy} from '@angular/core';
 import {Case} from '../../resources/interface/case';
 import {toMoment} from '../../resources/types/nae-date-type';
 import {HeaderColumn} from '../../header/models/header-column';
@@ -23,7 +23,9 @@ import {FormControl} from '@angular/forms';
 
 @Component({
     selector: 'ncc-abstract-case-panel',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractCasePanelComponent extends AbstractPanelWithImmediateDataComponent {
 
@@ -111,6 +113,6 @@ export abstract class AbstractCasePanelComponent extends AbstractPanelWithImmedi
     }
 
     public getMinWidth() {
-        return (this._overflowService && this._overflowService.overflowMode) ? `${this._overflowService.columnWidth}px` : '0';
+        return (this._overflowService && this._overflowService.overflowMode) ? `${OverflowService.MIN_COLUMN_WIDTH}px` : '0';
     }
 }

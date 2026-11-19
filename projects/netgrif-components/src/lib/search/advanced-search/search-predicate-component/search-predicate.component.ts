@@ -1,4 +1,4 @@
-import {Component, Inject, Type} from '@angular/core';
+import {Component, Inject, Type, ChangeDetectionStrategy} from '@angular/core';
 import {
     AbstractSearchPredicateComponent,
     AdvancedSearchComponentInitializationService,
@@ -10,7 +10,9 @@ import {
 @Component({
     selector: 'nc-search-predicate',
     templateUrl: './search-predicate.component.html',
-    styleUrls: ['./search-predicate.component.scss']
+    styleUrls: ['./search-predicate.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class SearchPredicateComponent extends AbstractSearchPredicateComponent {
 

@@ -1,36 +1,30 @@
-mat-dialog-content {
+@use '../../../dialog/dialog';
+
+@include dialog.styles;
+
+.links {
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 16px;
 }
 
-mat-dialog-actions {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    column-gap: 16px;
 }
 
-.icon-select {
+.section-title {
+    margin: 16px 0 8px;
+    color: var(--mat-sys-on-surface-variant);
+    font: var(--mat-sys-title-small);
+    letter-spacing: var(--mat-sys-title-small-tracking);
+}
+
+.tag-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr auto;
     align-items: center;
-}
-
-.icon-preview {
-    padding-left: 8px;
-    padding-right: 8px;
-    overflow: hidden;
-}
-
-.loading-text {
-    height: 65px;
-}
-
-.margin-right8px {
-    margin-right: 6px;
-}
-
-.margin-html {
-    margin-top: 6px;
-}
-
-.padding-top-4px {
-    padding-top: 4px !important;
+    gap: 8px;
 }

@@ -1,12 +1,14 @@
 import {NumberField, NumberFieldValidation} from './models/number-field';
 import {TranslateService} from '@ngx-translate/core';
-import {Component, Inject, Optional} from '@angular/core';
+import {Component, Inject, Optional, ChangeDetectionStrategy} from '@angular/core';
 import {AbstractBaseDataFieldComponent} from "../base-component/abstract-base-data-field.component";
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../models/data-field-portal-data-injection-token";
 
 @Component({
     selector: 'ncc-abstract-number-errors-field',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractNumberErrorsComponent extends AbstractBaseDataFieldComponent<NumberField>{
 

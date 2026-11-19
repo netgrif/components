@@ -1,8 +1,7 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {HeaderComponent} from './header.component';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {of} from 'rxjs';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {MatIconModule} from '@angular/material/icon';
 import {HeaderComponentModule} from './header.module';
 import {
@@ -24,6 +23,7 @@ import {
     ViewService
 } from '@netgrif/components-core';
 import {RouterTestingModule} from "@angular/router/testing";
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('HeaderComponent', () => {
     let component: HeaderComponent;
@@ -31,11 +31,13 @@ describe('HeaderComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
+            declarations: [
+                ErrorSnackBarComponent,
+                SuccessSnackBarComponent
+            ],
             imports: [
                 HeaderComponentModule,
-                NoopAnimationsModule,
                 TranslateLibModule,
-                HttpClientTestingModule,
                 MatIconModule,
                 RouterTestingModule.withRoutes([])
             ],
@@ -47,11 +49,9 @@ describe('HeaderComponent', () => {
                 {provide: CaseViewService, useValue: {allowedNets$: of([])}},
                 {provide: ViewService, useClass: TestViewService},
                 {provide: AllowedNetsService, useFactory: TestNoAllowedNetsFactory, deps: [AllowedNetsServiceFactory]},
-                OverflowService
-            ],
-            declarations: [
-                ErrorSnackBarComponent,
-                SuccessSnackBarComponent
+                OverflowService,
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
             ]
         }).compileComponents();
     }));

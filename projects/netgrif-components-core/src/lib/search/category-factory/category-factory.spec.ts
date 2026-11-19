@@ -1,23 +1,23 @@
 import {TestBed} from '@angular/core/testing';
 import {CategoryFactory} from './category-factory';
 import {OperatorService} from '../operator-service/operator.service';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {CaseViewService} from '../../view/case-view/service/case-view-service';
 import {UserResourceService} from '../../resources/engine-endpoint/user-resource.service';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {TaskViewService} from '../../view/task-view/service/task-view.service';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
 import {AllowedNetsService} from '../../allowed-nets/services/allowed-nets.service';
 import {TestNoAllowedNetsFactory} from '../../utility/tests/test-factory-methods';
 import {AllowedNetsServiceFactory} from '../../allowed-nets/services/factory/allowed-nets-service-factory';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('CategoryFactoryService', () => {
     let service: CategoryFactory;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule, NoopAnimationsModule],
+            imports: [],
             providers: [
                 OperatorService,
                 {provide: TaskViewService, useValue: null},
@@ -25,7 +25,9 @@ describe('CategoryFactoryService', () => {
                 {provide: UserResourceService, useValue: null},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 CategoryFactory,
-                {provide: AllowedNetsService, useFactory: TestNoAllowedNetsFactory, deps: [AllowedNetsServiceFactory]}
+                {provide: AllowedNetsService, useFactory: TestNoAllowedNetsFactory, deps: [AllowedNetsServiceFactory]},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
             ]
         });
         service = TestBed.inject(CategoryFactory);

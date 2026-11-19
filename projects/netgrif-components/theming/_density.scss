@@ -1,0 +1,104 @@
+
+@use 'sass:map';
+@use 'sass:math';
+@use 'sass:list';
+@use '@angular/material' as mat;
+
+/// Elements of the blocks. A block nested in another one (a task form in a list) has its own density, the custom
+/// properties set on the inner element win over the inherited ones.
+$block-selectors: (
+    navigation: (
+        'nc-navigation-double-drawer > mat-sidenav-container > mat-sidenav',
+        'nc-navigation-double-drawer > mat-sidenav-container > mat-sidenav-content > mat-sidenav-container > mat-sidenav',
+        'nc-navigation-rail',
+        'nc-navigation-drawer',
+        'nc-breadcrumbs',
+    ),
+    lists: ('nc-case-list', 'nc-case-list-paginator', 'nc-task-list', 'nc-task-list-pagination', 'nc-header', 'nc-workflow-panel'),
+    forms: ('nc-task-content'),
+    dialogs: ('.mat-mdc-dialog-panel'),
+    builder: ('nc-builder'),
+);
+
+/// Offsets of the blocks from the global density (0 = the global density). `form-fields` is the offset of the form
+/// fields in the task forms from the density of the forms (the height of the outlined fields).
+$default-blocks: (
+    navigation: 0,
+    lists: 0,
+    forms: 0,
+    form-fields: 0,
+    dialogs: 0,
+    builder: 0,
+);
+
+@function clamp-level($density) {
+    @return math.max(-5, math.min(0, $density));
+}
+
+/// All density tokens of the components for a density (also for 0: `mat.theme` emits nothing for 0, the density of
+/// the parent would apply) and `--nae-density-scale` (0 ... -5) for the custom heights of the library components,
+/// e.g. `height: calc(40px + 4px * var(--nae-density-scale, 0))`.
+@mixin tokens($density) {
+    @include mat.all-component-densities(mat.define-theme((density: (scale: clamp-level($density)))));
+    --nae-density-scale: #{clamp-level($density)};
+}
+
+/// Height of the outlined form fields of a density (56px - 4px per step), the padding centers the 24px line.
+@mixin form-field-height($density) {
+    $height: 56px + 4px * clamp-level($density);
+    @include mat.form-field-overrides((
+        container-height: $height,
+        container-vertical-padding: math.div($height - 24px, 2),
+    ));
+}
+
+/// The density of one block for the global density `$global`.
+@mixin block($name, $global, $blocks) {
+    $offset: map.get($blocks, $name);
+    @if $offset != 0 {
+        @include tokens($global + $offset);
+    }
+    @if $name == forms {
+        $field-offset: map.get($blocks, form-fields);
+        @if $field-offset != 0 {
+            @include form-field-height($global + $offset + $field-offset);
+        }
+    }
+}
+
+/// Global levels and the blocks.
+/// @param {Number} $density - global density of the theme (0 ... -5)
+/// @param {Map} $blocks - offsets of the blocks (merged into `$default-blocks`)
+@mixin density($density: 0, $blocks: ()) {
+    $blocks: map.merge($default-blocks, $blocks);
+
+    html {
+        --nae-density: #{$density};
+        --nae-density-scale: #{clamp-level($density)};
+    }
+
+    @for $level from 0 through 5 {
+        html.nae-density-#{$level} {
+            @include tokens(-$level);
+        }
+    }
+
+    @each $name, $selectors in $block-selectors {
+        $offset: map.get($blocks, $name);
+        $field-offset: 0;
+        @if $name == forms {
+            $field-offset: map.get($blocks, form-fields);
+        }
+        @if $offset != 0 or $field-offset != 0 {
+            $selector: list.join($selectors, (), comma);
+            :where(#{$selector}) {
+                @include block($name, $density, $blocks);
+            }
+            @for $level from 0 through 5 {
+                :where(html.nae-density-#{$level}) :where(#{$selector}) {
+                    @include block($name, -$level, $blocks);
+                }
+            }
+        }
+    }
+}

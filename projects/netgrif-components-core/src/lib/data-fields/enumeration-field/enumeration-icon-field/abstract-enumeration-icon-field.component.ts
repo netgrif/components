@@ -1,4 +1,4 @@
-import {Component, OnInit, Inject, Optional, OnDestroy} from '@angular/core';
+import {Component, OnInit, Inject, Optional, OnDestroy, ChangeDetectionStrategy} from '@angular/core';
 import {EnumerationField} from '../models/enumeration-field';
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
 import {AbstractBaseDataFieldComponent} from "../../base-component/abstract-base-data-field.component";
@@ -6,7 +6,9 @@ import {Subscription} from 'rxjs';
 
 @Component({
     selector: 'ncc-abstract-enumerataion-icon-field',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractEnumerationIconFieldComponent extends AbstractBaseDataFieldComponent<EnumerationField> implements OnInit, OnDestroy{
     public horizontal: boolean;

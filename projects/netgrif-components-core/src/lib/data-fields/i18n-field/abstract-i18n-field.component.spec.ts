@@ -1,13 +1,12 @@
 import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 import {AbstractI18nFieldComponent} from './abstract-i18n-field.component';
-import {Component, CUSTOM_ELEMENTS_SCHEMA, Inject, Optional} from '@angular/core';
+import {Component, CUSTOM_ELEMENTS_SCHEMA, Inject, Optional, ChangeDetectionStrategy} from '@angular/core';
 import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token';
 import {I18nField} from './models/i18n-field';
 import {MaterialModule} from '../../material/material.module';
-import {AngularResizeEventModule} from 'angular-resize-event';
-import {BrowserAnimationsModule, NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('AbstractI18nFieldComponent', () => {
     let component: TestI18nComponent;
@@ -15,19 +14,16 @@ describe('AbstractI18nFieldComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
+            declarations: [TestI18nComponent, TestWrapperComponent],
+            schemas: [CUSTOM_ELEMENTS_SCHEMA],
             imports: [
                 MaterialModule,
-                AngularResizeEventModule,
-                BrowserAnimationsModule,
                 TranslateLibModule,
-                HttpClientTestingModule,
-                NoopAnimationsModule
             ],
-            declarations: [
-                TestI18nComponent,
-                TestWrapperComponent
-            ],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA]
+            providers: [
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
+            ]
         }).compileComponents();
         fixture = TestBed.createComponent(TestWrapperComponent);
         component = fixture.debugElement.children[0].componentInstance;
@@ -45,7 +41,9 @@ describe('AbstractI18nFieldComponent', () => {
 
 @Component({
     selector: 'ncc-test-i18n',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestI18nComponent extends AbstractI18nFieldComponent {
     constructor(@Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
@@ -55,7 +53,9 @@ class TestI18nComponent extends AbstractI18nFieldComponent {
 
 @Component({
     selector: 'ncc-test-wrapper',
-    template: '<ncc-test-i18n [dataField]="field"></ncc-test-i18n>'
+    template: '<ncc-test-i18n [dataField]="field"></ncc-test-i18n>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestWrapperComponent {
     field = new I18nField('', '',

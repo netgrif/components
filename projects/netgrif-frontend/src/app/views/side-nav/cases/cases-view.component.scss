@@ -1,0 +1,31 @@
+:host {
+    display: block;
+    height: 100%;
+}
+
+.cases {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.tabs {
+    flex: 1 1 auto;
+    min-height: 0;
+}
+
+.detail-header {
+    order: -1;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 8px 16px 0;
+}
+
+.detail-title {
+    overflow: hidden;
+    margin: 0;
+    color: var(--mat-sys-on-surface);
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}

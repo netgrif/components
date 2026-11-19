@@ -1,4 +1,4 @@
-import {Component, Inject} from '@angular/core';
+import {Component, Inject, ChangeDetectionStrategy} from '@angular/core';
 import {DataVariable, Role, Transition} from '@netgrif/petriflow';
 import {AbstractMasterDetailService} from '../../../components/master-detail/abstract-master-detail.service';
 import {MASTER_ITEM, MASTER_SERVICE} from '../../../components/master-detail/main-master-item/master-injection-tokens';
@@ -6,7 +6,9 @@ import {MASTER_ITEM, MASTER_SERVICE} from '../../../components/master-detail/mai
 @Component({
   selector: 'nc-builder-action-master-item',
   templateUrl: './action-master-item.component.html',
-  styleUrl: './action-master-item.component.scss'
+  styleUrl: './action-master-item.component.scss',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class ActionMasterItemComponent {
 

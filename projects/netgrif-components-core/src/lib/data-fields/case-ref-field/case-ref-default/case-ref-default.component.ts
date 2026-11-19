@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Inject, Injector, OnDestroy, Optional, Type} from "@angular/core";
+import {AfterViewInit, Component, Inject, Injector, OnDestroy, Optional, Type, ChangeDetectionStrategy} from "@angular/core";
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
 import {CaseRefField} from '../model/case-ref-field';
 import {Subscription} from 'rxjs';
@@ -6,7 +6,9 @@ import {AbstractCaseRefBaseFieldComponent} from '../model/abstract-case-ref-base
 
 @Component({
     selector: 'ncc-abstract-case-ref-default',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractCaseRefDefaultComponent extends AbstractCaseRefBaseFieldComponent<CaseRefField> implements AfterViewInit, OnDestroy {
 

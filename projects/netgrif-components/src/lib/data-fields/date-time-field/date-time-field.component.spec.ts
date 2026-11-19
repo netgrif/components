@@ -1,13 +1,11 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {DateTimeFieldComponent} from './date-time-field.component';
-import {AngularResizeEventModule} from 'angular-resize-event';
 import {DataFieldTemplateComponent} from '../data-field-template/data-field-template.component';
 import {RequiredLabelComponent} from '../required-label/required-label.component';
-import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+import {Component, CUSTOM_ELEMENTS_SCHEMA, ChangeDetectionStrategy} from '@angular/core';
 import moment from 'moment';
-import {NgxMatDatetimePickerModule} from '@angular-material-components/datetime-picker';
 import {BehaviorSubject} from 'rxjs';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {
     AuthenticationMethodService,
     AuthenticationService,
@@ -22,8 +20,7 @@ import {
     TranslateLibModule,
     UserResourceService
 } from '@netgrif/components-core';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {NgxMatMomentModule} from '@angular-material-components/moment-adapter';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('DatetimeFieldComponent', () => {
     let component: DateTimeFieldComponent;
@@ -31,26 +28,25 @@ describe('DatetimeFieldComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
+            declarations: [
+                DateTimeFieldComponent,
+                DataFieldTemplateComponent,
+                RequiredLabelComponent,
+                TestWrapperComponent
+            ],
+            schemas: [CUSTOM_ELEMENTS_SCHEMA],
             imports: [
                 MaterialModule,
-                AngularResizeEventModule,
-                NgxMatDatetimePickerModule,
-                NgxMatMomentModule,
-                TranslateLibModule, HttpClientTestingModule, NoopAnimationsModule
+                TranslateLibModule,
             ],
             providers: [
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
-                {provide: ConfigurationService, useClass: TestConfigurationService}
-            ],
-            declarations: [
-                DateTimeFieldComponent,
-                DataFieldTemplateComponent,
-                RequiredLabelComponent,
-                TestWrapperComponent,
-            ],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA]
+                {provide: ConfigurationService, useClass: TestConfigurationService},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
+            ]
         })
             .compileComponents();
         fixture = TestBed.createComponent(TestWrapperComponent);
@@ -69,7 +65,9 @@ describe('DatetimeFieldComponent', () => {
 
 @Component({
     selector: 'nc-test-wrapper',
-    template: '<nc-date-time-field [dataField]="field" [changedFields]="changedFields"></nc-date-time-field>'
+    template: '<nc-date-time-field [dataField]="field" [changedFields]="changedFields"></nc-date-time-field>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestWrapperComponent {
     field = new DateTimeField('', '', moment('2020-03-09'), {

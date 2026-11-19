@@ -1,101 +1,99 @@
-<mat-card [ngClass]="{'padding-custom': headerService.headerState.mode === headerModeEnum.SORT}" class="header-color header-card">
-    <div fxLayout="row" class="header-content-container">
-        <div fxLayout="row" fxFlex="95" class="header-content-container flex-95" fxLayoutAlign="start center"
-             [ngSwitch]="headerService.headerState.mode" *ngIf="!headerService.loading.isActive">
-            <div *ngSwitchCase="headerModeEnum.SORT" fxFlex="100" fxLayout="row">
-                <nc-sort-mode fxFlex="100" [headerService]="headerService"
-                              [overflowWidth]="getMinWidth()"
-                              [approvalFormControl]="approvalFormControl"
-                              [indeterminate]="indeterminate()"
-                              [approval]="approval"
-                              [typeApproval]="typeApproval()"
-                ></nc-sort-mode>
-            </div>
-            <div *ngSwitchCase="headerModeEnum.SEARCH" fxFlex="100" fxLayout="row">
-                <nc-search-mode fxFlex="100" [headerService]="headerService"
-                                [overflowWidth]="getMinWidth()"
-                                [approvalFormControl]="approvalFormControl"
-                                [indeterminate]="indeterminate()"
-                                [approval]="approval"
-                                [typeApproval]="typeApproval()"
-                ></nc-search-mode>
-            </div>
-            <div *ngSwitchCase="headerModeEnum.EDIT" fxFlex="100" fxLayout="row">
-                <nc-edit-mode fxFlex="100" [headerService]="headerService"
-                              [overflowWidth]="getMinWidth()"
-                              [approvalFormControl]="approvalFormControl"
-                              [indeterminate]="indeterminate()"
-                              [approval]="approval"
-                              [typeApproval]="typeApproval()"
-                ></nc-edit-mode>
-            </div>
+<div class="header-row" fxLayout="row" fxLayoutAlign="start center" [style.--nc-column-min-width]="getMinWidth()">
+        <div fxFlex fxLayout="row">
+            @if (headerService.loading.isActive) {
+            <nc-loading-mode fxFlex [headerService]="headerService" [overflowWidth]="getMinWidth()"></nc-loading-mode>
+            } @else {
+            @switch (headerService.headerState.mode) {
+            @case (headerModeEnum.SORT) {
+            <nc-sort-mode fxFlex
+                          [headerService]="headerService"
+                          [overflowWidth]="getMinWidth()"
+                          [approvalFormControl]="approvalFormControl"
+                          [indeterminate]="indeterminate()"
+                          [approval]="approval"
+                          [typeApproval]="typeApproval()"></nc-sort-mode>
+            }
+            @case (headerModeEnum.SEARCH) {
+            <nc-search-mode fxFlex
+                            [headerService]="headerService"
+                            [overflowWidth]="getMinWidth()"
+                            [approvalFormControl]="approvalFormControl"
+                            [indeterminate]="indeterminate()"
+                            [approval]="approval"
+                            [typeApproval]="typeApproval()"></nc-search-mode>
+            }
+            @case (headerModeEnum.EDIT) {
+            <nc-edit-mode fxFlex
+                          [headerService]="headerService"
+                          [overflowWidth]="getMinWidth()"
+                          [approvalFormControl]="approvalFormControl"
+                          [indeterminate]="indeterminate()"
+                          [approval]="approval"
+                          [typeApproval]="typeApproval()"></nc-edit-mode>
+            }
+            }
+            }
         </div>
-        <div fxLayout="row" fxFlex="95" class="header-content-container" fxLayoutAlign="start center"
-             *ngIf="headerService.loading.isActive">
-            <div fxFlex="100" fxLayout="row">
-                <nc-loading-mode fxFlex="100" [headerService]="headerService"
-                                 [overflowWidth]="getMinWidth()"></nc-loading-mode>
-            </div>
+
+        <div fxFlex="40px" fxLayoutAlign="center center">
+            @if (!hideHeaderMenu) {
+            <button mat-icon-button [matMenuTriggerFor]="headerMenu">
+                <mat-icon>more_vert</mat-icon>
+            </button>
+            }
         </div>
-        <div fxLayout="row" fxLayoutAlign="end center" fxFlex="5" class="flex-5">
-            <div *ngIf="!hideHeaderMenu">
-                <button mat-icon-button [matMenuTriggerFor]="headerMenu">
-                    <mat-icon>more_vert</mat-icon>
-                </button>
-                <mat-menu  #headerMenu="matMenu" class="mat-menu-border-radius mat-menu-padding">
-                    <div *ngIf="headerService.headerState.mode !== headerModeEnum.EDIT">
-                        <button *ngIf="showSortButton" mat-menu-item
-                                [ngClass]="{'active-header-item': headerService.headerState.mode === headerModeEnum.SORT}"
-                                (click)="headerService.changeMode(headerModeEnum.SORT, false)">
-                            <mat-icon>sort</mat-icon>
-                            {{ 'headers.orderMode' | translate}}
-                        </button>
-                        <button *ngIf="type === headerTypeEnum.CASE && showSearchButton" mat-menu-item
-                                [ngClass]="{'active-header-item': headerService.headerState.mode === headerModeEnum.SEARCH}"
-                                (click)="headerService.changeMode(headerModeEnum.SEARCH, false)">
-                            <mat-icon>search</mat-icon>
-                            {{ 'headers.searchMode' | translate}}
-                        </button>
-                        <button *ngIf="showEditButton" mat-menu-item
-                                (click)="headerService.changeMode(headerModeEnum.EDIT)">
-                            <mat-icon>edit</mat-icon>
-                            {{ 'headers.editMode' | translate}}
-                        </button>
-                    </div>
-                    <div *ngIf="headerService.headerState.mode === headerModeEnum.EDIT">
-                        <button mat-menu-item (click)="confirmEditMode()">
-                            <mat-icon color="primary">done</mat-icon>
-                            {{ 'dialog.submit' | translate}}
-                        </button>
-                        <button mat-menu-item (click)="headerService.revertEditMode()">
-                            <mat-icon color="warn">close</mat-icon>
-                            {{ 'tasks.view.cancel' | translate}}
-                        </button>
-                        <mat-divider *ngIf="canOverflow && showTableSection"></mat-divider>
-                        <div class="header-menu-row header-menu-toggle" (click)="clickStop($event)"
-                             *ngIf="canOverflow && showTableSection">
-                            <mat-slide-toggle
-                                [formControl]="overflowControl">{{ 'headers.overflowMode' | translate}}</mat-slide-toggle>
-                        </div>
-                        <div class="header-menu-row header-menu-field" (click)="clickStop($event)"
-                             *ngIf="canOverflow && showTableSection && overflowControl.value">
-                            <mat-form-field appearance="outline" subscriptSizing="dynamic">
-                                <mat-label>{{ 'headers.columnWidth' | translate}}</mat-label>
-                                <input matInput type="number" [formControl]="columnWidthControl">
-                                <mat-error *ngIf="!columnWidthControl.valid">{{getErrorMessageWidth()}}</mat-error>
-                            </mat-form-field>
-                        </div>
-                        <div class="header-menu-row header-menu-field" (click)="clickStop($event)"
-                             *ngIf="canOverflow && showTableSection && overflowControl.value">
-                            <mat-form-field appearance="outline" subscriptSizing="dynamic">
-                                <mat-label>{{ 'headers.columnCount' | translate}}</mat-label>
-                                <input matInput type="number" [formControl]="columnCountControl">
-                                <mat-error *ngIf="!columnCountControl.valid">{{getErrorMessageCount()}}</mat-error>
-                            </mat-form-field>
-                        </div>
-                    </div>
-                </mat-menu>
-            </div>
-        </div>
+</div>
+<mat-divider></mat-divider>
+
+<mat-menu #headerMenu="matMenu">
+    @if (headerService.headerState.mode !== headerModeEnum.EDIT) {
+    @if (showSortButton) {
+    <button mat-menu-item
+            [disabled]="headerService.headerState.mode === headerModeEnum.SORT"
+            (click)="headerService.changeMode(headerModeEnum.SORT, false)">
+        <mat-icon>sort</mat-icon>
+        <span>{{ "headers.orderMode" | translate }}</span>
+    </button>
+    }
+    @if (type === headerTypeEnum.CASE && showSearchButton) {
+    <button mat-menu-item
+            [disabled]="headerService.headerState.mode === headerModeEnum.SEARCH"
+            (click)="headerService.changeMode(headerModeEnum.SEARCH, false)">
+        <mat-icon>search</mat-icon>
+        <span>{{ "headers.searchMode" | translate }}</span>
+    </button>
+    }
+    @if (showEditButton) {
+    <button mat-menu-item (click)="headerService.changeMode(headerModeEnum.EDIT)">
+        <mat-icon>edit</mat-icon>
+        <span>{{ "headers.editMode" | translate }}</span>
+    </button>
+    }
+    } @else {
+    <button mat-menu-item (click)="confirmEditMode()">
+        <mat-icon>done</mat-icon>
+        <span>{{ "dialog.submit" | translate }}</span>
+    </button>
+    <button mat-menu-item (click)="headerService.revertEditMode()">
+        <mat-icon>close</mat-icon>
+        <span>{{ "tasks.view.cancel" | translate }}</span>
+    </button>
+    @if (canOverflow && showTableSection) {
+    <mat-divider></mat-divider>
+    <div mat-menu-item disableRipple (click)="clickStop($event)">
+        <mat-slide-toggle [formControl]="overflowControl">{{ "headers.overflowMode" | translate }}</mat-slide-toggle>
     </div>
-</mat-card>
+    @if (overflowControl.value) {
+    <div mat-menu-item disableRipple (click)="clickStop($event)" (keydown)="$event.stopPropagation()">
+        <mat-form-field subscriptSizing="dynamic">
+            <mat-label>{{ "headers.columnCount" | translate }}</mat-label>
+            <input matInput type="number" [formControl]="columnCountControl"/>
+            @if (!columnCountControl.valid) {
+            <mat-error>{{ getErrorMessageCount() }}</mat-error>
+            }
+        </mat-form-field>
+    </div>
+    }
+    }
+    }
+</mat-menu>

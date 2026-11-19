@@ -1,9 +1,8 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {CommonModule} from '@angular/common';
 import {FlexModule} from '@ngbracket/ngx-layout';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {Component, NO_ERRORS_SCHEMA} from '@angular/core';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
+import {Component, NO_ERRORS_SCHEMA, ChangeDetectionStrategy} from '@angular/core';
 import {of} from 'rxjs';
 import {MaterialModule} from '../../material/material.module';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
@@ -27,6 +26,7 @@ import {take} from 'rxjs/operators';
 import {PetriNetResourceService} from '../../resources/engine-endpoint/petri-net-resource.service';
 import { MockPetrinetResourceService } from '../../utility/tests/mocks/mock-petrinet-resource.service';
 import { OverflowService } from '../../header/services/overflow.service';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('AbstractWorkflowPanelComponent', () => {
     let component: TestWorkflowPanelComponent;
@@ -37,13 +37,16 @@ describe('AbstractWorkflowPanelComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
+            declarations: [
+                TestWorkflowPanelComponent,
+                TestWrapperComponent
+            ],
+            schemas: [NO_ERRORS_SCHEMA],
             imports: [
                 MaterialModule,
                 CommonModule,
                 FlexModule,
-                NoopAnimationsModule,
                 TranslateLibModule,
-                HttpClientTestingModule,
                 RouterTestingModule.withRoutes([])
             ],
             providers: [
@@ -54,9 +57,9 @@ describe('AbstractWorkflowPanelComponent', () => {
                 WorkflowViewService,
                 OverflowService,
                 {provide: PetriNetResourceService, useClass: MockPetrinetResourceService},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
             ],
-            declarations: [TestWorkflowPanelComponent, TestWrapperComponent],
-            schemas: [NO_ERRORS_SCHEMA],
         }).compileComponents();
         fixture = TestBed.createComponent(TestWrapperComponent);
         component = fixture.debugElement.children[0].componentInstance;
@@ -99,7 +102,9 @@ describe('AbstractWorkflowPanelComponent', () => {
 
 @Component({
     selector: 'ncc-test-workflow-panel',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestWorkflowPanelComponent extends AbstractWorkflowPanelComponent {
 
@@ -114,7 +119,9 @@ class TestWorkflowPanelComponent extends AbstractWorkflowPanelComponent {
 
 @Component({
     selector: 'ncc-test-wrapper',
-    template: '<ncc-test-workflow-panel [workflow]="workflow" [selectedHeaders$]="selectedHeaders"></ncc-test-workflow-panel>'
+    template: '<ncc-test-workflow-panel [workflow]="workflow" [selectedHeaders$]="selectedHeaders"></ncc-test-workflow-panel>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestWrapperComponent {
     public selectedHeaders = of([

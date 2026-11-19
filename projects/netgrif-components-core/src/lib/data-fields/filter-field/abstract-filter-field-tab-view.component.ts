@@ -1,4 +1,4 @@
-import { Component, Type } from '@angular/core';
+import { Component, Type, ChangeDetectionStrategy} from '@angular/core';
 import { TabContent } from '../../tabs/interfaces';
 
 import { Dashboard } from '../text-field/dashboard-portal-text-field/dashboard-view-constants';
@@ -7,7 +7,9 @@ import {ComponentRegistryService} from "../../registry/component-registry.servic
 
 @Component({
     selector: 'ncc-abstract-filter-field-tab-view',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractFilterFieldTabViewComponent {
 

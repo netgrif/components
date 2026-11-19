@@ -1,8 +1,6 @@
 import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
-import {AngularResizeEventModule} from 'angular-resize-event';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {Component, CUSTOM_ELEMENTS_SCHEMA, Inject, Optional} from '@angular/core';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
+import {Component, CUSTOM_ELEMENTS_SCHEMA, Inject, Optional, ChangeDetectionStrategy} from '@angular/core';
 import {MockAuthenticationMethodService} from '../../../utility/tests/mocks/mock-authentication-method-service';
 import {AuthenticationMethodService} from '../../../authentication/services/authentication-method.service';
 import {AuthenticationService} from '../../../authentication/services/authentication/authentication.service';
@@ -19,6 +17,7 @@ import {AbstractBooleanDefaultFieldComponent} from "./abstract-boolean-default-f
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
 import {FormControl} from "@angular/forms";
 import {WrappedBoolean} from "../../data-field-template/models/wrapped-boolean";
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('AbstractBooleanDefaultFieldComponent', () => {
     let component: TestBooleanComponent;
@@ -26,12 +25,11 @@ describe('AbstractBooleanDefaultFieldComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
+            declarations: [TestBooleanComponent, TestWrapperComponent],
+            schemas: [CUSTOM_ELEMENTS_SCHEMA],
             imports: [
                 MaterialModule,
-                AngularResizeEventModule,
-                TranslateLibModule,
-                HttpClientTestingModule,
-                NoopAnimationsModule
+                TranslateLibModule
             ],
             providers: [
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
@@ -48,13 +46,10 @@ describe('AbstractBooleanDefaultFieldComponent', () => {
                         formControlRef: new FormControl(),
                         showLargeLayout: new WrappedBoolean()
                     } as DataFieldPortalData<BooleanField>
-                }
-            ],
-            declarations: [
-                TestBooleanComponent,
-                TestWrapperComponent
-            ],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA]
+                },
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
+            ]
         }).compileComponents();
 
         fixture = TestBed.createComponent(TestWrapperComponent);
@@ -77,7 +72,9 @@ describe('AbstractBooleanDefaultFieldComponent', () => {
 
 @Component({
     selector: 'ncc-test-default-boolean',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestBooleanComponent extends AbstractBooleanDefaultFieldComponent {
 
@@ -89,7 +86,9 @@ class TestBooleanComponent extends AbstractBooleanDefaultFieldComponent {
 
 @Component({
     selector: 'ncc-test-wrapper',
-    template: '<ncc-test-default-boolean></ncc-test-default-boolean>'
+    template: '<ncc-test-default-boolean></ncc-test-default-boolean>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestWrapperComponent {
 

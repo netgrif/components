@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit, Optional} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit, Optional, ChangeDetectionStrategy} from '@angular/core';
 import {MatExpansionPanel} from '@angular/material/expansion';
 import {AbstractPanelWithHeaderBindingComponent} from '../abstract/panel-with-header-binding';
 import {HeaderColumn} from '../../header/models/header-column';
@@ -29,7 +29,9 @@ export interface WorkflowPanelContent {
 
 @Component({
     selector: 'ncc-abstract-workflow-panel',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractWorkflowPanelComponent extends AbstractPanelWithHeaderBindingComponent implements OnInit, OnDestroy {
 

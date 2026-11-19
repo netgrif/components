@@ -1,46 +1,31 @@
-.version-span{
-    padding-left: 8px;
-    color: gray;
+@use '../dialog';
+
+@include dialog.styles;
+
+.field {
+    width: 100%;
 }
 
-.spinner-padding {
-    padding: 24px;
+.process-list {
+    margin: 0 -16px;
+    padding: 0;
 }
 
-.spinner-margin {
-    margin-top: 16px;
+.option-version {
+    color: var(--mat-sys-on-surface-variant);
+    font: var(--mat-sys-body-small);
 }
 
-.min-height-36px {
-    min-height: 36px;
+.no-process {
+    padding: 0 24px;
 }
 
-.margin-right {
-    margin-right: 8px;
-}
+.title-with-back {
+    display: flex;
+    align-items: center;
+    gap: 4px;
 
-@keyframes spinner {
-    to {
-        transform: rotate(360deg);
+    .back {
+        margin-left: -12px;
     }
-}
-
-.spinner:before {
-    content: '';
-    box-sizing: border-box;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 20px;
-    height: 20px;
-    margin-top: -10px;
-    margin-left: -10px;
-    border-radius: 50%;
-    border: 2px solid #ffffff;
-    border-top-color: #000000;
-    animation: spinner .8s linear infinite;
-}
-
-.margin-top-field {
-    margin-top: 4px;
 }

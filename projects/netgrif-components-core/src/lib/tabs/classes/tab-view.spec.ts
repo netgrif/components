@@ -11,11 +11,11 @@ import {MockUserResourceService} from '../../utility/tests/mocks/mock-user-resou
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
 import {TestViewService} from '../../utility/tests/test-view-service';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
 import {RouterTestingModule} from '@angular/router/testing';
 import {SimpleFilter} from '../../filter/models/simple-filter';
-import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
+import {HttpTestingController, provideHttpClientTesting} from '@angular/common/http/testing';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('TabView', () => {
     let viewService: ViewService;
@@ -24,16 +24,16 @@ describe('TabView', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
-                RouterTestingModule.withRoutes([]),
-                NoopAnimationsModule,
-                HttpClientTestingModule
+                RouterTestingModule.withRoutes([])
             ],
             providers: [
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
-                {provide: ViewService, useClass: TestViewService}
+                {provide: ViewService, useClass: TestViewService},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
             ]
         });
         viewService = TestBed.inject(ViewService);

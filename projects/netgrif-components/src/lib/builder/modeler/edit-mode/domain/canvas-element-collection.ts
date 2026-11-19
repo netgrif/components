@@ -1,6 +1,6 @@
 import {NodeElement} from '@netgrif/petriflow';
 import {PetriflowNode} from '@netgrif/petriflow.svg';
-import {PetriflowCanvasElement} from '@netgrif/petriflow.svg/lib/svg-elements/petriflow-canvas-element';
+import {PetriflowCanvasElement} from '@netgrif/petriflow.svg';
 import {CanvasArc} from './canvas-arc';
 import {CanvasNodeElement} from './canvas-node-element';
 import {CanvasObject} from './canvas-object';

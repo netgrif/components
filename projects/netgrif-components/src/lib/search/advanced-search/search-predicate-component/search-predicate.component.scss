@@ -1,55 +1,56 @@
-.predicate-body {
-    border-radius: 4px;
-    padding-right: 4px;
-    min-height: 32px;
+:host {
+    display: flex;
+    align-items: center;
+    gap: 4px;
 }
 
-.smaller-button {
-    width: 32px;
-    height: 32px;
-    line-height: 32px;
-    margin-right: -4px;
+.category-select {
+    width: 220px;
 }
 
-.bold-text {
-    font-weight: bold;
+.condition {
+    box-sizing: border-box;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px 6px;
+    min-height: var(--nc-condition-field-height, 40px);
+    padding: 0 0 0 12px;
+    border: 1px solid var(--mat-sys-outline);
+    border-radius: var(--mat-sys-corner-small);
+    background: var(--mat-sys-surface);
+    color: var(--mat-sys-on-surface);
+    font: var(--mat-sys-label-large);
+    letter-spacing: var(--mat-sys-label-large-tracking);
 }
 
-.text-margin {
-    margin-left: 4px;
-}
-
-// TODO 19.1.2021 - we might want to get the "white" color from the theme, so that it is not hardcoded
-.white-background {
-    background: #fafafa;
-}
-
-::ng-deep .mat-mdc-form-field-wrapper {
-    margin: 0;
-    padding-bottom: 0;
-}
-
-.mat-mdc-form-field-wrapper-search {
-    margin: 0 !important;
-    border-radius: 5px;
-    background: #fafafa;
-    min-width: 250px;
-}
-
-.advanced-search-buttons {
-    min-height: 43px;
-    margin: 0 8px 0 4px;
-    min-width: 43px;
+.condition-category {
     padding: 0;
-}
+    border: 0;
+    background: none;
+    color: var(--mat-sys-primary);
+    font: inherit;
+    cursor: pointer;
 
-.prefix-icon {
-    color: #64748B;
-}
+    &:disabled {
+        cursor: default;
+    }
 
-@media only screen and (max-width: 599px) {
-    .mat-mdc-form-field-wrapper-search {
-        min-width: unset;
+    &:hover:not(:disabled) {
+        text-decoration: underline;
     }
 }
 
+.remove {
+    --mat-icon-button-state-layer-size: 32px;
+    --mat-icon-button-icon-size: 18px;
+    width: 32px;
+    height: 32px;
+    padding: 7px;
+
+    mat-icon {
+        width: 18px;
+        height: 18px;
+        font-size: 18px;
+    }
+}

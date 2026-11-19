@@ -1,3 +1,66 @@
+@use 'sass:meta';
+
 :host ::ng-deep {
-    @import 'easymde/dist/easymde.min';
+    @include meta.load-css('easymde/dist/easymde.min');
+
+    .editor-toolbar {
+        border-color: var(--mat-sys-outline);
+        border-radius: var(--mat-sys-corner-extra-small) var(--mat-sys-corner-extra-small) 0 0;
+        opacity: 1;
+
+        button {
+            border-color: transparent;
+            color: var(--mat-sys-on-surface-variant);
+
+            &:hover,
+            &.active {
+                border-color: transparent;
+                background: color-mix(in srgb, var(--mat-sys-on-surface) 8%, transparent);
+                color: var(--mat-sys-primary);
+            }
+        }
+
+        i.separator {
+            border-right-color: transparent;
+            border-left-color: var(--mat-sys-outline-variant);
+        }
+
+        &.disabled-for-preview button:not(.no-disable) {
+            opacity: 0.38;
+        }
+    }
+
+    .EasyMDEContainer .CodeMirror {
+        border-color: var(--mat-sys-outline);
+        border-radius: 0 0 var(--mat-sys-corner-extra-small) var(--mat-sys-corner-extra-small);
+        background: transparent;
+        color: var(--mat-sys-on-surface);
+        font-family: inherit;
+    }
+
+    .CodeMirror-cursor {
+        border-left-color: var(--mat-sys-on-surface);
+    }
+
+    .CodeMirror-selected,
+    .CodeMirror-focused .CodeMirror-selected,
+    .CodeMirror-line::selection,
+    .CodeMirror-line > span::selection,
+    .CodeMirror-line > span > span::selection {
+        background: color-mix(in srgb, var(--mat-sys-primary) 24%, transparent);
+    }
+
+    .CodeMirror-placeholder {
+        color: var(--mat-sys-on-surface-variant) !important;
+    }
+
+    .editor-preview,
+    .editor-preview-side {
+        background: var(--mat-sys-surface-container-low);
+        color: var(--mat-sys-on-surface);
+    }
+
+    .editor-statusbar {
+        color: var(--mat-sys-on-surface-variant);
+    }
 }

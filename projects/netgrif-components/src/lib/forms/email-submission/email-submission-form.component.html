@@ -1,30 +1,24 @@
-<div fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="24px">
-    <form [formGroup]="rootFormGroup" (ngSubmit)="onSubmit()" class="full-width netgrif-input">
-        <div fxLayout="row" fxLayoutAlign="center center">
-            <mat-icon color="primary" class="netgrif-icon-fix">email</mat-icon>
-            <mat-form-field fxFlex="100" appearance="outline">
-                <mat-label>{{ 'forms.email.enterEmail' | translate}}</mat-label>
-                <input matInput formControlName="email" required
-                       autocomplete="email">
-                <mat-error *ngIf="rootFormGroup.controls['email'].hasError('email')">
-                    {{ 'dataField.validations.email' | translate}}
-                </mat-error>
-            </mat-form-field>
-        </div>
-        <nc-legal-notice *ngIf="displayLegalNotice" [buttonName]="'dialog.submit'"></nc-legal-notice>
-        <div fxLayout="row" class="margin-top-4">
-            <button mat-icon-button fxLayoutAlign="start" (click)="emitGoBack()">
-                <mat-icon>arrow_back</mat-icon>
-            </button>
-            <div fxFlex></div>
-            <button fxLayoutAlign="end" mat-raised-button color="primary" fxFlexOffset="8px">
-                <mat-spinner *ngIf="loading | async"
-                             mode="indeterminate"
-                             diameter="36"
-                             color="accent"
-                             fxFlex></mat-spinner>
-                <span *ngIf="(loading | async) === false" fxFlex>{{ 'dialog.submit' | translate}}</span>
-            </button>
-        </div>
-    </form>
-</div>
+<form class="auth-form" [formGroup]="rootFormGroup" (ngSubmit)="onSubmit()" novalidate>
+    <mat-form-field>
+        <mat-label>{{ "forms.email.enterEmail" | translate }}</mat-label>
+        <input matInput type="email" formControlName="email" required autocomplete="email" autofocus/>
+        @if (rootFormGroup.controls['email'].hasError('email')) {
+        <mat-error>{{ "dataField.validations.email" | translate }}</mat-error>
+        }
+    </mat-form-field>
+    @if (displayLegalNotice) {
+    <nc-legal-notice [buttonName]="'forms.email.send'"></nc-legal-notice>
+    }
+    <button mat-flat-button class="auth-submit" type="submit" [disabled]="loading | async">
+        {{ "forms.email.send" | translate }}
+    </button>
+    @if (loading | async) {
+    <mat-progress-bar class="auth-progress" mode="indeterminate"></mat-progress-bar>
+    }
+    <div class="auth-footer">
+        <button mat-button type="button" (click)="emitGoBack()">
+            <mat-icon>arrow_back</mat-icon>
+            {{ "forms.email.backToLogin" | translate }}
+        </button>
+    </div>
+</form>

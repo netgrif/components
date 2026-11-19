@@ -1,4 +1,4 @@
-import {Component, Inject, Optional} from '@angular/core';
+import {Component, Inject, Optional, ChangeDetectionStrategy} from '@angular/core';
 import {
     AbstractTaskContentComponent,
     FieldConverterService,
@@ -12,7 +12,9 @@ import {
 @Component({
     selector: 'nc-task-content',
     templateUrl: './task-content.component.html',
-    styleUrls: ['./task-content.component.scss']
+    styleUrls: ['./task-content.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class TaskContentComponent extends AbstractTaskContentComponent {
 

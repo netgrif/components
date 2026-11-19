@@ -1,4 +1,4 @@
-import {Component, Inject, Optional} from '@angular/core';
+import {Component, Inject, Optional, ChangeDetectionStrategy} from '@angular/core';
 import {TranslateService} from "@ngx-translate/core";
 import {
     TaskResourceService,
@@ -13,7 +13,9 @@ import {
 @Component({
   selector: 'nc-file-list-default-field',
   templateUrl: './file-list-default-field.component.html',
-  styleUrls: ['./file-list-default-field.component.scss']
+  styleUrls: ['./file-list-default-field.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class FileListDefaultFieldComponent extends AbstractFileListDefaultFieldComponent {
 

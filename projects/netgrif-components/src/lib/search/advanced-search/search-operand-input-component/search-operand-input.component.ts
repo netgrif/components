@@ -1,5 +1,5 @@
-import {NGX_MAT_DATE_FORMATS} from '@angular-material-components/datetime-picker';
-import {Component} from '@angular/core';
+import {MAT_DATE_FORMATS} from '@angular/material/core';
+import {Component, ChangeDetectionStrategy} from '@angular/core';
 import {
     AbstractSearchOperandInputComponent,
     DATE_FORMAT_STRING, DATE_TIME_FORMAT,
@@ -12,8 +12,10 @@ import {
     templateUrl: './search-operand-input.component.html',
     styleUrls: ['./search-operand-input.component.scss'],
     providers: [
-        {provide: NGX_MAT_DATE_FORMATS, useValue: DATE_TIME_FORMAT}
-    ]
+        {provide: MAT_DATE_FORMATS, useValue: DATE_TIME_FORMAT}
+    ],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class SearchOperandInputComponent extends AbstractSearchOperandInputComponent {
 

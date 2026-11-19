@@ -1,4 +1,4 @@
-import {Component, Inject} from '@angular/core';
+import {Component, Inject, ChangeDetectionStrategy} from '@angular/core';
 import {PetriNet} from '@netgrif/petriflow';
 import {AbstractMasterDetailService} from '../../components/master-detail/abstract-master-detail.service';
 import {MASTER_ITEM, MASTER_SERVICE} from '../../components/master-detail/main-master-item/master-injection-tokens';
@@ -8,7 +8,9 @@ import {ModelService} from '../../services/model/model.service';
 @Component({
     selector: 'nc-builder-history-master-item',
     templateUrl: './history-master-item.component.html',
-    styleUrl: './history-master-item.component.scss'
+    styleUrl: './history-master-item.component.scss',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class HistoryMasterItemComponent {
 

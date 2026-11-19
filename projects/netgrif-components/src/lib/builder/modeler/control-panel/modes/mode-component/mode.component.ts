@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, ChangeDetectionStrategy} from '@angular/core';
 import {TutorialService} from '../../../../tutorial/tutorial-service';
 import {ControlPanelService} from '../../control-panel.service';
 import {Mode} from '../mode';
@@ -6,7 +6,9 @@ import {Mode} from '../mode';
 @Component({
     selector: 'nc-builder-control-panel-mode',
     templateUrl: './mode.component.html',
-    styleUrls: ['./mode.component.scss']
+    styleUrls: ['./mode.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class ModeComponent {
 

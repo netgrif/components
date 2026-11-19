@@ -1,7 +1,6 @@
 import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 
 import {DefaultPublicSingleTaskViewComponent} from './default-public-single-task-view.component';
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {RouterTestingModule} from "@angular/router/testing";
 import {Observable} from "rxjs";
 import {
@@ -24,7 +23,7 @@ import {
 import {HeaderComponentModule} from "../../../../../header/header.module";
 import {PanelComponentModule} from "../../../../../panel/panel.module";
 
-xdescribe('DefaultPublicSingleTaskViewComponent', () => {
+describe('DefaultPublicSingleTaskViewComponent', () => {
     let component: DefaultPublicSingleTaskViewComponent;
     let fixture: ComponentFixture<DefaultPublicSingleTaskViewComponent>;
 
@@ -34,7 +33,6 @@ xdescribe('DefaultPublicSingleTaskViewComponent', () => {
                 MaterialModule,
                 HeaderComponentModule,
                 PanelComponentModule,
-                BrowserAnimationsModule,
                 RouterTestingModule.withRoutes([])
             ],
             providers: [

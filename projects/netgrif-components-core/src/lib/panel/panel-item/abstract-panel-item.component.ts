@@ -1,9 +1,11 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, ChangeDetectionStrategy} from '@angular/core';
 import { FeaturedValue } from '../abstract/featured-value';
 
 @Component({
     selector: 'ncc-abstract-panel-item-component',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractPanelItemComponent {
 

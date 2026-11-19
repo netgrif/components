@@ -1,12 +1,18 @@
-<mat-selection-list color="primary"
-                    [formControl]="formControlRef"
-                    [required]="dataField.behavior.required">
-    <mat-label class="netgrif-label" [ngClass]="{'netgrif-label-disabled': formControlRef.disabled}" *ngIf="!showLargeLayout.value">{{dataField.title}}
-        <nc-required-label *ngIf="dataField.behavior.required" [isIn]="true"></nc-required-label>
-        <br></mat-label>
-    <mat-list-option checkboxPosition="before" *ngFor="let option of dataField.choices" [value]="option.key">
-        {{option.value}}
-    </mat-list-option>
-    <mat-hint [ngClass]="{'mat-hint-disabled': formControlRef.disabled}" *ngIf="dataField.description !== undefined && dataField.description !== '' && !dataField.isInvalid(formControlRef)">{{dataField.description}}</mat-hint>
-    <mat-error *ngIf="dataField.isInvalid(formControlRef)">{{'dataField.validations.required' | translate}}</mat-error>
+@if (!showLargeLayout.value && hasTitle()) {
+<span class="field-title">
+    {{ dataField.title }}
+    @if (dataField.behavior.required) {
+    <nc-required-label [isIn]="!formControlRef.disabled"></nc-required-label>
+    }
+</span>
+}
+<mat-selection-list [formControl]="formControlRef" [required]="dataField.behavior.required" [attr.aria-label]="dataField.title">
+    @for (option of dataField.choices; track option.key) {
+    <mat-list-option togglePosition="before" [value]="option.key">{{ option.value }}</mat-list-option>
+    }
 </mat-selection-list>
+@if (dataField.isInvalid(formControlRef)) {
+<span class="field-supporting error">{{ "dataField.validations.required" | translate }}</span>
+} @else if (hasHint()) {
+<span class="field-supporting">{{ dataField.description }}</span>
+}

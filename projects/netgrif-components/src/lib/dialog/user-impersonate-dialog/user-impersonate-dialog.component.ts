@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Inject, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, Inject, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {
     AbstractCaseViewComponent,
     AllowedNetsService,
@@ -53,7 +53,9 @@ function localAllowedNetsFactory(factory: AllowedNetsServiceFactory): AllowedNet
                 `${UserImpersonationConstants.IMPERSONATION_CONFIG_NET_IDENTIFIER}-${UserImpersonationConstants.IMPERSONATION_CONFIG_FIELD_AUTHS}`,
             ]
         }
-    ]
+    ],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class UserImpersonateDialogComponent extends AbstractCaseViewComponent implements AfterViewInit {
 

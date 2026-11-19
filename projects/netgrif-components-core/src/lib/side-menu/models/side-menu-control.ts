@@ -4,10 +4,15 @@ import {SideMenuInjectionData} from './side-menu-injection-data';
 import {tap} from 'rxjs/operators';
 import {MatDrawerToggleResult} from '@angular/material/sidenav';
 
+/**
+ * @deprecated the side menu is deprecated, the library opens dialogs instead (`DialogComponentsModule`)
+ */
 export class SideMenuControl {
 
     private _event$: Subject<SideMenuEvent>;
     private _isOpened: BehaviorSubject<boolean>;
+    /** set by {@link close}, the following closed state of the side menu is expected */
+    private _closing = false;
 
     constructor(bindingsFunction: (event$: Subject<SideMenuEvent>) => void = () => {},
                 sideMenuOpenedStateChange: Observable<boolean> = of(true),
@@ -21,7 +26,9 @@ export class SideMenuControl {
         sideMenuOpenedStateChange.subscribe((opened) => {
             this._isOpened.next(opened);
             if (!opened) {
-                this._event$.next({opened, message: 'Side menu closed unexpectedly'});
+                if (!this._closing) {
+                    this._event$.next({opened, message: 'Side menu closed unexpectedly'});
+                }
                 this._event$.complete();
                 this._isOpened.complete();
             }
@@ -45,6 +52,7 @@ export class SideMenuControl {
         if (!event.message) {
             event.message = 'Side menu is closing';
         }
+        this._closing = true;
         this._event$.next({...event, opened: false});
         this._isOpened.next(event.opened);
         return this.sideMenuCloseFunction().pipe(

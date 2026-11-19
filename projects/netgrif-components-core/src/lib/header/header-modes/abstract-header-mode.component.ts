@@ -1,9 +1,11 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, ChangeDetectionStrategy} from '@angular/core';
 import {FormControl} from '@angular/forms';
 
 @Component({
     selector: 'ncc-abstract-header-mode',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractHeaderModeComponent {
 

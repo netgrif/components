@@ -1,4 +1,4 @@
-import {Component, Injector, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, Injector, Input, OnDestroy, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {CountCard} from '../model/count-card';
 import {CountService} from '../../../resources/abstract-endpoint/count-service';
 import {Filter} from '../../../filter/models/filter';
@@ -10,7 +10,9 @@ import {Subscription} from 'rxjs';
 
 @Component({
     selector: 'ncc-abstract-count-card',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractCountCardComponent implements OnInit, OnDestroy {
 

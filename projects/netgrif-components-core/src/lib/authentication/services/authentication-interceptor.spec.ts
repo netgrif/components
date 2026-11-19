@@ -3,11 +3,10 @@ import {AuthenticationInterceptor} from './authentication-interceptor';
 import {AuthenticationMethodService} from './authentication-method.service';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
-import {HTTP_INTERCEPTORS, HttpClient, HttpHeaders} from '@angular/common/http';
-import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
+import {HTTP_INTERCEPTORS, HttpClient, HttpHeaders, provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
+import {HttpTestingController, provideHttpClientTesting} from '@angular/common/http/testing';
 import {SessionService} from '../session/services/session.service';
 import {RouterTestingModule} from '@angular/router/testing';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
 import {LoggerService} from '../../logger/services/logger.service';
 
@@ -17,7 +16,7 @@ describe('AuthenticationInterceptor', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule, NoopAnimationsModule, RouterTestingModule.withRoutes([])],
+            imports: [ RouterTestingModule.withRoutes([])],
             providers: [
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 SessionService,
@@ -26,7 +25,9 @@ describe('AuthenticationInterceptor', () => {
                     provide: HTTP_INTERCEPTORS,
                     useClass: AuthenticationInterceptor,
                     multi: true
-                }
+                },
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
             ]
         });
         service = TestBed.inject(SessionService);
@@ -43,7 +44,7 @@ describe('AuthenticationInterceptor', () => {
                         expect(response).toBeTruthy();
                         done();
                     });
-                    const request = mock.expectOne(req => (req.headers.has('X-Auth-Token')));
+                    const request = mock.expectOne(req =>req.headers.has('X-Auth-Token'))
 
                     request.flush({data: 'test'}, {headers: new HttpHeaders({'X-Auth-Token': 'tokenos'})});
                 })();

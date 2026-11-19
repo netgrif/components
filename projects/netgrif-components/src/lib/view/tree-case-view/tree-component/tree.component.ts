@@ -1,11 +1,13 @@
-import {Component} from '@angular/core';
+import {Component, ChangeDetectionStrategy} from '@angular/core';
 import {AbstractTreeComponent, CaseTreeService} from '@netgrif/components-core';
 
 @Component({
     selector: 'nc-tree-component',
     templateUrl: './tree.component.html',
     styleUrls: ['./tree.component.scss'],
-    providers: [CaseTreeService]
+    providers: [CaseTreeService],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class TreeComponent extends AbstractTreeComponent {
     constructor(protected _treeService: CaseTreeService) {

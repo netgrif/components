@@ -34,8 +34,12 @@ export abstract class GroupNavigationComponentResolverService {
                 return this._taskResourceService.getData(taskId)
             })).subscribe(itemData => {
             try {
+                const component = this.resolveViewComponent(itemData);
+                if (!component) {
+                    throw new Error(`The view of the menu item ${decodedCaseId} could not be resolved`);
+                }
                 result.next(new ComponentPortal(
-                    this.resolveViewComponent(itemData),
+                    component,
                     null,
                     Injector.create({
                         providers: [

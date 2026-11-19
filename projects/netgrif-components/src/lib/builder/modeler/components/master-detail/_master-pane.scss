@@ -1,0 +1,39 @@
+@mixin styles {
+    :host {
+        display: block;
+        height: 100%;
+    }
+
+    .master {
+        display: flex;
+        flex-direction: column;
+        box-sizing: border-box;
+        height: 100%;
+    }
+
+    .master-toolbar {
+        display: flex;
+        flex: 0 0 auto;
+        align-items: center;
+        gap: 8px;
+        box-sizing: border-box;
+        height: 56px;
+        padding: 0 8px 0 16px;
+    }
+
+    .spacer {
+        flex: 1 1 auto;
+    }
+
+    .list {
+        flex: 1 1 auto;
+        min-height: 0;
+        overflow: auto;
+        padding: 0 8px 8px;
+    }
+
+    mat-paginator {
+        flex: 0 0 auto;
+        border-top: 1px solid var(--mat-sys-outline-variant);
+    }
+}

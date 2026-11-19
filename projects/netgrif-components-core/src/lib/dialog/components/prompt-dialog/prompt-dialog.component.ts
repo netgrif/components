@@ -1,4 +1,4 @@
-import {Component, Inject} from '@angular/core';
+import {Component, Inject, ChangeDetectionStrategy} from '@angular/core';
 import {AbstractDialogComponent} from '../../models/abstract-dialog.component';
 import {DialogResult} from '../../models/DialogResult';
 import {DialogData} from '../../models/DialogData';
@@ -11,7 +11,9 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 @Component({
     selector: 'ncc-question-dialog-with-answer',
     templateUrl: './prompt-dialog.component.html',
-    styleUrls: ['./prompt-dialog.component.scss']
+    styleUrls: ['./prompt-dialog.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class PromptDialogComponent extends AbstractDialogComponent<PromptDialogComponent> {
     /** Set submit button to disabled or enabled according to the user answer. */

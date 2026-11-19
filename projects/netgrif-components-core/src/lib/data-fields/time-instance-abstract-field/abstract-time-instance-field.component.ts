@@ -3,14 +3,16 @@ import {TranslateService} from '@ngx-translate/core';
 import moment, {Moment} from 'moment';
 import {AbstractBaseDataFieldComponent} from "../base-component/abstract-base-data-field.component";
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../models/data-field-portal-data-injection-token";
-import {Component, Inject, OnDestroy, Optional} from '@angular/core';
+import {Component, Inject, OnDestroy, Optional, ChangeDetectionStrategy} from '@angular/core';
 import {DateAdapter, MAT_DATE_LOCALE} from '@angular/material/core';
 import {LanguageService} from '../../translate/language.service';
 import {Subscription} from 'rxjs';
 
 @Component({
     selector: 'ncc-abstract-time-instance-field',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractTimeInstanceFieldComponent<T extends AbstractTimeInstanceField> extends AbstractBaseDataFieldComponent<T> implements OnDestroy {
 

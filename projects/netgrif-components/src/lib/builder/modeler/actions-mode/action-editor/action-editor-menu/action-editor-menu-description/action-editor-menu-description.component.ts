@@ -1,10 +1,12 @@
-import {Component, ElementRef, ViewChild} from '@angular/core';
+import {Component, ElementRef, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {CommandAction} from '../../classes/command-action';
 
 @Component({
     selector: 'nc-builder-action-editor-menu-description',
     templateUrl: './action-editor-menu-description.component.html',
-    styleUrls: ['./action-editor-menu-description.component.scss']
+    styleUrls: ['./action-editor-menu-description.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class ActionEditorMenuDescriptionComponent {
 

@@ -1,6 +1,7 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {SearchComponent} from './search.component';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 import {SearchComponentModule} from '../search.module';
 import {
     AuthenticationMethodService,
@@ -20,7 +21,6 @@ import {
     CategoryFactory,
     ViewIdService, CaseAuthor, CaseCreationDate, CaseProcess, Category
 } from '@netgrif/components-core';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {Type} from '@angular/core';
 import {RouterTestingModule} from "@angular/router/testing";
 
@@ -31,13 +31,13 @@ describe('SearchComponent', () => {
     const imports = [
         MaterialModule,
         TranslateLibModule,
-        HttpClientTestingModule,
         SearchComponentModule,
-        NoopAnimationsModule,
         RouterTestingModule.withRoutes([])
     ];
 
     const providers = [
+        provideHttpClient(withXhr(), withInterceptorsFromDi()),
+        provideHttpClientTesting(),
         AuthenticationMethodService,
         {provide: ConfigurationService, useClass: TestConfigurationService},
         {provide: AuthenticationService, useClass: MockAuthenticationService},

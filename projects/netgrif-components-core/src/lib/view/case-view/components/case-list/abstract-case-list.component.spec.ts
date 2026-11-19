@@ -1,6 +1,5 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {of} from 'rxjs';
 import {MaterialModule} from '../../../../material/material.module';
 import {TranslateLibModule} from '../../../../translate/translate-lib.module';
@@ -9,7 +8,7 @@ import {ConfigurationService} from '../../../../configuration/configuration.serv
 import {TestConfigurationService} from '../../../../utility/tests/test-config';
 import {CaseViewService} from '../../service/case-view-service';
 import {SearchService} from '../../../../search/search-service/search.service';
-import {Component, CUSTOM_ELEMENTS_SCHEMA, Inject, Optional} from '@angular/core';
+import {Component, CUSTOM_ELEMENTS_SCHEMA, Inject, Optional, ChangeDetectionStrategy} from '@angular/core';
 import {AbstractCaseListComponent} from './abstract-case-list.component';
 import {LoggerService} from '../../../../logger/services/logger.service';
 import {AuthenticationMethodService} from '../../../../authentication/services/authentication-method.service';
@@ -23,7 +22,7 @@ import {AllowedNetsServiceFactory} from '../../../../allowed-nets/services/facto
 import {ActivatedRoute} from '@angular/router';
 import {RouterTestingModule} from '@angular/router/testing';
 import {LanguageService} from "../../../../translate/language.service";
-
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('AbstractCaseListComponent', () => {
     let component: TestCaseComponent;
@@ -31,11 +30,11 @@ describe('AbstractCaseListComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
+            declarations: [TestCaseComponent],
+            schemas: [CUSTOM_ELEMENTS_SCHEMA],
             imports: [
-                HttpClientTestingModule,
                 MaterialModule,
                 TranslateLibModule,
-                NoopAnimationsModule,
                 RouterTestingModule.withRoutes([])
             ],
             providers: [
@@ -48,10 +47,10 @@ describe('AbstractCaseListComponent', () => {
                     provide: NAE_BASE_FILTER,
                     useFactory: TestCaseBaseFilterProvider
                 },
-                {provide: AllowedNetsService, useFactory: TestCaseViewAllowedNetsFactory, deps: [AllowedNetsServiceFactory]}
-            ],
-            declarations: [TestCaseComponent],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA]
+                {provide: AllowedNetsService, useFactory: TestCaseViewAllowedNetsFactory, deps: [AllowedNetsServiceFactory]},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
+            ]
         }).compileComponents();
     }));
 
@@ -72,7 +71,9 @@ describe('AbstractCaseListComponent', () => {
 
 @Component({
     selector: 'ncc-test-case',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestCaseComponent extends AbstractCaseListComponent {
     constructor(protected _caseViewService: CaseViewService,

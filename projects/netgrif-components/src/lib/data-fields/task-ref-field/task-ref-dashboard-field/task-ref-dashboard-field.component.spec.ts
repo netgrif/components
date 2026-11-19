@@ -11,7 +11,7 @@ import {
     TestConfigurationService,
     UserResourceService
 } from "@netgrif/components-core";
-import {Component} from "@angular/core";
+import {Component, ChangeDetectionStrategy} from "@angular/core";
 import {TaskContentComponent} from "../../../task-content/task-content/task-content.component";
 import {FormControl} from "@angular/forms";
 
@@ -55,7 +55,9 @@ describe('TaskRefDashboardFieldComponent', () => {
                                     [gdColumn]="'1 / 2'"
                                     [gdRow]="'1 / 2'"
                                     [taskContentComponentClassReference]="taskContentComponentClass">
-        </nc-task-ref-dashboard-field>`
+        </nc-task-ref-dashboard-field>`,
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestWrapperComponent {
     tile = {

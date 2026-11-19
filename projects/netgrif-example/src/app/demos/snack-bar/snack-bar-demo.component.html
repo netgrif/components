@@ -1,0 +1,48 @@
+<ne-demo-page title="Snack bar" description="Success, warning, error and generic notifications of SnackBarService."
+              [api]="['SnackBarService', 'SnackBarModule']" [snippets]="snippets">
+    <div demoPreview>
+        <button mat-flat-button (click)="open()">
+            <mat-icon>notifications</mat-icon>
+            Open {{ type | lowercase }} snack bar
+        </button>
+    </div>
+
+    <div demoConfig class="ne-config">
+        <mat-form-field>
+            <mat-label>Type</mat-label>
+            <mat-select [(ngModel)]="type">
+                @for (t of types; track t) {
+                <mat-option [value]="t">{{ t }}</mat-option>
+                }
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Message</mat-label>
+            <input matInput [(ngModel)]="message">
+        </mat-form-field>
+        @if (hasDuration) {
+        <mat-form-field>
+            <mat-label>Duration (s)</mat-label>
+            <input matInput type="number" min="1" [(ngModel)]="duration">
+        </mat-form-field>
+        } @else {
+        <p class="mat-body-small">The error snack bar stays open until it's closed.</p>
+        }
+        <mat-form-field>
+            <mat-label>Vertical position</mat-label>
+            <mat-select [(ngModel)]="verticalPosition">
+                @for (p of vertical; track p) {
+                <mat-option [value]="p">{{ p }}</mat-option>
+                }
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Horizontal position</mat-label>
+            <mat-select [(ngModel)]="horizontalPosition">
+                @for (p of horizontal; track p) {
+                <mat-option [value]="p">{{ p }}</mat-option>
+                }
+            </mat-select>
+        </mat-form-field>
+    </div>
+</ne-demo-page>

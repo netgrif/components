@@ -1,0 +1,23 @@
+<div class="view">
+    <div class="search-row">
+        @if (enableSearch) {
+        <nc-search class="search"></nc-search>
+        } @else {
+        <span class="search"></span>
+        }
+        @if (showCreateCaseButton) {
+        <nc-create-case-button [newCaseCreationConfig]="newCaseCreationConfig"
+                               (caseCreatedEvent)="handleCaseClick($event)"></nc-create-case-button>
+        }
+    </div>
+    <!-- header and rows scroll together, the paginator stays below them -->
+    <nc-case-list-paginator class="list"
+                            [width]="getWidth()"
+                            [selectedHeaders$]="selectedHeaders$"
+                            [showDeleteMenu]="showDeleteMenu"
+                            [responsiveBody]="true"
+                            [textEllipsis]="true"
+                            (caseClick)="handleCaseClick($event)">
+        <nc-header #header ncListHeader [type]="headerType" [responsiveHeaders]="true" [ngStyle]="{ width: getWidth() }"></nc-header>
+    </nc-case-list-paginator>
+</div>

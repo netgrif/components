@@ -94,8 +94,7 @@ export abstract class SimulationTool extends CanvasListenerTool {
 
     openMarkingPlaceDialog(place: Place): void {
         this.openDialog(DialogMarkingChangeComponent, {
-            width: '50%',
-            panelClass: "dialog-width-50",
+            panelClass: 'dialog-responsive',
             data: {
                 placeId: place.id,
                 simulationService: this.simulationModeService
@@ -112,8 +111,7 @@ export abstract class SimulationTool extends CanvasListenerTool {
     openDataDialog(id: string, value: number): void {
         const dataSet = new Map<string, number>([[id, value]]);
         this.openDialog(DialogChangeDataComponent, {
-            width: '50%',
-            panelClass: "dialog-width-50",
+            panelClass: 'dialog-responsive',
             data: {
                 dataSet: dataSet
             } as DataSet

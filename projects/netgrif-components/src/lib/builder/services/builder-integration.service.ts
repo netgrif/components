@@ -27,6 +27,7 @@ export class BuilderIntegrationService implements OnDestroy {
     protected _reloadModes: Subject<boolean>;
     protected _loading: LoadingEmitter;
     protected _historySub: Subscription;
+    protected _modelDataSet: Subject<PetriNet>;
 
     constructor(protected _historyService: HistoryService,
                 protected _taskResourceService: TaskResourceService,
@@ -36,6 +37,7 @@ export class BuilderIntegrationService implements OnDestroy {
         this._reloadCase = new Subject<boolean>();
         this._reloadModes = new Subject<boolean>();
         this._loading = new LoadingEmitter();
+        this._modelDataSet = new Subject<PetriNet>();
         this._historySub = this._historyService.historyChange.subscribe(history => {
             if (this._isIntegrated && this._editTaskId && !_builderModeService.readOnly) {
                 if (!this._isAssigned) {
@@ -54,6 +56,7 @@ export class BuilderIntegrationService implements OnDestroy {
 
     ngOnDestroy(): any {
         this._historySub?.unsubscribe();
+        this._modelDataSet.complete();
     }
 
     get isIntegrated(): boolean {
@@ -104,6 +107,14 @@ export class BuilderIntegrationService implements OnDestroy {
         this._reloadModes.next(value);
     }
 
+    /**
+     * Emits the model whose data (id, version, icon, title) were saved into the process case by {@link setModelData}
+     * (after an import or an edit of the model), e.g. to update the title of the tab of the process
+     */
+    get modelDataSet$(): Observable<PetriNet> {
+        return this._modelDataSet.asObservable();
+    }
+
     get loading$(): Observable<boolean> {
         return this._loading.asObservable();
     }
@@ -148,11 +159,19 @@ export class BuilderIntegrationService implements OnDestroy {
             return of('');
         }
         const xml = new Subject<string>();
-        this._taskResourceService.getData(taskId).subscribe(dg => {
-            const xmlFieldValue = extractFieldValueFromData<string>(dg, 'xml_text');
-            xml.next(xmlFieldValue);
-            xml.complete();
-        })
+        this._taskResourceService.getData(taskId).subscribe({
+            next: dg => {
+                try {
+                    const xmlFieldValue = extractFieldValueFromData<string>(dg, 'xml_text');
+                    xml.next(xmlFieldValue);
+                    xml.complete();
+                } catch (error) {
+                    this._log.error('The model of the process case could not be loaded', error);
+                    xml.error(error);
+                }
+            },
+            error: error => xml.error(error)
+        });
         return xml.asObservable();
     }
 
@@ -187,6 +206,7 @@ export class BuilderIntegrationService implements OnDestroy {
                     if ((outcome.outcome as TaskEventOutcome)?.task?.user?.email !== undefined) {
                         this._isAssigned = true;
                     }
+                    this._modelDataSet.next(model);
                     this._log.debug('Data set successfully');
                 }, error: error => {
                     this._loading.next(false);

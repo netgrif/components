@@ -1,4 +1,4 @@
-import {Component, Inject, Optional} from '@angular/core';
+import {Component, Inject, Optional, ChangeDetectionStrategy} from '@angular/core';
 import {
     AbstractDashboardIframeTextFieldComponent,
     DATA_FIELD_PORTAL_DATA,
@@ -10,7 +10,8 @@ import {TranslateService} from '@ngx-translate/core';
 @Component({
     selector: 'nc-dashboard-iframe-text-field',
     templateUrl: './dashboard-iframe-text-field.component.html',
-    styleUrls: ['./dashboard-iframe-text-field.component.scss']
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class DashboardIframeTextFieldComponent extends AbstractDashboardIframeTextFieldComponent {
 

@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output, ChangeDetectionStrategy} from '@angular/core';
 import {Observable, ReplaySubject} from 'rxjs';
 import {UserListItem, UserListService} from '../../../../user/services/user-list.service';
 import {UserValue} from '../../../../data-fields/user-field/models/user-value';
@@ -9,7 +9,9 @@ import {AbstractBaseUserAssignListComponent} from "../base-user-assign-list/abst
  */
 @Component({
     selector: 'ncc-abstract-multi-user-assign-list',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractMultiUserAssignListComponent extends AbstractBaseUserAssignListComponent implements OnInit, OnDestroy {
 

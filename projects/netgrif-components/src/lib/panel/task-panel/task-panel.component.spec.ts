@@ -1,10 +1,9 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {CommonModule} from '@angular/common';
-import {Component, NO_ERRORS_SCHEMA} from '@angular/core';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {Component, NO_ERRORS_SCHEMA, ChangeDetectionStrategy} from '@angular/core';
 import {TaskPanelComponent} from './task-panel.component';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {RouterTestingModule} from '@angular/router/testing';
 import {
     AssignPolicy,
@@ -58,6 +57,7 @@ import {of, Subject, throwError} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {PanelComponent} from '../panel.component';
 import {TaskContentComponentModule} from '../../task-content/task-content.module';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('TaskPanelComponent', () => {
     let component: TaskPanelComponent;
@@ -70,13 +70,18 @@ describe('TaskPanelComponent', () => {
         };
 
         TestBed.configureTestingModule({
+            declarations: [
+                PanelComponent,
+                TaskPanelComponent,
+                TestWrapperComponent
+            ],
+            schemas: [NO_ERRORS_SCHEMA],
             imports: [
+                // PanelComponent still binds [@.disabled] on mat-expansion-panel, which needs an animations provider
                 MatExpansionModule,
                 MaterialModule,
-                NoopAnimationsModule,
                 CommonModule,
                 TranslateLibModule,
-                HttpClientTestingModule,
                 SnackBarModule,
                 TaskContentComponentModule,
                 CurrencyModule,
@@ -109,14 +114,10 @@ describe('TaskPanelComponent', () => {
                 AssignPolicyService,
                 FinishPolicyService,
                 {provide: NAE_TASK_OPERATIONS, useClass: SubjectTaskOperations},
-                {provide: AllowedNetsService, useFactory: TestTaskViewAllowedNetsFactory, deps: [AllowedNetsServiceFactory]}
-            ],
-            declarations: [
-                PanelComponent,
-                TaskPanelComponent,
-                TestWrapperComponent,
-            ],
-            schemas: [NO_ERRORS_SCHEMA]
+                {provide: AllowedNetsService, useFactory: TestTaskViewAllowedNetsFactory, deps: [AllowedNetsServiceFactory]},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
+            ]
         }).overrideProvider(AssignPolicyService, {useValue: mockAssignPolicyService}
         ).compileComponents();
 
@@ -136,7 +137,9 @@ describe('TaskPanelComponent', () => {
 
 @Component({
     selector: 'nc-test-wrapper',
-    template: '<nc-task-panel [taskPanelData]="taskPanel" [selectedHeaders$]="selectedHeaders$"></nc-task-panel>'
+    template: '<nc-task-panel [taskPanelData]="taskPanel" [selectedHeaders$]="selectedHeaders$"></nc-task-panel>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestWrapperComponent {
     taskPanel: TaskPanelData = {

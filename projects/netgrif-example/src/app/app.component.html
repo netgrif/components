@@ -1,0 +1,40 @@
+<mat-toolbar class="toolbar">
+    @if (mobile) {
+    <button mat-icon-button (click)="sidenav.toggle()" aria-label="Menu">
+        <mat-icon>menu</mat-icon>
+    </button>
+    }
+    <a routerLink="/" class="brand">
+        <img [src]="dark ? 'assets/img/netgrif_full_white.svg' : 'assets/img/netgrif_full_grey.svg'" alt="Netgrif" class="logo">
+        <span class="mat-title-medium">Components playground</span>
+    </a>
+    <span class="spacer"></span>
+    <button mat-icon-button (click)="toggleTheme()" [matTooltip]="dark ? 'Light mode' : 'Dark mode'">
+        <mat-icon>{{ dark ? 'light_mode' : 'dark_mode' }}</mat-icon>
+    </button>
+</mat-toolbar>
+
+<mat-sidenav-container class="container">
+    <mat-sidenav #sidenav [mode]="mobile ? 'over' : 'side'" [opened]="!mobile" class="sidenav">
+        <mat-nav-list>
+            <a mat-list-item routerLink="/" routerLinkActive #home="routerLinkActive" [routerLinkActiveOptions]="{exact: true}"
+               [activated]="home.isActive" (click)="mobile && sidenav.close()">
+                <mat-icon matListItemIcon>home</mat-icon>
+                <span matListItemTitle>Overview</span>
+            </a>
+            @for (group of groups; track group.label) {
+            <div matSubheader>{{ group.label }}</div>
+            @for (item of group.items; track item.path) {
+            <a mat-list-item [routerLink]="item.path" routerLinkActive #link="routerLinkActive" [activated]="link.isActive"
+               (click)="mobile && sidenav.close()">
+                <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
+                <span matListItemTitle>{{ item.label }}</span>
+            </a>
+            }
+            }
+        </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content class="content">
+        <router-outlet></router-outlet>
+    </mat-sidenav-content>
+</mat-sidenav-container>

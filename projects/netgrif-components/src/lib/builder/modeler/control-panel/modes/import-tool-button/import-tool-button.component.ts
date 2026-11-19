@@ -1,4 +1,4 @@
-import {Component, ElementRef, Inject, ViewChild} from '@angular/core';
+import {Component, ElementRef, Inject, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {TutorialService} from '../../../../tutorial/tutorial-service';
 import {NAB_CONTROL_PANEL_TOOL} from '../../control-panel-tool-injection-token';
 import {ImportTool} from '../import-tool';
@@ -6,7 +6,9 @@ import {ImportTool} from '../import-tool';
 @Component({
     selector: 'nc-builder-import-tool-button',
     templateUrl: './import-tool-button.component.html',
-    styleUrls: ['./import-tool-button.component.scss']
+    styleUrls: ['./import-tool-button.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class ImportToolButtonComponent {
 

@@ -1,4 +1,4 @@
-import {Component, Inject} from '@angular/core';
+import {Component, Inject, ChangeDetectionStrategy} from '@angular/core';
 import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 
 export interface DialogData {
@@ -10,7 +10,9 @@ export interface DialogData {
 @Component({
     selector: 'nc-builder-dialog-local-storage-model',
     templateUrl: './dialog-local-storage-model.component.html',
-    styleUrls: ['./dialog-local-storage-model.component.scss']
+    styleUrls: ['./dialog-local-storage-model.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class DialogLocalStorageModelComponent {
 

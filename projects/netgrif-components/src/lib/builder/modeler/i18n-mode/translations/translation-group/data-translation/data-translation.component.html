@@ -1,27 +1,27 @@
-<div fxLayout="column" *ngFor="let dataVariable of model.getDataSet(); let i = index">
-<!--    @defer (on viewport) {-->
-        <div>
-            <h3 class="margin-none">{{dataVariable.title.value}} [{{dataVariable.id}}]</h3>
-            <nc-builder-i18n-field [field]="dataVariable.title" [name]="'builder.modeler.i18n-mode.title' | translate" [translation]="translation"></nc-builder-i18n-field>
-            <nc-builder-i18n-field [field]="dataVariable.placeholder" [name]="'builder.modeler.i18n-mode.placeholder' | translate" [translation]="translation"></nc-builder-i18n-field>
-            <nc-builder-i18n-field [field]="dataVariable.desc" [name]="'builder.modeler.i18n-mode.description' | translate" [translation]="translation"></nc-builder-i18n-field>
-            <nc-builder-i18n-field *ngIf="isI18nField(dataVariable)" [field]="dataVariable.init" [name]="'builder.modeler.i18n-mode.init' | translate" [translation]="translation"></nc-builder-i18n-field>
-            <div *ngIf="dataVariable.options?.length > 0">
-                <h4>{{ 'builder.modeler.i18n-mode.options' | translate }}:</h4>
-                <nc-builder-i18n-field *ngFor="let option of dataVariable.options" [field]="option.value"
-                                [name]="option.key" class="options" [translation]="translation"></nc-builder-i18n-field>
-            </div>
-            <div *ngIf="dataVariable.validations?.length > 0">
-                <h4>{{ 'builder.modeler.i18n-mode.validations' | translate }}:</h4>
-                <nc-builder-i18n-field *ngFor="let validation of dataVariable.validations" [field]="validation.message"
-                                [name]="validation.expression.expression" class="options" [translation]="translation"></nc-builder-i18n-field>
-            </div>
-            <mat-divider *ngIf="notLast(i)"></mat-divider>
-        </div>
-<!--    } @placeholder {-->
-<!--        <div>-->
-<!--            <h3 class="margin-none">{{dataVariable.title.value}} [{{dataVariable.id}}]</h3>-->
-<!--            <mat-spinner></mat-spinner>-->
-<!--        </div>-->
-<!--    }-->
-</div>
+@for (dataVariable of model.getDataSet(); track dataVariable) {
+<section class="item">
+    <h3 class="item-title">{{ dataVariable.title.value }}<span class="item-id">{{ dataVariable.id }}</span></h3>
+    <nc-builder-i18n-field [field]="dataVariable.title" [name]="'builder.modeler.i18n-mode.title' | translate" [translation]="translation"></nc-builder-i18n-field>
+    <nc-builder-i18n-field [field]="dataVariable.placeholder" [name]="'builder.modeler.i18n-mode.placeholder' | translate" [translation]="translation"></nc-builder-i18n-field>
+    <nc-builder-i18n-field [field]="dataVariable.desc" [name]="'builder.modeler.i18n-mode.description' | translate" [translation]="translation"></nc-builder-i18n-field>
+    @if (isI18nField(dataVariable)) {
+    <nc-builder-i18n-field [field]="dataVariable.init" [name]="'builder.modeler.i18n-mode.init' | translate" [translation]="translation"></nc-builder-i18n-field>
+    }
+    @if (dataVariable.options?.length > 0) {
+    <h4 class="subsection-title">{{ "builder.modeler.i18n-mode.options" | translate }}</h4>
+    <div class="nested">
+        @for (option of dataVariable.options; track option) {
+        <nc-builder-i18n-field [field]="option.value" [name]="option.key" [translation]="translation"></nc-builder-i18n-field>
+        }
+    </div>
+    }
+    @if (dataVariable.validations?.length > 0) {
+    <h4 class="subsection-title">{{ "builder.modeler.i18n-mode.validations" | translate }}</h4>
+    <div class="nested">
+        @for (validation of dataVariable.validations; track validation) {
+        <nc-builder-i18n-field [field]="validation.message" [name]="validation.expression.expression" [translation]="translation"></nc-builder-i18n-field>
+        }
+    </div>
+    }
+</section>
+}

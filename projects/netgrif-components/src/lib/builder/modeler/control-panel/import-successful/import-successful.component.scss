@@ -1,9 +1,9 @@
-mat-icon {
-  color: green;
-  padding-right: 10px;
+div {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
 }
 
-div {
-  vertical-align: top;
-  display: inline-flex;
+mat-icon {
+    color: var(--mat-sys-primary);
 }

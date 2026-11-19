@@ -1,6 +1,5 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {Component, Injector, OnInit} from '@angular/core';
+import {Component, Injector, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
 import {MaterialModule} from '../../material/material.module';
 import {RouterTestingModule} from '@angular/router/testing';
@@ -18,7 +17,8 @@ import {TabView} from '../classes/tab-view';
 import {TabContent} from '../interfaces';
 import {LoggerService} from '../../logger/services/logger.service';
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('AbstractTabCreationDetectorComponent', () => {
     let component: TestTabComponent;
@@ -26,10 +26,13 @@ describe('AbstractTabCreationDetectorComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
+            declarations: [
+                TestComponent,
+                TestTabComponent,
+                TestWrapperComponent
+            ],
             imports: [
                 MaterialModule,
-                NoopAnimationsModule,
-                HttpClientTestingModule,
                 RouterTestingModule.withRoutes([])
             ],
             providers: [
@@ -38,11 +41,8 @@ describe('AbstractTabCreationDetectorComponent', () => {
                 {provide: UserResourceService, useClass: MockUserResourceService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: ViewService, useClass: TestViewService},
-            ],
-            declarations: [
-                TestComponent,
-                TestTabComponent,
-                TestWrapperComponent,
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting(),
             ]
         }).compileComponents();
 
@@ -62,7 +62,9 @@ describe('AbstractTabCreationDetectorComponent', () => {
 
 @Component({
     selector: 'ncc-test-tabs',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestTabComponent extends AbstractTabCreationDetectorComponent {
     constructor() {
@@ -72,7 +74,9 @@ class TestTabComponent extends AbstractTabCreationDetectorComponent {
 
 @Component({
     selector: 'ncc-test-wrapper',
-    template: '<ncc-test-tabs [initializeTabFunction]="initializeTabLambda" [tabIndex]="0"></ncc-test-tabs>'
+    template: '<ncc-test-tabs [initializeTabFunction]="initializeTabLambda" [tabIndex]="0"></ncc-test-tabs>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestWrapperComponent implements OnInit {
     tabGroup: TabView;
@@ -100,7 +104,9 @@ class TestWrapperComponent implements OnInit {
 
 @Component({
     selector: 'ncc-test-div',
-    template: '<div></div>'
+    template: '<div></div>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestComponent {
 }

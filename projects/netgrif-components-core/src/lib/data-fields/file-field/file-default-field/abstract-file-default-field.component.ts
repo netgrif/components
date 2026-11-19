@@ -1,13 +1,4 @@
-import {
-    AfterViewInit,
-    Component,
-    ElementRef,
-    Inject,
-    OnDestroy,
-    OnInit,
-    Optional,
-    ViewChild
-} from "@angular/core";
+import {AfterViewInit, Component, ElementRef, Inject, OnDestroy, OnInit, Optional, ViewChild, ChangeDetectionStrategy} from "@angular/core";
 import {FileField, FilePreviewType} from "../models/file-field";
 import {DomSanitizer, SafeUrl} from "@angular/platform-browser";
 import {BehaviorSubject, Subscription} from "rxjs";
@@ -21,7 +12,6 @@ import {ProgressType, ProviderProgress} from "../../../resources/resource-provid
 import {ChangedFieldsMap} from "../../../event/services/interfaces/changed-fields-map";
 import {HttpParams} from "@angular/common/http";
 import {take} from "rxjs/operators";
-import {ResizedEvent} from "angular-resize-event";
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
 import {FILE_FIELD_HEIGHT, FILE_FIELD_PADDING, PREVIEW, PREVIEW_BUTTON} from '../models/file-field-constants';
 import {FileFieldRequest} from "../../../resources/interface/file-field-request-body";
@@ -37,7 +27,9 @@ export interface FileState {
 
 @Component({
     selector: 'ncc-abstract-file-default-fied',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractFileDefaultFieldComponent extends AbstractFileFieldDefaultComponent<FileField> implements OnInit, AfterViewInit, OnDestroy {
     /**
@@ -118,7 +110,7 @@ export abstract class AbstractFileDefaultFieldComponent extends AbstractFileFiel
         super(_log, _snackbar, _translate, dataFieldPortalData);
         this.state = this.defaultState;
         this.fullSource = new BehaviorSubject<SafeUrl>(null);
-        this.taskId = dataFieldPortalData.additionalFieldProperties.taskId as string;
+        this.taskId = dataFieldPortalData?.additionalFieldProperties?.taskId as string;
     }
 
     /**
@@ -137,18 +129,14 @@ export abstract class AbstractFileDefaultFieldComponent extends AbstractFileFiel
                 this.upload();
             };
         }
-        if (this.isFilePreview) {
-            if (!!this.imageDivEl) {
-                if (!this.isEmpty()) {
-                    this.initializePreviewIfDisplayable();
-                }
-            }
-        }
-        if (this.isFilePreviewButton) {
-            if (!this.isEmpty()) {
+        Promise.resolve().then(() => {
+            if (this.isFilePreview && !!this.imageDivEl && !this.isEmpty()) {
                 this.initializePreviewIfDisplayable();
             }
-        }
+            if (this.isFilePreviewButton && !this.isEmpty()) {
+                this.initializePreviewIfDisplayable();
+            }
+        });
         this.updatedFieldSubscription = this.dataField.updated.subscribe(() => {
             this.previewSource = undefined;
             if (!!this.isFilePreview && !!this.dataField?.value?.name) {
@@ -185,6 +173,10 @@ export abstract class AbstractFileDefaultFieldComponent extends AbstractFileFiel
      *
      * Otherwise opens a file picker from which the user can select files.
      */
+    protected isUploading(): boolean {
+        return !!this.state?.uploading;
+    }
+
     public upload() {
         if (!this.fileUploadEl.nativeElement.files || this.fileUploadEl.nativeElement.files.length === 0) {
             return;
@@ -410,7 +402,8 @@ export abstract class AbstractFileDefaultFieldComponent extends AbstractFileFiel
         this.state.downloading = true;
         let params = new HttpParams()
         params = params.set("fieldId", this.dataField.stringId);
-        this._taskResourceService.downloadFilePreview(this.resolveParentTaskId(), params).subscribe(response => {            if (response instanceof Blob) {
+        this._taskResourceService.downloadFilePreview(this.resolveParentTaskId(), params).subscribe(response => {
+            if (response instanceof Blob) {
                 this._log.debug(`Preview of file [${this.dataField.stringId}] ${this.dataField.value.name} was successfully downloaded`);
                 this.fileForPreview = new Blob([response], {type: 'application/octet-stream'});
                 this.previewSource = this._sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(this.fileForPreview));
@@ -445,7 +438,8 @@ export abstract class AbstractFileDefaultFieldComponent extends AbstractFileFiel
         }
         let params = new HttpParams();
         params = params.set("fieldId", this.dataField.stringId);
-        this._taskResourceService.downloadFile(this.resolveParentTaskId(), params).subscribe(response => {            if (!(response as ProviderProgress).type || (response as ProviderProgress).type !== ProgressType.DOWNLOAD) {
+        this._taskResourceService.downloadFile(this.resolveParentTaskId(), params).subscribe(response => {
+            if (!(response as ProviderProgress).type || (response as ProviderProgress).type !== ProgressType.DOWNLOAD) {
                 this._log.debug(`File [${this.dataField.stringId}] ${this.dataField.value.name} was successfully downloaded`);
                 this.initDownloadFile(response);
             }
@@ -458,7 +452,10 @@ export abstract class AbstractFileDefaultFieldComponent extends AbstractFileFiel
         });
     }
 
-    public changeMaxWidth(event: ResizedEvent) {
+    /**
+     * @deprecated preview image is limited by CSS max-width, this is no longer called from the template
+     */
+    public changeMaxWidth(event: { newRect: DOMRectReadOnly }) {
         if (!!this.imageEl) {
             this.imageEl.nativeElement.style.maxWidth = event.newRect.width + 'px';
         }
@@ -474,8 +471,7 @@ export abstract class AbstractFileDefaultFieldComponent extends AbstractFileFiel
     }
 
     public getHeight() {
-        return this.dataField.layout?.rows && this.dataField.layout?.rows !== 1 ?
-            (this.dataField.layout.rows) * FILE_FIELD_HEIGHT - FILE_FIELD_PADDING : FILE_FIELD_HEIGHT - FILE_FIELD_PADDING;
+        return this.dataField.layout?.rows && this.dataField.layout?.rows !== 1 ?this.dataField.layout.rows * FILE_FIELD_HEIGHT - FILE_FIELD_PADDING : FILE_FIELD_HEIGHT - FILE_FIELD_PADDING;
     }
 
     public getPreviewBorderWidth(): string {

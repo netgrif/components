@@ -1,8 +1,7 @@
 import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 
 import {DefaultPublicWorkflowViewComponent} from './default-public-workflow-view.component';
-import {NoopAnimationsModule} from "@angular/platform-browser/animations";
-import {HttpClientTestingModule} from "@angular/common/http/testing";
+import {provideHttpClientTesting} from "@angular/common/http/testing";
 import {CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA} from "@angular/core";
 import {
     AuthenticationMethodService,
@@ -29,8 +28,9 @@ import {
     SideMenuContentComponentModule
 } from "../../../../../side-menu/content-components/side-menu-content-component.module";
 import {RouterTestingModule} from "@angular/router/testing";
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
-xdescribe('DefaultPublicWorkflowViewComponent', () => {
+describe('DefaultPublicWorkflowViewComponent', () => {
     let component: DefaultPublicWorkflowViewComponent;
     let fixture: ComponentFixture<DefaultPublicWorkflowViewComponent>;
 
@@ -39,17 +39,15 @@ xdescribe('DefaultPublicWorkflowViewComponent', () => {
             declarations: [
                 DefaultPublicWorkflowViewComponent
             ],
+            schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
             imports: [
                 MaterialModule,
-                NoopAnimationsModule,
                 PanelComponentModule,
                 HeaderComponentModule,
-                HttpClientTestingModule,
                 SideMenuContentComponentModule,
                 TranslateLibModule,
                 RouterTestingModule.withRoutes([])
             ],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
             providers: [
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
@@ -60,6 +58,8 @@ xdescribe('DefaultPublicWorkflowViewComponent', () => {
                 OverflowService,
                 {provide: ProcessService, useClass: MockProcessService},
                 {provide: PetriNetResourceService, useClass: MockPetrinetResourceService},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting(),
             ]
         })
             .compileComponents();

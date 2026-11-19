@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, Input, OnInit, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {ModelService} from '../../../services/model/model.service';
 import {ActionItemProviderService} from '../action-item-provider.service';
 import {getActions, CommandAction, CommandActions} from '../classes/command-action';
@@ -10,7 +10,9 @@ import {TranslateService} from "@ngx-translate/core";
 @Component({
     selector: 'nc-builder-action-editor-menu',
     templateUrl: './action-editor-menu.component.html',
-    styleUrls: ['./action-editor-menu.component.scss']
+    styleUrls: ['./action-editor-menu.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class ActionEditorMenuComponent implements OnInit {
 

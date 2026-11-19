@@ -1,9 +1,11 @@
-import {Component, EventEmitter, Input, OnDestroy, Output, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, Output, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {MatSidenav} from '@angular/material/sidenav';
 
 @Component({
     selector: 'ncc-abstract-navigation-rail',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractNavigationRailComponent implements OnDestroy {
 

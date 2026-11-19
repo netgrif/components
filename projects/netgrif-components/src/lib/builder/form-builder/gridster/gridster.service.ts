@@ -14,14 +14,7 @@ import {
   Transition,
   TransitionLayout,
 } from '@netgrif/petriflow';
-import {
-  CompactType,
-  DisplayGrid,
-  GridsterConfig,
-  GridsterItem,
-  GridsterItemComponentInterface,
-  GridType,
-} from 'angular-gridster2';
+import {CompactType, DisplayGrid, GridsterConfig, GridsterItem, GridsterItemConfig, GridType} from 'angular-gridster2';
 import {BehaviorSubject, Observable, ReplaySubject, Subject, Subscription} from 'rxjs';
 import {debounceTime} from 'rxjs/operators';
 import {ModelerConfig} from '../../modeler/modeler-config';
@@ -111,12 +104,12 @@ export class GridsterService implements OnDestroy {
         this._selectedDataFieldStream = new ReplaySubject();
         this._optionChanged = new Subject<void>();
         this._optionChanged.pipe(debounceTime(300)).subscribe(() => {
-            this._options?.api?.optionsChanged();
+            this.refreshOptions();
         });
         this._readOnlySub = this._builderModeService.readOnly$.subscribe((readOnly) => {
             this._options.draggable.enabled = !readOnly;
             this._options.resizable.enabled = !readOnly;
-            this._options?.api?.optionsChanged()
+            this.refreshOptions();
         });
     }
 
@@ -125,6 +118,14 @@ export class GridsterService implements OnDestroy {
     }
 
     get options(): GridsterConfig { return this._options; }
+
+    /**
+     * `options` is a signal input of the gridster component (angular-gridster2 >= 21),
+     * changes are picked up only when a new object reference is bound.
+     */
+    refreshOptions(): void {
+        this._options = {...this._options};
+    }
 
     get placedDataFields(): Array<GridsterDataField> { return this._placedDataFields; }
     set placedDataFields(value: Array<GridsterDataField>) { this._placedDataFields = value; }
@@ -155,7 +156,7 @@ export class GridsterService implements OnDestroy {
         return this.transitionService.id;
     }
 
-    emptyCellClick(event: DragEvent, item: GridsterItem) {
+    emptyCellClick(event: DragEvent, item: GridsterItemConfig) {
         if (!event?.dataTransfer?.getData('type') && !event?.dataTransfer?.getData(GridsterService.EXISTING_FIELD)) {
             return;
         }
@@ -170,11 +171,12 @@ export class GridsterService implements OnDestroy {
         this.addNewDataRef(dataVariable, event, item);
     }
 
-    updateDataRef(item: GridsterDataField, resized: GridsterItemComponentInterface) {
-        item.x = item.dataRef.layout.x = resized.$item.x;
-        item.y = item.dataRef.layout.y = resized.$item.y;
-        item.rows = item.dataRef.layout.rows = resized.$item.rows;
-        item.cols = item.dataRef.layout.cols = resized.$item.cols;
+    updateDataRef(item: GridsterDataField, resized: GridsterItem) {
+        const $item = resized.$item();
+        item.x = item.dataRef.layout.x =$item.x;
+        item.y = item.dataRef.layout.y =$item.y;
+        item.rows = item.dataRef.layout.rows =$item.rows;
+        item.cols = item.dataRef.layout.cols =$item.cols;
         this._historySave = true;
         this.updateGridsterRows();
     }
@@ -225,7 +227,7 @@ export class GridsterService implements OnDestroy {
         return dataVariable;
     }
 
-    public addDataRef(dataVariable: DataVariable, componentRows: number, componentCols: number, componentName: string, item: GridsterItem): DataRef {
+    public addDataRef(dataVariable: DataVariable, componentRows: number, componentCols: number, componentName: string, item: GridsterItemConfig): DataRef {
         const dataRef = new DataRef(dataVariable.id);
         dataRef.layout.x = item.x;
         dataRef.layout.y = item.y;
@@ -263,7 +265,7 @@ export class GridsterService implements OnDestroy {
         return dataRef;
     }
 
-    private addNewDataRef(data: DataVariable, event: DragEvent, item: GridsterItem): DataRef {
+    private addNewDataRef(data: DataVariable, event: DragEvent, item: GridsterItemConfig): DataRef {
         const newDataRef =  this.addDataRef(
             data,
             +event.dataTransfer.getData('rows'),
@@ -276,7 +278,7 @@ export class GridsterService implements OnDestroy {
                 newDataRef.component.properties.push(new Property(property.name, property.defaultValue));
             }
         }
-        this._options.api?.optionsChanged();
+        this.refreshOptions();
         return newDataRef;
     }
 

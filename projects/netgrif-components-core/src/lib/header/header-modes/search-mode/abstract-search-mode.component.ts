@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit, Type} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit, Type, ChangeDetectionStrategy} from '@angular/core';
 import {AbstractHeaderService} from '../../abstract-header-service';
 import {FormControl} from '@angular/forms';
 import {debounceTime, map} from 'rxjs/operators';
@@ -11,7 +11,9 @@ import {MatDialog} from '@angular/material/dialog';
 
 @Component({
     selector: 'ncc-abstract-seatch-mode',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractSearchModeComponent extends AbstractHeaderModeComponent implements OnInit, OnDestroy {
 

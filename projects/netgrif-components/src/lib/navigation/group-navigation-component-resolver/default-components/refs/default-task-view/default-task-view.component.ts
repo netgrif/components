@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {
     AbstractTaskViewComponent,
     AllowedNetsService,
@@ -20,7 +20,6 @@ const localAllowedNetsFactory = (factory: AllowedNetsServiceFactory) => {
 @Component({
     selector: 'nc-default-task-view',
     templateUrl: './default-task-view.component.html',
-    styleUrls: ['./default-task-view.component.scss'],
     providers: [
         CategoryFactory,
         TaskViewService,
@@ -37,7 +36,9 @@ const localAllowedNetsFactory = (factory: AllowedNetsServiceFactory) => {
             provide: NAE_ASYNC_RENDERING_CONFIGURATION,
             useValue: {enableAsyncRenderingForNewFields: false, enableAsyncRenderingOnTaskExpand: false}
         }
-    ]
+    ],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class DefaultTaskViewComponent extends AbstractTaskViewComponent implements AfterViewInit {
 

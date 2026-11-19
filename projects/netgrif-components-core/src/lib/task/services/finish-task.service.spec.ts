@@ -2,7 +2,7 @@ import {TestBed} from '@angular/core/testing';
 import {FinishTaskService} from './finish-task.service';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {MaterialModule} from '../../material/material.module';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
 import {TranslateModule} from '@ngx-translate/core';
@@ -12,7 +12,6 @@ import {DataFocusPolicyService} from './data-focus-policy.service';
 import {TaskContentService} from '../../task-content/services/task-content.service';
 import {NAE_TASK_OPERATIONS} from '../models/task-operations-injection-token';
 import {NullTaskOperations} from '../models/null-task-operations';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {EventOutcomeMessageResource} from '../../resources/interface/message-resource';
 import {Observable, of, throwError} from 'rxjs';
 import {map} from 'rxjs/operators';
@@ -35,6 +34,7 @@ import {createMockCase} from '../../utility/tests/utility/create-mock-case';
 import {createMockNet} from '../../utility/tests/utility/create-mock-net';
 import {ChangedFieldsService} from '../../changed-fields/services/changed-fields.service';
 import {FrontActionService} from "../../actions/services/front-action.service";
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('FinishTaskService', () => {
     let service: FinishTaskService;
@@ -46,11 +46,9 @@ describe('FinishTaskService', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
-                HttpClientTestingModule,
                 MaterialModule,
                 TranslateModule,
                 TranslateLibModule,
-                NoopAnimationsModule,
                 SnackBarModule
             ],
             providers: [
@@ -66,6 +64,8 @@ describe('FinishTaskService', () => {
                 {provide: NAE_TASK_OPERATIONS, useClass: NullTaskOperations},
                 {provide: TaskResourceService, useClass: TestTaskResourceService},
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting(),
             ]
         }).compileComponents();
         service = TestBed.inject(FinishTaskService);

@@ -1,4 +1,4 @@
-import {Component, Inject, Optional} from "@angular/core";
+import {Component, Inject, Optional, ChangeDetectionStrategy} from "@angular/core";
 import {FilterField, FilterFieldValidation} from "../models/filter-field";
 import {AbstractBaseDataFieldComponent} from "../../base-component/abstract-base-data-field.component";
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
@@ -6,7 +6,9 @@ import {TranslateService} from "@ngx-translate/core";
 
 @Component({
     selector: 'ncc-abstract-filter-string-query-field',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractFilterStringQueryFieldComponent extends AbstractBaseDataFieldComponent<FilterField> {
 

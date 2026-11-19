@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Inject, Optional} from '@angular/core';
+import {AfterViewInit, Component, Inject, Optional, ChangeDetectionStrategy} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {CurrencyPipe, getCurrencySymbol} from '@angular/common';
 import {AbstractNumberErrorsComponent} from '../abstract-number-errors.component';
@@ -7,9 +7,16 @@ import {NumberField} from "../models/number-field";
 
 @Component({
     selector: 'ncc-abstract-currency-field',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractCurrencyNumberFieldComponent extends AbstractNumberErrorsComponent implements AfterViewInit {
+
+    /** currency of a currency field without the `code` property */
+    public static readonly DEFAULT_CURRENCY = 'EUR';
+    /** decimal places of a currency field without the `fractionSize` property */
+    public static readonly DEFAULT_FRACTION_SIZE = 2;
 
     transformedValue: string;
     fieldType: string;
@@ -50,11 +57,8 @@ export abstract class AbstractCurrencyNumberFieldComponent extends AbstractNumbe
     }
 
     getCurrencySymbol(): string {
-        if (this.dataField._formatFilter === undefined) {
-            return getCurrencySymbol(this.dataField.component.properties['code'],
-                'wide', this.dataField.component.properties['locale']);
-        }
-        return getCurrencySymbol(this.dataField._formatFilter.code, 'wide', this.dataField._formatFilter.locale);
+        const format = this.currencyFormat();
+        return getCurrencySymbol(format.code, 'wide', format.locale);
     }
 
     isNumberType(): boolean {
@@ -63,19 +67,23 @@ export abstract class AbstractCurrencyNumberFieldComponent extends AbstractNumbe
 
     private transformCurrency(value: string | undefined): string {
         value = !!value ? value : '0';
-        if (this.dataField._formatFilter === undefined) {
-            return this._currencyPipe.transform(
-                parseFloat(value),
-                this.dataField.component.properties['code'],
-                'symbol',
-                '1.' + this.dataField.component.properties['fractionSize'] + '-' + this.dataField.component.properties['fractionSize'],
-                this.dataField.component.properties['locale']);
-        }
-        return this._currencyPipe.transform(
-            parseFloat(value),
-            this.dataField._formatFilter.code,
-            'symbol',
-            '1.' + this.dataField._formatFilter.fractionSize + '-' + this.dataField._formatFilter.fractionSize,
-            this.dataField._formatFilter.locale);
+        const format = this.currencyFormat();
+        return this._currencyPipe.transform(parseFloat(value), format.code, 'symbol',
+            '1.' + format.fractionSize + '-' + format.fractionSize, format.locale);
+    }
+
+    /**
+     * The format of the currency: the format filter of the field, or the properties of its component (`code`,
+     * `fractionSize`, `locale`); a property that is not set has a default (EUR, 2 decimal places, the locale of the
+     * application), the currency pipe failed on `1.undefined-undefined` without them.
+     */
+    protected currencyFormat(): {code: string, fractionSize: number, locale: string | undefined} {
+        const source = this.dataField._formatFilter ?? this.dataField.component?.properties ?? {};
+        const fractionSize = parseInt(source['fractionSize'], 10);
+        return {
+            code: source['code'] || AbstractCurrencyNumberFieldComponent.DEFAULT_CURRENCY,
+            fractionSize: Number.isNaN(fractionSize) ? AbstractCurrencyNumberFieldComponent.DEFAULT_FRACTION_SIZE : fractionSize,
+            locale: source['locale'] || undefined,
+        };
     }
 }

@@ -1,11 +1,13 @@
-.localeSelect {
-  margin-bottom: 16px;
+.translations {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
 }
 
-.example-tab-icon {
+.language-select {
+    width: min(360px, 100%);
+}
+
+.tab-icon {
     margin-right: 8px;
-}
-
-.mat-tab-group-height {
-    height: calc(100vh - 140px);
 }

@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, Inject, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {FormControl, ValidatorFn, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialog} from '@angular/material/dialog';
 import {Router} from '@angular/router';
@@ -22,7 +22,9 @@ export interface TransitionEditData {
 @Component({
     selector: 'nc-builder-dialog-transition-edit',
     templateUrl: './dialog-transition-edit.component.html',
-    styleUrls: ['./dialog-transition-edit.component.scss']
+    styleUrls: ['./dialog-transition-edit.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class DialogTransitionEditComponent implements OnInit {
 
@@ -95,8 +97,7 @@ export class DialogTransitionEditComponent implements OnInit {
 
     openPermissions() {
         this.dialog.open(DialogManageRolesComponent, {
-            width: '60%',
-            panelClass: "dialog-width-60",
+            panelClass: 'dialog-task-responsive',
             data: {
                 type: RoleRefType.TRANSITION,
                 roles: this._modelService.model.getRoles(),

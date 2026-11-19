@@ -4,9 +4,6 @@ import {BuilderComponent} from './builder.component';
 import {MaterialModule, ComponentRegistryService, FrontActionRegistryService} from '@netgrif/components-core';
 import {FormBuilderModule} from './form-builder/form-builder.module';
 import {ModelerModule} from './modeler/modeler.module';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-import {NgxMatDatetimePickerModule} from '@angular-material-components/datetime-picker';
-import {NgxMatMomentModule} from '@angular-material-components/moment-adapter';
 import {TaskContentComponentModule} from '../task-content/task-content.module';
 import {MaterialIconPickerComponent} from './modeler/components/material-icon-picker/material-icon-picker.component';
 import {BuilderDialogsModule} from './dialogs/dialogs.module';
@@ -30,9 +27,6 @@ import {readOnlyBuilder} from "./read-only-builder";
         ModelerModule,
         NgOptimizedImage,
         TaskContentComponentModule,
-        MatProgressSpinnerModule,
-        NgxMatDatetimePickerModule,
-        NgxMatMomentModule,
         MaterialIconPickerComponent,
         FlexLayoutModule,
         TranslateModule,

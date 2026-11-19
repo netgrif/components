@@ -1,18 +1,7 @@
-.not-resizable {
-    resize: none;
-}
-
-.editor-area-height-constraints {
-    height: 600px;
-}
+@use '@angular/material' as mat;
 
 .full-size-editor {
-    .editor-container {
-        height: calc(100vh - 100px);
-    }
     height: 420px;
-    border: 1px solid #0000001f;
-    border-radius: 4px;
 }
 
 #description {
@@ -30,21 +19,70 @@
     position: relative;
 }
 
-
-.mat-action-row {
-    padding: 0 16px 4px 16px;
-    border: none;
+.action-card {
+    overflow: hidden;
+    margin-bottom: 12px;
 }
 
-.header {
-    height: 48px !important;
+.action-header {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    min-height: 48px;
+    padding: 4px 8px;
+    border-bottom: 1px solid var(--mat-sys-outline-variant);
 }
 
-.panel-fix {
-    margin: 0;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+.collapsed .action-header {
+    border-bottom: 0;
 }
-.full-menu-width{
-    height: 5px;
-    width: 100%;
+
+.collapsed .action-body {
+    display: none;
+}
+
+.action-title,
+.action-preview {
+    cursor: pointer;
+}
+
+.action-title {
+    flex: 0 0 auto;
+}
+
+.action-preview {
+    flex: 0 1 auto;
+    min-width: 0;
+    margin-left: 12px;
+    overflow: hidden;
+    color: var(--mat-sys-on-surface-variant);
+    font-family: monospace;
+    font-size: 13px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.action-title {
+    color: var(--mat-sys-on-surface);
+    font: var(--mat-sys-title-small);
+    letter-spacing: var(--mat-sys-title-small-tracking);
+}
+
+.spacer {
+    flex: 1 1 auto;
+}
+
+.toggled {
+    background: var(--mat-sys-secondary-container);
+    color: var(--mat-sys-on-secondary-container);
+}
+
+.action-body {
+    @include mat.sidenav-overrides((
+        container-width: 280px,
+        container-shape: 0,
+        container-divider-color: var(--mat-sys-outline-variant),
+        container-background-color: var(--mat-sys-surface-container-low),
+        content-background-color: transparent,
+    ));
 }

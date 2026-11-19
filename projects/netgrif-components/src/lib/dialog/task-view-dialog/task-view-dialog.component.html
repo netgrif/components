@@ -1,5 +1,16 @@
-<div fxLayout="column" fxLayoutAlign="start stretch" class="content-margin full-height" >
-    <nc-header #header type="task" [responsiveHeaders]="true" class="task-panel-padding-mini"></nc-header>
-    <nc-task-list-pagination [allowMultiOpen]="false" [tasks$]="tasks$" [loading$]="loading$" [textEllipsis]="true" [forceLoadDataOnOpen]="true" [responsiveBody]="true"
-                             [selectedHeaders$]="selectedHeaders$" (taskEvent)="processTaskEvents($event)" fxFlex></nc-task-list-pagination>
-</div>
+<mat-dialog-content>
+    <nc-task-list-pagination
+                             [allowMultiOpen]="false"
+                             [tasks$]="tasks$"
+                             [loading$]="loading$"
+                             [textEllipsis]="true"
+                             [forceLoadDataOnOpen]="true"
+                             [responsiveBody]="true"
+                             [selectedHeaders$]="selectedHeaders$"
+                             (taskEvent)="processTaskEvents($event)">
+        <nc-header #header ncListHeader type="task" [responsiveHeaders]="true"></nc-header>
+    </nc-task-list-pagination>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>{{ "dialog.close" | translate }}</button>
+</mat-dialog-actions>

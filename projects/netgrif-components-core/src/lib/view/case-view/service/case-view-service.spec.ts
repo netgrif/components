@@ -1,14 +1,13 @@
 import {fakeAsync, TestBed, tick} from '@angular/core/testing';
 import {CaseViewService} from './case-view-service';
 import {ConfigurationService} from '../../../configuration/configuration.service';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {MaterialModule} from '../../../material/material.module';
 import {TestConfigurationService} from '../../../utility/tests/test-config';
 import {Observable, of} from 'rxjs';
 import {CaseResourceService} from '../../../resources/engine-endpoint/case-resource.service';
 import {SearchService} from '../../../search/search-service/search.service';
 import {TranslateLibModule} from '../../../translate/translate-lib.module';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {Page} from '../../../resources/interface/page';
 import {tap, delay} from 'rxjs/operators';
 import {Case} from '../../../resources/interface/case';
@@ -22,7 +21,7 @@ import {TestCaseBaseFilterProvider, TestCaseViewAllowedNetsFactory} from '../../
 import {AllowedNetsService} from '../../../allowed-nets/services/allowed-nets.service';
 import {AllowedNetsServiceFactory} from '../../../allowed-nets/services/factory/allowed-nets-service-factory';
 import {PermissionService} from '../../../authorization/permission/permission.service';
-
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('CaseViewService', () => {
     let service: CaseViewService;
@@ -34,10 +33,8 @@ describe('CaseViewService', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
-                HttpClientTestingModule,
                 MaterialModule,
-                TranslateLibModule,
-                NoopAnimationsModule
+                TranslateLibModule
             ],
             providers: [
                 CaseViewService,
@@ -50,7 +47,9 @@ describe('CaseViewService', () => {
                     provide: NAE_BASE_FILTER,
                     useFactory: TestCaseBaseFilterProvider
                 },
-                {provide: AllowedNetsService, useFactory: TestCaseViewAllowedNetsFactory, deps: [AllowedNetsServiceFactory]}
+                {provide: AllowedNetsService, useFactory: TestCaseViewAllowedNetsFactory, deps: [AllowedNetsServiceFactory]},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
             ]
         });
         service = TestBed.inject(CaseViewService);

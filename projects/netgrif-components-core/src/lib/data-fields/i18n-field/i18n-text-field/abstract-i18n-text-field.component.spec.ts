@@ -1,13 +1,11 @@
 import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
-import {Component, CUSTOM_ELEMENTS_SCHEMA, Inject, Optional} from '@angular/core';
+import {Component, CUSTOM_ELEMENTS_SCHEMA, Inject, Optional, ChangeDetectionStrategy} from '@angular/core';
 import {WrappedBoolean} from '../../data-field-template/models/wrapped-boolean';
 import {FormControl} from '@angular/forms';
 import {I18nField} from '../models/i18n-field';
 import {MaterialModule} from '../../../material/material.module';
-import {AngularResizeEventModule} from 'angular-resize-event';
-import {BrowserAnimationsModule, NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {TranslateLibModule} from '../../../translate/translate-lib.module';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {AbstractI18nTextFieldComponent} from './abstract-i18n-text-field.component';
 import {AuthenticationMethodService} from '../../../authentication/services/authentication-method.service';
 import {MockAuthenticationMethodService} from '../../../utility/tests/mocks/mock-authentication-method-service';
@@ -22,6 +20,7 @@ import {LanguageIconsService} from '../language-icons.service';
 import {DomSanitizer} from '@angular/platform-browser';
 import {LanguageService} from '../../../translate/language.service';
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('AbstractI18nTextFieldComponent', () => {
     let component: TestI18nTextComponent;
@@ -30,13 +29,11 @@ describe('AbstractI18nTextFieldComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
+            declarations: [TestI18nTextComponent, TestWrapperComponent],
+            schemas: [CUSTOM_ELEMENTS_SCHEMA],
             imports: [
                 MaterialModule,
-                AngularResizeEventModule,
-                BrowserAnimationsModule,
-                TranslateLibModule,
-                HttpClientTestingModule,
-                NoopAnimationsModule
+                TranslateLibModule
             ],
             providers: [
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
@@ -57,10 +54,10 @@ describe('AbstractI18nTextFieldComponent', () => {
                         formControlRef: new FormControl(),
                         showLargeLayout: new WrappedBoolean()
                     } as DataFieldPortalData<I18nField>
-                }
-            ],
-            declarations: [TestI18nTextComponent, TestWrapperComponent],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA]
+                },
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
+            ]
         }).compileComponents();
         service = TestBed.inject(LanguageService);
         service.setLanguage('en-US');
@@ -80,7 +77,9 @@ describe('AbstractI18nTextFieldComponent', () => {
 
 @Component({
     selector: 'ncc-test-i18n-text',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestI18nTextComponent extends AbstractI18nTextFieldComponent {
     constructor(protected languageIconsService: LanguageIconsService,
@@ -93,7 +92,9 @@ class TestI18nTextComponent extends AbstractI18nTextFieldComponent {
 
 @Component({
     selector: 'ncc-test-wrapper',
-    template: '<ncc-test-i18n-text></ncc-test-i18n-text>'
+    template: '<ncc-test-i18n-text></ncc-test-i18n-text>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestWrapperComponent {
 

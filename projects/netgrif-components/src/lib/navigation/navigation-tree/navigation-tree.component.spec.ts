@@ -14,8 +14,8 @@ import {FlexLayoutModule, FlexModule} from '@ngbracket/ngx-layout';
 import {QuickPanelComponentModule} from '../quick-panel/quick-panel.module';
 import {UserComponentModule} from '../../user/user.module';
 import {RouterTestingModule} from '@angular/router/testing';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('NavigationTreeComponent', () => {
     let component: NavigationTreeComponent;
@@ -24,10 +24,6 @@ describe('NavigationTreeComponent', () => {
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             declarations: [NavigationTreeComponent],
-            providers: [
-                {provide: ConfigurationService, useClass: TestConfigurationService},
-                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
-            ],
             imports: [
                 CommonModule,
                 MaterialModule,
@@ -36,10 +32,14 @@ describe('NavigationTreeComponent', () => {
                 QuickPanelComponentModule,
                 UserComponentModule,
                 RouterTestingModule.withRoutes([]),
-                HttpClientTestingModule,
                 TranslateLibModule,
-                NoopAnimationsModule,
-                AuthenticationModule,
+                AuthenticationModule
+            ],
+            providers: [
+                {provide: ConfigurationService, useClass: TestConfigurationService},
+                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting(),
             ]
         })
             .compileComponents();

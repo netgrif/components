@@ -9,7 +9,6 @@ import {
     GroupNavigationConstants,
     StringCollectionField,
 } from '@netgrif/components-core';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterTestingModule} from "@angular/router/testing";
 
 describe('DefaultSimpleTaskViewComponent', () => {
@@ -21,8 +20,7 @@ describe('DefaultSimpleTaskViewComponent', () => {
             imports: [
                 NavigationComponentModule,
                 TestMockDependenciesModule,
-                RouterTestingModule.withRoutes([]),
-                NoopAnimationsModule,
+                RouterTestingModule.withRoutes([])
             ],
             providers: [
                 {

@@ -1,6 +1,6 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {SearchConfigurationInputComponent} from './search-configuration-input.component';
-import {Component} from '@angular/core';
+import {Component, ChangeDetectionStrategy} from '@angular/core';
 import {
     AuthenticationMethodService,
     CaseTitle,
@@ -18,10 +18,10 @@ import {
     TestNoAllowedNetsFactory,
     AllowedNetsServiceFactory
 } from '@netgrif/components-core';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {AdvancedSearchComponentModule} from '../advanced-search.module';
-import {RouterTestingModule} from "@angular/router/testing";
+import {RouterTestingModule} from '@angular/router/testing';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('SearchConfigurationInputComponent', () => {
     let component: SearchConfigurationInputComponent;
@@ -29,14 +29,10 @@ describe('SearchConfigurationInputComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
+            declarations: [TestWrapperComponent],
             imports: [
                 AdvancedSearchComponentModule,
-                HttpClientTestingModule,
-                NoopAnimationsModule,
                 RouterTestingModule.withRoutes([])
-            ],
-            declarations: [
-                TestWrapperComponent
             ],
             providers: [
                 CategoryFactory,
@@ -47,7 +43,9 @@ describe('SearchConfigurationInputComponent', () => {
                     useFactory: TestCaseBaseFilterProvider
                 },
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
-                {provide: AllowedNetsService, useFactory: TestNoAllowedNetsFactory, deps: [AllowedNetsServiceFactory]}
+                {provide: AllowedNetsService, useFactory: TestNoAllowedNetsFactory, deps: [AllowedNetsServiceFactory]},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
             ]
         })
             .compileComponents();
@@ -71,7 +69,9 @@ describe('SearchConfigurationInputComponent', () => {
 @Component({
     selector: 'nc-test-wrapper',
     template: '<nc-search-configuration-input [configuration]="configuration" [selectedCategory]="category">' +
-        '</nc-search-configuration-input>'
+        '</nc-search-configuration-input>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestWrapperComponent {
 

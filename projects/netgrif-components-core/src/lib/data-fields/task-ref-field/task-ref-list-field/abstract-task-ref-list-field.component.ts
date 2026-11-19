@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Inject, Injector, Optional, Type} from "@angular/core";
+import {AfterViewInit, Component, Inject, Injector, Optional, Type, ChangeDetectionStrategy} from "@angular/core";
 import {TaskRefField} from "../model/task-ref-field";
 import {NAE_BASE_FILTER} from "../../../search/models/base-filter-injection-token";
 import {SimpleFilter} from "../../../filter/models/simple-filter";
@@ -12,7 +12,9 @@ import {NAE_DEFAULT_HEADERS} from "../../../header/models/default-headers-token"
 
 @Component({
     selector: 'ncc-abstract-task-ref-list-field',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractTaskRefListFieldComponent extends AbstractBaseDataFieldComponent<TaskRefField> implements AfterViewInit {
 

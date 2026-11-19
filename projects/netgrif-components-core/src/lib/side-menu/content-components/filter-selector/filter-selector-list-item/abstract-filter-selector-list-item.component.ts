@@ -1,13 +1,16 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {Filter} from '../../../../filter/models/filter';
 
 /**
  * @ignore
  * Renders a single filter in the selection list.
+ * @deprecated the side menu is deprecated, the library opens dialogs instead (`DialogComponentsModule`)
  */
 @Component({
     selector: 'ncc-abstract-filter-selector-list-item',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractFilterSelectorListItemComponent implements OnInit {
 

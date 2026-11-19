@@ -3,7 +3,6 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {DefaultTaskViewComponent} from './default-task-view.component';
 import {NavigationComponentModule} from "../../../../navigation.module";
 import {NAE_BASE_FILTER, NAE_VIEW_ID_SEGMENT, SimpleFilter, TestMockDependenciesModule} from "@netgrif/components-core";
-import {NoopAnimationsModule} from "@angular/platform-browser/animations";
 import {RouterTestingModule} from "@angular/router/testing";
 
 describe('DefaultTaskViewComponent', () => {
@@ -16,7 +15,6 @@ describe('DefaultTaskViewComponent', () => {
             imports: [
                 NavigationComponentModule,
                 TestMockDependenciesModule,
-                NoopAnimationsModule,
                 RouterTestingModule.withRoutes([]),
             ],
             providers: [

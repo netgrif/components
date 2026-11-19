@@ -1,8 +1,20 @@
-.example-radio-group {
-    display: flex;
-    flex-direction: column;
+@use '../../field-label' as label;
+@use '../../selection-list' as list;
+
+@include label.styles;
+@include list.styles;
+
+:host {
+    display: block;
 }
 
-.full-width {
-    width: 100%;
+.title-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+
+    .field-title {
+        margin-bottom: 0;
+    }
 }

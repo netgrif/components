@@ -1,17 +1,19 @@
 import {TestLoggingConfigurationService} from './test-logging-config';
 import {TestBed} from '@angular/core/testing';
 import {ConfigurationService} from '../../configuration/configuration.service';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('TestLoggingConfigurationService', () => {
     let service: ConfigurationService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule, NoopAnimationsModule],
+            imports: [],
             providers: [
-                {provide: ConfigurationService, useClass: TestLoggingConfigurationService}
+                {provide: ConfigurationService, useClass: TestLoggingConfigurationService},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
             ]
         });
         service = TestBed.inject(ConfigurationService);

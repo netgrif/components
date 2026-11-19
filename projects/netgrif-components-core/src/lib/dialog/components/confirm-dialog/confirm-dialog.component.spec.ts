@@ -3,7 +3,6 @@ import {NO_ERRORS_SCHEMA} from '@angular/core';
 import {MaterialModule} from '../../../material/material.module';
 import {ConfirmDialogComponent} from './confirm-dialog.component';
 import {DialogModule} from '../../dialog.module';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 describe(' ConfirmDialogComponent', () => {
@@ -12,7 +11,7 @@ describe(' ConfirmDialogComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
-            imports: [MaterialModule, DialogModule, NoopAnimationsModule],
+            imports: [MaterialModule, DialogModule],
             declarations: [],
             providers: [
                 { provide: MAT_DIALOG_DATA, useValue: {} },

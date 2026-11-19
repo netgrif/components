@@ -1,8 +1,6 @@
 import {ComponentFixture, TestBed, waitForAsync} from "@angular/core/testing";
 import {MaterialModule} from "../../../material/material.module";
-import {AngularResizeEventModule} from "angular-resize-event";
-import {BrowserAnimationsModule, NoopAnimationsModule} from "@angular/platform-browser/animations";
-import {HttpClientTestingModule} from "@angular/common/http/testing";
+import {provideHttpClientTesting} from "@angular/common/http/testing";
 import {TranslateLibModule} from "../../../translate/translate-lib.module";
 import {SnackBarModule} from "../../../snack-bar/snack-bar.module";
 import {SideMenuService} from "../../../side-menu/services/side-menu.service";
@@ -15,7 +13,7 @@ import {UserResourceService} from "../../../resources/engine-endpoint/user-resou
 import {MockUserResourceService} from "../../../utility/tests/mocks/mock-user-resource.service";
 import {ConfigurationService} from "../../../configuration/configuration.service";
 import {TestConfigurationService} from "../../../utility/tests/test-config";
-import {Component, CUSTOM_ELEMENTS_SCHEMA, Inject, Optional} from "@angular/core";
+import {Component, CUSTOM_ELEMENTS_SCHEMA, Inject, Optional, ChangeDetectionStrategy} from "@angular/core";
 import {BrowserDynamicTestingModule} from "@angular/platform-browser-dynamic/testing";
 import {ErrorSnackBarComponent} from "../../../snack-bar/components/error-snack-bar/error-snack-bar.component";
 import {SuccessSnackBarComponent} from "../../../snack-bar/components/success-snack-bar/success-snack-bar.component";
@@ -29,6 +27,7 @@ import {AbstractFileDefaultFieldComponent} from "./abstract-file-default-field.c
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
 import {FormControl} from "@angular/forms";
 import {WrappedBoolean} from "../../data-field-template/models/wrapped-boolean";
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('AbstractFileDefaultFieldComponent', () => {
     let component: TestFileComponent;
@@ -36,13 +35,11 @@ describe('AbstractFileDefaultFieldComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
+            schemas: [CUSTOM_ELEMENTS_SCHEMA],
+            declarations: [TestWrapperComponent, TestFileComponent],
             imports: [
                 MaterialModule,
-                AngularResizeEventModule,
-                BrowserAnimationsModule,
-                HttpClientTestingModule,
                 TranslateLibModule,
-                NoopAnimationsModule,
                 SnackBarModule
             ],
             providers: [
@@ -64,12 +61,9 @@ describe('AbstractFileDefaultFieldComponent', () => {
                         showLargeLayout: new WrappedBoolean(),
                         additionalFieldProperties: {taskId: '0'}
                     } as DataFieldPortalData<FileField>
-                }
-            ],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA],
-            declarations: [
-                TestWrapperComponent,
-                TestFileComponent
+                },
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
             ],
         }).compileComponents();
         fixture = TestBed.createComponent(TestWrapperComponent);
@@ -88,7 +82,9 @@ describe('AbstractFileDefaultFieldComponent', () => {
 
 @Component({
     selector: 'ncc-test-file',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestFileComponent extends AbstractFileDefaultFieldComponent {
     constructor(taskResourceService: TaskResourceService,
@@ -104,7 +100,9 @@ class TestFileComponent extends AbstractFileDefaultFieldComponent {
 
 @Component({
     selector: 'ncc-test-wrapper',
-    template: '<ncc-test-file></ncc-test-file>'
+    template: '<ncc-test-file></ncc-test-file>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestWrapperComponent {
 

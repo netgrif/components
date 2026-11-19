@@ -15,13 +15,13 @@ import {
     UserResourceService,
     MockUserResourceService
 } from '@netgrif/components-core';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from '@angular/material/dialog';
 import {
     SideMenuAdminImpersonateComponentModule
 } from '../../side-menu/content-components/admin-impersonate/side-menu-admin-impersonate-component.module';
 import {RouterTestingModule} from "@angular/router/testing";
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('AdminImpersonateDialogComponent', () => {
     let component: AdminImpersonateDialogComponent;
@@ -29,10 +29,9 @@ describe('AdminImpersonateDialogComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
+            declarations: [AdminImpersonateDialogComponent],
             imports: [
                 MaterialModule,
-                BrowserAnimationsModule,
-                HttpClientTestingModule,
                 TranslateLibModule,
                 SnackBarModule,
                 MatDialogModule,
@@ -46,10 +45,9 @@ describe('AdminImpersonateDialogComponent', () => {
                 { provide: MatDialogRef, useValue: {} },
                 { provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService },
                 { provide: AuthenticationService, useClass: MockAuthenticationService },
-                { provide: UserResourceService, useClass: MockUserResourceService }
-            ],
-            declarations: [
-                AdminImpersonateDialogComponent,
+                { provide: UserResourceService, useClass: MockUserResourceService },
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
             ]
         })
             .compileComponents();

@@ -2,12 +2,11 @@ import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {CasePanelComponent} from './case-panel.component';
 import {CommonModule} from '@angular/common';
 import {FlexModule} from '@ngbracket/ngx-layout';
-import {BrowserAnimationsModule, NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {DataFieldsComponentModule} from '../../data-fields/data-fields.module';
-import {Component, NO_ERRORS_SCHEMA} from '@angular/core';
+import {Component, NO_ERRORS_SCHEMA, ChangeDetectionStrategy} from '@angular/core';
 import {PanelComponent} from '../panel.component';
 import {of} from 'rxjs';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {
     AllowedNetsService, AllowedNetsServiceFactory,
     CaseMetaField, CurrencyModule,
@@ -29,6 +28,7 @@ import {
     MockAuthenticationMethodService
 } from '@netgrif/components-core';
 import { RouterTestingModule } from '@angular/router/testing';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('CasePanelComponent', () => {
     let component: CasePanelComponent;
@@ -36,14 +36,19 @@ describe('CasePanelComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
+            declarations: [
+                CasePanelComponent,
+                PanelComponent,
+                TestWrapperComponent
+            ],
+            schemas: [NO_ERRORS_SCHEMA],
             imports: [
+                // PanelComponent still binds [@.disabled] on mat-expansion-panel, which needs an animations provider
                 MaterialModule,
                 CommonModule,
                 FlexModule,
-                BrowserAnimationsModule,
                 DataFieldsComponentModule,
                 TranslateLibModule,
-                HttpClientTestingModule,
                 CurrencyModule,
                 RouterTestingModule.withRoutes([])
             ],
@@ -57,10 +62,10 @@ describe('CasePanelComponent', () => {
                     useFactory: TestCaseBaseFilterProvider
                 },
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
-                {provide: AllowedNetsService, useFactory: TestCaseViewAllowedNetsFactory, deps: [AllowedNetsServiceFactory]}
-            ],
-            declarations: [CasePanelComponent, PanelComponent, TestWrapperComponent],
-            schemas: [NO_ERRORS_SCHEMA]
+                {provide: AllowedNetsService, useFactory: TestCaseViewAllowedNetsFactory, deps: [AllowedNetsServiceFactory]},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
+            ]
         })
             .compileComponents();
         fixture = TestBed.createComponent(TestWrapperComponent);
@@ -79,7 +84,9 @@ describe('CasePanelComponent', () => {
 
 @Component({
     selector: 'nc-test-wrapper',
-    template: '<nc-case-panel [selectedHeaders$]="selectedHeaders" [case_]="case_"> </nc-case-panel>'
+    template: '<nc-case-panel [selectedHeaders$]="selectedHeaders" [case_]="case_"> </nc-case-panel>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestWrapperComponent {
     selectedHeaders = of([

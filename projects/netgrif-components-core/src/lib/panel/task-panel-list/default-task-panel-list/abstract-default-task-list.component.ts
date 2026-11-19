@@ -2,7 +2,7 @@ import {MatExpansionPanel} from '@angular/material/expansion';
 import {ActivatedRoute} from '@angular/router';
 import {filter} from 'rxjs/operators';
 import {TabbedVirtualScrollComponent} from '../../abstract/tabbed-virtual-scroll.component';
-import {AfterViewInit, Component, EventEmitter, Inject, Input, OnDestroy, Optional, Output} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, Inject, Input, OnDestroy, Optional, Output, ChangeDetectionStrategy} from '@angular/core';
 import {Observable, Subject, Subscription} from 'rxjs';
 import {TaskPanelData} from '../task-panel-data/task-panel-data';
 import {HeaderColumn} from '../../../header/models/header-column';
@@ -15,7 +15,9 @@ import {InjectedTabData} from '../../../tabs/interfaces';
 
 @Component({
     selector: 'ncc-abstract-default-task-list',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractDefaultTaskListComponent extends TabbedVirtualScrollComponent implements AfterViewInit, OnDestroy {
 

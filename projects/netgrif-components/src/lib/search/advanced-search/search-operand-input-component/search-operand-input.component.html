@@ -1,121 +1,102 @@
-<div *ngIf="!isInputFilled(); then operandSelection else operandDisplay"></div>
-
-<ng-template #operandSelection>
-    <div [ngSwitch]="inputType">
-        <ng-template [ngSwitchCase]="searchInputType.TEXT">
-            <ng-container *ngTemplateOutlet="textInput"></ng-container>
-        </ng-template>
-        <ng-template [ngSwitchCase]="searchInputType.PLAIN_QUERY">
-            <ng-container *ngTemplateOutlet="textInput"></ng-container>
-        </ng-template>
-        <ng-template #textInput>
-            <mat-form-field appearance="outline">
-                <input type="text" matInput autocomplete="off"
-                       [formControl]="inputFormControl"
-                       [disabled]="!editable"
-                       (keydown.enter)="$event.target.blur()"
-                       (blur)="confirmInput()"
-                       #operandInput>
-            </mat-form-field>
-        </ng-template>
-
-        <ng-template [ngSwitchCase]="searchInputType.AUTOCOMPLETE">
-            <mat-form-field appearance="outline">
-                <input type="text" matInput autocomplete="off"
-                       #autocompleteInput
-                       #autocompleteTrigger="matAutocompleteTrigger"
-                       [formControl]="inputFormControl"
-                       [matAutocomplete]="searchAutocomplete"
-                       [disabled]="!editable"
-                       (keydown.enter)="$event.target.blur(); autocompleteTrigger.closePanel()"
-                       (focus)="editInput()"
-                       #operandInput>
-                <mat-autocomplete #searchAutocomplete="matAutocomplete"
-                                  [displayWith]="renderSelection"
-                                  (optionSelected)="autocompleteInput.blur()">
-                    <mat-option *ngFor="let option of filteredOptions$ | async" [value]="option">
-                        <mat-icon *ngIf="option.icon">{{option.icon}}</mat-icon>
-                        <span>{{option.text | translate}}</span>
-                    </mat-option>
-                </mat-autocomplete>
-            </mat-form-field>
-        </ng-template>
-
-        <ng-template [ngSwitchCase]="searchInputType.DATE">
-            <mat-form-field appearance="outline">
-                <input matInput autocomplete="off"
-                       [formControl]="inputFormControl"
-                       [matDatepicker]="searchDatepicker"
-                       [disabled]="!editable"
-                       (keydown.enter)="searchDatepicker.close()"
-                       (focus)="editInput(); searchDatepicker.open()"
-                       #operandInput>
-                <mat-datepicker-toggle matPrefix [for]="searchDatepicker"></mat-datepicker-toggle>
-                <mat-datepicker
-                    #searchDatepicker
-                    (closed)="confirmInput()"></mat-datepicker>
-            </mat-form-field>
-        </ng-template>
-
-        <ng-template [ngSwitchCase]="searchInputType.DATE_TIME">
-            <mat-form-field appearance="outline">
-                <input matInput autocomplete="off"
-                       [formControl]="inputFormControl"
-                       [ngxMatDatetimePicker]="searchDateTimepicker"
-                       [disabled]="!editable"
-                       (keydown.enter)="searchDateTimepicker.close()"
-                       (focus)="editInput(); searchDateTimepicker.open()"
-                       #operandInput>
-                <mat-datepicker-toggle matPrefix [for]="searchDateTimepicker">
-                    <mat-icon matDatepickerToggleIcon>schedule</mat-icon>
-                </mat-datepicker-toggle>
-                <ngx-mat-datetime-picker #searchDateTimepicker
-                                         [showSpinners]="true"
-                                         [showSeconds]="false"
-                                         [stepHour]="1"
-                                         [stepMinute]="5"
-                                         [color]="'primary'"
-                                         [enableMeridian]="false"
-                                         (closed)="confirmInput()"></ngx-mat-datetime-picker>
-            </mat-form-field>
-        </ng-template>
-
-        <ng-template [ngSwitchCase]="searchInputType.NUMBER">
-            <mat-form-field appearance="outline">
-                <input type="number" matInput autocomplete="off"
-                       [formControl]="inputFormControl"
-                       [disabled]="!editable"
-                       (keydown.enter)="$event.target.blur()"
-                       (focus)="editInput()"
-                       (blur)="confirmInput()"
-                       #operandInput>
-            </mat-form-field>
-        </ng-template>
-
-        <ng-template [ngSwitchCase]="searchInputType.BOOLEAN">
-            <div fxLayout="row">
-                <mat-slide-toggle [formControl]="inputFormControl"
-                                  [disabled]="!editable"
-                                  (focus)="editInput()"
-                                  (toggleChange)="confirmInput()"></mat-slide-toggle>
-            </div>
-        </ng-template>
-    </div>
-</ng-template>
-
-<ng-template #operandDisplay>
-    <div [ngSwitch]="inputType" (click)="editInput()" [ngClass]="{'bold-text': inputType !== searchInputType.PLAIN_QUERY}">
-        <div *ngSwitchCase="searchInputType.AUTOCOMPLETE">
-            {{inputFormControl.value.text | translate}}
-        </div>
-        <div *ngSwitchCase="searchInputType.DATE">
-            {{formatDate(inputFormControl.value)}}
-        </div>
-        <div *ngSwitchCase="searchInputType.DATE_TIME">
-            {{formatDateTime(inputFormControl.value)}}
-        </div>
-        <div *ngSwitchDefault>
-            {{inputFormControl.value}}
-        </div>
-    </div>
-</ng-template>
+@if (!isInputFilled()) {
+@switch (inputType) {
+@case (searchInputType.AUTOCOMPLETE) {
+<mat-form-field class="operand-field" subscriptSizing="dynamic">
+    <input type="text" matInput autocomplete="off"
+           #autocompleteInput
+           #autocompleteTrigger="matAutocompleteTrigger"
+           [formControl]="inputFormControl"
+           [matAutocomplete]="searchAutocomplete"
+           [disabled]="!editable"
+           (keydown.enter)="$event.target.blur(); autocompleteTrigger.closePanel()"
+           (focus)="editInput()"
+           #operandInput>
+    <mat-autocomplete #searchAutocomplete="matAutocomplete"
+                      [displayWith]="renderSelection"
+                      (optionSelected)="autocompleteInput.blur()">
+        @for (option of filteredOptions$ | async; track option) {
+        <mat-option [value]="option">
+            @if (option.icon) {
+            <mat-icon>{{ option.icon }}</mat-icon>
+            }
+            <span>{{ option.text | translate }}</span>
+        </mat-option>
+        }
+    </mat-autocomplete>
+</mat-form-field>
+}
+@case (searchInputType.DATE) {
+<mat-form-field class="operand-field" subscriptSizing="dynamic">
+    <input matInput autocomplete="off"
+           [formControl]="inputFormControl"
+           [matDatepicker]="searchDatepicker"
+           [disabled]="!editable"
+           (keydown.enter)="searchDatepicker.close()"
+           (focus)="editInput(); searchDatepicker.open()"
+           #operandInput>
+    <mat-datepicker-toggle matIconSuffix [for]="searchDatepicker"></mat-datepicker-toggle>
+    <mat-datepicker #searchDatepicker (closed)="confirmInput()"></mat-datepicker>
+</mat-form-field>
+}
+@case (searchInputType.DATE_TIME) {
+<mat-form-field class="operand-field" subscriptSizing="dynamic">
+    <input matInput autocomplete="off"
+           [formControl]="inputFormControl"
+           [matDatepicker]="searchDateTimepicker"
+           [disabled]="!editable"
+           (keydown.enter)="searchDateTimepicker.close()"
+           (focus)="editInput(); searchDateTimepicker.open()"
+           #operandInput>
+    <mat-datepicker-toggle matIconSuffix [for]="searchDateTimepicker"></mat-datepicker-toggle>
+    <mat-datepicker #searchDateTimepicker
+                    (closed)="inputFormControl.value ? searchTimepicker.open() : confirmInput()"></mat-datepicker>
+</mat-form-field>
+<mat-form-field class="time-field" subscriptSizing="dynamic">
+    <input matInput autocomplete="off"
+           [formControl]="inputFormControl"
+           [matTimepicker]="searchTimepicker"
+           [disabled]="!editable"
+           (keydown.enter)="searchTimepicker.close(); confirmInput()"
+           (focus)="editInput()">
+    <mat-timepicker-toggle matIconSuffix [for]="searchTimepicker"></mat-timepicker-toggle>
+    <mat-timepicker #searchTimepicker interval="5m" (closed)="confirmInput()"></mat-timepicker>
+</mat-form-field>
+}
+@case (searchInputType.NUMBER) {
+<mat-form-field class="operand-field number" subscriptSizing="dynamic">
+    <input type="number" matInput autocomplete="off"
+           [formControl]="inputFormControl"
+           [disabled]="!editable"
+           (keydown.enter)="$event.target.blur()"
+           (focus)="editInput()"
+           (blur)="confirmInput()"
+           #operandInput>
+</mat-form-field>
+}
+@case (searchInputType.BOOLEAN) {
+<mat-slide-toggle [formControl]="inputFormControl"
+                  [disabled]="!editable"
+                  (focus)="editInput()"
+                  (toggleChange)="confirmInput()"></mat-slide-toggle>
+}
+@default {
+<mat-form-field class="operand-field" [class.query]="inputType === searchInputType.PLAIN_QUERY" subscriptSizing="dynamic">
+    <input type="text" matInput autocomplete="off"
+           [formControl]="inputFormControl"
+           [disabled]="!editable"
+           (keydown.enter)="$event.target.blur()"
+           (blur)="confirmInput()"
+           #operandInput>
+</mat-form-field>
+}
+}
+} @else {
+<button type="button" class="value" [class.query]="inputType === searchInputType.PLAIN_QUERY" [disabled]="!editable" (click)="editInput()">
+    @switch (inputType) {
+    @case (searchInputType.AUTOCOMPLETE) { {{ inputFormControl.value.text | translate }} }
+    @case (searchInputType.DATE) { {{ formatDate(inputFormControl.value) }} }
+    @case (searchInputType.DATE_TIME) { {{ formatDateTime(inputFormControl.value) }} }
+    @default { {{ inputFormControl.value }} }
+    }
+</button>
+}

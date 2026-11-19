@@ -1,4 +1,4 @@
-import {Component, Inject, Injector, Optional, Type} from '@angular/core';
+import {Component, Inject, Injector, Optional, Type, ChangeDetectionStrategy} from '@angular/core';
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from '../../models/data-field-portal-data-injection-token';
 import {AbstractBaseDataFieldComponent} from '../../base-component/abstract-base-data-field.component';
 import {ComponentPortal} from '@angular/cdk/portal';
@@ -6,7 +6,9 @@ import {ProcessRefField} from '../model/process-ref-field';
 
 @Component({
     selector: 'ncc-abstract-process-ref-default',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractProcessRefDefaultComponent extends AbstractBaseDataFieldComponent<ProcessRefField> {
 

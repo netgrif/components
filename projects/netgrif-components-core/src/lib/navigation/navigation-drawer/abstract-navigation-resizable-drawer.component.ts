@@ -1,9 +1,11 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {BehaviorSubject} from 'rxjs';
 
 @Component({
     selector: 'ncc-abstract-navigation-resizable-drawer',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractNavigationResizableDrawerComponent implements OnInit {
     @Input() public contentWidth: BehaviorSubject<number>;

@@ -1,4 +1,4 @@
-import {Component, Inject, Optional} from '@angular/core';
+import {Component, Inject, Optional, ChangeDetectionStrategy} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {
     AbstractDashboardBarChartTextFieldComponent,
@@ -10,7 +10,8 @@ import {
 @Component({
   selector: 'nc-dashboard-bar-chart-text-field',
   templateUrl: './dashboard-bar-chart-text-field.component.html',
-  styleUrls: ['./dashboard-bar-chart-text-field.component.scss']
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class DashboardBarChartTextFieldComponent extends AbstractDashboardBarChartTextFieldComponent {
 

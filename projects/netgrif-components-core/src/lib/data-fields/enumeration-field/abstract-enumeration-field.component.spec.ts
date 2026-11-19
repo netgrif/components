@@ -1,13 +1,12 @@
 import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
-import {AngularResizeEventModule} from 'angular-resize-event';
-import {BrowserAnimationsModule, NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {Component, CUSTOM_ELEMENTS_SCHEMA, Inject, Optional} from '@angular/core';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
+import {Component, CUSTOM_ELEMENTS_SCHEMA, Inject, Optional, ChangeDetectionStrategy} from '@angular/core';
 import {AbstractEnumerationFieldComponent} from './abstract-enumeration-field.component';
 import {EnumerationField} from './models/enumeration-field';
 import {MaterialModule} from '../../material/material.module';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
 import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('AbstractEnumerationFieldComponent', () => {
     let component: TestEnumerationComponent;
@@ -15,19 +14,16 @@ describe('AbstractEnumerationFieldComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
+            declarations: [TestEnumerationComponent, TestWrapperComponent],
+            schemas: [CUSTOM_ELEMENTS_SCHEMA],
             imports: [
                 MaterialModule,
-                AngularResizeEventModule,
-                BrowserAnimationsModule,
                 TranslateLibModule,
-                HttpClientTestingModule,
-                NoopAnimationsModule
             ],
-            declarations: [
-                TestEnumerationComponent,
-                TestWrapperComponent
-            ],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA]
+            providers: [
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
+            ]
         }).compileComponents();
         fixture = TestBed.createComponent(TestWrapperComponent);
         component = fixture.debugElement.children[0].componentInstance;
@@ -45,7 +41,9 @@ describe('AbstractEnumerationFieldComponent', () => {
 
 @Component({
     selector: 'ncc-test-enumeration',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestEnumerationComponent extends AbstractEnumerationFieldComponent {
     constructor(@Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
@@ -55,7 +53,9 @@ class TestEnumerationComponent extends AbstractEnumerationFieldComponent {
 
 @Component({
     selector: 'ncc-test-wrapper',
-    template: '<ncc-test-enumeration [dataField]="field"></ncc-test-enumeration>'
+    template: '<ncc-test-enumeration [dataField]="field"></ncc-test-enumeration>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestWrapperComponent {
     field = new EnumerationField('', '', '', [], {

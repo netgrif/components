@@ -4,9 +4,10 @@ import {DataFieldTemplateComponent} from '../data-field-template/data-field-temp
 import {FilterFieldContentComponent} from './filter-field-content/filter-field-content.component';
 import {MaterialModule, FieldTypeResource, FilterField, ConfigurationService, TestConfigurationService} from '@netgrif/components-core';
 import {RequiredLabelComponent} from '../required-label/required-label.component';
-import {Component} from '@angular/core';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {Component, ChangeDetectionStrategy} from '@angular/core';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {AdvancedSearchComponentModule} from '../../search/advanced-search/advanced-search.module';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('FilterFieldComponent', () => {
     let component: FilterFieldComponent;
@@ -14,20 +15,21 @@ describe('FilterFieldComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [
-                MaterialModule,
-                AdvancedSearchComponentModule,
-                HttpClientTestingModule
-            ],
-            providers: [
-                {provide: ConfigurationService, useClass: TestConfigurationService}
-            ],
             declarations: [
                 DataFieldTemplateComponent,
                 RequiredLabelComponent,
                 FilterFieldComponent,
                 FilterFieldContentComponent,
                 TestWrapperComponent
+            ],
+            imports: [
+                MaterialModule,
+                AdvancedSearchComponentModule
+            ],
+            providers: [
+                {provide: ConfigurationService, useClass: TestConfigurationService},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
             ]
         }).compileComponents();
     });
@@ -49,7 +51,9 @@ describe('FilterFieldComponent', () => {
 
 @Component({
     selector: 'nc-test-wrapper',
-    template: '<nc-filter-field [dataField]="field"></nc-filter-field>'
+    template: '<nc-filter-field [dataField]="field"></nc-filter-field>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestWrapperComponent {
     field = new FilterField('', '', '', FieldTypeResource.CASE_FILTER, [], {}, '', '');

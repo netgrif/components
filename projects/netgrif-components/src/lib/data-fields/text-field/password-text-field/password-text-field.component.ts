@@ -1,4 +1,4 @@
-import {Component, Inject, Optional} from '@angular/core';
+import {Component, Inject, Optional, ChangeDetectionStrategy} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {
     AbstractPasswordTextFieldComponent,
@@ -9,7 +9,8 @@ import {
 @Component({
   selector: 'nc-password-text-field',
   templateUrl: './password-text-field.component.html',
-  styleUrls: ['./password-text-field.component.scss']
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class PasswordTextFieldComponent extends AbstractPasswordTextFieldComponent {
 

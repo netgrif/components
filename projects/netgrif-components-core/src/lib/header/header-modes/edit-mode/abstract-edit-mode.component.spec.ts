@@ -1,8 +1,7 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {FlexLayoutModule, FlexModule} from '@ngbracket/ngx-layout';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {Component} from '@angular/core';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
+import {Component, ChangeDetectionStrategy} from '@angular/core';
 import {AbstractEditModeComponent} from './abstract-edit-mode.component';
 import {TranslateService} from '@ngx-translate/core';
 import {CaseHeaderService} from '../../case-header/case-header.service';
@@ -28,6 +27,7 @@ import {LoggerService} from '../../../logger/services/logger.service';
 import {NAE_BASE_FILTER} from '../../../search/models/base-filter-injection-token';
 import {AllowedNetsService} from '../../../allowed-nets/services/allowed-nets.service';
 import {AllowedNetsServiceFactory} from '../../../allowed-nets/services/factory/allowed-nets-service-factory';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('AbstractEditModeComponent', () => {
     let component: TestEditModeComponent;
@@ -40,8 +40,6 @@ describe('AbstractEditModeComponent', () => {
             imports: [
                 FlexModule,
                 FlexLayoutModule,
-                NoopAnimationsModule,
-                HttpClientTestingModule,
                 MaterialModule,
                 TranslateLibModule,
                 RouterTestingModule.withRoutes([])
@@ -59,7 +57,9 @@ describe('AbstractEditModeComponent', () => {
                 {provide: UserResourceService, useClass: MockUserResourceService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: ViewService, useClass: TestViewService},
-                {provide: AllowedNetsService, useFactory: TestCaseViewAllowedNetsFactory, deps: [AllowedNetsServiceFactory]}
+                {provide: AllowedNetsService, useFactory: TestCaseViewAllowedNetsFactory, deps: [AllowedNetsServiceFactory]},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
             ]
         }).compileComponents();
     }));
@@ -88,7 +88,9 @@ describe('AbstractEditModeComponent', () => {
 
 @Component({
     selector: 'ncc-test-edit',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestEditModeComponent extends AbstractEditModeComponent {
     constructor(protected _translate: TranslateService, protected _log: LoggerService) {
@@ -98,7 +100,9 @@ class TestEditModeComponent extends AbstractEditModeComponent {
 
 @Component({
     selector: 'ncc-test-wrapper',
-    template: '<ncc-test-edit [headerService]="service"></ncc-test-edit>'
+    template: '<ncc-test-edit [headerService]="service"></ncc-test-edit>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestWrapperComponent {
     constructor(public service: CaseHeaderService) {

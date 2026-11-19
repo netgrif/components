@@ -1,10 +1,12 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, ChangeDetectionStrategy} from '@angular/core';
 import {AbstractHeaderService} from '../../abstract-header-service';
 import {AbstractHeaderModeComponent} from '../abstract-header-mode.component';
 
 @Component({
     selector: 'ncc-abstract-loading-mode',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractLoadingModeComponent extends AbstractHeaderModeComponent {
 

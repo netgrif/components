@@ -1,14 +1,13 @@
 import { AbstractSingleTaskViewComponent } from './abstract-single-task-view.component';
 import { SideMenuControl } from '../../side-menu/models/side-menu-control';
 import { NAE_SIDE_MENU_CONTROL } from '../../side-menu/side-menu-injection-token';
-import {Component, Inject} from '@angular/core';
+import {Component, Inject, ChangeDetectionStrategy } from '@angular/core';
 import { TaskViewService } from './service/task-view.service';
 import { ActivatedRoute } from '@angular/router';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { MaterialModule } from '../../material/material.module';
 import { TranslateLibModule } from '../../translate/translate-lib.module';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ConfigurationService } from '../../configuration/configuration.service';
 import { TestConfigurationService } from '../../utility/tests/test-config';
 import { AuthenticationService } from '../../authentication/services/authentication/authentication.service';
@@ -25,6 +24,7 @@ import { SimpleFilter } from '../../filter/models/simple-filter';
 import {AsyncPipe} from "@angular/common";
 import {BaseFilter} from "../../search/models/base-filter";
 import {RouterTestingModule} from '@angular/router/testing';
+import { provideHttpClient, withInterceptorsFromDi, withXhr } from '@angular/common/http';
 
 describe('AbstractSingleTaskViewComponent', () => {
     let component: TestAbstractSingleTaskViewComponent;
@@ -32,11 +32,10 @@ describe('AbstractSingleTaskViewComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
+            declarations: [TestAbstractSingleTaskViewComponent],
             imports: [
                 MaterialModule,
                 TranslateLibModule,
-                HttpClientTestingModule,
-                NoopAnimationsModule,
                 RouterTestingModule.withRoutes([]),
             ],
             providers: [
@@ -51,10 +50,9 @@ describe('AbstractSingleTaskViewComponent', () => {
                 {provide: AllowedNetsService, useFactory: TestTaskViewAllowedNetsFactory, deps: [AllowedNetsServiceFactory]},
                 SearchService,
                 {provide: NAE_BASE_FILTER, useValue: {filter: SimpleFilter.emptyTaskFilter()}},
-                AsyncPipe
-            ],
-            declarations: [
-                TestAbstractSingleTaskViewComponent,
+                AsyncPipe,
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
             ]
         }).compileComponents();
     }));
@@ -76,7 +74,9 @@ describe('AbstractSingleTaskViewComponent', () => {
 
 @Component({
     selector: 'ncc-test-single-task-view',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestAbstractSingleTaskViewComponent extends AbstractSingleTaskViewComponent {
     constructor(taskViewService: TaskViewService,

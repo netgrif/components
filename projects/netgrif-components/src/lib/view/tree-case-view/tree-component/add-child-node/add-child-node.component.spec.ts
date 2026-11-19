@@ -1,8 +1,7 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {AddChildNodeComponent} from './add-child-node.component';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {
     CaseTreeNode,
     CaseTreeService,
@@ -12,7 +11,8 @@ import {
     TranslateLibModule,
     TreeCaseViewService
 } from '@netgrif/components-core';
-import {Component} from '@angular/core';
+import {Component, ChangeDetectionStrategy} from '@angular/core';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('AddChildNodeComponent', () => {
     let component: AddChildNodeComponent;
@@ -20,20 +20,17 @@ describe('AddChildNodeComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
+            declarations: [TestComponent, AddChildNodeComponent],
             imports: [
                 MaterialModule,
-                NoopAnimationsModule,
-                HttpClientTestingModule,
                 TranslateLibModule
             ],
             providers: [
                 CaseTreeService,
                 TreeCaseViewService,
-                {provide: ConfigurationService, useClass: TestConfigurationService}
-            ],
-            declarations: [
-                TestComponent,
-                AddChildNodeComponent
+                {provide: ConfigurationService, useClass: TestConfigurationService},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
             ]
         }).compileComponents();
     }));
@@ -55,7 +52,9 @@ describe('AddChildNodeComponent', () => {
 
 @Component({
     selector: 'nc-test-wrapper',
-    template: '<nc-add-child-node [node]="node"></nc-add-child-node>'
+    template: '<nc-add-child-node [node]="node"></nc-add-child-node>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestComponent {
     node = new CaseTreeNode({

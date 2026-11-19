@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Inject, Optional, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, Inject, Optional, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {
     SearchService,
     AllowedNetsService,
@@ -75,7 +75,9 @@ function allowedNetsFactory(factory: AllowedNetsServiceFactory,
         {   provide: NAE_SEARCH_CATEGORIES,
             useExisting: NAE_DEFAULT_TASK_SEARCH_CATEGORIES
         },
-    ]
+    ],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class DefaultSimpleTaskViewComponent extends AbstractTaskViewComponent implements AfterViewInit {
 

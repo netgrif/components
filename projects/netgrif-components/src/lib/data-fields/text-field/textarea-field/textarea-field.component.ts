@@ -1,4 +1,4 @@
-import {Component, Inject, NgZone, Optional} from '@angular/core';
+import {Component, Inject, NgZone, Optional, ChangeDetectionStrategy} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {
     AbstractTextareaFieldComponent,
@@ -10,7 +10,8 @@ import {
 @Component({
     selector: 'nc-textarea-field',
     templateUrl: './textarea-field.component.html',
-    styleUrls: ['./textarea-field.component.scss']
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class TextareaFieldComponent extends AbstractTextareaFieldComponent {
 

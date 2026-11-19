@@ -25,6 +25,7 @@ jobs:
                     npm run nc:full-test
                     npm i ./dist/netgrif-components --save-optional --legacy-peer-deps
                     npm run example:build
+                    npm run frontend:build
 
     publish-npm:
         needs: build

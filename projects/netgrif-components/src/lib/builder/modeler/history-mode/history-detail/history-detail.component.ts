@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {editor} from 'monaco-editor';
 import {DiffEditorModel} from 'ngx-monaco-editor-v2';
 import {Subscription} from 'rxjs';
@@ -11,7 +11,9 @@ import IDiffEditorOptions = editor.IDiffEditorOptions;
 @Component({
     selector: 'nc-builder-history-detail',
     templateUrl: './history-detail.component.html',
-    styleUrl: './history-detail.component.scss'
+    styleUrl: './history-detail.component.scss',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class HistoryDetailComponent implements OnInit, OnDestroy {
 

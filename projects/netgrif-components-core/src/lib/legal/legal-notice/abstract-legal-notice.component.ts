@@ -1,10 +1,12 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, ChangeDetectionStrategy} from '@angular/core';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {Services} from '../../../commons/schema';
 
 @Component({
     selector: 'ncc-abstract-legal-notice',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractLegalNoticeComponent {
 

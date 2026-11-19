@@ -1,4 +1,4 @@
-import {Component} from "@angular/core";
+import {Component, ChangeDetectionStrategy} from "@angular/core";
 import {FormControl} from "@angular/forms";
 import {UserListInjectedData} from "./model/user-list-injected-data";
 import {UserValue} from "../../../data-fields/user-field/models/user-value";
@@ -6,9 +6,14 @@ import {SideMenuControl} from "../../models/side-menu-control";
 import {ProcessRole} from "../../../resources/interface/process-role";
 import {UserListValue} from "../../../data-fields/user-list-field/models/user-list-value";
 
+/**
+ * @deprecated the side menu is deprecated, the library opens dialogs instead (`DialogComponentsModule`)
+ */
 @Component({
     selector: 'ncc-abstract-multi-user-assign',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractMultiUserAssignComponent {
 

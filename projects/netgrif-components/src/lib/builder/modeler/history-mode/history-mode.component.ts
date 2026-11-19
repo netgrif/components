@@ -1,5 +1,5 @@
 import {ComponentType} from '@angular/cdk/overlay';
-import {Component} from '@angular/core';
+import {Component, ChangeDetectionStrategy} from '@angular/core';
 import {HistoryDetailComponent} from './history-detail/history-detail.component';
 import {HistoryMasterDetailService} from './history-master-detail.service';
 import {HistoryMasterItemComponent} from './history-master-item/history-master-item.component';
@@ -7,7 +7,9 @@ import {HistoryMasterItemComponent} from './history-master-item/history-master-i
 @Component({
     selector: 'nc-builder-history-mode',
     templateUrl: './history-mode.component.html',
-    styleUrls: ['./history-mode.component.scss']
+    styleUrls: ['./history-mode.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class HistoryModeComponent {
 

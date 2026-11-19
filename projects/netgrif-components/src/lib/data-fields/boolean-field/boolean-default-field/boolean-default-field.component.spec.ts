@@ -15,10 +15,9 @@ import {
     TranslateLibModule,
     UserResourceService, WrappedBoolean
 } from "@netgrif/components-core";
-import {AngularResizeEventModule} from "angular-resize-event";
-import {HttpClientTestingModule} from "@angular/common/http/testing";
-import {NoopAnimationsModule} from "@angular/platform-browser/animations";
-import {FormControl} from "@angular/forms";
+import {provideHttpClientTesting} from "@angular/common/http/testing";
+import {FormControl} from '@angular/forms';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('BooleanSimpleFieldComponent', () => {
   let component: BooleanDefaultFieldComponent;
@@ -26,11 +25,10 @@ describe('BooleanSimpleFieldComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+        declarations: [BooleanDefaultFieldComponent],
         imports: [
             MaterialModule,
-            AngularResizeEventModule,
-            TranslateLibModule,
-            HttpClientTestingModule, NoopAnimationsModule
+            TranslateLibModule
         ],
         providers: [
             {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
@@ -47,9 +45,10 @@ describe('BooleanSimpleFieldComponent', () => {
                     formControlRef: new FormControl(),
                     showLargeLayout: new WrappedBoolean()
                 } as DataFieldPortalData<BooleanField>
-            }
-        ],
-      declarations: [ BooleanDefaultFieldComponent ]
+            },
+            provideHttpClient(withXhr(), withInterceptorsFromDi()),
+            provideHttpClientTesting()
+        ]
     })
     .compileComponents();
   });

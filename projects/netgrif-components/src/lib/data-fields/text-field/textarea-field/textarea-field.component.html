@@ -1,19 +1,28 @@
-<mat-form-field [appearance]="dataField.materialAppearance"
-                floatLabel="always"
-                class="full-width"
-                color="primary">
-    <mat-label *ngIf="!showLargeLayout.value">{{dataField.title}}</mat-label>
-    <textarea matInput
-              #textArea
-              [placeholder]="dataField.placeholder"
-              [required]="dataField.behavior.required"
-              [formControl]="formControlRef"
-              [ngStyle]="{'min-height': getHeight()+'px', 'height': getHeight()+'px'}"
-              #dynamicTextArea="cdkTextareaAutosize"
-              cdkTextareaAutosize
-              cdkAutosizeMinRows="1"></textarea>
-    <mat-hint [ngClass]="{'mat-hint-disabled': formControlRef.disabled}">{{dataField.description}}</mat-hint>
-    <mat-error *ngIf="dataField.isInvalid(formControlRef)">{{getErrorMessage()}}</mat-error>
+<mat-form-field appearance="outline"
+    floatLabel="always"
+    fxFlexFill
+>
+    @if (!showLargeLayout.value && hasTitle()) {
+    <mat-label>{{ dataField.title }}</mat-label>
+    }
+    <textarea
+        matInput
+        #textArea
+        [placeholder]="dataField.placeholder"
+        [required]="dataField.behavior.required"
+        [formControl]="formControlRef"
+        [ngStyle]="{
+            'min-height': getHeight() + 'px',
+            height: getHeight() + 'px'
+        }"
+        #dynamicTextArea="cdkTextareaAutosize"
+        cdkTextareaAutosize
+        cdkAutosizeMinRows="1"
+    ></textarea>
+    <mat-hint>{{
+        dataField.description
+    }}</mat-hint>
+    @if (dataField.isInvalid(formControlRef)) {
+    <mat-error>{{ getErrorMessage() }}</mat-error>
+    }
 </mat-form-field>
-
-

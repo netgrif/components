@@ -1,22 +1,39 @@
-<mat-form-field [appearance]="dataField.materialAppearance" class="full-width" color="primary">
-    <mat-label *ngIf="!showLargeLayout.value">{{dataField.title}}</mat-label>
-    <input matInput
-           [ngxMatDatetimePicker]="picker"
-           [required]="dataField.behavior.required"
-           [placeholder]="dataField.placeholder"
-           [formControl]="formControlRef"
-           [min]="dataField.min"
-           [max]="dataField.max"
-           (click)="picker.open()">
-    <mat-datepicker-toggle matPrefix [for]="picker"></mat-datepicker-toggle>
-    <ngx-mat-datetime-picker #picker
-                             [showSpinners]="true"
-                             [showSeconds]="false"
-                             [stepHour]="1"
-                             [stepMinute]="5"
-                             [color]="'primary'"
-                             [enableMeridian]="false">
-    </ngx-mat-datetime-picker>
-    <mat-hint [ngClass]="{'mat-hint-disabled': formControlRef.disabled}">{{dataField.description}}</mat-hint>
-    <mat-error *ngIf="dataField.isInvalid(formControlRef)">{{getErrorMessage()}}</mat-error>
-</mat-form-field>
+<div fxLayout="row" fxLayoutGap="8px">
+    <mat-form-field appearance="outline" fxFlex>
+        @if (!showLargeLayout.value && hasTitle()) {
+        <mat-label>{{ dataField.title }}</mat-label>
+        }
+        <input
+            matInput
+            [matDatepicker]="picker"
+            [required]="dataField.behavior.required"
+            [placeholder]="dataField.placeholder"
+            [formControl]="dateControl"
+            [errorStateMatcher]="dataFieldErrorStateMatcher"
+            [min]="dataField.min"
+            [max]="dataField.max"
+            (dateChange)="dateChanged($event.value)"
+            (blur)="formControlRef.markAsTouched()"
+            (click)="picker.open()"
+            (keydown.enter)="picker.close()"
+        />
+        <mat-datepicker-toggle matIconPrefix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <mat-hint>{{ dataField.description }}</mat-hint>
+        @if (dataField.isInvalid(formControlRef)) {
+        <mat-error>{{ getErrorMessage() }}</mat-error>
+        }
+    </mat-form-field>
+    <mat-form-field appearance="outline" fxFlex="140px">
+        <input
+            matInput
+            [matTimepicker]="timepicker"
+            [matTimepickerMin]="timeMin"
+            [matTimepickerMax]="timeMax"
+            [required]="dataField.behavior.required"
+            [formControl]="formControlRef"
+        />
+        <mat-timepicker-toggle matIconSuffix [for]="timepicker"></mat-timepicker-toggle>
+        <mat-timepicker #timepicker interval="5m"></mat-timepicker>
+    </mat-form-field>
+</div>

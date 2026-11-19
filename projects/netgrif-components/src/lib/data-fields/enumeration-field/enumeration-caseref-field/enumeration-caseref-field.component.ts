@@ -1,4 +1,4 @@
-import {Component, Inject, Injector, Optional} from '@angular/core';
+import {Component, Inject, Injector, Optional, ChangeDetectionStrategy} from '@angular/core';
 import {
     DATA_FIELD_PORTAL_DATA,
     DataFieldPortalData, EnumerationField,
@@ -11,7 +11,8 @@ import {
 @Component({
   selector: 'nc-enumeration-caseref-field',
   templateUrl: './enumeration-caseref-field.component.html',
-  styleUrls: ['./enumeration-caseref-field.component.scss']
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class EnumerationCaserefFieldComponent extends AbstractEnumerationCaseRefComponent {
 

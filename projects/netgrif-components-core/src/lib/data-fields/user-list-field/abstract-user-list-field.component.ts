@@ -1,4 +1,4 @@
-import {Component, Inject, Input, OnInit, Optional} from '@angular/core';
+import {Component, Inject, Input, OnInit, Optional, ChangeDetectionStrategy} from '@angular/core';
 import {AbstractDataFieldComponent} from '../models/abstract-data-field-component';
 import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token';
 import {UserListField} from './models/user-list-field';
@@ -9,6 +9,8 @@ import {UserListField} from './models/user-list-field';
 @Component({
   selector: 'ncc-abstract-user-list-field',
   template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false,
 })
 export abstract class AbstractUserListFieldComponent extends AbstractDataFieldComponent implements OnInit {
     /**

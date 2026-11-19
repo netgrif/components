@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Inject, Input, OnDestroy, Optional, Output} from '@angular/core';
+import {Component, EventEmitter, Inject, Input, OnDestroy, Optional, Output, ChangeDetectionStrategy} from '@angular/core';
 import {FormSubmitEvent, HasForm} from '../has-form';
 import {FormGroup} from '@angular/forms';
 import {MessageResource} from '../../resources/interface/message-resource';
@@ -16,7 +16,9 @@ import {NAE_DEFAULT_MIN_PASSWORD_LENGTH, NAE_MIN_PASSWORD_LENGTH} from "../min-p
  */
 @Component({
     selector: 'ncc-abstract-registration',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractRegistrationComponent implements HasForm, OnDestroy {
 
@@ -36,6 +38,9 @@ export abstract class AbstractRegistrationComponent implements HasForm, OnDestro
     public loadingToken: LoadingEmitter;
     public loadingSubmit: LoadingEmitter;
     public userEmail: string;
+
+    /** error of the last submit (shown by the form), `undefined` when it succeeded or was not sent yet */
+    public submitError: string | undefined;
 
     protected constructor(protected _signupService: SignUpService,
                           protected _log: LoggerService,
@@ -104,10 +109,13 @@ export abstract class AbstractRegistrationComponent implements HasForm, OnDestro
         }
         request.token = this._token;
         this.loadingSubmit.on();
+        this.submitError = undefined;
         this.callRegistration(request).pipe(take(1)).subscribe(message => {
+            this.submitError = message?.error;
             this.register.emit(message);
             this.loadingSubmit.off();
         }, error => {
+            this.submitError = formSubmitErrorText(error) ?? this._translate.instant('forms.submitFailed');
             this.register.emit({error});
             this.loadingSubmit.off();
         });
@@ -134,4 +142,25 @@ export abstract class AbstractRegistrationComponent implements HasForm, OnDestro
     protected abstract createRequestBody(): UserRegistrationRequest;
 
     protected abstract callRegistration(requestBody: UserRegistrationRequest): Observable<MessageResource>;
+}
+
+/**
+ * Text of an error of a form request for the user: the error message of the engine (a short text or the `error` /
+ * `message` of a JSON body). `undefined` (the caller shows its translated message) for anything else: an HTML page of a
+ * proxy (502 / 504), the technical text of an HTTP error (e.g. "Http failure response ...: 0 Unknown Error").
+ */
+export function formSubmitErrorText(error: any): string | undefined {
+    if (!error) {
+        return undefined;
+    }
+    const readable = (text: unknown): string | undefined =>
+        typeof text === 'string' && text.trim().length > 0 && text.length <= 500 && !/<[a-z!/]/i.test(text) ? text.trim() : undefined;
+    if (typeof error === 'string') {
+        return readable(error);
+    }
+    const body = error.error;
+    if (typeof body === 'string') {
+        return readable(body);
+    }
+    return readable(body?.error) ?? readable(body?.message);
 }

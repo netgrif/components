@@ -1,4 +1,4 @@
-import {Component, Inject, Optional} from '@angular/core';
+import {Component, Inject, Optional, ChangeDetectionStrategy} from '@angular/core';
 import {
     AbstractMultichoiceAutocompleteFieldComponentComponent,
     DATA_FIELD_PORTAL_DATA,
@@ -9,7 +9,9 @@ import {
 @Component({
   selector: 'nc-multichoice-autocomplete-field',
   templateUrl: './multichoice-autocomplete-field.component.html',
-  styleUrls: ['./multichoice-autocomplete-field.component.scss']
+  styleUrls: ['./multichoice-autocomplete-field.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class MultichoiceAutocompleteFieldComponent  extends AbstractMultichoiceAutocompleteFieldComponentComponent {
 

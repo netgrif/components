@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {MatSelectionList} from '@angular/material/list';
 import {CdkVirtualScrollViewport} from '@angular/cdk/scrolling';
 import {UserListItem, UserListService} from '../../user/services/user-list.service';
@@ -11,7 +11,9 @@ import {Subscription} from 'rxjs';
 
 @Component({
     selector: 'ncc-abstract-role',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractRoleAssignmentComponent implements OnInit, AfterViewInit, OnDestroy {
 
@@ -73,18 +75,29 @@ export abstract class AbstractRoleAssignmentComponent implements OnInit, AfterVi
     }
 
     public autoSelectRoles(): void {
+        if (!this.nets || !this.userList) {
+            return;
+        }
         const all = this.userList.selectedOptions.selected.map(option => (option.value as UserListItem).roles);
         if (all.length === 0) {
             this.nets.selectRoles(new Set<string>([]));
+            this.nets.markPartialRoles(new Set<string>([]));
+            return;
         }
         const intersection = all.reduce((acc, curr) => new Set([...acc].filter(s => curr.has(s))), all[0]);
+        const union = all.reduce((acc, curr) => new Set([...acc, ...curr]), new Set<string>());
         this.nets.selectRoles(intersection);
+        this.nets.markPartialRoles(new Set([...union].filter(role => !intersection.has(role))));
     }
 
+    /**
+     * Adds the role to all selected items (the role was not checked or indeterminate, the checkbox is checked now) or
+     * removes it from all of them. The other roles of the items stay.
+     */
     public update(role: ExtendedProcessRole): void {
         this.nets.updateSelectedRoles(role);
         const selected = this.userList.selectedOptions.selected.map(option => (option.value as UserListItem));
-        this.users.updateRoles(selected, this.nets.selectedRoles).subscribe(_ => {
+        this.users.changeRoles(selected, [role.stringId], role.selected).subscribe(_ => {
             this.autoSelectRoles();
         });
     }
@@ -96,13 +109,14 @@ export abstract class AbstractRoleAssignmentComponent implements OnInit, AfterVi
         this.autoSelectRoles();
     }
 
+    /** adds all roles of the process to the selected items or removes them, the roles of the other processes stay */
     public toggleAllRoles(net: ProcessVersion, select: boolean): void {
         net.roles.forEach(r => {
             r.selected = select;
             this.nets.updateSelectedRoles(r);
         });
         const selected = this.userList.selectedOptions.selected.map(option => (option.value as UserListItem));
-        this.users.updateRoles(selected, this.nets.selectedRoles).subscribe(_ => {
+        this.users.changeRoles(selected, net.roles.map(r => r.stringId), select).subscribe(_ => {
             this.autoSelectRoles();
         });
     }

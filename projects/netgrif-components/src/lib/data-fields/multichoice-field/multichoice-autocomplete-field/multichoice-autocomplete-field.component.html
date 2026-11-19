@@ -1,14 +1,22 @@
-<mat-form-field [appearance]="dataField.materialAppearance" class="full-width chip-fix" color="primary">
-    <mat-label *ngIf="!showLargeLayout.value">{{dataField.title}}</mat-label>
-    <mat-chip-grid #chipList aria-label="Autocomplete" [formControl]="formControlRef">
-        <mat-chip-row *ngFor="let option of dataField.value"
-                      (removed)="remove(option)"
-                      [value]="option">
-            {{getValueFromKey(option)}}
-            <button *ngIf="!formControlRef.disabled" matChipRemove>
+<mat-form-field appearance="outline" fxFlexFill>
+    @if (!showLargeLayout.value && hasTitle()) {
+    <mat-label>{{ dataField.title }}</mat-label>
+    }
+    <mat-chip-grid
+        #chipList
+        aria-label="Autocomplete"
+        [formControl]="formControlRef"
+    >
+        @for (option of dataField.value; track option) {
+        <mat-chip-row (removed)="remove(option)" [value]="option">
+            {{ getValueFromKey(option) }}
+            @if (!formControlRef.disabled) {
+            <button matChipRemove>
                 <mat-icon>cancel</mat-icon>
             </button>
+            }
         </mat-chip-row>
+        }
         <input
             aria-label="Autocomplete"
             matInput
@@ -18,15 +26,25 @@
             [matAutocomplete]="auto"
             [matChipInputFor]="chipList"
             [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-            (keyup)="change()">
+            (keyup)="change()"
+        />
     </mat-chip-grid>
-    <mat-autocomplete [displayWith]="renderSelection" autoActiveFirstOption #auto="matAutocomplete">
+    <mat-autocomplete
+        [displayWith]="renderSelection"
+        autoActiveFirstOption
+        #auto="matAutocomplete"
+    >
         <mat-option [value]="null">---</mat-option>
-        <mat-option *ngFor="let option of filteredOptions | async" [value]="option.key" (click)="add(option)">
-            {{option.value}}
+        @for (option of filteredOptions | async; track option) {
+        <mat-option [value]="option.key" (click)="add(option)">
+            {{ option.value }}
         </mat-option>
+        }
     </mat-autocomplete>
-    <mat-hint [ngClass]="{'mat-hint-disabled': formControlRef.disabled}">{{dataField.description}}</mat-hint>
-    <mat-error
-        *ngIf="dataField.isInvalid(formControlRef)">{{'dataField.validations.required' | translate}}</mat-error>
+    <mat-hint>{{
+        dataField.description
+    }}</mat-hint>
+    @if (dataField.isInvalid(formControlRef)) {
+    <mat-error>{{ "dataField.validations.required" | translate }}</mat-error>
+    }
 </mat-form-field>

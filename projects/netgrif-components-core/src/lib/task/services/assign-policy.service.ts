@@ -9,7 +9,7 @@ import {FinishPolicyService} from './finish-policy.service';
 import {NAE_TASK_OPERATIONS} from '../models/task-operations-injection-token';
 import {TaskOperations} from '../interfaces/task-operations';
 import {CallChainService} from '../../utility/call-chain/call-chain.service';
-import {race, Subject} from 'rxjs';
+import {merge, Subject} from 'rxjs';
 import {UserComparatorService} from '../../user/services/user-comparator.service';
 import {AfterAction} from '../../utility/call-chain/after-action';
 import {PermissionService} from '../../authorization/permission/permission.service';
@@ -55,13 +55,11 @@ export class AssignPolicyService extends TaskHandlingService {
         if (!this._userService.isCurrentUserEmpty()) {
             this.performAssign(taskOpened, afterAction);
         } else {
-            race([
+            merge(
                 this._userService.anonymousUser$,
-                this._userService.user$
-            ])
-                .pipe(filter(user => !this._userService.isUserEmpty(user)))
-                .pipe(take(1))
-                .subscribe(user => this.performAssign(taskOpened, afterAction));
+                this._userService.user$)
+                .pipe(filter(user => !this._userService.isUserEmpty(user)), take(1))
+                .subscribe(() => this.performAssign(taskOpened, afterAction));
         }
     }
 

@@ -3,8 +3,8 @@ import {DialogService} from './dialog.service';
 import {of} from 'rxjs';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
 import {MatDialog, MatDialogModule} from '@angular/material/dialog';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('DialogService', () => {
     let service: DialogService;
@@ -13,8 +13,11 @@ describe('DialogService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [MatDialogModule, TranslateLibModule, HttpClientTestingModule, NoopAnimationsModule],
-            providers: [MatDialog]
+            imports: [MatDialogModule, TranslateLibModule],
+            providers: [MatDialog,
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
+            ]
         });
         service = TestBed.inject(DialogService);
 

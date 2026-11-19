@@ -4,7 +4,8 @@ import {UserService} from '../../user/services/user.service';
 import {AuthenticationModule} from '../../authentication/authentication.module';
 import {RedirectService} from '../../routing/redirect-service/redirect.service';
 import {ConfigurationService} from '../../configuration/configuration.service';
-import {Observable} from 'rxjs';
+import {Observable, of} from 'rxjs';
+import {catchError, filter, map, take, timeout} from 'rxjs/operators';
 import {View} from '../../../commons/schema';
 import {NavigationItem} from "../../navigation/model/navigation-configs";
 import {GroupNavigationConstants} from "../../navigation/model/group-navigation-constants";
@@ -13,6 +14,9 @@ import {GroupNavigationConstants} from "../../navigation/model/group-navigation-
     providedIn: AuthenticationModule
 })
 export class AuthorityGuardService implements CanActivate {
+
+    /** how long the guard waits for the logged user (reload of the page), then it leads to the login */
+    public static readonly USER_LOAD_TIMEOUT = 10000;
 
     private readonly _loginUrl: string;
 
@@ -27,7 +31,16 @@ export class AuthorityGuardService implements CanActivate {
                 state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
         this._redirectService.intendedRoute = route;
         const view = this._configService.getViewByUrl(state.url.toString());
-        return this.canAccessView(view);
+        if (!this._userService.isUserEmpty(this._userService.user)) {
+            return this.canAccessView(view);
+        }
+        return this._userService.user$.pipe(
+            filter(user => !this._userService.isUserEmpty(user)),
+            take(1),
+            map(() => this.canAccessView(view)),
+            timeout(AuthorityGuardService.USER_LOAD_TIMEOUT),
+            catchError(() => of(this._router.parseUrl(this._loginUrl)))
+        );
     }
 
     public canAccessView(view: View): boolean {

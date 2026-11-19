@@ -2,8 +2,7 @@ import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 
 import {MultiUserAssignItemComponent} from './multi-user-assign-item.component';
 import {MaterialModule, TranslateLibModule, UserValue} from "@netgrif/components-core";
-import {NoopAnimationsModule} from "@angular/platform-browser/animations";
-import {Component, CUSTOM_ELEMENTS_SCHEMA} from "@angular/core";
+import {Component, CUSTOM_ELEMENTS_SCHEMA, ChangeDetectionStrategy} from "@angular/core";
 
 describe('MultiUserAssignItemComponent', () => {
     let component: MultiUserAssignItemComponent;
@@ -13,8 +12,7 @@ describe('MultiUserAssignItemComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 MaterialModule,
-                TranslateLibModule,
-                NoopAnimationsModule
+                TranslateLibModule
             ],
             declarations: [
                 MultiUserAssignItemComponent,
@@ -39,7 +37,9 @@ describe('MultiUserAssignItemComponent', () => {
 
 @Component({
     selector: 'nc-test-wrapper',
-    template: '<nc-user-assign-item [user]="user"></nc-user-assign-item>'
+    template: '<nc-user-assign-item [user]="user"></nc-user-assign-item>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestWrapperComponent {
     user = new UserValue('0', '', '', '');

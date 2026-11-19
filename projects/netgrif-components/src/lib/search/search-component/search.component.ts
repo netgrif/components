@@ -1,4 +1,4 @@
-import {Component, Inject, Optional, SkipSelf, Type, ViewEncapsulation} from '@angular/core';
+import {Component, Inject, Optional, SkipSelf, Type, ChangeDetectionStrategy} from '@angular/core';
 import {MAT_DATE_FORMATS} from '@angular/material/core';
 import {
     AbstractSearchComponent,
@@ -71,7 +71,6 @@ export function searchCategoryConverter(categoryResolverService: CategoryResolve
     selector: 'nc-search',
     templateUrl: './search.component.html',
     styleUrls: ['./search.component.scss'],
-    encapsulation: ViewEncapsulation.None,
     providers: [
         {provide: MAT_DATE_FORMATS, useValue: DATE_FORMAT},
         {
@@ -85,7 +84,9 @@ export function searchCategoryConverter(categoryResolverService: CategoryResolve
                 [new Optional(), new SkipSelf(), NAE_SEARCH_CATEGORIES]
             ]
         }
-    ]
+    ],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class SearchComponent extends AbstractSearchComponent {
 

@@ -1,13 +1,10 @@
-.builder-container {
+.height-builder {
     display: flex;
     flex-direction: column;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
+    height: 100%;
 }
 
-.height-builder {
-    height: 100%;
+.builder-fix {
+    flex: 1 1 auto;
+    min-height: 0;
 }

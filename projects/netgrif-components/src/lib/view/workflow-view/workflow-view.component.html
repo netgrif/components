@@ -1,60 +1,51 @@
-<div class="workflow-container full-height" fxLayout="column" fxLayoutAlign="start stretch">
-    <div>
-        <button mat-fab color="primary" class="upload-petri-net" (click)="importNet()">
-            <mat-icon>cloud_upload</mat-icon>
+<div class="view">
+    <div class="search-row">
+        <div class="search">
+            <label class="search-bar">
+                <mat-icon>search</mat-icon>
+                <input type="text"
+                       [formControl]="fullTextFormControl"
+                       [placeholder]="'search.fullText' | translate"
+                       [attr.aria-label]="'search.fullText' | translate"
+                       (keydown.enter)="$any($event.target).blur()">
+                @if (fullTextFormControl.value) {
+                <button mat-icon-button type="button" (click)="fullTextFormControl.setValue('')">
+                    <mat-icon>close</mat-icon>
+                </button>
+                }
+            </label>
+        </div>
+        <button mat-fab extended (click)="importNet()">
+            <mat-icon>upload_file</mat-icon>
+            {{ "side-menu.import-net.upload" | translate }}
         </button>
     </div>
 
-    <div class="workflow-search-container">
-        <div fxLayout="row" class="max-height" fxLayoutAlign="space-between">
-            <div fxLayoutAlign="start center" fxFlex>
-                <div fxLayout="row" fxLayoutAlign="start center" class="full-size netgrif-input-primary-search-fix netgrif-input">
-                    <mat-form-field appearance="outline" class="disable-error-margin fulltext-search">
-                        <mat-icon matPrefix class="prefix-icon">search</mat-icon>
-                        <input type="text" matInput [formControl]="fullTextFormControl" [placeholder]="'search.fullText' | translate">
-                    </mat-form-field>
-                </div>
-            </div>
+    <div class="list">
+        <nc-header #header [type]="headerType"></nc-header>
+        @if (workflows$ | async; as workflows) {
+        @if ((loading$ | async) === false && workflows.length === 0) {
+        <div class="nae-empty-state" role="status">
+            <mat-icon class="nae-empty-state-icon">account_tree</mat-icon>
+            <span class="nae-empty-state-title">{{ "view-list.noProcessesSatisfyingThisFilter" | translate }}</span>
+            <span class="nae-empty-state-text">{{ "view-list.noProcessesHint" | translate }}</span>
         </div>
-    </div>
-    <div fxLayout="row" fxLayoutAlign="center" class="workflow-header">
-        <nc-header class="padding-mini" #header fxFlex="100" [type]="headerType"></nc-header>
-    </div>
-    <div fxLayout="column" fxLayoutAlign="start center" fxFlex class="workflow-panels-container">
-        <ng-container *ngIf="workflows$ | async as workflows">
-
-            <div *ngIf="(loading$ | async) === false && workflows.length === 0" fxLayout="column"
-                 fxLayoutAlign="center center">
-                <mat-icon color="accent" class="font-size-40 block-size-40 margin-bottom-default">linear_scale
-                </mat-icon>
-                <span class="font-size-20">{{ 'view-list.noProcessesSatisfyingThisFilter' | translate}}</span>
-            </div>
-
-            <mat-accordion [multi]="true" fxFlex="100" class="full-width panel-list-content">
-
-                <cdk-virtual-scroll-viewport itemSize="50" (scrolledIndexChange)="loadNextPage()"
-                                             class="full-height full-width dashboard-workflow-view">
-
-                    <nc-workflow-panel
-                        *cdkVirtualFor="let workflow of workflows;
-                                        let first = first;
-                                        let last = last;
-                                        let i = index;
-                                        templateCacheSize: 0;
-                                        trackBy: trackBy"
-                        [workflow]="workflow" [first]="first" [last]="last"
-                        [selectedHeaders$]="selectedHeaders$"
-                        [showDeleteMenu]="showDeleteMenu">
-                    </nc-workflow-panel>
-
-                    <div *ngIf="loading$ | async" fxLayout="column" fxLayoutAlign="center center"
-                         class="margin-top-default">
-                        <mat-spinner color="primary" diameter="50"></mat-spinner>
-                    </div>
-
-                </cdk-virtual-scroll-viewport>
-
-            </mat-accordion>
-        </ng-container>
+        }
+        <mat-accordion multi="true" class="accordion">
+            <cdk-virtual-scroll-viewport itemSize="50" (scrolledIndexChange)="loadNextPage()" class="viewport">
+                <nc-workflow-panel
+                    *cdkVirtualFor="let workflow of workflows; let first = first; let last = last; templateCacheSize: 0; trackBy: trackBy"
+                    [workflow]="workflow"
+                    [first]="first"
+                    [last]="last"
+                    [selectedHeaders$]="selectedHeaders$"
+                    [showDeleteMenu]="showDeleteMenu"
+                ></nc-workflow-panel>
+                @if (loading$ | async) {
+                <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+                }
+            </cdk-virtual-scroll-viewport>
+        </mat-accordion>
+        }
     </div>
 </div>

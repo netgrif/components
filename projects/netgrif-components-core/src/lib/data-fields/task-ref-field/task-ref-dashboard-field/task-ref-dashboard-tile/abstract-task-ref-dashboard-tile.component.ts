@@ -1,4 +1,4 @@
-import {Component, Inject, Input, OnDestroy} from '@angular/core';
+import {Component, Inject, Input, OnDestroy, ChangeDetectionStrategy} from '@angular/core';
 import {TaskRefDashboardTile} from '../../model/task-ref-dashboard-tile';
 import {CaseResourceService} from '../../../../resources/engine-endpoint/case-resource.service';
 import {TaskRefField} from '../../model/task-ref-field';
@@ -23,6 +23,8 @@ import {AfterAction} from '../../../../utility/call-chain/after-action';
 @Component({
     selector: 'ncc-abstract-task-ref-dashboard-tile',
     template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false,
 })
 export abstract class AbstractTaskRefDashboardTileComponent implements OnDestroy {
 

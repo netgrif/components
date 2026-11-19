@@ -1,4 +1,4 @@
-import {Component, Inject, Injector, Optional} from '@angular/core';
+import {Component, Inject, Injector, Optional, ChangeDetectionStrategy} from '@angular/core';
 import {
     ComponentRegistryService,
     NAE_FILTER_FIELD,
@@ -18,14 +18,15 @@ import {
 @Component({
   selector: 'nc-filter-field-tab-view-content',
   templateUrl: './filter-field-tab-view-content.component.html',
-  styleUrls: ['./filter-field-tab-view-content.component.scss'],
     providers: [
         {provide: NAE_BASE_FILTER, useFactory: filterFieldBaseFilterFactory, deps: [NAE_FILTER_FIELD]},
         {provide: AllowedNetsService, useFactory: filterFieldAllowedNetsFactory, deps: [AllowedNetsServiceFactory, NAE_FILTER_FIELD]},
         CategoryFactory,
         {provide: NAE_SEARCH_CATEGORIES, useFactory: filterFieldCategoriesFactory, deps: [CategoryResolverService, NAE_FILTER_FIELD]},
         SearchService
-    ]
+    ],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class FilterFieldTabViewContentComponent extends AbstractFilterFieldTabViewContentComponent{
 

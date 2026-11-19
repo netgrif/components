@@ -1,10 +1,11 @@
 import { TestBed } from '@angular/core/testing';
 import { ExportService } from './export.service';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { ConfigurationService } from '../../configuration/configuration.service';
 import { TranslateService } from '@ngx-translate/core';
 import { Filter } from '../../filter/models/filter';
 import { HeaderColumn, HeaderColumnType } from '../../header/models/header-column';
+import { provideHttpClient, withInterceptorsFromDi, withXhr } from '@angular/common/http';
 
 describe('ExportService', () => {
     let service: ExportService;
@@ -24,11 +25,13 @@ describe('ExportService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule],
+            imports: [],
             providers: [
                 ExportService,
                 { provide: ConfigurationService, useValue: mockConfigService },
-                { provide: TranslateService, useValue: mockTranslateService }
+                { provide: TranslateService, useValue: mockTranslateService },
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
             ]
         });
 

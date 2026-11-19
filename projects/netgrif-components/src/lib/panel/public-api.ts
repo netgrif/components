@@ -13,3 +13,5 @@ export * from './immediate/immediate-filter-text-content/immediate-filter-text-c
 export * from './panel-item/panel-item.component';
 export * from './task-panel-list-pagination/task-list-pagination.component';
 export * from './task-panel-single/single-task.component';
+
+export * from './list-viewport/list-viewport.directive';

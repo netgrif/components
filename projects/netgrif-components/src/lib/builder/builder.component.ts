@@ -1,4 +1,4 @@
-import {Component, Inject, OnDestroy, Optional, Type} from '@angular/core';
+import {Component, Inject, OnDestroy, Optional, Type, ChangeDetectionStrategy} from '@angular/core';
 import {BuilderMode, BuilderModeService} from "./services/builder-mode.service";
 import {ModelService} from "./modeler/services/model/model.service";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -127,12 +127,17 @@ import {TranslateService} from "@ngx-translate/core";
         // single instance shared by every open builder tab (wrong canvas/model rendered on tab switch).
         // Re-provided here so each <nc-builder> instance gets its own canvas/panzoom state.
         {provide: PetriflowCanvasService, useClass: PetriflowCanvasService as unknown as Type<PetriflowCanvasService>}
-    ]
+    ],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class BuilderComponent implements OnDestroy {
     public typeMode = BuilderMode;
+    /** mode of the first opening of an integrated process (tab data) */
+    protected _initialMode: BuilderMode | undefined;
     public loading: LoadingEmitter;
     protected _reloadSub: Subscription;
+    protected _modelDataSetSub: Subscription;
 
     constructor(private modelService: ModelService, private router: Router,
                 public dialog: MatDialog,
@@ -151,6 +156,12 @@ export class BuilderComponent implements OnDestroy {
         if (injectedTabData !== null && injectedTabData?.processCase) {
             this._builderIntegrationService.isIntegrated = true;
             this._builderIntegrationService.processCase = injectedTabData.processCase;
+            this._initialMode = injectedTabData.initialMode;
+            this._modelDataSetSub = this._builderIntegrationService.modelDataSet$.subscribe(model => {
+                if (model?.title?.value) {
+                    injectedTabData.tabViewRef?.setText(model.title.value);
+                }
+            });
             this.resolveIntegratedMode();
             this._reloadSub = this._builderIntegrationService.reloadCase.subscribe(() => {
                 this._caseResourceService.getOneCase(this._builderIntegrationService.processCase.stringId).subscribe({
@@ -192,9 +203,21 @@ export class BuilderComponent implements OnDestroy {
 
     ngOnDestroy(): void {
         this._reloadSub?.unsubscribe();
+        this._modelDataSetSub?.unsubscribe();
+    }
+
+    /**
+     * The mode of the first opening (`InjectedTabbedBuilderViewData.initialMode`), the process mode afterwards
+     * (a reload of the process case).
+     */
+    protected takeInitialMode(): BuilderMode {
+        const mode = this._initialMode ?? BuilderMode.TASK_MODE;
+        this._initialMode = undefined;
+        return mode;
     }
 
     protected resolveIntegratedMode() {
+        const mode = this.takeInitialMode();
         const stateFieldValue: string = this._builderIntegrationService.processCase.immediateData.find((data: ImmediateData) => data.stringId === 'state')?.value;
         const taskId = this._builderIntegrationService.processCase.tasks.find(taskPair => taskPair.transition === 'form')?.task;
         if (stateFieldValue === 'draft') {
@@ -205,10 +228,11 @@ export class BuilderComponent implements OnDestroy {
                 this._builderIntegrationService.allowedTransIds = ['view'];
             }
             this._builderIntegrationService.getXml().subscribe(value => {
-                this.parseModel(value, BuilderMode.TASK_MODE);
+                this.parseModel(value, mode);
                 this.loading.off();
             }, error => {
                 console.log(error);
+                this.parseModel(undefined, mode);
                 this.loading.off();
             })
         } else if (stateFieldValue === 'deployed' || stateFieldValue === 'archived') {
@@ -219,10 +243,11 @@ export class BuilderComponent implements OnDestroy {
             }
             this._builderIntegrationService.editTaskId = undefined;
             this._builderIntegrationService.getXml(taskId).subscribe(value => {
-                this.parseModel(value, BuilderMode.TASK_MODE);
+                this.parseModel(value, mode);
                 this.loading.off();
             }, error => {
                 console.log(error);
+                this.parseModel(undefined, mode);
                 this.loading.off();
             })
         } else {
@@ -230,7 +255,7 @@ export class BuilderComponent implements OnDestroy {
             this.loading.off();
             this._builderIntegrationService.editTaskId = undefined;
         }
-        this.builderModeService.mode = BuilderMode.TASK_MODE;
+        this.builderModeService.mode = mode;
     }
 
     protected parseModel(data: string, mode: BuilderMode) {

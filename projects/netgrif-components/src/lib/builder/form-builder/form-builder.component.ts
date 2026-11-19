@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, OnDestroy, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnDestroy, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {DataGroup, LayoutType} from '@netgrif/petriflow';
 import {ModelerConfig} from '../modeler/modeler-config';
 import {ModelerUtils} from '../modeler/modeler-utils';
@@ -10,7 +10,9 @@ import {GridsterService} from './gridster/gridster.service';
 @Component({
     selector: 'nc-builder-form-builder',
     templateUrl: './form-builder.component.html',
-    styleUrls: ['./form-builder.component.scss']
+    styleUrls: ['./form-builder.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class FormBuilderComponent implements AfterViewInit, OnDestroy {
     title = 'form-builder';
@@ -37,7 +39,7 @@ export class FormBuilderComponent implements AfterViewInit, OnDestroy {
     ngAfterViewInit(): void {
         ModelerUtils.clearSelection();
         this.rightPanelResizeObserver = new ResizeObserver(() => {
-            this._gridsterService.options?.api?.optionsChanged();
+            this._gridsterService.refreshOptions();
         });
         this.rightPanelResizeObserver.observe(this.rightPanel.nativeElement);
     }
@@ -54,6 +56,6 @@ export class FormBuilderComponent implements AfterViewInit, OnDestroy {
         } else {
             this.width = event.rectangle.width;
         }
-        this._gridsterService.options?.api?.optionsChanged();
+        this._gridsterService.refreshOptions();
     }
 }

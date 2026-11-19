@@ -1,4 +1,4 @@
-import {Component, Inject} from '@angular/core';
+import {Component, Inject, ChangeDetectionStrategy} from '@angular/core';
 import {FormArray, FormControl, ValidatorFn, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 
@@ -14,7 +14,9 @@ export interface Data {
 @Component({
     selector: 'nc-builder-dialog-change-data',
     templateUrl: './dialog-change-data.component.html',
-    styleUrls: ['./dialog-change-data.component.scss']
+    styleUrls: ['./dialog-change-data.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class DialogChangeDataComponent {
 

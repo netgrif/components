@@ -1,7 +1,7 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {TaskRefListFieldComponent} from './task-ref-list-field.component';
-import {Component} from "@angular/core";
+import {Component, ChangeDetectionStrategy} from "@angular/core";
 import {TaskRefField} from "@netgrif/components-core";
 
 describe('TaskRefListFieldComponent', () => {
@@ -33,7 +33,9 @@ describe('TaskRefListFieldComponent', () => {
 
 @Component({
     selector: 'nc-test-wrapper',
-    template: '<nc-task-ref-list-field [dataField]="field"></nc-task-ref-list-field>'
+    template: '<nc-task-ref-list-field [dataField]="field"></nc-task-ref-list-field>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestWrapperComponent {
     field = new TaskRefField('', '', ['633c6187bb12a90925e0a17e'], {

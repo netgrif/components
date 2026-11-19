@@ -1,12 +1,12 @@
-import {Component, Injectable} from '@angular/core';
+import {Component, Injectable, ChangeDetectionStrategy} from '@angular/core';
 import {AbstractCaseViewComponent} from './abstract-case-view';
 import {AllowedNetsService} from '../../allowed-nets/services/allowed-nets.service';
 import {CaseViewService} from './service/case-view-service';
 import {Case} from '../../resources/interface/case';
 import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 import {MaterialModule} from '../../material/material.module';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
@@ -32,12 +32,12 @@ describe('AbstractCaseView', () => {
 
     const imports = [
         MaterialModule,
-        NoopAnimationsModule,
-        HttpClientTestingModule,
         TranslateLibModule
     ];
 
     const providers = [
+        provideHttpClient(withXhr(), withInterceptorsFromDi()),
+        provideHttpClientTesting(),
         CaseViewService,
         {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
         {provide: UserService, useClass: MockUserService},
@@ -136,7 +136,9 @@ describe('AbstractCaseView', () => {
 
 @Component({
     selector: 'ncc-test-case-view',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestCaseViewComponent extends AbstractCaseViewComponent {
     constructor(caseViewService: CaseViewService) {

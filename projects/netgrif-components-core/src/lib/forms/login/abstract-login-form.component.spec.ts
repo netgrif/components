@@ -1,8 +1,7 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {FlexLayoutModule} from '@ngbracket/ngx-layout';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {Component, NO_ERRORS_SCHEMA} from '@angular/core';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
+import {Component, NO_ERRORS_SCHEMA, ChangeDetectionStrategy} from '@angular/core';
 import {MaterialModule} from '../../material/material.module';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
 import {RouterTestingModule} from '@angular/router/testing';
@@ -15,6 +14,7 @@ import {AbstractLoginFormComponent} from './abstract-login-form.component';
 import {UserService} from '../../user/services/user.service';
 import {AuthenticationService} from '../../authentication/services/authentication/authentication.service';
 import {MockAuthenticationService} from '../../utility/tests/mocks/mock-authentication.service';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('AbstractLoginFormComponent', () => {
     let component: TestLoginFormComponent;
@@ -22,21 +22,21 @@ describe('AbstractLoginFormComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
+            declarations: [TestLoginFormComponent],
+            schemas: [NO_ERRORS_SCHEMA],
             imports: [
                 MaterialModule,
                 FlexLayoutModule,
-                NoopAnimationsModule,
-                HttpClientTestingModule,
                 TranslateLibModule,
                 RouterTestingModule.withRoutes([])
             ],
-            declarations: [TestLoginFormComponent],
             providers: [
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
-                {provide: ConfigurationService, useClass: TestConfigurationService}
-            ],
-            schemas: [NO_ERRORS_SCHEMA]
+                {provide: ConfigurationService, useClass: TestConfigurationService},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
+            ]
         }).compileComponents();
     }));
 
@@ -67,7 +67,9 @@ describe('AbstractLoginFormComponent', () => {
 
 @Component({
     selector: 'ncc-test-login',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestLoginFormComponent extends AbstractLoginFormComponent {
     constructor(formBuilder: FormBuilder, protected _userService: UserService) {

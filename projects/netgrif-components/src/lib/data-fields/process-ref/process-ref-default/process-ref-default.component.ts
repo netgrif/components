@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Inject, Injector, OnDestroy, OnInit, Optional} from '@angular/core';
+import {Component, Inject, Injector, OnDestroy, OnInit, Optional, ChangeDetectionStrategy} from '@angular/core';
 import {
     AbstractProcessRefDefaultComponent,
     DATA_FIELD_PORTAL_DATA,
@@ -11,9 +11,11 @@ import {Subscription} from 'rxjs';
 @Component({
     selector: 'nc-process-ref-default',
     templateUrl: './process-ref-default.component.html',
-    styleUrls: ['./process-ref-default.component.scss']
+    styleUrls: ['./process-ref-default.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
-export class ProcessRefDefaultComponent extends AbstractProcessRefDefaultComponent implements OnInit, AfterViewInit, OnDestroy {
+export class ProcessRefDefaultComponent extends AbstractProcessRefDefaultComponent implements OnInit, OnDestroy {
 
     public height: number;
     protected subComp: Subscription;
@@ -24,6 +26,7 @@ export class ProcessRefDefaultComponent extends AbstractProcessRefDefaultCompone
     }
 
     ngOnInit() {
+        this.createPortal();
         this.checkProperties();
         this.subComp = this.dataField.componentChange$().subscribe(() => this.checkProperties());
     }
@@ -35,9 +38,5 @@ export class ProcessRefDefaultComponent extends AbstractProcessRefDefaultCompone
     ngOnDestroy() {
         super.ngOnDestroy();
         this.subComp.unsubscribe();
-    }
-
-    ngAfterViewInit() {
-        this.createPortal();
     }
 }

@@ -1,7 +1,6 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {TabCreationDetectorComponent} from './tab-creation-detector.component';
-import {Component, Injector, NgModule, OnInit} from '@angular/core';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {Component, Injector, NgModule, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {
     AuthenticationMethodService,
     AuthenticationService,
@@ -29,7 +28,6 @@ describe('TabCreationDetectorComponent', () => {
             imports: [
                 MaterialModule,
                 TabTestModule,
-                NoopAnimationsModule,
                 RouterTestingModule.withRoutes([])
             ],
             providers: [
@@ -62,7 +60,9 @@ describe('TabCreationDetectorComponent', () => {
 
 @Component({
     selector: 'nc-test-wrapper',
-    template: '<nc-tab-creation-detector [initializeTabFunction]="initializeTabLambda" [tabIndex]="0"></nc-tab-creation-detector>'
+    template: '<nc-tab-creation-detector [initializeTabFunction]="initializeTabLambda" [tabIndex]="0"></nc-tab-creation-detector>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestWrapperComponent implements OnInit {
     tabGroup: TabView;
@@ -90,7 +90,9 @@ class TestWrapperComponent implements OnInit {
 
 @Component({
     selector: 'nc-test-div-test',
-    template: '<div></div>'
+    template: '<div></div>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestComponent {
 }

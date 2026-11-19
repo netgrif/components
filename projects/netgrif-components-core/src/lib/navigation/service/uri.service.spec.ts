@@ -1,7 +1,5 @@
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {TestBed} from '@angular/core/testing';
-import {expect} from '@ngbracket/ngx-layout/_private-utils/testing';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterTestingModule} from '@angular/router/testing';
 import {AuthenticationModule} from '../../authentication/authentication.module';
 import {ConfigurationService} from '../../configuration/configuration.service';
@@ -12,6 +10,7 @@ import {TestLoggingConfigurationService} from '../../utility/tests/test-logging-
 import {UriResourceService} from './uri-resource.service';
 import {UriService} from './uri.service';
 import {SessionService} from '../../authentication/session/services/session.service';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('UriService', () => {
     let service: UriService;
@@ -20,8 +19,6 @@ describe('UriService', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
-                HttpClientTestingModule,
-                NoopAnimationsModule,
                 AuthenticationModule,
                 RouterTestingModule.withRoutes([]),
             ],
@@ -29,6 +26,8 @@ describe('UriService', () => {
                 {provide: ConfigurationService, useClass: TestLoggingConfigurationService},
                 {provide: UriResourceService, useClass: MockUriResourceService},
                 {provide: CaseResourceService, useClass: MockCaseResourceService},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting(),
             ],
         });
         sessionService = TestBed.inject(SessionService);

@@ -1,12 +1,26 @@
-<div class="breadcrumbs">
-    <div *ngIf="showHome">
-        <span class="breadcrumbs-span" (click)="reset()">{{'toolbar.menu.home' | translate}}</span>
-    </div>
-    <div *ngFor="let path of breadcrumbsParts;let i = index;let last = last;">
-        <span class="breadcrumbs-span" (click)="changePath(path, i)">{{path | titlecase}}</span>
-        <span class="delimeter" *ngIf="!last || (showFilter && !!itemName)">/</span>
-    </div>
-    <div *ngIf="showFilter && !!itemName">
-        <span class="breadcrumbs-span">{{itemName}}</span>
-    </div>
+<div fxLayout="row wrap" fxLayoutAlign="start center">
+    @if (showHome) {
+    <button mat-button (click)="reset()">{{ "toolbar.menu.home" | translate }}</button>
+    }
+    @for (path of breadcrumbsParts; track $index; let i = $index) {
+    @if (path) {
+    @if (showHome || i > 0) {
+    <mat-icon>chevron_right</mat-icon>
+    }
+    <button mat-button (click)="changePath(path, i)">{{ path | titlecase }}</button>
+    }
+    }
+    @let detail = detailService.detail$ | async;
+    @if (showFilter && !!itemName) {
+    <mat-icon>chevron_right</mat-icon>
+    @if (detail) {
+    <button mat-button (click)="detail.close()">{{ itemName }}</button>
+    } @else {
+    <span class="current" aria-current="page">{{ itemName }}</span>
+    }
+    }
+    @if (detail) {
+    <mat-icon>chevron_right</mat-icon>
+    <span class="current" aria-current="page">{{ detail.name }}</span>
+    }
 </div>

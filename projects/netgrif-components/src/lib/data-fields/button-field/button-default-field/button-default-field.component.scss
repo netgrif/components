@@ -1,48 +1,43 @@
-.label-waiting{
-    opacity: 0;
+@use '@angular/material' as mat;
+
+:host {
+    display: block;
+    min-height: calc(var(--mat-form-field-container-height, 56px) + 20px);
 }
 
-.grid-wrapper {
-    display: grid;
-    place-items: center;
+.button-field {
+    position: relative;
+    min-height: var(--mat-form-field-container-height, 56px);
 }
 
-.grid-1-1{
-    grid-column: 1;
-    grid-row: 1;
+.button-field .mat-mdc-button-base:has(.button-progress) {
+    overflow: hidden;
+
+    ::ng-deep .mdc-button__label {
+        position: static;
+    }
 }
 
-.margin-auto{
-    margin: 0 auto;
+.button-progress {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    @include mat.progress-bar-overrides((
+        active-indicator-color: currentColor,
+        track-color: transparent,
+    ));
 }
 
-.flex-end {
-    display: flex;
-    place-content: flex-end;
-}
-
-.flex-start {
-    display: flex;
-    place-content: flex-start;
-}
-
-.flex-center {
-    display: flex;
-    place-content: center;
-}
-
-.full-button-width {
-    width: 100%;
-}
-
-.padding-bottom {
-    padding-bottom: 24px;
-}
-
-.padding-bottom-9px {
-    padding-bottom: 9px;
-}
-
-.no-shadow {
-    box-shadow: unset !important;
+.button-title {
+    position: absolute;
+    top: -8px;
+    left: 4px;
+    max-width: calc(100% - 8px);
+    overflow: hidden;
+    color: var(--mat-sys-on-surface-variant);
+    font: var(--mat-sys-body-small);
+    letter-spacing: var(--mat-sys-body-small-tracking);
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }

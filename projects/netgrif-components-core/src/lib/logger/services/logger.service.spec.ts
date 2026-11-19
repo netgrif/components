@@ -3,9 +3,9 @@ import {LoggerService} from './logger.service';
 import {LocalStorageLogPublisher} from '../publishers/local-storage-log-publisher';
 import {LogLevel} from './log-level';
 import {ConfigurationService} from '../../configuration/configuration.service';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {TestLoggingConfigurationService} from '../../utility/tests/test-logging-config';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('LoggerService', () => {
     const testString = 'Testing string to log: ';
@@ -13,9 +13,11 @@ describe('LoggerService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopAnimationsModule, HttpClientTestingModule],
+            imports: [],
             providers: [
-                {provide: ConfigurationService, useClass: TestLoggingConfigurationService}
+                {provide: ConfigurationService, useClass: TestLoggingConfigurationService},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
             ]
         });
         service = TestBed.inject(LoggerService);

@@ -7,24 +7,34 @@
         "declaration": true,
         "inlineSources": true,
         "types": [],
-        "lib": [
-            "dom",
-            "es2018"
-        ],
         "allowSyntheticDefaultImports": true,
         "resolveJsonModule": true,
-        "esModuleInterop": true
+        "esModuleInterop": true,
+        "paths": {
+            "netgrif-components-core": [
+                "dist/netgrif-components-core"
+            ],
+            "netgrif-components": [
+                "dist/netgrif-components"
+            ],
+            "jszip": [
+                "./node_modules/jszip/dist/jszip.min.js"
+            ],
+            "@netgrif/components-core": [
+                "dist/netgrif-components-core"
+            ]
+        }
     },
     "angularCompilerOptions": {
         "skipTemplateCodegen": true,
         "strictMetadataEmit": true,
         "enableResourceInlining": true,
         "fullTemplateTypeCheck": true,
+        "strictTemplates": false
     },
     "exclude": [
         "src/test.ts",
-        "**/*.spec.ts",
-        "schematics/**"
+        "**/*.spec.ts"
     ],
     "typedocOptions": {
         "exclude": "**/*.spec.ts",

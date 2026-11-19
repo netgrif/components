@@ -1,13 +1,7 @@
-.load-filter-container {
-    height: calc(100% - 64px);
-    padding-left: 8px;
-    padding-right: 8px;
-}
+@use '../dialog';
 
-.case-header-padding {
-    padding-top: 4px;
-}
+@include dialog.styles;
 
-.virtual-scroll-list-padding {
-    padding-right: 4px;
+nc-case-list {
+    height: min(400px, 60vh);
 }

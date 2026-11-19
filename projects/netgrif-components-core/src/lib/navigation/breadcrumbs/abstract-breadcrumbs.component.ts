@@ -1,13 +1,14 @@
-import {AfterViewInit, Component, Input, OnDestroy} from '@angular/core';
+import {AfterViewInit, Component, Input, OnDestroy, OnInit, ChangeDetectionStrategy, inject} from '@angular/core';
 import {UriService} from '../service/uri.service';
 import {CaseResourceService} from "../../resources/engine-endpoint/case-resource.service";
 import {CaseSearchRequestBody} from "../../filter/models/case-search-request-body";
 import {HttpParams} from "@angular/common/http";
 import {PaginationParams} from "../../utility/pagination/pagination-params";
 import {SimpleFilter} from "../../filter/models/simple-filter";
-import {take} from "rxjs/operators";
-import {BehaviorSubject, Subscription} from "rxjs";
-import {ActivatedRoute, Router} from "@angular/router";
+import {debounceTime, distinctUntilChanged, filter, map, skip, switchMap, take} from "rxjs/operators";
+import {BehaviorSubject, combineLatest, EMPTY, merge, of, Subscription} from "rxjs";
+import {LoadingEmitter} from "../../utility/loading-emitter";
+import {ActivatedRoute, ActivatedRouteSnapshot, NavigationEnd, Router} from "@angular/router";
 import {
     DynamicNavigationRouteProviderService
 } from "../../routing/dynamic-navigation-route-provider/dynamic-navigation-route-provider.service";
@@ -18,12 +19,17 @@ import {encodeBase64, decodeBase64} from "../../utility/base64";
 import {LoggerService} from "../../logger/services/logger.service";
 import {DoubleDrawerNavigationService} from "../navigation-double-drawer/service/double-drawer-navigation.service";
 import {GroupNavigationConstants} from "../model/group-navigation-constants";
+import {ConfigurationService} from '../../configuration/configuration.service';
+import {NAE_ROUTING_CONFIGURATION_PATH} from '../../routing/routing-builder/routing-builder.service';
+import {BreadcrumbsDetailService} from './breadcrumbs-detail.service';
 
 @Component({
     selector: 'ncc-breadcrumbs-component',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
-export abstract class AbstractBreadcrumbsComponent implements OnDestroy, AfterViewInit {
+export abstract class AbstractBreadcrumbsComponent implements OnInit, OnDestroy, AfterViewInit {
 
     @Input() showHome: boolean = true;
     @Input() showFilter: boolean = true;
@@ -34,12 +40,28 @@ export abstract class AbstractBreadcrumbsComponent implements OnDestroy, AfterVi
     itemName: string;
     breadcrumbsParts: Array<string>;
 
+    /** the current route is a menu item (the breadcrumbs have something to show) */
+    active: boolean = false;
+
     private static DOTS: string = '...';
     private static DELIMETER: string = '/';
     private _showPaths: boolean = false;
     private nicePath: BehaviorSubject<Array<string>>;
     private redirectUrls: Map<string, Array<string>>;
     private nicePathSubscription: Subscription;
+    private navigationSubscription: Subscription;
+    /** the level of the menu (active node) of the resolved breadcrumbs */
+    /** the search of the menu item cases of the last resolution (a newer one cancels it) */
+    private searchSubscription: Subscription;
+    /** the item and the path of the last search (running or done): the same one is not searched again */
+    private _searchKey: string | undefined;
+    /** the menu items found by the last search */
+    private _found: {key: string, itemCaseId: string, fullPath: Array<string>, cases: Array<Case>} | undefined;
+    private langChangeSubscription: Subscription;
+
+    protected _configService = inject(ConfigurationService);
+    /** the detail opened in the view (e.g. a case): the last part, the view before it closes it */
+    public readonly detailService = inject(BreadcrumbsDetailService);
 
     protected constructor(protected _uriService: UriService,
                           protected _caseResourceService: CaseResourceService,
@@ -52,30 +74,72 @@ export abstract class AbstractBreadcrumbsComponent implements OnDestroy, AfterVi
         this.nicePath = new BehaviorSubject<Array<string>>(undefined);
         this.redirectUrls = new Map<string, Array<string>>();
         this.initNicePath();
+        this.navigationSubscription = merge(
+            this._router?.events?.pipe(filter(event => event instanceof NavigationEnd)) ?? EMPTY,
+            this._uriService?.activeNode$?.pipe(
+                map(node => node?.uriPath),
+                distinctUntilChanged(),
+                skip(1),
+            ) ?? EMPTY
+        ).pipe(debounceTime(0)).subscribe(() => this.resolveBreadcrumbs());
+        this.langChangeSubscription = this._translateService?.onLangChange?.subscribe(() => this.resolveBreadcrumbs(true));
     }
 
-    ngAfterViewInit() {
+    ngOnInit(): void {
         this.resolveBreadcrumbs();
+    }
+
+    /**
+     * The breadcrumbs are resolved in `ngOnInit`, kept for the subclasses that call `super.ngAfterViewInit()`.
+     */
+    // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method
+    ngAfterViewInit() {
     }
 
     ngOnDestroy(): void {
         if (!!this.nicePathSubscription) {
             this.nicePathSubscription.unsubscribe();
         }
+        this.navigationSubscription?.unsubscribe();
+        this.searchSubscription?.unsubscribe();
+        this.langChangeSubscription?.unsubscribe();
     }
 
-    public resolveBreadcrumbs() {
-        const encodedItemCaseId = this._activatedRoute.snapshot.params.itemCaseId
+    /**
+     * Resolves the breadcrumbs of the shown page.
+     * @param translateOnly only the language changed: the last found menu items are translated again when they are the
+     * ones of the shown page, they are searched only otherwise
+     */
+    public resolveBreadcrumbs(translateOnly = false) {
+        const encodedItemCaseId = this.findItemCaseId();
         if (!encodedItemCaseId) {
-            this._log.error("Missing required data for resolving breadcrumbs.")
+            this.searchSubscription?.unsubscribe();
+            this._searchKey = undefined;
+            this.itemName = this.findConfiguredViewTitle();
+            this.active = !!this.itemName;
+            if (this.active) {
+                this.nicePath.next(['']);
+            } else {
+                this._log.debug('No menu item in the route, breadcrumbs are not resolved.');
+            }
             return;
         }
+        this.active = true;
         const decodedItemCaseId = decodeBase64(encodedItemCaseId);
-        const splitPath = this._uriService.splitNodePath(this._uriService.activeNode);
+        const splitPath = this._uriService.splitNodePath(this._uriService.activeNode) ?? [];
         const fullPath = this.createFullPath(splitPath);
         const fullPathQueries = fullPath.map(p => '(processIdentifier:menu_item AND dataSet.nodePath.textValue.keyword:\"' + p + '\")')
         fullPathQueries.push('(stringId:\"' + decodedItemCaseId + '\")')
 
+        const key = decodedItemCaseId + '|' + fullPath.join(',');
+        if (key === this._searchKey) {
+            if (translateOnly && this._found?.key === key) {
+                this.applyFound(this._found);
+            }
+            return;
+        }
+        this.searchSubscription?.unsubscribe();
+        this._searchKey = key;
         const searchBody: CaseSearchRequestBody = {
             query: fullPathQueries.join(" OR ")
         };
@@ -83,19 +147,67 @@ export abstract class AbstractBreadcrumbsComponent implements OnDestroy, AfterVi
             .set(PaginationParams.PAGE_SIZE, 25)
             .set(PaginationParams.PAGE_NUMBER, 0);
 
-        this._caseResourceService.searchCases(SimpleFilter.fromCaseQuery(searchBody), httpParams).pipe(take(1)).subscribe(result => {
-            const cases = result.content;
-            const itemCaseIndex = cases.findIndex(c => c.stringId === decodedItemCaseId && !fullPath.includes(this.immediateValue(c, GroupNavigationConstants.ITEM_FIELD_ID_NODE_PATH)));
-            if (itemCaseIndex >= 0) {
-                const itemCase = cases.splice(cases.findIndex(c => c.stringId === decodedItemCaseId && !fullPath.includes(this.immediateValue(c, GroupNavigationConstants.ITEM_FIELD_ID_NODE_PATH))), 1)[0];
-                this.itemName = this.getTranslation(this.immediateValue(itemCase, GroupNavigationConstants.ITEM_FIELD_ID_MENU_NAME));
-            }
-            cases.sort((a, b) => fullPath.indexOf(this.immediateValue(a, GroupNavigationConstants.ITEM_FIELD_ID_NODE_PATH)) - fullPath.indexOf(this.immediateValue(b, GroupNavigationConstants.ITEM_FIELD_ID_NODE_PATH)));
-            if (this.redirectOnClick) {
-                cases.forEach(c => this.redirectUrls.set(this.immediateValue(c, GroupNavigationConstants.ITEM_FIELD_ID_NODE_PATH), [this._dynamicRoutingService.route, encodeBase64(c.stringId)]));
-            }
-            this.nicePath.next(["", ...cases.map(c => this.getTranslation(this.immediateValue(c, GroupNavigationConstants.ITEM_FIELD_ID_MENU_NAME)))]);
+        this.searchSubscription = this._caseResourceService.searchCases(SimpleFilter.fromCaseQuery(searchBody), httpParams).pipe(take(1)).subscribe({
+            next: result => {
+                this._found = {key, itemCaseId: decodedItemCaseId, fullPath, cases: result.content ?? []};
+                this.applyFound(this._found);
+            },
+            error: () => this._searchKey = undefined
         });
+    }
+
+    /** the names of the found menu items (translated now), the item itself is the last part */
+    protected applyFound(found: {itemCaseId: string, fullPath: Array<string>, cases: Array<Case>}): void {
+        const cases = [...found.cases];
+        const isItem = (c: Case) => c.stringId === found.itemCaseId
+            && !found.fullPath.includes(this.immediateValue(c, GroupNavigationConstants.ITEM_FIELD_ID_NODE_PATH));
+        const itemCaseIndex = cases.findIndex(isItem);
+        this.itemName = itemCaseIndex >= 0
+            ? this.getTranslation(this.immediateValue(cases.splice(itemCaseIndex, 1)[0], GroupNavigationConstants.ITEM_FIELD_ID_MENU_NAME))
+            : undefined;
+        cases.sort((a, b) => found.fullPath.indexOf(this.immediateValue(a, GroupNavigationConstants.ITEM_FIELD_ID_NODE_PATH))
+            - found.fullPath.indexOf(this.immediateValue(b, GroupNavigationConstants.ITEM_FIELD_ID_NODE_PATH)));
+        if (this.redirectOnClick) {
+            cases.forEach(c => this.redirectUrls.set(this.immediateValue(c, GroupNavigationConstants.ITEM_FIELD_ID_NODE_PATH), [this._dynamicRoutingService.route, encodeBase64(c.stringId)]));
+        }
+        this.nicePath.next(["", ...cases.map(c => this.getTranslation(this.immediateValue(c, GroupNavigationConstants.ITEM_FIELD_ID_MENU_NAME)))]);
+    }
+
+    /** id of the menu item case: own route first, then the deepest route of the router (breadcrumbs in the layout) */
+    protected findItemCaseId(): string | undefined {
+        const param = GroupNavigationConstants.GROUP_NAVIGATION_ROUTER_PARAM;
+        const own = this._activatedRoute?.snapshot?.params?.[param];
+        if (own) {
+            return own;
+        }
+        let route: ActivatedRouteSnapshot | null = this._router?.routerState?.snapshot?.root ?? null;
+        let found: string | undefined;
+        while (route) {
+            found = route.params?.[param] ?? found;
+            route = route.firstChild;
+        }
+        return found;
+    }
+
+    /**
+     * Title of the view of the configuration (nae.json) of the deepest route, when the view has a navigation title
+     * (`navigation: {title, translate}`, e.g. the views shown in the navigation drawer by their `processUri`).
+     */
+    protected findConfiguredViewTitle(): string | undefined {
+        let route: ActivatedRouteSnapshot | null = this._router?.routerState?.snapshot?.root ?? null;
+        let configPath: string | undefined;
+        while (route) {
+            configPath = route.data?.[NAE_ROUTING_CONFIGURATION_PATH] ?? configPath;
+            route = route.firstChild;
+        }
+        if (!configPath) {
+            return undefined;
+        }
+        const navigation = this._configService.getViewByPath(configPath)?.navigation;
+        if (!navigation || typeof navigation !== 'object' || !navigation.title) {
+            return undefined;
+        }
+        return navigation.translate ? this._translateService.instant(navigation.title) : navigation.title;
     }
 
     public initNicePath() {
@@ -122,10 +234,45 @@ export abstract class AbstractBreadcrumbsComponent implements OnDestroy, AfterVi
         this._router.navigate(this.redirectUrls.get(this._uriService.activeNode.uriPath)).then(r => {})
     }
 
+    /**
+     * Home: closes an opened detail of the view (e.g. a case), moves the navigation to the root node and opens its
+     * view when the navigation has one to open. The breadcrumbs are resolved again for the page that is shown (a view
+     * of the root stays shown, its name must not disappear).
+     */
     public reset(): void {
+        this.detailService.detail?.close();
         this.itemName = undefined;
         this._uriService.reset();
-        this.nicePath.next([""])
+        this.nicePath.next([""]);
+        if (this.redirectOnClick) {
+            this.openRootView();
+        }
+        this.resolveBreadcrumbs();
+    }
+
+    /**
+     * Opens a view of the active node (the root after Home) once its items are loaded: the items of the previous node
+     * would open a view of that node (the same as a click on a folder of the navigation drawer). A load still running
+     * (e.g. Home clicked while a folder is loading) is waited for; the navigation skips a node set during a load, so the
+     * active node is set to it again and its items are waited for.
+     */
+    protected openRootView(): void {
+        const navigation = this._navigationService;
+        if (!navigation?.rightLoading$) {
+            return;
+        }
+        const idle = (loading: LoadingEmitter | undefined) => (loading ?? of(false)).pipe(filter(isLoading => !isLoading), take(1));
+        combineLatest([idle(navigation.nodeLoading$), idle(navigation.leftLoading$), idle(navigation.rightLoading$)]).pipe(
+            take(1),
+            switchMap(() => {
+                const target = this._uriService.activeNode;
+                if (!!target && navigation.currentNode !== target) {
+                    navigation.currentNode = target;
+                    return idle(navigation.rightLoading$);
+                }
+                return of(false);
+            })
+        ).subscribe(() => navigation.openAvailableView());
     }
 
     public changePath(path: string, count: number) {

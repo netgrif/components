@@ -1,25 +1,27 @@
-.border {
-    overflow-y: auto;
+:host {
+    display: block;
+    padding: 8px 0;
 }
 
-.paper-view-content {
-    padding: 20px;
+.paper-view {
     width: 22cm;
-    border: 1px solid #dddddd;
+    padding: 24px;
+    border: 1px solid var(--mat-sys-outline-variant);
 }
 
-.scrolling_data {
-    overflow-y: auto !important;
+.data-group-item {
+    min-width: 0;
+
+    ::ng-deep .mat-mdc-form-field-infix {
+        width: auto;
+        min-width: 0;
+    }
 }
 
-.grid-rows-auto {
-    grid-template-rows: auto;
+@media (max-width: 599.98px) {
+    .data-group-grid {
+        display: flex !important;
+        flex-direction: column;
+        gap: 8px;
+    }
 }
-
-.responsive-grid {
-    display: block !important;
-}
-.width-100 {
-    width: 100%;
-}
-

@@ -1,7 +1,6 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {TreeTaskContentComponent} from './tree-task-content.component';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {TaskContentComponentModule} from '../../../task-content/task-content.module';
 import {
     AuthenticationMethodService,
@@ -20,7 +19,7 @@ describe('TreeTaskContentComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
-            imports: [NoopAnimationsModule, TaskContentComponentModule, MaterialModule, TranslateLibModule],
+            imports: [ TaskContentComponentModule, MaterialModule, TranslateLibModule],
             providers: [
                 TreeCaseViewService,
                 ChangedFieldsService,

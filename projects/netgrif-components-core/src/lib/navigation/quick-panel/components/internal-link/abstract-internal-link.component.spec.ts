@@ -1,11 +1,11 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {CommonModule} from '@angular/common';
 import {RouterTestingModule} from '@angular/router/testing';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {MaterialModule} from '../../../../material/material.module';
-import {Component} from '@angular/core';
+import {Component, ChangeDetectionStrategy} from '@angular/core';
 import {AbstractInternalLinkComponent} from './abstract-internal-link.component';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('AbstractInternalLinkComponent', () => {
     let component: TestLinkComponent;
@@ -17,9 +17,11 @@ describe('AbstractInternalLinkComponent', () => {
             imports: [
                 CommonModule,
                 RouterTestingModule.withRoutes([]),
-                MaterialModule,
-                NoopAnimationsModule,
-                HttpClientTestingModule
+                MaterialModule
+            ],
+            providers: [
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
             ]
         })
             .compileComponents();
@@ -42,7 +44,9 @@ describe('AbstractInternalLinkComponent', () => {
 
 @Component({
     selector: 'ncc-test-nav-tree',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestLinkComponent extends AbstractInternalLinkComponent {
     constructor() {

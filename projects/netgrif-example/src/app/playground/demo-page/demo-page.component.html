@@ -1,0 +1,47 @@
+<header class="header">
+    <h1 class="mat-headline-small">{{ title }}</h1>
+    @if (description) {
+    <p class="mat-body-large description">{{ description }}</p>
+    }
+    @if (api.length) {
+    <mat-chip-set>
+        @for (item of api; track item) {
+        <mat-chip disableRipple class="api">{{ item }}</mat-chip>
+        }
+    </mat-chip-set>
+    }
+</header>
+
+<div class="columns" [class.stacked]="stacked">
+    <section class="preview-column">
+        <mat-card appearance="outlined" class="preview">
+            <mat-card-header>
+                <mat-card-title class="mat-title-medium">Preview</mat-card-title>
+            </mat-card-header>
+            <mat-card-content class="preview-content" [class.fixed-height]="!!previewHeight" [style.height]="previewHeight">
+                <ng-content select="[demoPreview]"></ng-content>
+            </mat-card-content>
+        </mat-card>
+        <ng-content select="[demoState]"></ng-content>
+    </section>
+
+    <mat-card appearance="outlined" class="config">
+        <mat-card-header>
+            <mat-card-title class="mat-title-medium">Configuration</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <ng-content select="[demoConfig]"></ng-content>
+        </mat-card-content>
+    </mat-card>
+</div>
+
+@if (snippets.length) {
+<mat-card appearance="outlined" class="code">
+    <mat-card-header>
+        <mat-card-title class="mat-title-medium">Usage</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <ne-code-block [snippets]="snippets"></ne-code-block>
+    </mat-card-content>
+</mat-card>
+}

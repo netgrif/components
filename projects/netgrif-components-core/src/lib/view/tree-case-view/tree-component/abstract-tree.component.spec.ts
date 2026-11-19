@@ -1,14 +1,14 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {Component} from '@angular/core';
+import {Component, ChangeDetectionStrategy} from '@angular/core';
 import {AbstractTreeComponent} from './abstract-tree.component';
 import {CaseTreeService} from './case-tree.service';
 import {MaterialModule} from '../../../material/material.module';
 import {TreeCaseViewService} from '../tree-case-view.service';
 import {TestConfigurationService} from '../../../utility/tests/test-config';
 import {ConfigurationService} from '../../../configuration/configuration.service';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {TranslateLibModule} from '../../../translate/translate-lib.module';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('TreeComponent', () => {
     let component: TestTreeComponent;
@@ -16,18 +16,18 @@ describe('TreeComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
+            declarations: [TestTreeComponent],
             imports: [
                 MaterialModule,
-                NoopAnimationsModule,
-                HttpClientTestingModule,
                 TranslateLibModule
             ],
             providers: [
                 TreeCaseViewService,
                 CaseTreeService,
-                {provide: ConfigurationService, useClass: TestConfigurationService}
-            ],
-            declarations: [TestTreeComponent]
+                {provide: ConfigurationService, useClass: TestConfigurationService},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
+            ]
         }).compileComponents();
     }));
 
@@ -49,7 +49,9 @@ describe('TreeComponent', () => {
 @Component({
     selector: 'ncc-test-tree',
     template: '',
-    providers: [CaseTreeService]
+    providers: [CaseTreeService],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestTreeComponent extends AbstractTreeComponent {
     constructor(protected _treeService: CaseTreeService) {

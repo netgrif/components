@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, EventEmitter, Input, OnDestroy, Output, TemplateRef, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, Input, OnDestroy, Output, TemplateRef, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {MatExpansionPanel} from '@angular/material/expansion';
 import {CaseListFontColorService} from '../utility/service/case-list-font-color.service';
 import { ActivatedRoute, Params } from '@angular/router';
@@ -6,7 +6,9 @@ import { ConfigParams } from './configuration/config-params';
 
 @Component({
     selector: 'ncc-abstract-panel',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractPanelComponent implements AfterViewInit, OnDestroy {
 

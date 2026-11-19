@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AbstractFilterFieldTabViewContentComponent } from './abstract-filter-field-tab-view-content.component';
-import { Component, Inject, Injector, Optional } from '@angular/core';
+import { Component, Inject, Injector, Optional, ChangeDetectionStrategy } from '@angular/core';
 import { FilterField } from './models/filter-field';
 import { NAE_FILTER_FIELD } from './models/filter-field-injection-token';
 import { SearchService } from '../../search/search-service/search.service';
 import { Subject } from 'rxjs';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { Dashboard } from '../text-field/dashboard-portal-text-field/dashboard-view-constants';
 import { ComponentPortal } from '@angular/cdk/portal';
 import {ComponentRegistryService} from "../../registry/component-registry.service";
 import {FieldTypeResource} from "../../task-content/model/field-type-resource";
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../models/data-field-portal-data-injection-token";
+import { provideHttpClient, withInterceptorsFromDi, withXhr } from '@angular/common/http';
 
 describe('AbstractFilterFieldTabViewContentComponent', () => {
     let component: TestFilterFieldTabViewContentComponent;
@@ -31,13 +31,13 @@ describe('AbstractFilterFieldTabViewContentComponent', () => {
         };
 
         await TestBed.configureTestingModule({
-            imports: [NoopAnimationsModule, HttpClientTestingModule],
+            declarations: [TestFilterFieldTabViewContentComponent],
+            imports: [],
             providers: [
                 { provide: NAE_FILTER_FIELD, useValue: field },
-                { provide: SearchService, useValue: mockSearchService }
-            ],
-            declarations: [
-                TestFilterFieldTabViewContentComponent
+                { provide: SearchService, useValue: mockSearchService },
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
             ]
         }).compileComponents();
     });
@@ -67,7 +67,9 @@ describe('AbstractFilterFieldTabViewContentComponent', () => {
 
 @Component({
     selector: 'ncc-test-filter-tab-view-content',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestFilterFieldTabViewContentComponent extends AbstractFilterFieldTabViewContentComponent {
     constructor(registry: ComponentRegistryService,
@@ -81,7 +83,9 @@ class TestFilterFieldTabViewContentComponent extends AbstractFilterFieldTabViewC
 
 @Component({
     selector: 'ncc-test-tab-view',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestTabViewComponent {
 }

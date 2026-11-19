@@ -1,4 +1,4 @@
-import {Component, Inject, Optional} from '@angular/core';
+import {Component, Inject, Optional, ChangeDetectionStrategy} from '@angular/core';
 import {
     AbstractBooleanDefaultFieldComponent, BooleanField, DATA_FIELD_PORTAL_DATA, DataFieldPortalData,
 } from '@netgrif/components-core';
@@ -7,7 +7,9 @@ import {TranslateService} from "@ngx-translate/core";
 @Component({
     selector: 'nc-boolean-default-field',
     templateUrl: './boolean-default-field.component.html',
-    styleUrls: ['./boolean-default-field.component.scss']
+    styleUrls: ['./boolean-default-field.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class BooleanDefaultFieldComponent extends AbstractBooleanDefaultFieldComponent {
 

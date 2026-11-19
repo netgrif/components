@@ -1,6 +1,6 @@
 import {DataField} from './abstract-data-field';
 import {FormControl} from '@angular/forms';
-import {Component, Inject, Input, OnDestroy, OnInit, Optional} from '@angular/core';
+import {Component, Inject, Input, OnDestroy, OnInit, Optional, ChangeDetectionStrategy} from '@angular/core';
 import {NAE_INFORM_ABOUT_INVALID_DATA} from './invalid-data-policy-token';
 
 /**
@@ -9,7 +9,9 @@ import {NAE_INFORM_ABOUT_INVALID_DATA} from './invalid-data-policy-token';
  */
 @Component({
     selector: 'ncc-abstract-datafield',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractDataFieldComponent implements OnInit, OnDestroy {
 

@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Inject, Optional} from '@angular/core';
+import {AfterViewInit, Component, Inject, Optional, ChangeDetectionStrategy} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {
     AbstractCurrencyNumberFieldComponent,
@@ -11,7 +11,8 @@ import {CurrencyPipe} from '@angular/common';
 @Component({
     selector: 'nc-number-currency-field',
     templateUrl: './number-currency-field.component.html',
-    styleUrls: ['./number-currency-field.component.scss']
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class NumberCurrencyFieldComponent extends AbstractCurrencyNumberFieldComponent {
 

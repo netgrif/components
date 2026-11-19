@@ -1,4 +1,4 @@
-import {Component, Inject, Injector, Optional} from '@angular/core';
+import {Component, Inject, Injector, Optional, ChangeDetectionStrategy} from '@angular/core';
 import {
     AbstractHeaderComponent,
     CaseHeaderService,
@@ -20,7 +20,9 @@ import {TranslateService} from '@ngx-translate/core';
         WorkflowHeaderService,
         HeaderSearchService,
         CategoryFactory
-    ]
+    ],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class HeaderComponent extends AbstractHeaderComponent {
 

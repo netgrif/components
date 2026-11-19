@@ -2,13 +2,15 @@ import {Observable, ReplaySubject} from 'rxjs';
 import {HeaderColumn} from '../../header/models/header-column';
 import {AbstractHeaderComponent} from '../../header/abstract-header.component';
 import {AbstractSortableViewComponent} from './sortable-view';
-import { Component, OnDestroy } from '@angular/core';
+import {Component, OnDestroy, ChangeDetectionStrategy} from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { ConfigParams } from '../../panel/configuration/config-params';
 
 @Component({
     selector: 'ncc-abstract-view-with-headers',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractViewWithHeadersComponent implements OnDestroy {
 

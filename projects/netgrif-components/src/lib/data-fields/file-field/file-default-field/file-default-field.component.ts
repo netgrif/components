@@ -1,4 +1,4 @@
-import {Component, Inject, Optional} from '@angular/core';
+import {Component, Inject, Optional, ChangeDetectionStrategy} from '@angular/core';
 import {
     DATA_FIELD_PORTAL_DATA, DataFieldPortalData,
     EventService, FileField,
@@ -15,7 +15,9 @@ import {PreviewDialogComponent} from "../preview-dialog/preview-dialog.component
 @Component({
   selector: 'nc-file-default-field',
   templateUrl: './file-default-field.component.html',
-  styleUrls: ['./file-default-field.component.scss']
+  styleUrls: ['./file-default-field.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class FileDefaultFieldComponent extends AbstractFileDefaultFieldComponent{
 

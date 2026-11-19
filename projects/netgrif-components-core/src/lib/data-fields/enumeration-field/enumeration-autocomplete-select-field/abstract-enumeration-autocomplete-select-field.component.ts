@@ -1,4 +1,4 @@
-import {Component, ElementRef, Inject, OnDestroy, OnInit, Optional, ViewChild} from '@angular/core';
+import {Component, ElementRef, Inject, OnDestroy, OnInit, Optional, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {Observable, of} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import {EnumerationField, EnumerationFieldValidation, EnumerationFieldValue} from '../models/enumeration-field';
@@ -9,7 +9,9 @@ import {AbstractBaseDataFieldComponent} from "../../base-component/abstract-base
 
 @Component({
     selector: 'ncc-abstract-enumeration-autocomplete-field',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractEnumerationAutocompleteSelectFieldComponent extends AbstractBaseDataFieldComponent<EnumerationField> implements OnInit, OnDestroy {
 
@@ -24,7 +26,7 @@ export abstract class AbstractEnumerationAutocompleteSelectFieldComponent extend
     ngOnInit() {
         this.filteredOptions = this.formControlRef.valueChanges.pipe(
             startWith(''),
-            map(value => this._filter(value))
+            map(value => this.optionsFor(this.isChosenOption(value) ? this.renderSelection(value) : value))
         );
     }
 
@@ -74,8 +76,34 @@ export abstract class AbstractEnumerationAutocompleteSelectFieldComponent extend
 
     change() {
         if (this.text.nativeElement.value !== undefined) {
-            this.filteredOptions = of(this._filter(this.text.nativeElement.value));
+            this.filteredOptions = of(this.optionsFor(this.text.nativeElement.value));
         }
+    }
+
+    /**
+     * Options offered for the text of the input: all of them while the text is the selected option (the panel opened on
+     * a chosen value offers the other options too), otherwise the options matching the typed text.
+     */
+    protected optionsFor(text: string): Array<EnumerationFieldValue> {
+        if (typeof text === 'string' && this.isSelectedKey(this.formControlRef.value)
+                && text === this.renderSelection(this.formControlRef.value)) {
+            return this.dataField.choices;
+        }
+        return this._filter(text);
+    }
+
+    /**
+     * The value is an option chosen in the panel, not a typed text that equals the key of an option: the input shows the
+     * label of the chosen option (written before the value is set).
+     */
+    protected isChosenOption(value: unknown): boolean {
+        return this.isSelectedKey(value) && (!this.text?.nativeElement || this.text.nativeElement.value === this.renderSelection(value));
+    }
+
+    /** the value is the key of one of the options */
+    protected isSelectedKey(value: unknown): boolean {
+        return value !== undefined && value !== null && value !== ''
+            && this.dataField.choices.some(choice => choice.key === value);
     }
 
     public renderSelection = (key) => {

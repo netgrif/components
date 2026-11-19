@@ -1,4 +1,4 @@
-import {Component, ElementRef, Injector, Input, OnInit, TemplateRef, ViewChild} from '@angular/core';
+import {Component, ElementRef, Injector, Input, OnInit, TemplateRef, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {WrappedBoolean} from './models/wrapped-boolean';
 import {DataField} from '../models/abstract-data-field';
 import {TemplateAppearance} from '../models/template-appearance';
@@ -25,7 +25,9 @@ import {ButtonField} from '../button-field/models/button-field';
 
 @Component({
     selector: 'ncc-abstract-datafield-template',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractDataFieldTemplateComponent implements OnInit {
 

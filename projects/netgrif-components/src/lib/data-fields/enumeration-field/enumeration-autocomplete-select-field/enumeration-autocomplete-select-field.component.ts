@@ -1,4 +1,4 @@
-import {Component, Inject, Optional} from '@angular/core';
+import {Component, Inject, Optional, ChangeDetectionStrategy} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {
     AbstractEnumerationAutocompleteSelectFieldComponent,
@@ -9,7 +9,8 @@ import {
 @Component({
     selector: 'nc-enumeration-autocomplete-select-field',
     templateUrl: './enumeration-autocomplete-select-field.component.html',
-    styleUrls: ['./enumeration-autocomplete-select-field.component.scss']
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class EnumerationAutocompleteSelectFieldComponent extends AbstractEnumerationAutocompleteSelectFieldComponent {
 

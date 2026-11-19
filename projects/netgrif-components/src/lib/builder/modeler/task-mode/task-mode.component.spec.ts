@@ -5,31 +5,36 @@ import {ArcFactory} from "../edit-mode/domain/arc-builders/arc-factory.service";
 import {PetriflowCanvasService} from "@netgrif/petriflow.svg";
 import {CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA} from "@angular/core";
 import {CommonModule} from "@angular/common";
-import {NoopAnimationsModule} from "@angular/platform-browser/animations";
-import {HttpClientTestingModule} from "@angular/common/http/testing";
-import {TestMockDependenciesModule} from "@netgrif/components-core";
-import {TranslateService} from "@ngx-translate/core";
+import {provideRouter} from '@angular/router';
+import {provideHttpClientTesting} from "@angular/common/http/testing";
+import {NAE_VIEW_ID_SEGMENT, TestMockDependenciesModule, TranslateLibModule} from "@netgrif/components-core";
+import {BuilderIntegrationService} from '../../services/builder-integration.service';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
-xdescribe('TaskModeComponent', () => {
+describe('TaskModeComponent', () => {
     let component: TaskModeComponent;
     let fixture: ComponentFixture<TaskModeComponent>;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
+            schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA],
             imports: [
                 TaskModeComponent,
                 CommonModule,
-                NoopAnimationsModule,
-                HttpClientTestingModule,
                 TestMockDependenciesModule,
+                TranslateLibModule
             ],
             providers: [
                 ModelService,
                 ArcFactory,
-                {provide: PetriflowCanvasService, useValue: {}},
-                {provide: TranslateService, useValue: { instant: (key: string) => `translated-${key}` }}
+                // provided by nc-builder in the application
+                { provide: BuilderIntegrationService, useValue: {}},
+                {provide: PetriflowCanvasService, useValue: { }},
+                provideRouter([]),
+                { provide: NAE_VIEW_ID_SEGMENT, useValue: 'builder-task-mode' },
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
             ],
-            schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA],
         });
 
         fixture = TestBed.createComponent(TaskModeComponent);

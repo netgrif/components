@@ -1,8 +1,7 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {AdminImpersonateItemComponent} from './admin-impersonate-item.component';
-import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+import {Component, CUSTOM_ELEMENTS_SCHEMA, ChangeDetectionStrategy} from '@angular/core';
 import {MaterialModule, TranslateLibModule, UserValue} from '@netgrif/components-core';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('AdminImpersonateItemComponent', () => {
     let component: AdminImpersonateItemComponent;
@@ -11,8 +10,7 @@ describe('AdminImpersonateItemComponent', () => {
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [MaterialModule,
-                TranslateLibModule,
-                NoopAnimationsModule],
+                TranslateLibModule],
             declarations: [
                 AdminImpersonateItemComponent,
                 TestWrapperComponent
@@ -36,7 +34,9 @@ describe('AdminImpersonateItemComponent', () => {
 
 @Component({
     selector: 'nc-test-wrapper',
-    template: '<nc-user-impersonate-item [user]="user"></nc-user-impersonate-item>'
+    template: '<nc-user-impersonate-item [user]="user"></nc-user-impersonate-item>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestWrapperComponent {
     user = new UserValue('0', '', '', '');

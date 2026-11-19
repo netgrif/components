@@ -1,7 +1,6 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {ProfileComponent} from './profile.component';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {
     AuthenticationMethodService,
     ConfigurationService,
@@ -11,6 +10,7 @@ import {
     TranslateLibModule
 } from '@netgrif/components-core';
 import {MatInputModule} from '@angular/material/input';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('ProfileComponent', () => {
     let component: ProfileComponent;
@@ -18,17 +18,17 @@ describe('ProfileComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
+            declarations: [ProfileComponent],
             imports: [
                 MaterialModule,
-                NoopAnimationsModule,
-                HttpClientTestingModule,
                 TranslateLibModule,
                 MatInputModule
             ],
-            declarations: [ProfileComponent],
             providers: [
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting(),
             ]
         })
             .compileComponents();

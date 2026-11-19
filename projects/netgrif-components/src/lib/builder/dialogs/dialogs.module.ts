@@ -19,8 +19,6 @@ import {DialogRefactorComponent} from './dialog-refactor/dialog-refactor.compone
 import {DialogTransitionEditComponent} from './dialog-transition-edit/dialog-transition-edit.component';
 import {MaterialIconPickerComponent} from "../modeler/components/material-icon-picker/material-icon-picker.component";
 import {TriggerTreeComponent} from "./dialog-transition-edit/trigger-tree/trigger-tree.component";
-import {NgxMatDatetimePickerModule} from "@angular-material-components/datetime-picker";
-import {NgxMatMomentModule} from "@angular-material-components/moment-adapter";
 import {TranslateModule} from "@ngx-translate/core";
 
 const DIALOG_COMPONENTS = [
@@ -50,8 +48,6 @@ const DIALOG_COMPONENTS = [
         MaterialModule,
         ReactiveFormsModule,
         MaterialIconPickerComponent,
-        NgxMatDatetimePickerModule,
-        NgxMatMomentModule,
         TranslateModule,
     ],
 })

@@ -1,4 +1,4 @@
-import {Component, Inject} from '@angular/core';
+import {Component, Inject, ChangeDetectionStrategy} from '@angular/core';
 import {AbstractOptionSelectorComponent, NAE_SIDE_MENU_CONTROL, SideMenuControl} from '@netgrif/components-core';
 
 /**
@@ -7,7 +7,9 @@ import {AbstractOptionSelectorComponent, NAE_SIDE_MENU_CONTROL, SideMenuControl}
 @Component({
     selector: 'nc-option-selector',
     templateUrl: './option-selector.component.html',
-    styleUrls: ['./option-selector.component.scss']
+    styleUrls: ['./option-selector.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class OptionSelectorComponent extends AbstractOptionSelectorComponent {
 

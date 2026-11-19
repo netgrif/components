@@ -1,4 +1,4 @@
-import {Component, Inject, Optional} from '@angular/core';
+import {Component, Inject, Optional, ChangeDetectionStrategy} from '@angular/core';
 import {AbstractMultichoiceFieldComponent, NAE_INFORM_ABOUT_INVALID_DATA} from '@netgrif/components-core';
 
 /**
@@ -7,7 +7,8 @@ import {AbstractMultichoiceFieldComponent, NAE_INFORM_ABOUT_INVALID_DATA} from '
 @Component({
     selector: 'nc-multichoice-field',
     templateUrl: './multichoice-field.component.html',
-    styleUrls: ['./multichoice-field.component.scss']
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class MultichoiceFieldComponent extends AbstractMultichoiceFieldComponent {
 

@@ -1,5 +1,5 @@
 import {TestBed} from '@angular/core/testing';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {ProcessService} from './process.service';
 import {ConfigurationService} from '../configuration/configuration.service';
 import {TestConfigurationService} from '../utility/tests/test-config';
@@ -7,12 +7,12 @@ import {PetriNetResourceService} from '../resources/engine-endpoint/petri-net-re
 import {Observable, of, throwError} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {LoggerService} from '../logger/services/logger.service';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {AuthenticationMethodService} from '../authentication/services/authentication-method.service';
 import {MockAuthenticationMethodService} from '../utility/tests/mocks/mock-authentication-method-service';
 import RolesAndPermissions from './rolesAndPermissions';
 import Transaction from './transaction';
 import Transition from './transition';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('ProcessService', () => {
     let service: ProcessService;
@@ -22,14 +22,14 @@ describe('ProcessService', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
-                HttpClientTestingModule,
-                NoopAnimationsModule
             ],
             providers: [
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: PetriNetResourceService, useClass: MyPetriNetResource},
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
-                ProcessService
+                ProcessService,
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
             ]
         });
         service = TestBed.inject(ProcessService);

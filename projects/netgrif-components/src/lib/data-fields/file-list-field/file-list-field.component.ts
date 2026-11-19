@@ -1,4 +1,4 @@
-import {Component, Inject, Optional} from '@angular/core';
+import {Component, Inject, Optional, ChangeDetectionStrategy} from '@angular/core';
 import {
     AbstractFileListFieldComponent,
     NAE_INFORM_ABOUT_INVALID_DATA,
@@ -10,7 +10,8 @@ import {
 @Component({
     selector: 'nc-file-list-field',
     templateUrl: './file-list-field.component.html',
-    styleUrls: ['./file-list-field.component.scss']
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class FileListFieldComponent extends AbstractFileListFieldComponent {
 

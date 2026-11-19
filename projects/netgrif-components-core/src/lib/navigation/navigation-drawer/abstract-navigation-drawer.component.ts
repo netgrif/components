@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {User} from '../../user/models/user';
 import 'hammerjs';
 import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
@@ -15,6 +15,8 @@ const DRAWER_MAX_WIDTH = 450;
 @Component({
     selector: 'ncc-abstract-navigation-drawer',
     template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false,
 })
 export abstract class AbstractNavigationDrawerComponent implements OnInit, AfterViewInit, OnDestroy {
 

@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, ChangeDetectionStrategy} from '@angular/core';
 import {AbstractTabCreationDetectorComponent} from '@netgrif/components-core';
 
 /**
@@ -10,7 +10,9 @@ import {AbstractTabCreationDetectorComponent} from '@netgrif/components-core';
 @Component({
     selector: 'nc-tab-creation-detector',
     templateUrl: './tab-creation-detector.component.html',
-    styleUrls: ['./tab-creation-detector.component.scss']
+    styleUrls: ['./tab-creation-detector.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class TabCreationDetectorComponent extends AbstractTabCreationDetectorComponent {
     constructor() {

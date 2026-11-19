@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, ChangeDetectionStrategy} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {LanguageService} from '../translate/language.service';
 import {ToolbarConfig} from './toolbar-config';
@@ -10,7 +10,9 @@ import {RedirectService} from '../routing/redirect-service/redirect.service';
 
 @Component({
     selector: 'ncc-abstract-toolbar',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractToolbarComponent {
 

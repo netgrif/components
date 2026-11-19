@@ -1,14 +1,14 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {CommonModule} from '@angular/common';
 import {FlexModule} from '@ngbracket/ngx-layout';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {Component, NO_ERRORS_SCHEMA} from '@angular/core';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
+import {Component, NO_ERRORS_SCHEMA, ChangeDetectionStrategy} from '@angular/core';
 import {MaterialModule} from '../material/material.module';
 import {TranslateLibModule} from '../translate/translate-lib.module';
 import {AbstractPanelComponent} from './abstract-panel.component';
 import {CaseListFontColorService} from '../utility/service/case-list-font-color.service';
 import { RouterTestingModule } from '@angular/router/testing';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('AbstractPanelComponent', () => {
     let component: TestPanelComponent;
@@ -16,17 +16,19 @@ describe('AbstractPanelComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
+            declarations: [TestPanelComponent],
+            schemas: [NO_ERRORS_SCHEMA],
             imports: [
                 MaterialModule,
                 CommonModule,
                 FlexModule,
-                NoopAnimationsModule,
                 TranslateLibModule,
-                HttpClientTestingModule,
                 RouterTestingModule.withRoutes([])
             ],
-            declarations: [TestPanelComponent],
-            schemas: [NO_ERRORS_SCHEMA]
+            providers: [
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
+            ]
         }).compileComponents();
     }));
 
@@ -47,7 +49,9 @@ describe('AbstractPanelComponent', () => {
 
 @Component({
     selector: 'ncc-test-panel',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestPanelComponent extends AbstractPanelComponent {
     constructor(protected _caseListFontColorService: CaseListFontColorService) {

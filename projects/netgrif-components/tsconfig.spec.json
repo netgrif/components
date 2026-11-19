@@ -15,10 +15,12 @@
         "src/test.ts"
     ],
     "exclude": [
-        "src/commons/*"
     ],
     "include": [
         "**/*.spec.ts",
         "**/*.d.ts"
-    ]
+    ],
+    "angularCompilerOptions": {
+        "strictTemplates": false
+    }
 }

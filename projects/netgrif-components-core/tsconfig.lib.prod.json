@@ -1,13 +1,13 @@
 {
-  "extends": "./tsconfig.lib.json",
-  "compilerOptions": {
-    "declarationMap": false
-  },
-  "angularCompilerOptions": {
-      "skipTemplateCodegen": true,
-      "strictMetadataEmit": true,
-      "enableResourceInlining": true,
-      "fullTemplateTypeCheck": true,
-      "compilationMode": "partial"
-  }
+    "extends": "./tsconfig.lib.json",
+    "compilerOptions": {
+        "declarationMap": false
+    },
+    "angularCompilerOptions": {
+        "skipTemplateCodegen": true,
+        "strictMetadataEmit": true,
+        "enableResourceInlining": true,
+        "fullTemplateTypeCheck": true,
+        "compilationMode": "partial"
+    }
 }

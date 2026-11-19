@@ -1,4 +1,4 @@
-import {Component, Inject, Optional} from '@angular/core';
+import {Component, Inject, Optional, ChangeDetectionStrategy} from '@angular/core';
 import {
     AbstractDashboardPieChartTextFieldComponent,
     DATA_FIELD_PORTAL_DATA,
@@ -10,7 +10,8 @@ import {TranslateService} from '@ngx-translate/core';
 @Component({
     selector: 'nc-dashboard-pie-chart-text-field',
     templateUrl: './dashboard-pie-chart-text-field.component.html',
-    styleUrls: ['./dashboard-pie-chart-text-field.component.scss']
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class DashboardPieChartTextFieldComponent extends AbstractDashboardPieChartTextFieldComponent {
 

@@ -10,7 +10,7 @@ import {
     DatafieldGridLayoutElement,
     TaskElementType
 } from '@netgrif/components-core';
-import {Component} from '@angular/core';
+import {Component, ChangeDetectionStrategy} from '@angular/core';
 
 describe('FieldComponentResolverComponent', () => {
     let component: FieldComponentResolverComponent;
@@ -48,7 +48,9 @@ describe('FieldComponentResolverComponent', () => {
 
 @Component({
     selector: 'nc-test-wrapper',
-    template: '<nc-field-component-resolver [gridElement]="gridElement"></nc-field-component-resolver>'
+    template: '<nc-field-component-resolver [gridElement]="gridElement"></nc-field-component-resolver>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestComponent {
     gridElement: DatafieldGridLayoutElement = {gridAreaId: 'id', type: TaskElementType.BLANK};

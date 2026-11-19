@@ -1,19 +1,15 @@
-.task-tab-background{
-    height: 100%;
-    width: 100%;
-    overflow: auto;
-    background-color: transparent;
-}
-
-.content-margin{
-    margin: 0 8px;
-}
-.task-panel-padding-mini{
-    padding-bottom: 8px;
-    padding-top: 8px;
-}
-
-.full-height {
+:host {
+    display: block;
     height: 100%;
 }
 
+.view {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.task {
+    flex: 1 1 auto;
+    min-height: 0;
+}

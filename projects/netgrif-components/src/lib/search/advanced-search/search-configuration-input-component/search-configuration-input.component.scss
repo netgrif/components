@@ -1,17 +1,60 @@
-.bold-text {
-    font-weight: bold;
+:host {
+    display: contents;
 }
 
-.text-margin {
-    margin-left: 4px;
+.config-field {
+    width: 200px;
 }
 
-.argument-placeholder-dimensions {
-    height: 1.5em;
-    width: 6em;
-    border-radius: 4px;
+.segment {
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--mat-sys-on-surface-variant);
+    font: inherit;
+    cursor: pointer;
+
+    &.value {
+        color: var(--mat-sys-on-surface);
+        font-weight: 700;
+    }
+
+    &:disabled {
+        cursor: default;
+    }
+
+    &:hover:not(:disabled) {
+        text-decoration: underline;
+    }
 }
 
-.argument-right-margin {
-    margin-right: 0.5em;
+.operator {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px 6px;
+    cursor: pointer;
+}
+
+.segment-text {
+    color: var(--mat-sys-on-surface-variant);
+}
+
+.operand {
+    display: inline-flex;
+    align-items: center;
+    cursor: default;
+}
+
+.operator-option {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
+}
+
+.argument-placeholder {
+    width: 4em;
+    height: 1.25em;
+    border-radius: var(--mat-sys-corner-extra-small);
+    background: var(--mat-sys-surface-container-highest);
 }

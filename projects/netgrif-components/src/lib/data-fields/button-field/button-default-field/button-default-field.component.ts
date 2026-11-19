@@ -1,4 +1,4 @@
-import {Component, Inject, OnDestroy, OnInit, Optional} from '@angular/core';
+import {Component, Inject, OnDestroy, OnInit, Optional, ChangeDetectionStrategy} from '@angular/core';
 import {
     AbstractButtonDefaultFieldComponent, ButtonField,
     DATA_FIELD_PORTAL_DATA,
@@ -11,7 +11,9 @@ import {Subscription} from 'rxjs';
 @Component({
     selector: 'nc-button-default-field',
     templateUrl: './button-default-field.component.html',
-    styleUrls: ['./button-default-field.component.scss']
+    styleUrls: ['./button-default-field.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class ButtonDefaultFieldComponent extends AbstractButtonDefaultFieldComponent implements OnInit, OnDestroy {
 

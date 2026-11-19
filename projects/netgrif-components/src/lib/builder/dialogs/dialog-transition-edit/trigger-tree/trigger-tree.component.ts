@@ -1,6 +1,6 @@
-import {NGX_MAT_DATE_FORMATS} from '@angular-material-components/datetime-picker';
+import {MAT_DATE_FORMATS} from '@angular/material/core';
 import {NestedTreeControl} from '@angular/cdk/tree';
-import {Component, Input} from '@angular/core';
+import {Component, Input, ChangeDetectionStrategy} from '@angular/core';
 import {MatTreeNestedDataSource} from '@angular/material/tree';
 import {DATE_TIME_FORMAT} from '@netgrif/components-core';
 import {Trigger, TriggerType} from '@netgrif/petriflow';
@@ -21,8 +21,10 @@ interface TriggerNode {
     templateUrl: './trigger-tree.component.html',
     styleUrls: ['./trigger-tree.component.scss'],
     providers: [
-        {provide: NGX_MAT_DATE_FORMATS, useValue: DATE_TIME_FORMAT}
-    ]
+        {provide: MAT_DATE_FORMATS, useValue: DATE_TIME_FORMAT}
+    ],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class TriggerTreeComponent {
     @Input() triggers: Array<Trigger>;

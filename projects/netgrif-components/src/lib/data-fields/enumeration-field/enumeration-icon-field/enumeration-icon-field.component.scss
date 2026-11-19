@@ -1,34 +1,69 @@
-.enum-icon-item {
-    font-size: 18px;
-    font-family: Roboto, sans-serif;
-    font-weight: 500;
-    line-height: 24px;
-    letter-spacing: -0.2px;
-    text-align: left;
-    color: #64748B;
-    text-decoration: none;
-    padding: 8px 0;
+@use '@angular/material' as mat;
+@use '../../field-label' as label;
+
+@include label.styles;
+
+:host {
+    display: block;
 }
 
-.enum-icon-item-row:hover {
-    cursor: pointer;
+.icon-field {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
 }
 
-.enum-icon-item:focus,
-.enum-icon-item-row:focus {
-    outline: none;
+mat-button-toggle-group {
+    max-width: 100%;
 }
 
-.enum-icon-divider {
-    position: relative !important;
+mat-button-toggle-group {
+    width: 100%;
 }
 
-.enum-icon-text {
-    padding: 0 16px;
+mat-button-toggle {
+    flex: 1 1 0;
+    min-width: 0;
+
+    ::ng-deep .mat-button-toggle-button {
+        min-width: 0;
+    }
+
+    mat-icon {
+        flex: none;
+    }
+
+    ::ng-deep .mat-button-toggle-label-content {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        min-width: 0;
+    }
 }
 
-.enum-icon-item-disabled {
-    color: #94A3B8;
-    cursor: default !important;
+.toggle-text {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
+.no-divider mat-button-toggle {
+    @include mat.button-toggle-overrides((
+        divider-color: transparent,
+    ));
+}
+
+.arrow {
+    flex: none;
+}
+
+.mdc-list-item--activated {
+    @include mat.list-overrides((
+        list-item-label-text-color: var(--mat-sys-on-secondary-container),
+        list-item-hover-label-text-color: var(--mat-sys-on-secondary-container),
+        list-item-focus-label-text-color: var(--mat-sys-on-secondary-container),
+        list-item-leading-icon-color: var(--mat-sys-on-secondary-container),
+        list-item-hover-leading-icon-color: var(--mat-sys-on-secondary-container),
+    ));
+}

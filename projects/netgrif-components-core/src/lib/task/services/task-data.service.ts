@@ -310,6 +310,7 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
             },
             nextEvent => {
                 this.revertSetDataRequest(requestContext);
+                afterAction.resolve(false);
                 nextEvent.resolve(false);
             }
         ));

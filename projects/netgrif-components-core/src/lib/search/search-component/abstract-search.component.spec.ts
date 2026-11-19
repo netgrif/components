@@ -1,7 +1,6 @@
 import {waitForAsync, ComponentFixture, TestBed, fakeAsync, tick} from '@angular/core/testing';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {Component, Inject, Optional, Type} from '@angular/core';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
+import {Component, Inject, Optional, Type, ChangeDetectionStrategy} from '@angular/core';
 import {AbstractSearchComponent} from './abstract-search.component';
 import {SearchService} from '../search-service/search.service';
 import {LoggerService} from '../../logger/services/logger.service';
@@ -30,6 +29,7 @@ import {NAE_FILTERS_FILTER} from '../../filter/models/filters-filter-injection-t
 import {Filter} from '../../filter/models/filter';
 import {ViewIdService} from '../../user/services/view-id.service';
 import {DefaultSearchCategoriesModule} from '../category-factory/default-search-categories.module';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('AbstractSearchComponent', () => {
     let component: TestSearchComponent;
@@ -37,11 +37,10 @@ describe('AbstractSearchComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
+            declarations: [TestSearchComponent],
             imports: [
                 MaterialModule,
                 TranslateLibModule,
-                HttpClientTestingModule,
-                NoopAnimationsModule,
                 DefaultSearchCategoriesModule,
             ],
             providers: [
@@ -58,10 +57,9 @@ describe('AbstractSearchComponent', () => {
                     useFactory: TestCaseBaseFilterProvider
                 },
                 {provide: NAE_SEARCH_COMPONENT_CONFIGURATION, useValue: {showSearchIcon: false}},
-                {provide: ViewIdService, useValue: {viewId: 'test_view_id'}}
-            ],
-            declarations: [
-                TestSearchComponent,
+                {provide: ViewIdService, useValue: {viewId: 'test_view_id'}},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
             ]
         }).compileComponents();
     }));
@@ -89,7 +87,9 @@ describe('AbstractSearchComponent', () => {
 
 @Component({
     selector: 'ncc-test-search',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestSearchComponent extends AbstractSearchComponent {
     constructor(searchService: SearchService,

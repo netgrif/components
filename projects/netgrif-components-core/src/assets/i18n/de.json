@@ -11,7 +11,12 @@
             "home": "Startseite",
             "back": "Zurück",
             "folders": "Mappen",
-            "views": "Blidschirme"
+            "views": "Blidschirme",
+            "darkMode": "Dunkel",
+            "lightMode": "Hell",
+            "appearance": "Darstellung",
+            "account": "Konto",
+            "settings": "Einstellungen"
         }
     },
     "tasks": {
@@ -38,10 +43,12 @@
             "noLongerExists": "Die ausgewählte Aufgabe existiert nicht mehr",
             "caseDeleteFailed": "Fall konnte nicht gelöscht werden",
             "caseDeleteSuccess": "Fall erfolgreich gelöscht",
-            "rolesSuccessAssign": "Rollen, die ausgewählten Benutzern erfolgreich zugewiesen wurden"
+            "rolesSuccessAssign": "Rollen, die ausgewählten Benutzern erfolgreich zugewiesen wurden",
+            "rolesFailAssign": "Rollen konnten nicht zugewiesen werden"
         },
         "view": {
-            "noTasksSatisfyingThisFilter": "Es gibt keine Aufgaben, die den ausgewählten Filter erfüllen",
+            "noTasksSatisfyingThisFilter": "Keine Aufgaben gefunden",
+            "noTasksHint": "Versuchen Sie eine andere Suche oder einen anderen Filter.",
             "collapse": "Schrumpfen",
             "assign": "Zuweisen",
             "reassign": "Neu zuweisen",
@@ -69,10 +76,13 @@
             "send": "Absenden"
         },
         "import-net": {
-            "upload": "Model hochladen",
+            "upload": "Prozess importieren",
+            "release": "Release",
             "choose": "Prozessdatei auswählen",
             "done": "Bestätigen",
-            "search": "Nach Prozess suchen"
+            "search": "Nach Prozess suchen",
+            "retry": "Erneut versuchen",
+            "cancel": "Abbrechen"
         },
         "new-case": {
             "case": "Neuen Fall erstellen",
@@ -91,14 +101,21 @@
             "createCase": "Neuen Fall würde erfolgreich erzeugt",
             "defaultCaseName": "mit einem Standardfallnamen",
             "errorCreate": "Fehler beim Erstellen des Falles ",
-            "createCaseError": "Neuer Fall wurde erstellt, aber beim Ausführen von Aktionen ist ein Fehler aufgetreten"
+            "createCaseError": "Neuer Fall wurde erstellt, aber beim Ausführen von Aktionen ist ein Fehler aufgetreten",
+            "caseCreated": "Fall „{{title}}“ wurde erstellt",
+            "caseCreatedDefaultName": "Fall wurde mit dem Standardnamen erstellt",
+            "caseCreatedActionsError": "Fall „{{title}}“ wurde erstellt, aber beim Ausführen der Aktionen ist ein Fehler aufgetreten",
+            "caseCreatedDefaultNameActionsError": "Fall wurde mit dem Standardnamen erstellt, aber beim Ausführen der Aktionen ist ein Fehler aufgetreten",
+            "searchProcess": "Prozesse suchen",
+            "noProcessFound": "Kein Prozess entspricht der Suche"
         },
         "user": {
             "assign": "Benutzer zuweisen",
             "choose": "Benutzer auswählen",
             "noUser": "Es gibt keine Benutzer",
             "err": "Beim laden der Benutzer ist eine Fehler aufgetreten",
-            "showcase": "Die Benutzeransicht ist nicht gesetzt!"
+            "showcase": "Die Benutzeransicht ist nicht gesetzt!",
+            "assignUsers": "Benutzer zuweisen"
         },
         "ldapGroup": {
             "choose": "LDAP-Gruppe suchen",
@@ -208,9 +225,11 @@
             "title": "Hilfe für den erweiterten Suchmodus",
             "text": "Man kann den erweiterten Suchmodus verwenden, um komplexere Suchanfragen zu erstellen. Beginnen Sie mit der Auswahl einer Suchkategorie. Die Suchkategorie definiert, wonach Sie suchen. Manche Suchkategorien benötigen zusätzliche Konfiguration (z.B. die Falldatei Suchkategorie). Nachdem Sie die Suchkategorie auswählen, mussen Sie den Operator auswählen. Der Operator stellt fest, wie die Daten mit der Suchanfrage übereinstimmen müssen. Mit verschiedenen Operatoren kann man nach einer genauen Übereinstimmung oder nach Werten aus einem Bereich suchen. Nach der Operatorasuwahl muss man das gesuchte Wert eingeben. Die Suchanfragen können mit den Stichwörtern UND verbunden werden. Das UND Stichwort findet Einträge, die alle der kombinierten Suchanfragen, erfühlen. Wenn Sie komplexere Suchanfragen eingeben möchten, können Sie die Kategorie „Einfache Abfrage“ auswählen und eine beliebige gültige PFQL-Abfrage eingeben."
         },
-        "fullText": "Geben Sie den gesuchten Text ein",
+        "fullText": "Suchen",
         "and": "und",
-        "or": "oder"
+        "or": "oder",
+        "addCondition": "Bedingung hinzufügen",
+        "remove": "Bedingung entfernen"
     },
     "dataField": {
         "validations": {
@@ -230,6 +249,7 @@
             "dateRange": "Das eingegebene Datum muss zwischen {{left}} und {{right}} liegen",
             "datePast": "Das eingegebene Datum muss bis {{right}} sein",
             "dateFuture": "Das eingegebene Datum muss ab {{left}} sein",
+            "dateInvalid": "Das eingegebene Datum ist ungültig",
             "weekend": "Das eingegebene Datum muss das Wochenende sein",
             "workday": "Das eingegebene Datum muss ein Wochentag sein",
             "enumeration": "Eine von der angebotenen Optionen muss ausgewählt sein",
@@ -269,7 +289,16 @@
             "clickToDownload": "Klicken Sie, um {{fileName}} herunterzuladen",
             "clickToOpen": "Klicken Sie hier, um den Dateiinhalt anzuzeigen",
             "clickToDelete": "Klicken Sie, um die Datei zu löschen",
-            "notAllowed": "Datei {{fileName}} kann nicht hochgeladen werden. Der Datentyp ist nicht zulässig."
+            "notAllowed": "Datei {{fileName}} kann nicht hochgeladen werden. Der Datentyp ist nicht zulässig.",
+            "dropOne": "Datei hierher ziehen oder",
+            "dropMany": "Dateien hierher ziehen oder",
+            "browse": "Datei auswählen",
+            "browseMany": "Dateien auswählen",
+            "dropToUpload": "Zum Hochladen loslassen",
+            "maxSize": "max. {{size}}",
+            "download": "Herunterladen",
+            "delete": "Löschen",
+            "preview": "Vorschau"
         },
         "i18n": {
             "languageSelect": "Sprache auswählen",
@@ -295,41 +324,51 @@
     },
     "dialog": {
         "close": "Schließen",
+        "cancel": "Abbrechen",
         "submit": "Bestätigen"
     },
     "forms": {
         "email": {
-            "enterEmail": "Ihre E-Mail Adresse eingeben"
+            "enterEmail": "E-Mail",
+            "send": "Link senden",
+            "backToLogin": "Zurück zur Anmeldung"
         },
         "login": {
             "length": "Das Benutzername muss mindestens 4 Zeichen enthalten",
             "login": "Benutzername",
-            "wrongCredentials": "Falsche Anmeldeinformationen!",
+            "wrongCredentials": "Falscher Benutzername oder falsches Passwort",
             "loginButton": "Anmelden",
-            "reset": "Kennwort wiederherstellen",
+            "reset": "Passwort vergessen?",
             "sign": "Registrieren",
-            "enterPass": "Ihre Kennwort eingeben"
+            "enterPass": "Passwort",
+            "noAccount": "Noch kein Konto?",
+            "title": "Anmelden",
+            "subtitle": "Melden Sie sich mit Ihrem Konto an, um fortzufahren"
         },
         "changePassword": {
-            "oldPassword": "Geben Sie Ihr altes Kennwort ein",
-            "enterNewPass": "Geben Sie Ihr neues Kennwort ein",
-            "repeatNewPass": "Wiederholen Sie Ihr neues Kennwort",
-            "changePass": "Kennwort ändern"
+            "oldPassword": "Aktuelles Passwort",
+            "enterNewPass": "Neues Passwort",
+            "repeatNewPass": "Neues Passwort bestätigen",
+            "changePass": "Kennwort ändern",
+            "changed": "Das Passwort wurde geändert"
         },
         "register": {
-            "email": "Ihre E-Mail Adresse",
+            "email": "E-Mail",
             "name": "Vorname",
             "surname": "Nachname",
-            "repeatPass": "Kennwort viederhollen",
+            "repeatPass": "Passwort bestätigen",
             "register": "Registrieren",
-            "notVerified": "Token kann nicht verifiziert werden!",
-            "passwordsMustMatch": "Die Kennwörter müssen übereinstimmen!"
+            "notVerified": "Der Link ist ungültig oder abgelaufen",
+            "passwordsMustMatch": "Die Passwörter stimmen nicht überein"
         },
         "forgottenPass": {
-            "enterNewPass": "Ihre neues Kennwort eingeben",
-            "repeatNewPass": "Neues Kennwort viederhollen",
-            "recover": "Kennwort ändern"
-        }
+            "enterNewPass": "Neues Passwort",
+            "repeatNewPass": "Neues Passwort bestätigen",
+            "recover": "Passwort festlegen"
+        },
+        "submitFailed": "Die Anfrage ist fehlgeschlagen, versuchen Sie es erneut",
+        "showPassword": "Passwort anzeigen",
+        "hidePassword": "Passwort verbergen"
     },
     "headers": {
         "newHeader": "Kopfzeile auswählen",
@@ -395,13 +434,36 @@
         "taskHead": "Aufgabe Kopfzeilen",
         "taskFilter": "Aufgabe Filter",
         "workHead": "Workflow Kopfzeilen",
-        "workFilter": "Workflow Filter"
+        "workFilter": "Workflow Filter",
+        "email": "E-Mail"
     },
     "view-list": {
-        "noCasesSatisfyingThisFilter": "Es gibt keine Fälle, die den ausgewählten Filter erfüllen",
-        "noProcessesSatisfyingThisFilter": "Es gibt keine Prozesse, die den ausgewählten Filter erfüllen"
+        "noCasesSatisfyingThisFilter": "Keine Fälle gefunden",
+        "noCasesHint": "Versuchen Sie eine andere Suche oder erstellen Sie einen neuen Fall.",
+        "noProcessesSatisfyingThisFilter": "Keine Prozesse gefunden",
+        "noProcessesHint": "Versuchen Sie eine andere Suche oder importieren Sie einen Prozess."
     },
     "admin": {
+        "role-assignment": {
+            "selected": "{{count}} ausgewählt",
+            "selectAll": "Alle auswählen",
+            "clear": "Auswahl aufheben",
+            "noUserTitle": "Kein Benutzer ausgewählt",
+            "noUserText": "Wählen Sie einen oder mehrere Benutzer aus, um ihre Prozessrollen zu sehen und zu ändern.",
+            "version": "Version {{version}}",
+            "allRoles": "Alle auswählen",
+            "noRoles": "Aufheben",
+            "assigned": "Einige Rollen dieses Prozesses sind zugewiesen",
+            "saving": "Wird gespeichert…",
+            "searchUsers": "Benutzer suchen",
+            "searchProcesses": "Prozesse suchen",
+            "noUsers": "Keine Benutzer gefunden",
+            "noProcesses": "Keine Prozesse gefunden",
+            "emptyRoles": "Dieser Prozess hat keine Rollen",
+            "searchGroups": "Gruppen suchen",
+            "noGroupTitle": "Keine Gruppe ausgewählt",
+            "noGroupText": "Wählen Sie eine oder mehrere LDAP-Gruppen aus, um ihre Prozessrollen zu sehen und zu ändern."
+        },
         "user-list": {
             "noUsersWereFound": "Derzeit befinden sich keine Benutzer im System",
             "listTitle": "Benutzer"
@@ -421,18 +483,18 @@
         "user-invite": {
             "newUser": "Neuer Benutzer",
             "orgs": "Organisationen",
-            "selectedOrgs": "Ausgewählte Organisationen",
-            "selectedRoles": "Ausgewählte Rollen",
-            "mail": "E-Mail eingeben",
-            "noSelectedOrgs": "Diesem Benutzer ist noch keine Organisation zugewiesen!",
-            "noSelectedRoles": "Diesem Benutzer ist noch keine Rolle zugewiesen!",
-            "noOrgs": "Derzeit sind keine Gruppen verfügbar!",
+            "selectedOrgs": "Organisationen",
+            "selectedRoles": "Rollen",
+            "mail": "E-Mail",
+            "noSelectedOrgs": "Wählen Sie mindestens eine Organisation",
+            "noSelectedRoles": "Keine Rollen, der Benutzer kann sie später erhalten",
+            "noOrgs": "Keine Organisationen",
             "version": "Version",
-            "emailFieldMandatory": "E-Mail-Feld ist obligatorisch",
-            "oneOrMoreOrganization": "Neuer Benutzer muss zu einer oder mehreren Gruppen gehören",
+            "emailFieldMandatory": "Geben Sie die E-Mail des Benutzers ein",
+            "oneOrMoreOrganization": "Wählen Sie mindestens eine Organisation",
             "inviteSent": "Einladung gesendet",
             "inviteFailed": "Einladung fehlgeschlagen",
-            "invite-user": "BENUTZER EINLADEN"
+            "invite-user": "Benutzer einladen"
         }
     },
     "preferences": {
@@ -446,11 +508,12 @@
         "noTaskSelected": "Momentan ist keiner Fall ausgewählt. Klicken Sie einen Knoten in dem Baum an, um einen Fall auszuwählen."
     },
     "dashboard": {
-        "cases": "Fälle"
+        "cases": "Fälle",
+        "noItems": "Auf diesem Dashboard gibt es keine Einträge"
     },
     "workflow": {
-        "delete": "löschen",
-        "download": "herunterladen",
+        "delete": "Löschen",
+        "download": "Herunterladen",
         "dialog": {
             "header": "Sind Sie sicher, dass Sie den Prozess '{{name}}' mit Version '{{version}}' löschen wollen?",
             "content": "Alle Fälle aus diesem Prozess werden gleichzeitig gelöscht!",
@@ -464,7 +527,8 @@
             "uploadFailed": "Prozessdatei konnte nicht hochgeladen werden.",
             "uploadSuccess": "Prozessdatei erfolgreich hochgeladen"
         },
-        "new-process": "Neuen Prozess erstellen"
+        "new-process": "Neuen Prozess erstellen",
+        "processes": "Prozesse"
     },
     "legal": {
         "byClicking": "Indem Sie auf '{{buttonName}}' klicken,",
@@ -490,7 +554,13 @@
         "createMenuItemBtn": "Neuen Menüpunkt erstellen",
         "editMenuItem": "Bearbeiten",
         "snackbar": {
-            "failedItemCreation": "Fehler beim Erstellen des Artikels"
+            "failedItemCreation": "Fehler beim Erstellen des Artikels",
+            "failedItemOrder": "Die Reihenfolge der Menüpunkte konnte nicht geändert werden"
+        },
+        "defaultViews": {
+            "cases": "Fälle",
+            "tasks": "Aufgaben",
+            "roleAssignment": "Rollenzuweisung"
         }
     },
     "impersonation": {
@@ -506,7 +576,7 @@
     },
     "session": {
         "expireTitle": "Ihre Sitzung läuft bald ab",
-        "expireDetail": "Ihre Sitzung läuft bald ab.\n\nSie werden in {{time}} Sekunden weitergeleitet",
+        "expireDetail": "Ihre Sitzung läuft bald ab.\n\nSie werden in {{time}} Sekunden abgemeldet.",
         "exitButton": "Abmelden",
         "refreshButton": "Angemeldet bleiben"
     },
@@ -540,6 +610,7 @@
             },
             "change-data": {
                 "title": "Referenzierten Datenwert ändern",
+                "cancel": "Abbrechen",
                 "titleMulti": "Referenzierten Datenwert ändern",
                 "valueRequired": "Wert ist erforderlich",
                 "valueNotNegative": "Wert darf keine negative Zahl sein",
@@ -548,19 +619,19 @@
             },
             "dead-net": {
                 "title": "Keine ausführbare Aufgabe",
-                "message": "Es gibt keine ausführbaren Aufgaben. Sind Sie sicher, dass Sie das Modell herunterladen möchten?",
+                "message": "Es gibt keine ausführbaren Aufgaben. Das Modell trotzdem herunterladen?",
                 "cancel": "Stornieren",
                 "download": "Herunterladen"
             },
             "delete": {
-                "title": "Löschbestätigung",
-                "message": "Sind Sie sicher, dass Sie dieses Element löschen möchten?",
+                "title": "Element löschen?",
+                "message": "Das Element wird aus dem Modell gelöscht.",
                 "cancel": "Stornieren",
-                "confirm": "Bestätigen"
+                "confirm": "Löschen"
             },
             "delete-model": {
-                "title": "Modell löschen",
-                "message": "Sind Sie sicher, dass Sie das Modell löschen möchten? Alle nicht gespeicherten Änderungen gehen verloren.",
+                "title": "Modell löschen?",
+                "message": "Das Modell und alle nicht gespeicherten Änderungen werden gelöscht.",
                 "cancel": "Stornieren",
                 "delete": "Löschen"
             },
@@ -580,6 +651,8 @@
             },
             "manage-roles": {
                 "title": "Berechtigungen",
+                "titleTask": "Aufgabenberechtigungen",
+                "titleProcess": "Prozessberechtigungen",
                 "rolePermissions": "Rollenberechtigungen",
                 "id": "Id",
                 "perform": "Ausführen",
@@ -601,11 +674,12 @@
             },
             "model-edit": {
                 "title": "Modell bearbeiten",
+                "id": "ID",
                 "idRequired": "Id ist erforderlich",
                 "version": "Version",
                 "versionFormat": "Version muss im Format Major.Minor.Patch sein",
                 "modelTitle": "Titel",
-                "idRequired2": "Id ist erforderlich",
+                "idRequired2": "Dieses Feld ist erforderlich",
                 "initials": "Initialen",
                 "defaultRole": "Standardrolle",
                 "anonymousRole": "Anonyme Rolle",
@@ -613,7 +687,7 @@
                 "tags": "Tags",
                 "key": "Schlüssel",
                 "value": "Wert",
-                "empty": "Leer",
+                "empty": "Keine Tags",
                 "addTag": "Tag hinzufügen",
                 "actions": "Aktionen",
                 "permissions": "Berechtigungen",
@@ -640,15 +714,15 @@
                 "delete": "Löschen"
             },
             "refactor": {
-                "title": "Id refaktorieren",
+                "title": "ID umbenennen",
                 "originalId": "Ursprüngliche Id",
                 "newId": "Neue Id",
                 "newIdRequired": "Neue Id ist erforderlich!",
-                "idCharsOnly": "Id darf nur alphanumerische Zeichen, Bindestriche oder Unterstriche enthalten!",
-                "idUnique": "Id muss eindeutig sein! Die ausgewählte Id existiert bereits!",
-                "warning": "WARNUNG! In Aktionen wird die Feld-Id nur im Deklarationsteil geändert. Die als Zeichenkette verwendete Id in der Aktionsanweisung wird nicht geändert.",
-                "close": "Schließen",
-                "refactor": "Refaktorieren"
+                "idCharsOnly": "Nur Buchstaben, Ziffern, Bindestriche und Unterstriche verwenden",
+                "idUnique": "Diese ID existiert bereits, wählen Sie eine andere",
+                "warning": "In den Aktionen wird die ID nur in der Deklaration des Feldes geändert, nicht dort, wo sie als Zeichenkette verwendet wird.",
+                "close": "Abbrechen",
+                "refactor": "Umbenennen"
             },
             "transition-edit": {
                 "trigger-tree": {
@@ -662,7 +736,8 @@
                     "delay": "Verzögerung",
                     "auto": "Auto",
                     "user": "Benutzer",
-                    "time": "Zeit"
+                    "time": "Zeit",
+                    "delayPlaceholder": "Z. B. PT5D"
                 },
                 "title": "Aufgabe bearbeiten",
                 "id": "Id",
@@ -674,7 +749,7 @@
                 "tags": "Tags",
                 "key": "Schlüssel",
                 "value": "Wert",
-                "empty": "Leer",
+                "empty": "Keine Tags",
                 "addTag": "Tag hinzufügen",
                 "form": "Formular",
                 "actions": "Aktionen",
@@ -710,7 +785,25 @@
                 "dataFieldActions": "DataField-Aktionen",
                 "template": "Vorlage",
                 "appearance": "Darstellung",
-                "fieldOffset": "Feldversatz"
+                "fieldOffset": "Feldversatz",
+                "assignEvent": "Zuweisungsereignis",
+                "finishEvent": "Abschlussereignis",
+                "cancelEvent": "Abbruchereignis",
+                "delegateEvent": "Delegierungsereignis",
+                "refactorId": "Feld-ID umbenennen",
+                "none": "Keine",
+                "behavior": "Verhalten",
+                "key": "Schlüssel",
+                "value": "Wert",
+                "icon": "Symbol",
+                "icons": "Symbole",
+                "dataRefComponent": "DataRef-Komponente",
+                "behaviors": {
+                    "editable": "Bearbeitbar",
+                    "visible": "Sichtbar",
+                    "hidden": "Ausgeblendet",
+                    "forbidden": "Verboten"
+                }
             },
             "field-list": {
                 "dataFields": "Datenfelder",
@@ -741,7 +834,8 @@
                 "preview": "Vorschau",
                 "text": "Text",
                 "divider": "Trennlinie",
-                "dashboard": "Dashboard"
+                "dashboard": "Dashboard",
+                "search": "Suchen"
             },
             "gridster": {
                 "placeholderFor": "Platzhalter für",
@@ -760,17 +854,21 @@
         "modeler": {
             "actions-mode": {
                 "action-detail": {
+                    "addAction": "Aktion hinzufügen",
+                    "noActions": "Keine Aktionen",
                     "toggle": "umschalten",
                     "name": "Name",
                     "scope": "Geltungsbereich",
                     "noActionSelected": "Keine Aktion ausgewählt",
                     "process": "Prozess",
                     "namespace": "Namespace",
-                    "actionsChanged": "Aktionen wurden geändert."
+                    "actionsChanged": "Aktionen wurden geändert.",
+                    "dataRefs": "Datenfelder"
                 },
                 "action-editor": {
                     "action-editor": {
                         "action": "Aktion",
+                        "delete": "Aktion löschen",
                         "functions": "Funktionen",
                         "references": "Referenzen",
                         "transitions": "Übergänge",
@@ -832,7 +930,9 @@
                         "taskIdEqualsValue": "Aufgaben-ID ist gleich Wert",
                         "transitionIdEqualsValue": "Übergangs-Id ist gleich Wert",
                         "caseIdEqualsValue2": "Fall-Id ist gleich Wert",
-                        "caseTitleEqualsValue": "Falltitel ist gleich Wert"
+                        "caseTitleEqualsValue": "Falltitel ist gleich Wert",
+                        "expand": "Aufklappen",
+                        "collapse": "Zuklappen"
                     },
                     "action-editor-menu": {
                         "example": "Beispiel",
@@ -1597,7 +1697,8 @@
                     "nextPage": "Nächste Seite",
                     "previousPage": "Vorherige Seite",
                     "of": "von",
-                    "add": "Hinzufügen"
+                    "add": "Hinzufügen",
+                    "sort": "Sortieren"
                 },
                 "material-icon-picker": {
                     "icon": "Symbol",
@@ -1680,7 +1781,12 @@
                 "addDataVariable": "Datenvariable hinzufügen",
                 "dataEditView": "Daten-Bearbeitungsansicht",
                 "deleteDataField": "Datenfeld löschen",
-                "duplicateDataField": "Datenfeld duplizieren"
+                "duplicateDataField": "Datenfeld duplizieren",
+                "general": "Allgemein",
+                "refactorId": "ID ändern (auch in den Verweisen)",
+                "properties": "Eigenschaften",
+                "noComponent": "Standardkomponente des Feldtyps.",
+                "delete": "Löschen"
             },
             "edit-mode": {
                 "context-menu": {
@@ -1757,12 +1863,12 @@
             },
             "i18n-mode": {
                 "removeLocale": "Sprache entfernen",
-                "addNewLanguage": "Neue Sprache hinzufügen",
-                "addLocale": "Sprache hinzufügen",
+                "addNewLanguage": "Sprache",
+                "addLocale": "Hinzufügen",
                 "translations": "Übersetzungen",
                 "translationsChanged": "Übersetzungen wurden geändert.",
                 "languages": "Sprachen",
-                "stringId": "Zeichenketten-Id",
+                "stringId": "Zeichenketten-ID",
                 "defaultValue": "Standardwert",
                 "translation": "Übersetzung",
                 "title": "Titel",
@@ -1774,7 +1880,7 @@
                 "defaultCaseName": "Standardfallname",
                 "message": "Nachricht",
                 "events": "Ereignisse",
-                "noLanguageAvailable": "Keine Sprache verfügbar, bitte fügen Sie eine neue Sprache hinzu",
+                "noLanguageAvailable": "Noch keine Sprachen",
                 "selectLanguage": "Sprache auswählen",
                 "modelMetadata": "Modell-Metadaten",
                 "modelMetadataHint": "Titel, Standardfallname, ...",
@@ -1866,6 +1972,53 @@
             "bugReport": "Sie können unsere Github-Issues-Seite nutzen, um Fehler zu melden, die Sie bei der Verwendung des Netgrif Application Builders entdecken."
         },
         "newModelCreated": "Neues Modell wurde erstellt.",
-        "hasBeenImported": "wurde importiert."
+        "hasBeenImported": "wurde importiert.",
+        "readOnly": "Der Prozess ist bereitgestellt und kann nicht geändert werden. Änderungen erfolgen in einem Entwurf des Prozesses.",
+        "readOnlyShort": "Nur lesen"
+    },
+    "appearance": {
+        "title": "Darstellung",
+        "color": "Farbe",
+        "hue": "Farbton",
+        "chroma": "Sättigung",
+        "variantTitle": "Palettenstil",
+        "contrastTitle": "Kontrast",
+        "cornersTitle": "Ecken",
+        "densityTitle": "Dichte",
+        "flatTitle": "Schatten",
+        "fontTitle": "Schrift",
+        "textSize": "Textgröße",
+        "reset": "Standard",
+        "variant": {
+            "tonal-spot": "Ruhig",
+            "neutral": "Neutral",
+            "fidelity": "Getreu",
+            "vibrant": "Lebendig",
+            "expressive": "Expressiv",
+            "monochrome": "Monochrom"
+        },
+        "contrast": {
+            "standard": "Standard",
+            "medium": "Mittel",
+            "high": "Hoch"
+        },
+        "corners": {
+            "sharp": "Eckig",
+            "default": "Standard",
+            "rounded": "Abgerundet"
+        },
+        "density": {
+            "default": "Komfortabel",
+            "compact": "Kompakt"
+        },
+        "flat": {
+            "shadows": "Schatten",
+            "flat": "Flach"
+        },
+        "font": {
+            "roboto": "Roboto",
+            "inter": "Inter",
+            "system": "System"
+        }
     }
 }

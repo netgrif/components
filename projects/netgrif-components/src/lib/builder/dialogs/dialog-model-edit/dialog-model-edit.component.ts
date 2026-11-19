@@ -1,4 +1,4 @@
-import {Component, Inject} from '@angular/core';
+import {Component, Inject, ChangeDetectionStrategy} from '@angular/core';
 import {FormControl, ValidatorFn, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialog} from '@angular/material/dialog';
 import {DataType} from '@netgrif/petriflow';
@@ -20,7 +20,9 @@ export interface ModelEditData {
 @Component({
     selector: 'nc-builder-dialog-model-edit',
     templateUrl: './dialog-model-edit.component.html',
-    styleUrls: ['./dialog-model-edit.component.scss']
+    styleUrls: ['./dialog-model-edit.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class DialogModelEditComponent {
 
@@ -73,8 +75,7 @@ export class DialogModelEditComponent {
 
     openPermissions() {
         this.dialog.open(DialogManageRolesComponent, {
-            width: '60%',
-            panelClass: "dialog-width-60",
+            panelClass: 'dialog-task-responsive',
             data: {
                 type: RoleRefType.PROCESS,
                 roles: this.modelService.model.getRoles(),

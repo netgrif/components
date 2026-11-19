@@ -1,17 +1,39 @@
-<mat-grid-list [cols]="params.columns" rowHeight="210px">
-    <mat-grid-tile *ngFor="let card of gridElements"
-                   [colspan]="card.layout.cols"
-                   [rowspan]="card.layout.rows"
-                   [ngSwitch]="card.type">
-        <nc-count-card *ngSwitchCase="cardTypes.COUNT" [card]="card.item" class="full-size"></nc-count-card>
-        <nc-iframe-card *ngSwitchCase="cardTypes.IFRAME" [card]="card.item" class="full-size"></nc-iframe-card>
-        <nc-pie-chart-card *ngSwitchCase="cardTypes.PIE" [card]="card.item" class="full-size"></nc-pie-chart-card>
-        <nc-line-chart-card *ngSwitchCase="cardTypes.LINE" [card]="card.item" class="full-size"></nc-line-chart-card>
-        <nc-linear-gauge-card *ngSwitchCase="cardTypes.LINEARGAUGE" [card]="card.item"
-                             class="full-size"></nc-linear-gauge-card>
-        <nc-barchart-card *ngSwitchCase="cardTypes.BAR" [card]="card.item" class="full-size"></nc-barchart-card>
-        <nc-portal-card *ngSwitchCase="cardTypes.DEFAULT" [card]="card.item"
-                        [componentPortal]="card.item.portalComponent" class="full-size"></nc-portal-card>
-        <div *ngSwitchCase="cardTypes.BLANK"></div>
+<mat-grid-list [cols]="params.columns" rowHeight="210px" gutterSize="16px">
+    @for (card of gridElements; track card) {
+    <mat-grid-tile [colspan]="card.layout.cols" [rowspan]="card.layout.rows">
+        @switch (card.type) { @case (cardTypes.COUNT) {
+        <nc-count-card [card]="card.item" fxFlexFill></nc-count-card>
+        } @case (cardTypes.IFRAME) {
+        <nc-iframe-card [card]="card.item" fxFlexFill></nc-iframe-card>
+        } @case (cardTypes.PIE) {
+        <nc-pie-chart-card
+            [card]="card.item"
+            fxFlexFill
+        ></nc-pie-chart-card>
+        } @case (cardTypes.LINE) {
+        <nc-line-chart-card
+            [card]="card.item"
+            fxFlexFill
+        ></nc-line-chart-card>
+        } @case (cardTypes.LINEARGAUGE) {
+        <nc-linear-gauge-card
+            [card]="card.item"
+            fxFlexFill
+        ></nc-linear-gauge-card>
+        } @case (cardTypes.BAR) {
+        <nc-barchart-card
+            [card]="card.item"
+            fxFlexFill
+        ></nc-barchart-card>
+        } @case (cardTypes.DEFAULT) {
+        <nc-portal-card
+            [card]="card.item"
+            [componentPortal]="card.item.portalComponent"
+            fxFlexFill
+        ></nc-portal-card>
+        } @case (cardTypes.BLANK) {
+        <div></div>
+        } }
     </mat-grid-tile>
+    }
 </mat-grid-list>

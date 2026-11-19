@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, ChangeDetectionStrategy} from '@angular/core';
 import {CategoryFactory, defaultCaseSearchCategoriesFactory, NAE_SEARCH_CATEGORIES} from '@netgrif/components-core';
 
 /**
@@ -14,7 +14,9 @@ import {CategoryFactory, defaultCaseSearchCategoriesFactory, NAE_SEARCH_CATEGORI
     providers: [
         CategoryFactory,
         {provide: NAE_SEARCH_CATEGORIES, useFactory: defaultCaseSearchCategoriesFactory, deps: [CategoryFactory]}
-    ]
+    ],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class CaseSearchComponent {
 }

@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, ChangeDetectionStrategy} from '@angular/core';
 import {MatDialog} from "@angular/material/dialog";
 import {ActivatedRoute, Router} from "@angular/router";
 import {AbstractWorkflowViewComponent,
@@ -12,7 +12,9 @@ import {AbstractWorkflowViewComponent,
         WorkflowViewService,
         ProcessServiceProvider,
         PetriNetResourceServiceProvider,
-    ]
+    ],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class DefaultPublicWorkflowViewComponent extends AbstractWorkflowViewComponent {
     constructor(protected _dialog: MatDialog,
@@ -25,7 +27,7 @@ export class DefaultPublicWorkflowViewComponent extends AbstractWorkflowViewComp
     }
 
     handleClick(workflow: Net) {
-        this._router.navigate([this._route.snapshot.url.join('/') + '/' + btoa(workflow.identifier)]);
+        this._router.navigate([...this._route.snapshot.url.map(segment => segment.path), btoa(workflow.identifier)]);
     }
 
 }

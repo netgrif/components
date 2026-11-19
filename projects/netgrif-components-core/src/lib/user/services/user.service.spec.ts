@@ -1,13 +1,13 @@
 import {TestBed} from '@angular/core/testing';
 import {UserService} from './user.service';
 import {ConfigurationService} from '../../configuration/configuration.service';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {TestConfigurationService} from '../../utility/tests/test-config';
 import {AuthenticationService} from '../../authentication/services/authentication/authentication.service';
 import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
 import {MockAuthenticationService} from '../../utility/tests/mocks/mock-authentication.service';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('UserService', () => {
     let service: UserService;
@@ -15,13 +15,13 @@ describe('UserService', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
-                HttpClientTestingModule,
-                NoopAnimationsModule
             ],
             providers: [
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting(),
             ]
         });
         service = TestBed.inject(UserService);

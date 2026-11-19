@@ -1,7 +1,6 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {Component, NO_ERRORS_SCHEMA, OnDestroy} from '@angular/core';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
+import {Component, NO_ERRORS_SCHEMA, OnDestroy, ChangeDetectionStrategy} from '@angular/core';
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
 import {FormControl} from '@angular/forms';
 import {UserListItem, UserListService} from '../../../../user/services/user-list.service';
@@ -15,6 +14,7 @@ import {MaterialModule} from '../../../../material/material.module';
 import {SnackBarModule} from '../../../../snack-bar/snack-bar.module';
 import {AbstractBaseUserAssignListComponent} from "./abstract-base-user-assign-list.component";
 import {noop} from "rxjs";
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('AbstractBaseUserAssignListComponent', () => {
     let component: TestUserComponent;
@@ -22,22 +22,19 @@ describe('AbstractBaseUserAssignListComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
+            declarations: [TestUserComponent, TestWrapperComponent],
+            schemas: [NO_ERRORS_SCHEMA],
             imports: [
                 MaterialModule,
-                NoopAnimationsModule,
-                HttpClientTestingModule,
                 TranslateLibModule,
                 SnackBarModule
             ],
             providers: [
                 UserListService,
-                {provide: ConfigurationService, useClass: TestConfigurationService}
-            ],
-            declarations: [
-                TestUserComponent,
-                TestWrapperComponent
-            ],
-            schemas: [NO_ERRORS_SCHEMA]
+                {provide: ConfigurationService, useClass: TestConfigurationService},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
+            ]
         }).compileComponents();
 
         fixture = TestBed.createComponent(TestWrapperComponent);
@@ -60,7 +57,9 @@ describe('AbstractBaseUserAssignListComponent', () => {
 
 @Component({
     selector: 'ncc-test-user',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestUserComponent extends AbstractBaseUserAssignListComponent implements OnDestroy {
     constructor(protected _userListService: UserListService) {
@@ -78,7 +77,9 @@ class TestUserComponent extends AbstractBaseUserAssignListComponent implements O
 
 @Component({
     selector: 'ncc-test-wrapper',
-    template: '<ncc-test-user [searchUserControl]="formControl"></ncc-test-user>'
+    template: '<ncc-test-user [searchUserControl]="formControl"></ncc-test-user>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestWrapperComponent {
     injectedData = {roles: [], value: new UserValue('5', 'admin', 'netgrif', 'super@netgrif.com')} as UserListInjectedData;

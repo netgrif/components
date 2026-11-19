@@ -5,11 +5,11 @@
     overflow: auto;
     -webkit-overflow-scrolling: touch;
     max-height: calc(100vh - 48px);
-    border-radius: 4px;
+    border-radius: var(--mat-sys-corner-extra-small);
     outline: 0;
     min-height: 64px;
-    background: #fff;
-    box-shadow: 0 2px 4px -1px rgba(0, 0, 0, .2), 0 4px 5px 0 rgba(0, 0, 0, .14), 0 1px 10px 0 rgba(0, 0, 0, .12);
+    background: var(--mat-sys-surface-container);
+    box-shadow: var(--mat-sys-level2);
 }
 
 .menuItem {
@@ -24,51 +24,36 @@
     display: block;
     line-height: 48px;
     height: 48px;
-    padding: 0 16px;
+    padding: 0 12px;
     text-align: left;
     text-decoration: none;
     max-width: 100%;
     position: relative;
     background: 0 0;
-    color: rgba(0, 0, 0, .87);
-    font-size: 14px;
-    font-weight: 400;
+    color: var(--mat-sys-on-surface);
+    font: var(--mat-sys-label-large);
 
     span {
         vertical-align: middle;
     }
 
     mat-icon {
-        margin-right: 16px;
+        margin-right: 12px;
+        color: var(--mat-sys-on-surface-variant);
         vertical-align: middle;
     }
 }
 
 .menuItem:hover:not([disabled]) {
-    background: rgba(0, 0, 0, .04);
+    background: color-mix(in srgb, var(--mat-sys-on-surface) 8%, transparent);
 }
 
 .menuItem:active:not([disabled]) {
-    background: rgba(0, 0, 0, .3);
+    background: color-mix(in srgb, var(--mat-sys-on-surface) 10%, transparent);
 }
 
 button.menuItem {
     width: 100%;
-}
-
-button {
-    -webkit-appearance: button;
-    -webkit-writing-mode: horizontal-tb !important;
-    text-rendering: auto;
-    letter-spacing: normal;
-    word-spacing: normal;
-    text-transform: none;
-    text-indent: 0;
-    text-shadow: none;
-    align-items: flex-start;
-    box-sizing: border-box;
-    margin: 0;
-    font: 400 13.3333px sans-serif;
 }
 
 .content {

@@ -1,9 +1,8 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {CommonModule} from '@angular/common';
 import {RouterTestingModule} from '@angular/router/testing';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {Component} from '@angular/core';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
+import {Component, ChangeDetectionStrategy} from '@angular/core';
 import {AbstractQuickPanelComponent} from './abstract-quick-panel.component';
 import {MaterialModule} from '../../../material/material.module';
 import {TranslateLibModule} from '../../../translate/translate-lib.module';
@@ -17,6 +16,7 @@ import {MockUserResourceService} from '../../../utility/tests/mocks/mock-user-re
 import {TestConfigurationService} from '../../../utility/tests/test-config';
 import {LanguageService} from '../../../translate/language.service';
 import {PaperViewService} from './paper-view.service';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('AbstractQuickPanelComponent', () => {
     let component: TestQuickPanelComponent;
@@ -24,23 +24,20 @@ describe('AbstractQuickPanelComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
+            declarations: [TestQuickPanelComponent, TestWrapperComponent],
             imports: [
                 CommonModule,
                 RouterTestingModule.withRoutes([]),
                 MaterialModule,
-                TranslateLibModule,
-                HttpClientTestingModule,
-                NoopAnimationsModule
+                TranslateLibModule
             ],
             providers: [
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
-            ],
-            declarations: [
-                TestQuickPanelComponent,
-                TestWrapperComponent
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
             ]
         }).compileComponents();
 
@@ -60,7 +57,9 @@ describe('AbstractQuickPanelComponent', () => {
 
 @Component({
     selector: 'ncc-test-quick-panel',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestQuickPanelComponent extends AbstractQuickPanelComponent {
     constructor(protected _select: LanguageService, protected _paperView: PaperViewService) {
@@ -70,7 +69,9 @@ class TestQuickPanelComponent extends AbstractQuickPanelComponent {
 
 @Component({
     selector: 'ncc-test-wrapper',
-    template: '<ncc-test-quick-panel [items]="items"></ncc-test-quick-panel>'
+    template: '<ncc-test-quick-panel [items]="items"></ncc-test-quick-panel>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestWrapperComponent {
     items = [];

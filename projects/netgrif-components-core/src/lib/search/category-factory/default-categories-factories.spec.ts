@@ -5,7 +5,7 @@ import {defaultCaseSearchCategoriesFactory, defaultTaskSearchCategoriesFactory} 
 import {CategoryFactory} from './category-factory';
 import {TestConfigurationService} from '../../utility/tests/test-config';
 import {ConfigurationService} from '../../configuration/configuration.service';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {
     TestCaseBaseFilterProvider,
     TestCaseViewAllowedNetsFactory,
@@ -20,7 +20,7 @@ import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-au
 import {NAE_BASE_FILTER} from '../models/base-filter-injection-token';
 import {AllowedNetsService} from '../../allowed-nets/services/allowed-nets.service';
 import {AllowedNetsServiceFactory} from '../../allowed-nets/services/factory/allowed-nets-service-factory';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('Default search categories factory methods', () => {
     let testService: TestService;
@@ -29,10 +29,8 @@ describe('Default search categories factory methods', () => {
         beforeEach(() => {
             TestBed.configureTestingModule({
                 imports: [
-                    HttpClientTestingModule,
                     MaterialModule,
-                    TranslateLibModule,
-                    NoopAnimationsModule
+                    TranslateLibModule
                 ],
                 providers: [
                     TestService,
@@ -45,7 +43,9 @@ describe('Default search categories factory methods', () => {
                         useFactory: TestCaseBaseFilterProvider
                     },
                     {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
-                    {provide: AllowedNetsService, useFactory: TestCaseViewAllowedNetsFactory, deps: [AllowedNetsServiceFactory]}
+                    {provide: AllowedNetsService, useFactory: TestCaseViewAllowedNetsFactory, deps: [AllowedNetsServiceFactory]},
+                    provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                    provideHttpClientTesting()
                 ]
             });
             testService = TestBed.inject(TestService);
@@ -70,10 +70,8 @@ describe('Default search categories factory methods', () => {
         beforeEach(() => {
             TestBed.configureTestingModule({
                 imports: [
-                    HttpClientTestingModule,
                     MaterialModule,
-                    TranslateLibModule,
-                    HttpClientTestingModule
+                    TranslateLibModule
                 ],
                 providers: [
                     TestService,
@@ -83,7 +81,9 @@ describe('Default search categories factory methods', () => {
                     {provide: ConfigurationService, useClass: TestConfigurationService},
                     {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                     {provide: NAE_BASE_FILTER, useFactory: TestTaskBaseFilterProvider},
-                    {provide: AllowedNetsService, useFactory: TestTaskViewAllowedNetsFactory, deps: [AllowedNetsServiceFactory]}
+                    {provide: AllowedNetsService, useFactory: TestTaskViewAllowedNetsFactory, deps: [AllowedNetsServiceFactory]},
+                    provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                    provideHttpClientTesting()
                 ]
             });
             testService = TestBed.inject(TestService);

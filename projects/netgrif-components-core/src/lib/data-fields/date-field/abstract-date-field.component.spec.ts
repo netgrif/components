@@ -1,8 +1,6 @@
 import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
-import {AngularResizeEventModule} from 'angular-resize-event';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {Component, CUSTOM_ELEMENTS_SCHEMA, Inject, Optional} from '@angular/core';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
+import {Component, CUSTOM_ELEMENTS_SCHEMA, Inject, Optional, ChangeDetectionStrategy} from '@angular/core';
 import moment from 'moment';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {AbstractDateFieldComponent} from './abstract-date-field.component';
@@ -19,6 +17,7 @@ import {MaterialModule} from '../../material/material.module';
 import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token';
 import {DateAdapter} from '@angular/material/core';
 import {CustomDateAdapter} from './models/custom-date-adapter';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('AbstractDateFieldComponent', () => {
     let component: TestDateFieldComponent;
@@ -26,24 +25,21 @@ describe('AbstractDateFieldComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
+            declarations: [TestDateFieldComponent, TestWrapperComponent],
+            schemas: [CUSTOM_ELEMENTS_SCHEMA],
             imports: [
                 MaterialModule,
-                AngularResizeEventModule,
-                TranslateLibModule,
-                HttpClientTestingModule, NoopAnimationsModule
+                TranslateLibModule
             ],
             providers: [
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
-                {provide: DateAdapter, useClass: CustomDateAdapter}
-            ],
-            declarations: [
-                TestDateFieldComponent,
-                TestWrapperComponent
-            ],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA]
+                {provide: DateAdapter, useClass: CustomDateAdapter},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
+            ]
         }).compileComponents();
 
         fixture = TestBed.createComponent(TestWrapperComponent);
@@ -62,7 +58,9 @@ describe('AbstractDateFieldComponent', () => {
 
 @Component({
     selector: 'ncc-test-date',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestDateFieldComponent extends AbstractDateFieldComponent {
     constructor(@Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
@@ -72,7 +70,9 @@ class TestDateFieldComponent extends AbstractDateFieldComponent {
 
 @Component({
     selector: 'ncc-test-wrapper',
-    template: '<ncc-test-date [dataField]="field"></ncc-test-date>'
+    template: '<ncc-test-date [dataField]="field"></ncc-test-date>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestWrapperComponent {
     field = new DateField('', '', moment(new Date()), {

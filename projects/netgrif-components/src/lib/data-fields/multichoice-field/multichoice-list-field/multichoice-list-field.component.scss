@@ -1,0 +1,9 @@
+@use '../../field-label' as label;
+@use '../../selection-list' as list;
+
+@include label.styles;
+@include list.styles;
+
+:host {
+    display: block;
+}

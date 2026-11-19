@@ -1,11 +1,10 @@
 import {TestBed} from '@angular/core/testing';
 import {SearchService} from './search.service';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {CategoryFactory} from '../category-factory/category-factory';
 import {CaseTitle} from '../models/category/case/case-title';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {NAE_BASE_FILTER} from '../models/base-filter-injection-token';
 import {
     TestCaseBaseFilterProvider,
@@ -28,6 +27,7 @@ import {RouterTestingModule} from "@angular/router/testing";
 import {UserService} from "../../user/services/user.service";
 import {MockUserService} from "../../utility/tests/mocks/mock-user.service";
 import {User} from "../../user/models/user";
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('SearchService', () => {
     let service: SearchService;
@@ -38,8 +38,6 @@ describe('SearchService', () => {
         beforeEach(() => {
             TestBed.configureTestingModule({
                 imports: [
-                    NoopAnimationsModule,
-                    HttpClientTestingModule,
                     AuthenticationModule,
                     RouterTestingModule.withRoutes([]),
                 ],
@@ -50,7 +48,9 @@ describe('SearchService', () => {
                     {provide: NAE_BASE_FILTER, useFactory: TestCaseBaseFilterProvider},
                     {provide: ConfigurationService, useClass: TestConfigurationService},
                     {provide: UserService, useClass: CustomMockUserService},
-                    {provide: AllowedNetsService, useFactory: TestNoAllowedNetsFactory, deps: [AllowedNetsServiceFactory]}
+                    {provide: AllowedNetsService, useFactory: TestNoAllowedNetsFactory, deps: [AllowedNetsServiceFactory]},
+                    provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                    provideHttpClientTesting()
                 ]
             });
             service = TestBed.inject(SearchService);
@@ -114,8 +114,6 @@ describe('SearchService', () => {
         beforeEach(() => {
             TestBed.configureTestingModule({
                 imports: [
-                    NoopAnimationsModule,
-                    HttpClientTestingModule,
                     AuthenticationModule,
                     RouterTestingModule.withRoutes([]),
                 ],
@@ -127,7 +125,9 @@ describe('SearchService', () => {
                     {provide: ConfigurationService, useClass: TestConfigurationService},
                     {provide: UserService, useClass: CustomMockUserService},
                     {provide: NAE_IGNORE_NETS_ON_AUTOCOMPLETE_CATEGORY, useValue: true},
-                    {provide: AllowedNetsService, useFactory: TestNoAllowedNetsFactory, deps: [AllowedNetsServiceFactory]}
+                    {provide: AllowedNetsService, useFactory: TestNoAllowedNetsFactory, deps: [AllowedNetsServiceFactory]},
+                    provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                    provideHttpClientTesting()
                 ]
             });
             service = TestBed.inject(SearchService);
@@ -162,8 +162,6 @@ describe('SearchService', () => {
         beforeEach(() => {
             TestBed.configureTestingModule({
                 imports: [
-                    NoopAnimationsModule,
-                    HttpClientTestingModule,
                     AuthenticationModule,
                     RouterTestingModule.withRoutes([]),
                 ],
@@ -177,7 +175,9 @@ describe('SearchService', () => {
                     },
                     {provide: ConfigurationService, useClass: TestConfigurationService},
                     {provide: UserService, useClass: CustomMockUserService},
-                    {provide: AllowedNetsService, useFactory: TestNoAllowedNetsFactory, deps: [AllowedNetsServiceFactory]}
+                    {provide: AllowedNetsService, useFactory: TestNoAllowedNetsFactory, deps: [AllowedNetsServiceFactory]},
+                    provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                    provideHttpClientTesting()
                 ]
             });
             service = TestBed.inject(SearchService);

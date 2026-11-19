@@ -1,15 +1,11 @@
-@import '../../side-menu.theme';
-@import '../../../../styles/core';
+:host {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
 
-.user-assign-container {
+.content {
+    flex: 1 1 auto;
+    overflow: auto;
     padding: 16px;
-    position: relative;
-}
-
-.user-assign-search {
-    width: 100%;
-}
-
-.search-icon {
-    margin-right: 10px;
 }

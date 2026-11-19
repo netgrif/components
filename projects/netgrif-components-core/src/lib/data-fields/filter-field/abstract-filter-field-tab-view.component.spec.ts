@@ -2,12 +2,12 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AbstractFilterFieldTabViewComponent } from './abstract-filter-field-tab-view.component';
 import { FilterField } from './models/filter-field';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { NAE_FILTER_FIELD } from './models/filter-field-injection-token';
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, ChangeDetectionStrategy } from '@angular/core';
 import {ComponentRegistryService} from "../../registry/component-registry.service";
 import {FieldTypeResource} from "../../task-content/model/field-type-resource";
+import { provideHttpClient, withInterceptorsFromDi, withXhr } from '@angular/common/http';
 describe('AbstractFilterFieldTabViewComponent', () => {
     let component: TestFilterFieldTabViewComponent;
     let fixture: ComponentFixture<TestFilterFieldTabViewComponent>;
@@ -18,12 +18,12 @@ describe('AbstractFilterFieldTabViewComponent', () => {
         field = new FilterField('', '', '', FieldTypeResource.CASE_FILTER, [], {}, '', '');
 
         await TestBed.configureTestingModule({
-            imports: [NoopAnimationsModule, HttpClientTestingModule],
+            declarations: [TestFilterFieldTabViewComponent],
+            imports: [],
             providers: [
                 { provide: NAE_FILTER_FIELD, useValue: field },
-            ],
-            declarations: [
-                TestFilterFieldTabViewComponent
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
             ]
         }).compileComponents();
     });
@@ -46,7 +46,9 @@ describe('AbstractFilterFieldTabViewComponent', () => {
 
 @Component({
     selector: 'ncc-test-filter-tab-view',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestFilterFieldTabViewComponent extends AbstractFilterFieldTabViewComponent {
     constructor(registry: ComponentRegistryService,
@@ -57,7 +59,9 @@ class TestFilterFieldTabViewComponent extends AbstractFilterFieldTabViewComponen
 
 @Component({
     selector: 'ncc-test',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestCaseViewComponent  {
     constructor() {
@@ -66,7 +70,9 @@ class TestCaseViewComponent  {
 
 @Component({
     selector: 'ncc-test',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestTaskViewComponent  {
     constructor() {

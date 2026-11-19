@@ -1,15 +1,14 @@
 import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 
 import {I18nFieldComponent} from './i18n-field.component';
-import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+import {Component, CUSTOM_ELEMENTS_SCHEMA, ChangeDetectionStrategy} from '@angular/core';
 import {I18nField, MaterialModule, TranslateLibModule} from '@netgrif/components-core';
-import {AngularResizeEventModule} from 'angular-resize-event';
-import {BrowserAnimationsModule, NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {DataFieldTemplateComponent} from '../data-field-template/data-field-template.component';
 import {RequiredLabelComponent} from '../required-label/required-label.component';
 import {I18nDividerFieldComponent} from './i18n-divider-field/i18n-divider-field.component';
 import {I18nTextFieldComponent} from './i18n-text-field/i18n-text-field.component';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('I18nFieldComponent', () => {
     let component: I18nFieldComponent;
@@ -17,14 +16,6 @@ describe('I18nFieldComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
-            imports: [
-                MaterialModule,
-                AngularResizeEventModule,
-                BrowserAnimationsModule,
-                TranslateLibModule,
-                HttpClientTestingModule,
-                NoopAnimationsModule
-            ],
             declarations: [
                 I18nFieldComponent,
                 I18nDividerFieldComponent,
@@ -33,7 +24,15 @@ describe('I18nFieldComponent', () => {
                 RequiredLabelComponent,
                 TestWrapperComponent
             ],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA]
+            schemas: [CUSTOM_ELEMENTS_SCHEMA],
+            imports: [
+                MaterialModule,
+                TranslateLibModule,
+            ],
+            providers: [
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
+            ]
         }).compileComponents();
         fixture = TestBed.createComponent(TestWrapperComponent);
         component = fixture.debugElement.children[0].componentInstance;
@@ -51,7 +50,9 @@ describe('I18nFieldComponent', () => {
 
 @Component({
     selector: 'nc-test-wrapper',
-    template: '<nc-i18n-field [dataField]="field"></nc-i18n-field>'
+    template: '<nc-i18n-field [dataField]="field"></nc-i18n-field>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestWrapperComponent {
     field = new I18nField('', '',

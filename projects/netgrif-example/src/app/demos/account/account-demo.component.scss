@@ -1,0 +1,43 @@
+// a page like the login page of an application: the form in the middle of the background
+.auth-page {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    box-sizing: border-box;
+    height: 100%;
+    overflow: auto;
+    padding: 48px 16px;
+    background: var(--mat-sys-surface-container);
+}
+
+.auth-card {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 440px;
+    padding: 32px 24px 24px;
+    border-radius: var(--mat-sys-corner-extra-large);
+    background: var(--mat-sys-surface);
+}
+
+.auth-title {
+    margin: 0 0 24px;
+    color: var(--mat-sys-on-surface);
+    font: var(--mat-sys-headline-small);
+}
+
+.events-title {
+    margin: 16px 0 4px;
+}
+
+.events-empty {
+    color: var(--mat-sys-on-surface-variant);
+}
+
+.event {
+    overflow-wrap: anywhere;
+    font: var(--mat-sys-body-small);
+
+    code {
+        color: var(--mat-sys-on-surface-variant);
+    }
+}

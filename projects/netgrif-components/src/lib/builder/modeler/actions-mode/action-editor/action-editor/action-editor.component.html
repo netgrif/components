@@ -1,76 +1,77 @@
 <div class="description" id="description">
-    <nc-builder-action-editor-menu-description id="description-content"
-                                        #descriptionComponent></nc-builder-action-editor-menu-description>
+    <nc-builder-action-editor-menu-description
+        id="description-content"
+        #descriptionComponent
+    ></nc-builder-action-editor-menu-description>
 </div>
-<mat-sidenav-container autosize>
-    <mat-sidenav mode="side" #drawer>
-        <nc-builder-action-editor-menu [descriptionComponent]="descriptionComponent"
-                                [editor]="editor"></nc-builder-action-editor-menu>
-    </mat-sidenav>
-    <mat-sidenav-content>
-        <mat-expansion-panel (closed)="setHeightOnClose(index, action); closeDrawer()"
-                             id="{{action.event + '_' + action.phase + '_' + index}}"
-                             class="panel-fix">
-            <mat-expansion-panel-header class="header">
-                {{ 'builder.modeler.actions-mode.action-editor.action-editor.action' | translate }}: {{action.id}}
-            </mat-expansion-panel-header>
-            <ng-template matExpansionPanelContent>
-                <div fxLayout="row">
-                    <div fxFlex fxLayoutGap="3em" fxLayoutAlign="start center">
-                        <button type="button" mat-button (click)="openDrawer()" *ngIf="!_builderModeService.readOnly">
-                            <mat-icon *ngIf="drawer.opened; else closed">
-                                keyboard_arrow_left
-                            </mat-icon>
-                            <ng-template #closed>
-                                <mat-icon>
-                                    keyboard_arrow_right
-                                </mat-icon>
-                            </ng-template>
-                            <mat-icon>
-                                functions
-                            </mat-icon>
-                            {{ 'builder.modeler.actions-mode.action-editor.action-editor.functions' | translate }}
-                        </button>
-                    </div>
-
-                    <div fxFlex="50" fxLayoutGap="3em" fxLayoutAlign="end center">
-                        <mat-menu #referencesMenu="matMenu">
-                            <ng-container *ngFor="let configuration of editorConfigurations">
-                                <nc-builder-action-editor-menu-item [parentTrigger]="referencesTrigger" [trigger]="referenceItemTrigger" #referenceItem="menuInOtherComponent" [configuration]="configuration" [hidden]="!referencesOpened"></nc-builder-action-editor-menu-item>
-                                <button mat-menu-item #referenceItemTrigger="matMenuTrigger" [matMenuTriggerFor]="referenceItem.menu">
-                                    {{configuration.title}}
-                                </button>
-                            </ng-container>
-                        </mat-menu>
-                        <button #matButton fxFlexAlign="end center" type="button" mat-button
-                                #referencesTrigger="matMenuTrigger"
-                                [matMenuTriggerFor]="referencesMenu"
-                                [hidden]="_builderModeService.readOnly">
-                            <mat-icon>
-                                link
-                            </mat-icon>
-                            {{ 'builder.modeler.actions-mode.action-editor.action-editor.references' | translate }}
-                            <mat-icon *ngIf="referencesTrigger.menuOpen; else closedMenu">
-                                keyboard_arrow_up
-                            </mat-icon>
-                            <ng-template #closedMenu>
-                                <mat-icon>
-                                    keyboard_arrow_down
-                                </mat-icon>
-                            </ng-template>
-                        </button>
-                    </div>
-                </div>
-                <div fxLayout="column" fxLayoutAlign="start stretch" id="{{name + '_div'}}">
-                    <ngx-monaco-editor class="full-size-editor" id="{{name + '_editor'}}" [options]="editorOptions"
-                                       [formControl]="formControl" (onInit)="onInit($event)"></ngx-monaco-editor>
-                </div>
-            </ng-template>
-            <mat-action-row>
-                <button mat-icon-button (click)="openDialog(index)" *ngIf="!_builderModeService.readOnly">
-                    <mat-icon>delete</mat-icon>
-                </button>
-            </mat-action-row>
-        </mat-expansion-panel>
-    </mat-sidenav-content>
-</mat-sidenav-container>
+<mat-card appearance="outlined" class="action-card" [class.collapsed]="!expanded" id="{{ action.event + '_' + action.phase + '_' + index }}">
+    <div class="action-header">
+        <button mat-icon-button type="button" class="expand-button" (click)="toggleExpanded()"
+                [attr.aria-expanded]="expanded"
+                [matTooltip]="(expanded ? 'builder.modeler.actions-mode.action-editor.action-editor.collapse' : 'builder.modeler.actions-mode.action-editor.action-editor.expand') | translate">
+            <mat-icon>{{ expanded ? "expand_less" : "expand_more" }}</mat-icon>
+        </button>
+        <span class="action-title" (click)="toggleExpanded()">{{
+            "builder.modeler.actions-mode.action-editor.action-editor.action" | translate
+        }} {{ action.id }}</span>
+        @if (!expanded) {
+        <code class="action-preview" (click)="toggleExpanded()">{{ preview }}</code>
+        }
+        <span class="spacer"></span>
+        @if (expanded && !_builderModeService.readOnly) {
+        <button mat-icon-button type="button" (click)="openDrawer()"
+                [class.toggled]="drawer.opened" [attr.aria-pressed]="drawer.opened"
+                [matTooltip]="'builder.modeler.actions-mode.action-editor.action-editor.functions' | translate">
+            <mat-icon>functions</mat-icon>
+        </button>
+        }
+        <mat-menu #referencesMenu="matMenu">
+            @for (configuration of editorConfigurations; track configuration) {
+            <nc-builder-action-editor-menu-item
+                [parentTrigger]="referencesTrigger"
+                [trigger]="referenceItemTrigger"
+                #referenceItem="menuInOtherComponent"
+                [configuration]="configuration"
+                [hidden]="!referencesOpened"
+            ></nc-builder-action-editor-menu-item>
+            <button mat-menu-item #referenceItemTrigger="matMenuTrigger" [matMenuTriggerFor]="referenceItem.menu">
+                {{ configuration.title }}
+            </button>
+            }
+        </mat-menu>
+        <button #matButton type="button" mat-button
+                #referencesTrigger="matMenuTrigger"
+                [matMenuTriggerFor]="referencesMenu"
+                [hidden]="_builderModeService.readOnly || !expanded">
+            <mat-icon>link</mat-icon>
+            {{ "builder.modeler.actions-mode.action-editor.action-editor.references" | translate }}
+            <mat-icon iconPositionEnd>arrow_drop_down</mat-icon>
+        </button>
+        @if (!_builderModeService.readOnly) {
+        <button mat-icon-button type="button" (click)="openDialog(index)"
+                [matTooltip]="'builder.modeler.actions-mode.action-editor.action-editor.delete' | translate">
+            <mat-icon>delete</mat-icon>
+        </button>
+        }
+    </div>
+    <mat-sidenav-container autosize class="action-body">
+        <mat-sidenav mode="side" #drawer>
+            <nc-builder-action-editor-menu
+                [descriptionComponent]="descriptionComponent"
+                [editor]="editor"
+            ></nc-builder-action-editor-menu>
+        </mat-sidenav>
+        <mat-sidenav-content>
+            <div fxLayout="column" fxLayoutAlign="start stretch" id="{{ name + '_div' }}">
+                <ngx-monaco-editor
+                    class="full-size-editor"
+                    [style.height.px]="editorHeight"
+                    id="{{ name + '_editor' }}"
+                    [options]="editorOptions"
+                    [formControl]="formControl"
+                    (onInit)="onInit($event)"
+                ></ngx-monaco-editor>
+            </div>
+        </mat-sidenav-content>
+    </mat-sidenav-container>
+</mat-card>

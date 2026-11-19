@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit, Optional} from "@angular/core";
+import {Component, Inject, OnInit, Optional, ChangeDetectionStrategy} from "@angular/core";
 import {TaskRefField} from "../model/task-ref-field";
 import {TaskRefDashboardTile} from "../model/task-ref-dashboard-tile";
 import {LoggerService} from "../../../logger/services/logger.service";
@@ -9,7 +9,9 @@ import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-fie
 
 @Component({
     selector: 'ncc-abstract-task-ref-dashboard',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractTaskRefDashboardFieldComponent extends AbstractBaseDataFieldComponent<TaskRefField> implements OnInit {
 

@@ -10,12 +10,12 @@ import {
     UserListService, UserListValue,
     UserValue
 } from "@netgrif/components-core";
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {HttpClientTestingModule} from "@angular/common/http/testing";
-import {Component, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA} from "@angular/core";
+import {provideHttpClientTesting} from "@angular/common/http/testing";
+import {Component, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA, ChangeDetectionStrategy} from "@angular/core";
 import {FormControl} from "@angular/forms";
 import {MultiUserAssignItemComponent} from "./multi-user-assign-item/multi-user-assign-item.component";
 import {BrowserDynamicTestingModule} from "@angular/platform-browser-dynamic/testing";
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('MultiUserAssignListComponent', () => {
     let component: MultiUserAssignItemComponent;
@@ -23,23 +23,23 @@ describe('MultiUserAssignListComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
-            imports: [
-                MaterialModule,
-                BrowserAnimationsModule,
-                HttpClientTestingModule,
-                TranslateLibModule
-            ],
-            providers: [
-                UserListService,
-                {provide: ConfigurationService, useClass: TestConfigurationService}
-            ],
             declarations: [
                 MultiUserAssignListComponent,
                 MultiUserAssignItemComponent,
                 ErrorSnackBarComponent,
                 TestWrapperComponent
             ],
-            schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA]
+            schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA],
+            imports: [
+                MaterialModule,
+                TranslateLibModule
+            ],
+            providers: [
+                UserListService,
+                {provide: ConfigurationService, useClass: TestConfigurationService},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
+            ]
         }).compileComponents();
 
         fixture = TestBed.createComponent(TestWrapperComponent);
@@ -58,7 +58,9 @@ describe('MultiUserAssignListComponent', () => {
 
 @Component({
     selector: 'nc-test-wrapper',
-    template: '<nc-multi-user-assign-list [searchUserControl]="formControl" [roles]="injectedData.roles"></nc-multi-user-assign-list>'
+    template: '<nc-multi-user-assign-list [searchUserControl]="formControl" [roles]="injectedData.roles"></nc-multi-user-assign-list>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestWrapperComponent {
     injectedData = {

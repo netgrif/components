@@ -1,0 +1,14 @@
+<div class="cases">
+    <nc-tab-view #tabView class="tabs" [initialTabs]="tabs" [hideHeader]="true" animationDuration="0" stretch="false"></nc-tab-view>
+
+    <!-- placed after the tab view so its TabView exists, shown above it (order): an opened case gets a back button and its title -->
+    @let selected = tabView.tabView?.selectedIndex.value ?? 0;
+    @if (selected > 0) {
+    <div class="detail-header">
+        <button mat-icon-button (click)="closeDetail(tabView.tabView)" [matTooltip]="'toolbar.menu.back' | translate">
+            <mat-icon>arrow_back</mat-icon>
+        </button>
+        <h1 class="mat-title-large detail-title">{{ tabView.tabView.openedTabs[selected]?.getText$() | async | translate }}</h1>
+    </div>
+    }
+</div>

@@ -144,6 +144,9 @@ export class CancelTaskService extends TaskHandlingService {
                     this._changedFieldsService.emitChangedFields(changedFieldsMap);
                 }
                 this.completeActions(afterAction, nextEvent, false);
+            } else {
+                this._snackBar.openErrorSnackBar(`${this._translate.instant('tasks.snackbar.cancelTask')} ${this._translate.instant('tasks.snackbar.failed')}`);
+                this.completeActions(afterAction, nextEvent, false);
             }
         }, error => {
             this._taskState.stopLoading(canceledTaskId);

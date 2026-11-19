@@ -1,10 +1,8 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {SignaturePadFieldComponent} from './signature-pad-field.component';
-import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
-import {AngularResizeEventModule} from 'angular-resize-event';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {Component, CUSTOM_ELEMENTS_SCHEMA, ChangeDetectionStrategy} from '@angular/core';
 import {FormControl} from '@angular/forms';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {
     AuthenticationMethodService,
     AuthenticationService,
@@ -19,6 +17,7 @@ import {
     UserResourceService,
     WrappedBoolean
 } from '@netgrif/components-core';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('SignaturePadFieldComponent', () => {
     let component: SignaturePadFieldComponent;
@@ -26,21 +25,23 @@ describe('SignaturePadFieldComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
+            declarations: [
+                SignaturePadFieldComponent,
+                TestWrapperComponent
+            ],
+            schemas: [CUSTOM_ELEMENTS_SCHEMA],
             imports: [
                 MaterialModule,
-                AngularResizeEventModule,
-                BrowserAnimationsModule,
-                TranslateLibModule,
-                HttpClientTestingModule
+                TranslateLibModule
             ],
             providers: [
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
-            ],
-            declarations: [SignaturePadFieldComponent, TestWrapperComponent],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA]
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
+            ]
         }).compileComponents();
 
         fixture = TestBed.createComponent(TestWrapperComponent);
@@ -59,7 +60,9 @@ describe('SignaturePadFieldComponent', () => {
 
 @Component({
     selector: 'nc-test-wrapper',
-    template: '<nc-signature-pad-field [showLargeLayout]="label" [dataField]="field" [formControlRef]="formControl"> </nc-signature-pad-field>'
+    template: '<nc-signature-pad-field [showLargeLayout]="label" [dataField]="field" [formControlRef]="formControl"> </nc-signature-pad-field>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestWrapperComponent {
     label = new WrappedBoolean();

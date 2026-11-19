@@ -1,4 +1,4 @@
-import {AfterViewInit, ChangeDetectorRef, Component, Inject, Optional} from "@angular/core";
+import {AfterViewInit, ChangeDetectorRef, Component, Inject, Optional, ChangeDetectionStrategy} from "@angular/core";
 import {AbstractNumberErrorsComponent} from "../abstract-number-errors.component";
 import {DecimalPipe} from "@angular/common";
 import {TranslateService} from "@ngx-translate/core";
@@ -7,7 +7,9 @@ import {NumberField} from "../models/number-field";
 
 @Component({
     selector: 'ncc-abstract-number-decimal-field',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractNumberDecimalFieldComponent extends AbstractNumberErrorsComponent implements AfterViewInit {
 

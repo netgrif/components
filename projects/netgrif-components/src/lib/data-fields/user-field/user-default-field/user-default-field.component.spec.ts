@@ -8,11 +8,10 @@ import {
     TranslateLibModule,
     UserField, WrappedBoolean
 } from "@netgrif/components-core";
-import {AngularResizeEventModule} from "angular-resize-event";
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {HttpClientTestingModule} from "@angular/common/http/testing";
+import {provideHttpClientTesting} from "@angular/common/http/testing";
 import {CUSTOM_ELEMENTS_SCHEMA} from "@angular/core";
 import {FormControl} from "@angular/forms";
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('UserDefaultFieldComponent', () => {
   let component: UserDefaultFieldComponent;
@@ -20,8 +19,12 @@ describe('UserDefaultFieldComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-        imports: [MaterialModule, AngularResizeEventModule, BrowserAnimationsModule, HttpClientTestingModule, TranslateLibModule],
         declarations: [UserDefaultFieldComponent],
+        schemas: [CUSTOM_ELEMENTS_SCHEMA],
+        imports: [
+            MaterialModule,
+            TranslateLibModule
+        ],
         providers: [
             SideMenuService,
             {provide: DATA_FIELD_PORTAL_DATA, useValue: {
@@ -35,9 +38,10 @@ describe('UserDefaultFieldComponent', () => {
                     formControlRef: new FormControl(),
                     showLargeLayout: new WrappedBoolean()
                 } as DataFieldPortalData<UserField>
-            }
-        ],
-        schemas: [CUSTOM_ELEMENTS_SCHEMA]
+            },
+            provideHttpClient(withXhr(), withInterceptorsFromDi()),
+            provideHttpClientTesting()
+        ]
     })
     .compileComponents();
   });

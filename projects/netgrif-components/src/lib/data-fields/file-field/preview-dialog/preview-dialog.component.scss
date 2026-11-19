@@ -1,18 +1,9 @@
-.image-size {
-    height: 64vh;
+img {
+    max-height: 64vh;
+    max-width: 100%;
 }
 
-.close {
-    float: right;
-    top:-24px;
-    right:-24px;
-}
-
-.pdf-view {
+embed {
     width: 50vw;
     height: 64vh;
-}
-
-.fit-content {
-    height: fit-content;
 }

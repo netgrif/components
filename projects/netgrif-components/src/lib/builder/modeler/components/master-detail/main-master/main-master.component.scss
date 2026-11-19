@@ -1,36 +1,3 @@
-.header {
-    align-items: center;
-    border-bottom: 1px solid #dddddd;
-    margin: 0;
-    padding-left: 16px;
-    padding-right: 16px;
+@use '../master-pane' as pane;
 
-    p {
-        margin-top: 8px;
-        margin-bottom: 8px;
-    }
-}
-
-.button-wrap {
-    display: flex;
-    flex-direction: row-reverse;
-}
-
-mat-action-list {
-    padding-top: 0;
-}
-
-mat-paginator {
-    border-top: 1px solid #dddddd;
-    background-color: transparent;
-}
-
-.height-max {
-    box-sizing: border-box;
-    height: calc(100% - 57px);
-    overflow: auto;
-}
-
-.height-fix {
-    height: 100%;
-}
+@include pane.styles;

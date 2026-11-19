@@ -1,6 +1,6 @@
 import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 import {TaskRefFieldComponent} from './task-ref-field.component';
-import {Component, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA} from '@angular/core';
+import {Component, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA, ChangeDetectionStrategy} from '@angular/core';
 import {
     AuthenticationMethodService,
     AuthenticationService,
@@ -15,13 +15,12 @@ import {
     TranslateLibModule,
     UserResourceService
 } from '@netgrif/components-core';
-import {AngularResizeEventModule} from 'angular-resize-event';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {DataFieldTemplateComponent} from '../data-field-template/data-field-template.component';
 import {
     TaskRefDashboardTileComponent
 } from './task-ref-dashboard-field/task-ref-dashboard-tile/task-ref-dashboard-tile.component';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('TaskRefFieldComponent', () => {
     let component: TaskRefFieldComponent;
@@ -29,20 +28,22 @@ describe('TaskRefFieldComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
-            imports: [MaterialModule, AngularResizeEventModule, NoopAnimationsModule,
-                CovalentModule, TranslateLibModule, HttpClientTestingModule],
-            providers: [
-                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
-                {provide: ConfigurationService, useClass: TestConfigurationService},
-                {provide: AuthenticationService, useClass: MockAuthenticationService},
-                {provide: UserResourceService, useClass: MockUserResourceService}
-            ],
             declarations: [
                 DataFieldTemplateComponent,
                 TaskRefDashboardTileComponent,
                 TestWrapperComponent
             ],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
+            schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
+            imports: [MaterialModule,
+                CovalentModule, TranslateLibModule],
+            providers: [
+                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
+                {provide: ConfigurationService, useClass: TestConfigurationService},
+                {provide: AuthenticationService, useClass: MockAuthenticationService},
+                {provide: UserResourceService, useClass: MockUserResourceService},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
+            ]
         }).compileComponents();
         fixture = TestBed.createComponent(TestWrapperComponent);
         component = fixture.debugElement.children[0].componentInstance;
@@ -60,7 +61,9 @@ describe('TaskRefFieldComponent', () => {
 
 @Component({
     selector: 'nc-test-wrapper',
-    template: '<nc-task-ref-field [dataField]="field"></nc-task-ref-field>'
+    template: '<nc-task-ref-field [dataField]="field"></nc-task-ref-field>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestWrapperComponent {
     field = new TaskRefField('', '', ['633c6187bb12a90925e0a17e'], {

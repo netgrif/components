@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, ChangeDetectionStrategy} from '@angular/core';
 import {AbstractHeaderService} from '../../abstract-header-service';
 import {Sort} from '@angular/material/sort';
 import {AbstractHeaderModeComponent} from '../abstract-header-mode.component';
@@ -6,7 +6,9 @@ import {AbstractHeaderModeComponent} from '../abstract-header-mode.component';
 
 @Component({
     selector: 'ncc-abstract-sort-mode',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractSortModeComponent extends AbstractHeaderModeComponent {
 

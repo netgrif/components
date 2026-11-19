@@ -1,8 +1,7 @@
 import {ComponentFixture, fakeAsync, TestBed, tick, waitForAsync} from '@angular/core/testing';
 import {WorkflowViewComponent} from './workflow-view.component';
 import {CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA} from '@angular/core';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {SideMenuContentComponentModule} from '../../side-menu/content-components/side-menu-content-component.module';
 import {
     AuthenticationMethodService,
@@ -29,6 +28,7 @@ import {CommonModule} from "@angular/common";
 import {SearchComponentModule} from "../../search/search.module";
 import {TranslatePipe, TranslateService} from "@ngx-translate/core";
 import {RouterTestingModule} from "@angular/router/testing";
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('WorkflowViewComponent', () => {
     let component: WorkflowViewComponent;
@@ -40,20 +40,18 @@ describe('WorkflowViewComponent', () => {
             declarations: [
                 WorkflowViewComponent
             ],
+            schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
             imports: [
                 TranslateLibModule,
                 MaterialModule,
-                NoopAnimationsModule,
                 PanelComponentModule,
                 HeaderComponentModule,
-                HttpClientTestingModule,
                 SideMenuContentComponentModule,
                 CommonModule,
                 SearchComponentModule,
                 TranslateLibModule,
                 RouterTestingModule.withRoutes([])
             ],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
             providers: [
                 TranslatePipe,
                 LanguageService,
@@ -65,13 +63,17 @@ describe('WorkflowViewComponent', () => {
                 WorkflowHeaderService,
                 OverflowService,
                 {provide: ProcessService, useClass: MockProcessService},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting(),
             ]
         })
             .compileComponents();
+        // the language service loads the translations of the libraries (as in the application, before the first view)
+        TestBed.inject(LanguageService);
         translateService = TestBed.inject(TranslateService);
         // Set up translations
         translateService.setTranslation('en', {
-            'search.fullText': 'Enter searched phrase'
+            'search.fullText': 'Search'
         });
         translateService.use('en');
 

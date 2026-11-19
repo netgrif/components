@@ -1,10 +1,9 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {MatIconModule} from '@angular/material/icon';
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
 import {MockAuthenticationMethodService} from '../utility/tests/mocks/mock-authentication-method-service';
-import {Component, Inject, Injector, Optional} from '@angular/core';
+import {Component, Inject, Injector, Optional, ChangeDetectionStrategy} from '@angular/core';
 import {AbstractHeaderComponent} from './abstract-header.component';
 import {TranslateLibModule} from '../translate/translate-lib.module';
 import {RouterTestingModule} from '@angular/router/testing';
@@ -36,6 +35,7 @@ import {
 } from "../data-fields/models/data-field-portal-data-injection-token";
 import {MultichoiceField} from "../data-fields/multichoice-field/models/multichoice-field";
 import {EnumerationField} from "../data-fields/enumeration-field/models/enumeration-field";
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('AbstractHeaderComponent', () => {
     let component: TestHeaderComponent;
@@ -43,10 +43,9 @@ describe('AbstractHeaderComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
+            declarations: [TestHeaderComponent],
             imports: [
-                NoopAnimationsModule,
                 TranslateLibModule,
-                HttpClientTestingModule,
                 MaterialModule,
                 MatIconModule,
                 RouterTestingModule.withRoutes([]),
@@ -61,9 +60,10 @@ describe('AbstractHeaderComponent', () => {
                 {provide: UserResourceService, useClass: MockUserResourceService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: ViewService, useClass: TestViewService},
-                {provide: AllowedNetsService, useFactory: TestNoAllowedNetsFactory, deps: [AllowedNetsServiceFactory]}
-            ],
-            declarations: [TestHeaderComponent]
+                {provide: AllowedNetsService, useFactory: TestNoAllowedNetsFactory, deps: [AllowedNetsServiceFactory]},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
+            ]
         }).compileComponents();
     }));
 
@@ -84,7 +84,9 @@ describe('AbstractHeaderComponent', () => {
 
 @Component({
     selector: 'ncc-test-head',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestHeaderComponent extends AbstractHeaderComponent {
     constructor(protected _injector: Injector,

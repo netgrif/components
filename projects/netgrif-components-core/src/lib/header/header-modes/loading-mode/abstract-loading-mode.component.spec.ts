@@ -1,8 +1,7 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {FlexLayoutModule, FlexModule} from '@ngbracket/ngx-layout';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {Component} from '@angular/core';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
+import {Component, ChangeDetectionStrategy} from '@angular/core';
 import {AbstractLoadingModeComponent} from './abstract-loading-mode.component';
 import {CaseHeaderService} from '../../case-header/case-header.service';
 import {ViewService} from '../../../routing/view-service/view.service';
@@ -24,6 +23,7 @@ import {RouterTestingModule} from '@angular/router/testing';
 import {NAE_BASE_FILTER} from '../../../search/models/base-filter-injection-token';
 import {AllowedNetsService} from '../../../allowed-nets/services/allowed-nets.service';
 import {AllowedNetsServiceFactory} from '../../../allowed-nets/services/factory/allowed-nets-service-factory';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('AbstractLoadingModeComponent', () => {
     let component: TestLoadModeComponent;
@@ -35,8 +35,6 @@ describe('AbstractLoadingModeComponent', () => {
             imports: [
                 FlexModule,
                 FlexLayoutModule,
-                NoopAnimationsModule,
-                HttpClientTestingModule,
                 MaterialModule,
                 TranslateLibModule,
                 RouterTestingModule.withRoutes([])
@@ -54,7 +52,9 @@ describe('AbstractLoadingModeComponent', () => {
                 {provide: UserResourceService, useClass: MockUserResourceService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: ViewService, useClass: TestViewService},
-                {provide: AllowedNetsService, useFactory: TestCaseViewAllowedNetsFactory, deps: [AllowedNetsServiceFactory]}
+                {provide: AllowedNetsService, useFactory: TestCaseViewAllowedNetsFactory, deps: [AllowedNetsServiceFactory]},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
             ]
         }).compileComponents();
     }));
@@ -76,7 +76,9 @@ describe('AbstractLoadingModeComponent', () => {
 
 @Component({
     selector: 'ncc-test-load',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestLoadModeComponent extends AbstractLoadingModeComponent {
     constructor() {
@@ -86,7 +88,9 @@ class TestLoadModeComponent extends AbstractLoadingModeComponent {
 
 @Component({
     selector: 'ncc-test-wrapper',
-    template: '<ncc-test-load [headerService]="service"></ncc-test-load>'
+    template: '<ncc-test-load [headerService]="service"></ncc-test-load>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestWrapperComponent {
     constructor(public service: CaseHeaderService) {

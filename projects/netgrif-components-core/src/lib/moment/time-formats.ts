@@ -14,14 +14,19 @@ export const DATE_FORMAT = {
     },
 };
 
+export const TIME_FORMAT_STRING = 'HH:mm';
+
 export const DATE_TIME_FORMAT = {
     parse: {
-        dateInput: DATE_TIME_FORMAT_STRING,
+        dateInput: DATE_FORMAT_STRING,
+        timeInput: TIME_FORMAT_STRING,
     },
     display: {
-        dateInput: DATE_TIME_FORMAT_STRING,
+        dateInput: DATE_FORMAT_STRING,
+        timeInput: TIME_FORMAT_STRING,
+        timeOptionLabel: TIME_FORMAT_STRING,
         monthYearLabel: 'MMM YYYY',
-        dateA11yLabel: 'Do MMMM YYYY HH:mm',
+        dateA11yLabel: 'Do MMMM YYYY',
         monthYearA11yLabel: 'MMMM YYYY',
     },
 };

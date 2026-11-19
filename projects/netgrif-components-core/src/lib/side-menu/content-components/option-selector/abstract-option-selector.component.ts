@@ -3,11 +3,16 @@ import {Option, OptionSelectorInjectionData} from './model/option-selector-injec
 import {FormControl, Validators} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
-import {Component} from '@angular/core';
+import {Component, ChangeDetectionStrategy} from '@angular/core';
 
+/**
+ * @deprecated the side menu is deprecated, the library opens dialogs instead (`DialogComponentsModule`)
+ */
 @Component({
     selector: 'ncc-abstract-option-selector',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractOptionSelectorComponent {
 

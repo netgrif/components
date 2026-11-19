@@ -17,11 +17,10 @@ import {
     TranslateLibModule,
     UserResourceService, WrappedBoolean
 } from "@netgrif/components-core";
-import {AngularResizeEventModule} from "angular-resize-event";
-import {BrowserAnimationsModule, NoopAnimationsModule} from "@angular/platform-browser/animations";
-import {HttpClientTestingModule} from "@angular/common/http/testing";
+import {provideHttpClientTesting} from "@angular/common/http/testing";
 import {CUSTOM_ELEMENTS_SCHEMA} from "@angular/core";
 import {FormControl} from "@angular/forms";
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('FileDefaultFieldComponent', () => {
   let component: FileDefaultFieldComponent;
@@ -29,13 +28,15 @@ describe('FileDefaultFieldComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+        schemas: [CUSTOM_ELEMENTS_SCHEMA],
+        declarations: [
+            FileDefaultFieldComponent,
+            ErrorSnackBarComponent,
+            SuccessSnackBarComponent
+        ],
         imports: [
             MaterialModule,
-            AngularResizeEventModule,
-            BrowserAnimationsModule,
-            HttpClientTestingModule,
-            TranslateLibModule,
-            NoopAnimationsModule
+            TranslateLibModule
         ],
         providers: [
             SideMenuService,
@@ -55,13 +56,9 @@ describe('FileDefaultFieldComponent', () => {
                     showLargeLayout: new WrappedBoolean(),
                     additionalFieldProperties: {taskId: '0'}
                 } as DataFieldPortalData<FileField>
-            }
-        ],
-        schemas: [CUSTOM_ELEMENTS_SCHEMA],
-        declarations: [
-            FileDefaultFieldComponent,
-            ErrorSnackBarComponent,
-            SuccessSnackBarComponent
+            },
+            provideHttpClient(withXhr(), withInterceptorsFromDi()),
+            provideHttpClientTesting()
         ]
     })
     .compileComponents();

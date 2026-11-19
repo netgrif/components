@@ -1,7 +1,16 @@
-.full-height {
+:host {
+    display: block;
     height: 100%;
 }
 
-.block {
-    display: block !important;
+.detail-header {
+    padding: 8px 16px 0;
+}
+
+.detail-title {
+    overflow: hidden;
+    margin: 0;
+    color: var(--mat-sys-on-surface);
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }

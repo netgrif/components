@@ -2,9 +2,8 @@ import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {TaskListComponent} from './task-list.component';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {CommonModule} from '@angular/common';
-import {Component, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA} from '@angular/core';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {Component, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA, ChangeDetectionStrategy} from '@angular/core';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {of} from 'rxjs';
 import {
     AssignPolicy,
@@ -27,6 +26,7 @@ import {
 import {RouterTestingModule} from '@angular/router/testing';
 import {PanelComponentModule} from '../panel.module';
 import {AuthenticationComponentModule} from '../../authentication/auth.module';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('TaskListComponent', () => {
     let component: TaskListComponent;
@@ -34,17 +34,16 @@ describe('TaskListComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
+            declarations: [TestWrapperComponent],
+            schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
             imports: [
                 MatExpansionModule,
                 PanelComponentModule,
                 MaterialModule,
-                NoopAnimationsModule,
                 CommonModule,
-                HttpClientTestingModule,
                 AuthenticationComponentModule,
                 RouterTestingModule.withRoutes([])
             ],
-            declarations: [TestWrapperComponent],
             providers: [
                 TaskViewService,
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
@@ -60,9 +59,10 @@ describe('TaskListComponent', () => {
                     useClass: TestConfigurationService
                 },
                 {provide: TaskResourceService, useClass: MyResources},
-                {provide: AllowedNetsService, useFactory: TestTaskViewAllowedNetsFactory, deps: [AllowedNetsServiceFactory]}
-            ],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
+                {provide: AllowedNetsService, useFactory: TestTaskViewAllowedNetsFactory, deps: [AllowedNetsServiceFactory]},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
+            ]
         })
             .compileComponents();
 
@@ -82,7 +82,9 @@ describe('TaskListComponent', () => {
 
 @Component({
     selector: 'nc-test-wrapper',
-    template: '<nc-task-list [tasks$]="taskPanels"></nc-task-list>'
+    template: '<nc-task-list [tasks$]="taskPanels"></nc-task-list>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestWrapperComponent {
     taskPanels = of([]);

@@ -1,8 +1,7 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {FilterSelectorListItemComponent} from './filter-selector-list-item.component';
-import {Component} from '@angular/core';
+import {Component, ChangeDetectionStrategy} from '@angular/core';
 import {FilterType, SimpleFilter} from '@netgrif/components-core';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('FilterSelectorListItemComponent', () => {
     let component: FilterSelectorListItemComponent;
@@ -10,8 +9,7 @@ describe('FilterSelectorListItemComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
-            imports: [
-                NoopAnimationsModule],
+            imports: [],
             declarations: [
                 FilterSelectorListItemComponent,
                 TestWrapperComponent
@@ -37,7 +35,9 @@ describe('FilterSelectorListItemComponent', () => {
 
 @Component({
     selector: 'nc-test-wrapper',
-    template: '<nc-filter-selector-list-item [filter]="filter"></nc-filter-selector-list-item>'
+    template: '<nc-filter-selector-list-item [filter]="filter"></nc-filter-selector-list-item>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestWrapperComponent {
     filter = new SimpleFilter('', FilterType.CASE, {});

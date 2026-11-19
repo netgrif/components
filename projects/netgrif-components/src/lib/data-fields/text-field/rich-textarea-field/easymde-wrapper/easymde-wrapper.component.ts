@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, forwardRef, Input, OnDestroy, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, forwardRef, Input, OnDestroy, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import EasyMDE from 'easymde';
 import * as marked from 'marked';
 import {ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR} from '@angular/forms';
@@ -18,6 +18,8 @@ const noop: any = () => {
             multi: true,
         },
     ],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false,
 })
 export class EasymdeWrapperComponent implements OnDestroy, AfterViewInit, ControlValueAccessor {
     private _easyMDE!: EasyMDE;
@@ -41,7 +43,6 @@ export class EasymdeWrapperComponent implements OnDestroy, AfterViewInit, Contro
         };
     }
 
-    // eslint-disable-next-line no-unused-vars
     propagateChange = (_: any) => noop;
     onTouched = () => noop;
 

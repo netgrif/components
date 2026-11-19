@@ -1,9 +1,8 @@
 import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 import {AdminImpersonateListComponent} from './admin-impersonate-list.component';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {Component, NO_ERRORS_SCHEMA} from '@angular/core';
+import {Component, NO_ERRORS_SCHEMA, ChangeDetectionStrategy} from '@angular/core';
 import {FormControl} from '@angular/forms';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
 import {
     ConfigurationService,
@@ -16,6 +15,7 @@ import {
     UserValue
 } from '@netgrif/components-core';
 import {AdminImpersonateItemComponent} from './admin-impersonate-item/admin-impersonate-item.component';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('AdminImpersonateListComponent', () => {
     let component: AdminImpersonateListComponent;
@@ -23,23 +23,23 @@ describe('AdminImpersonateListComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
-            imports: [
-                MaterialModule,
-                BrowserAnimationsModule,
-                HttpClientTestingModule,
-                TranslateLibModule
-            ],
-            providers: [
-                {provide: UserListService, useClass: ImpersonationUserListService},
-                {provide: ConfigurationService, useClass: TestConfigurationService}
-            ],
             declarations: [
                 AdminImpersonateListComponent,
                 AdminImpersonateItemComponent,
                 ErrorSnackBarComponent,
                 TestWrapperComponent
             ],
-            schemas: [NO_ERRORS_SCHEMA]
+            schemas: [NO_ERRORS_SCHEMA],
+            imports: [
+                MaterialModule,
+                TranslateLibModule
+            ],
+            providers: [
+                {provide: UserListService, useClass: ImpersonationUserListService},
+                {provide: ConfigurationService, useClass: TestConfigurationService},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
+            ]
         }).compileComponents();
 
         fixture = TestBed.createComponent(TestWrapperComponent);
@@ -58,7 +58,9 @@ describe('AdminImpersonateListComponent', () => {
 
 @Component({
     selector: 'nc-test-wrapper',
-    template: '<nc-user-impersonate-list [searchUserControl]="formControl" [roles]="injectedData.roles"></nc-user-impersonate-list>'
+    template: '<nc-user-impersonate-list [searchUserControl]="formControl" [roles]="injectedData.roles"></nc-user-impersonate-list>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestWrapperComponent {
     injectedData = {roles: [], value: new UserValue('5', 'admin', 'netgrif', 'super@netgrif.com')} as UserListInjectedData;

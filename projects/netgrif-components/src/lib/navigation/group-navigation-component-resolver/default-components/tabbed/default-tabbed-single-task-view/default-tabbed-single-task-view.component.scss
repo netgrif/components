@@ -1,19 +1,5 @@
-.task-tab-background{
+.view {
+    box-sizing: border-box;
     height: 100%;
-    width: 100%;
-    overflow: auto;
-    background-color: transparent;
-}
-.content-margin{
-    margin: 8px 24px 0;
-}
-
-.full-height {
-    height: calc(100% - 8px);
-}
-
-@media screen and (max-width: 599.99px) {
-    .content-margin {
-        margin: 8px 12px 0;
-    }
+    padding: 16px 24px;
 }

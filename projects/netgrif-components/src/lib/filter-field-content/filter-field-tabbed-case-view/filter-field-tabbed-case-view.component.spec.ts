@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FilterFieldTabbedCaseViewComponent } from './filter-field-tabbed-case-view.component';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import {
     AllowedNetsService,
     AllowedNetsServiceFactory,
@@ -26,11 +26,11 @@ import {
 } from '@netgrif/components-core';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { RouterTestingModule } from '@angular/router/testing';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { Component, Injectable } from '@angular/core';
+import { Component, Injectable, ChangeDetectionStrategy } from '@angular/core';
 import { of } from 'rxjs';
 import { NavigationComponentModule } from '../../navigation/navigation.module';
 import { HeaderComponent } from '../../header/header.component';
+import { provideHttpClient, withInterceptorsFromDi, withXhr } from '@angular/common/http';
 
 describe('FilterFieldTabbedCaseViewComponent', () => {
     let component: FilterFieldTabbedCaseViewComponent;
@@ -40,11 +40,9 @@ describe('FilterFieldTabbedCaseViewComponent', () => {
         await TestBed.configureTestingModule({
             declarations: [ TestWrapperComponent, FilterFieldTabbedCaseViewComponent, HeaderComponent],
             imports: [
-                HttpClientTestingModule,
                 MatSnackBarModule,
                 RouterTestingModule.withRoutes([]),
                 MaterialModule,
-                NoopAnimationsModule,
                 TranslateLibModule,
                 NavigationComponentModule,
                 TestMockDependenciesModule
@@ -69,6 +67,8 @@ describe('FilterFieldTabbedCaseViewComponent', () => {
                 OverflowService,
                 {provide: UserPreferenceService, useClass: MockUserPreferenceService},
                 {provide: AbstractHeaderService, useClass: CaseHeaderService},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting(),
             ]
         })
             .compileComponents();
@@ -91,7 +91,9 @@ describe('FilterFieldTabbedCaseViewComponent', () => {
 
 @Component({
     selector: 'nc-test-wrapper',
-    template: '<nc-filter-field-tabbed-case-view></nc-filter-field-tabbed-case-view>'
+    template: '<nc-filter-field-tabbed-case-view></nc-filter-field-tabbed-case-view>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestWrapperComponent {
     constructor() {

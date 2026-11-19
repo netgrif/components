@@ -2,9 +2,8 @@ import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {LoadingModeComponent} from './loading-mode.component';
 import {FlexLayoutModule, FlexModule} from '@ngbracket/ngx-layout';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {Component} from '@angular/core';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {Component, ChangeDetectionStrategy} from '@angular/core';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {
     AllowedNetsService, AllowedNetsServiceFactory,
     AuthenticationMethodService,
@@ -24,6 +23,7 @@ import {
     ViewService
 } from '@netgrif/components-core';
 import {RouterTestingModule} from '@angular/router/testing';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('LoadingModeComponent', () => {
     let component: LoadingModeComponent;
@@ -35,8 +35,6 @@ describe('LoadingModeComponent', () => {
             imports: [
                 FlexModule,
                 FlexLayoutModule,
-                NoopAnimationsModule,
-                HttpClientTestingModule,
                 MaterialModule,
                 TranslateLibModule,
                 RouterTestingModule.withRoutes([])
@@ -55,7 +53,9 @@ describe('LoadingModeComponent', () => {
                 {provide: UserResourceService, useClass: MockUserResourceService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: ViewService, useClass: TestViewService},
-                {provide: AllowedNetsService, useFactory: TestCaseViewAllowedNetsFactory, deps: [AllowedNetsServiceFactory]}
+                {provide: AllowedNetsService, useFactory: TestCaseViewAllowedNetsFactory, deps: [AllowedNetsServiceFactory]},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
             ]
         }).compileComponents();
     }));
@@ -77,7 +77,9 @@ describe('LoadingModeComponent', () => {
 
 @Component({
     selector: 'nc-test-wrapper',
-    template: '<nc-loading-mode [headerService]="service"></nc-loading-mode>'
+    template: '<nc-loading-mode [headerService]="service"></nc-loading-mode>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestWrapperComponent {
     constructor(public service: CaseHeaderService) {

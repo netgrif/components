@@ -1,4 +1,4 @@
-import {Component, Inject, Optional, Type} from '@angular/core';
+import {Component, Inject, Optional, Type, ChangeDetectionStrategy} from '@angular/core';
 import {
     AbstractFilterFieldContentComponent,
     SearchService,
@@ -50,7 +50,6 @@ export function filterFieldCategoriesFactory(filterField: FilterField, caseCateg
 @Component({
     selector: 'nc-filter-field-content',
     templateUrl: './filter-field-content.component.html',
-    styleUrls: ['./filter-field-content.component.scss'],
     providers: [
         {provide: NAE_BASE_FILTER, useFactory: filterFieldBaseFilterFactory, deps: [NAE_FILTER_FIELD]},
         {provide: NAE_IGNORE_NETS_ON_AUTOCOMPLETE_CATEGORY, useValue: true},
@@ -60,7 +59,9 @@ export function filterFieldCategoriesFactory(filterField: FilterField, caseCateg
                 NAE_DEFAULT_CASE_SEARCH_CATEGORIES, NAE_DEFAULT_TASK_SEARCH_CATEGORIES]},
         SearchService,
         PfqlVisitor
-    ]
+    ],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class FilterFieldContentComponent extends AbstractFilterFieldContentComponent {
 

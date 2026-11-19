@@ -1,10 +1,9 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {WorkflowPanelComponent} from './workflow-panel.component';
-import {Component, NO_ERRORS_SCHEMA} from '@angular/core';
+import {Component, NO_ERRORS_SCHEMA, ChangeDetectionStrategy} from '@angular/core';
 import {PanelComponent} from '../panel.component';
 import {CommonModule} from '@angular/common';
 import {FlexModule} from '@ngbracket/ngx-layout';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {DataFieldsComponentModule} from '../../data-fields/data-fields.module';
 import {of} from 'rxjs';
 import {
@@ -25,9 +24,9 @@ import {
     OverflowService,
     WorkflowViewService, DeploymentState
 } from '@netgrif/components-core';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('WorkflowPanelComponent', () => {
     let component: WorkflowPanelComponent;
@@ -35,14 +34,19 @@ describe('WorkflowPanelComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
+            declarations: [
+                WorkflowPanelComponent,
+                PanelComponent,
+                TestWrapperComponent
+            ],
+            schemas: [NO_ERRORS_SCHEMA],
             imports: [
+                // PanelComponent still binds [@.disabled] on mat-expansion-panel, which needs an animations provider
                 MaterialModule,
                 CommonModule,
                 FlexModule,
-                BrowserAnimationsModule,
                 DataFieldsComponentModule,
                 TranslateLibModule,
-                HttpClientTestingModule,
                 RouterTestingModule.withRoutes([])
             ],
             providers: [
@@ -51,10 +55,10 @@ describe('WorkflowPanelComponent', () => {
                 {provide: UserResourceService, useClass: MockUserResourceService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 WorkflowViewService,
-                OverflowService
-            ],
-            declarations: [WorkflowPanelComponent, PanelComponent, TestWrapperComponent],
-            schemas: [NO_ERRORS_SCHEMA],
+                OverflowService,
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
+            ]
         })
             .compileComponents();
         fixture = TestBed.createComponent(TestWrapperComponent);
@@ -73,7 +77,9 @@ describe('WorkflowPanelComponent', () => {
 
 @Component({
     selector: 'nc-test-wrapper',
-    template: '<nc-workflow-panel [workflow]="workflow" [selectedHeaders$]="selectedHeaders"></nc-workflow-panel>'
+    template: '<nc-workflow-panel [workflow]="workflow" [selectedHeaders$]="selectedHeaders"></nc-workflow-panel>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestWrapperComponent {
     public selectedHeaders = of([

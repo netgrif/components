@@ -1,0 +1,74 @@
+// layout of the playground views, the same structure as the default views of netgrif-frontend
+:host {
+    display: block;
+    height: 100%;
+}
+
+.view {
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    height: 100%;
+}
+
+.search-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+    padding: 16px 24px;
+}
+
+// on a narrow view the actions wrap under the search instead of squeezing it
+.search {
+    flex: 1 1 240px;
+    min-width: 0;
+}
+
+// generated query of the advanced search
+.query-row {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin: 0 24px 8px;
+    padding: 8px 16px;
+    border-radius: var(--mat-sys-corner-medium);
+    background: var(--mat-sys-surface-container-low);
+}
+
+.query-label {
+    flex: 0 0 auto;
+    color: var(--mat-sys-on-surface-variant);
+    font: var(--mat-sys-label-medium);
+}
+
+.query {
+    min-width: 0;
+    color: var(--mat-sys-on-surface);
+    font-family: 'Roboto Mono', monospace;
+    font-size: 13px;
+    overflow-wrap: anywhere;
+}
+
+// paginated list (nc-case-list-paginator / nc-task-list-pagination): it scrolls the header and the rows itself,
+// its scrollbar is drawn in the right padding
+.list {
+    flex: 1 1 auto;
+    min-height: 0;
+    padding: 0 24px 8px;
+}
+
+// lists with their own (virtual) scroll: header above, the list fills the rest
+.list-column {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    min-height: 0;
+    padding: 0 24px 16px;
+}
+
+.virtual-list {
+    flex: 1 1 auto;
+    min-height: 0;
+}

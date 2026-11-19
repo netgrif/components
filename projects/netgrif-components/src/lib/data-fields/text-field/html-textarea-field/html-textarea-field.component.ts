@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Inject, Optional} from '@angular/core';
+import {AfterViewInit, Component, Inject, Optional, ChangeDetectionStrategy} from '@angular/core';
 import {
     AbstractHtmlTextareaFieldComponent,
     DATA_FIELD_PORTAL_DATA,
@@ -11,7 +11,9 @@ import {DomSanitizer} from '@angular/platform-browser';
 @Component({
     selector: 'nc-html-textarea-field',
     templateUrl: './html-textarea-field.component.html',
-    styleUrls: ['./html-textarea-field.component.scss']
+    styleUrls: ['./html-textarea-field.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class HtmlTextareaFieldComponent extends AbstractHtmlTextareaFieldComponent implements AfterViewInit {
     constructor(protected _translate: TranslateService, protected _sanitizer: DomSanitizer,

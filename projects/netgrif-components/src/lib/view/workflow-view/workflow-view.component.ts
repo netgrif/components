@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, ChangeDetectionStrategy} from '@angular/core';
 import {
     AbstractWorkflowViewComponent,
     LoggerService,
@@ -13,7 +13,9 @@ import {ImportNetDialogComponent} from '../../dialog/import-net-dialog/import-ne
     selector: 'nc-workflow-view',
     templateUrl: './workflow-view.component.html',
     styleUrls: ['./workflow-view.component.scss'],
-    providers: [WorkflowViewService]
+    providers: [WorkflowViewService],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class WorkflowViewComponent extends AbstractWorkflowViewComponent {
     constructor(protected _dialog: MatDialog,

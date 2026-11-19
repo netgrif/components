@@ -12,8 +12,8 @@ import {
     TestConfigurationService,
     TranslateLibModule
 } from '@netgrif/components-core';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('UserInviteComponent', () => {
     let component: UserInviteComponent;
@@ -21,14 +21,16 @@ describe('UserInviteComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule, MaterialModule, TranslateLibModule, NoopAnimationsModule],
+            declarations: [UserInviteComponent],
+            imports: [ MaterialModule, TranslateLibModule],
             providers: [
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
-                SignUpService
-            ],
-            declarations: [UserInviteComponent]
+                SignUpService,
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
+            ]
         })
             .compileComponents();
     }));

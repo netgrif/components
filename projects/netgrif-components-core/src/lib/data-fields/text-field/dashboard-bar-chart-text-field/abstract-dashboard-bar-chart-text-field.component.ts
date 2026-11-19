@@ -1,4 +1,4 @@
-import {Component, Inject, Optional} from '@angular/core';
+import {Component, Inject, Optional, ChangeDetectionStrategy} from '@angular/core';
 import {CustomCard} from '../../../dashboard/cards/model/custom-dashboard-model/custom-card';
 import {TranslateService} from '@ngx-translate/core';
 import {DashboardCardTypes} from '../../../dashboard/cards/model/dashboard-card-types';
@@ -9,7 +9,9 @@ import {TextField} from "../models/text-field";
 
 @Component({
     selector: 'ncc-abstract-dashboard-bar-chart-text-field',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractDashboardBarChartTextFieldComponent extends AbstractDashboardTextFieldComponent {
 

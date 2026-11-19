@@ -1,7 +1,7 @@
-<h1 mat-dialog-title>{{data.title}}</h1>
+<h2 mat-dialog-title>{{data.title}}</h2>
 
-<div mat-dialog-content class="dialog-container dialog-content-margin">{{data.content}}</div>
+<div mat-dialog-content>{{data.content}}</div>
 
-<mat-dialog-actions fxLayoutAlign="end">
-    <button mat-button color="primary" (click)="onClose()">OK</button>
+<mat-dialog-actions align="end">
+    <button mat-button cdkFocusInitial (click)="onClose()">OK</button>
 </mat-dialog-actions>

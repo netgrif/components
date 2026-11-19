@@ -1,0 +1,63 @@
+<ne-demo-page title="Alert, confirm, prompt" description="Alert, confirm and prompt dialogs of DialogService. Panel classes dialog-responsive / dialog-task-responsive come from the nae.theme() mixin."
+              [api]="['DialogService', 'DialogModule']" [snippets]="snippets">
+    <div demoPreview class="preview">
+        <button mat-flat-button (click)="open()">
+            <mat-icon>open_in_new</mat-icon>
+            Open {{ type | lowercase }} dialog
+        </button>
+        @if (result !== undefined) {
+        <p class="mat-body-medium">Result: <code>{{ result }}</code></p>
+        }
+    </div>
+
+    <div demoConfig class="ne-config">
+        <mat-form-field subscriptSizing="dynamic">
+            <mat-label>Density</mat-label>
+            <mat-select [(ngModel)]="density">
+                @for (d of densities; track d) {
+                <mat-option [value]="d">{{ d }}{{ d === 0 ? ' (default)' : '' }}</mat-option>
+                }
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Type</mat-label>
+            <mat-select [(ngModel)]="type">
+                @for (t of types; track t) {
+                <mat-option [value]="t">{{ t }}</mat-option>
+                }
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Title</mat-label>
+            <input matInput [(ngModel)]="title">
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Content</mat-label>
+            <input matInput [(ngModel)]="content">
+        </mat-form-field>
+        @if (type === 'Confirm') {
+        <mat-form-field>
+            <mat-label>Negative label</mat-label>
+            <input matInput [(ngModel)]="negativeLabel">
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Positive label</mat-label>
+            <input matInput [(ngModel)]="positiveLabel">
+        </mat-form-field>
+        }
+        @if (type === 'Prompt') {
+        <mat-form-field>
+            <mat-label>Placeholder</mat-label>
+            <input matInput [(ngModel)]="placeholder">
+        </mat-form-field>
+        }
+        <mat-form-field>
+            <mat-label>Panel class</mat-label>
+            <mat-select [(ngModel)]="panelClass">
+                <mat-option value="">none</mat-option>
+                <mat-option value="dialog-responsive">dialog-responsive</mat-option>
+                <mat-option value="dialog-task-responsive">dialog-task-responsive</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+</ne-demo-page>

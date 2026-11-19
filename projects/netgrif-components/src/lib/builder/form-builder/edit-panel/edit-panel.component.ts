@@ -1,14 +1,12 @@
-import {NGX_MAT_DATE_FORMATS} from '@angular-material-components/datetime-picker';
-import {animate, state, style, transition, trigger} from '@angular/animations';
 import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
-import {AfterViewInit, Component, HostListener, OnDestroy, OnInit} from '@angular/core';
+import {AfterViewInit, Component, HostListener, OnDestroy, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
 import {MAT_DATE_FORMATS} from '@angular/material/core';
 import {MatDialog} from '@angular/material/dialog';
-import {DATE_FORMAT, DATE_TIME_FORMAT, EnumerationFieldValue} from '@netgrif/components-core';
+import {DATE_TIME_FORMAT, EnumerationFieldValue} from '@netgrif/components-core';
+import moment, {Moment} from 'moment/moment';
 import {
-  Appearance,
   Component as PetriflowComponent,
   DataRef,
   DataRefBehavior,
@@ -20,7 +18,6 @@ import {
   IconType,
   Option,
   Property,
-  Template,
   Transition,
   TransitionEvent,
   TransitionEventType,
@@ -43,29 +40,15 @@ import {DataModeService} from "../../modeler/data-mode/data-mode.service";
     selector: 'nc-builder-edit-panel',
     templateUrl: './edit-panel.component.html',
     styleUrls: ['./edit-panel.component.scss'],
-    animations: [
-        trigger('openClose', [
-            // ...
-            state('open', style({
-                minWidth: '300px'
-            })),
-            state('closed', style({
-                minWidth: '180px'
-            })),
-            transition('open => closed', [
-                animate('0.3s')
-            ]),
-            transition('closed => open', [
-                animate('0.3s')
-            ]),
-        ]),
-    ],
-    providers: [
-        {provide: NGX_MAT_DATE_FORMATS, useValue: DATE_TIME_FORMAT},
-        {provide: MAT_DATE_FORMATS, useValue: DATE_FORMAT}
-    ]
+    providers: [{provide: MAT_DATE_FORMATS, useValue: DATE_TIME_FORMAT}],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class EditPanelComponent implements OnInit, AfterViewInit, OnDestroy {
+    private static readonly DATE_INIT_FORMAT = 'YYYY-MM-DD';
+    private static readonly DATE_TIME_INIT_FORMAT = 'YYYY-MM-DDTHH:mm:ss';
+    private _dateInit: { source: string; value: Moment | null };
+
     numOfCols: number;
     minOfCols: number;
     hover: boolean;
@@ -159,7 +142,7 @@ export class EditPanelComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        this.readOnlySub.unsubscribe();
+        this.readOnlySub?.unsubscribe();
     }
 
     get transition(): Transition {
@@ -203,14 +186,6 @@ export class EditPanelComponent implements OnInit, AfterViewInit, OnDestroy {
         return this.gridsterService.selectedDataField.dataVariable;
     }
 
-    get templates(): Array<Template> {
-        return Object.values(Template);
-    }
-
-    get appearances(): Array<Appearance> {
-        return Object.values(Appearance);
-    }
-
     ngAfterViewInit(): void {
         setTimeout(() => {
             this.notifyGridster();
@@ -243,7 +218,7 @@ export class EditPanelComponent implements OnInit, AfterViewInit, OnDestroy {
         this.gridsterService.options.maxCols = newCols;
         this.gridsterService.options.maxItemCols = newCols;
         this.modelService.model.getTransition(this.transId).dataGroups[0].cols = newCols;
-        this.gridsterService.options.api.optionsChanged();
+        this.gridsterService.refreshOptions();
         this.registerChange();
     }
 
@@ -274,7 +249,7 @@ export class EditPanelComponent implements OnInit, AfterViewInit, OnDestroy {
             this.gridsterService.selectedDataField.dataVariable.type === DataType.PROCESS_FILTER ||
             this.gridsterService.selectedDataField.dataVariable.type === DataType.TASK_FILTER ||
             this.gridsterService.selectedDataField.dataVariable.type === DataType.CASE_FILTER ||
-            this.gridsterService.selectedDataField.dataVariable.type as string === 'i18n'
+                (this.gridsterService.selectedDataField.dataVariable.type as string) === 'i18n'
         );
     }
 
@@ -282,10 +257,6 @@ export class EditPanelComponent implements OnInit, AfterViewInit, OnDestroy {
         return this.isSomeGridsterFieldSelected() &&
             this.gridsterService.selectedDataField.dataVariable.type === DataType.TEXT &&
             this.gridsterService.selectedDataField.dataVariable.component?.name === 'area';
-    }
-
-    isListOptionsDisplay(): boolean {
-        return this.hasOptions() && this.gridsterService.selectedDataField.dataVariable.component?.name === 'list';
     }
 
     isBoolean(): boolean {
@@ -296,16 +267,6 @@ export class EditPanelComponent implements OnInit, AfterViewInit, OnDestroy {
     isButton(): boolean {
         return this.isSomeGridsterFieldSelected() &&
             this.gridsterService.selectedDataField.dataVariable.type === DataType.BUTTON;
-    }
-
-    isFile(): boolean {
-        return this.isSomeGridsterFieldSelected() &&
-            this.gridsterService.selectedDataField.dataVariable.type === DataType.FILE;
-    }
-
-    isFileList(): boolean {
-        return this.isSomeGridsterFieldSelected() &&
-            this.gridsterService.selectedDataField.dataVariable.type === DataType.FILE_LIST;
     }
 
     isNumber(): boolean {
@@ -344,10 +305,7 @@ export class EditPanelComponent implements OnInit, AfterViewInit, OnDestroy {
         this.dataVariable.options.splice(index, 1);
     }
 
-    notifyGridster(): void {
-        if (this.gridsterService.options.api) {
-            this.gridsterService.options.api.optionsChanged();
-        }
+    notifyGridster(): void {this.gridsterService.refreshOptions();
         this.gridsterService.notifySelectedDataFieldChange();
         this.registerChange();
     }
@@ -379,8 +337,7 @@ export class EditPanelComponent implements OnInit, AfterViewInit, OnDestroy {
 
     openRefactorDialog(event, item: DataVariable): void {
         const dialogRef = this.dialog.open(DialogRefactorComponent, {
-            width: '50%',
-            panelClass: "dialog-width-50",
+            panelClass: 'dialog-responsive',
             data: {
                 originalId: item.id,
                 modelService: this.modelService,
@@ -536,11 +493,31 @@ export class EditPanelComponent implements OnInit, AfterViewInit, OnDestroy {
         return this.dataVariable.inits.map(initKey => initKey.value);
     }
 
-    formatDate() {
-        // TODO: NAB-326 better solution? date picker setting to store only date?
-        if (this.dataVariable.init.value) {
-            this.dataVariable.init.value = this.dataVariable.init.value.substring(0,10);
+    /**
+     * Init value of a date / date time field for the pickers. The model stores it as an ISO string,
+     * the moment instance is cached, so `ngModel` does not get a new value on every change detection.
+     */
+    get dateInitValue(): Moment | null {
+        const source = this.dataVariable?.init?.value ?? '';
+        if (!this._dateInit || this._dateInit.source !== source) {
+            const value = source ? moment(source) : null;
+            this._dateInit = { source, value: value?.isValid() ? value : null };
         }
+        return this._dateInit.value;
+    }
+
+    /**
+     * Stores a value picked in the date / time picker as the init value of the selected field.
+     * @param value picked value
+     * @param withTime `YYYY-MM-DDTHH:mm:ss` for date time fields, `YYYY-MM-DD` for date fields
+     */
+    setDateInitValue(value: Moment | null, withTime: boolean): void {
+        const source = value && moment.isMoment(value) && value.isValid()
+            ? value.format(withTime ? EditPanelComponent.DATE_TIME_INIT_FORMAT : EditPanelComponent.DATE_INIT_FORMAT)
+            : '';
+        this.dataVariable.init.value = source;
+        this._dateInit = { source, value };
+        this.notifyGridster();
     }
 
     openActions() {

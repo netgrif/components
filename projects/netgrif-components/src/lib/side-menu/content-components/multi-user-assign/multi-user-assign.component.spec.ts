@@ -12,8 +12,8 @@ import {Observable} from "rxjs";
 import {UserAssignComponent} from "../user-assign/user-assign.component";
 import {UserAssignListComponent} from "../user-assign/user-assign-list/user-assign-list.component";
 import {UserAssignItemComponent} from "../user-assign/user-assign-list/user-assign-item/user-assign-item.component";
-import {NoopAnimationsModule} from "@angular/platform-browser/animations";
-import {HttpClientTestingModule} from "@angular/common/http/testing";
+import {provideHttpClientTesting} from '@angular/common/http/testing';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('MultiUserAssignComponent', () => {
     let component: MultiUserAssignComponent;
@@ -21,11 +21,15 @@ describe('MultiUserAssignComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
+            declarations: [
+                UserAssignComponent,
+                UserAssignListComponent,
+                UserAssignItemComponent,
+                MultiUserAssignComponent
+            ],
             imports: [
                 MaterialModule,
-                TranslateLibModule,
-                NoopAnimationsModule,
-                HttpClientTestingModule
+                TranslateLibModule
             ],
             providers: [
                 UserListService,
@@ -33,13 +37,9 @@ describe('MultiUserAssignComponent', () => {
                     provide: NAE_SIDE_MENU_CONTROL, useValue: new SideMenuControl(() => {
                     }, new Observable<boolean>(), null)
                 },
-                {provide: ConfigurationService, useClass: TestConfigurationService}
-            ],
-            declarations: [
-                UserAssignComponent,
-                UserAssignListComponent,
-                UserAssignItemComponent,
-                MultiUserAssignComponent
+                {provide: ConfigurationService, useClass: TestConfigurationService},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
             ]
         })
             .compileComponents();

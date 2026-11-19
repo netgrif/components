@@ -1,9 +1,8 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {SortModeComponent} from './sort-mode.component';
 import {FlexLayoutModule, FlexModule} from '@ngbracket/ngx-layout';
-import {Component} from '@angular/core';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {Component, ChangeDetectionStrategy} from '@angular/core';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {
     AllowedNetsService, AllowedNetsServiceFactory,
     AuthenticationMethodService,
@@ -26,6 +25,7 @@ import {MatSortModule} from '@angular/material/sort';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {of} from 'rxjs';
 import {RouterTestingModule} from '@angular/router/testing';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('SortModeComponent', () => {
     let component: SortModeComponent;
@@ -33,13 +33,12 @@ describe('SortModeComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
+            declarations: [SortModeComponent, TestWrapperComponent],
             imports: [
                 FlexModule,
                 FlexLayoutModule,
                 MatSortModule,
-                NoopAnimationsModule,
                 TranslateLibModule,
-                HttpClientTestingModule,
                 MatSnackBarModule,
                 RouterTestingModule.withRoutes([])
             ],
@@ -52,9 +51,10 @@ describe('SortModeComponent', () => {
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: ViewService, useClass: TestViewService},
                 {provide: CaseViewService, useValue: {allowedNets$: of([])}},
-                {provide: AllowedNetsService, useFactory: TestNoAllowedNetsFactory, deps: [AllowedNetsServiceFactory]}
+                {provide: AllowedNetsService, useFactory: TestNoAllowedNetsFactory, deps: [AllowedNetsServiceFactory]},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
             ],
-            declarations: [SortModeComponent, TestWrapperComponent],
         })
             .compileComponents();
     }));
@@ -76,7 +76,9 @@ describe('SortModeComponent', () => {
 
 @Component({
     selector: 'nc-test-wrapper',
-    template: '<nc-sort-mode [headerService]="service"></nc-sort-mode>'
+    template: '<nc-sort-mode [headerService]="service"></nc-sort-mode>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestWrapperComponent {
     constructor(public service: CaseHeaderService) {

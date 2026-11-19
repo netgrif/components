@@ -1,14 +1,25 @@
-<mat-form-field [appearance]="dataField.materialAppearance" class="full-width" color="primary">
-    <mat-label *ngIf="!showLargeLayout.value">{{dataField.title}}</mat-label>
-    <span matPrefix *ngIf="isNumberType() && isCodeExists()">{{this.dataField.component.properties['code'] ?? ''}}</span>
-    <input matInput
-           [type]="fieldType"
-           [value]="transformedValue"
-           [formControl]="formControlRef"
-           [placeholder]="dataField.placeholder"
-           [required]="dataField.behavior.required"
-           (focusout)="onFocusOut($event)"
-           (focusin)="onFocusIn()">
-    <mat-hint [ngClass]="{'mat-hint-disabled': formControlRef.disabled}">{{dataField.description}}</mat-hint>
-    <mat-error *ngIf="dataField.isInvalid(formControlRef)">{{getErrorMessage()}}</mat-error>
+<mat-form-field appearance="outline"
+    fxFlexFill
+>
+    @if (!showLargeLayout.value && hasTitle()) {
+    <mat-label>{{ dataField.title }}</mat-label>
+    } @if (isNumberType() && isCodeExists()) {
+    <span matPrefix>{{this.dataField.component.properties['code'] ?? ''}}</span>
+    }
+    <input
+        matInput
+        [type]="fieldType"
+        [value]="transformedValue"
+        [formControl]="formControlRef"
+        [placeholder]="dataField.placeholder"
+        [required]="dataField.behavior.required"
+        (focusout)="onFocusOut($event)"
+        (focusin)="onFocusIn()"
+    />
+    <mat-hint>{{
+        dataField.description
+    }}</mat-hint>
+    @if (dataField.isInvalid(formControlRef)) {
+    <mat-error>{{ getErrorMessage() }}</mat-error>
+    }
 </mat-form-field>

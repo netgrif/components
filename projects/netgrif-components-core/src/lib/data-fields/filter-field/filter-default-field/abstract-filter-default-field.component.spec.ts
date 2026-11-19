@@ -1,8 +1,7 @@
 import {ComponentFixture, TestBed} from "@angular/core/testing";
 import {of, Subject} from "rxjs";
-import {NoopAnimationsModule} from "@angular/platform-browser/animations";
-import {HttpClientTestingModule} from "@angular/common/http/testing";
-import {Component, Inject, Injector, Optional} from "@angular/core";
+import {provideHttpClientTesting} from "@angular/common/http/testing";
+import {Component, Inject, Injector, Optional, ChangeDetectionStrategy} from "@angular/core";
 import {ComponentType} from "@angular/cdk/portal";
 import {AbstractFilterFieldContentComponent} from "../abstract-filter-field-content.component";
 import {FilterField} from "../models/filter-field";
@@ -12,6 +11,7 @@ import {AbstractFilterDefaultFieldComponent} from "./abstract-filter-default-fie
 import {FormControl} from "@angular/forms";
 import {WrappedBoolean} from "../../data-field-template/models/wrapped-boolean";
 import {FieldTypeResource} from "../../../task-content/model/field-type-resource";
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('AbstractFilterDefaultFieldComponent', () => {
     let component: TestFilterComponent;
@@ -26,19 +26,21 @@ describe('AbstractFilterDefaultFieldComponent', () => {
         };
 
         TestBed.configureTestingModule({
-            imports: [NoopAnimationsModule, HttpClientTestingModule],
+            declarations: [
+                TestWrapperComponent,
+                TestFilterComponent,
+                TestFilterContentComponent
+            ],
+            imports: [],
             providers: [
                 {provide: DATA_FIELD_PORTAL_DATA, useValue: {
                         dataField: new FilterField('', '', '', FieldTypeResource.CASE_FILTER, [], {}, '', ''),
                         formControlRef: new FormControl(),
                         showLargeLayout: new WrappedBoolean()
                     } as DataFieldPortalData<FilterField>
-                }
-            ],
-            declarations: [
-                TestWrapperComponent,
-                TestFilterComponent,
-                TestFilterContentComponent
+                },
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
             ]
         }).compileComponents();
         fixture = TestBed.createComponent(TestWrapperComponent);
@@ -57,7 +59,9 @@ describe('AbstractFilterDefaultFieldComponent', () => {
 
 @Component({
     selector: 'ncc-test-filter',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestFilterComponent extends AbstractFilterDefaultFieldComponent {
     constructor(parentInjector: Injector,
@@ -72,7 +76,9 @@ class TestFilterComponent extends AbstractFilterDefaultFieldComponent {
 
 @Component({
     selector: 'ncc-test-wrapper',
-    template: '<ncc-test-filter></ncc-test-filter>'
+    template: '<ncc-test-filter></ncc-test-filter>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestWrapperComponent {
 
@@ -80,7 +86,9 @@ class TestWrapperComponent {
 
 @Component({
     selector: 'ncc-test-filter-content',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestFilterContentComponent extends AbstractFilterFieldContentComponent {
     constructor() {

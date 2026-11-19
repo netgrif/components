@@ -6,7 +6,8 @@ import {
     TestConfigurationService,
     TranslateLibModule,
 } from '@netgrif/components-core';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('RedirectComponent', () => {
     let component: RedirectComponent;
@@ -14,14 +15,15 @@ describe('RedirectComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
+            declarations: [RedirectComponent],
             imports: [
                 RouterTestingModule.withRoutes([]),
-                TranslateLibModule,
-                HttpClientTestingModule,
+                TranslateLibModule
             ],
-            declarations: [RedirectComponent],
             providers: [
-                {provide: ConfigurationService, useClass: TestConfigurationService}
+                {provide: ConfigurationService, useClass: TestConfigurationService},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
             ]
         })
             .compileComponents();

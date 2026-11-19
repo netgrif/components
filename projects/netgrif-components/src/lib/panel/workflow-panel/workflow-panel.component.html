@@ -1,61 +1,65 @@
-<nc-app-panel [panelHeader]="header" [panelContent]="content" (getExpansionPanelRef)="setPanelRef($event)" [first]="first" [last]="last">
+<nc-app-panel
+    [panelHeader]="header"
+    [panelContent]="content"
+    (getExpansionPanelRef)="setPanelRef($event)"
+    [first]="first"
+    [last]="last"
+>
     <ng-template #header>
-        <div fxLayoutAlign="start center" fxLayout="row" fxFlex="95" (click)="preventSelectionClick($event)">
-            <div *ngFor="let field of featuredFieldsValues; let i = index" fxLayoutAlign="start center" fxFlex
-                 [fxHide.lt-xl]="i >= 4 && responsiveBody"
-                 [fxHide.lt-lg]="i >= 3 && responsiveBody"
-                 [fxHide.lt-md]="i >= 2 && responsiveBody"
-                 [fxHide.lt-sm]="i >= 1 && responsiveBody">
-                <mat-icon class="workflow-panel-icon panel-primary-icon"
-                          *ngIf="!!field.icon && !!field.value">{{field.icon}}</mat-icon>
-                {{field.value}}
+        <div
+            fxLayoutAlign="start center"
+            fxLayout="row"
+            fxFlex fxLayoutGap="16px"
+            (click)="preventSelectionClick($event)"
+        >
+            @for (field of featuredFieldsValues; track $index; let i = $index) {
+            <div
+                class="workflow-panel-item"
+                fxFlex
+                [fxHide.lt-xl]="i >= 4 && responsiveBody"
+                [fxHide.lt-lg]="i >= 3 && responsiveBody"
+                [fxHide.lt-md]="i >= 2 && responsiveBody"
+                [fxHide.lt-sm]="i >= 1 && responsiveBody"
+            >
+                @if (!!field.icon && !!field.value) {
+                <mat-icon class="workflow-panel-icon panel-primary-icon">{{ field.icon }}</mat-icon>
+                }
+                <span class="workflow-panel-text" [title]="field.value ?? ''">{{ field.value }}</span>
             </div>
+            }
         </div>
-        <div fxFlex="5"></div>
+        <div fxFlex="40px"></div>
     </ng-template>
     <ng-template #content>
-        <div class="panel-main-content" fxLayout="column">
-            <div class="workflow-panel-body netgrif-input" fxFlex="100">
-                <div fxLayout="row">
-                    <div fxFlex="50">
-                        <nc-data-field-template *ngIf="!panelContent.netIdentifier.behavior.hidden"
-                                                [dataField]="panelContent.netIdentifier">
-                        </nc-data-field-template>
-                    </div>
-                    <div fxFlex="50">
-                        <nc-data-field-template *ngIf="!panelContent.title.behavior.hidden"
-                                                [dataField]="panelContent.title">
-                        </nc-data-field-template>
-                    </div>
-                </div>
-                <div fxLayout="row">
-                    <div fxFlex="50">
-                        <nc-data-field-template *ngIf="!panelContent.version.behavior.hidden"
-                                                [dataField]="panelContent.version">
-                        </nc-data-field-template>
-                    </div>
-                    <div fxFlex="50">
-                        <nc-data-field-template *ngIf="!panelContent.author.behavior.hidden"
-                                                [dataField]="panelContent.author">
-                        </nc-data-field-template>
-                    </div>
-                </div>
-                <div fxLayout="row">
-                    <div fxFlex="50">
-                        <nc-data-field-template *ngIf="!panelContent.uploaded.behavior.hidden"
-                                                [dataField]="panelContent.uploaded">
-                        </nc-data-field-template>
-                    </div>
-                </div>
-            </div>
-            <mat-action-row>
-                <button mat-stroked-button color="primary"
-                        (click)="downloadNetFile()">{{'workflow.download' | translate | uppercase }}</button>
-                <button *ngIf="showDeleteMenu" mat-stroked-button color="warn"
-                        (click)="deleteWorkflow()">{{'workflow.delete' | translate | uppercase }}</button>
-                <button mat-button color="primary"
-                        (click)="panelRef.expanded = false">{{'tasks.view.collapse' | translate | uppercase }}</button>
-            </mat-action-row>
+        <div class="workflow-panel-fields">
+            @if (!panelContent.netIdentifier.behavior.hidden) {
+            <nc-data-field-template [dataField]="panelContent.netIdentifier"></nc-data-field-template>
+            }
+            @if (!panelContent.title.behavior.hidden) {
+            <nc-data-field-template [dataField]="panelContent.title"></nc-data-field-template>
+            }
+            @if (!panelContent.version.behavior.hidden) {
+            <nc-data-field-template [dataField]="panelContent.version"></nc-data-field-template>
+            }
+            @if (!panelContent.author.behavior.hidden) {
+            <nc-data-field-template [dataField]="panelContent.author"></nc-data-field-template>
+            }
+            @if (!panelContent.uploaded.behavior.hidden) {
+            <nc-data-field-template [dataField]="panelContent.uploaded"></nc-data-field-template>
+            }
         </div>
+        <mat-action-row>
+            <button mat-button (click)="downloadNetFile()">
+                {{ "workflow.download" | translate }}
+            </button>
+            @if (showDeleteMenu) {
+            <button mat-button (click)="deleteWorkflow()">
+                {{ "workflow.delete" | translate }}
+            </button>
+            }
+            <button mat-button (click)="panelRef.expanded = false">
+                {{ "tasks.view.collapse" | translate }}
+            </button>
+        </mat-action-row>
     </ng-template>
 </nc-app-panel>

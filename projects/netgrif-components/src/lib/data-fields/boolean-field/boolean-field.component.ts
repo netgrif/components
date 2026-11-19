@@ -1,4 +1,4 @@
-import {Component, Inject, Optional} from '@angular/core';
+import {Component, Inject, Optional, ChangeDetectionStrategy} from '@angular/core';
 import {AbstractBooleanFieldComponent, NAE_INFORM_ABOUT_INVALID_DATA} from '@netgrif/components-core';
 
 /**
@@ -7,7 +7,8 @@ import {AbstractBooleanFieldComponent, NAE_INFORM_ABOUT_INVALID_DATA} from '@net
 @Component({
     selector: 'nc-boolean-field',
     templateUrl: './boolean-field.component.html',
-    styleUrls: ['./boolean-field.component.scss']
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class BooleanFieldComponent extends AbstractBooleanFieldComponent {
 

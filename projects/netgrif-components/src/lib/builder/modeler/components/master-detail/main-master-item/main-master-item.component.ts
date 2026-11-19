@@ -1,12 +1,14 @@
 import {ComponentType} from '@angular/cdk/overlay';
 import {ComponentPortal} from '@angular/cdk/portal';
-import {Component, Injector, Input, OnInit} from '@angular/core';
+import {Component, Injector, Input, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {AbstractMasterDetailService} from '../abstract-master-detail.service';
 import {MASTER_ITEM, MASTER_SERVICE} from './master-injection-tokens';
 
 @Component({
     selector: 'nc-builder-main-master-item',
-    template: '<ng-template [cdkPortalOutlet]="masterItemPortal"></ng-template>'
+    template: '<ng-template [cdkPortalOutlet]="masterItemPortal"></ng-template>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class MainMasterItemComponent implements OnInit {
 

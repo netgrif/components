@@ -3,7 +3,7 @@ import {SearchService} from '../search-service/search.service';
 import {KeyValue} from '@angular/common';
 import {EditablePredicate} from '../models/predicate/editable-predicate';
 import {Subject} from 'rxjs';
-import {AfterViewInit, Component, Input, OnDestroy} from '@angular/core';
+import {AfterViewInit, Component, Input, OnDestroy, ChangeDetectionStrategy} from '@angular/core';
 import {BooleanOperator} from '../models/boolean-operator';
 import {
     AdvancedSearchComponentInitializationService
@@ -11,7 +11,9 @@ import {
 
 @Component({
     selector: 'ncc-abstract-advanced-search',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractAdvancedSearchComponent implements AfterViewInit, OnDestroy {
 

@@ -1,4 +1,4 @@
-import {Component, Inject, Injector,  Optional} from '@angular/core';
+import {Component, Inject, Injector,  Optional, ChangeDetectionStrategy} from '@angular/core';
 import {
     AbstractTaskRefListFieldComponent,
     DATA_FIELD_PORTAL_DATA,
@@ -12,7 +12,8 @@ import {
 @Component({
   selector: 'nc-task-ref-list-field',
   templateUrl: './task-ref-list-field.component.html',
-  styleUrls: ['./task-ref-list-field.component.scss']
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class TaskRefListFieldComponent extends AbstractTaskRefListFieldComponent {
 

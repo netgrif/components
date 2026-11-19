@@ -1,18 +1,18 @@
-<mat-toolbar color="primary">{{ data.title | translate}}</mat-toolbar>
-<div fxLayout="column" fxLayoutAlign="start stretch" class="netgrif-input">
-    <mat-form-field class="select-field-margin" appearance="outline">
+<mat-toolbar>{{ data.title | translate }}</mat-toolbar>
+<div class="content" fxLayout="column" fxLayoutGap="8px">
+    <mat-form-field>
         <input type="text" matInput required
                [placeholder]="'side-menu.option-selector.choose-one-option' | translate"
                [formControl]="selectorFormControl"
                [matAutocomplete]="auto"
-               (keyup.enter)="submit()">
+               (keyup.enter)="submit()"/>
         <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
-            <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-                {{option.text}}
-            </mat-option>
+            @for (option of filteredOptions | async; track option) {
+            <mat-option [value]="option">{{ option.text }}</mat-option>
+            }
         </mat-autocomplete>
     </mat-form-field>
-    <div fxLayout="row" fxLayoutAlign="center center">
-        <button mat-raised-button (click)="submit()">{{'side-menu.option-selector.select' | translate}}</button>
+    <div fxLayout="row" fxLayoutAlign="end center">
+        <button mat-flat-button (click)="submit()">{{ "side-menu.option-selector.select" | translate }}</button>
     </div>
 </div>

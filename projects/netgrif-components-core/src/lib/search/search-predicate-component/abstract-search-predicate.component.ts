@@ -1,4 +1,4 @@
-import {Component, Inject, Input, OnDestroy, OnInit, Type, ViewChild} from '@angular/core';
+import {Component, Inject, Input, OnDestroy, OnInit, Type, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {Subject, Subscription} from 'rxjs';
 import {NAE_SEARCH_CATEGORIES} from '../category-factory/search-categories-injection-token';
 import {Category} from '../models/category/category';
@@ -19,7 +19,9 @@ import {CategoryFactory} from '../category-factory/category-factory';
  */
 @Component({
     selector: 'ncc-abstract-search-predicate',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractSearchPredicateComponent implements OnInit, OnDestroy {
 

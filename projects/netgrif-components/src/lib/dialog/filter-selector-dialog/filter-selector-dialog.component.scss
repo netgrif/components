@@ -1,26 +1,9 @@
-.filter-selector-root {
-    width: calc(100% - 8px);
-    margin: 0;
-    padding-top: 4px;
-    padding-left: 4px;
-    padding-right: 4px;
-}
+@use '../dialog';
+@use '../../data-fields/selection-list' as list;
 
-.header-padding {
-    padding: 0 0 0 16px
-}
+@include dialog.styles;
+@include list.styles;
 
-.submit-button-padding {
-    margin-right: 16px;
-}
-
-.input-margin {
-    margin-left: 16px;
-    margin-right: 16px;
-}
-
-.full-width-input {
-    display: block;
-    margin: 0 auto;
+.search-field {
     width: 100%;
 }

@@ -3,21 +3,21 @@ import {TestBed} from '@angular/core/testing';
 import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {DialogErrorsComponent} from './dialog-errors.component';
 import {TranslateService} from "@ngx-translate/core";
-import {HttpClientTestingModule} from "@angular/common/http/testing";
+import {provideHttpClientTesting} from "@angular/common/http/testing";
 import {TranslateLibModule} from "@netgrif/components-core";
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('DialogErrorsComponent', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateLibModule,
-                HttpClientTestingModule,
-            ],
             declarations: [DialogErrorsComponent],
-            providers: [{provide: MAT_DIALOG_DATA, useValue: {errors: []}},
-                {provide: TranslateService, useValue: { instant: (key: string) => `translated-${key}` }}
-            ],
             schemas: [NO_ERRORS_SCHEMA],
+            imports: [TranslateLibModule],
+            providers: [{provide: MAT_DIALOG_DATA, useValue: {errors: []}},
+                {provide: TranslateService, useValue: { instant: (key: string) => `translated-${key}` }},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
+            ],
         });
     });
 

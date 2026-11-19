@@ -1,4 +1,4 @@
-import {Component, Inject, Optional} from '@angular/core';
+import {Component, Inject, Optional, ChangeDetectionStrategy} from '@angular/core';
 import {
     AbstractCaseListComponent,
     CaseViewService,
@@ -12,7 +12,9 @@ import {ActivatedRoute} from '@angular/router';
 @Component({
     selector: 'nc-case-list',
     templateUrl: './case-list.component.html',
-    styleUrls: ['./case-list.component.scss']
+    styleUrls: ['./case-list.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class CaseListComponent extends AbstractCaseListComponent {
 

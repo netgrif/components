@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Inject, Optional} from '@angular/core';
+import {AfterViewInit, Component, Inject, Optional, ChangeDetectionStrategy} from '@angular/core';
 import {ElementRef, NgZone, ViewChild} from '@angular/core';
 import {TextAreaHeight, TextField} from '../models/text-field';
 import {TranslateService} from '@ngx-translate/core';
@@ -10,7 +10,9 @@ import {TextAreaField} from "../models/text-area-field";
 
 @Component({
     selector: 'ncc-abstract-text-area-field',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractTextareaFieldComponent extends AbstractTextErrorsComponent<TextField> implements AfterViewInit {
 

@@ -1,5 +1,5 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {
     ConfigurationService,
     TestConfigurationService,
@@ -10,6 +10,7 @@ import {
 } from '@netgrif/components-core';
 import {AdvancedSearchComponentModule} from '../../../search/advanced-search/advanced-search.module';
 import { FilterFieldTabViewContentComponent } from './filter-field-tab-view-content.component';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('FilterFieldTabViewContentComponent', () => {
     let component: FilterFieldTabViewContentComponent;
@@ -19,9 +20,9 @@ describe('FilterFieldTabViewContentComponent', () => {
         const field = new FilterField('', '', '', FieldTypeResource.CASE_FILTER, [], {}, '', '');
 
         await TestBed.configureTestingModule({
+            declarations: [FilterFieldTabViewContentComponent],
             imports: [
-                AdvancedSearchComponentModule,
-                HttpClientTestingModule
+                AdvancedSearchComponentModule
             ],
             providers: [
                 SearchService,
@@ -30,10 +31,9 @@ describe('FilterFieldTabViewContentComponent', () => {
                 {
                     provide: NAE_BASE_FILTER,
                     useValue: { filter: SimpleFilter.emptyCaseFilter()} as BaseFilter
-                }
-            ],
-            declarations: [
-                FilterFieldTabViewContentComponent
+                },
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
             ]
         }).compileComponents();
     });

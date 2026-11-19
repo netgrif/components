@@ -19,9 +19,9 @@ export class NetgrifPaginatorIntl implements MatPaginatorIntl {
         this.initTranslations();
         this._languageService.getLangChange$().subscribe(lang => {
             this.initTranslations();
+            this.changes.next();
         });
     }
-
 
     public initTranslations() {
         this.firstPageLabel = this._translate.instant('paginator.firstPage');

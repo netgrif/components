@@ -1,13 +1,13 @@
-@import '../../../../../styles/core';
-
-.font-size-20 {
-    font-size: 20px;
+:host {
+    display: flex;
+    flex-direction: column;
 }
 
-.margin-bottom-default {
-    margin-bottom: 8px;
+cdk-virtual-scroll-viewport {
+    flex: 1 1 auto;
+    min-height: 320px;
 }
 
-.margin-top-default {
-    margin-top: 8px;
+cdk-virtual-scroll-viewport ::ng-deep .cdk-virtual-scroll-content-wrapper {
+    right: 0;
 }

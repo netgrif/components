@@ -2,15 +2,15 @@ import {TestBed} from '@angular/core/testing';
 import {TaskContentService} from './task-content.service';
 import {MaterialModule} from '../../material/material.module';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {SingleTaskContentService} from './single-task-content.service';
 import {createMockTask} from '../../utility/tests/utility/create-mock-task';
 import {createMockDataGroup} from '../../utility/tests/utility/create-mock-datagroup';
 import {createMockField} from '../../utility/tests/utility/create-mock-field';
 import {TaskFields} from '../model/task-fields';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('TaskPanelContentService', () => {
     const FIELD_ID = 'field1';
@@ -20,10 +20,12 @@ describe('TaskPanelContentService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [MaterialModule, TranslateLibModule, HttpClientTestingModule, NoopAnimationsModule],
+            imports: [MaterialModule, TranslateLibModule],
             providers: [
                 {provide: TaskContentService, useClass: SingleTaskContentService},
-                {provide: ConfigurationService, useClass: TestConfigurationService}
+                {provide: ConfigurationService, useClass: TestConfigurationService},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
             ]
         });
         service = TestBed.inject(TaskContentService);

@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Inject, OnDestroy, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, Inject, OnDestroy, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {
     AbstractTabbedCaseViewComponent,
     AllowedNetsService,
@@ -81,7 +81,9 @@ import {TranslateService} from "@ngx-translate/core";
             useFactory: navigationItemCaseViewDefaultHeadersFactory,
             deps: [NAE_NAVIGATION_ITEM_TASK_DATA]
         }
-    ]
+    ],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class DefaultTabbedCaseViewComponent extends AbstractTabbedCaseViewComponent implements AfterViewInit, OnDestroy {
 

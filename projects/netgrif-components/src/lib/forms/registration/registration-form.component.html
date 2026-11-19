@@ -1,87 +1,72 @@
-<div fxLayout="column" fxLayoutGap="24px" *ngIf="tokenVerified && (loadingToken | async) === false">
-    <form [formGroup]="rootFormGroup" (ngSubmit)="onSubmit()" class="full-width netgrif-input">
-        <div fxLayout="row" fxLayoutAlign="center center" class="netgrif-input">
-            <mat-icon color="primary" class="netgrif-icon-fix">email</mat-icon>
-            <mat-form-field fxFlex="100" appearance="outline">
-                <mat-label>{{ 'forms.register.email' | translate}}</mat-label>
-                <input matInput disabled [value]="userEmail"
-                       autocomplete="username">
-            </mat-form-field>
-        </div>
-        <div fxLayout="row" fxLayoutAlign="center center" class="netgrif-input " >
-            <mat-icon color="primary" class="netgrif-icon-fix">account_circle</mat-icon>
-            <mat-form-field fxFlex="100" appearance="outline">
-                <mat-label>{{ 'forms.register.name' | translate }}</mat-label>
-                <input matInput formControlName="name" required
-                       autocomplete="given-name">
-                <mat-error *ngIf="!isFieldValid('name')">{{getErrorMessage('name')}}</mat-error>
-            </mat-form-field>
-        </div>
-        <div fxLayout="row" fxLayoutAlign="center center" class="netgrif-input" >
-            <mat-icon color="primary" class="netgrif-icon-fix">account_circle_outline</mat-icon>
-            <mat-form-field fxFlex="100" appearance="outline">
-                <mat-label>{{ 'forms.register.surname' | translate }}</mat-label>
-                <input matInput formControlName="surname"
-                       required autocomplete="family-name">
-                <mat-error *ngIf="!isFieldValid('surname')">{{getErrorMessage('surname')}}</mat-error>
-            </mat-form-field>
-        </div>
-        <div fxLayout="row" fxLayoutAlign="center center" class="netgrif-input">
-            <mat-icon color="primary" class="netgrif-icon-fix">vpn_key</mat-icon>
-            <mat-form-field fxFlex="100" appearance="outline">
-                <mat-label>{{ 'forms.login.enterPass' | translate }}</mat-label>
-                <input matInput
-                       [type]="hidePassword ? 'password' : 'text'"
-                       formControlName="password" required autocomplete="new-password">
-                <button mat-icon-button matSuffix type="button"
-                        (click)="hidePassword = !hidePassword"
-                        (keypress)="false"
-                        [attr.aria-label]="'Hide password'"
-                        [attr.aria-pressed]="hidePassword">
-                    <mat-icon
-                        [color]="hidePassword ? undefined : 'accent'">{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
-                </button>
-                <mat-error *ngIf="!isFieldValid('password')">{{getErrorMessage('password')}}</mat-error>
-            </mat-form-field>
-        </div>
-        <div fxLayout="row" fxLayoutAlign="center center" class="netgrif-input">
-            <mat-icon color="primary" class="netgrif-icon-fix">vpn_key</mat-icon>
-            <mat-form-field fxFlex="100" appearance="outline">
-                <mat-label>{{ 'forms.register.repeatPass' | translate }}</mat-label>
-                <input matInput
-                       [type]="hideRepeatPassword ? 'password' : 'text'"
-                       formControlName="confirmPassword" required autocomplete="new-password">
-                <button mat-icon-button matSuffix type="button"
-                        (click)="hideRepeatPassword = !hideRepeatPassword"
-                        (keypress)="false"
-                        [attr.aria-label]="'Hide password'"
-                        [attr.aria-pressed]="hideRepeatPassword">
-                    <mat-icon
-                        [color]="hideRepeatPassword ? undefined : 'accent'">{{hideRepeatPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
-                </button>
-                <mat-error *ngIf="!isFieldValid('confirmPassword')">{{getErrorMessage('confirmPassword')}}</mat-error>
-            </mat-form-field>
-        </div>
-        <nc-legal-notice *ngIf="displayLegalNotice" [buttonName]="'forms.register.register'"></nc-legal-notice>
-        <div fxLayout="row" fxLayoutAlign="end" fxLayoutAlign.xs="center" class="margin-top-4">
-            <button fxFlexOffset="8px" fxFlexOffset.xs="0" mat-raised-button class="register-button" color="primary">
-                <mat-spinner *ngIf="loadingSubmit | async"
-                             mode="indeterminate"
-                             diameter="36"
-                             color="accent"
-                             fxFlex></mat-spinner>
-                <span *ngIf="(loadingSubmit | async) === false"
-                      fxFlex>{{ 'forms.register.register' | translate }}</span>
-            </button>
-        </div>
-    </form>
+@if (loadingToken | async) {
+<div class="auth-state"><mat-progress-bar mode="indeterminate" class="auth-progress"></mat-progress-bar></div>
+} @else if (!tokenVerified) {
+<div class="auth-alert" role="alert">
+    <mat-icon>link_off</mat-icon>
+    <span>{{ "forms.register.notVerified" | translate }}</span>
 </div>
-
-<div *ngIf="!tokenVerified && (loadingToken | async) === false" fxLayout="column" fxLayoutAlign="center center" fxFlex>
-    <mat-icon color="accent">unpublished</mat-icon>
-    <span class="font-size-20">{{ 'forms.register.notVerified' | translate}}</span>
-</div>
-
-<div *ngIf="loadingToken | async">
-    <mat-progress-spinner></mat-progress-spinner>
-</div>
+} @else {
+<form class="auth-form" [formGroup]="rootFormGroup" (ngSubmit)="onSubmit()" novalidate>
+    @if (submitError) {
+    <div class="auth-alert" role="alert">
+        <mat-icon>error</mat-icon>
+        <span>{{ submitError }}</span>
+    </div>
+    }
+    <mat-form-field>
+        <mat-label>{{ "forms.register.email" | translate }}</mat-label>
+        <input matInput disabled [value]="userEmail" autocomplete="username"/>
+    </mat-form-field>
+    <div class="auth-row">
+        <mat-form-field>
+            <mat-label>{{ "forms.register.name" | translate }}</mat-label>
+            <input matInput formControlName="name" required autocomplete="given-name"/>
+            @if (!isFieldValid('name')) {
+            <mat-error>{{ getErrorMessage("name") }}</mat-error>
+            }
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>{{ "forms.register.surname" | translate }}</mat-label>
+            <input matInput formControlName="surname" required autocomplete="family-name"/>
+            @if (!isFieldValid('surname')) {
+            <mat-error>{{ getErrorMessage("surname") }}</mat-error>
+            }
+        </mat-form-field>
+    </div>
+    <mat-form-field>
+        <mat-label>{{ "forms.login.enterPass" | translate }}</mat-label>
+        <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password" required autocomplete="new-password"/>
+        <button mat-icon-button matIconSuffix type="button"
+                (click)="hidePassword = !hidePassword"
+                [attr.aria-label]="(hidePassword ? 'forms.showPassword' : 'forms.hidePassword') | translate"
+                [attr.aria-pressed]="!hidePassword">
+            <mat-icon>{{ hidePassword ? "visibility" : "visibility_off" }}</mat-icon>
+        </button>
+        @if (!isFieldValid('password')) {
+        <mat-error>{{ getErrorMessage("password") }}</mat-error>
+        }
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>{{ "forms.register.repeatPass" | translate }}</mat-label>
+        <input matInput [type]="hideRepeatPassword ? 'password' : 'text'" formControlName="confirmPassword" required autocomplete="new-password"/>
+        <button mat-icon-button matIconSuffix type="button"
+                (click)="hideRepeatPassword = !hideRepeatPassword"
+                [attr.aria-label]="(hideRepeatPassword ? 'forms.showPassword' : 'forms.hidePassword') | translate"
+                [attr.aria-pressed]="!hideRepeatPassword">
+            <mat-icon>{{ hideRepeatPassword ? "visibility" : "visibility_off" }}</mat-icon>
+        </button>
+        @if (!isFieldValid('confirmPassword')) {
+        <mat-error>{{ getErrorMessage("confirmPassword") }}</mat-error>
+        }
+    </mat-form-field>
+    @if (displayLegalNotice) {
+    <nc-legal-notice [buttonName]="'forms.register.register'"></nc-legal-notice>
+    }
+    <button mat-flat-button class="auth-submit" type="submit" [disabled]="loadingSubmit | async">
+        {{ "forms.register.register" | translate }}
+    </button>
+    @if (loadingSubmit | async) {
+    <mat-progress-bar class="auth-progress" mode="indeterminate"></mat-progress-bar>
+    }
+</form>
+}

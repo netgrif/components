@@ -10,9 +10,10 @@ import {
     TestNoAllowedNetsFactory,
     AllowedNetsServiceFactory, MockUserService, User, UserService, AuthenticationModule
 } from '@netgrif/components-core';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {Injectable} from "@angular/core";
 import {RouterTestingModule} from "@angular/router/testing";
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('ImmediateFilterTextContentComponent', () => {
     let component: ImmediateFilterTextContentComponent;
@@ -24,7 +25,6 @@ describe('ImmediateFilterTextContentComponent', () => {
             imports: [
                 MaterialModule,
                 TranslateLibModule,
-                HttpClientTestingModule,
                 AuthenticationModule,
                 RouterTestingModule.withRoutes([]),
             ],
@@ -40,6 +40,8 @@ describe('ImmediateFilterTextContentComponent', () => {
                         ellipsis: true
                     }
                 },
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting(),
             ]
         })
             .compileComponents();

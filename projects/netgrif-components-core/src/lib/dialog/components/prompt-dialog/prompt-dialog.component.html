@@ -1,15 +1,14 @@
-<h1 mat-dialog-title>{{data.title}}</h1>
+<h2 mat-dialog-title>{{data.title}}</h2>
 
-<div mat-dialog-content class="dialog-container dialog-content-margin netgrif-input netgrif-input-fix">
-    <span>{{data.content}}</span>
-    <br>
-    <mat-form-field class="dialog-prompt-margin" appearance="outline">
+<div mat-dialog-content>
+    <p class="supporting-text">{{data.content}}</p>
+    <mat-form-field class="dialog-prompt-field" appearance="outline">
         <mat-label>{{data.placeholder}}</mat-label>
         <input matInput [(ngModel)]="prompt" (ngModelChange)="disableButton = !prompt || prompt.trim().length === 0">
     </mat-form-field>
 </div>
 
-<mat-dialog-actions fxLayoutAlign="end">
+<mat-dialog-actions align="end">
     <button mat-button (click)="onClose(false)">{{ 'dialog.close' | translate}}</button>
-    <button mat-flat-button color="primary" [disabled]="disableButton" (click)="onClose(true)">{{ 'dialog.submit' | translate}}</button>
+    <button mat-flat-button [disabled]="disableButton" (click)="onClose(true)">{{ 'dialog.submit' | translate}}</button>
 </mat-dialog-actions>

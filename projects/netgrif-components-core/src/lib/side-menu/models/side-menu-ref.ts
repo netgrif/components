@@ -2,6 +2,9 @@ import {Observable, Subject, throwError} from 'rxjs';
 import {SideMenuEvent} from './side-menu-event';
 import {filter} from 'rxjs/operators';
 
+/**
+ * @deprecated the side menu is deprecated, the library opens dialogs instead (`DialogComponentsModule`)
+ */
 export class SideMenuRef {
 
     constructor(private _event$: Subject<SideMenuEvent>) {

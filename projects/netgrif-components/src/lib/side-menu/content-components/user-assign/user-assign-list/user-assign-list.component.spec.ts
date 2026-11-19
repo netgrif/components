@@ -1,10 +1,9 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {UserAssignListComponent} from './user-assign-list.component';
 import {UserAssignItemComponent} from './user-assign-item/user-assign-item.component';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {Component, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA} from '@angular/core';
+import {Component, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA, ChangeDetectionStrategy} from '@angular/core';
 import {FormControl} from '@angular/forms';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
 import {
     ConfigurationService,
@@ -16,6 +15,7 @@ import {
     UserListService,
     UserValue
 } from '@netgrif/components-core';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('UserAssignListComponent', () => {
     let component: UserAssignListComponent;
@@ -23,23 +23,23 @@ describe('UserAssignListComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
-            imports: [
-                MaterialModule,
-                BrowserAnimationsModule,
-                HttpClientTestingModule,
-                TranslateLibModule
-            ],
-            providers: [
-                UserListService,
-                {provide: ConfigurationService, useClass: TestConfigurationService}
-            ],
             declarations: [
                 UserAssignListComponent,
                 UserAssignItemComponent,
                 ErrorSnackBarComponent,
                 TestWrapperComponent
             ],
-            schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA]
+            schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA],
+            imports: [
+                MaterialModule,
+                TranslateLibModule
+            ],
+            providers: [
+                UserListService,
+                {provide: ConfigurationService, useClass: TestConfigurationService},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
+            ]
         }).compileComponents();
 
         fixture = TestBed.createComponent(TestWrapperComponent);
@@ -58,7 +58,9 @@ describe('UserAssignListComponent', () => {
 
 @Component({
     selector: 'nc-test-wrapper',
-    template: '<nc-user-assign-list [searchUserControl]="formControl" [roles]="injectedData.roles"></nc-user-assign-list>'
+    template: '<nc-user-assign-list [searchUserControl]="formControl" [roles]="injectedData.roles"></nc-user-assign-list>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestWrapperComponent {
     injectedData = {roles: [], value: new UserValue('5', 'admin', 'netgrif', 'super@netgrif.com')} as UserListInjectedData;

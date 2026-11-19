@@ -1,4 +1,4 @@
-import {Component, Inject, OnDestroy, OnInit, Optional} from '@angular/core';
+import {Component, Inject, OnDestroy, OnInit, Optional, ChangeDetectionStrategy} from '@angular/core';
 import {AbstractTextErrorsComponent} from './abstract-text-errors.component';
 import {TextField} from './models/text-field';
 import {CustomCard} from '../../dashboard/cards/model/custom-dashboard-model/custom-card';
@@ -8,7 +8,9 @@ import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../models/data-field-
 
 @Component({
     selector: 'ncc-abstract-dashboard-text-field',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractDashboardTextFieldComponent extends AbstractTextErrorsComponent<TextField> implements OnInit, OnDestroy {
     public card?: CustomCard;

@@ -233,17 +233,21 @@ export class CaseViewService extends AbstractSortableViewComponent implements On
         return requestContext === undefined || this._loading$.isActiveWithFilter(requestContext.filter);
     }
 
+    /**
+     * Opens the new case dialog.
+     * @param newCaseCreationConfiguration the configuration of the dialog
+     * @param allowedNets the processes already loaded by the caller (e.g. the create case button), loaded again when
+     * not given
+     */
     public createNewCase(newCaseCreationConfiguration: NewCaseCreationConfigurationData = {
         enableCaseTitle: true,
         isCaseTitleRequired: true
-    }): Observable<Case> {
+    }, allowedNets?: Array<PetriNetReferenceWithPermissions>): Observable<Case> {
         const myCase = new Subject<Case>();
         const dialogRef = this._dialog.open(this._newCaseComponent, {
-            width: '40%',
-            minWidth: '300px',
             panelClass: "dialog-responsive",
             data: {
-                allowedNets$: this.getNewCaseAllowedNets(newCaseCreationConfiguration.blockNets),
+                allowedNets$: allowedNets ? of(allowedNets) : this.getNewCaseAllowedNets(newCaseCreationConfiguration.blockNets),
                 newCaseCreationConfiguration
             },
         });
@@ -258,12 +262,18 @@ export class CaseViewService extends AbstractSortableViewComponent implements On
         return myCase.asObservable();
     }
 
+    /**
+     * Creates a case of the first allowed process without the dialog (the default name of the case).
+     * @param newCaseCreationConfiguration the configuration of the creation
+     * @param allowedNets the processes already loaded by the caller (e.g. the create case button), loaded again when
+     * not given
+     */
     public createDefaultNewCase(newCaseCreationConfiguration: NewCaseCreationConfigurationData = {
         enableCaseTitle: true,
         isCaseTitleRequired: true
-    }): Observable<Case> {
+    }, allowedNets?: Array<PetriNetReferenceWithPermissions>): Observable<Case> {
         const myCase = new Subject<Case>();
-        this.getNewCaseAllowedNets(newCaseCreationConfiguration.blockNets).pipe(take(1)).subscribe({
+        (allowedNets ? of(allowedNets) : this.getNewCaseAllowedNets(newCaseCreationConfiguration.blockNets)).pipe(take(1)).subscribe({
             next: (nets: Array<PetriNetReferenceWithPermissions>) => {
                 if (!nets || nets.length === 0) {
                     const errorMessage = this._translate.instant('side-menu.new-case.noNets');
@@ -278,10 +288,25 @@ export class CaseViewService extends AbstractSortableViewComponent implements On
                     netId: nets[0].stringId
                 }).pipe(take(1)).subscribe({
                     next: (response: EventOutcomeMessageResource) => {
-                        this._snackBarService.openSuccessSnackBar(this._translate.instant('side-menu.new-case.createCase')
-                            + ' ' + this._translate.instant('side-menu.new-case.defaultCaseName'));
+                        const created = (response?.outcome as CreateCaseEventOutcome)?.aCase;
+                        if (!created) {
+                            if (response?.error !== undefined) {
+                                this._log.error('Case creation ended with an error: ' + response.error);
+                                this._snackBarService.openWarningSnackBar(
+                                    this._translate.instant('side-menu.new-case.caseCreatedDefaultNameActionsError'));
+                                this.reload();
+                            } else {
+                                this._snackBarService.openErrorSnackBar(this._translate.instant('side-menu.new-case.errorCreate'));
+                            }
+                            myCase.complete();
+                            return;
+                        }
+                        this._snackBarService.openSuccessSnackBar(response.outcome.message
+                            ?? (created.title
+                                ? this._translate.instant('side-menu.new-case.caseCreated', {title: created.title})
+                                : this._translate.instant('side-menu.new-case.caseCreatedDefaultName')));
                         this.reload();
-                        myCase.next((response.outcome as CreateCaseEventOutcome).aCase);
+                        myCase.next(created);
                         myCase.complete();
                     },
                     error: error => {

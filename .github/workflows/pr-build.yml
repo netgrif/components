@@ -8,7 +8,7 @@ jobs:
         runs-on: ubuntu-24.04
         strategy:
             matrix:
-                node-version: [ 20, 22, 24 ]
+                node-version: [ 22, 24 ]
         steps:
             -   uses: actions/checkout@v4
                 with:
@@ -31,6 +31,8 @@ jobs:
                     npm i ./dist/netgrif-components --save-optional --legacy-peer-deps
             -   name: Build examples
                 run: npm run example:build
+            -   name: Build frontend
+                run: npm run frontend:build
     test:
         name: Test with SonarCloud
         runs-on: ubuntu-latest
@@ -41,7 +43,7 @@ jobs:
             -   uses: actions/setup-node@v4
                 name: Full Test
                 with:
-                    node-version: 20
+                    node-version: 24
             -   run: npm i --legacy-peer-deps
             -   name: Build & test components-core
                 run: |
@@ -64,3 +66,5 @@ jobs:
                     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
             -   name: Build examples
                 run: npm run example:build
+            -   name: Build frontend
+                run: npm run frontend:build

@@ -1,4 +1,4 @@
-import {Component, Inject, Input, OnDestroy, OnInit, Optional} from '@angular/core';
+import {Component, Inject, Input, OnDestroy, OnInit, Optional, ChangeDetectionStrategy} from '@angular/core';
 import {TaskContentService} from '../services/task-content.service';
 import {DatafieldGridLayoutElement} from '../model/datafield-grid-layout-element';
 import {TaskContentElementType, TaskElementType} from '../model/task-content-element-type';
@@ -12,7 +12,9 @@ import {FormControl} from "@angular/forms";
  */
 @Component({
     selector: 'ncc-abstract-field-component-resolver',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractFieldComponentResolverComponent implements OnInit, OnDestroy {
     @Input() gridElement: DatafieldGridLayoutElement;

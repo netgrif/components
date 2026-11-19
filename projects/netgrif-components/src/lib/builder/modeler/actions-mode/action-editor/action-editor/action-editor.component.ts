@@ -1,5 +1,7 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild, ChangeDetectionStrategy, OnDestroy, NgZone} from '@angular/core';
 import {FormControl} from '@angular/forms';
+import {darkColorScheme$, monacoTheme} from '../../../../utils/color-scheme';
+import {Subscription as ColorSchemeSubscription} from 'rxjs';
 import {MatButton} from '@angular/material/button';
 import {MatDialog} from '@angular/material/dialog';
 import {MatMenuTrigger} from '@angular/material/menu';
@@ -18,9 +20,13 @@ import {BuilderModeService} from "../../../../services/builder-mode.service";
 @Component({
     selector: 'nc-builder-action-editor',
     templateUrl: './action-editor.component.html',
-    styleUrls: ['./action-editor.component.scss']
+    styleUrls: ['./action-editor.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
-export class ActionEditorComponent implements OnInit {
+export class ActionEditorComponent implements OnInit, OnDestroy {
+    /** the Monaco editor follows the light / dark mode of the application */
+    private _colorSchemeSub: ColorSchemeSubscription;
 
     @Input() public leafNode: LeafNode;
     @Output() public actionChanged: EventEmitter<ActionChangedEvent>;
@@ -60,12 +66,19 @@ export class ActionEditorComponent implements OnInit {
 
     public editorOptions: object;
 
+    /** the code is shown (collapsed: one line with the beginning of the code) */
+    public expanded = true;
+
+    /** height of the code editor: the height of the code, at least 12 lines, at most 30 lines (then it scrolls) */
+    public editorHeight = 240;
+
     constructor(
         private actionEditorService: ActionEditorService,
         private modelService: ModelService,
         private deleteDialog: MatDialog,
         private _translateService: TranslateService,
-        protected _builderModeService: BuilderModeService
+        protected _builderModeService: BuilderModeService,
+        private _zone: NgZone
     ) {
         this.formControl = new FormControl(undefined, {updateOn: 'blur'});
         this.actionChanged = new EventEmitter<ActionChangedEvent>();
@@ -73,15 +86,38 @@ export class ActionEditorComponent implements OnInit {
         // options: https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.ieditoroptions.html
         this.editorOptions = {
             language: 'petriflow',
+            theme: monacoTheme(),
             scrollBeyondLastLine: false,
             automaticLayout: true,
+            fixedOverflowWidgets: true,
             wordWrap: 'off',
             colorDecorators: true,
             readOnly: this._builderModeService.readOnly
         };
     }
 
+    /** first line of the code (collapsed action) */
+    get preview(): string {
+        return (this.action.definition ?? '').split('\n').map(line => line.trim()).find(line => line.length > 0) ?? '';
+    }
+
+    toggleExpanded(): void {
+        this.expanded = !this.expanded;
+    }
+
     onInit(editorObject) {
+        const lineHeightOption = (window as any).monaco?.editor?.EditorOption?.lineHeight;
+        const fitHeight = () => {
+            const lineHeight = (lineHeightOption !== undefined ? editorObject.getOption?.(lineHeightOption) : undefined) || 19;
+            const height = Math.min(30 * lineHeight, Math.max(12 * lineHeight, Math.ceil(editorObject.getContentHeight())));
+            if (height !== this.editorHeight) {
+                this._zone.run(() => this.editorHeight = height);
+            }
+        };
+        editorObject.onDidContentSizeChange?.(() => fitHeight());
+        fitHeight();
+        this._colorSchemeSub?.unsubscribe();
+        this._colorSchemeSub = darkColorScheme$().subscribe(dark => (window as any).monaco?.editor?.setTheme(monacoTheme(dark)));
         this.editor = editorObject;
         this.editor.onDidChangeModelContent(e => {
             this.saveAction(this.editor.getModel().getLinesContent().join('\n'));
@@ -136,6 +172,8 @@ export class ActionEditorComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.expanded = this.leafNode?.actions?.length <= 1 || this.action.changeType === ChangeType.CREATED
+            || !this.action.definition?.trim();
         this.formControl.setValue(this.action.definition);
         this.formControl.valueChanges.subscribe(value => {
             this.saveAction(value);
@@ -356,24 +394,6 @@ export class ActionEditorComponent implements OnInit {
         });
     }
 
-    setHeightOnClose(index: number, action: any): void {
-        const element = document.getElementById(action.event + '_' + action.phase + '_' + index) as HTMLElement;
-        element.style.height = 'auto';
-    }
-
-    onResizeEvent(event: any, name: string): void {
-        const newHeight = event.rectangle.height < 370 ? 370 : event.rectangle.height;
-        const element = document.getElementById(name);
-        const headerSize = (element.childNodes[0] as HTMLElement).offsetHeight;
-        const bottomSize = (element.childNodes[1].childNodes[1] as HTMLElement).offsetHeight;
-        const div = document.getElementById(name + '_div');
-        const editorObject = document.getElementById(name + '_editor');
-        element.style.height = newHeight + 'px';
-        const innerSize = newHeight - headerSize - bottomSize - 45;
-        div.style.height = innerSize + 'px';
-        editorObject.style.height = innerSize + 'px';
-    }
-
     openDialog(index: number): void {
         const dialogRef = this.deleteDialog.open(DialogDeleteComponent);
 
@@ -382,11 +402,6 @@ export class ActionEditorComponent implements OnInit {
                 this.deleteAction(index);
             }
         });
-    }
-
-    closeDrawer() {
-        this.drawer.close();
-        this.drawerOpened.emit(this.drawer.opened);
     }
 
     undo(): void {
@@ -413,4 +428,8 @@ export class ActionEditorComponent implements OnInit {
 
     // monarch playground: https://microsoft.github.io/monaco-editor/monarch.html
     // monaco playground: https://microsoft.github.io/monaco-editor/playground.html#extending-language-services-custom-languages
+
+    ngOnDestroy(): void {
+        this._colorSchemeSub?.unsubscribe();
+    }
 }

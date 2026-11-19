@@ -1,4 +1,4 @@
-import {Component, ElementRef, Inject, Input, Optional, ViewChild} from '@angular/core';
+import {Component, ElementRef, Inject, Input, Optional, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {AbstractBaseDataFieldComponent} from '../base-component/abstract-base-data-field.component';
 import {FileField, FileUploadMIMEType} from '../file-field/models/file-field';
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from './data-field-portal-data-injection-token';
@@ -9,7 +9,9 @@ import {FileListField} from '../file-list-field/models/file-list-field';
 
 @Component({
     selector: 'ncc-abstract-file-field-default-component',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractFileFieldDefaultComponent<T extends FileField | FileListField> extends AbstractBaseDataFieldComponent<T> {
 
@@ -68,6 +70,7 @@ export abstract class AbstractFileFieldDefaultComponent<T extends FileField | Fi
         return false;
     }
 
+    /** @deprecated the M3 templates truncate the texts with CSS (ellipsis) */
     public getCutProperty(label): string {
         if (this.labelWidth !== label.offsetWidth) {
             this.labelWidth = label.offsetWidth;
@@ -75,6 +78,97 @@ export abstract class AbstractFileFieldDefaultComponent<T extends FileField | Fi
             this.cutProperty = `polygon(0 0, 0 100%, 100% 100%, 100% 0%, ${calculatedWidth} 0, ${calculatedWidth} 3px, 0.5em 3px, 0.5em 0)`;
         }
         return this.cutProperty;
+    }
+
+    /** a file is dragged over the field (the drop area is highlighted) */
+    public dragOver = false;
+
+    /**
+     * Uploads the files of the file picker (also the dropped ones). The single file and the file list field implement
+     * it; not abstract, so the classes of the applications extending this one keep compiling.
+     */
+    public upload(): void {
+    }
+
+    /** files can be dropped / picked: the field is editable and nothing is being uploaded */
+    public get canUpload(): boolean {
+        return !!this.formControlRef && !this.formControlRef.disabled && !this.isUploading();
+    }
+
+    /** an upload of the field is running (a dropped file must not start another one) */
+    protected isUploading(): boolean {
+        return false;
+    }
+
+    public onDragOver(event: DragEvent): void {
+        if (!this.canUpload || !event.dataTransfer?.types?.includes('Files')) {
+            return;
+        }
+        event.preventDefault();
+        event.dataTransfer.dropEffect = 'copy';
+        this.dragOver = true;
+    }
+
+    public onDragLeave(event: DragEvent): void {
+        const related = event.relatedTarget as Node | null;
+        if (related && (event.currentTarget as HTMLElement)?.contains(related)) {
+            return;
+        }
+        this.dragOver = false;
+    }
+
+    /** dropped files are uploaded the same way as the files of the file picker */
+    public onDrop(event: DragEvent, multiple = false): void {
+        this.dragOver = false;
+        if (!this.canUpload || !event.dataTransfer?.files?.length) {
+            return;
+        }
+        event.preventDefault();
+        const transfer = new DataTransfer();
+        Array.from(event.dataTransfer.files).slice(0, multiple ? undefined : 1).forEach(file => transfer.items.add(file));
+        this.fileUploadEl.nativeElement.files = transfer.files;
+        this.upload();
+    }
+
+    /** Material Symbols icon of a file by its extension */
+    public fileIcon(fileName: string | undefined): string {
+        const extension = (fileName ?? '').split('.').pop()?.toLowerCase() ?? '';
+        if (['png', 'jpg', 'jpeg', 'gif', 'svg', 'webp', 'bmp'].includes(extension)) {
+            return 'image';
+        }
+        if (extension === 'pdf') {
+            return 'picture_as_pdf';
+        }
+        if (['mp4', 'avi', 'mov', 'mkv', 'webm'].includes(extension)) {
+            return 'movie';
+        }
+        if (['mp3', 'wav', 'ogg', 'flac'].includes(extension)) {
+            return 'audio_file';
+        }
+        if (['zip', 'rar', '7z', 'tar', 'gz'].includes(extension)) {
+            return 'folder_zip';
+        }
+        return 'description';
+    }
+
+    /** supporting text of the drop area: allowed types and the maximal size */
+    public get uploadRestrictions(): string {
+        const parts: Array<string> = [];
+        if (this.dataField?.allowTypes) {
+            parts.push(String(this.dataField.allowTypes).split(',').map(type => type.trim()).filter(type => type).join(', '));
+        }
+        if (this.dataField?.maxUploadSizeInBytes) {
+            const megabytes = this.dataField.maxUploadSizeInBytes / (1024 * 1024);
+            parts.push(this._translate.instant('dataField.file.maxSize', {size: megabytes >= 1 ? `${Math.round(megabytes * 10) / 10} MB`
+                    : `${Math.round(this.dataField.maxUploadSizeInBytes / 1024)} kB`}));
+        }
+        return parts.join(' · ');
+    }
+
+    /** supporting text under the field: the description and, when files can be added, the upload restrictions */
+    public supportingText(withRestrictions = true): string {
+        const restrictions = withRestrictions && this.canUpload ? this.uploadRestrictions : '';
+        return [this.hasHint() ? this.dataField.description : '', restrictions].filter(text => !!text).join(' · ');
     }
 
     protected resolveParentTaskId(): string {

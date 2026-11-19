@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { PanelItemComponent } from './panel-item.component';
-import { Component, NO_ERRORS_SCHEMA } from '@angular/core';
+import { Component, NO_ERRORS_SCHEMA, ChangeDetectionStrategy} from '@angular/core';
 import { FeaturedValue } from '@netgrif/components-core';
 
 describe('PanelItemComponent', () => {
@@ -41,7 +41,9 @@ describe('PanelItemComponent', () => {
 @Component({
     selector: 'nc-test-wrapper',
     template: '<nc-panel-item [leadingIcon]="leadingIcon" [leadingIconEnabled]="index" [textEllipsis]="textEllipsis" ' +
-        '[featuredValue]="featuredValue"></nc-panel-item>'
+        '[featuredValue]="featuredValue"></nc-panel-item>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestWrapperComponent {
     leadingIcon = 'label';

@@ -1,4 +1,4 @@
-import {Component, Inject} from '@angular/core';
+import {Component, Inject, ChangeDetectionStrategy} from '@angular/core';
 import {FormBuilder} from '@angular/forms';
 import {STEPPER_GLOBAL_OPTIONS} from '@angular/cdk/stepper';
 import {TranslateService} from '@ngx-translate/core';
@@ -20,7 +20,9 @@ import {
     styleUrls: ['./new-case.component.scss'],
     providers: [{
         provide: STEPPER_GLOBAL_OPTIONS, useValue: {showError: true}
-    }]
+    }],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class NewCaseComponent extends AbstractNewCaseComponent {
 

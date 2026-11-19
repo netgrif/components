@@ -1,11 +1,13 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, ChangeDetectionStrategy} from '@angular/core';
 import {DataType, DataVariable, I18nTranslations, PetriNet} from '@netgrif/petriflow';
 import {ModelService} from '../../../../services/model/model.service';
 
 @Component({
     selector: 'nc-builder-data-translation',
     templateUrl: './data-translation.component.html',
-    styleUrls: ['./data-translation.component.scss']
+    styleUrls: ['./data-translation.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class DataTranslationComponent {
 

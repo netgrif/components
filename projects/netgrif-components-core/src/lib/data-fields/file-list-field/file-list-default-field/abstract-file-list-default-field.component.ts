@@ -1,11 +1,4 @@
-import {
-    AfterViewInit,
-    Component,
-    Inject,
-    OnDestroy,
-    OnInit,
-    Optional,
-} from "@angular/core";
+import {AfterViewInit, Component, Inject, OnDestroy, OnInit, Optional, ChangeDetectionStrategy} from "@angular/core";
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
 import {FileListField, FileListFieldValidation} from "../models/file-list-field";
 import {Subscription} from "rxjs";
@@ -34,7 +27,9 @@ export interface FilesState {
 
 @Component({
     selector: 'ncc-abstract-file-list-default-field',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractFileListDefaultFieldComponent extends AbstractFileFieldDefaultComponent<FileListField> implements OnInit, AfterViewInit, OnDestroy {
 
@@ -60,7 +55,7 @@ export abstract class AbstractFileListDefaultFieldComponent extends AbstractFile
         this.state = this.defaultState;
         this.uploadedFiles = new Array<string>();
         this.maxFilesNumber = Number.POSITIVE_INFINITY;
-        this.taskId = dataFieldPortalData.additionalFieldProperties.taskId as string;
+        this.taskId = dataFieldPortalData?.additionalFieldProperties?.taskId as string;
     }
 
     ngOnInit(): void {
@@ -111,6 +106,10 @@ export abstract class AbstractFileListDefaultFieldComponent extends AbstractFile
      *
      * Otherwise opens a file picker from which the user can select files.
      */
+    protected isUploading(): boolean {
+        return !!this.state?.uploading;
+    }
+
     public upload() {
         if (!this.fileUploadEl.nativeElement.files || this.fileUploadEl.nativeElement.files.length === 0) {
             return;

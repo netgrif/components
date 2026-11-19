@@ -1,0 +1,32 @@
+:host {
+    display: block;
+    height: 100%;
+}
+
+.view {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    box-sizing: border-box;
+    height: 100%;
+    padding: 16px 24px;
+}
+
+.list {
+    flex: 1 1 auto;
+    min-height: 0;
+}
+
+// search and the create case button in one row; on a narrow view the button wraps under the search
+.search-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+}
+
+.search {
+    flex: 1 1 240px;
+    min-width: 0;
+}

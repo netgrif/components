@@ -1,26 +1,31 @@
-<div fxLayout="row" fxFlex="100" fxLayoutAlign="start center" class="netgrif-input netgrif-header-input netgrif-input-fix netgrif-zero-field-wrapper">
-    <mat-checkbox *ngIf="approval && typeApproval === 'multichoice'" [formControl]="approvalFormControl" [indeterminate]="indeterminate"
-                  (click)="$event.stopPropagation();" color='primary' class="checkbox-padding"></mat-checkbox>
-    <mat-icon *ngIf="approval && typeApproval === 'enumeration'" color="warn" (click)="setValue();$event.stopPropagation();" class="checkbox-padding cursor-fix">close</mat-icon>
-    <mat-form-field *ngFor="let header of this.headerService.selectedHeaders$ | async; let i = index" fxLayout="row"
-                    fxLayoutAlign=" center" fxFlex [ngStyle]="{'min-width': getMinWidth()}" appearance="outline"
-                    [fxHide.lt-xl]="i >= 4 && this.headerService.responsiveHeaders && !this.headerService.overflowMode"
-                    [fxHide.lt-lg]="i >= 3 && this.headerService.responsiveHeaders && !this.headerService.overflowMode"
-                    [fxHide.lt-md]="i >= 2 && this.headerService.responsiveHeaders && !this.headerService.overflowMode"
-                    [fxHide.lt-sm]="i >= 1 && this.headerService.responsiveHeaders && !this.headerService.overflowMode">
-        <mat-label *ngIf="!header">{{ 'headers.newHeader' | translate}}</mat-label>
-        <input type="text"
-               aria-label="Autocomplete"
-               matInput
-               [formControl]="formControls[i]"
-               [matAutocomplete]="auto">
-        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="renderSelection"
-                          (optionSelected)="headerColumnSelected(i, $event.option.value)" fxFlex>
-            <mat-optgroup *ngFor="let group of this.filterOptions[i] | async" [label]="group.groupTitle">
-                <mat-option *ngFor="let field of group.fields" [value]="field">
-                    {{field.title | translate}}
-                </mat-option>
+<div fxFlex fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px">
+    @if (approval && typeApproval === 'multichoice') {
+    <mat-checkbox [formControl]="approvalFormControl" [indeterminate]="indeterminate" (click)="$event.stopPropagation()"></mat-checkbox>
+    }
+    @if (approval && typeApproval === 'enumeration') {
+    <button mat-icon-button (click)="setValue(); $event.stopPropagation()"><mat-icon>close</mat-icon></button>
+    }
+    @for (header of headerService.selectedHeaders$ | async; track header; let i = $index) {
+    <mat-form-field fxFlex subscriptSizing="dynamic" class="table-column"
+         [fxHide.lt-xl]="i >= 4 && headerService.responsiveHeaders && !headerService.overflowMode"
+         [fxHide.lt-lg]="i >= 3 && headerService.responsiveHeaders && !headerService.overflowMode"
+         [fxHide.lt-md]="i >= 2 && headerService.responsiveHeaders && !headerService.overflowMode"
+         [fxHide.lt-sm]="i >= 1 && headerService.responsiveHeaders && !headerService.overflowMode">
+        @if (!header) {
+        <mat-label>{{ "headers.newHeader" | translate }}</mat-label>
+        }
+        <input matInput type="text" aria-label="Autocomplete" [formControl]="formControls[i]" [matAutocomplete]="auto"/>
+        <mat-autocomplete #auto="matAutocomplete" autoActiveFirstOption
+                          [displayWith]="renderSelection"
+                          (optionSelected)="headerColumnSelected(i, $event.option.value)">
+            @for (group of filterOptions[i] | async; track group) {
+            <mat-optgroup [label]="group.groupTitle">
+                @for (field of group.fields; track field) {
+                <mat-option [value]="field">{{ field.title | translate }}</mat-option>
+                }
             </mat-optgroup>
+            }
         </mat-autocomplete>
     </mat-form-field>
+    }
 </div>

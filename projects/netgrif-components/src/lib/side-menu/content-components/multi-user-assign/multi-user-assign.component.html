@@ -1,30 +1,16 @@
-<div class="full-width full-height" fxLayout="column" fxLayoutAlign="start stretch">
-    <mat-toolbar color="primary">{{ 'side-menu.user.assign' | translate | uppercase }}</mat-toolbar>
-    <div class="user-assign-container side-menu-root" fxLayout="column" fxFlex>
-        <div fxLayout="row" fxLayoutAlign="start center" class="netgrif-input netgrif-input-fix">
-            <mat-icon fxFlex class="search-icon">search</mat-icon>
-            <mat-form-field fxFlex="100" class="user-assign-search" color="primary" appearance="outline">
-                <input matInput placeholder="{{ 'side-menu.user.choose' | translate }}"
-                       [formControl]="searchUserControl">
-                <button mat-button *ngIf="searchUserControl.value" matSuffix mat-icon-button
-                        (click)="searchUserControl.setValue('')">
-                    <mat-icon>close</mat-icon>
-                </button>
-            </mat-form-field>
-        </div>
-
-        <nc-multi-user-assign-list fxFlex
-                             [searchUserControl]="searchUserControl"
-                             [roles]="roles"
-                             [negativeRoles]="negativeRoles"
-                             [initiallySelectedUsers]="initiallySelectedUsers"
-                             (userSelected)="userWasSelected($event)"
-                             (userUnselected)="userWasUnselected($event)">
-        </nc-multi-user-assign-list>
-
-        <div fxLayout="row" fxLayoutAlign="end center">
-            <button mat-raised-button color="primary"
-                    (click)="save()">{{ 'dataField.user.save' | translate | uppercase }}</button>
-        </div>
-    </div>
+<mat-toolbar>{{ "side-menu.user.assign" | translate }}</mat-toolbar>
+<div class="content" fxLayout="column">
+    <mat-form-field>
+        <mat-icon matIconPrefix>search</mat-icon>
+        <input matInput placeholder="{{ 'side-menu.user.choose' | translate }}" [formControl]="searchUserControl"/>
+        @if (searchUserControl.value) {
+        <button mat-icon-button matIconSuffix (click)="searchUserControl.setValue('')">
+            <mat-icon>close</mat-icon>
+        </button>
+        }
+    </mat-form-field>
+    <nc-multi-user-assign-list fxFlex [searchUserControl]="searchUserControl" [roles]="roles" [negativeRoles]="negativeRoles" [initiallySelectedUsers]="initiallySelectedUsers" (userSelected)="userWasSelected($event)" (userUnselected)="userWasUnselected($event)"></nc-multi-user-assign-list>
+<div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px">
+    <button mat-flat-button (click)="save()">{{ "dataField.user.save" | translate }}</button>
+</div>
 </div>

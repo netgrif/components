@@ -1,6 +1,6 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {IframeCardComponent} from './iframe-card.component';
-import {Component} from '@angular/core';
+import {Component, ChangeDetectionStrategy} from '@angular/core';
 import {DashboardCardTypes, IframeCard} from '@netgrif/components-core';
 import {FlexLayoutModule} from '@ngbracket/ngx-layout';
 import {MatCardModule} from '@angular/material/card';
@@ -35,7 +35,9 @@ describe('IframeCardComponent', () => {
 
 @Component({
     selector: 'nc-test-wrapper',
-    template: '<nc-iframe-card [card]="card"></nc-iframe-card>'
+    template: '<nc-iframe-card [card]="card"></nc-iframe-card>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestWrapperComponent {
     card: IframeCard = {

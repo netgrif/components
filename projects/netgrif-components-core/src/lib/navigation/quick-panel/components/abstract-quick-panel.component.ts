@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {LanguageService} from '../../../translate/language.service';
 import {PaperViewService} from './paper-view.service';
 import {AbstractNavigationResizableDrawerComponent} from '../../navigation-drawer/abstract-navigation-resizable-drawer.component';
@@ -7,7 +7,9 @@ export type QuickPanelItem = 'language' | 'settings' | 'logout' | 'impersonation
 
 @Component({
     selector: 'ncc-abstract-quick-panel',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractQuickPanelComponent extends AbstractNavigationResizableDrawerComponent implements OnInit {
 

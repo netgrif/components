@@ -1,9 +1,6 @@
-<div fxLayout="row" fxLayoutAlign="start center" class="user-item" [ngClass]="{
-            'user-assign-item-selected': (selectedId$ | async) === user.id
-        }">
-    <mat-icon class="icon">account_circle</mat-icon>
-    <div fxLayout="column">
-        <span>{{user.fullName}}</span>
-        <span>{{user.email}}</span>
-    </div>
-</div>
+@let selected = (selectedId$ | async) === user.id;
+<a mat-list-item [activated]="selected" [attr.aria-selected]="selected">
+    <span matListItemAvatar class="avatar" aria-hidden="true">{{ initials }}</span>
+    <span matListItemTitle>{{ user.fullName }}</span>
+    <span matListItemLine>{{ user.email }}</span>
+</a>

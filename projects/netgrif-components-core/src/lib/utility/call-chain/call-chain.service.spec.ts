@@ -1,13 +1,12 @@
 import {TestBed} from '@angular/core/testing';
 import {CallChainService} from './call-chain.service';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('CallChainService', () => {
     let service: CallChainService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopAnimationsModule]
+            imports: []
         });
         service = TestBed.inject(CallChainService);
     });

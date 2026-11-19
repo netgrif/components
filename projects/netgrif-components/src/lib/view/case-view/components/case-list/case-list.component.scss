@@ -1,32 +1,18 @@
-.font-size-20 {
-    font-size: 20px;
+@use '../../../../../../theming/scrollbar' as scrollbar;
+:host {
+    display: flex;
+    flex-direction: column;
 }
 
-.font-size-40 {
-    font-size: 40px;
-}
-
-.block-size-40 {
-    width: 40px;
-    height: 40px;
-}
-
-.margin-bottom-default {
-    margin-bottom: 8px;
-}
-
-.margin-top-default {
-    margin-top: 8px;
-}
-
-.full-width {
-    width: 100%;
-}
-
-.full-height {
+mat-accordion, cdk-virtual-scroll-viewport {
+    flex: 1 1 auto;
     height: 100%;
 }
 
-.scroll-container {
-    padding: 0 1px;
+cdk-virtual-scroll-viewport:not(.cdk-virtual-scrollable) {
+    height: auto;
+}
+
+cdk-virtual-scroll-viewport.cdk-virtual-scrollable {
+    @include scrollbar.list-scrollbar();
 }

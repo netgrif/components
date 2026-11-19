@@ -1,10 +1,8 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {TextareaFieldComponent} from './textarea-field.component';
-import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
-import {AngularResizeEventModule} from 'angular-resize-event';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {Component, CUSTOM_ELEMENTS_SCHEMA, ChangeDetectionStrategy} from '@angular/core';
 import {FormControl} from '@angular/forms';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {
     AuthenticationMethodService,
     AuthenticationService,
@@ -19,6 +17,7 @@ import {
     UserResourceService,
     WrappedBoolean
 } from '@netgrif/components-core';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('TextareaFieldComponent', () => {
     let component: TextareaFieldComponent;
@@ -26,21 +25,20 @@ describe('TextareaFieldComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
+            declarations: [TextareaFieldComponent, TestWrapperComponent],
+            schemas: [CUSTOM_ELEMENTS_SCHEMA],
             imports: [
                 MaterialModule,
-                AngularResizeEventModule,
-                BrowserAnimationsModule,
-                TranslateLibModule,
-                HttpClientTestingModule
+                TranslateLibModule
             ],
             providers: [
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
-            ],
-            declarations: [TextareaFieldComponent, TestWrapperComponent],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA]
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
+            ]
         }).compileComponents();
 
         fixture = TestBed.createComponent(TestWrapperComponent);
@@ -59,7 +57,9 @@ describe('TextareaFieldComponent', () => {
 
 @Component({
     selector: 'nc-test-wrapper',
-    template: '<nc-textarea-field [showLargeLayout]="label" [dataField]="field" [formControlRef]="formControl"> </nc-textarea-field>'
+    template: '<nc-textarea-field [showLargeLayout]="label" [dataField]="field" [formControlRef]="formControl"> </nc-textarea-field>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestWrapperComponent {
     label = new WrappedBoolean();

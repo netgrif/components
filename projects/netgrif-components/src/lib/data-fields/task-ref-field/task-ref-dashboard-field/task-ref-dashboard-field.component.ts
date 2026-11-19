@@ -1,4 +1,4 @@
-import {Component, Inject, Input, Optional, Type} from '@angular/core';
+import {Component, Inject, Input, Optional, Type, ChangeDetectionStrategy} from '@angular/core';
 import {
     AbstractTaskRefDashboardFieldComponent,
     DATA_FIELD_PORTAL_DATA,
@@ -11,7 +11,9 @@ import {
 @Component({
   selector: 'nc-task-ref-dashboard-field',
   templateUrl: './task-ref-dashboard-field.component.html',
-  styleUrls: ['./task-ref-dashboard-field.component.scss']
+  styleUrls: ['./task-ref-dashboard-field.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class TaskRefDashboardFieldComponent extends AbstractTaskRefDashboardFieldComponent {
 

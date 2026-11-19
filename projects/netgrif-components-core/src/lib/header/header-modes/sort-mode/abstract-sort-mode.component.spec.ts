@@ -1,10 +1,9 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {FlexLayoutModule, FlexModule} from '@ngbracket/ngx-layout';
 import {MatSortModule} from '@angular/material/sort';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
-import {Component} from '@angular/core';
+import {Component, ChangeDetectionStrategy} from '@angular/core';
 import {AbstractSortModeComponent} from './abstract-sort-mode.component';
 import {CaseHeaderService} from '../../case-header/case-header.service';
 import {MockAuthenticationMethodService} from '../../../utility/tests/mocks/mock-authentication-method-service';
@@ -22,6 +21,7 @@ import {MockAuthenticationService} from '../../../utility/tests/mocks/mock-authe
 import {AllowedNetsService} from '../../../allowed-nets/services/allowed-nets.service';
 import {TestNoAllowedNetsFactory} from '../../../utility/tests/test-factory-methods';
 import {AllowedNetsServiceFactory} from '../../../allowed-nets/services/factory/allowed-nets-service-factory';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('AbstractSortModeComponent', () => {
     let component: TestSortModeComponent;
@@ -30,13 +30,12 @@ describe('AbstractSortModeComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
+            declarations: [TestSortModeComponent, TestWrapperComponent],
             imports: [
                 FlexModule,
                 FlexLayoutModule,
                 MatSortModule,
-                NoopAnimationsModule,
                 TranslateLibModule,
-                HttpClientTestingModule,
                 MatSnackBarModule,
                 RouterTestingModule.withRoutes([])
             ],
@@ -47,9 +46,10 @@ describe('AbstractSortModeComponent', () => {
                 {provide: UserResourceService, useClass: MockUserResourceService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: ViewService, useClass: TestViewService},
-                {provide: AllowedNetsService, useFactory: TestNoAllowedNetsFactory, deps: [AllowedNetsServiceFactory]}
+                {provide: AllowedNetsService, useFactory: TestNoAllowedNetsFactory, deps: [AllowedNetsServiceFactory]},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
             ],
-            declarations: [TestSortModeComponent, TestWrapperComponent],
         }).compileComponents();
     }));
 
@@ -77,7 +77,9 @@ describe('AbstractSortModeComponent', () => {
 
 @Component({
     selector: 'ncc-test-sort',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestSortModeComponent extends AbstractSortModeComponent {
     constructor() {
@@ -87,7 +89,9 @@ class TestSortModeComponent extends AbstractSortModeComponent {
 
 @Component({
     selector: 'ncc-test-wrapper',
-    template: '<ncc-test-sort [headerService]="service"></ncc-test-sort>'
+    template: '<ncc-test-sort [headerService]="service"></ncc-test-sort>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestWrapperComponent {
     constructor(public service: CaseHeaderService) {

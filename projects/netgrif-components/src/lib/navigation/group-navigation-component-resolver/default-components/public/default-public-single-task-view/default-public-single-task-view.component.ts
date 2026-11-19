@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {AsyncPipe} from "@angular/common";
 import {combineLatest} from "rxjs";
@@ -65,7 +65,9 @@ const localAllowedNetsServiceFactory = (factory: AllowedNetsServiceFactory, rout
         {provide: NAE_TASK_OPERATIONS, useClass: SubjectTaskOperations},
         {provide: AllowedNetsServiceFactory, useClass: AllowedNetsServiceFactory},
         AsyncPipe
-    ]
+    ],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class DefaultPublicSingleTaskViewComponent extends AbstractSingleTaskViewComponent implements OnInit {
 

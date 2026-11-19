@@ -1,10 +1,4 @@
-import {
-    Component,
-    Inject,
-    Optional,
-    ViewChild,
-    Input
-} from '@angular/core';
+import {Component, Inject, Optional, ViewChild, Input, ChangeDetectionStrategy} from '@angular/core';
 import {CaseViewService} from '../../service/case-view-service';
 import {CdkVirtualScrollViewport} from '@angular/cdk/scrolling';
 import {LoggerService} from '../../../../logger/services/logger.service';
@@ -17,7 +11,9 @@ import {LanguageService} from "../../../../translate/language.service";
 
 @Component({
     selector: 'ncc-abstract-case-list',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractCaseListComponent extends AbstractDefaultCaseListComponent {
 

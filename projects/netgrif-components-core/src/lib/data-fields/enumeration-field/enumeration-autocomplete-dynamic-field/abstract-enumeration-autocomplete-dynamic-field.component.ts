@@ -1,13 +1,4 @@
-import {
-    AfterViewInit,
-    Component,
-    ElementRef,
-    Inject,
-    OnDestroy,
-    OnInit,
-    Optional,
-    ViewChild
-} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, Inject, OnDestroy, OnInit, Optional, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {Observable, of, Subscription} from 'rxjs';
 import {TranslateService} from '@ngx-translate/core';
 import {map, startWith} from 'rxjs/operators';
@@ -18,7 +9,9 @@ import {AbstractBaseDataFieldComponent} from "../../base-component/abstract-base
 
 @Component({
     selector: 'ncc-abstract-enumeration-autocomplete-dynamic-field',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractEnumerationAutocompleteDynamicFieldComponent extends AbstractBaseDataFieldComponent<DynamicEnumerationField> implements OnInit, OnDestroy, AfterViewInit {
 

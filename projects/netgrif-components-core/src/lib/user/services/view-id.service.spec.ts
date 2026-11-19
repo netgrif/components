@@ -1,10 +1,9 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {ViewIdService} from './view-id.service';
-import {Component, Injectable, Optional} from '@angular/core';
+import {Component, Injectable, Optional, ChangeDetectionStrategy} from '@angular/core';
 import {NAE_VIEW_ID_SEGMENT} from '../models/view-id-injection-tokens';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
-
+import {provideHttpClientTesting} from '@angular/common/http/testing';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('ViewIdService', () => {
     let helperService: ViewIdServiceGetter;
@@ -12,15 +11,17 @@ describe('ViewIdService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopAnimationsModule, HttpClientTestingModule],
             declarations: [
                 TestRootComponent,
                 TestDirectComponent,
                 TestSkippedComponent,
                 TestBottomComponent
             ],
+            imports: [],
             providers: [
-                ViewIdServiceGetter
+                ViewIdServiceGetter,
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
             ]
         }).compileComponents();
         helperService = TestBed.inject(ViewIdServiceGetter);
@@ -61,7 +62,9 @@ describe('ViewIdService', () => {
     providers: [
         {provide: NAE_VIEW_ID_SEGMENT, useValue: 'root'},
         ViewIdService
-    ]
+    ],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestRootComponent {
     constructor(@Optional() id: ViewIdService, helper: ViewIdServiceGetter) {
@@ -75,7 +78,9 @@ class TestRootComponent {
     providers: [
         {provide: NAE_VIEW_ID_SEGMENT, useValue: 'direct'},
         ViewIdService
-    ]
+    ],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestDirectComponent {
     constructor(@Optional() id: ViewIdService, helper: ViewIdServiceGetter) {
@@ -85,7 +90,9 @@ class TestDirectComponent {
 
 @Component({
     selector: 'ncc-test-skipped',
-    template: '<ncc-test-bottom></ncc-test-bottom>'
+    template: '<ncc-test-bottom></ncc-test-bottom>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestSkippedComponent {
     constructor(@Optional() id: ViewIdService, helper: ViewIdServiceGetter) {
@@ -99,7 +106,9 @@ class TestSkippedComponent {
     providers: [
         {provide: NAE_VIEW_ID_SEGMENT, useValue: 'bottom'},
         ViewIdService
-    ]
+    ],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestBottomComponent {
     constructor(@Optional() id: ViewIdService, helper: ViewIdServiceGetter) {

@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, ChangeDetectionStrategy} from '@angular/core';
 import {PetriNet, Transition} from '@netgrif/petriflow';
 import {SelectedTransitionService} from '../../modeler/selected-transition.service';
 import {ModelService} from '../../modeler/services/model/model.service';
@@ -7,7 +7,9 @@ import {BuilderModeService, BuilderMode} from "../../services/builder-mode.servi
 @Component({
     selector: 'nc-builder-info-label',
     templateUrl: './info-label.component.html',
-    styleUrls: ['./info-label.component.scss']
+    styleUrls: ['./info-label.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class InfoLabelComponent {
 

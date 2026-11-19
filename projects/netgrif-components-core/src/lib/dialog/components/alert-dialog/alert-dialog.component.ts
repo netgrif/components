@@ -1,4 +1,4 @@
-import {Component, Inject} from '@angular/core';
+import {Component, Inject, ChangeDetectionStrategy} from '@angular/core';
 import {AbstractDialogComponent} from '../../models/abstract-dialog.component';
 import {DialogData} from '../../models/DialogData';
 import {DialogResult} from '../../models/DialogResult';
@@ -11,7 +11,9 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 @Component({
     selector: 'ncc-simple-dialog',
     templateUrl: './alert-dialog.component.html',
-    styleUrls: ['./alert-dialog.component.scss']
+    styleUrls: ['./alert-dialog.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class AlertDialogComponent extends AbstractDialogComponent<AlertDialogComponent> {
     /**

@@ -1,13 +1,13 @@
 import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 import {AbstractSearchPredicateComponent} from './abstract-search-predicate.component';
-import {Component, Inject, OnDestroy, Type} from '@angular/core';
+import {Component, Inject, OnDestroy, Type, ChangeDetectionStrategy} from '@angular/core';
 import {NAE_DEFAULT_CASE_SEARCH_CATEGORIES, NAE_SEARCH_CATEGORIES} from '../category-factory/search-categories-injection-token';
 import {Category} from '../models/category/category';
 import {LoggerService} from '../../logger/services/logger.service';
 import {CategoryFactory} from '../category-factory/category-factory';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {
     TestCaseBaseFilterProvider,
     TestNoAllowedNetsFactory
@@ -26,7 +26,7 @@ import {NAE_BASE_FILTER} from '../models/base-filter-injection-token';
 import {AllowedNetsService} from '../../allowed-nets/services/allowed-nets.service';
 import {AllowedNetsServiceFactory} from '../../allowed-nets/services/factory/allowed-nets-service-factory';
 import {DefaultSearchCategoriesModule} from '../category-factory/default-search-categories.module';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('AbstractSearchPredicateComponent', () => {
     let component: TestSearchPredicateComponent;
@@ -34,16 +34,14 @@ describe('AbstractSearchPredicateComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
-            imports: [
-                HttpClientTestingModule,
-                MaterialModule,
-                TranslateLibModule,
-                DefaultSearchCategoriesModule,
-                NoopAnimationsModule
-            ],
             declarations: [
                 TestSearchPredicateComponent,
                 TestWrapperComponent
+            ],
+            imports: [
+                MaterialModule,
+                TranslateLibModule,
+                DefaultSearchCategoriesModule
             ],
             providers: [
                 CategoryFactory,
@@ -56,7 +54,9 @@ describe('AbstractSearchPredicateComponent', () => {
                 },
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 AdvancedSearchComponentInitializationService,
-                {provide: AllowedNetsService, useFactory: TestNoAllowedNetsFactory, deps: [AllowedNetsServiceFactory]}
+                {provide: AllowedNetsService, useFactory: TestNoAllowedNetsFactory, deps: [AllowedNetsServiceFactory]},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
             ]
         }).compileComponents();
     }));
@@ -78,7 +78,9 @@ describe('AbstractSearchPredicateComponent', () => {
 
 @Component({
     selector: 'ncc-search-predicate',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestSearchPredicateComponent extends AbstractSearchPredicateComponent {
     constructor(@Inject(NAE_SEARCH_CATEGORIES) searchCategories: Array<Type<Category<any>>>,
@@ -91,7 +93,9 @@ class TestSearchPredicateComponent extends AbstractSearchPredicateComponent {
 
 @Component({
     selector: 'ncc-test-wrapper',
-    template: '<ncc-search-predicate [predicate]="predicate" [predicateId]="0" [remove$]="remove$"></ncc-search-predicate>'
+    template: '<ncc-search-predicate [predicate]="predicate" [predicateId]="0" [remove$]="remove$"></ncc-search-predicate>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestWrapperComponent implements OnDestroy {
 

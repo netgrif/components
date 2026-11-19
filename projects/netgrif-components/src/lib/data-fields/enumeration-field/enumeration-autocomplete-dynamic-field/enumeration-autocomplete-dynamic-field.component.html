@@ -1,29 +1,46 @@
-<mat-form-field [appearance]="dataField.materialAppearance" class="full-width" color="primary">
-    <mat-label *ngIf="!showLargeLayout.value">{{dataField.title}}</mat-label>
-    <input type="text"
-           aria-label="Autocomplete"
-           matInput
-           #input
-           [placeholder]="dataField.placeholder"
-           [formControl]="formControlRef"
-           [matAutocomplete]="auto"
-           [required]="dataField.behavior.required"
-           (keyup)="change()">
-    <mat-spinner *ngIf="dataField.loading" matSuffix diameter="30"></mat-spinner>
-    <mat-autocomplete [displayWith]="renderSelection" autoActiveFirstOption #auto="matAutocomplete">
-
-        <mat-option disabled *ngIf="(filteredOptions | async)?.length === 0 && !dataField.loading && dataField.value && dataField.value.length > 0" fxLayoutAlign="center center">
-            {{ 'dataField.dynamicEnum.noData' | translate }}
+<mat-form-field appearance="outline"
+    fxFlexFill
+>
+    @if (!showLargeLayout.value && hasTitle()) {
+    <mat-label>{{ dataField.title }}</mat-label>
+    }
+    <input
+        type="text"
+        aria-label="Autocomplete"
+        matInput
+        #input
+        [placeholder]="dataField.placeholder"
+        [formControl]="formControlRef"
+        [matAutocomplete]="auto"
+        [required]="dataField.behavior.required"
+        (keyup)="change()"
+    />
+    <mat-autocomplete
+        [displayWith]="renderSelection"
+        autoActiveFirstOption
+        #auto="matAutocomplete"
+    >
+        @if ((filteredOptions | async)?.length === 0 && !dataField.loading &&
+        dataField.value && dataField.value.length > 0) {
+        <mat-option disabled fxLayoutAlign="center center">
+            {{ "dataField.dynamicEnum.noData" | translate }}
         </mat-option>
-
-        <ng-container *ngIf="!dataField.loading">
-            <mat-option [value]="null">---</mat-option>
-            <mat-option *ngFor="let option of filteredOptions | async" [value]="option.key" (click)="change()">
-                {{option.value}}
-            </mat-option>
-        </ng-container>
+        } @if (dataField.loading) {
+        <mat-option disabled>
+            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        </mat-option>
+        } @if (!dataField.loading) {
+        <mat-option [value]="null">---</mat-option>
+        @for (option of filteredOptions | async; track option) {
+        <mat-option [value]="option.key" (click)="change()">
+            {{ option.value }}
+        </mat-option>
+        } }
     </mat-autocomplete>
-    <mat-hint [ngClass]="{'mat-hint-disabled': formControlRef.disabled}">{{dataField.description}}</mat-hint>
-    <mat-error *ngIf="dataField.isInvalid(formControlRef)">{{buildErrorMessage()}}</mat-error>
+    <mat-hint>{{
+        dataField.description
+    }}</mat-hint>
+    @if (dataField.isInvalid(formControlRef)) {
+    <mat-error>{{ buildErrorMessage() }}</mat-error>
+    }
 </mat-form-field>
-

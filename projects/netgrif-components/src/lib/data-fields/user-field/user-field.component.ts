@@ -1,4 +1,4 @@
-import {Component, Inject, Optional} from '@angular/core';
+import {Component, Inject, Optional, ChangeDetectionStrategy} from '@angular/core';
 import {AbstractUserFieldComponent, NAE_INFORM_ABOUT_INVALID_DATA} from '@netgrif/components-core';
 
 /**
@@ -7,7 +7,8 @@ import {AbstractUserFieldComponent, NAE_INFORM_ABOUT_INVALID_DATA} from '@netgri
 @Component({
     selector: 'nc-user-field',
     templateUrl: './user-field.component.html',
-    styleUrls: ['./user-field.component.scss']
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class UserFieldComponent extends AbstractUserFieldComponent {
 

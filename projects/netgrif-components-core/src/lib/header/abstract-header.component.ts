@@ -1,4 +1,4 @@
-import {Component, Inject, Injector, Input, OnDestroy, OnInit, Optional} from '@angular/core';
+import {Component, Inject, Injector, Input, OnDestroy, OnInit, Optional, ChangeDetectionStrategy} from '@angular/core';
 import {AbstractHeaderService} from './abstract-header-service';
 import {CaseHeaderService} from './case-header/case-header.service';
 import {TaskHeaderService} from './task-header/task-header.service';
@@ -22,11 +22,14 @@ import {EnumerationField} from "../data-fields/enumeration-field/models/enumerat
 
 @Component({
     selector: 'ncc-abstract-header',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractHeaderComponent implements OnInit, OnDestroy {
 
     protected readonly DEFAULT_COLUMN_COUNT = 6;
+    /** @deprecated see {@link columnWidthControl} */
     protected readonly DEFAULT_COLUMN_WIDTH = 220;
     protected readonly INPUT_DEBOUNCE_TIME = 600;
     @Input() type: HeaderType = HeaderType.CASE;
@@ -43,10 +46,16 @@ export abstract class AbstractHeaderComponent implements OnInit, OnDestroy {
     public readonly headerTypeEnum = HeaderType;
     public overflowControl: FormControl<boolean>;
     public columnCountControl: FormControl<number>;
+    /**
+     * @deprecated the columns of the table mode share the width of the view (at least
+     * {@link OverflowService.MIN_COLUMN_WIDTH}), there is no column width setting; kept for the applications (its value
+     * is stored in {@link OverflowService.columnWidth}, unused by the library), will be removed in a future major version
+     */
     public columnWidthControl: FormControl<number>;
     public canOverflow: boolean;
     public subOverflowControl: Subscription;
     public subColumnCountControl: Subscription;
+    /** @deprecated see {@link columnWidthControl} */
     public subColumnWidthControl: Subscription;
 
     protected _initHeaderCount: number = undefined;
@@ -110,7 +119,7 @@ export abstract class AbstractHeaderComponent implements OnInit, OnDestroy {
 
     ngOnDestroy(): void {
         if (this.canOverflow) {
-            this.subColumnWidthControl.unsubscribe();
+            this.subColumnWidthControl?.unsubscribe();
             this.subColumnCountControl.unsubscribe();
             this.subOverflowControl.unsubscribe();
         }
@@ -150,18 +159,20 @@ export abstract class AbstractHeaderComponent implements OnInit, OnDestroy {
         stopPropagation($event);
     }
 
+    /** minimal width of a column: in table mode the columns stretch over the view, at least to this width */
     getMinWidth() {
-        return (this._overflowService && this._overflowService.overflowMode) ? `${this._overflowService.columnWidth}px` : '0';
+        return (this._overflowService && this._overflowService.overflowMode) ? `${OverflowService.MIN_COLUMN_WIDTH}px` : '0';
     }
 
     confirmEditMode() {
-        if (!this.overflowControl.value || (this.overflowControl.value && this.columnWidthControl.valid && this.columnWidthControl.valid)) {
+        if (!this.overflowControl.value || (this.overflowControl.value && this.columnCountControl.valid)) {
             this.headerService.confirmEditMode();
         }
     }
 
+    /** @deprecated see {@link columnWidthControl} */
     getErrorMessageWidth() {
-        return this.buildErrorMessage(this.columnWidthControl, 180);
+        return this.buildErrorMessage(this.columnWidthControl, OverflowService.MIN_COLUMN_WIDTH);
     }
 
     getErrorMessageCount() {
@@ -186,7 +197,7 @@ export abstract class AbstractHeaderComponent implements OnInit, OnDestroy {
             Validators.min(1)]);
         this.columnWidthControl = new FormControl(exist ? this._overflowService.columnWidth : this.DEFAULT_COLUMN_WIDTH, [
             Validators.required,
-            Validators.min(180)]);
+            Validators.min(OverflowService.MIN_COLUMN_WIDTH)]);
         this._approvalFormControl = new FormControl(false);
         if (exist) {
             this.initializeValueChanges();
@@ -209,9 +220,6 @@ export abstract class AbstractHeaderComponent implements OnInit, OnDestroy {
         this.subColumnWidthControl = this.columnWidthControl.valueChanges.pipe(debounceTime(this.INPUT_DEBOUNCE_TIME)).subscribe(value => {
             if (this.columnWidthControl.valid) {
                 this._overflowService.columnWidth = value;
-                if (this.headerService && this.type === HeaderType.CASE) {
-                    (this.headerService as CaseHeaderService).updateColumnCount();
-                }
             }
         });
     }

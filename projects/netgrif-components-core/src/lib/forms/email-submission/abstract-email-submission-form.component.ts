@@ -1,11 +1,13 @@
-import {Component, EventEmitter, Input, OnDestroy, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, Output, ChangeDetectionStrategy} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {FormSubmitEvent, HasForm} from '../has-form';
 import {LoadingEmitter} from '../../utility/loading-emitter';
 
 @Component({
     selector: 'ncc-abstract-email-submission-form',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractEmailSubmissionFormComponent implements HasForm, OnDestroy {
 

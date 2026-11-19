@@ -1,4 +1,4 @@
-import {Component, Injector} from '@angular/core';
+import {Component, Injector, Input, ChangeDetectionStrategy} from '@angular/core';
 import {AbstractTabViewComponent, LoggerService, ViewService} from '@netgrif/components-core';
 
 /**
@@ -9,9 +9,15 @@ import {AbstractTabViewComponent, LoggerService, ViewService} from '@netgrif/com
 @Component({
     selector: 'nc-tab-view',
     templateUrl: './tab-view.component.html',
-    styleUrls: ['./tab-view.component.scss']
+    styleUrls: ['./tab-view.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class TabViewComponent extends AbstractTabViewComponent {
+    /**
+     * Renders only the selected tab without the tab header. Tabs are switched / closed programmatically.
+     */
+    @Input() public hideHeader = false;
 
     constructor(protected _viewService: ViewService, protected _logger: LoggerService, injector: Injector) {
         super(_viewService, _logger, injector);

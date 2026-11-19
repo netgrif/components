@@ -1,6 +1,11 @@
-<mat-toolbar color="primary">{{'side-menu.impersonation.title' | translate}}</mat-toolbar>
-<div class="load-filter-container side-menu-root" fxLayout="column" fxLayoutAlign="start stretch">
-    <nc-header #header [type]="headerType" [maxHeaderColumns]="3" [responsiveHeaders]="true" [hideHeaderMenu]="true" class="case-header-padding" [ngStyle]="{'width': getWidth()}"></nc-header>
-    <nc-case-list [selectedHeaders$]="selectedHeaders$" [showDeleteMenu]="false" [width]="getWidth()"
-                  (caseClick)="handleCaseClick($event)" [responsiveBody]="true" fxFlex [textEllipsis]="true" class="virtual-scroll-list-padding"></nc-case-list>
+<mat-toolbar>{{ 'side-menu.impersonation.title' | translate }}</mat-toolbar>
+<div class="content" fxLayout="column">
+    <nc-header #header [type]="headerType" [maxHeaderColumns]="3" [responsiveHeaders]="true" [hideHeaderMenu]="true" [ngStyle]="{ width: getWidth() }"></nc-header>
+    <nc-case-list fxFlex
+                  [selectedHeaders$]="selectedHeaders$"
+                  [showDeleteMenu]="false"
+                  [width]="getWidth()"
+                  [responsiveBody]="true"
+                  [textEllipsis]="true"
+                  (caseClick)="handleCaseClick($event)"></nc-case-list>
 </div>

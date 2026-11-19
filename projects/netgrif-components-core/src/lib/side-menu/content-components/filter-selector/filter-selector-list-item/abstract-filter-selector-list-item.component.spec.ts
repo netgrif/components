@@ -1,10 +1,10 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {Component} from '@angular/core';
+import {Component, ChangeDetectionStrategy} from '@angular/core';
 import {AbstractFilterSelectorListItemComponent} from './abstract-filter-selector-list-item.component';
 import {SimpleFilter} from '../../../../filter/models/simple-filter';
 import {FilterType} from '../../../../filter/models/filter-type';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('AbstractFilterSelectorListItemComponent', () => {
     let component: TestFilterComponent;
@@ -12,12 +12,11 @@ describe('AbstractFilterSelectorListItemComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
-            imports: [
-                NoopAnimationsModule, HttpClientTestingModule
-            ],
-            declarations: [
-                TestFilterComponent,
-                TestWrapperComponent
+            declarations: [TestFilterComponent, TestWrapperComponent],
+            imports: [],
+            providers: [
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
             ]
         }).compileComponents();
     }));
@@ -39,14 +38,18 @@ describe('AbstractFilterSelectorListItemComponent', () => {
 
 @Component({
     selector: 'ncc-test-filter',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestFilterComponent extends AbstractFilterSelectorListItemComponent {
 }
 
 @Component({
     selector: 'ncc-test-wrapper',
-    template: '<ncc-test-filter [filter]="filter"></ncc-test-filter>'
+    template: '<ncc-test-filter [filter]="filter"></ncc-test-filter>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestWrapperComponent {
     filter = new SimpleFilter('', FilterType.CASE, {});

@@ -2,7 +2,6 @@ import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 
 import {DefaultSimpleCaseViewComponent} from './default-simple-case-view.component';
 import {NavigationComponentModule} from "../../../../navigation.module";
-import {NoopAnimationsModule} from "@angular/platform-browser/animations";
 import {RouterTestingModule} from "@angular/router/testing";
 import {
     BooleanField,
@@ -37,7 +36,6 @@ describe('SimpleCaseViewComponent', () => {
             imports: [
                 NavigationComponentModule,
                 TestMockDependenciesModule,
-                NoopAnimationsModule,
                 RouterTestingModule.withRoutes([]),
                 AuthenticationModule
             ],

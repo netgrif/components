@@ -27,12 +27,12 @@ import {
 import {FlexLayoutModule, FlexModule} from '@ngbracket/ngx-layout';
 import {QuickPanelComponentModule} from '../quick-panel/quick-panel.module';
 import {UserComponentModule} from '../../user/user.module';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {ResizableModule} from 'angular-resizable-element';
 import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import {TaskViewDialogComponent} from "../../dialog/task-view-dialog/task-view-dialog.component";
 import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from "@angular/material/dialog";
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('NavigationDoubleDrawerComponent', () => {
     let component: NavigationDoubleDrawerComponent;
@@ -41,6 +41,7 @@ describe('NavigationDoubleDrawerComponent', () => {
     beforeEach(async () => {
         await TestBed.configureTestingModule({
             declarations: [NavigationDrawerComponent, NavigationTreeComponent],
+            schemas: [CUSTOM_ELEMENTS_SCHEMA],
             imports: [
                 CommonModule,
                 RouterTestingModule.withRoutes([]),
@@ -49,9 +50,7 @@ describe('NavigationDoubleDrawerComponent', () => {
                 FlexLayoutModule,
                 QuickPanelComponentModule,
                 UserComponentModule,
-                NoopAnimationsModule,
                 TranslateLibModule,
-                HttpClientTestingModule,
                 ResizableModule,
                 MatDialogModule,
                 AuthenticationModule
@@ -68,8 +67,9 @@ describe('NavigationDoubleDrawerComponent', () => {
                 TaskViewService,
                 SearchService,
                 {provide: NAE_BASE_FILTER, useFactory: TestTaskBaseFilterProvider},
-            ],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA]
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
+            ]
         })
             .compileComponents();
     });

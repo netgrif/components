@@ -2,7 +2,7 @@ import {AbstractPanelWithHeaderBindingComponent} from './panel-with-header-bindi
 import {NaeDate, toMoment} from '../../resources/types/nae-date-type';
 import {DATE_FORMAT_STRING, DATE_TIME_FORMAT_STRING} from '../../moment/time-formats';
 import {TranslateService} from '@ngx-translate/core';
-import {Component, OnDestroy, Optional} from '@angular/core';
+import {Component, OnDestroy, Optional, ChangeDetectionStrategy} from '@angular/core';
 import {FeaturedValue} from './featured-value';
 import {CurrencyPipe} from '@angular/common';
 import {ImmediateData} from '../../resources/interface/immediate-data';
@@ -10,7 +10,9 @@ import {OverflowService} from '../../header/services/overflow.service';
 
 @Component({
     selector: 'ncc-abstract-panel-with-immediate',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractPanelWithImmediateDataComponent extends AbstractPanelWithHeaderBindingComponent implements OnDestroy {
     protected constructor(protected _translate: TranslateService,

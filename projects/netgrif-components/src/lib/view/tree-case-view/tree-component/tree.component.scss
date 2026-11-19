@@ -8,7 +8,7 @@
 }
 
 .border-radius {
-    border-radius: 8px;
+    border-radius: var(--mat-sys-corner-small);
 }
 
 .tree-offset {
@@ -19,18 +19,13 @@
     display: none;
 }
 
-.mat-mdc-tree-node {
-    min-height: 0 !important;
-}
-
-.min-node-height {
-    min-height: 40px !important;
-}
-
 .width-100 {
     width: 100%;
 }
 
-.spinner-margin {
-    margin: 8px;
+.progress-slot {
+    display: flex;
+    align-items: center;
+    width: 40px;
+    height: 40px;
 }

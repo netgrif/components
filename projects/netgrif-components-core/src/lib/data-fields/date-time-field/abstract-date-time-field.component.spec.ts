@@ -1,9 +1,6 @@
 import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
-import {AngularResizeEventModule} from 'angular-resize-event';
-import {NgxMatDateAdapter, NgxMatDatetimePickerModule} from '@angular-material-components/datetime-picker';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {Component, CUSTOM_ELEMENTS_SCHEMA, Inject, Optional} from '@angular/core';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
+import {Component, CUSTOM_ELEMENTS_SCHEMA, Inject, Optional, ChangeDetectionStrategy} from '@angular/core';
 import moment from 'moment';
 import {BehaviorSubject} from 'rxjs';
 import {DateTimeField} from './models/date-time-field';
@@ -21,8 +18,8 @@ import {TestConfigurationService} from '../../utility/tests/test-config';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token';
 import {DateAdapter} from '@angular/material/core';
-import {NgxMatMomentModule} from '@angular-material-components/moment-adapter';
 import {CustomDateAdapter} from '../date-field/models/custom-date-adapter';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('AbstractDatetimeFieldComponent', () => {
     let component: TestDateTimeFieldComponent;
@@ -30,27 +27,24 @@ describe('AbstractDatetimeFieldComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
+            declarations: [
+                TestDateTimeFieldComponent,
+                TestWrapperComponent
+            ],
+            schemas: [CUSTOM_ELEMENTS_SCHEMA],
             imports: [
                 MaterialModule,
-                AngularResizeEventModule,
-                NgxMatDatetimePickerModule,
-                NgxMatMomentModule,
-                TranslateLibModule,
-                HttpClientTestingModule,
-                NoopAnimationsModule,
+                TranslateLibModule
             ],
             providers: [
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
-                {provide: DateAdapter, useClass: CustomDateAdapter}
-            ],
-            declarations: [
-                TestDateTimeFieldComponent,
-                TestWrapperComponent
-            ],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA]
+                {provide: DateAdapter, useClass: CustomDateAdapter},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
+            ]
         }).compileComponents();
         fixture = TestBed.createComponent(TestWrapperComponent);
         component = fixture.debugElement.children[0].componentInstance;
@@ -68,7 +62,9 @@ describe('AbstractDatetimeFieldComponent', () => {
 
 @Component({
     selector: 'ncc-test-date-time',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestDateTimeFieldComponent extends AbstractDateTimeFieldComponent {
     constructor(@Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
@@ -78,7 +74,9 @@ class TestDateTimeFieldComponent extends AbstractDateTimeFieldComponent {
 
 @Component({
     selector: 'ncc-test-wrapper',
-    template: '<ncc-test-date-time [dataField]="field" [changedFields]="changedFields"></ncc-test-date-time>'
+    template: '<ncc-test-date-time [dataField]="field" [changedFields]="changedFields"></ncc-test-date-time>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestWrapperComponent {
     field = new DateTimeField('', '', moment('2020-03-09'), {

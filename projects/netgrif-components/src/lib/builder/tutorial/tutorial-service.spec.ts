@@ -3,16 +3,16 @@ import {TestBed} from "@angular/core/testing";
 import {TranslateService} from "@ngx-translate/core";
 import {MortgageService} from "../modeler/mortgage.service";
 import {ModelService} from "../modeler/services/model/model.service";
-import {HttpClientTestingModule} from "@angular/common/http/testing";
+import {provideHttpClientTesting} from "@angular/common/http/testing";
 import {ModelImportService} from "../modeler/model-import-service";
 import {ArcFactory} from "../modeler/edit-mode/domain/arc-builders/arc-factory.service";
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('Tutorial', () => {
     let service: TutorialService;
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
-                HttpClientTestingModule,
             ],
             providers: [
                 TutorialService,
@@ -20,7 +20,9 @@ describe('Tutorial', () => {
                 ModelService,
                 ArcFactory,
                 {provide: ModelImportService, useValue: { importFromXml: (key: string): void => {} }},
-                {provide: TranslateService, useValue: { instant: (key: string) => `translated-${key}` }}
+                {provide: TranslateService, useValue: { instant: (key: string) => `translated-${key}` }},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
             ]
         });
         service = TestBed.inject(TutorialService);

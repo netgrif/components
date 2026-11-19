@@ -26,6 +26,7 @@ export * from './contains.pipe';
 export * from './utility.module';
 export * from './directives/let.directive';
 export * from './base64';
+export * from './user-initials';
 
 /* TESTS */
 export * from './tests/mocks/mock-authentication.service';

@@ -1,443 +1,712 @@
-<div class="form netgrif-input builder-field-input">
-    <div *ngIf="!isSomeGridsterFieldSelected()">
-        <mat-form-field appearance="outline" class="full-width margin-html">
-            <mat-label>{{ 'builder.form-builder.edit-panel.numberOfColumns' | translate }}</mat-label>
-            <input matInput type="number" [min]="minOfCols" [(ngModel)]="numOfCols" (change)="changeCols($event)"
-                   [disabled]="_builderModeService.readOnly">
-        </mat-form-field>
-
-        <button mat-stroked-button color="primary" class="action-button margin-html" (click)="openTransitionActions()">
+<div class="detail">
+    @if (!isSomeGridsterFieldSelected()) {
+    <header class="detail-header">
+        <div class="detail-heading">
+            <h2 class="detail-title">{{ transition.label.value || transition.id }}</h2>
+            <span class="detail-id">{{ transition.id }}</span>
+        </div>
+        <button mat-stroked-button (click)="openTransitionActions()">
             <mat-icon>code</mat-icon>
-            {{ 'builder.form-builder.edit-panel.editActions' | translate }} ({{numberOfActions()}})
+            {{ "builder.form-builder.edit-panel.editActions" | translate }} ({{ numberOfActions() }})
         </button>
+    </header>
 
-        <h5 class="full-width margin-html">Assign event</h5>
-        <mat-form-field appearance="outline" class="full-width margin-html">
-            <mat-label>{{ 'builder.form-builder.edit-panel.title' | translate }}</mat-label>
-            <input matInput type="text" [(ngModel)]="assignEvent.title.value" (change)="registerChange()"
-                   [disabled]="_builderModeService.readOnly">
-        </mat-form-field>
-        <mat-form-field appearance="outline" class="full-width margin-html">
-            <mat-label>{{ 'builder.form-builder.edit-panel.message' | translate }}</mat-label>
-            <input matInput type="text" [(ngModel)]="assignEvent.message.value" (change)="registerChange()"
-                   [disabled]="_builderModeService.readOnly">
-        </mat-form-field>
+    <section class="section">
+        <h3 class="section-title">{{ "builder.modeler.data-mode.general" | translate }}</h3>
+        <div class="fields">
+            <mat-form-field appearance="outline">
+                <mat-label>{{ "builder.form-builder.edit-panel.numberOfColumns" | translate }}</mat-label>
+                <input
+                    matInput
+                    type="number"
+                    [min]="minOfCols"
+                    [(ngModel)]="numOfCols"
+                    (change)="changeCols($event)"
+                    [disabled]="_builderModeService.readOnly"
+                />
+            </mat-form-field>
+        </div>
+    </section>
 
-        <h5 class="full-width margin-html">Finish event</h5>
-        <mat-form-field appearance="outline" class="full-width margin-html">
-            <mat-label>{{ 'builder.form-builder.edit-panel.title' | translate }}</mat-label>
-            <input matInput type="text" [(ngModel)]="finishEvent.title.value" (change)="registerChange()"
-                   [disabled]="_builderModeService.readOnly">
-        </mat-form-field>
-        <mat-form-field appearance="outline" class="full-width margin-html">
-            <mat-label>{{ 'builder.form-builder.edit-panel.message' | translate }}</mat-label>
-            <input matInput type="text" [(ngModel)]="finishEvent.message.value" (change)="registerChange()"
-                   [disabled]="_builderModeService.readOnly">
-        </mat-form-field>
+    <section class="section">
+        <h3 class="section-title">{{ "builder.form-builder.edit-panel.assignEvent" | translate }}</h3>
+        <div class="fields">
+            <mat-form-field appearance="outline">
+                <mat-label>{{ "builder.form-builder.edit-panel.title" | translate }}</mat-label>
+                <input
+                    matInput
+                    type="text"
+                    [(ngModel)]="assignEvent.title.value"
+                    (change)="registerChange()"
+                    [disabled]="_builderModeService.readOnly"
+                />
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>{{ "builder.form-builder.edit-panel.message" | translate }}</mat-label>
+                <input
+                    matInput
+                    type="text"
+                    [(ngModel)]="assignEvent.message.value"
+                    (change)="registerChange()"
+                    [disabled]="_builderModeService.readOnly"
+                />
+            </mat-form-field>
+        </div>
+    </section>
 
-        <h5 class="full-width margin-html">Cancel event</h5>
-        <mat-form-field appearance="outline" class="full-width margin-html">
-            <mat-label>{{ 'builder.form-builder.edit-panel.title' | translate }}</mat-label>
-            <input matInput type="text" [(ngModel)]="cancelEvent.title.value" (change)="registerChange()"
-                   [disabled]="_builderModeService.readOnly">
-        </mat-form-field>
-        <mat-form-field appearance="outline" class="full-width margin-html">
-            <mat-label>{{ 'builder.form-builder.edit-panel.message' | translate }}</mat-label>
-            <input matInput type="text" [(ngModel)]="cancelEvent.message.value" (change)="registerChange()"
-                   [disabled]="_builderModeService.readOnly">
-        </mat-form-field>
+    <section class="section">
+        <h3 class="section-title">{{ "builder.form-builder.edit-panel.finishEvent" | translate }}</h3>
+        <div class="fields">
+            <mat-form-field appearance="outline">
+                <mat-label>{{ "builder.form-builder.edit-panel.title" | translate }}</mat-label>
+                <input
+                    matInput
+                    type="text"
+                    [(ngModel)]="finishEvent.title.value"
+                    (change)="registerChange()"
+                    [disabled]="_builderModeService.readOnly"
+                />
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>{{ "builder.form-builder.edit-panel.message" | translate }}</mat-label>
+                <input
+                    matInput
+                    type="text"
+                    [(ngModel)]="finishEvent.message.value"
+                    (change)="registerChange()"
+                    [disabled]="_builderModeService.readOnly"
+                />
+            </mat-form-field>
+        </div>
+    </section>
 
-        <h5 class="full-width margin-html">Delegate event</h5>
-        <mat-form-field appearance="outline" class="full-width margin-html">
-            <mat-label>{{ 'builder.form-builder.edit-panel.title' | translate }}</mat-label>
-            <input matInput type="text" [(ngModel)]="delegateEvent.title.value" (change)="registerChange()"
-                   [disabled]="_builderModeService.readOnly">
-        </mat-form-field>
-        <mat-form-field appearance="outline" class="full-width margin-html">
-            <mat-label>{{ 'builder.form-builder.edit-panel.message' | translate }}</mat-label>
-            <input matInput type="text" [(ngModel)]="delegateEvent.message.value" (change)="registerChange()"
-                   [disabled]="_builderModeService.readOnly">
-        </mat-form-field>
-    </div>
-    <div *ngIf="isSomeGridsterFieldSelected()">
-        <h4 class="full-width margin-html">
-            {{ 'builder.form-builder.edit-panel.id' | translate }}: {{ dataVariable.id }}
-            <button *ngIf="!_builderModeService.readOnly" mat-icon-button matTooltip="Refactor field ID"
-                    (click)="openRefactorDialog($event, dataVariable)">
-                <mat-icon>edit</mat-icon>
-            </button>
-        </h4>
+    <section class="section">
+        <h3 class="section-title">{{ "builder.form-builder.edit-panel.cancelEvent" | translate }}</h3>
+        <div class="fields">
+            <mat-form-field appearance="outline">
+                <mat-label>{{ "builder.form-builder.edit-panel.title" | translate }}</mat-label>
+                <input
+                    matInput
+                    type="text"
+                    [(ngModel)]="cancelEvent.title.value"
+                    (change)="registerChange()"
+                    [disabled]="_builderModeService.readOnly"
+                />
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>{{ "builder.form-builder.edit-panel.message" | translate }}</mat-label>
+                <input
+                    matInput
+                    type="text"
+                    [(ngModel)]="cancelEvent.message.value"
+                    (change)="registerChange()"
+                    [disabled]="_builderModeService.readOnly"
+                />
+            </mat-form-field>
+        </div>
+    </section>
 
-        <div>
-            <mat-slide-toggle [(ngModel)]="dataRef.logic.required" class="full-width margin-html"
-                              (change)="notifyGridster()" [disabled]="_builderModeService.readOnly">
-                {{ 'builder.form-builder.edit-panel.required' | translate }}
-            </mat-slide-toggle>
-            <mat-slide-toggle [(ngModel)]="dataRef.logic.immediate" class="full-width margin-html"
-                              (change)="notifyGridster()" [disabled]="_builderModeService.readOnly">
-                {{ 'builder.form-builder.edit-panel.immediate' | translate }}
-            </mat-slide-toggle>
-            <mat-form-field appearance="outline" class="full-width margin-html">
-                <mat-label>{{ 'builder.modeler.data-mode.type' | translate }}</mat-label>
+    <section class="section">
+        <h3 class="section-title">{{ "builder.form-builder.edit-panel.delegateEvent" | translate }}</h3>
+        <div class="fields">
+            <mat-form-field appearance="outline">
+                <mat-label>{{ "builder.form-builder.edit-panel.title" | translate }}</mat-label>
+                <input
+                    matInput
+                    type="text"
+                    [(ngModel)]="delegateEvent.title.value"
+                    (change)="registerChange()"
+                    [disabled]="_builderModeService.readOnly"
+                />
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>{{ "builder.form-builder.edit-panel.message" | translate }}</mat-label>
+                <input
+                    matInput
+                    type="text"
+                    [(ngModel)]="delegateEvent.message.value"
+                    (change)="registerChange()"
+                    [disabled]="_builderModeService.readOnly"
+                />
+            </mat-form-field>
+        </div>
+    </section>
+    } @else {
+    <header class="detail-header">
+        <div class="detail-heading">
+            <h2 class="detail-title">{{ dataVariable.title.value || dataVariable.id }}</h2>
+            <span class="detail-id">{{ dataVariable.id }}</span>
+        </div>
+        @if (!_builderModeService.readOnly) {
+        <button
+            mat-icon-button
+            [matTooltip]="'builder.form-builder.edit-panel.refactorId' | translate"
+            (click)="openRefactorDialog($event, dataVariable)"
+        >
+            <mat-icon>edit</mat-icon>
+        </button>
+        }
+        <button mat-stroked-button (click)="openActions()">
+            <mat-icon>code</mat-icon>
+            {{ "builder.form-builder.edit-panel.dataFieldActions" | translate }}
+        </button>
+    </header>
+
+    <section class="section">
+        <h3 class="section-title">{{ "builder.modeler.data-mode.general" | translate }}</h3>
+        <div class="fields">
+            <mat-form-field appearance="outline">
+                <mat-label>{{ "builder.modeler.data-mode.type" | translate }}</mat-label>
                 <mat-select [(value)]="dataVariable.type" [disabled]="true">
-                    <mat-option *ngFor="let opt of _dataModeService.typeArray" [value]="opt.value">{{ opt.viewValue }}</mat-option>
+                    @for (opt of _dataModeService.typeArray; track opt) {
+                    <mat-option [value]="opt.value">{{ opt.viewValue }}</mat-option>
+                    }
                 </mat-select>
             </mat-form-field>
-            <mat-form-field appearance="outline" class="full-width margin-html">
-                <mat-label>Behavior</mat-label>
-                <mat-select [(value)]="dataRef.logic.behavior" (selectionChange)="notifyGridster()"
-                            [disabled]="_builderModeService.readOnly">
-                    <mat-option *ngFor="let opt of behaviorOptions" [value]="opt.key">
-                        {{ opt.value }}
-                    </mat-option>
-                </mat-select>
+            <mat-form-field appearance="outline">
+                <mat-label>{{ "builder.form-builder.edit-panel.title" | translate }}</mat-label>
+                <input
+                    matInput
+                    type="text"
+                    [(ngModel)]="dataVariable.title.value"
+                    (change)="notifyGridster()"
+                    [disabled]="_builderModeService.readOnly"
+                />
             </mat-form-field>
-        </div>
+            <mat-form-field appearance="outline">
+                <mat-label>{{ "builder.form-builder.edit-panel.placeholder" | translate }}</mat-label>
+                <input
+                    matInput
+                    type="text"
+                    [(ngModel)]="dataVariable.placeholder.value"
+                    (change)="notifyGridster()"
+                    [disabled]="_builderModeService.readOnly"
+                />
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>{{ "builder.form-builder.edit-panel.description" | translate }}</mat-label>
+                <textarea
+                    matInput
+                    [(ngModel)]="dataVariable.desc.value"
+                    (change)="notifyGridster()"
+                    [disabled]="_builderModeService.readOnly"
+                ></textarea>
+            </mat-form-field>
 
-        <div>
-            <mat-form-field appearance="outline" class="full-width margin-html">
-                <mat-label>{{ 'builder.form-builder.edit-panel.title' | translate }}</mat-label>
-                <input matInput type="text" [(ngModel)]="dataVariable.title.value" (change)="notifyGridster()"
-                       [disabled]="_builderModeService.readOnly">
+            @if (hasTextValue()) {
+            <mat-form-field appearance="outline">
+                <mat-label>{{ "builder.form-builder.edit-panel.initialValue" | translate }}</mat-label>
+                <input
+                    matInput
+                    type="text"
+                    placeholder=""
+                    [(ngModel)]="dataVariable.init.value"
+                    (change)="notifyGridster()"
+                    [disabled]="_builderModeService.readOnly"
+                />
             </mat-form-field>
-            <mat-form-field appearance="outline" class="full-width margin-html">
-                <mat-label>{{ 'builder.form-builder.edit-panel.placeholder' | translate }}</mat-label>
-                <input matInput type="text" [(ngModel)]="dataVariable.placeholder.value" (change)="notifyGridster()"
-                       [disabled]="_builderModeService.readOnly">
-            </mat-form-field>
-            <mat-form-field appearance="outline" class="full-width margin-html">
-                <mat-label>{{ 'builder.form-builder.edit-panel.description' | translate }}</mat-label>
-                <textarea matInput [(ngModel)]="dataVariable.desc.value" (change)="notifyGridster()"
-                          [disabled]="_builderModeService.readOnly"></textarea>
-            </mat-form-field>
-            <!--  VALUES  -->
-            <mat-form-field appearance="outline" *ngIf="hasTextValue()" class="full-width margin-html">
-                <mat-label>{{ 'builder.form-builder.edit-panel.initialValue' | translate }}</mat-label>
-                <input matInput type="text" placeholder="" [(ngModel)]="dataVariable.init.value"
-                       (change)="notifyGridster()" [disabled]="_builderModeService.readOnly">
-            </mat-form-field>
-            <mat-form-field appearance="outline" *ngIf="hasOptions()" class="full-width margin-html">
-                <mat-label>{{ 'builder.form-builder.edit-panel.initialValue' | translate }}</mat-label>
-                <mat-select *ngIf="!hasInits(); else hasInitsItems" [(ngModel)]="dataVariable.init.value"
-                            (selectionChange)="notifyGridster()" [disabled]="_builderModeService.readOnly">
-                    <mat-option>None</mat-option>
-                    <mat-option *ngFor="let opt of dataVariable.options" [value]="opt.key">
-                        {{ opt.value?.value }}
-                    </mat-option>
+            }
+            @if (hasOptions()) {
+            <mat-form-field appearance="outline">
+                <mat-label>{{ "builder.form-builder.edit-panel.initialValue" | translate }}</mat-label>
+                @if (!hasInits()) {
+                <mat-select
+                    [(ngModel)]="dataVariable.init.value"
+                    (selectionChange)="notifyGridster()"
+                    [disabled]="_builderModeService.readOnly"
+                >
+                    <mat-option>{{ "builder.form-builder.edit-panel.none" | translate }}</mat-option>
+                    @for (opt of dataVariable.options; track opt) {
+                    <mat-option [value]="opt.key">{{ opt.value?.value }}</mat-option>
+                    }
                 </mat-select>
-                <ng-template #hasInitsItems>
-                    <mat-select (valueChange)="changeInitsValue($event)" [value]="getInitsValue()"
-                                (selectionChange)="notifyGridster()" multiple
-                                [disabled]="_builderModeService.readOnly">
-                        <mat-option *ngFor="let opt of dataVariable.options" [value]="opt.key">
-                            {{ opt.value?.value }}
-                        </mat-option>
-                    </mat-select>
-                </ng-template>
+                } @else {
+                <mat-select
+                    (valueChange)="changeInitsValue($event)"
+                    [value]="getInitsValue()"
+                    (selectionChange)="notifyGridster()"
+                    multiple
+                    [disabled]="_builderModeService.readOnly"
+                >
+                    @for (opt of dataVariable.options; track opt) {
+                    <mat-option [value]="opt.key">{{ opt.value?.value }}</mat-option>
+                    }
+                </mat-select>
+                }
             </mat-form-field>
-            <mat-slide-toggle *ngIf="isBoolean()" [checked]="dataVariable.init.value === 'true'"
-                              (change)="setBooleanValue($event); notifyGridster()"
-                              [disabled]="_builderModeService.readOnly">
-                {{ 'builder.form-builder.edit-panel.initialValue' | translate }}
-            </mat-slide-toggle>
-            <mat-form-field appearance="outline" *ngIf="isNumber()" class="full-width margin-html">
-                <mat-label>{{ 'builder.form-builder.edit-panel.initialValue' | translate }}</mat-label>
-                <input matInput type="number" [(ngModel)]="dataVariable.init.value" (change)="notifyGridster()"
-                       [disabled]="_builderModeService.readOnly">
+            }
+            @if (isBoolean()) {
+            <div class="checkbox-cell">
+                <mat-slide-toggle
+                    [checked]="dataVariable.init.value === 'true'"
+                    (change)="setBooleanValue($event); notifyGridster()"
+                    [disabled]="_builderModeService.readOnly"
+                >
+                    {{ "builder.form-builder.edit-panel.initialValue" | translate }}
+                </mat-slide-toggle>
+            </div>
+            }
+            @if (isNumber()) {
+            <mat-form-field appearance="outline">
+                <mat-label>{{ "builder.form-builder.edit-panel.initialValue" | translate }}</mat-label>
+                <input
+                    matInput
+                    type="number"
+                    [(ngModel)]="dataVariable.init.value"
+                    (change)="notifyGridster()"
+                    [disabled]="_builderModeService.readOnly"
+                />
             </mat-form-field>
-            <mat-form-field appearance="outline" *ngIf="isDate()" class="full-width margin-html">
-                <mat-label>{{ 'builder.form-builder.edit-panel.initialValue' | translate }}</mat-label>
+            }
+            @if (isDate()) {
+            <mat-form-field appearance="outline">
+                <mat-label>{{ "builder.form-builder.edit-panel.initialValue" | translate }}</mat-label>
                 <mat-datepicker-toggle matPrefix [for]="datepicker"></mat-datepicker-toggle>
-                <input matInput (dateChange)="notifyGridster(); formatDate();"
-                       [matDatepicker]="datepicker"
-                       [(ngModel)]="dataVariable.init.value"
-                       [disabled]="_builderModeService.readOnly"
-                       (click)="datepicker.open()"
-                       (keydown.enter)="datepicker.close()">
-                <mat-datepicker #datepicker>
-                </mat-datepicker>
+                <input
+                    matInput
+                    [matDatepicker]="datepicker"
+                    [ngModel]="dateInitValue"
+                    (ngModelChange)="setDateInitValue($event, false)"
+                    [disabled]="_builderModeService.readOnly"
+                    (click)="datepicker.open()"
+                    (keydown.enter)="datepicker.close()"
+                />
+                <mat-datepicker #datepicker></mat-datepicker>
             </mat-form-field>
-            <mat-form-field appearance="outline" *ngIf="isDatetime()" class="full-width margin-html">
-                <mat-label>{{ 'builder.form-builder.edit-panel.initialValue' | translate }}</mat-label>
-                <input matInput
-                       [ngxMatDatetimePicker]="picker"
-                       [(ngModel)]="dataVariable.init.value"
-                       [disabled]="_builderModeService.readOnly"
-                       (ngModelChange)="notifyGridster()">
-                <mat-datepicker-toggle matPrefix [for]="picker"></mat-datepicker-toggle>
-                <ngx-mat-datetime-picker #picker
-                                         [showSpinners]="true"
-                                         [showSeconds]="false"
-                                         [stepHour]="1"
-                                         [stepMinute]="5"
-                                         [color]="'primary'"
-                                         [enableMeridian]="false"
-                                         class="full-width">
-                </ngx-mat-datetime-picker>
-            </mat-form-field>
-            <div class="margin-html" *ngIf="isTaskRef()">
-                <nc-builder-task-ref-init-field [taskRef]="dataVariable"></nc-builder-task-ref-init-field>
-            </div>
-            <!--  OPTIONS MANAGEMENT IF APPLICABLE  -->
-            <div *ngIf="hasOptions()">
-                <mat-divider></mat-divider>
-                <div cdkDropList class="drag-list margin-html" (cdkDropListDropped)="drop($event)"
-                     [cdkDropListDisabled]="_builderModeService.readOnly">
-                    <div *ngIf="dataVariable.options.length > 0">
-                        <div class="drag-box" *ngFor="let item of dataVariable.options; let i = index" cdkDrag
-                             [cdkDragDisabled]="_builderModeService.readOnly">
-                            <mat-icon class="icon-color" cdkDragHandle>drag_indicator</mat-icon>
-                            <mat-form-field appearance="outline" class="margin-right8px" *ngIf="!hasSimpleOptions()">
-                                <input matInput type="text" placeholder="Key" [value]="item.key"
-                                       [disabled]="_builderModeService.readOnly"
-                                       (change)="setOptionsKey($event, i) ;notifyGridster()">
-                            </mat-form-field>
-                            <mat-form-field appearance="outline" class="margin-right8px">
-                                <input matInput type="text" placeholder="Value" [value]="item.value?.value"
-                                       [disabled]="_builderModeService.readOnly"
-                                       (change)="setOptionsValue($event, i) ;notifyGridster()">
-                            </mat-form-field>
-                            <button *ngIf="!_builderModeService.readOnly" mat-icon-button
-                                    (click)="deleteOption(i); notifyGridster()">
-                                <mat-icon>delete</mat-icon>
-                            </button>
-                        </div>
-                    </div>
-                    <div fxLayoutAlign="center center" *ngIf="dataVariable.options.length === 0"
-                         class="no-options">
-                        <span>{{ 'builder.form-builder.edit-panel.noOptions' | translate }}</span>
-                    </div>
-                </div>
-                <button *ngIf="!_builderModeService.readOnly" mat-stroked-button color="primary" class="save-button"
-                        (click)="addOption(); notifyGridster()">
-                    <mat-icon>add</mat-icon>
-                    {{ 'builder.form-builder.edit-panel.addOption' | translate }}
-                </button>
-            </div>
-
-            <mat-divider></mat-divider>
-
-            <div class="full-width">
-                <button *ngIf="!_builderModeService.readOnly" mat-stroked-button color="primary"
-                        (click)="createOrDeleteComponent();notifyGridster()"
-                        class="full-width save-button">
-                    <mat-icon *ngIf="dataVariable.component === undefined">add</mat-icon>
-                    <mat-icon *ngIf="dataVariable.component !== undefined">delete</mat-icon>
-                    {{ dataVariable.component === undefined ? ('builder.form-builder.edit-panel.addComponent' | translate) : ('builder.form-builder.edit-panel.deleteComponent' | translate) }}
-                </button>
-            </div>
-            <div *ngIf="dataVariable.component !== undefined" class="full-width">
-                <mat-form-field appearance="outline" class="full-width margin-html">
-                    <mat-label>{{ 'builder.form-builder.edit-panel.componentName' | translate }}</mat-label>
-                    <input matInput [(ngModel)]="dataVariable.component.name" (change)="setComponent($event);notifyGridster()"
-                           [formControl]="componentNameFormCtrl" [matAutocomplete]="componentAutocomplete">
-                    <mat-autocomplete #componentAutocomplete="matAutocomplete" (optionSelected)="setComponent($event);notifyGridster()">
-                        <mat-option *ngFor="let componentDef of filteredComponents(dataVariable.component)" [value]="componentDef.name">
-                            {{componentDef.title}}
-                        </mat-option>
-                    </mat-autocomplete>
+            }
+            @if (isDatetime()) {
+            <div class="pair">
+                <mat-form-field appearance="outline">
+                    <mat-label>{{ "builder.form-builder.edit-panel.initialValue" | translate }}</mat-label>
+                    <input
+                        matInput
+                        [matDatepicker]="picker"
+                        [ngModel]="dateInitValue"
+                        (ngModelChange)="setDateInitValue($event, true)"
+                        [disabled]="_builderModeService.readOnly"
+                        (click)="picker.open()"
+                    />
+                    <mat-datepicker-toggle matIconPrefix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
                 </mat-form-field>
-                <div>
-                    <div *ngIf="dataVariable.component.properties.length > 0">
-                        <div *ngFor="let property of dataVariable.component.properties; let i = index" class="margin-html properties">
-                            <mat-form-field appearance="outline" class="margin-right8px">
-                                <input matInput type="text" placeholder="Key" [value]="property.key" [matAutocomplete]="propertyAutocomplete"
-                                       [disabled]="_builderModeService.readOnly"
-                                       (change)="setPropertyKey($event, i, dataVariable.component) ;notifyGridster()">
-                                <mat-autocomplete #propertyAutocomplete="matAutocomplete" (optionSelected)="setPropertyKey($event, i, dataVariable.component);notifyGridster()">
-                                    <mat-option *ngFor="let propertyDef of filteredProperties(dataVariable.component, property.key)" [value]="propertyDef.name">
-                                        {{propertyDef.name}}
-                                    </mat-option>
-                                </mat-autocomplete>
-                            </mat-form-field>
-                            <mat-form-field appearance="outline" class="margin-right8px">
-                                <input matInput type="text" placeholder="Value" [value]="property.value"
-                                       [disabled]="_builderModeService.readOnly"
-                                       (change)="setPropertyValue($event, i, dataVariable.component) ;notifyGridster()">
-                            </mat-form-field>
-                            <button *ngIf="!_builderModeService.readOnly" mat-icon-button
-                                    (click)="deleteProperty(i, dataVariable.component); notifyGridster()">
-                                <mat-icon>delete</mat-icon>
-                            </button>
-                        </div>
-                    </div>
-                    <div fxLayoutAlign="center center" *ngIf="dataVariable.component?.properties?.length === 0"
-                         class="no-options">
-                        <span>{{ 'builder.form-builder.edit-panel.noProperties' | translate }}</span>
-                    </div>
-                </div>
-                <button *ngIf="!_builderModeService.readOnly" mat-stroked-button color="primary" class="button-text save-button"
-                        (click)="addProperty(dataVariable.component); notifyGridster()">
-                    <mat-icon>add</mat-icon>
-                    {{ 'builder.form-builder.edit-panel.addProperty' | translate }}
-                </button>
-                <button *ngIf="!_builderModeService.readOnly" mat-stroked-button color="primary" class="button-text save-button"
-                        (click)="cloneProperty(dataVariable, dataRef, 'component')">
-                    <mat-icon>move_down</mat-icon>
-                    {{ 'builder.form-builder.edit-panel.copyToDataRef' | translate }}
-                </button>
-                <div *ngIf="isIconEnumeration(dataVariable.type, dataVariable?.component)">
-                    <div *ngIf="dataVariable.component.icons.length > 0; else noIcons">
-                        <div *ngFor="let icon of dataVariable.component.icons; let i = index" class="margin-html properties">
-                            <mat-form-field appearance="outline" class="margin-right8px">
-                                <input matInput type="text" placeholder="Key" [value]="icon.key"
-                                       [disabled]="_builderModeService.readOnly"
-                                       (change)="setIconKey($event, i, dataVariable.component) ;notifyGridster()">
-                            </mat-form-field>
-                            <mat-form-field appearance="outline" class="margin-right8px">
-                                <input matInput type="text" placeholder="Icon" [value]="icon.icon"
-                                       [disabled]="_builderModeService.readOnly"
-                                       (change)="setIconValue($event, i, dataVariable.component) ;notifyGridster()">
-                            </mat-form-field>
-                            <button *ngIf="!_builderModeService.readOnly" mat-icon-button
-                                    (click)="deleteIcon(i, dataVariable.component); notifyGridster()">
-                                <mat-icon>delete</mat-icon>
-                            </button>
-                        </div>
-                    </div>
-                    <ng-template #noIcons>
-                        <div fxLayoutAlign="center center"
-                             class="no-options">
-                            <span>{{ 'builder.form-builder.edit-panel.noIcons' | translate }}</span>
-                        </div>
-                    </ng-template>
-                    <button *ngIf="!_builderModeService.readOnly" mat-stroked-button color="primary" class="button-text save-button"
-                            (click)="addIcon(gridsterService.selectedDataField.dataVariable.component); notifyGridster()">
-                        <mat-icon>add</mat-icon>
-                        {{ 'builder.form-builder.edit-panel.addIcon' | translate }}
-                    </button>
-                </div>
-            </div>
-
-            <mat-divider></mat-divider>
-
-            <div class="full-width">
-                <button *ngIf="!_builderModeService.readOnly" mat-stroked-button color="primary"
-                        (click)="createOrDeleteDataRefComponent();notifyGridster()"
-                        class="full-width save-button">
-                    <mat-icon *ngIf="dataRef.component === undefined">add</mat-icon>
-                    <mat-icon *ngIf="dataRef.component !== undefined">delete</mat-icon>
-                    {{ dataRef.component === undefined ? ('builder.form-builder.edit-panel.addDataRefComponent' | translate) : ('builder.form-builder.edit-panel.deleteDataRefComponent' | translate) }}
-                </button>
-            </div>
-            <div *ngIf="dataRef.component !== undefined" class="full-width">
-                <mat-form-field appearance="outline" class="full-width">
-                    <mat-label>{{ 'builder.form-builder.edit-panel.componentName' | translate }}</mat-label>
-                    <input matInput [(ngModel)]="dataRef.component.name" (change)="setDataRefComponent($event);notifyGridster()"
-                           [formControl]="dataRefComponentNameFormCtrl" [matAutocomplete]="dataRefComponentAutocomplete">
-                    <mat-autocomplete #dataRefComponentAutocomplete="matAutocomplete" (optionSelected)="setComponent($event);notifyGridster()">
-                        <mat-option *ngFor="let componentDef of filteredComponents(dataRef.component)" [value]="componentDef.name">
-                            {{componentDef.title}}
-                        </mat-option>
-                    </mat-autocomplete>
-                </mat-form-field>
-                <div>
-                    <div *ngIf="dataRef.component.properties.length > 0">
-                        <div *ngFor="let property of dataRef.component.properties; let i = index" class="margin-html properties">
-                            <mat-form-field appearance="outline" class="margin-right8px">
-                                <input matInput type="text" placeholder="Key" [value]="property.key" [matAutocomplete]="dataRefPropertyAutocomplete"
-                                       [disabled]="_builderModeService.readOnly"
-                                       (change)="setPropertyKey($event, i, dataRef.component) ;notifyGridster()">
-                                <mat-autocomplete #dataRefPropertyAutocomplete="matAutocomplete" (optionSelected)="setPropertyKey($event, i, dataRef.component);notifyGridster()">
-                                    <mat-option *ngFor="let propertyDef of filteredProperties(dataRef.component, property.key)" [value]="propertyDef.name">
-                                        {{propertyDef.name}}
-                                    </mat-option>
-                                </mat-autocomplete>
-                            </mat-form-field>
-                            <mat-form-field appearance="outline" class="margin-right8px">
-                                <input matInput type="text" placeholder="Value" [value]="property.value"
-                                       [disabled]="_builderModeService.readOnly"
-                                       (change)="setPropertyValue($event, i, dataRef.component) ;notifyGridster()">
-                            </mat-form-field>
-                            <button *ngIf="!_builderModeService.readOnly" mat-icon-button
-                                    (click)="deleteProperty(i, dataRef.component); notifyGridster()">
-                                <mat-icon>delete</mat-icon>
-                            </button>
-                        </div>
-                    </div>
-                    <div fxLayoutAlign="center center"
-                         *ngIf="dataRef.component?.properties?.length === 0"
-                         class="no-options">
-                        <span>{{ 'builder.form-builder.edit-panel.noProperties' | translate }}</span>
-                    </div>
-                </div>
-                <button *ngIf="!_builderModeService.readOnly" mat-stroked-button color="primary" class="button-text save-button"
-                        (click)="addProperty(gridsterService.selectedDataField.dataRef.component); notifyGridster()">
-                    <mat-icon>add</mat-icon>
-                    {{ 'builder.form-builder.edit-panel.addProperty' | translate }}
-                </button>
-                <button *ngIf="!_builderModeService.readOnly" mat-stroked-button color="primary" class="button-text save-button"
-                        (click)="cloneProperty(dataRef, dataVariable, 'component')">
-                    <mat-icon>move_up</mat-icon>
-                    {{ 'builder.form-builder.edit-panel.copyToDataField' | translate }}
-                </button>
-                <div *ngIf="isIconEnumeration(dataVariable.type, dataRef.component)" >
-                    <div *ngIf="dataRef.component.icons.length > 0; else noIcons">
-                        <div *ngFor="let icon of dataRef.component.icons; let i = index" class="margin-html properties">
-                            <mat-form-field appearance="outline" class="margin-right8px">
-                                <input matInput type="text" placeholder="Key" [value]="icon.key"
-                                       [disabled]="_builderModeService.readOnly"
-                                       (change)="setIconKey($event, i, dataRef.component) ;notifyGridster()">
-                            </mat-form-field>
-                            <mat-form-field appearance="outline" class="margin-right8px">
-                                <input matInput type="text" placeholder="Icon" [value]="icon.icon"
-                                       [disabled]="_builderModeService.readOnly"
-                                       (change)="setIconValue($event, i, dataRef.component) ;notifyGridster()">
-                            </mat-form-field>
-                            <button *ngIf="!_builderModeService.readOnly" mat-icon-button
-                                    (click)="deleteIcon(i, dataRef.component); notifyGridster()">
-                                <mat-icon>delete</mat-icon>
-                            </button>
-                        </div>
-                    </div>
-                    <ng-template #noIcons>
-                        <div fxLayoutAlign="center center"
-                             class="no-options">
-                            <span>{{ 'builder.form-builder.edit-panel.noIcons' | translate }}</span>
-                        </div>
-                    </ng-template>
-                </div>
-            </div>
-
-            <div class="full-width">
-                <button mat-stroked-button color="primary" (click)="openActions()"
-                        class="full-width save-button">
-                    <mat-icon>code</mat-icon>
-                    {{ 'builder.form-builder.edit-panel.dataFieldActions' | translate }}
-                </button>
-            </div>
-
-            <mat-divider></mat-divider>
-
-            <!--  FIELD OFFSET MANAGEMENT  -->
-            <mat-form-field appearance="outline" class="full-width margin-html">
-                <mat-label>{{ 'builder.form-builder.edit-panel.template' | translate }}</mat-label>
-                <mat-select [(value)]="dataRef.layout.template" (selectionChange)="notifyGridster()"
-                            [disabled]="_builderModeService.readOnly">
-                    <mat-option *ngFor="let opt of templates" [value]="opt">
-                        {{ opt }}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-            <mat-form-field appearance="outline" *ngIf="!isBoolean() && !isListOptionsDisplay() && !isFile() && !isFileList()"
-                            class="full-width margin-html">
-                <mat-label>{{ 'builder.form-builder.edit-panel.appearance' | translate }}</mat-label>
-                <mat-select [(value)]="dataRef.layout.appearance" (selectionChange)="notifyGridster()"
-                            [disabled]="_builderModeService.readOnly">
-                    <mat-option *ngFor="let opt of appearances" [value]="opt">
-                        {{ opt }}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-            <div>
-                <mat-form-field appearance="outline" class="full-width margin-html">
-                    <mat-label>{{ 'builder.form-builder.edit-panel.fieldOffset' | translate }}</mat-label>
-                    <input matInput type="number"
-                           [(ngModel)]="gridsterService.selectedDataField.dataRef.layout.offset"
-                           [disabled]="_builderModeService.readOnly"
-                           (change)="notifyGridster()">
+                <mat-form-field appearance="outline" class="time">
+                    <input
+                        matInput
+                        [matTimepicker]="timepicker"
+                        [ngModel]="dateInitValue"
+                        (ngModelChange)="setDateInitValue($event, true)"
+                        [disabled]="_builderModeService.readOnly"
+                    />
+                    <mat-timepicker-toggle matIconSuffix [for]="timepicker"></mat-timepicker-toggle>
+                    <mat-timepicker #timepicker interval="5m"></mat-timepicker>
                 </mat-form-field>
             </div>
+            }
+            @if (isTaskRef()) {
+            <nc-builder-task-ref-init-field [taskRef]="dataVariable"></nc-builder-task-ref-init-field>
+            }
         </div>
-    </div>
+    </section>
+
+    <section class="section">
+        <h3 class="section-title">{{ "builder.form-builder.edit-panel.behavior" | translate }}</h3>
+        <div class="fields">
+            <mat-form-field appearance="outline">
+                <mat-label>{{ "builder.form-builder.edit-panel.behavior" | translate }}</mat-label>
+                <mat-select
+                    [(value)]="dataRef.logic.behavior"
+                    (selectionChange)="notifyGridster()"
+                    [disabled]="_builderModeService.readOnly"
+                >
+                    @for (opt of behaviorOptions; track opt) {
+                    <mat-option [value]="opt.key">{{ "builder.form-builder.edit-panel.behaviors." + opt.key | translate }}</mat-option>
+                    }
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="toggles">
+            <mat-slide-toggle
+                [(ngModel)]="dataRef.logic.required"
+                (change)="notifyGridster()"
+                [disabled]="_builderModeService.readOnly"
+            >
+                {{ "builder.form-builder.edit-panel.required" | translate }}
+            </mat-slide-toggle>
+            <mat-slide-toggle
+                [(ngModel)]="dataRef.logic.immediate"
+                (change)="notifyGridster()"
+                [disabled]="_builderModeService.readOnly"
+            >
+                {{ "builder.form-builder.edit-panel.immediate" | translate }}
+            </mat-slide-toggle>
+        </div>
+    </section>
+
+    @if (hasOptions()) {
+    <section class="section">
+        <div class="section-header">
+            <h3 class="section-title">{{ "builder.modeler.data-mode.options" | translate }}</h3>
+            @if (!_builderModeService.readOnly) {
+            <button mat-button (click)="addOption(); notifyGridster()">
+                <mat-icon>add</mat-icon>
+                {{ "builder.form-builder.edit-panel.addOption" | translate }}
+            </button>
+            }
+        </div>
+        <div
+            cdkDropList
+            class="row-list drag-list"
+            (cdkDropListDropped)="drop($event)"
+            [cdkDropListDisabled]="_builderModeService.readOnly"
+        >
+            @for (item of dataVariable.options; track item; let i = $index) {
+            <div class="row drag-box" cdkDrag [cdkDragDisabled]="_builderModeService.readOnly">
+                <mat-icon class="drag-handle" cdkDragHandle>drag_indicator</mat-icon>
+                @if (!hasSimpleOptions()) {
+                <mat-form-field appearance="outline" class="row-field" subscriptSizing="dynamic">
+                    <input
+                        matInput
+                        type="text"
+                        [placeholder]="'builder.form-builder.edit-panel.key' | translate"
+                        [value]="item.key"
+                        [disabled]="_builderModeService.readOnly"
+                        (change)="setOptionsKey($event, i); notifyGridster()"
+                    />
+                </mat-form-field>
+                }
+                <mat-form-field appearance="outline" class="row-field" subscriptSizing="dynamic">
+                    <input
+                        matInput
+                        type="text"
+                        [placeholder]="'builder.form-builder.edit-panel.value' | translate"
+                        [value]="item.value?.value"
+                        [disabled]="_builderModeService.readOnly"
+                        (change)="setOptionsValue($event, i); notifyGridster()"
+                    />
+                </mat-form-field>
+                @if (!_builderModeService.readOnly) {
+                <button mat-icon-button (click)="deleteOption(i); notifyGridster()">
+                    <mat-icon>delete</mat-icon>
+                </button>
+                }
+            </div>
+            } @empty {
+            <p class="empty">{{ "builder.form-builder.edit-panel.noOptions" | translate }}</p>
+            }
+        </div>
+    </section>
+    }
+
+    <section class="section">
+        <div class="section-header">
+            <h3 class="section-title">{{ "builder.modeler.data-mode.component" | translate }}</h3>
+            @if (!_builderModeService.readOnly) {
+            <button mat-button (click)="createOrDeleteComponent(); notifyGridster()">
+                @if (dataVariable.component === undefined) {
+                <mat-icon>add</mat-icon>
+                }
+                @if (dataVariable.component !== undefined) {
+                <mat-icon>delete</mat-icon>
+                }
+                {{
+                    dataVariable.component === undefined
+                        ? ("builder.form-builder.edit-panel.addComponent" | translate)
+                        : ("builder.form-builder.edit-panel.deleteComponent" | translate)
+                }}
+            </button>
+            }
+        </div>
+        @if (dataVariable.component !== undefined) {
+        <div class="fields">
+            <mat-form-field appearance="outline">
+                <mat-label>{{ "builder.form-builder.edit-panel.componentName" | translate }}</mat-label>
+                <input
+                    matInput
+                    [(ngModel)]="dataVariable.component.name"
+                    (change)="setComponent($event); notifyGridster()"
+                    [formControl]="componentNameFormCtrl"
+                    [matAutocomplete]="componentAutocomplete"
+                />
+                <mat-autocomplete
+                    #componentAutocomplete="matAutocomplete"
+                    (optionSelected)="setComponent($event); notifyGridster()"
+                >
+                    @for (componentDef of filteredComponents(dataVariable.component); track componentDef) {
+                    <mat-option [value]="componentDef.name">{{ componentDef.title }}</mat-option>
+                    }
+                </mat-autocomplete>
+            </mat-form-field>
+        </div>
+
+        <div class="sub-header">
+            <span class="sub-title">{{ "builder.modeler.data-mode.properties" | translate }}</span>
+            @if (!_builderModeService.readOnly) {
+            <button mat-button (click)="addProperty(dataVariable.component); notifyGridster()">
+                <mat-icon>add</mat-icon>
+                {{ "builder.form-builder.edit-panel.addProperty" | translate }}
+            </button>
+            }
+        </div>
+        @if (dataVariable.component.properties.length > 0) {
+        <div class="row-list">
+            @for (property of dataVariable.component.properties; track property; let i = $index) {
+            <div class="row">
+                <mat-form-field appearance="outline" class="row-field" subscriptSizing="dynamic">
+                    <input
+                        matInput
+                        type="text"
+                        [placeholder]="'builder.form-builder.edit-panel.key' | translate"
+                        [value]="property.key"
+                        [matAutocomplete]="propertyAutocomplete"
+                        [disabled]="_builderModeService.readOnly"
+                        (change)="setPropertyKey($event, i, dataVariable.component); notifyGridster()"
+                    />
+                    <mat-autocomplete
+                        #propertyAutocomplete="matAutocomplete"
+                        (optionSelected)="setPropertyKey($event, i, dataVariable.component); notifyGridster()"
+                    >
+                        @for (propertyDef of filteredProperties(dataVariable.component, property.key); track propertyDef) {
+                        <mat-option [value]="propertyDef.name">{{ propertyDef.name }}</mat-option>
+                        }
+                    </mat-autocomplete>
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="row-field" subscriptSizing="dynamic">
+                    <input
+                        matInput
+                        type="text"
+                        [placeholder]="'builder.form-builder.edit-panel.value' | translate"
+                        [value]="property.value"
+                        [disabled]="_builderModeService.readOnly"
+                        (change)="setPropertyValue($event, i, dataVariable.component); notifyGridster()"
+                    />
+                </mat-form-field>
+                @if (!_builderModeService.readOnly) {
+                <button mat-icon-button (click)="deleteProperty(i, dataVariable.component); notifyGridster()">
+                    <mat-icon>delete</mat-icon>
+                </button>
+                }
+            </div>
+            }
+        </div>
+        }
+        @if (dataVariable.component?.properties?.length === 0) {
+        <p class="empty">{{ "builder.form-builder.edit-panel.noProperties" | translate }}</p>
+        }
+
+        @if (isIconEnumeration(dataVariable.type, dataVariable?.component)) {
+        <div class="sub-header">
+            <span class="sub-title">{{ "builder.form-builder.edit-panel.icons" | translate }}</span>
+            @if (!_builderModeService.readOnly) {
+            <button
+                mat-button
+                (click)="addIcon(gridsterService.selectedDataField.dataVariable.component); notifyGridster()"
+            >
+                <mat-icon>add</mat-icon>
+                {{ "builder.form-builder.edit-panel.addIcon" | translate }}
+            </button>
+            }
+        </div>
+        @if (dataVariable.component.icons.length > 0) {
+        <div class="row-list">
+            @for (icon of dataVariable.component.icons; track icon; let i = $index) {
+            <div class="row">
+                <mat-form-field appearance="outline" class="row-field" subscriptSizing="dynamic">
+                    <input
+                        matInput
+                        type="text"
+                        [placeholder]="'builder.form-builder.edit-panel.key' | translate"
+                        [value]="icon.key"
+                        [disabled]="_builderModeService.readOnly"
+                        (change)="setIconKey($event, i, dataVariable.component); notifyGridster()"
+                    />
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="row-field" subscriptSizing="dynamic">
+                    <input
+                        matInput
+                        type="text"
+                        [placeholder]="'builder.form-builder.edit-panel.icon' | translate"
+                        [value]="icon.icon"
+                        [disabled]="_builderModeService.readOnly"
+                        (change)="setIconValue($event, i, dataVariable.component); notifyGridster()"
+                    />
+                </mat-form-field>
+                @if (!_builderModeService.readOnly) {
+                <button mat-icon-button (click)="deleteIcon(i, dataVariable.component); notifyGridster()">
+                    <mat-icon>delete</mat-icon>
+                </button>
+                }
+            </div>
+            }
+        </div>
+        } @else {
+        <p class="empty">{{ "builder.form-builder.edit-panel.noIcons" | translate }}</p>
+        }
+        }
+
+        @if (!_builderModeService.readOnly) {
+        <div class="section-actions">
+            <button mat-stroked-button (click)="cloneProperty(dataVariable, dataRef, 'component')">
+                <mat-icon>move_down</mat-icon>
+                {{ "builder.form-builder.edit-panel.copyToDataRef" | translate }}
+            </button>
+        </div>
+        }
+        } @else {
+        <p class="empty">{{ "builder.modeler.data-mode.noComponent" | translate }}</p>
+        }
+    </section>
+
+    <section class="section">
+        <div class="section-header">
+            <h3 class="section-title">{{ "builder.form-builder.edit-panel.dataRefComponent" | translate }}</h3>
+            @if (!_builderModeService.readOnly) {
+            <button mat-button (click)="createOrDeleteDataRefComponent(); notifyGridster()">
+                @if (dataRef.component === undefined) {
+                <mat-icon>add</mat-icon>
+                }
+                @if (dataRef.component !== undefined) {
+                <mat-icon>delete</mat-icon>
+                }
+                {{
+                    dataRef.component === undefined
+                        ? ("builder.form-builder.edit-panel.addDataRefComponent" | translate)
+                        : ("builder.form-builder.edit-panel.deleteDataRefComponent" | translate)
+                }}
+            </button>
+            }
+        </div>
+        @if (dataRef.component !== undefined) {
+        <div class="fields">
+            <mat-form-field appearance="outline">
+                <mat-label>{{ "builder.form-builder.edit-panel.componentName" | translate }}</mat-label>
+                <input
+                    matInput
+                    [(ngModel)]="dataRef.component.name"
+                    (change)="setDataRefComponent($event); notifyGridster()"
+                    [formControl]="dataRefComponentNameFormCtrl"
+                    [matAutocomplete]="dataRefComponentAutocomplete"
+                />
+                <mat-autocomplete
+                    #dataRefComponentAutocomplete="matAutocomplete"
+                    (optionSelected)="setComponent($event); notifyGridster()"
+                >
+                    @for (componentDef of filteredComponents(dataRef.component); track componentDef) {
+                    <mat-option [value]="componentDef.name">{{ componentDef.title }}</mat-option>
+                    }
+                </mat-autocomplete>
+            </mat-form-field>
+        </div>
+
+        <div class="sub-header">
+            <span class="sub-title">{{ "builder.modeler.data-mode.properties" | translate }}</span>
+            @if (!_builderModeService.readOnly) {
+            <button
+                mat-button
+                (click)="addProperty(gridsterService.selectedDataField.dataRef.component); notifyGridster()"
+            >
+                <mat-icon>add</mat-icon>
+                {{ "builder.form-builder.edit-panel.addProperty" | translate }}
+            </button>
+            }
+        </div>
+        @if (dataRef.component.properties.length > 0) {
+        <div class="row-list">
+            @for (property of dataRef.component.properties; track property; let i = $index) {
+            <div class="row">
+                <mat-form-field appearance="outline" class="row-field" subscriptSizing="dynamic">
+                    <input
+                        matInput
+                        type="text"
+                        [placeholder]="'builder.form-builder.edit-panel.key' | translate"
+                        [value]="property.key"
+                        [matAutocomplete]="dataRefPropertyAutocomplete"
+                        [disabled]="_builderModeService.readOnly"
+                        (change)="setPropertyKey($event, i, dataRef.component); notifyGridster()"
+                    />
+                    <mat-autocomplete
+                        #dataRefPropertyAutocomplete="matAutocomplete"
+                        (optionSelected)="setPropertyKey($event, i, dataRef.component); notifyGridster()"
+                    >
+                        @for (propertyDef of filteredProperties(dataRef.component, property.key); track propertyDef) {
+                        <mat-option [value]="propertyDef.name">{{ propertyDef.name }}</mat-option>
+                        }
+                    </mat-autocomplete>
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="row-field" subscriptSizing="dynamic">
+                    <input
+                        matInput
+                        type="text"
+                        [placeholder]="'builder.form-builder.edit-panel.value' | translate"
+                        [value]="property.value"
+                        [disabled]="_builderModeService.readOnly"
+                        (change)="setPropertyValue($event, i, dataRef.component); notifyGridster()"
+                    />
+                </mat-form-field>
+                @if (!_builderModeService.readOnly) {
+                <button mat-icon-button (click)="deleteProperty(i, dataRef.component); notifyGridster()">
+                    <mat-icon>delete</mat-icon>
+                </button>
+                }
+            </div>
+            }
+        </div>
+        }
+        @if (dataRef.component?.properties?.length === 0) {
+        <p class="empty">{{ "builder.form-builder.edit-panel.noProperties" | translate }}</p>
+        }
+
+        @if (isIconEnumeration(dataVariable.type, dataRef.component)) {
+        <div class="sub-header">
+            <span class="sub-title">{{ "builder.form-builder.edit-panel.icons" | translate }}</span>
+        </div>
+        @if (dataRef.component.icons.length > 0) {
+        <div class="row-list">
+            @for (icon of dataRef.component.icons; track icon; let i = $index) {
+            <div class="row">
+                <mat-form-field appearance="outline" class="row-field" subscriptSizing="dynamic">
+                    <input
+                        matInput
+                        type="text"
+                        [placeholder]="'builder.form-builder.edit-panel.key' | translate"
+                        [value]="icon.key"
+                        [disabled]="_builderModeService.readOnly"
+                        (change)="setIconKey($event, i, dataRef.component); notifyGridster()"
+                    />
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="row-field" subscriptSizing="dynamic">
+                    <input
+                        matInput
+                        type="text"
+                        [placeholder]="'builder.form-builder.edit-panel.icon' | translate"
+                        [value]="icon.icon"
+                        [disabled]="_builderModeService.readOnly"
+                        (change)="setIconValue($event, i, dataRef.component); notifyGridster()"
+                    />
+                </mat-form-field>
+                @if (!_builderModeService.readOnly) {
+                <button mat-icon-button (click)="deleteIcon(i, dataRef.component); notifyGridster()">
+                    <mat-icon>delete</mat-icon>
+                </button>
+                }
+            </div>
+            }
+        </div>
+        } @else {
+        <p class="empty">{{ "builder.form-builder.edit-panel.noIcons" | translate }}</p>
+        }
+        }
+
+        @if (!_builderModeService.readOnly) {
+        <div class="section-actions">
+            <button mat-stroked-button (click)="cloneProperty(dataRef, dataVariable, 'component')">
+                <mat-icon>move_up</mat-icon>
+                {{ "builder.form-builder.edit-panel.copyToDataField" | translate }}
+            </button>
+        </div>
+        }
+        } @else {
+        <p class="empty">{{ "builder.modeler.data-mode.noComponent" | translate }}</p>
+        }
+    </section>
+    }
 </div>

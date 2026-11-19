@@ -1,11 +1,13 @@
 import {FormControl} from '@angular/forms';
 import {debounceTime, filter, map} from 'rxjs/operators';
 import {SearchService} from '../search-service/search.service';
-import {Component, Input} from '@angular/core';
+import {Component, Input, ChangeDetectionStrategy} from '@angular/core';
 
 @Component({
     selector: 'ncc-abstract-fulltext-search',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractFulltextSearchComponent {
 

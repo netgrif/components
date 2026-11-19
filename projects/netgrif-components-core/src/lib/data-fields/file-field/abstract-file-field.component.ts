@@ -1,8 +1,4 @@
-import {
-    Component,
-    Inject, Input,
-    Optional,
-} from '@angular/core';
+import {Component, Inject, Input, Optional, ChangeDetectionStrategy} from '@angular/core';
 import {AbstractDataFieldComponent} from '../models/abstract-data-field-component';
 import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token';
 import {FileField} from "./models/file-field";
@@ -15,7 +11,9 @@ import {FileField} from "./models/file-field";
  */
 @Component({
     selector: 'ncc-abstract-file-field',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractFileFieldComponent extends AbstractDataFieldComponent  {
 

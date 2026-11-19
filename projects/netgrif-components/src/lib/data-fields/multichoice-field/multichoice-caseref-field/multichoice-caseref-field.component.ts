@@ -1,4 +1,4 @@
-import {Component, Inject, Injector, Optional} from '@angular/core';
+import {Component, Inject, Injector, Optional, ChangeDetectionStrategy} from '@angular/core';
 import {
     DATA_FIELD_PORTAL_DATA,
     DataFieldPortalData,
@@ -12,7 +12,8 @@ import {
 @Component({
   selector: 'nc-multichoice-caseref-field',
   templateUrl: './multichoice-caseref-field.component.html',
-  styleUrls: ['./multichoice-caseref-field.component.scss']
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class MultichoiceCaserefFieldComponent extends AbstractMultichoiceCaseRefComponent {
 

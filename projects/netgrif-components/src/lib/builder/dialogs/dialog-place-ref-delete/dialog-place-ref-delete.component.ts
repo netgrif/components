@@ -1,4 +1,4 @@
-import {Component, Inject} from '@angular/core';
+import {Component, Inject, ChangeDetectionStrategy} from '@angular/core';
 import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {Arc} from '@netgrif/petriflow';
 import {CanvasPlace} from '../../modeler/edit-mode/domain/canvas-place';
@@ -11,7 +11,9 @@ export interface PlaceRefDeleteData {
 @Component({
     selector: 'nc-builder-dialog-place-ref-delete',
     templateUrl: './dialog-place-ref-delete.component.html',
-    styleUrls: ['./dialog-place-ref-delete.component.scss']
+    styleUrls: ['./dialog-place-ref-delete.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class DialogPlaceRefDeleteComponent {
 

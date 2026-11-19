@@ -1,8 +1,0 @@
-<% if (isToolbar) { %>
-<nc-toolbar  logoSrc="" logoAlt="" ></nc-toolbar>
-<% } %>
-<% if (isSideNav) { %>
-<<%= drawerType %><%= drawerParam %>>
-    <router-outlet></router-outlet>
-</<%= drawerType %>>
-<% } %>

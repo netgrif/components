@@ -1,12 +1,3 @@
-.margin-top32px {
-    margin-top: 32px;
-}
+@use '../../components/master-detail/detail-form' as form;
 
-.height-fix {
-    min-height: 100%;
-    overflow: visible;
-}
-
-.full-width {
-    width: 100%;
-}
+@include form.styles;

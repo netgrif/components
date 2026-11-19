@@ -1,78 +1,68 @@
-<div fxFlex="100" fxLayout="row" fxLayoutAlign=" center">
-    <mat-checkbox *ngIf="approval && typeApproval === 'multichoice'" [formControl]="approvalFormControl" [indeterminate]="indeterminate"
-                  (click)="$event.stopPropagation();" color='primary' class="checkbox-padding"></mat-checkbox>
-    <mat-icon *ngIf="approval && typeApproval === 'enumeration'" color="warn" (click)="setValue();$event.stopPropagation();" class="checkbox-padding cursor-fix">close</mat-icon>
-    <div *ngFor="let header of this.headerService.selectedHeaders$ | async; let i = index"
-         [fxHide.lt-xl]="i >= 4 && this.headerService.responsiveHeaders && !this.headerService.overflowMode"
-         [fxHide.lt-lg]="i >= 3 && this.headerService.responsiveHeaders && !this.headerService.overflowMode"
-         [fxHide.lt-md]="i >= 2 && this.headerService.responsiveHeaders && !this.headerService.overflowMode"
-         [fxHide.lt-sm]="i >= 1 && this.headerService.responsiveHeaders && !this.headerService.overflowMode"
-         fxFlex [ngStyle]="{'min-width': getMinWidth()}">
-        <div
-            *ngIf="!!header && header.fieldType !== 'button'; then thenBlock else elseBlock"
-            fxFlex></div>
-        <ng-template #thenBlock>
-            <div fxLayout="row" fxLayoutAlign=" center" fxFlex [ngSwitch]="header.fieldType" class="netgrif-input netgrif-header-input netgrif-input-fix netgrif-zero-field-wrapper">
-                <mat-form-field color="primary" fxLayout="row" fxLayoutAlign=" center" fxFlex *ngSwitchCase="'date'" appearance="outline">
-                    <mat-label>{{header.title | translate}}</mat-label>
-                    <input matInput autocomplete="off"
-                           [matDatepicker]="datepicker"
-                           [formControl]="formControls[i]"
-                           [placeholder]="'headers.date' | translate"
-                           (click)="datepicker.open()"
-                           (keydown.enter)="datepicker.close()">
-<!--                    <mat-datepicker-toggle matPrefix [for]="datepicker"></mat-datepicker-toggle>-->
-                    <mat-datepicker #datepicker></mat-datepicker>
-                </mat-form-field>
-                <mat-form-field color="primary" fxLayout="row" fxLayoutAlign=" center" fxFlex *ngSwitchCase="'dateTime'"
-                                appearance="outline">
-                    <mat-label>{{header.title | translate}}</mat-label>
-                    <input matInput autocomplete="off"
-                           [ngxMatDatetimePicker]="datetimepicker"
-                           [formControl]="formControls[i]"
-                           [placeholder]="'headers.dateTime' | translate"
-                           (click)="datetimepicker.open()"
-                           (keydown.enter)="datetimepicker.close()">
-<!--                    <mat-datepicker-toggle matPrefix [for]="datetimepicker"></mat-datepicker-toggle>-->
-                    <ngx-mat-datetime-picker #datetimepicker
-                                             [showSpinners]="true"
-                                             [showSeconds]="false"
-                                             [stepHour]="1"
-                                             [stepMinute]="5"
-                                             [color]="'primary'"
-                                             [enableMeridian]="false">
-                    </ngx-mat-datetime-picker>
-                </mat-form-field>
-
-                <mat-form-field color="primary" fxLayout="row" fxLayoutAlign=" center" fxFlex *ngSwitchCase="'number'" appearance="outline">
-                    <mat-label>{{header.title | translate}}</mat-label>
-                    <input matInput type="number" [formControl]="formControls[i]">
-                </mat-form-field>
-
-                <mat-form-field color="primary" fxLayout="row" fxLayoutAlign=" center" fxFlex *ngSwitchCase="'boolean'" appearance="outline">
-                    <mat-label>{{header.title | translate}}</mat-label>
-                    <mat-select matInput [formControl]="formControls[i]">
-                        <mat-option>---</mat-option>
-                        <mat-option [value]="true">{{'dataField.values.boolean.true' | translate}}</mat-option>
-                    </mat-select>
-                </mat-form-field>
-
-                <mat-form-field color="primary" fxLayout="row" fxLayoutAlign=" center" fxFlex *ngSwitchCase="'user'"  appearance="outline">
-                    <mat-label>{{header.title | translate}}</mat-label>
-                    <input matInput (click)="selectUser(i)" autocomplete="false"
-                            [formControl]="formControls[i]">
-                </mat-form-field>
-
-                <mat-form-field color="primary" fxLayout="row" fxLayoutAlign=" center" fxFlex *ngSwitchDefault
-                                appearance="outline">
-                    <mat-label>{{header.title | translate}}</mat-label>
-                    <input matInput [formControl]="formControls[i]">
-                </mat-form-field>
-            </div>
-        </ng-template>
-
-        <ng-template #elseBlock>
-            <div fxFlex></div>
-        </ng-template>
+<div fxFlex fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px">
+    @if (approval && typeApproval === 'multichoice') {
+    <mat-checkbox [formControl]="approvalFormControl" [indeterminate]="indeterminate" (click)="$event.stopPropagation()"></mat-checkbox>
+    }
+    @if (approval && typeApproval === 'enumeration') {
+    <button mat-icon-button (click)="setValue(); $event.stopPropagation()"><mat-icon>close</mat-icon></button>
+    }
+    @for (header of headerService.selectedHeaders$ | async; track header; let i = $index) {
+    <div fxFlex fxLayout="row" fxLayoutGap="16px" class="table-column"
+         [fxHide.lt-xl]="i >= 4 && headerService.responsiveHeaders && !headerService.overflowMode"
+         [fxHide.lt-lg]="i >= 3 && headerService.responsiveHeaders && !headerService.overflowMode"
+         [fxHide.lt-md]="i >= 2 && headerService.responsiveHeaders && !headerService.overflowMode"
+         [fxHide.lt-sm]="i >= 1 && headerService.responsiveHeaders && !headerService.overflowMode">
+        @if (!!header && header.fieldType !== 'button') {
+        @switch (header.fieldType) {
+        @case ('date') {
+        <mat-form-field fxFlex subscriptSizing="dynamic">
+            <mat-label>{{ header.title | translate }}</mat-label>
+            <input matInput autocomplete="off" [matDatepicker]="datepicker" [formControl]="formControls[i]"
+                   (click)="datepicker.open()" (keydown.enter)="datepicker.close()"/>
+            <mat-datepicker #datepicker></mat-datepicker>
+        </mat-form-field>
+        }
+        @case ('dateTime') {
+        <mat-form-field fxFlex subscriptSizing="dynamic">
+            <mat-label>{{ header.title | translate }}</mat-label>
+            <input matInput autocomplete="off" [matDatepicker]="datetimepicker" [formControl]="formControls[i]"
+                   (click)="datetimepicker.open()" (keydown.enter)="datetimepicker.close()"/>
+            <mat-datepicker #datetimepicker></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field fxFlex="100px" subscriptSizing="dynamic">
+            <input matInput autocomplete="off" [matTimepicker]="timepicker" [formControl]="formControls[i]"/>
+            <mat-timepicker-toggle matIconSuffix [for]="timepicker"></mat-timepicker-toggle>
+            <mat-timepicker #timepicker interval="5m"></mat-timepicker>
+        </mat-form-field>
+        }
+        @case ('number') {
+        <mat-form-field fxFlex subscriptSizing="dynamic">
+            <mat-label>{{ header.title | translate }}</mat-label>
+            <input matInput type="number" [formControl]="formControls[i]"/>
+        </mat-form-field>
+        }
+        @case ('boolean') {
+        <mat-form-field fxFlex subscriptSizing="dynamic">
+            <mat-label>{{ header.title | translate }}</mat-label>
+            <mat-select [formControl]="formControls[i]">
+                <mat-option>---</mat-option>
+                <mat-option [value]="true">{{ "dataField.values.boolean.true" | translate }}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        }
+        @case ('user') {
+        <mat-form-field fxFlex subscriptSizing="dynamic">
+            <mat-label>{{ header.title | translate }}</mat-label>
+            <input matInput autocomplete="off" (click)="selectUser(i)" [formControl]="formControls[i]"/>
+        </mat-form-field>
+        }
+        @default {
+        <mat-form-field fxFlex subscriptSizing="dynamic">
+            <mat-label>{{ header.title | translate }}</mat-label>
+            <input matInput [formControl]="formControls[i]"/>
+        </mat-form-field>
+        }
+        }
+        }
     </div>
+    }
 </div>

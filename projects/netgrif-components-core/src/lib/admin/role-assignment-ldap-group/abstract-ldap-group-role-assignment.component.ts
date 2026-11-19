@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {MatSelectionList} from '@angular/material/list';
 import {CdkVirtualScrollViewport} from '@angular/cdk/scrolling';
 import {
@@ -15,7 +15,9 @@ import {LdapGroupListItem, LdapGroupListService} from '../../groups/services/lda
 
 @Component({
     selector: 'ncc-abstract-ldap-group-role-assignment',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractLdapGroupRoleAssignmentComponent implements OnInit, AfterViewInit, OnDestroy {
 
@@ -78,19 +80,29 @@ export abstract class AbstractLdapGroupRoleAssignmentComponent implements OnInit
     }
 
     public autoSelectRoles(): void {
+        if (!this.nets || !this.ldapGroupList) {
+            return;
+        }
         const all = this.ldapGroupList.selectedOptions.selected.map(option => (option.value as LdapGroupListItem).roles);
         if (all.length === 0) {
             this.nets.selectRoles(new Set<string>([]));
+            this.nets.markPartialRoles(new Set<string>([]));
+            return;
         }
-
         const intersection = all.reduce((acc, curr) => new Set([...acc].filter(s => curr.has(s))), all[0]);
+        const union = all.reduce((acc, curr) => new Set([...acc, ...curr]), new Set<string>());
         this.nets.selectRoles(intersection);
+        this.nets.markPartialRoles(new Set([...union].filter(role => !intersection.has(role))));
     }
 
+    /**
+     * Adds the role to all selected items (the role was not checked or indeterminate, the checkbox is checked now) or
+     * removes it from all of them. The other roles of the items stay.
+     */
     public update(role: ExtendedProcessRole): void {
         this.nets.updateSelectedRoles(role);
         const selected = this.ldapGroupList.selectedOptions.selected.map(option => (option.value as LdapGroupListItem));
-        this.ldapGroup.updateRoles(selected, this.nets.selectedRoles).subscribe(_ => {
+        this.ldapGroup.changeRoles(selected, [role.stringId], role.selected).subscribe(_ => {
             this.autoSelectRoles();
         });
     }
@@ -102,13 +114,14 @@ export abstract class AbstractLdapGroupRoleAssignmentComponent implements OnInit
         this.autoSelectRoles();
     }
 
+    /** adds all roles of the process to the selected items or removes them, the roles of the other processes stay */
     public toggleAllRoles(net: ProcessVersion, select: boolean): void {
         net.roles.forEach(r => {
             r.selected = select;
             this.nets.updateSelectedRoles(r);
         });
         const selected = this.ldapGroupList.selectedOptions.selected.map(option => (option.value as LdapGroupListItem));
-        this.ldapGroup.updateRoles(selected, this.nets.selectedRoles).subscribe(_ => {
+        this.ldapGroup.changeRoles(selected, net.roles.map(r => r.stringId), select).subscribe(_ => {
             this.autoSelectRoles();
         });
     }

@@ -3,8 +3,7 @@ import {ImportNetDialogComponent} from './import-net-dialog.component';
 import {
     SideMenuImportNetComponentModule
 } from '../../side-menu/content-components/import-net/side-menu-import-net-component.module';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {
     ConfigurationService,
     PetriNetResourceService,
@@ -18,6 +17,7 @@ import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from '@angular/material/
 import {NO_ERRORS_SCHEMA} from "@angular/core";
 import {AuthenticationModule} from "@netgrif/components-core";
 import {RouterTestingModule} from "@angular/router/testing";
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('ImportNetDialogComponent', () => {
     let component: ImportNetDialogComponent;
@@ -30,11 +30,10 @@ describe('ImportNetDialogComponent', () => {
     beforeEach(async () => {
         await TestBed.configureTestingModule({
             declarations: [ImportNetDialogComponent],
+            schemas: [NO_ERRORS_SCHEMA],
             imports: [
                 SideMenuImportNetComponentModule,
-                HttpClientTestingModule,
                 AuthenticationModule,
-                NoopAnimationsModule,
                 TranslateLibModule,
                 MatIconModule,
                 SnackBarModule,
@@ -46,8 +45,9 @@ describe('ImportNetDialogComponent', () => {
                 {provide: MatDialogRef, useValue: dialogMock},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: PetriNetResourceService, useClass: MyPetriNetResource},
-            ],
-            schemas: [NO_ERRORS_SCHEMA]
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
+            ]
         }).compileComponents();
     });
 

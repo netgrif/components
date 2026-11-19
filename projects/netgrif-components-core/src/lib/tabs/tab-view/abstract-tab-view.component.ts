@@ -1,4 +1,4 @@
-import {Component, Injector, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, Injector, Input, OnDestroy, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {TabContent} from '../interfaces';
 import {TabView} from '../classes/tab-view';
 import {ViewService} from '../../routing/view-service/view.service';
@@ -13,7 +13,9 @@ import {take} from 'rxjs/operators';
  */
 @Component({
     selector: 'ncc-abstract-tab-view',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractTabViewComponent implements OnInit, OnDestroy {
 

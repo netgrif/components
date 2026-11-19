@@ -1,8 +1,11 @@
-<div class="task-tab-background full-height">
-    <div fxLayout="column" fxLayoutAlign="start stretch" class="content-margin full-height" >
-        <nc-header #header type="task" [maxHeaderColumns]="3" class="task-panel-padding-mini" ></nc-header>
-        <nc-task-list-pagination class="fix-datafield-expansion-panel" (taskEvent)="onTaskEvent($event)" [tasks$]="tasks$"
-                                 [loading$]="loading$" [allowMultiOpen]="false" [selectedHeaders$]="selectedHeaders$"
-                                 [textEllipsis]="true" fxFlex></nc-task-list-pagination>
-    </div>
+<div class="view">
+    <nc-task-list-pagination class="list"
+                             [tasks$]="tasks$"
+                             [loading$]="loading$"
+                             [allowMultiOpen]="false"
+                             [selectedHeaders$]="selectedHeaders$"
+                             [textEllipsis]="true"
+                             (taskEvent)="onTaskEvent($event)">
+        <nc-header #header ncListHeader type="task" [maxHeaderColumns]="3"></nc-header>
+    </nc-task-list-pagination>
 </div>

@@ -1,6 +1,18 @@
-mat-hint {
-    display: block;
+@use '../../field-label' as label;
+
+@include label.styles;
+
+:host {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    min-height: calc(var(--mat-form-field-container-height, 56px) + 20px);
 }
-.min-height-62 {
-    min-height: 62px;
+
+mat-slide-toggle {
+    display: flex;
+    align-items: center;
+    min-height: var(--mat-form-field-container-height, 56px);
+    max-width: 100%;
+    overflow-wrap: anywhere;
 }

@@ -1,15 +1,14 @@
 import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 
 import {AbstractI18nDividerFieldComponent} from './abstract-i18n-divider-field.component';
-import {Component, CUSTOM_ELEMENTS_SCHEMA, Inject, Optional} from '@angular/core';
+import {Component, CUSTOM_ELEMENTS_SCHEMA, Inject, Optional, ChangeDetectionStrategy} from '@angular/core';
 import {WrappedBoolean} from '../../data-field-template/models/wrapped-boolean';
 import {I18nField} from '../models/i18n-field';
 import {MaterialModule} from '../../../material/material.module';
-import {AngularResizeEventModule} from 'angular-resize-event';
-import {BrowserAnimationsModule, NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {TranslateLibModule} from '../../../translate/translate-lib.module';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('AbstractI18nDividerFieldComponent', () => {
     let component: TestI18nDividerComponent;
@@ -17,13 +16,11 @@ describe('AbstractI18nDividerFieldComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
+            declarations: [TestI18nDividerComponent, TestWrapperComponent],
+            schemas: [CUSTOM_ELEMENTS_SCHEMA],
             imports: [
                 MaterialModule,
-                AngularResizeEventModule,
-                BrowserAnimationsModule,
-                TranslateLibModule,
-                HttpClientTestingModule,
-                NoopAnimationsModule
+                TranslateLibModule
             ],
             providers: [
                 {provide: DATA_FIELD_PORTAL_DATA, useValue: {
@@ -37,10 +34,10 @@ describe('AbstractI18nDividerFieldComponent', () => {
                         formControlRef: undefined,
                         showLargeLayout: new WrappedBoolean()
                     } as DataFieldPortalData<I18nField>
-                }
-            ],
-            declarations: [TestI18nDividerComponent, TestWrapperComponent],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA]
+                },
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
+            ]
         })
             .compileComponents();
         fixture = TestBed.createComponent(TestWrapperComponent);
@@ -59,7 +56,9 @@ describe('AbstractI18nDividerFieldComponent', () => {
 
 @Component({
     selector: 'ncc-test-i18n-divider',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestI18nDividerComponent extends AbstractI18nDividerFieldComponent {
     constructor(@Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<I18nField>) {
@@ -69,7 +68,9 @@ class TestI18nDividerComponent extends AbstractI18nDividerFieldComponent {
 
 @Component({
     selector: 'ncc-test-wrapper',
-    template: '<ncc-test-i18n-divider></ncc-test-i18n-divider>'
+    template: '<ncc-test-i18n-divider></ncc-test-i18n-divider>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestWrapperComponent {
 

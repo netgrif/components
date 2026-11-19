@@ -1,12 +1,11 @@
 import {TestBed} from '@angular/core/testing';
 import {BaseAllowedNetsService} from './base-allowed-nets.service';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('BaseAllowedNetsService', () => {
     let service: BaseAllowedNetsService;
 
     beforeEach(() => {
-        TestBed.configureTestingModule({imports: [NoopAnimationsModule]});
+        TestBed.configureTestingModule({imports: []});
         service = TestBed.inject(BaseAllowedNetsService);
     });
 

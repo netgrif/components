@@ -1,4 +1,4 @@
-import {Component, Inject, Optional} from '@angular/core';
+import {Component, Inject, Optional, ChangeDetectionStrategy} from '@angular/core';
 import {MultichoiceField} from '../models/multichoice-field';
 import {FormControl} from '@angular/forms';
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
@@ -6,7 +6,9 @@ import {AbstractBaseDataFieldComponent} from "../../base-component/abstract-base
 
 @Component({
     selector: 'ncc-abstract-multichoice-list-field',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractMultichoiceListFieldComponent extends AbstractBaseDataFieldComponent<MultichoiceField> {
 

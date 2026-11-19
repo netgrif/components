@@ -9,11 +9,7 @@ import {
     TranslateLibModule,
     ComponentRegistryService
 } from '@netgrif/components-core';
-import {AngularResizeEventModule} from 'angular-resize-event';
-import {HttpClientModule} from '@angular/common/http';
 import {ReactiveFormsModule} from '@angular/forms';
-import {NgxMatDatetimePickerModule} from '@angular-material-components/datetime-picker';
-import {NgxMatMomentModule} from '@angular-material-components/moment-adapter';
 import {BooleanFieldComponent} from './boolean-field/boolean-field.component';
 import {ButtonFieldComponent} from './button-field/button-field.component';
 import {DateAdapter} from '@angular/material/core';
@@ -62,7 +58,6 @@ import {
 import {
     EnumerationAutocompleteDynamicFieldComponent
 } from './enumeration-field/enumeration-autocomplete-dynamic-field/enumeration-autocomplete-dynamic-field.component';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 import {FilterFieldComponent} from './filter-field/filter-field.component';
 import {FilterFieldContentComponent} from './filter-field/filter-field-content/filter-field-content.component';
@@ -74,7 +69,6 @@ import {I18nFieldComponent} from './i18n-field/i18n-field.component';
 import {I18nDividerFieldComponent} from './i18n-field/i18n-divider-field/i18n-divider-field.component';
 import {I18nTextFieldComponent} from './i18n-field/i18n-text-field/i18n-text-field.component';
 import {EasymdeWrapperComponent} from './text-field/rich-textarea-field/easymde-wrapper/easymde-wrapper.component';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {
     MultichoiceAutocompleteFieldComponent
 } from './multichoice-field/multichoice-autocomplete-field/multichoice-autocomplete-field.component';
@@ -203,20 +197,14 @@ import { FilterStringQueryFieldComponent } from './filter-field/filter-string-qu
         FlexLayoutModule,
         MaterialModule,
         CovalentModule,
-        AngularResizeEventModule,
-        HttpClientModule,
         ReactiveFormsModule,
-        NgxMatDatetimePickerModule,
-        NgxMatMomentModule,
         TranslateLibModule,
         SideMenuUserAssignComponentModule,
         SideMenuMultiUserAssignComponentModule,
         QuillModule.forRoot(),
         MatDialogModule,
         AdvancedSearchComponentModule,
-        MatProgressSpinnerModule,
         CurrencyModule,
-        BrowserAnimationsModule,
         DashboardComponentModule,
         RouterModule,
         FrontActionModule

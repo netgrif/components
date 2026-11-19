@@ -1,11 +1,19 @@
 <mat-menu #appMenu="matMenu">
-  <ng-template matMenuContent>
-    <ng-container *ngIf="items.length > 0; else noItems">
-      <button (click)="addTextToEditor(item.id)" *ngFor="let item of items"
-              [innerHTML]="item.title | safeHtml" mat-menu-item></button>
-    </ng-container>
-    <ng-template #noItems>
-      <button [disabled]="true" mat-menu-item>{{ 'builder.modeler.actions-mode.action-editor.action-editor-menu.no' | translate }} {{ configuration.title }}</button>
+    <ng-template matMenuContent>
+        @if (items.length > 0) { @for (item of items; track item) {
+        <button
+            (click)="addTextToEditor(item.id)"
+            [innerHTML]="item.title | safeHtml"
+            mat-menu-item
+        ></button>
+        } } @else {
+        <button [disabled]="true" mat-menu-item>
+            {{
+                "builder.modeler.actions-mode.action-editor.action-editor-menu.no"
+                    | translate
+            }}
+            {{ configuration.title }}
+        </button>
+        }
     </ng-template>
-  </ng-template>
 </mat-menu>

@@ -1,5 +1,5 @@
 import {AbstractAdvancedSearchComponent} from './abstract-advanced-search.component';
-import {Component} from '@angular/core';
+import {Component, ChangeDetectionStrategy} from '@angular/core';
 import {SearchService} from '../search-service/search.service';
 import {
     AdvancedSearchComponentInitializationService
@@ -7,12 +7,12 @@ import {
 import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 import {MaterialModule} from '../../material/material.module';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {NAE_BASE_FILTER} from '../models/base-filter-injection-token';
 import {TestCaseBaseFilterProvider} from '../../utility/tests/test-factory-methods';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('AbstractAdvancedSearchComponent', () => {
     let component: TestAdvancedSearchComponent;
@@ -20,11 +20,10 @@ describe('AbstractAdvancedSearchComponent', () => {
 
     beforeEach(waitForAsync(waitForAsync(() => {
         TestBed.configureTestingModule({
+            declarations: [TestAdvancedSearchComponent],
             imports: [
                 MaterialModule,
-                TranslateLibModule,
-                NoopAnimationsModule,
-                HttpClientTestingModule
+                TranslateLibModule
             ],
             providers: [
                 SearchService,
@@ -32,10 +31,9 @@ describe('AbstractAdvancedSearchComponent', () => {
                     provide: NAE_BASE_FILTER,
                     useFactory: TestCaseBaseFilterProvider
                 },
-                {provide: ConfigurationService, useClass: TestConfigurationService}
-            ],
-            declarations: [
-                TestAdvancedSearchComponent,
+                {provide: ConfigurationService, useClass: TestConfigurationService},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
             ]
         }).compileComponents();
     })));
@@ -59,7 +57,9 @@ describe('AbstractAdvancedSearchComponent', () => {
 @Component({
     selector: 'ncc-test-fulltext-search',
     template: '',
-    providers: [AdvancedSearchComponentInitializationService]
+    providers: [AdvancedSearchComponentInitializationService],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestAdvancedSearchComponent extends AbstractAdvancedSearchComponent {
     constructor(searchService: SearchService, initializationService: AdvancedSearchComponentInitializationService) {

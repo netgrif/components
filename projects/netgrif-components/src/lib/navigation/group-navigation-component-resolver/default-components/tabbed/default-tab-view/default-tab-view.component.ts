@@ -1,4 +1,4 @@
-import {Component, Inject} from '@angular/core';
+import {AfterViewInit, Component, Inject, ChangeDetectionStrategy, OnDestroy, ViewChild, inject} from '@angular/core';
 import {
     DataGroup,
     extractIconAndTitle,
@@ -12,12 +12,16 @@ import {
     SearchComponentConfiguration,
     SearchMode,
     TabContent,
+    TabView,
     ViewIdService,
     FilterExtractionService,
     GroupNavigationConstants,
     hasView,
-    I18nFieldValue
+    I18nFieldValue,
+    BreadcrumbsDetailService
 } from '@netgrif/components-core';
+import {Subscription} from 'rxjs';
+import {TabViewComponent} from '../../../../../tabs/tab-view/tab-view.component';
 import {DefaultTabbedCaseViewComponent} from '../default-tabbed-case-view/default-tabbed-case-view.component';
 import {DefaultTabbedTaskViewComponent} from '../default-tabbed-task-view/default-tabbed-task-view.component';
 import {ActivatedRoute} from '@angular/router';
@@ -34,17 +38,42 @@ import {
     providers: [
         ViewIdService,
         {provide: NAE_VIEW_ID_SEGMENT, useFactory: groupNavigationViewIdSegmentFactory, deps: [ActivatedRoute]}
-    ]
+    ],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
-export class DefaultTabViewComponent {
+export class DefaultTabViewComponent implements AfterViewInit, OnDestroy {
 
     tabs: Array<TabContent>;
+
+    @ViewChild('tabView') protected _tabViewComponent: TabViewComponent;
+    protected _detailSub: Subscription;
+
+    /** the opened detail (a case) in the breadcrumbs of the layout (injected, the constructor of the subclasses stays) */
+    protected _breadcrumbsDetail = inject(BreadcrumbsDetailService);
 
     constructor(@Inject(NAE_NAVIGATION_ITEM_TASK_DATA) protected _navigationItemTaskData: Array<DataGroup>,
                 protected translateService: TranslateService,
                 protected extractionService: FilterExtractionService,
                 protected activatedRoute: ActivatedRoute) {
         this.tabs = this.getTabs();
+    }
+
+    ngAfterViewInit(): void {
+        if (this._tabViewComponent?.tabView) {
+            this._detailSub = this._breadcrumbsDetail.followTabView(this._tabViewComponent.tabView);
+        }
+    }
+
+    ngOnDestroy(): void {
+        this._detailSub?.unsubscribe();
+    }
+
+    /**
+     * Closes the opened detail tab (e.g. a case) and shows the tab it was opened from.
+     */
+    public closeDetail(tabView: TabView): void {
+        BreadcrumbsDetailService.closeDetailTab(tabView);
     }
 
     protected getTabs(): TabContent[] {

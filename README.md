@@ -25,23 +25,27 @@ and to create own library of Angular web components to incorporate your own pers
            [@netgrif/components-core typedoc](https://components.netgrif.com/typedoc/components-core)
 * License: [NETGRIF Community License](https://github.com/netgrif/components/blob/master/LICENSE.txt)
 
-In this repository are 3 projects:
+In this repository are 4 projects:
 * [@netgrif/components-core](projects/netgrif-components-core/README.md) - Core library of services, factories and abstract classes of components.  
 * [@netgrif/components](projects/netgrif-components/README.md) - Library of angular components implementing classes from core library.
-* [Examples App](projects/nae-example-app/README.md) - Simple application to demonstrate and test individual components.
+* [Components Playground](projects/netgrif-example/README.md) - offline playground of the library components with live configuration and code snippets.
+* [Netgrif Frontend](projects/netgrif-frontend/README.md) - functional frontend application for Netgrif Application Engine built on the libraries.
 
 ## Requirements
 
-The Libraries are implemented as Angular libraries. With Angular dependencies there are several others to complement functionality and range of components available for
-NAE based applications. The components library is based upon Angular Material components to make it easier to derived and implement own set of components but still keep
-the functionality and compatibility with Application Engine.
+The libraries are Angular libraries built on Angular Material (Material 3). They require:
 
-The library has defined peer dependencies that are not installed automatically with npm. You can install dependencies with this command:
+| Name | Version |
+|------|---------|
+| [Node.js](https://nodejs.org) | 22.22+ or 24.15+ |
+| [Angular](https://angular.dev) | 22 |
+| [TypeScript](https://www.typescriptlang.org) | 6.0 |
+
+The libraries have peer dependencies that are not installed automatically with npm. You can install them with this command:
 
 ```shell
-npm i -S @angular-material-components/datetime-picker@7.0.1 @angular-material-components/moment-adapter@7.0.0 @angular/animations@13.3 @angular/cdk@13.3 @angular/common@13.3.1 @angular/compiler@13.3.1 @angular/core@13.3.1 @angular/flex-layout@13.0.0-beta.38 @angular/forms@13.3.1 @angular/material@13.3.1 @angular/material-moment-adapter@13.3.1 @angular/platform-browser@13.3.1 @angular/platform-browser-dynamic@13.3.1 @angular/router@13.3.1 @covalent/markdown@4.1.0 @ngx-translate/core@13.0.0 @ngx-translate/http-loader@6.0.0 @schematics/angular@13.3.0 @swimlane/ngx-charts@20.1.0 @types/mousetrap@1.6.9 angular-resizable-element@3.3.0 angular-resize-event@3.1.1 angular2-hotkeys@2.4.0 easymde@2.16.1 hammerjs@2.0.8 json-schema-to-typescript@8.1.0 jszip@3.2.2 marked@4.0.12 moment@2.24.0 mousetrap@1.6.5 natural-orderby@2.0.3 ngx-quill@16.2.0 palette-creator@0.5.4 quill@1.3.7 rxjs@6.5.4 showdown@2.0.3 tslib@2.0.0 zone.js@0.11.4
+npm i -S @angular/animations@"~22.2.3" @angular/cdk@"~22.2.4" @angular/common@"~22.2.3" @angular/compiler@"~22.2.3" @angular/core@"~22.2.3" @angular/forms@"~22.2.3" @angular/material@"~22.2.4" @angular/material-moment-adapter@"~22.2.4" @angular/platform-browser@"~22.2.3" @angular/platform-browser-dynamic@"~22.2.3" @angular/router@"~22.2.3" @material/material-color-utilities@"^0.4.0" @netgrif/petri.svg@"1.1.1" @netgrif/petriflow@"2.2.4" @netgrif/petriflow.svg@"1.1.1" @ngbracket/ngx-layout@"^22.0.2" @ngx-translate/core@"~15.0.0" @ngx-translate/http-loader@"~8.0.0" @panzoom/panzoom@"~4.5.1" @swimlane/ngx-charts@"^25.0.3" angular-gridster2@"~22.0.0" angular-resizable-element@"^8.0.3" angular2-hotkeys@"~16.0.0" antlr4ng@"^3.0.16" easymde@"~2.16.1" escape-string-regexp@"^4.0.0" hammerjs@"~2.0.8" jszip@"~3.2.2" marked@"~4.0.12" moment@"~2.29.4" monaco-editor@"^0.56.0" natural-orderby@"~2.0.3" ngx-monaco-editor-v2@"^22.0.5" ngx-quill@"^31.0.1" quill@"^2.0.0" rxjs@"~7.8.1" semver@"^7.6.0" xml-formatter@"^3.6.2" zone.js@"~0.15.1"
 ```
-
 
 ## Installation
 
@@ -51,7 +55,37 @@ To install complete NAE frontend experience you must install the core library an
 npm i -S @netgrif/components-core @netgrif/components
 ```
 
-If you want to developer own set of NAE components, just install the core library, and you can start developing.
+If you want to develop own set of NAE components, just install the core library, and you can start developing.
+
+## Theming
+
+The components use the Material 3 system tokens (`--mat-sys-*`). Include the theme of the library in the global stylesheet of the application:
+
+```scss
+@use '@netgrif/components/theming' as nae;
+
+@include nae.theme();                                    // Netgrif brand palettes
+// @include nae.theme($primary: my.$primary-palette);    // own palettes from `ng generate @angular/material:theme-color`
+// @include nae.theme($density: -1, $density-blocks: (lists: -1, dialogs: -1)); // density of the app and of its blocks
+```
+
+Density: `$density` is the global density of the application (0 ... -5), the user can change it at runtime in the
+appearance dialog of the navigation (`AppearanceService`, `html.nae-density-<n>`). The blocks of the application have an
+offset from it set by the developer in `$density-blocks` and move with it (`global + offset`, clamped to 0 ... -5):
+`navigation`, `lists`, `forms` (task forms, default -2), `form-fields` (the fields of the task forms, offset from the forms,
+default -3), `dialogs` and `builder` (default 0). `$task-form-density` / `$task-form-field-density` still set the forms with
+absolute values (they are converted to the offsets).
+
+The theme is required, Material 2 themes (`nae-lib-theme()`, `mat.m2-*`) are not supported. Besides the system tokens
+it emits the few global state classes the components rely on (case color, active indicator, builder canvas states).
+
+and provide the Material defaults the design is built for:
+
+```typescript
+providers: [provideNaeMaterialDefaults({iconFontSet: 'material-symbols-rounded'})]
+```
+
+Dashboard chart cards use `@swimlane/ngx-charts`, which still needs `provideAnimationsAsync()` from `@angular/platform-browser/animations/async`.
 
 ## Usage and configuration
 
@@ -70,7 +104,7 @@ You can find [minimal nae.json configuration here](docs/configuration/nae-minima
 <!-- You can read more on how to configure complete [nae.json here](https://components.netgrif.com/#/configuration). -->
 
 
-For easier startup clone [template project for NAE frontend application](https://github.com/netgrif/nae-frontend-application-starter)
+For easier startup look at [Netgrif Frontend](projects/netgrif-frontend/README.md), a complete application built on the libraries.
 
 <!-- For more information please read instructions in [Get Started](https://components.netgrif.com/#/get_started) -->
 

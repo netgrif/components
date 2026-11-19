@@ -1,8 +1,7 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {CommonModule} from '@angular/common';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {RouterTestingModule} from '@angular/router/testing';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {MaterialModule} from '../../../material/material.module';
 import {TranslateLibModule} from '../../../translate/translate-lib.module';
 import {MockAuthenticationMethodService} from '../../../utility/tests/mocks/mock-authentication-method-service';
@@ -11,10 +10,11 @@ import {ConfigurationService} from '../../../configuration/configuration.service
 import {UserPreferenceService} from '../../services/user-preference.service';
 import {MockUserPreferenceService} from '../../../utility/tests/mocks/mock-user-preference.service';
 import {TestConfigurationService} from '../../../utility/tests/test-config';
-import {Component, Injector} from '@angular/core';
+import {Component, Injector, ChangeDetectionStrategy} from '@angular/core';
 import {AbstractUserCardComponent} from './abstract-user-card.component';
 import {AuthenticationService} from '../../../authentication/services/authentication/authentication.service';
 import {MockAuthenticationService} from '../../../utility/tests/mocks/mock-authentication.service';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('AbstractUserCardComponent', () => {
     let component: TestUserComponent;
@@ -26,16 +26,16 @@ describe('AbstractUserCardComponent', () => {
             imports: [
                 CommonModule,
                 MaterialModule,
-                HttpClientTestingModule,
                 RouterTestingModule.withRoutes([]),
-                TranslateLibModule,
-                NoopAnimationsModule
+                TranslateLibModule
             ],
             providers: [
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
-                {provide: UserPreferenceService, useValue: MockUserPreferenceService}
+                {provide: UserPreferenceService, useValue: MockUserPreferenceService},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
             ]
         }).compileComponents();
     }));
@@ -61,7 +61,9 @@ describe('AbstractUserCardComponent', () => {
 
 @Component({
     selector: 'ncc-test-user',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestUserComponent extends AbstractUserCardComponent {
     constructor(protected _injector: Injector) {

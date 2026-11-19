@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, Inject, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {FormControl, ValidatorFn, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {Arc, DataType, TransitionPlaceArc, XmlArcType} from '@netgrif/petriflow';
@@ -28,7 +28,9 @@ export interface ReferenceGroup {
 @Component({
     selector: 'nc-builder-dialog-arc-edit',
     templateUrl: './dialog-arc-edit.component.html',
-    styleUrls: ['./dialog-arc-edit.component.scss']
+    styleUrls: ['./dialog-arc-edit.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class DialogArcEditComponent implements OnInit {
 

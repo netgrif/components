@@ -1,7 +1,6 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {Observable, of} from 'rxjs';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {SideMenuImportNetComponentModule} from './side-menu-import-net-component.module';
 import {ImportNetComponent} from './import-net.component';
 import {
@@ -16,6 +15,7 @@ import {
 } from '@netgrif/components-core';
 import {MatIconModule} from '@angular/material/icon';
 import {RouterTestingModule} from "@angular/router/testing";
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('ImportNetComponent', () => {
     let component: ImportNetComponent;
@@ -26,8 +26,6 @@ describe('ImportNetComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 SideMenuImportNetComponentModule,
-                HttpClientTestingModule,
-                NoopAnimationsModule,
                 AuthenticationModule,
                 TranslateLibModule,
                 MatIconModule,
@@ -40,7 +38,9 @@ describe('ImportNetComponent', () => {
                 }, new Observable<boolean>(), null)
             },
                 {provide: ConfigurationService, useClass: TestConfigurationService},
-                {provide: PetriNetResourceService, useClass: MyPetriNetResource}
+                {provide: PetriNetResourceService, useClass: MyPetriNetResource},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
             ],
         }).compileComponents();
     }));

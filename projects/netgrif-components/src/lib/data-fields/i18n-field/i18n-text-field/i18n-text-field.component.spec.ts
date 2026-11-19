@@ -15,11 +15,10 @@ import {
     WrappedBoolean,
     LanguageService
 } from '@netgrif/components-core';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import {FormControl} from '@angular/forms';
-import {AngularResizeEventModule} from 'angular-resize-event';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('I18nTextFieldComponent', () => {
     let component: I18nTextFieldComponent;
@@ -28,21 +27,20 @@ describe('I18nTextFieldComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
+            declarations: [I18nTextFieldComponent, TestWrapperComponent],
+            schemas: [CUSTOM_ELEMENTS_SCHEMA],
             imports: [
                 MaterialModule,
-                AngularResizeEventModule,
-                BrowserAnimationsModule,
-                TranslateLibModule,
-                HttpClientTestingModule
+                TranslateLibModule
             ],
             providers: [
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
-                {provide: UserResourceService, useClass: MockUserResourceService}
-            ],
-            declarations: [I18nTextFieldComponent, TestWrapperComponent],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA]
+                {provide: UserResourceService, useClass: MockUserResourceService},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
+            ]
         }).compileComponents();
         service = TestBed.inject(LanguageService);
         service.setLanguage('en-US');
@@ -61,7 +59,8 @@ describe('I18nTextFieldComponent', () => {
 
     @Component({
         selector: 'nc-test-wrapper',
-        template: '<nc-i18n-text-field [formControlRef]="fc" [dataField]="field" [showLargeLayout]="boolean"></nc-i18n-text-field>'
+        template: '<nc-i18n-text-field [formControlRef]="fc" [dataField]="field" [showLargeLayout]="boolean"></nc-i18n-text-field>',
+        standalone: false
     })
     class TestWrapperComponent {
         field = new I18nField('', '',

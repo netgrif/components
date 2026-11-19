@@ -1,16 +1,24 @@
-<mat-radio-group
-    color="primary"
-    class="full-width example-radio-group netgrif-label"
-    aria-labelledby="example-radio-group-label"
-    [required]="dataField.behavior.required"
-    [formControl]="formControlRef" [ngClass]="{'netgrif-label-disabled': formControlRef.disabled}">
-    <mat-label *ngIf="!showLargeLayout.value"  >{{dataField.title}}
-        <nc-required-label *ngIf="dataField.behavior.required" [isIn]="true"></nc-required-label>
-        <button mat-button *ngIf="!formControlRef.disabled" (click)="resetEnum()">{{'dataField.enum.reset' | translate}}</button>
-        <br></mat-label>
-    <mat-radio-button class="example-radio-button" *ngFor="let option of dataField.choices" [value]="option.key">
-        {{option.value}}
-    </mat-radio-button>
-    <mat-hint [ngClass]="{'mat-hint-disabled': formControlRef.disabled}" *ngIf="dataField.description !== undefined && dataField.description !== ''">{{dataField.description}}</mat-hint>
-    <mat-error *ngIf="dataField.isInvalid(formControlRef)">{{'dataField.validations.required' | translate}}</mat-error>
-</mat-radio-group>
+@if (!showLargeLayout.value && hasTitle()) {
+<div class="title-row">
+    <span class="field-title">
+        {{ dataField.title }}
+        @if (dataField.behavior.required) {
+        <nc-required-label [isIn]="!formControlRef.disabled"></nc-required-label>
+        }
+    </span>
+    @if (!formControlRef.disabled && formControlRef.value) {
+    <button mat-button type="button" (click)="resetEnum()">{{ "dataField.enum.reset" | translate }}</button>
+    }
+</div>
+}
+<mat-selection-list [multiple]="false" [disabled]="formControlRef.disabled" [attr.aria-label]="dataField.title"
+                    (selectionChange)="select($event)">
+    @for (option of dataField.choices; track option.key) {
+    <mat-list-option togglePosition="before" [value]="option.key" [selected]="formControlRef.value === option.key">{{ option.value }}</mat-list-option>
+    }
+</mat-selection-list>
+@if (dataField.isInvalid(formControlRef)) {
+<span class="field-supporting error">{{ "dataField.validations.required" | translate }}</span>
+} @else if (hasHint()) {
+<span class="field-supporting">{{ dataField.description }}</span>
+}

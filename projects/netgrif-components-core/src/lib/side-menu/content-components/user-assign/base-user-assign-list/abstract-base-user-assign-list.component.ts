@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit, ViewChild} from "@angular/core";
+import {Component, Input, OnDestroy, OnInit, ViewChild, ChangeDetectionStrategy} from "@angular/core";
 import {RolesObject, UserListItem, UserListService} from "../../../../user/services/user-list.service";
 import {FormControl} from "@angular/forms";
 import {CdkVirtualScrollViewport} from "@angular/cdk/scrolling";
@@ -7,7 +7,9 @@ import {UserValue} from "../../../../data-fields/user-field/models/user-value";
 
 @Component({
     selector: 'ncc-base-user-assign-list',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractBaseUserAssignListComponent implements OnInit, OnDestroy {
 

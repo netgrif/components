@@ -1,17 +1,16 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { AbstractUserListFieldComponent } from './abstract-user-list-field.component';
-import { Component, Inject, Optional } from '@angular/core';
+import { Component, Inject, Optional, ChangeDetectionStrategy } from '@angular/core';
 import { SideMenuService } from '../../side-menu/services/side-menu.service';
 import { TranslateService } from '@ngx-translate/core';
 import { NAE_INFORM_ABOUT_INVALID_DATA } from '../models/invalid-data-policy-token';
 import { UserListField } from './models/user-list-field';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from '../../material/material.module';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateLibModule } from '../../translate/translate-lib.module';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { expect } from '@ngbracket/ngx-layout/_private-utils/testing';
-import {MatDialogModule} from '@angular/material/dialog';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { MatDialogModule } from '@angular/material/dialog';
+import { provideHttpClient, withInterceptorsFromDi, withXhr } from '@angular/common/http';
 
 describe('AbstractUserListFieldComponent', () => {
     let component: TestUserListFieldComponent;
@@ -20,17 +19,17 @@ describe('AbstractUserListFieldComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
+            declarations: [TestUserListFieldComponent],
             imports: [
                 CommonModule,
                 MaterialModule,
-                NoopAnimationsModule,
                 TranslateLibModule,
-                HttpClientTestingModule,
                 MatDialogModule
             ],
-            declarations: [TestUserListFieldComponent],
             providers: [
-                TranslateService
+                TranslateService,
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
             ]
         })
             .compileComponents();
@@ -53,7 +52,9 @@ describe('AbstractUserListFieldComponent', () => {
 
 @Component({
     selector: 'ncc-test-userlistfield',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestUserListFieldComponent extends AbstractUserListFieldComponent {
     constructor(@Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {

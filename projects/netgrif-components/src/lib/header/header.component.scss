@@ -1,48 +1,17 @@
-.header-content-container {
-    height: 40px;
+.header-row {
+    min-height: var(--mat-expansion-header-collapsed-state-height, 48px);
+    padding: 0 32px 0 24px;
+    color: var(--mat-sys-on-surface);
+    font: var(--mat-sys-title-small);
+    letter-spacing: var(--mat-sys-title-small-tracking);
 }
 
-.header-card {
-    border-radius: 8px 8px 0 0;
-    padding: 10px 16px;
-}
+:host ::ng-deep .table-column {
+    contain: inline-size;
+    min-width: var(--nc-column-min-width, 0);
 
-.padding-custom {
-    padding: 6px 16px;
-}
-
-.flex-95 {
-    flex: 1 1 95%;
-}
-
-.flex-5 {
-    flex: 1 1 5%;
-}
-
-.header-menu-row {
-    box-sizing: border-box;
-    display: flex;
-    align-items: center;
-    padding: 0 16px;
-    font-size: 14px;
-    user-select: none;
-}
-
-.header-menu-toggle {
-    min-height: 48px;
-    cursor: pointer;
-}
-
-.header-menu-field {
-    // fixed, compact width so the fields don't stretch the whole menu
-    width: 100%;
-    min-width: 200px;
-    max-width: 280px;
-    padding-top: 12px;
-    padding-bottom: 4px;
-    cursor: default;
-
-    mat-form-field {
-        width: 100%;
+    .mat-mdc-form-field-infix {
+        width: auto;
+        min-width: 0;
     }
 }

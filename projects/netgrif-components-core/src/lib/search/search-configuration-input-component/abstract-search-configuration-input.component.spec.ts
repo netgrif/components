@@ -1,8 +1,8 @@
 import {AbstractSearchConfigurationInputComponent} from './abstract-search-configuration-input.component';
-import {Component} from '@angular/core';
+import {Component, ChangeDetectionStrategy} from '@angular/core';
 import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('AbstractSearchConfigurationInputComponent', () => {
     let component: TestSearchConfigurationInputComponent;
@@ -10,9 +10,11 @@ describe('AbstractSearchConfigurationInputComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
-            imports: [NoopAnimationsModule, HttpClientTestingModule],
-            declarations: [
-                TestSearchConfigurationInputComponent
+            declarations: [TestSearchConfigurationInputComponent],
+            imports: [],
+            providers: [
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
             ]
         }).compileComponents();
     }));
@@ -34,7 +36,9 @@ describe('AbstractSearchConfigurationInputComponent', () => {
 
 @Component({
     selector: 'ncc-search-configuration-input',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestSearchConfigurationInputComponent extends AbstractSearchConfigurationInputComponent {
     constructor() {

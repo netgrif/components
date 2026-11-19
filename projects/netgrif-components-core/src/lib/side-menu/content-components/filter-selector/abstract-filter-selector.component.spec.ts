@@ -1,6 +1,5 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {Observable} from 'rxjs';
 import {MatSelectionListChange} from '@angular/material/list';
 import {SimpleFilter} from '../../../filter/models/simple-filter';
@@ -15,9 +14,10 @@ import {MockUserResourceService} from '../../../utility/tests/mocks/mock-user-re
 import {SideMenuControl} from '../../models/side-menu-control';
 import {ConfigurationService} from '../../../configuration/configuration.service';
 import {TestConfigurationService} from '../../../utility/tests/test-config';
-import {Component, Inject} from '@angular/core';
+import {Component, Inject, ChangeDetectionStrategy} from '@angular/core';
 import {AbstractFilterSelectorComponent} from './abstract-filter-selector.component';
 import {FilterRepository} from '../../../filter/filter.repository';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('AbstractFilterSelectorComponent', () => {
     let component: TestFilterSelectorComponent;
@@ -27,9 +27,8 @@ describe('AbstractFilterSelectorComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
+            declarations: [TestFilterSelectorComponent],
             imports: [
-                HttpClientTestingModule,
-                NoopAnimationsModule
             ],
             providers: [
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
@@ -39,9 +38,10 @@ describe('AbstractFilterSelectorComponent', () => {
                     provide: NAE_SIDE_MENU_CONTROL,
                     useValue: new SideMenuControl(() => {}, new Observable<boolean>(), null)
                 },
-                {provide: ConfigurationService, useClass: TestConfigurationService}
-            ],
-            declarations: [TestFilterSelectorComponent]
+                {provide: ConfigurationService, useClass: TestConfigurationService},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
+            ]
         }).compileComponents();
     }));
 
@@ -76,7 +76,9 @@ describe('AbstractFilterSelectorComponent', () => {
 
 @Component({
     selector: 'ncc-test-files',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestFilterSelectorComponent extends AbstractFilterSelectorComponent {
     constructor(@Inject(NAE_SIDE_MENU_CONTROL) protected _sideMenuControl: SideMenuControl,

@@ -1,6 +1,5 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {of} from 'rxjs';
 import {ActivatedRoute} from '@angular/router';
 import {RouterTestingModule} from '@angular/router/testing';
@@ -21,12 +20,12 @@ import {
 } from '../../../../utility/tests/test-factory-methods';
 import {AllowedNetsService} from '../../../../allowed-nets/services/allowed-nets.service';
 import {AllowedNetsServiceFactory} from '../../../../allowed-nets/services/factory/allowed-nets-service-factory';
-import {Component, Inject, Optional} from '@angular/core';
+import {Component, Inject, Optional, ChangeDetectionStrategy} from '@angular/core';
 import {LoggerService} from '../../../../logger/services/logger.service';
 import {NAE_TAB_DATA} from '../../../../tabs/tab-data-injection-token/tab-data-injection-token';
 import {InjectedTabData} from '../../../../tabs/interfaces';
 import {LanguageService} from "../../../../translate/language.service";
-
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('AbstractCaseListPaginatorComponent', () => {
     let component: TestCaseComponent;
@@ -34,11 +33,10 @@ describe('AbstractCaseListPaginatorComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
+            declarations: [TestCaseComponent],
             imports: [
-                HttpClientTestingModule,
                 MaterialModule,
                 TranslateLibModule,
-                NoopAnimationsModule,
                 RouterTestingModule.withRoutes([])
             ],
             providers: [
@@ -51,9 +49,10 @@ describe('AbstractCaseListPaginatorComponent', () => {
                     provide: NAE_BASE_FILTER,
                     useFactory: TestCaseBaseFilterProvider
                 },
-                {provide: AllowedNetsService, useFactory: TestCaseViewAllowedNetsFactory, deps: [AllowedNetsServiceFactory]}
-            ],
-            declarations: [TestCaseComponent]
+                {provide: AllowedNetsService, useFactory: TestCaseViewAllowedNetsFactory, deps: [AllowedNetsServiceFactory]},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
+            ]
         }).compileComponents();
     }));
 
@@ -74,7 +73,9 @@ describe('AbstractCaseListPaginatorComponent', () => {
 
 @Component({
     selector: 'ncc-test-case',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestCaseComponent extends AbstractCaseListPaginatorComponent {
     constructor(protected _caseViewService: CaseViewService,

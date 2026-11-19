@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Input, Output, ChangeDetectionStrategy} from '@angular/core';
 import {NestedTreeControl} from '@angular/cdk/tree';
 import {Filter} from '../../../filter/models/filter';
 import {CaseTreeService} from './case-tree.service';
@@ -9,7 +9,9 @@ import {CaseTreePath} from './model/case-tree-path';
 
 @Component({
     selector: 'ncc-abstract-tree',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractTreeComponent {
 

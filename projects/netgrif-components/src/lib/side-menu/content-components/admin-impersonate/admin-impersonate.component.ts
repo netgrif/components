@@ -1,4 +1,4 @@
-import {Component, Inject} from '@angular/core';
+import {Component, Inject, ChangeDetectionStrategy} from '@angular/core';
 import {AbstractUserAssignComponent, NAE_SIDE_MENU_CONTROL, SideMenuControl, UserListService, ImpersonationUserListService} from '@netgrif/components-core';
 
 /**
@@ -14,7 +14,9 @@ import {AbstractUserAssignComponent, NAE_SIDE_MENU_CONTROL, SideMenuControl, Use
     styleUrls: ['./admin-impersonate.component.scss'],
     providers: [{
         provide: UserListService, useClass: ImpersonationUserListService
-    }]
+    }],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class AdminImpersonateComponent extends AbstractUserAssignComponent {
     constructor(@Inject(NAE_SIDE_MENU_CONTROL) sideMenuControl: SideMenuControl) {

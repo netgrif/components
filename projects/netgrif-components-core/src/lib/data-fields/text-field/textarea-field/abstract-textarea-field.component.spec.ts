@@ -1,8 +1,6 @@
 import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
-import {AngularResizeEventModule} from 'angular-resize-event';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {Component, CUSTOM_ELEMENTS_SCHEMA, Inject, NgZone, Optional} from '@angular/core';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
+import {Component, CUSTOM_ELEMENTS_SCHEMA, Inject, NgZone, Optional, ChangeDetectionStrategy} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {AbstractTextareaFieldComponent} from './abstract-textarea-field.component';
 import {WrappedBoolean} from '../../data-field-template/models/wrapped-boolean';
@@ -20,6 +18,7 @@ import {MaterialModule} from '../../../material/material.module';
 import {TranslateService} from '@ngx-translate/core';
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
 import {TextAreaField} from "../models/text-area-field";
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('AbstractTextareaFieldComponent', () => {
     let component: TestTextComponent;
@@ -27,12 +26,11 @@ describe('AbstractTextareaFieldComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
+            declarations: [TestTextComponent, TestWrapperComponent],
+            schemas: [CUSTOM_ELEMENTS_SCHEMA],
             imports: [
                 MaterialModule,
-                AngularResizeEventModule,
-                NoopAnimationsModule,
-                TranslateLibModule,
-                HttpClientTestingModule
+                TranslateLibModule
             ],
             providers: [
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
@@ -50,10 +48,10 @@ describe('AbstractTextareaFieldComponent', () => {
                         formControlRef: new FormControl(),
                         showLargeLayout: new WrappedBoolean()
                     } as DataFieldPortalData<TextField>
-                }
-            ],
-            declarations: [TestTextComponent, TestWrapperComponent],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA]
+                },
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
+            ]
         })
             .compileComponents();
 
@@ -85,7 +83,9 @@ describe('AbstractTextareaFieldComponent', () => {
         '              [ngStyle]="{\'min-height\': getHeight()+\'px\', \'height\': getHeight()+\'px\'}"\n' +
         '              #dynamicTextArea="cdkTextareaAutosize"\n' +
         '              cdkTextareaAutosize\n' +
-        '              cdkAutosizeMinRows="1"></textarea>'
+        '              cdkAutosizeMinRows="1"></textarea>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestTextComponent extends AbstractTextareaFieldComponent {
     constructor(protected _translate: TranslateService, protected _ngZone: NgZone,
@@ -96,7 +96,9 @@ class TestTextComponent extends AbstractTextareaFieldComponent {
 
 @Component({
     selector: 'ncc-test-wrapper',
-    template: '<ncc-test-text></ncc-test-text>'
+    template: '<ncc-test-text></ncc-test-text>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestWrapperComponent {
 

@@ -1,4 +1,4 @@
-import {Component, Inject, Optional} from "@angular/core";
+import {Component, Inject, Optional, ChangeDetectionStrategy} from "@angular/core";
 import {UserListField} from "../models/user-list-field";
 import {SnackBarService} from "../../../snack-bar/services/snack-bar.service";
 import {TranslateService} from "@ngx-translate/core";
@@ -12,6 +12,8 @@ import {MatDialog} from '@angular/material/dialog';
 @Component({
     selector: 'ncc-abstract-user-list-default-field',
     template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false,
 })
 export abstract class AbstractUserListDefaultFieldComponent extends AbstractBaseDataFieldComponent<UserListField>{
 

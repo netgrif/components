@@ -15,7 +15,6 @@ import {
     ViewIdService
 } from '@netgrif/components-core';
 import {of} from 'rxjs';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterTestingModule} from '@angular/router/testing';
 
 describe('DefaultTabbedTaskViewComponent', () => {
@@ -27,7 +26,6 @@ describe('DefaultTabbedTaskViewComponent', () => {
             imports: [
                 NavigationComponentModule,
                 TestMockDependenciesModule,
-                NoopAnimationsModule,
                 RouterTestingModule.withRoutes([]),
             ],
             providers: [

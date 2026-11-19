@@ -1,5 +1,5 @@
 import {HttpClient} from '@angular/common/http';
-import {Component, ViewChild} from '@angular/core';
+import {Component, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {MatSidenav} from '@angular/material/sidenav';
 import {MatTabGroup} from '@angular/material/tabs';
@@ -14,7 +14,9 @@ import {BuilderModeService, BuilderMode} from "../services/builder-mode.service"
 @Component({
     selector: 'nc-builder-modeler',
     templateUrl: './modeler.component.html',
-    styleUrls: ['./modeler.component.scss']
+    styleUrls: ['./modeler.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class ModelerComponent {
     width: number;

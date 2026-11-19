@@ -1,4 +1,4 @@
-import {Component, Inject, Optional} from "@angular/core";
+import {Component, Inject, Optional, ChangeDetectionStrategy} from "@angular/core";
 import {SnackBarService} from "../../../snack-bar/services/snack-bar.service";
 import {TranslateService} from "@ngx-translate/core";
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
@@ -10,7 +10,9 @@ import {MatDialog} from '@angular/material/dialog';
 
 @Component({
     selector: 'ncc-abstract-user-default-field',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractUserDefaultFieldComponent extends AbstractBaseDataFieldComponent<UserField>{
 
@@ -63,6 +65,7 @@ export abstract class AbstractUserDefaultFieldComponent extends AbstractBaseData
         this.dataField.value = null;
     }
 
+    /** @deprecated the M3 templates truncate the texts with CSS (ellipsis) */
     public getCutProperty(i18nLabel): string {
         if (this.labelWidth !== i18nLabel.offsetWidth) {
             this.labelWidth = i18nLabel.offsetWidth;

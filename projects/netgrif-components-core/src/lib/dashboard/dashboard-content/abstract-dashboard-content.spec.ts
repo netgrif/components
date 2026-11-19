@@ -1,7 +1,6 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {MatGridListModule} from '@angular/material/grid-list';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {Component} from '@angular/core';
+import {Component, ChangeDetectionStrategy} from '@angular/core';
 import {AbstractDashboardContentComponent} from './abstract-dashboard-content';
 import {LoggerService} from '../../logger/services/logger.service';
 import {ConfigurationService} from '../../configuration/configuration.service';
@@ -14,7 +13,7 @@ describe('AbstractDashboardContentComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
-            imports: [MatGridListModule, NoopAnimationsModule],
+            imports: [MatGridListModule],
             declarations: [TestDashboardContentComponent, TestWrapperComponent],
             providers: [{provide: ConfigurationService, useClass: TestConfigurationService}]
         }).compileComponents();
@@ -37,7 +36,9 @@ describe('AbstractDashboardContentComponent', () => {
 
 @Component({
     selector: 'ncc-test-dashboard',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestDashboardContentComponent extends AbstractDashboardContentComponent {
     constructor(protected _log: LoggerService) {
@@ -47,7 +48,9 @@ class TestDashboardContentComponent extends AbstractDashboardContentComponent {
 
 @Component({
     selector: 'ncc-test-wrapper',
-    template: '<ncc-test-dashboard [params]="params"></ncc-test-dashboard>'
+    template: '<ncc-test-dashboard [params]="params"></ncc-test-dashboard>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestWrapperComponent {
     public params: DashboardParams = {

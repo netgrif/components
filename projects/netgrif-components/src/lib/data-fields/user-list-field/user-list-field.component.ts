@@ -1,4 +1,4 @@
-import { Component, Inject, Optional } from '@angular/core';
+import { Component, Inject, Optional, ChangeDetectionStrategy } from '@angular/core';
 import {
     AbstractUserListFieldComponent,
     NAE_INFORM_ABOUT_INVALID_DATA,
@@ -10,7 +10,8 @@ import {
 @Component({
   selector: 'nc-user-list-field',
   templateUrl: './user-list-field.component.html',
-  styleUrls: ['./user-list-field.component.scss']
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class UserListFieldComponent extends AbstractUserListFieldComponent {
 

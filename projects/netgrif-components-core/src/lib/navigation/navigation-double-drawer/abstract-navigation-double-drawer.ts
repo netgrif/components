@@ -1,5 +1,5 @@
-import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
-import {Component, EventEmitter, Inject, Input, OnDestroy, OnInit, Output, TemplateRef} from '@angular/core';
+import {BreakpointObserver} from '@angular/cdk/layout';
+import {Component, EventEmitter, Inject, Input, OnDestroy, OnInit, Output, TemplateRef, ChangeDetectionStrategy} from '@angular/core';
 import {ActivatedRoute, IsActiveMatchOptions, NavigationEnd, Router} from '@angular/router';
 import {TranslateService} from '@ngx-translate/core';
 import {ResizeEvent} from 'angular-resizable-element';
@@ -44,13 +44,18 @@ import {SnackBarService} from "../../snack-bar/services/snack-bar.service";
 import {MatDialog} from "@angular/material/dialog";
 import {NAE_TASK_VIEW_COMPONENT} from "../../side-menu/content-components/injection-tokens";
 import {ComponentType} from '@angular/cdk/portal';
+import {CdkDragDrop} from '@angular/cdk/drag-drop';
 import {TaskViewDialogInjectionData} from "../../dialog/models/task-view-dialog-injection-data";
 
 @Component({
     selector: 'ncc-abstract-navigation-double-drawer',
     template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false,
 })
 export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit, OnDestroy {
+    /** below this width the rail and the drawer are closed and open over the page (`lt-md` of the flex layout) */
+    public static readonly SMALL_SCREEN_QUERY = '(max-width: 959.98px)';
 
     @Input() portalLeftMenu: TemplateRef<any>;
     @Input() portalRightMenu: TemplateRef<any>;
@@ -63,6 +68,8 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
     @Input() includeMoreMenu: boolean = true;
     @Input() includeImpersonation: boolean = true;
     @Input() allClosable: boolean = true;
+    /** breadcrumbs of the opened menu item above the page (one place for every view, also above the tabs of a tab view) */
+    @Input() showBreadcrumbs: boolean = true;
     @Input() folderIcon: string = 'folder';
     @Input() openedFolderIcon: string = 'folder_open';
     @Input() filterIcon: string = 'filter_alt';
@@ -151,13 +158,7 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
     }
 
     public ngOnInit(): void {
-        this._breakpointSubscription = this._breakpoint.observe([Breakpoints.HandsetLandscape]).subscribe(() => {
-            if (this._breakpoint.isMatched('(max-width: 959.99px)')) {
-                this.resolveLayout(false);
-            } else {
-                this.resolveLayout(true);
-            }
-        });
+        this._breakpointSubscription = this._breakpoint.observe([AbstractNavigationDoubleDrawerComponent.SMALL_SCREEN_QUERY]).subscribe(state =>this.resolveLayout(!state.matches));
 
         this.activeParentSub = combineLatest([
             this._router.events.pipe(filter(event => event instanceof NavigationEnd), startWith(null)),
@@ -324,6 +325,28 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
         this._navigationService.onItemClick(item);
     }
 
+    /**
+     * The rail and the drawer open over the page (small screens): they are closed after a view is opened from them.
+     */
+    public get isOverlayMenu(): boolean {
+        return this._configRightMenu.mode === 'over';
+    }
+
+    /**
+     * Closes the rail and the drawer when they are opened over the page (small screens), e.g. after a view is opened.
+     */
+    public closeOverlayMenu(): void {
+        if (!this.isOverlayMenu) {
+            return;
+        }
+        if (this._configRightMenu.opened) {
+            this.toggleRightMenu();
+        }
+        if (this._configLeftMenu.opened) {
+            this.toggleLeftMenu();
+        }
+    }
+
     public loadMoreItems() {
         this._navigationService.loadMoreItems();
     }
@@ -423,6 +446,17 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
         return this.leftItems?.find(item => this.isItemAndNodeEqual(item, this.currentNode))?.id;
     }
 
+    /**
+     * Drop of a right side item in edit mode: moves it and persists the new order of the parent's children.
+     */
+    public onRightItemDrop(event: CdkDragDrop<Array<NavigationItem>>): void {
+        this._navigationService.moveRightItem(event.previousIndex, event.currentIndex).subscribe({
+            error: () => this._snackBarService.openErrorSnackBar(
+                this._translateService.instant('dynamicNavigation.snackbar.failedItemOrder')
+            )
+        });
+    }
+
     public setMenuEditMode(newVal: boolean): void {
         this.editModeEnabled = newVal;
     }
@@ -441,7 +475,7 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
     }
 
     public createMenuItem(additionalParams?: {[k: string]: string}) {
-        const baseParams = { "dest_uri_path": this.currentNode.uriPath };
+        const baseParams = { dest_uri_path: this.currentNode.uriPath };
         let mergedParams: {[k: string]: string} = !!additionalParams ? {...baseParams, ...additionalParams} : baseParams;
         this._processService.getNet('menu_item').pipe(
             switchMap(net => {

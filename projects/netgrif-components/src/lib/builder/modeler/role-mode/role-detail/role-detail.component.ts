@@ -1,4 +1,4 @@
-import {Component, OnDestroy} from '@angular/core';
+import {Component, OnDestroy, ChangeDetectionStrategy} from '@angular/core';
 import {FormControl, ValidatorFn, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {Role} from '@netgrif/petriflow';
@@ -16,6 +16,8 @@ import {TranslateService} from "@ngx-translate/core";
     selector: 'nc-builder-role-detail',
     templateUrl: './role-detail.component.html',
     styleUrl: './role-detail.component.scss',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false,
 })
 export class RoleDetailComponent implements OnDestroy {
 

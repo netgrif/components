@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Inject, Input, OnDestroy, Optional, Output} from '@angular/core';
+import {Component, EventEmitter, Inject, Input, OnDestroy, Optional, Output, ChangeDetectionStrategy} from '@angular/core';
 import {DatafieldGridLayoutElement} from '../model/datafield-grid-layout-element';
 import {FieldConverterService} from '../services/field-converter.service';
 import {TaskContentService} from '../services/task-content.service';
@@ -34,11 +34,14 @@ import {Component as DataRefComponent} from '../../data-fields/models/component'
 
 @Component({
     selector: 'ncc-abstract-task-content',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractTaskContentComponent implements OnDestroy {
     readonly DEFAULT_LAYOUT_TYPE = DataGroupLayoutType.LEGACY;
-    readonly DEFAULT_FIELD_ALIGNMENT = FieldAlignment.CENTER;
+    /** the fields of a row are aligned to the top (their outlines), a task or a field can set another alignment */
+    readonly DEFAULT_FIELD_ALIGNMENT = FieldAlignment.TOP;
     readonly DEFAULT_ASYNC_RENDERING_CONFIGURATION: AsyncRenderingConfiguration = {
         batchSize: 4,
         batchDelay: 200,

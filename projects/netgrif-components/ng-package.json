@@ -3,8 +3,6 @@
     "dest": "../../dist/netgrif-components",
     "assets": [
         "./src/assets",
-        "**/*theme.scss",
-        "./nae-typography.scss",
         {
             "glob": "**/*",
             "input": "node_modules/monaco-editor/min",
@@ -19,6 +17,11 @@
             "glob": "**/*",
             "input": "./src/assets/fonts",
             "output": "assets/fonts"
+        },
+        {
+            "glob": "**/*.scss",
+            "input": "./theming",
+            "output": "theming"
         }
     ],
     "lib": {

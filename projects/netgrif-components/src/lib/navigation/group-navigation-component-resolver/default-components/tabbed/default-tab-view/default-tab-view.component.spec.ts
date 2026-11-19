@@ -21,7 +21,6 @@ import {
     ViewService,
     StringCollectionField
 } from '@netgrif/components-core';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterTestingModule} from "@angular/router/testing";
 
 describe('DefaultTabViewComponent', () => {
@@ -35,7 +34,6 @@ describe('DefaultTabViewComponent', () => {
                 NavigationComponentModule,
                 TestMockDependenciesModule,
                 RouterTestingModule.withRoutes([]),
-                NoopAnimationsModule,
                 TranslateLibModule,
                 AuthenticationModule
             ],

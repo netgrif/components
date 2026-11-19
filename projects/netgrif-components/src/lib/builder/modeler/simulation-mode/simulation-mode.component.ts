@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, HostListener, OnDestroy, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, HostListener, OnDestroy, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {PetriflowCanvasService} from '@netgrif/petriflow.svg';
 import {ModelerUtils} from '../modeler-utils';
 import {ModelService} from '../services/model/model.service';
@@ -7,7 +7,9 @@ import {SimulationModeService} from './simulation-mode.service';
 @Component({
     selector: 'nc-builder-simulation-mode',
     templateUrl: './simulation-mode.component.html',
-    styleUrls: ['./simulation-mode.component.scss']
+    styleUrls: ['./simulation-mode.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class SimulationModeComponent implements AfterViewInit, OnDestroy {
     public static readonly URL = 'simulation';
@@ -33,6 +35,6 @@ export class SimulationModeComponent implements AfterViewInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        this.simulationService.activeTool.unbind();
+        this.simulationService.activeTool?.unbind();
     }
 }

@@ -1,5 +1,7 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild, ChangeDetectionStrategy, OnDestroy} from '@angular/core';
 import {FormControl} from '@angular/forms';
+import {darkColorScheme$, monacoTheme} from '../../../../utils/color-scheme';
+import {Subscription as ColorSchemeSubscription} from 'rxjs';
 import {MatButton} from '@angular/material/button';
 import {MatMenuTrigger} from '@angular/material/menu';
 import {MatSidenav} from '@angular/material/sidenav';
@@ -14,9 +16,13 @@ import {TranslateService} from "@ngx-translate/core";
 @Component({
     selector: 'nc-builder-function-editor',
     templateUrl: './function-editor.component.html',
-    styleUrls: ['./function-editor.component.scss']
+    styleUrls: ['./function-editor.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
-export class FunctionEditorComponent implements OnInit {
+export class FunctionEditorComponent implements OnInit, OnDestroy {
+    /** the Monaco editor follows the light / dark mode of the application */
+    private _colorSchemeSub: ColorSchemeSubscription;
 
     @Output() public actionChanged: EventEmitter<string>;
     @Output() public drawerOpened: EventEmitter<boolean>;
@@ -52,8 +58,10 @@ export class FunctionEditorComponent implements OnInit {
     // options: https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.ieditoroptions.html
     editorOptions = {
         language: 'petriflow',
+        theme: monacoTheme(),
         scrollBeyondLastLine: false,
         automaticLayout: true,
+        fixedOverflowWidgets: true,
         wordWrap: 'off',
         colorDecorators: true
     };
@@ -69,6 +77,8 @@ export class FunctionEditorComponent implements OnInit {
     }
 
     onInit(editorObject) {
+        this._colorSchemeSub?.unsubscribe();
+        this._colorSchemeSub = darkColorScheme$().subscribe(dark => (window as any).monaco?.editor?.setTheme(monacoTheme(dark)));
         this.editor = editorObject;
         this.editor.onDidChangeModelContent(e => {
             this.saveAction(this.editor.getModel().getLinesContent().join('\n'));
@@ -186,11 +196,6 @@ export class FunctionEditorComponent implements OnInit {
         });
     }
 
-    setHeightOnClose(index: number, action: any): void {
-        const element = document.getElementById(action.event + '_' + action.phase + '_' + index) as HTMLElement;
-        element.style.height = 'auto';
-    }
-
     openReference() {
         this.trigger.openMenu();
         this.trigger.updatePosition();
@@ -200,13 +205,12 @@ export class FunctionEditorComponent implements OnInit {
         this.referencesOpened = false;
     }
 
-    closeDrawer() {
-        this.drawer.close();
-        this.drawerOpened.emit(this.drawer.opened);
-    }
-
     openDrawer() {
         this.drawer.toggle();
         this.drawerOpened.emit(this.drawer.opened);
+    }
+
+    ngOnDestroy(): void {
+        this._colorSchemeSub?.unsubscribe();
     }
 }

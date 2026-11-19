@@ -1,21 +1,15 @@
-<div fxLayout="column" *ngFor="let role of model.getRoles(); let i = index">
-<!--    @defer (on viewport) {-->
-        <div>
-            <h3 class="margin-none">{{role.title.value}} [{{role.id}}]</h3>
-            <nc-builder-i18n-field [field]="role.title" [name]="'builder.modeler.i18n-mode.title' | translate" [translation]="translation"></nc-builder-i18n-field>
-            <div *ngIf="role.getEvents?.length > 0">
-                <h4>{{ 'builder.modeler.i18n-mode.events' | translate }}:</h4>
-                <div *ngFor="let event of role.getEvents()">
-                    <nc-builder-i18n-field [field]="event.title" [name]="'builder.modeler.i18n-mode.title' | translate" class="events" [translation]="translation"></nc-builder-i18n-field>
-                    <nc-builder-i18n-field [field]="event.message" [name]="'builder.modeler.i18n-mode.message' | translate" class="events" [translation]="translation"></nc-builder-i18n-field>
-                </div>
-            </div>
-            <mat-divider *ngIf="notLast(i)"></mat-divider>
-        </div>
-<!--    } @placeholder {-->
-<!--        <div>-->
-<!--            <h3 class="margin-none">{{role.title.value}} [{{role.id}}]</h3>-->
-<!--            <mat-spinner></mat-spinner>-->
-<!--        </div>-->
-<!--    }-->
-</div>
+@for (role of model.getRoles(); track role) {
+<section class="item">
+    <h3 class="item-title">{{ role.title.value }}<span class="item-id">{{ role.id }}</span></h3>
+    <nc-builder-i18n-field [field]="role.title" [name]="'builder.modeler.i18n-mode.title' | translate" [translation]="translation"></nc-builder-i18n-field>
+    @if (role.getEvents()?.length > 0) {
+    <h4 class="subsection-title">{{ "builder.modeler.i18n-mode.events" | translate }}</h4>
+    @for (event of role.getEvents(); track event) {
+    <div class="nested">
+        <nc-builder-i18n-field [field]="event.title" [name]="'builder.modeler.i18n-mode.title' | translate" [translation]="translation"></nc-builder-i18n-field>
+        <nc-builder-i18n-field [field]="event.message" [name]="'builder.modeler.i18n-mode.message' | translate" [translation]="translation"></nc-builder-i18n-field>
+    </div>
+    }
+    }
+</section>
+}

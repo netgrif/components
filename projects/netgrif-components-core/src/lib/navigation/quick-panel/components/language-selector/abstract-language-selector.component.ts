@@ -1,11 +1,13 @@
-import {Component} from '@angular/core';
+import {Component, ChangeDetectionStrategy} from '@angular/core';
 import {LanguageService} from '../../../../translate/language.service';
 import {LanguageIconsService} from '../../../../data-fields/i18n-field/language-icons.service';
 import {SafeHtml} from '@angular/platform-browser';
 
 @Component({
     selector: 'ncc-abstract-language-selector',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractLanguageSelectorComponent {
 

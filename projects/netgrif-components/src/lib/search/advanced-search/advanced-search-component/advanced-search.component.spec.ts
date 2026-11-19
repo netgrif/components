@@ -10,9 +10,9 @@ import {
     TestConfigurationService, TestNoAllowedNetsFactory
 } from '@netgrif/components-core';
 import {SearchComponentModule} from '../../search.module';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {RouterTestingModule} from "@angular/router/testing";
+import {provideHttpClientTesting} from '@angular/common/http/testing';
+import {RouterTestingModule} from '@angular/router/testing';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('AdvancedSearchComponent', () => {
     let component: AdvancedSearchComponent;
@@ -23,8 +23,6 @@ describe('AdvancedSearchComponent', () => {
             imports: [
                 MaterialModule,
                 SearchComponentModule,
-                NoopAnimationsModule,
-                HttpClientTestingModule,
                 RouterTestingModule.withRoutes([])
             ],
             providers: [
@@ -37,6 +35,8 @@ describe('AdvancedSearchComponent', () => {
                 {provide: NAE_SEARCH_CATEGORIES, useValue: []},
                 CategoryFactory,
                 {provide: AllowedNetsService, useFactory: TestNoAllowedNetsFactory, deps: [AllowedNetsServiceFactory]},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting(),
             ]
         })
             .compileComponents();

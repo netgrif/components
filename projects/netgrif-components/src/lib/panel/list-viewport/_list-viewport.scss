@@ -1,0 +1,53 @@
+@use '../../../../theming/scrollbar' as scrollbar;
+
+@mixin styles {
+    :host {
+        display: flex;
+        flex-direction: column;
+        min-height: 0;
+    }
+
+    .list-viewport {
+        flex: 1 1 auto;
+        min-height: 0;
+        overflow: auto;
+        @include scrollbar.list-scrollbar(var(--nc-list-header-height, 0px));
+    }
+
+    .list-content {
+        box-sizing: border-box;
+        width: 100%;
+        min-width: min-content;
+    }
+
+    mat-accordion {
+        display: block;
+    }
+
+    .list-header {
+        position: sticky;
+        top: 0;
+        z-index: 2;
+
+        &:empty {
+            display: none;
+        }
+    }
+
+    :host ::ng-deep .list-header > * {
+        display: block;
+        background: var(--mat-sys-surface);
+    }
+
+    .list-content > .nae-empty-state {
+        position: sticky;
+        left: 0;
+        box-sizing: border-box;
+        width: var(--nc-list-viewport-width, 100%);
+    }
+
+    mat-paginator {
+        flex: 0 0 auto;
+        border-top: 1px solid var(--mat-sys-outline-variant);
+    }
+}

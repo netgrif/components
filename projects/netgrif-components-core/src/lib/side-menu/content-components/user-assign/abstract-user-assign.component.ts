@@ -3,17 +3,20 @@ import {FormControl} from '@angular/forms';
 import {SideMenuControl} from '../../models/side-menu-control';
 import {UserListInjectedData} from './model/user-list-injected-data';
 import {ProcessRole} from '../../../resources/interface/process-role';
-import {Component} from '@angular/core';
+import {Component, ChangeDetectionStrategy} from '@angular/core';
 
 /**
  * Is the main - parent component of the entire user assignment in the side menu.
  *
  * Holds logic link of the [UserAssignListComponent]{@link AbstractUserAssignListComponent}
  * along with searching, selecting, and then assigning to the user field.
+ * @deprecated the side menu is deprecated, the library opens dialogs instead (`DialogComponentsModule`)
  */
 @Component({
     selector: 'ncc-abstract-user-assign',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractUserAssignComponent {
     /**

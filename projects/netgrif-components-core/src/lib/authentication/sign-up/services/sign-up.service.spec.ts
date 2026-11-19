@@ -2,10 +2,10 @@ import {inject, TestBed} from '@angular/core/testing';
 import {SignUpService} from './sign-up.service';
 import {ConfigurationService} from '../../../configuration/configuration.service';
 import {TestConfigurationService} from '../../../utility/tests/test-config';
-import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {HttpTestingController, provideHttpClientTesting} from '@angular/common/http/testing';
 import {RouterTestingModule} from '@angular/router/testing';
 import {NetgrifApplicationEngine} from '../../../../commons/schema';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('SignUpService', () => {
     let service: SignUpService;
@@ -13,10 +13,12 @@ describe('SignUpService', () => {
     describe('standard endpoints configuration', () => {
         beforeEach(() => {
             TestBed.configureTestingModule({
-                imports: [HttpClientTestingModule, NoopAnimationsModule, RouterTestingModule.withRoutes([])],
+                imports: [ RouterTestingModule.withRoutes([])],
                 providers: [
                     SignUpService,
-                    {provide: ConfigurationService, useClass: TestConfigurationService}
+                    {provide: ConfigurationService, useClass: TestConfigurationService},
+                    provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                    provideHttpClientTesting()
                 ]
             });
             service = TestBed.inject(SignUpService);
@@ -83,10 +85,12 @@ describe('SignUpService', () => {
     describe('no endpoints configuration', () => {
         beforeEach(() => {
             TestBed.configureTestingModule({
-                imports: [HttpClientTestingModule, NoopAnimationsModule, RouterTestingModule.withRoutes([])],
+                imports: [ RouterTestingModule.withRoutes([])],
                 providers: [
                     SignUpService,
-                    {provide: ConfigurationService, useClass: MissingEndpointsConfigurationService}
+                    {provide: ConfigurationService, useClass: MissingEndpointsConfigurationService},
+                    provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                    provideHttpClientTesting()
                 ]
             });
             service = TestBed.inject(SignUpService);

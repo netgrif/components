@@ -1,4 +1,4 @@
-import { Component, Inject, Optional } from '@angular/core';
+import { Component, Inject, Optional, ChangeDetectionStrategy } from '@angular/core';
 import {
     AbstractSingleTaskComponent,
     InjectedTabData,
@@ -10,7 +10,9 @@ import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'nc-single-task',
   templateUrl: './single-task.component.html',
-  styleUrls: ['./single-task.component.scss']
+  styleUrls: ['./single-task.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class SingleTaskComponent extends AbstractSingleTaskComponent {
 

@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {I18nTranslations} from '@netgrif/petriflow';
 import {HistoryService} from '../../services/history/history.service';
 import {ModelService} from '../../services/model/model.service';
@@ -11,7 +11,9 @@ import {TranslateService} from "@ngx-translate/core";
 @Component({
     selector: 'nc-builder-translations',
     templateUrl: './translations.component.html',
-    styleUrls: ['./translations.component.scss']
+    styleUrls: ['./translations.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class TranslationsComponent implements OnInit, OnDestroy {
 

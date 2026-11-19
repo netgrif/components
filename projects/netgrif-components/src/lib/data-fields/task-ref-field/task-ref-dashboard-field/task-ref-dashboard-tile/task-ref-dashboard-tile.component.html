@@ -1,11 +1,15 @@
-<ng-template [ngIf]="!tile.isEmpty" [ngIfElse]="newDashboardTile">
-    <ng-template [cdkPortalOutlet]="portal"></ng-template>
-</ng-template>
-
-<ng-template #newDashboardTile>
-    <div class="fill-available-space" [class.new-dashboard-tile]="!fc.disabled" fxLayout="row" fxLayoutAlign="center center">
-        <button mat-icon-button	color="primary" *ngIf="!fc.disabled" (click)="createNewDashboardTile()">
-            <mat-icon>add</mat-icon>
-        </button>
-    </div>
-</ng-template>
+@if (!tile.isEmpty) {
+<ng-template [cdkPortalOutlet]="portal"></ng-template>
+} @else {
+<div
+    class="fill-available-space"
+    fxLayout="row"
+    fxLayoutAlign="center center"
+>
+    @if (!fc.disabled) {
+    <button mat-icon-button (click)="createNewDashboardTile()">
+        <mat-icon>add</mat-icon>
+    </button>
+    }
+</div>
+}

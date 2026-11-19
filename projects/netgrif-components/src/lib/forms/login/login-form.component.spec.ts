@@ -2,8 +2,7 @@ import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {LoginFormComponent} from './login-form.component';
 import {NO_ERRORS_SCHEMA} from '@angular/core';
 import {FlexLayoutModule} from '@ngbracket/ngx-layout';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {
     AuthenticationMethodService,
     ConfigurationService,
@@ -12,6 +11,7 @@ import {
     TestConfigurationService,
     TranslateLibModule,
 } from '@netgrif/components-core';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('LoginFormComponent', () => {
     let component: LoginFormComponent;
@@ -19,19 +19,19 @@ describe('LoginFormComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
+            declarations: [LoginFormComponent],
+            schemas: [NO_ERRORS_SCHEMA],
             imports: [
                 MaterialModule,
                 FlexLayoutModule,
-                BrowserAnimationsModule,
-                HttpClientTestingModule,
                 TranslateLibModule
             ],
-            declarations: [LoginFormComponent],
             providers: [
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
-                {provide: ConfigurationService, useClass: TestConfigurationService}
-            ],
-            schemas: [NO_ERRORS_SCHEMA]
+                {provide: ConfigurationService, useClass: TestConfigurationService},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
+            ]
         })
             .compileComponents();
     }));

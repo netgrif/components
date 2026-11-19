@@ -1,13 +1,22 @@
-<div class="task-tab-background full-height">
-    <div fxLayout="column" fxLayoutAlign="start stretch" class="content-margin full-height" >
-        <nc-single-task [task$]="task$" [loading$]="loading$" [selectedHeaders$]="selectedHeaders$"
-                        [actionRowJustifyContent]="actionRowJustifyContent"  [hideActionRow]="hideActionRow" [hidePanelHeader]="hidePanelHeader"
-                        [showPageHeader]="showPageHeader" [showPageFooter]="showPageFooter" [actionButtonTemplates]='[finishButton]' fxFlex></nc-single-task>
-    </div>
+<div class="view">
+    <nc-single-task
+        class="task"
+        [task$]="task$"
+        [loading$]="loading$"
+        [selectedHeaders$]="selectedHeaders$"
+        [actionRowJustifyContent]="actionRowJustifyContent"
+        [hideActionRow]="hideActionRow"
+        [hidePanelHeader]="hidePanelHeader"
+        [showPageHeader]="showPageHeader"
+        [showPageFooter]="showPageFooter"
+        [actionButtonTemplates]="[finishButton]"
+    ></nc-single-task>
 </div>
 
 <ng-template #finishButton let-finish="finish">
-    <button *ngIf="showFinishButton" (click)="finish()" mat-stroked-button color="primary" >
-        {{ getFinishTitle() | translate | uppercase }}</button>
+    @if (showFinishButton) {
+    <button (click)="finish()" mat-flat-button>
+        {{ getFinishTitle() | translate }}
+    </button>
+    }
 </ng-template>
-

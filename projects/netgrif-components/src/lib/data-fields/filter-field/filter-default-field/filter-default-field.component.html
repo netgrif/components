@@ -1,3 +1,6 @@
-<ng-template [ngIf]="initialized">
-    <ng-template [cdkPortalOutlet]="portal" (attached)="onContentAttached($event)"></ng-template>
-</ng-template>
+@if (initialized) {
+<ng-template
+    [cdkPortalOutlet]="portal"
+    (attached)="onContentAttached($event)"
+></ng-template>
+}

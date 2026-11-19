@@ -36,6 +36,8 @@ jobs:
                     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
             -   name: Build examples
                 run: npm run example:build
+            -   name: Build frontend
+                run: npm run frontend:build
             -   uses: EndBug/add-and-commit@v9
                 with:
                     add: docs

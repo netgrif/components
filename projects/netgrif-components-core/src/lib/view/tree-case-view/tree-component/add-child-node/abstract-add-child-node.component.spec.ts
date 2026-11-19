@@ -1,7 +1,6 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {Component} from '@angular/core';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
+import {Component, ChangeDetectionStrategy} from '@angular/core';
 import {CaseTreeNode} from '../model/case-tree-node';
 import {AbstractAddChildNodeComponent} from './abstract-add-child-node.component';
 import {CaseTreeService} from '../case-tree.service';
@@ -10,6 +9,7 @@ import {TranslateLibModule} from '../../../../translate/translate-lib.module';
 import {TreeCaseViewService} from '../../tree-case-view.service';
 import {ConfigurationService} from '../../../../configuration/configuration.service';
 import {TestConfigurationService} from '../../../../utility/tests/test-config';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('AbstractAddChildNodeComponent', () => {
     let component: TestComponent;
@@ -17,20 +17,17 @@ describe('AbstractAddChildNodeComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
+            declarations: [TestComponent, TestWrapperComponent],
             imports: [
                 MaterialModule,
-                NoopAnimationsModule,
-                HttpClientTestingModule,
                 TranslateLibModule
             ],
             providers: [
                 CaseTreeService,
                 TreeCaseViewService,
-                {provide: ConfigurationService, useClass: TestConfigurationService}
-            ],
-            declarations: [
-                TestComponent,
-                TestWrapperComponent
+                {provide: ConfigurationService, useClass: TestConfigurationService},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
             ]
         }).compileComponents();
     }));
@@ -52,7 +49,9 @@ describe('AbstractAddChildNodeComponent', () => {
 
 @Component({
     selector: 'ncc-test-add-child',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestComponent extends AbstractAddChildNodeComponent {
     constructor(protected _treeService: CaseTreeService) {
@@ -62,7 +61,9 @@ class TestComponent extends AbstractAddChildNodeComponent {
 
 @Component({
     selector: 'ncc-test-wrapper',
-    template: '<ncc-test-add-child [node]="node"></ncc-test-add-child>'
+    template: '<ncc-test-add-child [node]="node"></ncc-test-add-child>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestWrapperComponent {
     node = new CaseTreeNode(undefined, undefined);

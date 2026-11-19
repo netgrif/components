@@ -1,0 +1,18 @@
+<div class="view">
+    <div class="search-row">
+        <nc-search class="search"></nc-search>
+        <nc-create-case-button [newCaseCreationConfig]="newCaseCreationConfig"
+                               (caseCreatedEvent)="openNewProcess($event)"></nc-create-case-button>
+    </div>
+    <nc-case-list-paginator class="list"
+                            [selectedHeaders$]="selectedHeaders$"
+                            [showDeleteMenu]="false"
+                            [width]="getWidth()"
+                            [responsiveBody]="true"
+                            [textEllipsis]="true"
+                            [redirectEnabled]="true"
+                            (caseClick)="handleCaseClick($event)">
+        <nc-header #header ncListHeader [type]="headerType" [maxHeaderColumns]="4" [responsiveHeaders]="true"
+                   [style.width]="getWidth()"></nc-header>
+    </nc-case-list-paginator>
+</div>

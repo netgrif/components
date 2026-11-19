@@ -1,17 +1,12 @@
-.task-panel-icon {
-    margin-right: 10px;
+@use 'workflow-panel-header';
+
+.workflow-panel-fields {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, max(280px, calc(50% - 8px))), 1fr));
+    column-gap: 16px;
+    padding-top: 8px;
 }
 
-.workflow-panel-footer {
-    border-top: 1px solid rgba(0, 0, 0, .03);
-    padding: 5px 24px;
+.workflow-panel-fields > * {
+    min-width: 0;
 }
-
-.workflow-panel-body {
-    padding: 10px 24px;
-}
-
-.workflow-panel-icon {
-    margin-right: 8px;
-}
-

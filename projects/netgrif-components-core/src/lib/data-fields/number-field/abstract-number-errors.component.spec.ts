@@ -1,13 +1,11 @@
-import {Component, CUSTOM_ELEMENTS_SCHEMA, Inject, OnDestroy, Optional} from '@angular/core';
+import {Component, CUSTOM_ELEMENTS_SCHEMA, Inject, OnDestroy, Optional, ChangeDetectionStrategy} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {AbstractNumberErrorsComponent} from './abstract-number-errors.component';
 import {NumberField} from './models/number-field';
 import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 import {MaterialModule} from '../../material/material.module';
-import {AngularResizeEventModule} from 'angular-resize-event';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
 import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
 import {AuthenticationService} from '../../authentication/services/authentication/authentication.service';
@@ -20,6 +18,7 @@ import {LanguageService} from '../../translate/language.service';
 import {FormControl} from '@angular/forms';
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../models/data-field-portal-data-injection-token";
 import {WrappedBoolean} from "../data-field-template/models/wrapped-boolean";
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('AbstractNumberErrorsComponent', () => {
     let component: TestNumErrorComponent;
@@ -27,12 +26,11 @@ describe('AbstractNumberErrorsComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
+            declarations: [TestNumErrorComponent, TestWrapperComponent],
+            schemas: [CUSTOM_ELEMENTS_SCHEMA],
             imports: [
                 MaterialModule,
-                AngularResizeEventModule,
-                TranslateLibModule,
-                HttpClientTestingModule,
-                NoopAnimationsModule
+                TranslateLibModule
             ],
             providers: [
                 {provide: AuthenticationMethodService, useCLass: MockAuthenticationMethodService},
@@ -58,13 +56,10 @@ describe('AbstractNumberErrorsComponent', () => {
                         formControlRef: new FormControl(),
                         showLargeLayout: new WrappedBoolean()
                     } as DataFieldPortalData<NumberField>
-                }
-            ],
-            declarations: [
-                TestNumErrorComponent,
-                TestWrapperComponent
-            ],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA]
+                },
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
+            ]
         })
             .compileComponents();
         fixture = TestBed.createComponent(TestWrapperComponent);
@@ -91,7 +86,9 @@ describe('AbstractNumberErrorsComponent', () => {
 
 @Component({
     selector: 'ncc-test-num-err',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestNumErrorComponent extends AbstractNumberErrorsComponent {
     constructor(translate: TranslateService, @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<NumberField>) {
@@ -101,7 +98,9 @@ class TestNumErrorComponent extends AbstractNumberErrorsComponent {
 
 @Component({
     selector: 'ncc-test-wrapper',
-    template: '<ncc-test-num-err></ncc-test-num-err>'
+    template: '<ncc-test-num-err></ncc-test-num-err>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestWrapperComponent  {
 

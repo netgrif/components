@@ -1,0 +1,49 @@
+@use '@angular/material' as mat;
+
+@mixin styles {
+    mat-selection-list {
+        padding: 0;
+        @include mat.list-overrides((
+            list-item-disabled-state-layer-opacity: 0,
+        ));
+    }
+
+    mat-list-option.mat-mdc-list-option.mdc-list-item {
+        --nc-option-line-height: var(--mat-sys-body-large-line-height, 24px);
+        height: auto;
+        min-height: 48px;
+        padding-block: 12px;
+        align-items: flex-start;
+
+        ::ng-deep .mdc-list-item__primary-text {
+            white-space: normal;
+            overflow-wrap: anywhere;
+        }
+
+        ::ng-deep .mdc-list-item__content {
+            align-self: flex-start;
+        }
+
+        ::ng-deep .mdc-list-item__start {
+            display: flex;
+            align-items: center;
+            align-self: flex-start;
+            height: var(--nc-option-line-height);
+            margin-block: 0;
+            overflow: visible;
+        }
+    }
+
+    mat-list-option + mat-list-option {
+        margin-top: 2px;
+    }
+
+    mat-list-option[aria-selected='true'] {
+        border-radius: var(--mat-sys-corner-small);
+        background: var(--mat-sys-secondary-container);
+    }
+
+    mat-list-option[aria-selected='true'][aria-disabled='true'] {
+        background: color-mix(in srgb, var(--mat-sys-on-surface) 8%, transparent);
+    }
+}

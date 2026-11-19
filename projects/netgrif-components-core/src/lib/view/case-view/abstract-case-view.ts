@@ -9,15 +9,18 @@ import {
     NAE_NEW_CASE_CREATION_CONFIGURATION_DATA,
     NewCaseCreationConfigurationData
 } from '../../side-menu/content-components/new-case/model/new-case-injection-data';
-import {Component, Inject, Optional, OnDestroy} from '@angular/core';
+import {Component, Inject, Optional, OnDestroy, ChangeDetectionStrategy} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'ncc-abstract-case-view',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractCaseViewComponent extends AbstractViewWithHeadersComponent implements OnDestroy{
 
+    /** @deprecated the width of the case list is no longer computed ({@link getWidth} is always 100%) */
     public readonly MINIMAL_OFFSET = 120;
     public readonly headerType: HeaderType = HeaderType.CASE;
     public cases$: Observable<Array<Case>>;
@@ -55,9 +58,12 @@ export abstract class AbstractCaseViewComponent extends AbstractViewWithHeadersC
         return (this._caseViewService.hasAuthority(this.authorityToCreate) && this.canCreate);
     }
 
+    /**
+     * Width of the header and the rows. Always the width of the view: in table mode the columns have a minimal width
+     * (`OverflowService.MIN_COLUMN_WIDTH`) and the list grows (scrolls horizontally) only when they do not fit.
+     */
     public getWidth() {
-        return (this._overflowService && this._overflowService.overflowMode && this._overflowService.columnCount) ?
-            `${this._overflowService.columnCount * this._overflowService.columnWidth + this.MINIMAL_OFFSET}px` : '100%';
+        return '100%';
     }
 
     public getOverflowStatus() {

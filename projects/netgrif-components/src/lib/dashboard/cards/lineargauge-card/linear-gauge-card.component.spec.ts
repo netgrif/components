@@ -4,7 +4,7 @@ import {LinearGaugeCardComponent} from './linear-gauge-card.component';
 import {CommonModule} from '@angular/common';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {NgxChartsModule} from '@swimlane/ngx-charts';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {} from '@angular/common/http/testing';
 
 // describe('LineargaugeCardComponent', () => {
 //     let component: LinearGaugeCardComponent;

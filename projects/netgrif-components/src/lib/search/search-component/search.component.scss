@@ -1,59 +1,48 @@
-.button-margin {
-    margin-left: 8px;
-    margin-right: 8px;
+@use '@angular/material' as mat;
+
+:host {
+    display: block;
+    --nc-filter-row-height: calc(40px + 2px * var(--nae-density-scale, 0));
 }
 
-.disable-error-margin .mat-mdc-form-field-wrapper {
-    margin: 0 !important;
-    padding-bottom: 0;
+nc-fulltext-search {
+    display: block;
+    max-width: 720px;
 }
 
-.search-buttons-margin {
-    margin-left: 8px;
+.filter-bar {
+    box-sizing: border-box;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    min-height: var(--mat-form-field-container-height, 56px);
+    padding: 8px 4px 8px 16px;
+    border-radius: 28px;
+    background: var(--mat-sys-surface-container-high);
+    color: var(--mat-sys-on-surface-variant);
+
+    &.disabled {
+        opacity: 0.38;
+        pointer-events: none;
+    }
 }
 
-.search-icon {
-    padding-right: 8px;
-    font-size: xx-large;
+.filter-bar-icon {
+    flex: 0 0 auto;
+    margin-top: calc((var(--nc-filter-row-height) - 24px) / 2);
 }
 
-.search-input {
-    width: 100%;
+.filter-bar-conditions {
+    flex: 1 1 auto;
+    min-width: 0;
 }
 
-.search-input-lg {
-    width: 60%;
+.filter-bar-actions {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+    height: var(--nc-filter-row-height);
+    @include mat.icon-button-overrides((
+        state-layer-size: var(--nc-filter-row-height),
+    ));
 }
-
-.search-input-md {
-    width: 80%;
-}
-
-.search-input-sm {
-    width: 100%;
-}
-
-.search-buttons-padding {
-    height: 43px !important;
-    min-width: 43px;
-    padding: 0;
-}
-
-.fix-icon-button {
-    height: 45px !important;
-    width: 45px !important;
-    padding: 10.5px !important;
-}
-
-.prefix-icon {
-    color: #64748B !important;
-}
-
-.padding-top-search {
-    padding-top: 2px;
-}
-
-.fix-filter-button {
-    margin-top: 1px;
-}
-

@@ -1,0 +1,11 @@
+<div class="view">
+    <!-- header and rows scroll together, the paginator stays below them -->
+    <nc-task-list-pagination class="list"
+                             [tasks$]="tasks$"
+                             [loading$]="loading$"
+                             [selectedHeaders$]="selectedHeaders$"
+                             [allowMultiOpen]="false"
+                             [textEllipsis]="true">
+        <nc-header #header ncListHeader type="task" [responsiveHeaders]="true"></nc-header>
+    </nc-task-list-pagination>
+</div>

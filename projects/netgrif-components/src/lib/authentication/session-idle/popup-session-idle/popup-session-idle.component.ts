@@ -1,11 +1,13 @@
-import {Component} from '@angular/core';
+import {Component, ChangeDetectionStrategy} from '@angular/core';
 import {MatDialogRef} from "@angular/material/dialog";
 import {SessionIdleTimerService} from '@netgrif/components-core';
 
 @Component({
     selector: 'nc-popup-session-idle',
     templateUrl: './popup-session-idle.component.html',
-    styleUrls: ['./popup-session-idle.component.scss']
+    styleUrls: ['./popup-session-idle.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class PopupSessionIdleComponent {
 

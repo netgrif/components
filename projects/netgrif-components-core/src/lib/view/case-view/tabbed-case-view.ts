@@ -1,5 +1,5 @@
 import {AbstractCaseViewComponent} from './abstract-case-view';
-import {Component, Inject, Optional, Type} from '@angular/core';
+import {Component, Inject, Optional, Type, ChangeDetectionStrategy} from '@angular/core';
 import {NAE_TAB_DATA} from '../../tabs/tab-data-injection-token/tab-data-injection-token';
 import {InjectedTabData} from '../../tabs/interfaces';
 import {Case} from '../../resources/interface/case';
@@ -23,7 +23,9 @@ export interface InjectedTabbedCaseViewData extends InjectedTabData {
 
 @Component({
     selector: 'ncc-abstract-tabbed-case-view',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractTabbedCaseViewComponent extends AbstractCaseViewComponent {
 

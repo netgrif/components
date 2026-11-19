@@ -30,9 +30,11 @@ import {
     SideMenuMultiUserAssignComponentModule
 } from "../side-menu/content-components/multi-user-assign/side-menu-multi-user-assign-component.module";
 import {MatExpansionModule} from '@angular/material/expansion';
+import {ListViewportDirective} from './list-viewport/list-viewport.directive';
 
 @NgModule({
     declarations: [
+        ListViewportDirective,
         PanelComponent,
         TaskPanelComponent,
         CasePanelComponent,
@@ -69,7 +71,8 @@ import {MatExpansionModule} from '@angular/material/expansion';
         PublicWorkflowPanelComponent,
         ImmediateFilterTextComponent,
         TaskListPaginationComponent,
-        SingleTaskComponent
+        SingleTaskComponent,
+        ListViewportDirective
     ]
 })
 export class PanelComponentModule {

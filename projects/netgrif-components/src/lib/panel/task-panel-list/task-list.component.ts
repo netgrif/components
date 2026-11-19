@@ -1,11 +1,13 @@
-import {Component, Inject, Optional} from '@angular/core';
+import {Component, Inject, Optional, ChangeDetectionStrategy} from '@angular/core';
 import {AbstractTaskListComponent, InjectedTabData, LoggerService, NAE_TAB_DATA, TaskViewService, LanguageService} from '@netgrif/components-core';
 import {ActivatedRoute} from '@angular/router';
 
 @Component({
     selector: 'nc-task-list',
     templateUrl: './task-list.component.html',
-    styleUrls: ['./task-list.component.scss']
+    styleUrls: ['./task-list.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class TaskListComponent extends AbstractTaskListComponent {
     constructor(protected _taskViewService: TaskViewService,

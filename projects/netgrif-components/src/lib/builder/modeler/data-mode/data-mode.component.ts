@@ -1,5 +1,5 @@
 import {ComponentType} from '@angular/cdk/overlay';
-import {Component} from '@angular/core';
+import {Component, ChangeDetectionStrategy} from '@angular/core';
 import {DataMasterDetailService} from './data-master-detail.service';
 import {DataMasterItemComponent} from './data-master-item/data-master-item.component';
 import {BuilderModeService} from "../../services/builder-mode.service";
@@ -14,6 +14,8 @@ export interface TypeArray {
     selector: 'nc-builder-data-mode',
     templateUrl: './data-mode.component.html',
     styleUrls: ['./data-mode.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false,
 })
 export class DataModeComponent {
 

@@ -9,8 +9,6 @@ export class LanguageIconsService {
     protected _languageIcons;
 
     constructor(private _domSanitizer: DomSanitizer) {
-    /* eslint-disable */
-    /* tslint:disable */
         this._languageIcons = {
             xx: {
                 languageName: 'Default',
@@ -242,8 +240,6 @@ export class LanguageIconsService {
             }
         };
     }
-    /* tslint:enable */
-    /* eslint-enable */
 
     get languageIcons(): LanguageIcons {
         return this._languageIcons;

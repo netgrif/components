@@ -1,11 +1,13 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, ChangeDetectionStrategy} from '@angular/core';
 import {I18nTranslations, PetriNet} from '@netgrif/petriflow';
 import {ModelService} from '../../../../services/model/model.service';
 
 @Component({
     selector: 'nc-builder-model-translation',
     templateUrl: './model-translation.component.html',
-    styleUrls: ['./model-translation.component.scss']
+    styleUrls: ['./model-translation.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class ModelTranslationComponent {
 

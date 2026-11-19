@@ -1,7 +1,7 @@
 import {TestBed} from '@angular/core/testing';
 import {WorkflowHeaderService} from './workflow-header.service';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
 import {AuthenticationService} from '../../authentication/services/authentication/authentication.service';
 import {MockAuthenticationService} from '../../utility/tests/mocks/mock-authentication.service';
@@ -16,10 +16,10 @@ import {SuccessSnackBarComponent} from '../../snack-bar/components/success-snack
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatIconModule} from '@angular/material/icon';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {SnackBarModule} from '../../snack-bar/snack-bar.module';
 import {RouterTestingModule} from '@angular/router/testing';
 import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('WorkflowHeaderService', () => {
     let service: WorkflowHeaderService;
@@ -28,11 +28,9 @@ describe('WorkflowHeaderService', () => {
         TestBed.configureTestingModule({
             imports: [
                 TranslateLibModule,
-                HttpClientTestingModule,
                 MatSnackBarModule,
                 MatIconModule,
                 RouterTestingModule.withRoutes([]),
-                NoopAnimationsModule,
                 SnackBarModule
             ],
             providers: [
@@ -42,6 +40,8 @@ describe('WorkflowHeaderService', () => {
                 {provide: UserResourceService, useClass: MockUserResourceService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: ViewService, useClass: TestViewService},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting(),
             ]
         });
         service = TestBed.inject(WorkflowHeaderService);

@@ -3,9 +3,8 @@ import {TestBed} from '@angular/core/testing';
 import {MaterialModule} from "../../material/material.module";
 import {CommonModule} from "@angular/common";
 import {FlexModule} from "@ngbracket/ngx-layout";
-import {BrowserAnimationsModule, NoopAnimationsModule} from "@angular/platform-browser/animations";
 import {TranslateLibModule} from "../../translate/translate-lib.module";
-import {HttpClientTestingModule} from "@angular/common/http/testing";
+import {provideHttpClientTesting} from "@angular/common/http/testing";
 import {UserService} from "../../user/services/user.service";
 import {MockUserService} from "../../utility/tests/mocks/mock-user.service";
 import { Injectable, NO_ERRORS_SCHEMA } from '@angular/core';
@@ -16,20 +15,20 @@ import {RouterTestingModule} from "@angular/router/testing";
 import { RoleGuardService } from './role-guard.service';
 import { Access, View } from '../../../commons/schema';
 import { User } from '../../user/models/user';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('RoleGuardService', () => {
     let service: RoleGuardService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
+            declarations: [],
+            schemas: [NO_ERRORS_SCHEMA],
             imports: [
                 MaterialModule,
                 CommonModule,
                 FlexModule,
-                NoopAnimationsModule,
-                BrowserAnimationsModule,
                 TranslateLibModule,
-                HttpClientTestingModule,
                 AuthenticationModule,
                 RouterTestingModule.withRoutes([]),
             ],
@@ -37,9 +36,9 @@ describe('RoleGuardService', () => {
                 RoleGuardService,
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: UserService, useClass: CustomMockUserService},
-            ],
-            declarations: [],
-            schemas: [NO_ERRORS_SCHEMA]
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
+            ]
         });
         service = TestBed.inject(RoleGuardService);
     });

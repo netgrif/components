@@ -1,12 +1,11 @@
 import {TestBed} from '@angular/core/testing';
 import {TreeTaskContentService} from './tree-task-content.service';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {TreeCaseViewService} from '../tree-case-view.service';
 import {TaskDataService} from '../../../task/services/task-data.service';
 import {TaskRequestStateService} from '../../../task/services/task-request-state.service';
 import {TranslateModule} from '@ngx-translate/core';
 import {TranslateLibModule} from '../../../translate/translate-lib.module';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {ConfigurationService} from '../../../configuration/configuration.service';
 import {TestConfigurationService} from '../../../utility/tests/test-config';
 import {MaterialModule} from '../../../material/material.module';
@@ -26,6 +25,7 @@ import {SelectedCaseService} from '../../../task/services/selected-case.service'
 import {MockAuthenticationMethodService} from '../../../utility/tests/mocks/mock-authentication-method-service';
 import {ChangedFieldsService} from '../../../changed-fields/services/changed-fields.service';
 import {FrontActionService} from "../../../actions/services/front-action.service";
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('TreeTaskContentService', () => {
     let service: TreeTaskContentService;
@@ -33,10 +33,8 @@ describe('TreeTaskContentService', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
-                NoopAnimationsModule,
                 TranslateModule,
                 TranslateLibModule,
-                HttpClientTestingModule,
                 MaterialModule,
             ],
             providers: [
@@ -57,7 +55,9 @@ describe('TreeTaskContentService', () => {
                 SelectedCaseService,
                 {provide: TaskContentService, useClass: UnlimitedTaskContentService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
-                {provide: NAE_TASK_OPERATIONS, useClass: SubjectTaskOperations}
+                {provide: NAE_TASK_OPERATIONS, useClass: SubjectTaskOperations},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
             ]
         });
         service = TestBed.inject(TreeTaskContentService);

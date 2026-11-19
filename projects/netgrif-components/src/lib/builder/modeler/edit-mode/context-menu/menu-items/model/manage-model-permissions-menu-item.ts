@@ -15,8 +15,7 @@ export class ManageModelPermissionsMenuItem extends MenuItem {
             'people',
             () => {
                 tool.openDialog(DialogManageRolesComponent, {
-                    width: '60%',
-                    panelClass: "dialog-width-60",
+                    panelClass: 'dialog-task-responsive',
                     data: {
                         type: RoleRefType.PROCESS,
                         roles: tool.model.getRoles(),

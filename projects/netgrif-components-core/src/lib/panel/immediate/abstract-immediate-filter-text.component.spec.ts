@@ -1,5 +1,5 @@
 import {AbstractImmediateFilterTextComponent} from './abstract-immediate-filter-text.component';
-import {Component, Inject, Injector} from '@angular/core';
+import {Component, Inject, Injector, ChangeDetectionStrategy} from '@angular/core';
 import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 import {FilterType} from '../../filter/models/filter-type';
 import {ComponentType} from '@angular/cdk/portal';
@@ -7,8 +7,8 @@ import {AbstractImmediateFilterTextContentComponent} from './abstract-immediate-
 import {FilterTextConfiguration, NAE_FILTER_TEXT} from './model/filter-text-injection-token';
 import {SearchService} from '../../search/search-service/search.service';
 import {TranslateService} from '@ngx-translate/core';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('AbstractImmediateFilterTextComponent', () => {
     let component: TestImmediateFilterTextComponent;
@@ -16,10 +16,13 @@ describe('AbstractImmediateFilterTextComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
+            declarations: [TestImmediateFilterTextComponent],
             imports: [
-                NoopAnimationsModule, HttpClientTestingModule
             ],
-            declarations: [TestImmediateFilterTextComponent]
+            providers: [
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
+            ]
         }).compileComponents();
     }));
 
@@ -40,7 +43,9 @@ describe('AbstractImmediateFilterTextComponent', () => {
 
 @Component({
     selector: 'ncc-test-immediate-filter-text',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestImmediateFilterTextComponent extends AbstractImmediateFilterTextComponent {
     constructor(parenInjector: Injector) {
@@ -57,7 +62,9 @@ class TestImmediateFilterTextComponent extends AbstractImmediateFilterTextCompon
 
 @Component({
     selector: 'ncc-portal-content-component',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class PortalContentComponent extends AbstractImmediateFilterTextContentComponent {
     constructor(@Inject(NAE_FILTER_TEXT) configuration: FilterTextConfiguration,

@@ -1,10 +1,12 @@
-import {Component, Inject, Optional} from '@angular/core';
+import {Component, Inject, Optional, ChangeDetectionStrategy} from '@angular/core';
 import {
     AbstractUserListDefaultFieldComponent,
     DATA_FIELD_PORTAL_DATA,
     DataFieldPortalData,
     SnackBarService,
-    UserListField
+    UserListField,
+    userInitials,
+    UserInitialsSource
 } from "@netgrif/components-core";
 import {TranslateService} from "@ngx-translate/core";
 import {
@@ -15,7 +17,9 @@ import {MatDialog} from '@angular/material/dialog';
 @Component({
   selector: 'nc-user-list-default-field',
   templateUrl: './user-list-default-field.component.html',
-  styleUrls: ['./user-list-default-field.component.scss']
+  styleUrls: ['./user-list-default-field.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class UserListDefaultFieldComponent extends AbstractUserListDefaultFieldComponent{
 
@@ -34,4 +38,8 @@ export class UserListDefaultFieldComponent extends AbstractUserListDefaultFieldC
         this.removeAbstractUser(userId);
     }
 
+    /** initials of the user for the avatar (first letters of the name and of the surname) */
+    public initials(user: UserInitialsSource | undefined): string {
+        return userInitials(user);
+    }
 }

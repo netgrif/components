@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, ChangeDetectionStrategy} from '@angular/core';
 import {Observable} from 'rxjs';
 import {UserListItem} from '../../../../../user/services/user-list.service';
 
@@ -7,7 +7,9 @@ import {UserListItem} from '../../../../../user/services/user-list.service';
  */
 @Component({
     selector: 'ncc-abstract-user-assign-item',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractMultiUserAssignItemComponent {
     /**

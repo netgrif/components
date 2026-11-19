@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Inject, OnDestroy, Optional, Type, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, Inject, OnDestroy, Optional, Type, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {
     AbstractCaseViewComponent,
     Case,
@@ -88,6 +88,8 @@ function allowedNetsFactory(factory: AllowedNetsServiceFactory,
             deps: [NAE_NAVIGATION_ITEM_TASK_DATA]
         }
     ],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false,
 })
 export class DefaultSimpleCaseViewComponent extends AbstractCaseViewComponent implements AfterViewInit, OnDestroy {
 

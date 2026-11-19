@@ -1,10 +1,9 @@
 import {inject, TestBed} from '@angular/core/testing';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
-import {HTTP_INTERCEPTORS, HttpClient, HttpHeaders} from '@angular/common/http';
-import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
+import {HTTP_INTERCEPTORS, HttpClient, HttpHeaders, provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
+import {HttpTestingController, provideHttpClientTesting} from '@angular/common/http/testing';
 import {RouterTestingModule} from '@angular/router/testing';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {LoggerService} from '../../logger/services/logger.service';
 import {AnonymousService} from '../anonymous/anonymous.service';
 import {AnonymousAuthenticationInterceptor} from './anonymous-authentication-interceptor';
@@ -15,7 +14,7 @@ describe('AnonymousAuthenticationInterceptor', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule, NoopAnimationsModule, RouterTestingModule.withRoutes([])],
+            imports: [ RouterTestingModule.withRoutes([])],
             providers: [
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 AnonymousService,
@@ -23,7 +22,9 @@ describe('AnonymousAuthenticationInterceptor', () => {
                     provide: HTTP_INTERCEPTORS,
                     useClass: AnonymousAuthenticationInterceptor,
                     multi: true
-                }
+                },
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
             ]
         });
         service = TestBed.inject(AnonymousService);
@@ -40,7 +41,7 @@ describe('AnonymousAuthenticationInterceptor', () => {
                         expect(response).toBeTruthy();
                         done();
                     });
-                    const request = mock.expectOne(req => (req.headers.has('X-Jwt-Token')));
+                    const request = mock.expectOne(req =>req.headers.has('X-Jwt-Token'))
 
                     request.flush({data: 'test'}, {headers: new HttpHeaders({'X-Jwt-Token': 'tokenos'})});
                     mock.verify();

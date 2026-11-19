@@ -1,0 +1,199 @@
+
+/// All state classes, included by `theme()`.
+@mixin component-classes() {
+    @include case-color-classes();
+    @include selection-classes();
+    @include empty-state-classes();
+    @include builder-classes();
+    @include builder-canvas-classes();
+}
+
+/// Case color chosen in the new case dialog (`Case.color`).
+@mixin case-color-classes() {
+    .panel-primary-icon {
+        color: var(--mat-sys-primary);
+    }
+
+    .panel-accent-icon {
+        color: var(--mat-sys-tertiary);
+    }
+}
+
+/// Active indicator of custom navigation and tree items (M3: secondary container).
+@mixin selection-classes() {
+    .active-navigation-route,
+    .selected-tree-node {
+        background-color: var(--mat-sys-secondary-container);
+        color: var(--mat-sys-on-secondary-container);
+    }
+}
+
+/// Empty state of the case / task / process lists (M3: icon, headline, supporting text, centered in the list area).
+@mixin empty-state-classes() {
+    .nae-empty-state {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        box-sizing: border-box;
+        min-height: 240px;
+        padding: 48px 24px;
+        text-align: center;
+        color: var(--mat-sys-on-surface-variant);
+    }
+
+    .mat-icon.nae-empty-state-icon {
+        width: 48px;
+        height: 48px;
+        margin-bottom: 8px;
+        font-size: 48px;
+        line-height: 48px;
+    }
+
+    .nae-empty-state-title {
+        color: var(--mat-sys-on-surface);
+        font: var(--mat-sys-title-medium);
+        letter-spacing: var(--mat-sys-title-medium-tracking);
+    }
+
+    .nae-empty-state-text {
+        max-width: 360px;
+        font: var(--mat-sys-body-medium);
+        letter-spacing: var(--mat-sys-body-medium-tracking);
+    }
+}
+
+/// Builder (`nc-builder` sets `.builder-fix` on the modeler and the form builder): selected tool
+/// (M3 selected icon button) and selected master list items.
+@mixin builder-classes() {
+    .builder-fix {
+        .button-highlight,
+        .item-selected,
+        .item-actual {
+            background: var(--mat-sys-secondary-container);
+            color: var(--mat-sys-on-secondary-container);
+        }
+
+        .active-custom-svg,
+        .inactive-custom-svg,
+        .fill-svg {
+            fill: currentColor;
+            stroke: currentColor;
+        }
+    }
+
+    .checkbox-background-warn {
+        --mat-checkbox-selected-icon-color: var(--mat-sys-error);
+        --mat-checkbox-selected-hover-icon-color: var(--mat-sys-error);
+        --mat-checkbox-selected-focus-icon-color: var(--mat-sys-error);
+        --mat-checkbox-selected-pressed-icon-color: var(--mat-sys-error);
+        --mat-checkbox-selected-checkmark-color: var(--mat-sys-on-error);
+    }
+}
+
+/// State classes petri.svg sets on canvas elements (active element, transition firing in simulation,
+/// lasso) and the colors of the canvas in the light / dark mode.
+@mixin builder-canvas-classes() {
+    html {
+        --nae-canvas-background: light-dark(white, var(--mat-sys-surface-container-lowest));
+        --nae-canvas-grid: light-dark(#ccc, #444);
+        --nae-canvas-element: light-dark(black, white);
+    }
+
+    petriflow-svg-canvas {
+        #canvas-grid > rect {
+            fill: var(--nae-canvas-background);
+        }
+
+        #canvas-grid-path {
+            stroke: var(--nae-canvas-grid);
+        }
+
+        :where([fill="white"]) {
+            fill: var(--nae-canvas-background);
+        }
+
+        :where([stroke="white"]) {
+            stroke: var(--nae-canvas-background);
+        }
+
+        :where([stroke="black"]) {
+            stroke: var(--nae-canvas-element);
+        }
+
+        :where(text) {
+            fill: var(--nae-canvas-element);
+        }
+    }
+
+    .svg-active-stroke {
+        stroke: var(--mat-sys-primary) !important;
+    }
+
+    svg text[style*="Material Icons"] {
+        font-family: var(--nae-icon-font-family, 'Material Symbols Outlined', 'Material Symbols Rounded', 'Material Icons') !important;
+    }
+
+    .svg-active-fill {
+        fill: var(--mat-sys-primary) !important;
+    }
+
+    .svg-inactive-stroke {
+        stroke: var(--nae-canvas-element, black) !important;
+    }
+
+    .svg-inactive-fill {
+        fill: var(--nae-canvas-element, black) !important;
+    }
+
+    .svg-invisible-fill {
+        fill: none !important;
+    }
+
+    .svg-transition-enabled {
+        stroke: green;
+        fill: yellowgreen;
+    }
+
+    .svg-transition-disabled {
+        stroke: red;
+        fill: var(--nae-canvas-background, white);
+    }
+
+    .svg-transition-firing {
+        stroke: green;
+        fill: none;
+    }
+
+    .svg-fire-arrow-cancel-active {
+        fill: coral;
+        stroke: red;
+    }
+
+    .svg-fire-arrow-cancel-inactive,
+    .svg-fire-arrow-finish-inactive {
+        fill: none;
+        stroke: none;
+    }
+
+    .svg-fire-arrow-finish-active {
+        stroke: green;
+        fill: yellowgreen;
+    }
+
+    .svg-icon-active {
+        display: block;
+    }
+
+    .svg-icon-inactive {
+        display: none;
+    }
+
+    .lasso-selection {
+        stroke: var(--mat-sys-primary);
+        fill: var(--mat-sys-primary);
+        fill-opacity: 10%;
+        stroke-width: 1;
+    }
+}

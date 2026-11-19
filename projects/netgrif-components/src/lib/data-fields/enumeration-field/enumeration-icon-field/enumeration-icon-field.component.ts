@@ -1,4 +1,4 @@
-import {Component, Inject, Optional} from '@angular/core';
+import {Component, Inject, Optional, ChangeDetectionStrategy} from '@angular/core';
 import {
     AbstractEnumerationIconFieldComponent,
     DATA_FIELD_PORTAL_DATA,
@@ -8,7 +8,9 @@ import {
 @Component({
     selector: 'nc-enumeration-icon-field',
     templateUrl: './enumeration-icon-field.component.html',
-    styleUrls: ['./enumeration-icon-field.component.scss']
+    styleUrls: ['./enumeration-icon-field.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class EnumerationIconFieldComponent extends AbstractEnumerationIconFieldComponent {
 

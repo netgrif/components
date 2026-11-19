@@ -1,7 +1,25 @@
-.bool-operator-margin {
-    margin: 0.5px 8px 0.5px 4px;
+@use '@angular/material' as mat;
+
+:host {
+    display: block;
+    --nc-condition-field-height: calc(40px + 2px * var(--nae-density-scale, 0));
+    @include mat.form-field-overrides((
+        container-height: var(--nc-condition-field-height),
+        container-vertical-padding: calc((var(--nc-condition-field-height) - 24px) / 2),
+        outlined-label-text-populated-size: 12px,
+    ));
 }
 
-.advanced-search-buttons {
-    min-height: 44px;
+.conditions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    min-height: var(--nc-condition-field-height);
+}
+
+.joiner {
+    color: var(--mat-sys-on-surface-variant);
+    font: var(--mat-sys-label-medium);
+    letter-spacing: var(--mat-sys-label-medium-tracking);
 }

@@ -1,0 +1,46 @@
+@mixin styles {
+    :host {
+        display: block;
+    }
+
+    .user-field {
+        width: 100%;
+    }
+
+    .avatar,
+    .chip-avatar {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        box-sizing: border-box;
+        border-radius: 50%;
+        background: var(--mat-sys-primary-container);
+        color: var(--mat-sys-on-primary-container);
+        font: var(--mat-sys-label-medium);
+        letter-spacing: 0;
+        text-transform: uppercase;
+    }
+
+    .avatar {
+        width: 28px;
+        height: 28px;
+        margin: 0 4px 0 12px;
+    }
+
+    .mat-mdc-chip .chip-avatar.mat-mdc-chip-avatar {
+        color: var(--mat-sys-on-primary-container);
+        width: 24px;
+        height: 24px;
+        margin-left: -4px;
+        font-size: 10px;
+        font-weight: 500;
+        line-height: 24px;
+    }
+
+    .user-chip-input.has-users {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        opacity: 0;
+    }
+}

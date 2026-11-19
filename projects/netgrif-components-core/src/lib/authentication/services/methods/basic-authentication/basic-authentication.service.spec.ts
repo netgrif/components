@@ -1,11 +1,10 @@
 import {inject, TestBed} from '@angular/core/testing';
 import {ConfigurationService} from '../../../../configuration/configuration.service';
-import {HttpClient} from '@angular/common/http';
-import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
+import {HttpClient, provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
+import {HttpTestingController, provideHttpClientTesting} from '@angular/common/http/testing';
 import {BasicAuthenticationService} from './basic-authentication.service';
 import {AuthenticationMethodService} from '../../authentication-method.service';
 import {TestConfigurationService} from '../../../../utility/tests/test-config';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterTestingModule} from '@angular/router/testing';
 import {MockAuthenticationMethodService} from '../../../../utility/tests/mocks/mock-authentication-method-service';
 import {AuthenticationService} from '../../authentication/authentication.service';
@@ -18,15 +17,15 @@ describe('BasicAuthenticationService', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
-                HttpClientTestingModule,
-                NoopAnimationsModule,
                 RouterTestingModule.withRoutes([])
             ],
             providers: [
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
-                BasicAuthenticationService
+                BasicAuthenticationService,
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
             ]
         });
         service = TestBed.inject(BasicAuthenticationService);

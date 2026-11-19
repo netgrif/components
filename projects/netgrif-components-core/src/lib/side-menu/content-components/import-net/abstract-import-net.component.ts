@@ -1,4 +1,4 @@
-import {AfterViewInit, Component} from '@angular/core';
+import {AfterViewInit, Component, ChangeDetectionStrategy} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {SideMenuControl} from '../../models/side-menu-control';
 import {PetriNetResourceService} from '../../../resources/engine-endpoint/petri-net-resource.service';
@@ -28,9 +28,14 @@ interface FileList {
     [key: string]: FileUploadModel;
 }
 
+/**
+ * @deprecated the side menu is deprecated, the library opens dialogs instead (`DialogComponentsModule`)
+ */
 @Component({
     selector: 'ncc-abstract-import-net',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractImportNetComponent implements AfterViewInit {
 

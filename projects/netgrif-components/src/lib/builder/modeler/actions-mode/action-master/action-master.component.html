@@ -1,35 +1,44 @@
-<div fxLayout="column" class="height-fix">
-    <div class="height-max" matSort (matSortChange)="sortData($event)">
-        <div *ngIf="!isFunctionsModeSelected()" class="height-100">
-            <div mat-subheader *ngIf="!isProcessAndCase()" class="header-action">
-                <p fxFlex="40" mat-sort-header="id"><strong>ID</strong></p>
-                <p fxFlex mat-sort-header="name">{{ 'builder.modeler.actions-mode.action-master.name' | translate }}</p>
-            </div>
-            <mat-action-list class="height-max" >
-                <nc-builder-main-master-item *ngFor="let item of pageData"
-                                  [item]="item"
-                                  [masterItemComponent]="actionMasterItemComponent"
-                                  [masterService]="masterService" ></nc-builder-main-master-item>
-            </mat-action-list>
-        </div>
-        <div *ngIf="isFunctionsModeSelected()" class="height-100">
-            <div mat-subheader class="header-action">
-                <p fxFlex="40"><strong>{{ 'builder.modeler.actions-mode.action-master.name' | translate }}</strong></p>
-                <p fxFlex>{{ 'builder.modeler.actions-mode.action-master.scope' | translate }}</p>
-                <button mat-icon-button class="button-line" matTooltip="{{ 'builder.modeler.actions-mode.action-master.addFunction' | translate }}"
-                        (click)="create()" *ngIf="!_builderModeService.readOnly">
-                    <mat-icon>add</mat-icon>
-                </button>
-            </div>
-            <mat-action-list class="height-max" >
-                <nc-builder-main-master-item *ngFor="let item of pageData"
-                                  [item]="item"
-                                  [masterItemComponent]="functionMasterItemComponent"
-                                  [masterService]="masterService" ></nc-builder-main-master-item>
-            </mat-action-list>
-        </div>
+<div class="master">
+    <div class="master-toolbar">
+        @if (isFunctionsModeSelected() && !_builderModeService.readOnly) {
+        <button mat-flat-button (click)="create()">
+            <mat-icon>add</mat-icon>
+            {{ "builder.modeler.actions-mode.action-master.addFunction" | translate }}
+        </button>
+        }
+        <span class="spacer"></span>
+        @if (!isFunctionsModeSelected() && !isProcessAndCase()) {
+        <button mat-icon-button [matMenuTriggerFor]="sortMenu" [matTooltip]="'builder.modeler.components.master-detail.sort' | translate">
+            <mat-icon>sort</mat-icon>
+        </button>
+        <mat-menu #sortMenu="matMenu" xPosition="before">
+            <button mat-menu-item (click)="sortBy('name')">
+                <mat-icon>{{ sortIcon("name") }}</mat-icon>
+                <span>{{ "builder.modeler.actions-mode.action-master.name" | translate }}</span>
+            </button>
+            <button mat-menu-item (click)="sortBy('id')">
+                <mat-icon>{{ sortIcon("id") }}</mat-icon>
+                <span>ID</span>
+            </button>
+        </mat-menu>
+        }
     </div>
-    <mat-paginator fxFlex class="footer" [length]="totalSize" [pageSize]="pageSize" [pageIndex]="pageIndex"
-                   [pageSizeOptions]="pageSizeOptions" (page)="onPageChanged($event)" showFirstLastButtons="false">
+    <mat-action-list class="list">
+        @for (item of pageData; track item) {
+        <nc-builder-main-master-item
+            [item]="item"
+            [masterItemComponent]="isFunctionsModeSelected() ? functionMasterItemComponent : actionMasterItemComponent"
+            [masterService]="masterService"
+        ></nc-builder-main-master-item>
+        }
+    </mat-action-list>
+    <mat-paginator
+        [length]="totalSize"
+        [pageSize]="pageSize"
+        [pageIndex]="pageIndex"
+        [pageSizeOptions]="pageSizeOptions"
+        (page)="onPageChanged($event)"
+        showFirstLastButtons="false"
+    >
     </mat-paginator>
 </div>

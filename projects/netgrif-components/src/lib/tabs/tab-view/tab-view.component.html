@@ -1,30 +1,58 @@
-<mat-tab-group [selectedIndex]="tabView.selectedIndex.value"
-               [class.center-tabs]="align === 'center'"
-               [class.end-tabs]="align === 'end'"
-               mat-stretch-tabs="false"
-               [animationDuration]="animationDuration ?? 500"
-               (selectedTabChange)="tabView.tabChange($event)" class="tab-group"
-               [class.nae-tab-fill-height]="stretch" fxFlex>
-    <mat-tab *ngFor="let tab of tabView.openedTabs; let i=index" [ngClass]="{'label-opacity': i === tabView.selectedIndex.value}">
+@if (hideHeader) {
+@for (tab of tabView.openedTabs; track tab.uniqueId; let i = $index) {
+<div class="tab-body" [hidden]="i !== tabView.selectedIndex.value">
+    <nc-tab-creation-detector [initializeTabFunction]="initializeTabLambda" [tabIndex]="i"></nc-tab-creation-detector>
+    @if (tab.isTabInitialized) {
+    <ng-template [cdkPortalOutlet]="tab.portal"></ng-template>
+    }
+</div>
+}
+} @else {
+<mat-tab-group
+    [selectedIndex]="tabView.selectedIndex.value"
+    [mat-align-tabs]="align"
+    mat-stretch-tabs="false"
+    fitInkBarToContent
+    [animationDuration]="animationDuration ?? 500"
+    (selectedTabChange)="tabView.tabChange($event)"
+    class="tab-group"
+    [class.nae-tab-fill-height]="stretch"
+    fxFlex
+>
+    @for (tab of tabView.openedTabs; track tab.uniqueId; let i = $index) {
+    <mat-tab>
         <ng-template mat-tab-label>
             <div fxLayout="row" fxLayoutAlign="start center">
                 <div fxFlex fxLayout="row" fxLayoutAlign="start center">
-                    <mat-icon class="icon-margin-right" [ngClass]="{'icon-tab-color': i === tabView.selectedIndex.value}"
-                              *ngIf="tab.getIcon() !== undefined">{{tab.getIcon$()|async}}</mat-icon>
-                    <span class="custom-badge" [matBadge]="(badgeCount(tab) | async)"
-                          [matBadgeHidden]="(badgeHidden(tab) | async)">{{((tab.getText$() | async) | translate) + ((badgeHidden(tab) | async) ? '' : offset)}}</span>
+                    @if (tab.getIcon() !== undefined) {
+                    <mat-icon
+                        class="icon-margin-right"
+                        >{{ tab.getIcon$() | async }}</mat-icon
+                    >
+                    }
+                    <span>{{ tab.getText$() | async | translate }}</span>
+                    @if ((badgeHidden(tab) | async) === false) {
+                    <span class="tab-badge">{{ badgeCount(tab) | async }}</span>
+                    }
                 </div>
-                <button mat-icon-button *ngIf="tab.canBeClosed" (click)="tabView.closeTabIndex(i)">
-                    <mat-icon [ngClass]="{'icon-tab-color': i === tabView.selectedIndex.value}">clear</mat-icon>
+                @if (tab.canBeClosed) {
+                <button mat-icon-button class="tab-close" (click)="$event.stopPropagation(); tabView.closeTabIndex(i)"
+                        [attr.aria-label]="'tasks.view.closeTab' | translate">
+                    <mat-icon>close</mat-icon>
                 </button>
+                }
             </div>
         </ng-template>
         <!--        TODO 16.4.2020 - lazy loading of tab contents is disabled for now -->
         <!--        <ng-template matTabContent>-->
-        <nc-tab-creation-detector [initializeTabFunction]="initializeTabLambda"
-                                  [tabIndex]="i"></nc-tab-creation-detector>
-        <ng-template [ngIf]="tab.isTabInitialized" class="full-height">
-            <ng-template [cdkPortalOutlet]="tab.portal" class="full-height"></ng-template>
-        </ng-template>
+        <nc-tab-creation-detector
+            [initializeTabFunction]="initializeTabLambda"
+            [tabIndex]="i"
+        ></nc-tab-creation-detector>
+        @if (tab.isTabInitialized) {
+        <ng-template [cdkPortalOutlet]="tab.portal"></ng-template>
+        }
     </mat-tab>
+    }
 </mat-tab-group>
+}

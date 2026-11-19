@@ -6,6 +6,8 @@ export * from './commons/schema';
 /* MODULES */
 export * from './lib/material/material.module';
 export * from './lib/covalent/covalent.module';
+export * from './lib/covalent/markdown.pipe';
+export * from './lib/covalent/markdown.component';
 export * from './lib/currency/currency.module';
 
 /* APIS */
@@ -50,3 +52,4 @@ export * from './lib/actions/public-api';
 export * from './lib/providers/public-api';
 export * from './lib/export/public-api';
 export * from './lib/pfql/public-api';
+export * from './lib/color-theme/public-api';

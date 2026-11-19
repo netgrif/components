@@ -1,0 +1,16 @@
+.workflow-panel-item {
+    display: flex;
+    align-items: center;
+    min-width: 0;
+}
+
+.workflow-panel-icon {
+    flex: none;
+    margin-right: 8px;
+}
+
+.workflow-panel-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}

@@ -5,10 +5,10 @@ import {CommonModule} from '@angular/common';
 import {FlexLayoutModule, FlexModule} from '@ngbracket/ngx-layout';
 import {QuickPanelComponentModule} from '../quick-panel/quick-panel.module';
 import {UserComponentModule} from '../../user/user.module';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {MaterialModule, TranslateLibModule} from '@netgrif/components-core';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {RouterTestingModule} from '@angular/router/testing';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('NavigationRailComponent', () => {
     let component: NavigationRailComponent;
@@ -25,9 +25,11 @@ describe('NavigationRailComponent', () => {
                 FlexLayoutModule,
                 QuickPanelComponentModule,
                 UserComponentModule,
-                NoopAnimationsModule,
-                TranslateLibModule,
-                HttpClientTestingModule
+                TranslateLibModule
+            ],
+            providers: [
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
             ],
         })
             .compileComponents();

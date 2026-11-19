@@ -1,12 +1,14 @@
 import {ComponentPortal} from '@angular/cdk/portal';
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {I18nTool} from './classes/i18n-tool';
 import {I18nModeService} from './i18n-mode.service';
 
 @Component({
     selector: 'nc-builder-i18n-mode',
     templateUrl: './i18n-mode.component.html',
-    styleUrls: ['./i18n-mode.component.scss']
+    styleUrls: ['./i18n-mode.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class I18nModeComponent implements OnInit {
 

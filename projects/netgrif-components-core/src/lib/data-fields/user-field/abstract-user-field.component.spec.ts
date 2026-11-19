@@ -1,8 +1,6 @@
 import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
-import {AngularResizeEventModule} from 'angular-resize-event';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {Component, CUSTOM_ELEMENTS_SCHEMA, Inject, Optional} from '@angular/core';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
+import {Component, CUSTOM_ELEMENTS_SCHEMA, Inject, Optional, ChangeDetectionStrategy} from '@angular/core';
 import {MaterialModule} from '../../material/material.module';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
 import {SideMenuService} from '../../side-menu/services/side-menu.service';
@@ -11,6 +9,7 @@ import {SnackBarModule} from '../../snack-bar/snack-bar.module';
 import {UserField} from './models/user-field';
 import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token';
 import {TranslateService} from '@ngx-translate/core';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('AbstractUserFieldComponent', () => {
     let component: TestUserComponent;
@@ -18,20 +17,19 @@ describe('AbstractUserFieldComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
+            declarations: [TestUserComponent, TestWrapperComponent],
+            schemas: [CUSTOM_ELEMENTS_SCHEMA],
             imports: [
                 MaterialModule,
-                AngularResizeEventModule,
-                NoopAnimationsModule,
-                HttpClientTestingModule,
                 TranslateLibModule,
                 SnackBarModule
             ],
-            declarations: [TestUserComponent, TestWrapperComponent],
             providers: [
                 SideMenuService,
-                TranslateService
-            ],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA]
+                TranslateService,
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
+            ]
         })
             .compileComponents();
         fixture = TestBed.createComponent(TestWrapperComponent);
@@ -50,7 +48,9 @@ describe('AbstractUserFieldComponent', () => {
 
 @Component({
     selector: 'ncc-test-user',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestUserComponent extends AbstractUserFieldComponent {
     constructor(@Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
@@ -60,7 +60,9 @@ class TestUserComponent extends AbstractUserFieldComponent {
 
 @Component({
     selector: 'ncc-test-wrapper',
-    template: '<ncc-test-user [dataField]="field"> </ncc-test-user>'
+    template: '<ncc-test-user [dataField]="field"> </ncc-test-user>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestWrapperComponent {
     field = new UserField('', '', {

@@ -1,30 +1,5 @@
-.task-tab-background{
+.view {
+    box-sizing: border-box;
     height: 100%;
-    width: 100%;
-    overflow: auto;
-    background-color: transparent;
-}
-.search-panel{
-    margin-top: 16px;
-    padding: 8px 0;
-}
-.content-margin{
-    margin: 0 24px ;
-}
-.task-panel-padding-mini{
-    padding-top: 16px;
-    padding-left: 1px;
-    padding-right: 1px;
-}
-.full-height {
-    height: calc(100% - 8px);
-}
-
-.search-width {
-    width: 100%;
-}
-.search-fix {
-    min-height: calc(100% + 2px);
-    max-height: 100%;
-    overflow-y: auto;
+    padding: 16px 24px;
 }

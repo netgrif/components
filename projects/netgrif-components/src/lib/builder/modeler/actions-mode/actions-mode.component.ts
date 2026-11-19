@@ -1,5 +1,5 @@
 import {ComponentType} from '@angular/cdk/overlay';
-import {Component} from '@angular/core';
+import {Component, ChangeDetectionStrategy} from '@angular/core';
 import {FunctionScope} from '@netgrif/petriflow';
 import {ActionDetailComponent} from './action-detail/action-detail.component';
 import {ActionMasterComponent} from './action-master/action-master.component';
@@ -13,7 +13,9 @@ export interface Scope {
 @Component({
     selector: 'nc-builder-actions-mode',
     templateUrl: './actions-mode.component.html',
-    styleUrls: ['./actions-mode.component.scss']
+    styleUrls: ['./actions-mode.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class ActionsModeComponent {
 

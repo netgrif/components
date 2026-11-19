@@ -1,7 +1,6 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {CaseSearchComponent} from './case-search.component';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {
     AuthenticationMethodService,
     AuthenticationService,
@@ -17,6 +16,7 @@ import {
     ViewIdService
 } from '@netgrif/components-core';
 import {SearchComponentModule} from '../../search.module';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('CaseSearchComponent', () => {
     let component: CaseSearchComponent;
@@ -25,9 +25,7 @@ describe('CaseSearchComponent', () => {
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [
-                SearchComponentModule,
-                HttpClientTestingModule,
-                NoopAnimationsModule,
+                SearchComponentModule
             ],
             providers: [
                 CategoryFactory,
@@ -41,7 +39,9 @@ describe('CaseSearchComponent', () => {
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
                 {provide: AllowedNetsService, useFactory: TestNoAllowedNetsFactory, deps: [AllowedNetsServiceFactory]},
-                {provide: ViewIdService, useValue: {viewId: 'test_view_id'}}
+                {provide: ViewIdService, useValue: {viewId: 'test_view_id'}},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
             ]
         })
             .compileComponents();

@@ -2,15 +2,13 @@ import {CommonModule} from '@angular/common';
 import {NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatIconRegistry} from '@angular/material/icon';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {DomSanitizer} from '@angular/platform-browser';
 import {RouterModule} from '@angular/router';
 import {MaterialModule} from '@netgrif/components-core';
 import {PetriflowCanvasModule} from '@netgrif/petriflow.svg';
 import {FlexLayoutModule} from '@ngbracket/ngx-layout';
-import {GridsterModule} from 'angular-gridster2';
+import {Gridster, GridsterItem} from 'angular-gridster2';
 import {ResizableModule} from 'angular-resizable-element';
-import {NgxDropzoneModule} from 'ngx-dropzone';
 import {MonacoEditorModule} from 'ngx-monaco-editor-v2';
 import {BuilderDialogsModule} from '../dialogs/dialogs.module';
 import {ActionDetailComponent} from './actions-mode/action-detail/action-detail.component';
@@ -64,8 +62,6 @@ import {RoleModeComponent} from './role-mode/role-mode.component';
 import {SimulationModeComponent} from './simulation-mode/simulation-mode.component';
 import {CdkPortalOutlet} from '@angular/cdk/portal';
 import {CdkTreeModule} from '@angular/cdk/tree';
-import {NgxMatDatetimePickerModule} from "@angular-material-components/datetime-picker";
-import {NgxMatMomentModule} from "@angular-material-components/moment-adapter";
 import { DataFieldsComponentModule } from "../../data-fields/data-fields.module";
 import {TaskContentComponentModule} from "../../task-content/task-content.module";
 import {MaterialIconPickerComponent} from "./components/material-icon-picker/material-icon-picker.component";
@@ -125,21 +121,18 @@ import {TranslateModule} from "@ngx-translate/core";
         DataFieldsComponentModule,
         FlexLayoutModule,
         FormsModule,
-        GridsterModule,
+        Gridster,
+        GridsterItem,
         MaterialModule,
-        NgxDropzoneModule,
         PetriflowCanvasModule,
         MonacoEditorModule,
         ReactiveFormsModule,
         ResizableModule,
         RouterModule,
         TaskContentComponentModule,
-        MatProgressSpinnerModule,
         I18nFieldComponent,
         CdkPortalOutlet,
         CdkTreeModule,
-        NgxMatDatetimePickerModule,
-        NgxMatMomentModule,
         MaterialIconPickerComponent,
         TaskModeComponent,
         TranslateModule,

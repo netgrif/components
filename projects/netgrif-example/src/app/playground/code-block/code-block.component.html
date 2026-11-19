@@ -1,0 +1,13 @@
+<mat-tab-group animationDuration="0ms" mat-stretch-tabs="false" mat-align-tabs="start" fitInkBarToContent>
+    @for (snippet of snippets; track snippet.label; let i = $index) {
+    <mat-tab [label]="snippet.label">
+        <div class="code">
+            <button mat-icon-button class="copy" [cdkCopyToClipboard]="snippet.code" (cdkCopyToClipboardCopied)="onCopied(i)"
+                    [matTooltip]="copiedIndex === i ? 'Copied' : 'Copy'">
+                <mat-icon>{{ copiedIndex === i ? 'check' : 'content_copy' }}</mat-icon>
+            </button>
+            <pre><code>{{ snippet.code }}</code></pre>
+        </div>
+    </mat-tab>
+    }
+</mat-tab-group>

@@ -1,3 +1,31 @@
-.margin-none {
+.languages {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-width: 720px;
+}
+
+.section-title {
     margin: 0;
+    color: var(--mat-sys-on-surface);
+    font: var(--mat-sys-title-medium);
+    letter-spacing: var(--mat-sys-title-medium-tracking);
+}
+
+.add-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+}
+
+.add-field {
+    flex: 1 1 280px;
+    min-width: 0;
+}
+
+.language-list {
+    overflow: hidden;
+    border: 1px solid var(--mat-sys-outline-variant);
+    border-radius: var(--mat-sys-corner-medium);
 }

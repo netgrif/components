@@ -1,9 +1,7 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {DataFieldTemplateComponent} from './data-field-template.component';
-import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
-import {AngularResizeEventModule} from 'angular-resize-event';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {Component, CUSTOM_ELEMENTS_SCHEMA, ChangeDetectionStrategy} from '@angular/core';
 import {
     MaterialModule,
     ConfigurationService,
@@ -19,7 +17,7 @@ describe('DataFieldTemplateComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
-            imports: [MaterialModule, AngularResizeEventModule, NoopAnimationsModule],
+            imports: [MaterialModule],
             declarations: [DataFieldTemplateComponent, TestWrapperComponent],
             providers: [
                 {provide: ConfigurationService, useClass: TestConfigurationService},
@@ -43,7 +41,9 @@ describe('DataFieldTemplateComponent', () => {
 
 @Component({
     selector: 'nc-test-wrapper',
-    template: '<nc-data-field-template [dataField]="field"></nc-data-field-template>'
+    template: '<nc-data-field-template [dataField]="field"></nc-data-field-template>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestWrapperComponent {
     field = new TextField('', '', '', {});

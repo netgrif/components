@@ -1,8 +1,7 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {NewCaseComponent} from './new-case.component';
 import {CommonModule} from '@angular/common';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {of} from 'rxjs';
 import {HotkeyModule, HotkeysService} from 'angular2-hotkeys';
 import {
@@ -18,6 +17,7 @@ import {
     NewCaseCreationConfigurationData
 } from '@netgrif/components-core';
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('NewCaseComponent', () => {
     let component: NewCaseComponent;
@@ -25,11 +25,10 @@ describe('NewCaseComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
+            declarations: [NewCaseComponent],
             imports: [
                 CommonModule,
                 MaterialModule,
-                BrowserAnimationsModule,
-                HttpClientTestingModule,
                 SnackBarModule,
                 TranslateLibModule,
                 HotkeyModule.forRoot()
@@ -46,10 +45,9 @@ describe('NewCaseComponent', () => {
                         } as NewCaseCreationConfigurationData
                     })
                 },
-                {provide: ConfigurationService, useClass: TestConfigurationService}
-            ],
-            declarations: [
-                NewCaseComponent,
+                {provide: ConfigurationService, useClass: TestConfigurationService},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
             ],
         }).compileComponents();
     }));

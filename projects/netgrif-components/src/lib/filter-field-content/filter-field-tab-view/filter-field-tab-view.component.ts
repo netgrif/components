@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, ChangeDetectionStrategy} from '@angular/core';
 import {
     ComponentRegistryService,
     AbstractFilterFieldTabViewComponent,
@@ -16,6 +16,8 @@ import {
   selector: 'nc-filter-field-tab-view',
   templateUrl: './filter-field-tab-view.component.html',
   styleUrls: ['./filter-field-tab-view.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false,
 })
 export class FilterFieldTabViewComponent extends AbstractFilterFieldTabViewComponent {
 

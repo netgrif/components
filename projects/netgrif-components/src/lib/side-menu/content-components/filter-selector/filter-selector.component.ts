@@ -1,4 +1,4 @@
-import {Component, Inject} from '@angular/core';
+import {Component, Inject, ChangeDetectionStrategy} from '@angular/core';
 import {AbstractFilterSelectorComponent, FilterRepository, NAE_SIDE_MENU_CONTROL, SideMenuControl} from '@netgrif/components-core';
 
 /**
@@ -18,7 +18,9 @@ import {AbstractFilterSelectorComponent, FilterRepository, NAE_SIDE_MENU_CONTROL
 @Component({
     selector: 'nc-filter-selector',
     templateUrl: './filter-selector.component.html',
-    styleUrls: ['./filter-selector.component.scss']
+    styleUrls: ['./filter-selector.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class FilterSelectorComponent extends AbstractFilterSelectorComponent {
     /**

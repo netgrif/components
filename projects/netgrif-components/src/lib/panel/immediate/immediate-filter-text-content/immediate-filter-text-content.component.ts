@@ -1,4 +1,4 @@
-import {Component, Inject, Type} from '@angular/core';
+import {Component, Inject, Type, ChangeDetectionStrategy} from '@angular/core';
 import {
     AbstractImmediateFilterTextContentComponent,
     NAE_FILTER_TEXT,
@@ -47,7 +47,9 @@ export function filterTextCategoriesFactory(configuration: FilterTextConfigurati
         SearchService,
         PfqlVisitor,
         {provide: NAE_IGNORE_NETS_ON_AUTOCOMPLETE_CATEGORY, useValue: true},
-    ]
+    ],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class ImmediateFilterTextContentComponent extends AbstractImmediateFilterTextContentComponent {
 

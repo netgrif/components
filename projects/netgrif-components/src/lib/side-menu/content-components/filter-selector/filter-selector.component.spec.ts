@@ -2,8 +2,7 @@ import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {FilterSelectorComponent} from './filter-selector.component';
 import {SideMenuFilterSelectorComponentModule} from './side-menu-filter-selector-component.module';
 import {Observable} from 'rxjs';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {
     AuthenticationMethodService,
     AuthenticationService,
@@ -16,6 +15,7 @@ import {
     TestConfigurationService,
     UserResourceService
 } from '@netgrif/components-core';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('FilterSelectorComponent', () => {
     let component: FilterSelectorComponent;
@@ -26,10 +26,7 @@ describe('FilterSelectorComponent', () => {
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [
-                SideMenuFilterSelectorComponentModule,
-                HttpClientTestingModule,
-                NoopAnimationsModule,
-                HttpClientTestingModule
+                SideMenuFilterSelectorComponentModule
             ],
             providers: [
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
@@ -40,7 +37,9 @@ describe('FilterSelectorComponent', () => {
                     useValue: new SideMenuControl(() => {
                     }, new Observable<boolean>(), null)
                 },
-                {provide: ConfigurationService, useClass: TestConfigurationService}
+                {provide: ConfigurationService, useClass: TestConfigurationService},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
             ]
         }).compileComponents();
     }));

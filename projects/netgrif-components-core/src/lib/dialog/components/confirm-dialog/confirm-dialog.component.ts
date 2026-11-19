@@ -1,4 +1,4 @@
-import {Component, Inject} from '@angular/core';
+import {Component, Inject, ChangeDetectionStrategy} from '@angular/core';
 import {AbstractDialogComponent} from '../../models/abstract-dialog.component';
 import {DialogResult} from '../../models/DialogResult';
 import {DialogData} from '../../models/DialogData';
@@ -12,7 +12,9 @@ import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
 @Component({
     selector: 'ncc-question-dialog',
     templateUrl: './confirm-dialog.component.html',
-    styleUrls: ['./confirm-dialog.component.scss']
+    styleUrls: ['./confirm-dialog.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class ConfirmDialogComponent extends AbstractDialogComponent<ConfirmDialogComponent> {
 

@@ -1,4 +1,4 @@
-import {Component, Inject, Injector, Optional} from '@angular/core';
+import {Component, Inject, Injector, Optional, ChangeDetectionStrategy} from '@angular/core';
 import {ComponentType} from "@angular/cdk/portal";
 import {FilterFieldTabViewContentComponent} from "../tab-view-filter-field/filter-field-tab-view-content.component";
 import {FilterFieldContentComponent} from "../filter-field-content/filter-field-content.component";
@@ -16,7 +16,8 @@ import {FilterStringQueryFieldComponent} from "../filter-string-query-field/filt
 @Component({
   selector: 'nc-filter-default-field',
   templateUrl: './filter-default-field.component.html',
-  styleUrls: ['./filter-default-field.component.scss']
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class FilterDefaultFieldComponent extends AbstractFilterDefaultFieldComponent {
 

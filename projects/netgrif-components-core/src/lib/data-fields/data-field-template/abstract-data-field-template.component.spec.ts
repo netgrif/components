@@ -1,7 +1,5 @@
 import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
-import {AngularResizeEventModule} from 'angular-resize-event';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {Component, CUSTOM_ELEMENTS_SCHEMA, Injector} from '@angular/core';
+import {Component, CUSTOM_ELEMENTS_SCHEMA, Injector, ChangeDetectionStrategy} from '@angular/core';
 import {AbstractDataFieldTemplateComponent} from './abstract-data-field-template.component';
 import {TextField} from '../text-field/models/text-field';
 import {ViewService} from '../../routing/view-service/view.service';
@@ -18,7 +16,7 @@ describe('AbstractDataFieldTemplateComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
-            imports: [MaterialModule, AngularResizeEventModule, NoopAnimationsModule],
+            imports: [MaterialModule],
             declarations: [TestDatafieldTemplateComponent, TestWrapperComponent],
             providers: [
                 {provide: ConfigurationService, useClass: TestConfigurationService},
@@ -45,7 +43,9 @@ describe('AbstractDataFieldTemplateComponent', () => {
 
 @Component({
     selector: 'ncc-test-datafield-template',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestDatafieldTemplateComponent extends AbstractDataFieldTemplateComponent {
     constructor(protected _paperView: PaperViewService,
@@ -58,7 +58,9 @@ class TestDatafieldTemplateComponent extends AbstractDataFieldTemplateComponent 
 
 @Component({
     selector: 'ncc-test-wrapper',
-    template: '<ncc-test-datafield-template [dataField]="field"></ncc-test-datafield-template>'
+    template: '<ncc-test-datafield-template [dataField]="field"></ncc-test-datafield-template>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestWrapperComponent {
     field = new TextField('', '', '', {});

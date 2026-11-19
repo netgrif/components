@@ -1,4 +1,4 @@
-import {Component, Inject} from '@angular/core';
+import {Component, Inject, ChangeDetectionStrategy} from '@angular/core';
 import {DialogData} from './DialogData';
 import {DialogResult} from './DialogResult';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
@@ -6,7 +6,9 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 /** Abstract dialog for all types of dialog components is used for data injection and dialog reference holding. */
 @Component({
     selector: 'ncc-abstract-dialog',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractDialogComponent<T> {
     /**

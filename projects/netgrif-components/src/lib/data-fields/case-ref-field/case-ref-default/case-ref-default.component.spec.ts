@@ -12,13 +12,12 @@ import {
     TestMockDependenciesModule,
     GroupNavigationConstants,
 } from '@netgrif/components-core';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterTestingModule} from '@angular/router/testing';
 import {of} from 'rxjs';
 import {
     DefaultTabbedTaskViewComponent
 } from '../../../navigation/group-navigation-component-resolver/default-components/tabbed/default-tabbed-task-view/default-tabbed-task-view.component';
-import {Component} from '@angular/core';
+import {Component, ChangeDetectionStrategy} from '@angular/core';
 
 describe('CaseRefDefaultComponent', () => {
   let component: CaseRefDefaultComponent;
@@ -29,7 +28,6 @@ describe('CaseRefDefaultComponent', () => {
         imports: [
             NavigationComponentModule,
             TestMockDependenciesModule,
-            NoopAnimationsModule,
             RouterTestingModule.withRoutes([]),
         ],
         providers: [
@@ -82,7 +80,9 @@ describe('CaseRefDefaultComponent', () => {
 
 @Component({
     selector: 'nc-test-wrapper',
-    template: '<nc-case-ref-default [dataField]="field"></nc-case-ref-default>'
+    template: '<nc-case-ref-default [dataField]="field"></nc-case-ref-default>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestWrapperComponent {
     field = new CaseRefField('', '', ['633c6187bb12a90925e0a17e'], {

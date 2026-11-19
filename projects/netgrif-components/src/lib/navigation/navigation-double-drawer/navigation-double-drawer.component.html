@@ -1,210 +1,197 @@
-<div class="drawer-control rail-color height-48" [ngClass]="{'index-menu': !configLeftMenu.opened}"
-     fxLayoutAlign="center center" fxHide.lt-md>
-    <button mat-icon-button (click)="toggleMenu()" class="menu-button mat-typography menu-font-color">
+<mat-toolbar fxHide.gt-sm>
+    <button mat-icon-button (click)="toggleMenu()">
         <mat-icon>menu</mat-icon>
     </button>
-</div>
-
-<mat-toolbar fxHide.gt-sm class="toolbar">
-    <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between stretch">
-        <div fxFlex fxLayoutAlign="start center">
-            <button mat-icon-button (click)="toggleMenu()">
-                <mat-icon>menu</mat-icon>
-            </button>
-        </div>
-        <div fxLayoutAlign="center center" fxFlex>
-            <img #logo [alt]="imageAlt" [src]="image" class="logoimg-tool"
-                 [routerLink]="imageRouterLink !== undefined ? imageRouterLink : []">
-        </div>
-        <div fxFlex></div>
-    </mat-toolbar-row>
+    <span fxFlex></span>
+    @if (image !== undefined) {
+    <img [alt]="imageAlt" [src]="image" height="32"
+         [routerLink]="imageRouterLink !== undefined ? imageRouterLink : []"/>
+    }
+    <span fxFlex></span>
 </mat-toolbar>
-<mat-spinner *ngIf="!logo"></mat-spinner>
-<mat-sidenav-container class="rail-container deny-select">
-    <mat-sidenav mode="side" [(opened)]="configLeftMenu.opened" position="start"
+
+<mat-sidenav-container [class.overlay-menu]="isOverlayMenu">
+    <mat-sidenav class="rail" mode="side" position="start"
+                 [(opened)]="configLeftMenu.opened"
                  [disableClose]="configLeftMenu.disableClose"
-                 class="rail-content">
-
-        <div fxLayout="column" class="rail-color" fxFlex>
-
-            <div *ngTemplateOutlet="portalLeftMenu || defaultLeftSide"></div>
-
-            <div class="margin-top-x2"></div>
-
-            <div fxFlex></div>
-
-            <mat-menu #userRailMenu="matMenu">
-                <div mat-menu-item role="menuitem" class="large-menu-item" fxLayout="row" fxFlexAlign="center center"
-                     [routerLink]="profileRouterLink" routerLinkActive="active-tree-node">
-                    <mat-icon class="user-menu-icon">face</mat-icon>
-                    <div class="large-menu-item user-menu-text" fxLayout="column" fxFlexAlign="start center" fxFlex>
-                        <span *ngIf="!user.isImpersonating()" class="large-menu-item-text text-ellipsis"
-                              fxFlex="50" [matTooltip]="user.fullName">{{ user.fullName }}</span>
-                        <span *ngIf="user.isImpersonating()" class="large-menu-item-text text-ellipsis"
-                              fxFlex="50"
-                              [matTooltip]="user.fullName + ' (' + user.getSelfOrImpersonated().fullName + ')'">{{ user.fullName }} ({{ user.getSelfOrImpersonated().fullName }})</span>
-                        <span class="large-menu-item-text text-ellipsis" style="font-size: 12px;" fxFlex="50"
-                              [matTooltip]="user.email">{{ user.email }}</span>
-                    </div>
-                </div>
-                <button *ngIf="includeImpersonation && !user.isImpersonating()" mat-menu-item (click)="impersonate()">
-                    <mat-icon>supervisor_account</mat-icon>
-                    <span>{{ 'side-menu.impersonation.submit' | translate }}</span>
-                </button>
-                <button *ngIf="includeImpersonation && user.isImpersonating()" mat-menu-item
-                        (click)="stopImpersonating()">
-                    <mat-icon>clear</mat-icon>
-                    <span>{{ 'side-menu.impersonation.cease' | translate }}</span>
-                </button>
-                <button mat-menu-item (click)="logout()">
-                    <mat-icon>exit_to_app</mat-icon>
-                    <span>{{ 'toolbar.menu.logout' | translate }}</span>
-                </button>
-            </mat-menu>
-            <button *ngIf="includeUser" mat-icon-button [matMenuTriggerFor]="userRailMenu"
-                    class="menu-button mat-typography menu-font-color"
-                    [matTooltip]="user.fullName"
-                    [matTooltipPosition]="'right'">
-                <mat-icon>account_circle</mat-icon>
-            </button>
-
-            <div *ngIf="includeLanguage" [ngClass]="{'margin-bottom-x2 menu-button': !(hiddenCustomItems?.length > 0)}" fxLayout="row" class="icon-container padding-2px">
-                <nc-language-selector fxLayout="row" ></nc-language-selector>
-            </div>
-
-            <mat-menu #railMenu="matMenu">
-                <button *ngFor='let item of hiddenCustomItems$ | async; trackBy: itemsTrackBy' mat-menu-item
-                        [routerLink]='item.routing.path' routerLinkActive="active-tree-node">
-                    <mat-icon>{{ item.navigation.icon }}</mat-icon>
-                    <span>{{ item.navigation.title }}</span>
-                </button>
-                <div *ngIf="canEditMenu()">
-                    <button mat-menu-item *ngIf="!editModeEnabled" (click)="setMenuEditMode(true)">
-                        <mat-icon color="primary">edit</mat-icon>
-                        {{ 'dynamicNavigation.editModeOn' | translate }}
-                    </button>
-                    <button mat-menu-item *ngIf="editModeEnabled" (click)="setMenuEditMode(false)">
-                        <mat-icon color="primary">edit</mat-icon>
-                        {{ 'dynamicNavigation.editModeOff' | translate }}
-                    </button>
-                </div>
-            </mat-menu>
-            <!--            <div fxLayout="row" class="margin-bottom-x2 icon-container" matTooltip="Otvoriť menu"-->
-            <!--                 matTooltipPosition="right"-->
-            <!--                 fxLayoutAlign="center center">-->
-            <!--                <button mat-icon-button [matMenuTriggerFor]="railMenu">-->
-            <!--                    <mat-icon class="icon-large sidemenu-icon">more_vert</mat-icon>-->
-            <!--                </button>-->
-            <!--            </div>-->
-            <button mat-icon-button *ngIf="(hiddenCustomItems && hiddenCustomItems.length > 0) || canEditMenu()"
-                    [matMenuTriggerFor]="railMenu"
-                    class="menu-button mat-typography menu-font-color margin-bottom-x2"
-                    [matTooltip]="'toolbar.menu.open' | translate"
-                    matTooltipPosition="right">
-                <mat-icon>more_vert</mat-icon>
+                 [style.width.px]="configLeftMenu.width">
+        <div fxLayout="column" fxFill>
+            <ng-container *ngTemplateOutlet="portalLeftMenu || defaultLeftSide"></ng-container>
+            <span fxFlex></span>
+            <button class="rail-item" [matMenuTriggerFor]="accountMenu"
+                    [matTooltip]="includeUser ? user.fullName : ''" matTooltipPosition="right">
+                <span class="rail-indicator"><mat-icon>{{ includeUser ? 'account_circle' : 'settings' }}</mat-icon></span>
+                <span class="rail-label">{{ (includeUser ? 'toolbar.menu.account' : 'toolbar.menu.settings') | translate }}</span>
             </button>
         </div>
     </mat-sidenav>
 
-    <mat-sidenav-content class="first-content index-menu">
-        <mat-sidenav-container class="drawer-container" (backdropClick)="toggleLeftMenu()">
-            <mat-sidenav [mode]="configRightMenu.mode" [(opened)]="configRightMenu.opened" position="start"
+    <mat-sidenav-content>
+        <mat-sidenav-container class="drawer-container" (backdropClick)="closeOverlayMenu()">
+            <mat-sidenav position="start"
+                         [mode]="configRightMenu.mode"
+                         [(opened)]="configRightMenu.opened"
+                         (closedStart)="closeOverlayMenu()"
                          [disableClose]="configRightMenu.disableClose"
-                         class="drawer-content"
+                         [style.width.px]="configRightMenu.width"
+                         [style.margin-left.px]="isOverlayMenu && configLeftMenu.opened ? configLeftMenu.width : null"
                          mwlResizable
-                         (resizing)="onResizeEvent($event)"
-                         [style.width.px]="configRightMenu.width">
-
-                <div *ngTemplateOutlet="portalRightMenu || defaultRightSide"></div>
-
+                         (resizing)="onResizeEvent($event)">
+                <ng-container *ngTemplateOutlet="portalRightMenu || defaultRightSide"></ng-container>
             </mat-sidenav>
 
-            <mat-sidenav-content class="content-color">
-                <ng-content></ng-content>
+            <mat-sidenav-content>
+                <div class="page-area">
+                    @if (showBreadcrumbs) {
+                    <nc-breadcrumbs class="page-breadcrumbs"></nc-breadcrumbs>
+                    }
+                    <div class="page">
+                        <ng-content></ng-content>
+                    </div>
+                </div>
             </mat-sidenav-content>
         </mat-sidenav-container>
     </mat-sidenav-content>
 </mat-sidenav-container>
 
+<mat-menu #accountMenu="matMenu" xPosition="after">
+    @if (includeUser) {
+    <div class="account-header" (click)="$event.stopPropagation()">
+        <span class="account-name">{{ user.fullName }}@if (user.isImpersonating()) { ({{ user.getSelfOrImpersonated().fullName }})}</span>
+        <span class="account-email">{{ user.email }}</span>
+    </div>
+    <button mat-menu-item [routerLink]="profileRouterLink" (click)="closeOverlayMenu()">
+        <mat-icon>account_circle</mat-icon>
+        <span>{{ "toolbar.menu.profile" | translate }}</span>
+    </button>
+    @if (includeImpersonation && !user.isImpersonating()) {
+    <button mat-menu-item (click)="impersonate()">
+        <mat-icon>supervisor_account</mat-icon>
+        <span>{{ "side-menu.impersonation.submit" | translate }}</span>
+    </button>
+    }
+    @if (includeImpersonation && user.isImpersonating()) {
+    <button mat-menu-item (click)="stopImpersonating()">
+        <mat-icon>clear</mat-icon>
+        <span>{{ "side-menu.impersonation.cease" | translate }}</span>
+    </button>
+    }
+    <mat-divider></mat-divider>
+    }
+    @if ((hiddenCustomItems && hiddenCustomItems.length > 0) || canEditMenu()) {
+    @for (item of hiddenCustomItems$ | async; track itemsTrackBy($index, item)) {
+    <button mat-menu-item [routerLink]="item.routing.path" (click)="closeOverlayMenu()">
+        <mat-icon>{{ item.navigation.icon }}</mat-icon>
+        <span>{{ (item.navigation.translate ? (item.navigation.title | translate) : item.navigation.title) }}</span>
+    </button>
+    }
+    @if (canEditMenu()) {
+    <button mat-menu-item (click)="setMenuEditMode(!editModeEnabled)">
+        <mat-icon>edit</mat-icon>
+        <span>{{ (editModeEnabled ? "dynamicNavigation.editModeOff" : "dynamicNavigation.editModeOn") | translate }}</span>
+    </button>
+    }
+    <mat-divider></mat-divider>
+    }
+    <button mat-menu-item (click)="toggleDarkMode()">
+        <mat-icon>{{ darkMode ? 'light_mode' : 'dark_mode' }}</mat-icon>
+        <span>{{ (darkMode ? 'toolbar.menu.lightMode' : 'toolbar.menu.darkMode') | translate }}</span>
+    </button>
+    <button mat-menu-item (click)="openAppearance()">
+        <mat-icon>palette</mat-icon>
+        <span>{{ 'toolbar.menu.appearance' | translate }}</span>
+    </button>
+    @if (includeLanguage) {
+    <button mat-menu-item [matMenuTriggerFor]="languageMenu">
+        <mat-icon>translate</mat-icon>
+        <span>{{ 'toolbar.menu.lang' | translate }}</span>
+    </button>
+    }
+    @if (includeUser) {
+    <mat-divider></mat-divider>
+    <button mat-menu-item (click)="logout()">
+        <mat-icon>logout</mat-icon>
+        <span>{{ "toolbar.menu.logout" | translate }}</span>
+    </button>
+    }
+</mat-menu>
+
+<mat-menu #languageMenu="matMenu">
+    @for (lang of languages(); track lang) {
+    <button mat-menu-item (click)="setLanguage(lang)">
+        <mat-icon>{{ lang === currentLanguage() ? 'check' : '' }}</mat-icon>
+        <span>{{ "toolbar.menu." + lang | translate }}</span>
+    </button>
+    }
+</mat-menu>
+
 <ng-template #defaultLeftSide>
-
-    <div class="height-48 border-bottom" fxLayoutAlign="center center" fxHide.lt-md>
-        <button mat-icon-button (click)="toggleRightMenu()" class="menu-button mat-typography menu-font-color">
-            <mat-icon>menu</mat-icon>
-        </button>
-    </div>
-
-    <button mat-icon-button (click)="onHomeClick()"
-            class="menu-button mat-typography menu-font-color margin-top-default"
-            [matTooltip]="'toolbar.menu.home' | translate"
-            matTooltipPosition="right">
-        <mat-icon>home</mat-icon>
+    <button class="rail-item rail-menu" (click)="toggleRightMenu()" fxHide.lt-md>
+        <span class="rail-indicator"><mat-icon>menu</mat-icon></span>
     </button>
-
-    <button *ngIf='!isOnZeroLevel() && (canGoBackLoading$ | async) === false' mat-icon-button (click)="onBackClick()"
-            class="menu-button mat-typography menu-font-color" [matTooltip]="'toolbar.menu.back' | translate"
-            matTooltipPosition="right">
-        <mat-icon>arrow_back</mat-icon>
-    </button>
-    <div *ngIf="(canGoBackLoading$ | async)" fxLayout="column" fxLayoutAlign="center center" class="margin-top-default">
-        <mat-spinner color="primary" diameter="30" mode="indeterminate"></mat-spinner>
-    </div>
-
-    <div class="margin-top-x2"></div>
-
-    <button *ngFor='let folder of leftItems$ | async; trackBy: itemsTrackBy' mat-icon-button (click)="onItemClick(folder)"
-            class="menu-button mat-typography" [matTooltip]="folder.navigation.title"
-            [matTooltipPosition]="'right'"
-            [ngClass]="isParentOfActiveView(folder) ? 'active-tree-node'
-                       : (isItemAndNodeEqual(folder, currentNode) ? 'rail-selected-color' : 'menu-font-color')"
-            [routerLink]='folder.routing.path'
-            routerLinkActive="active">
-        <mat-icon>{{ folder.navigation.icon }}</mat-icon>
-    </button>
-
-    <div *ngIf="(leftLoading$ | async)" fxLayout="column" fxLayoutAlign="center center" class="margin-top-default">
-        <mat-spinner color="primary" diameter="30" mode="indeterminate"></mat-spinner>
-    </div>
+    @for (folder of leftItems$ | async; track itemsTrackBy($index, folder)) {
+    <a class="rail-item"
+       [class.active]="isParentOfActiveView(folder) || isItemAndNodeEqual(folder, currentNode)"
+       [attr.aria-current]="railLink.isActive ? 'page' : (isParentOfActiveView(folder) || isItemAndNodeEqual(folder, currentNode)) ? 'true' : null"
+       [routerLink]="folder.routing.path"
+       routerLinkActive
+       #railLink="routerLinkActive"
+       [routerLinkActiveOptions]="{exact: true}"
+       (click)="onItemClick(folder)">
+        <span class="rail-indicator"><mat-icon>{{ folder.navigation.icon }}</mat-icon></span>
+        <span class="rail-label">{{ (folder.navigation.translate ? (folder.navigation.title | translate) : folder.navigation.title) }}</span>
+    </a>
+    }
+    @if ((canGoBackLoading$ | async) || (leftLoading$ | async)) {
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    }
 </ng-template>
 
 <ng-template #defaultRightSide>
-    <div class="logo border-bottom" fxLayoutAlign="center center" fxHide.lt-md>
-        <img *ngIf="image !== undefined" [alt]="imageAlt" [src]="image" class="logoimg"
-             [routerLink]="imageRouterLink !== undefined ? imageRouterLink : []">
-    </div>
-    <div *ngIf="(rightLoading$ | async) === false" class="margin-top-default">
-<!--        <div fxLayout="column" fxLayoutAlign="end end" class="order-icon-wrapper">-->
-<!--            <button mat-icon-button fxLayout="column" fxLayoutAlign="center center"-->
-<!--                    class="mat-button mat-typography menu-font-color order-icon" (click)="switchOrder()"-->
-<!--                    [matTooltip]="isAscending() ? ('dynamicNavigation.ascending' | translate) : ('dynamicNavigation.descending' | translate)">-->
-<!--                <mat-icon>{{ isAscending() ? "expand_more" : "expand_less" }}</mat-icon>-->
-<!--            </button>-->
-<!--        </div>-->
-        <div *ngFor='let item of rightItems$ | async; trackBy: itemsTrackBy' fxLayoutAlign="start center"
-             [ngClass]="{'menu-tree-node': !editModeEnabled}">
-            <div (click)="onItemClick(item)"
-                 class="tree-node width-menu mat-typography mat-body-2" fxLayoutAlign="start center"  [routerLink]='item.routing.path'
-                 routerLinkActive="active-tree-node">
-                <mat-icon class="tree-node-icon">{{ item.navigation.icon }}</mat-icon>
-                <span class="tree-node-title" [matTooltip]="item.navigation.title" matTooltipShowDelay="500">{{ item.navigation.title }}</span>
-                <span class="menu-item-focus-overlay"></span>
-            </div>
-            <button mat-icon-button *ngIf="editModeEnabled" class="cursor-pointer" [matTooltip]="'dynamicNavigation.editMenuItem' | translate" matTooltipPosition="right" (click)="editMenuItem(item.resource)" fxLayoutAlign="end">
+    @if (image !== undefined) {
+    <mat-toolbar class="drawer-logo" fxHide.lt-md fxLayoutAlign="center center">
+        <img [alt]="imageAlt" [src]="image" height="32"
+             [routerLink]="imageRouterLink !== undefined ? imageRouterLink : []"/>
+    </mat-toolbar>
+    }
+    @if ((rightLoading$ | async)) {
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    } @else {
+    <mat-nav-list class="drawer-list"
+                  cdkDropList
+                  cdkDropListLockAxis="y"
+                  [cdkDropListDisabled]="!editModeEnabled"
+                  (cdkDropListDropped)="onRightItemDrop($event)">
+        @for (item of rightItems$ | async; track itemsTrackBy($index, item)) {
+        <a mat-list-item
+           cdkDrag
+           cdkDragPreviewContainer="parent"
+           [cdkDragDisabled]="!item.resource"
+           [routerLink]="item.routing.path"
+           routerLinkActive
+           #itemLink="routerLinkActive"
+           [activated]="itemLink.isActive"
+           (click)="onItemClick(item); closeOverlayMenu()">
+            <mat-icon matListItemIcon>{{ editModeEnabled && item.resource ? 'drag_indicator' : item.navigation.icon }}</mat-icon>
+            <span matListItemTitle>{{ (item.navigation.translate ? (item.navigation.title | translate) : item.navigation.title) }}</span>
+            @if (editModeEnabled) {
+            <button mat-icon-button matListItemMeta
+                    [matTooltip]="'dynamicNavigation.editMenuItem' | translate"
+                    (click)="$event.preventDefault(); $event.stopPropagation(); editMenuItem(item.resource)">
                 <mat-icon>edit</mat-icon>
             </button>
-        </div>
-        <div *ngIf="moreItems.length > 0">
-            <button mat-button color="primary"
-                    (click)="loadMoreItems()">{{ 'dynamicNavigation.loadMoreItems' | translate }}
-            </button>
-        </div>
-        <div *ngIf="editModeEnabled" class="tree-node mat-typography mat-body-2" fxLayoutAlign="start center" (click)="createMenuItem()">
-            <mat-icon class="tree-node-icon">add</mat-icon>
-            <span>{{ 'dynamicNavigation.createMenuItemBtn' | translate }}</span>
-            <span class="menu-item-focus-overlay"></span>
-        </div>
-    </div>
-    <div *ngIf="(rightLoading$ | async)" fxLayout="column" fxLayoutAlign="center center" class="margin-top-default">
-        <mat-spinner color="primary" diameter="40" mode="indeterminate"></mat-spinner>
-    </div>
+            }
+        </a>
+        }
+        @if (editModeEnabled) {
+        <a mat-list-item (click)="createMenuItem()">
+            <mat-icon matListItemIcon>add</mat-icon>
+            <span matListItemTitle>{{ "dynamicNavigation.createMenuItemBtn" | translate }}</span>
+        </a>
+        }
+    </mat-nav-list>
+    @if (moreItems.length > 0) {
+    <button mat-button (click)="loadMoreItems()">{{ "dynamicNavigation.loadMoreItems" | translate }}</button>
+    }
+    }
 </ng-template>

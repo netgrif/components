@@ -1,9 +1,8 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {SearchModeComponent} from './search-mode.component';
 import {FlexLayoutModule, FlexModule} from '@ngbracket/ngx-layout';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {Component} from '@angular/core';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {Component, ChangeDetectionStrategy} from '@angular/core';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {
     AllowedNetsService, AllowedNetsServiceFactory,
     AuthenticationMethodService,
@@ -34,8 +33,7 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material/core';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {RouterTestingModule} from '@angular/router/testing';
-import {NgxMatDatetimePickerModule} from '@angular-material-components/datetime-picker';
-
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('SearchModeComponent', () => {
     let component: SearchModeComponent;
@@ -43,21 +41,19 @@ describe('SearchModeComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
+            declarations: [SearchModeComponent, TestWrapperComponent],
             imports: [
                 MatInputModule,
                 FlexModule,
                 FlexLayoutModule,
                 MatSortModule,
-                NoopAnimationsModule,
                 MatSelectModule,
                 MatFormFieldModule,
                 MatDatepickerModule,
                 MatNativeDateModule,
                 MatSnackBarModule,
-                HttpClientTestingModule,
                 TranslateLibModule,
                 MaterialModule,
-                NgxMatDatetimePickerModule,
                 RouterTestingModule.withRoutes([])
             ],
             providers: [
@@ -74,9 +70,10 @@ describe('SearchModeComponent', () => {
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: ViewService, useClass: TestViewService},
                 CaseHeaderService,
-                {provide: AllowedNetsService, useFactory: TestCaseViewAllowedNetsFactory, deps: [AllowedNetsServiceFactory]}
+                {provide: AllowedNetsService, useFactory: TestCaseViewAllowedNetsFactory, deps: [AllowedNetsServiceFactory]},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
             ],
-            declarations: [SearchModeComponent, TestWrapperComponent],
         })
             .compileComponents();
     }));
@@ -98,7 +95,9 @@ describe('SearchModeComponent', () => {
 
 @Component({
     selector: 'nc-test-wrapper',
-    template: '<nc-search-mode [headerService]="service"></nc-search-mode>'
+    template: '<nc-search-mode [headerService]="service"></nc-search-mode>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestWrapperComponent {
     constructor(public service: CaseHeaderService) {

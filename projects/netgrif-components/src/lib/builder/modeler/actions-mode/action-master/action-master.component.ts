@@ -1,5 +1,5 @@
 import {ComponentType} from '@angular/cdk/overlay';
-import {Component, Injector, OnInit} from '@angular/core';
+import {Component, Injector, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {Sort} from '@angular/material/sort';
 import {PageMasterComponent} from '../../components/master-detail/page-master.component';
 import {MasterItem} from '../action-editor/classes/master-item';
@@ -14,7 +14,9 @@ import {BuilderModeService} from "../../../services/builder-mode.service";
 @Component({
   selector: 'nc-builder-action-master',
   templateUrl: './action-master.component.html',
-  styleUrl: './action-master.component.scss'
+  styleUrl: './action-master.component.scss',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class ActionMasterComponent extends PageMasterComponent implements OnInit {
 
@@ -68,6 +70,7 @@ export class ActionMasterComponent extends PageMasterComponent implements OnInit
                 return;
             }
         }
+        this.currentSort = {...event};
         this.masterService.setSortToLocalStorage(event);
         this._allData = this.masterService.getAllDataSorted(event);
         this.updatePage();

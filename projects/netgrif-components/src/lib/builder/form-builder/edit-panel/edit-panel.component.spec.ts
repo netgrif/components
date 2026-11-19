@@ -15,14 +15,16 @@ import {TranslateService} from "@ngx-translate/core";
 import {DataModeService} from "../../modeler/data-mode/data-mode.service";
 import {TutorialService} from "../../tutorial/tutorial-service";
 import {MortgageService} from "../../modeler/mortgage.service";
-import {HttpClientTestingModule} from "@angular/common/http/testing";
+import {provideHttpClientTesting} from "@angular/common/http/testing";
 import {ModelImportService} from "../../modeler/model-import-service";
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('EditPanelComponent', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule],
             declarations: [EditPanelComponent],
+            schemas: [NO_ERRORS_SCHEMA],
+            imports: [],
             providers: [
                 GridsterService,
                 FieldListService,
@@ -39,8 +41,9 @@ describe('EditPanelComponent', () => {
                 TutorialService,
                 MortgageService,
                 {provide: ModelImportService, useValue: {}},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
             ],
-            schemas: [NO_ERRORS_SCHEMA],
         });
     });
 

@@ -1,4 +1,4 @@
-import {Component, Inject, OnDestroy, ViewChild} from '@angular/core';
+import {Component, Inject, OnDestroy, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {NAE_SIDE_MENU_CONTROL} from '../../side-menu-injection-token';
 import {SideMenuControl} from '../../models/side-menu-control';
 import {FilterRepository} from '../../../filter/filter.repository';
@@ -21,10 +21,13 @@ import {Subscription} from 'rxjs';
  * - filter selection is confirmed by the user. Message: `Selected filter was confirmed`, Data: the selected filter. If the user didn't
  * select any filter this event will not be published.
  *
+ * @deprecated the side menu is deprecated, the library opens dialogs instead (`DialogComponentsModule`)
  */
 @Component({
     selector: 'ncc-abstract-filter-selector',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractFilterSelectorComponent implements OnDestroy {
 

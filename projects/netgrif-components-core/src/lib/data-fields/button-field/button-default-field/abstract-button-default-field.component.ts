@@ -1,4 +1,4 @@
-import {Component, Inject, Optional} from "@angular/core";
+import {Component, Inject, Optional, ChangeDetectionStrategy} from "@angular/core";
 import {TranslateService} from "@ngx-translate/core";
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
 import {ButtonField, ButtonFieldValidation} from "../models/button-field";
@@ -9,7 +9,9 @@ import {AbstractBaseDataFieldComponent} from "../../base-component/abstract-base
 
 @Component({
     selector: 'ncc-abstract-button-default-field',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractButtonDefaultFieldComponent extends AbstractBaseDataFieldComponent<ButtonField> {
 

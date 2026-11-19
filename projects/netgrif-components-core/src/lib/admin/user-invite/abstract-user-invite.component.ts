@@ -8,13 +8,15 @@ import {OrganizationListService} from './services/organization-list.service';
 import {SignUpService} from '../../authentication/sign-up/services/sign-up.service';
 import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 import {UserInvitationRequest} from '../../authentication/sign-up/models/user-invitation-request';
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {debounceTime, take} from 'rxjs/operators';
 import {Subscription} from "rxjs";
 
 @Component({
     selector: 'ncc-abstract-user-invite',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractUserInviteComponent implements OnInit, OnDestroy {
 
@@ -86,6 +88,24 @@ export abstract class AbstractUserInviteComponent implements OnInit, OnDestroy {
         if (itemIndex === -1) {
             this.invitedRoles.push(role);
         }
+    }
+
+    public isGroupInvited(org: GroupInterface): boolean {
+        return this.invitedGroups.some(g => g.id === org.id);
+    }
+
+    /** adds the organization to the invitation or removes it (checkbox of the organization list) */
+    public toggleGroup(org: GroupInterface): void {
+        this.isGroupInvited(org) ? this.removeGroup(org) : this.addGroup(org);
+    }
+
+    public isRoleInvited(role: ExtendedProcessRole): boolean {
+        return this.invitedRoles.some(r => r.stringId === role.stringId);
+    }
+
+    /** adds the role to the invitation or removes it (checkbox of the role) */
+    public toggleRole(role: ExtendedProcessRole): void {
+        this.isRoleInvited(role) ? this.removeRole(role) : this.addRole(role);
     }
 
     public invite(): void {

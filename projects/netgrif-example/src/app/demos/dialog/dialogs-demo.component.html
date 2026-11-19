@@ -1,0 +1,53 @@
+@if (demo$ | async; as demo) {
+<ne-demo-page [title]="demo.title" [description]="demo.description" [api]="demo.api" [snippets]="snippets(demo)">
+    <div demoPreview class="preview">
+        <button mat-flat-button type="button" (click)="open(demo)">
+            <mat-icon>open_in_new</mat-icon>
+            Open dialog
+        </button>
+        <h3 class="mat-title-small events-title">Outputs</h3>
+        @if (events.length === 0) {
+        <p class="mat-body-small events-empty">Close the dialog, the result of <code>afterClosed()</code> appears here.</p>
+        }
+        @for (event of events; track $index) {
+        <div class="event"><b>{{ event.name }}</b> <code>{{ event.value }}</code></div>
+        }
+    </div>
+    <div demoConfig class="ne-config">
+        <mat-form-field subscriptSizing="dynamic">
+            <mat-label>Density</mat-label>
+            <mat-select [(ngModel)]="density">
+                @for (d of densities; track d) {
+                <mat-option [value]="d">{{ d }}{{ d === 0 ? ' (default)' : '' }}</mat-option>
+                }
+            </mat-select>
+        </mat-form-field>
+        @if (demo.longTexts) {
+        <mat-slide-toggle [(ngModel)]="longTexts">Long texts</mat-slide-toggle>
+        }
+        @switch (demo.id) {
+        @case ('new-case') {
+        <mat-slide-toggle [(ngModel)]="bothProcesses">Two processes to choose from</mat-slide-toggle>
+        <mat-slide-toggle [(ngModel)]="enableCaseTitle">Case title</mat-slide-toggle>
+        <mat-slide-toggle [(ngModel)]="isCaseTitleRequired">Title required</mat-slide-toggle>
+        }
+        @case ('task-view') {
+        <mat-slide-toggle [(ngModel)]="autoCloseOnEvent">Close after a task event</mat-slide-toggle>
+        }
+        @case ('filter-selector') {
+        <mat-form-field subscriptSizing="dynamic">
+            <mat-label>Filter type</mat-label>
+            <mat-select [(ngModel)]="filterType">
+                <mat-option value="all">All filters</mat-option>
+                <mat-option value="case">Case filters</mat-option>
+                <mat-option value="task">Task filters</mat-option>
+            </mat-select>
+        </mat-form-field>
+        }
+        @case ('single-task-view') {
+        <mat-slide-toggle [(ngModel)]="autoCloseOnEvent">Close after a task event</mat-slide-toggle>
+        }
+        }
+    </div>
+</ne-demo-page>
+}

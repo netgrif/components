@@ -1,10 +1,3 @@
-mat-divider.style-fix {
-    height: 30px;
-    margin-top: 0;
-    margin-left: 4px;
-    margin-right: 4px;
-}
-
 :host {
     display: block;
     width: 100%;
@@ -12,8 +5,43 @@ mat-divider.style-fix {
 }
 
 .control {
+    display: flex;
+    align-items: center;
+    gap: 2px;
     width: 100%;
     min-width: 0;
     overflow-x: auto;
     overflow-y: hidden;
+}
+
+mat-divider.style-fix {
+    height: 30px;
+    margin: 0 4px;
+}
+
+.spacer {
+    flex: 1 1 auto;
+}
+
+.read-only-status {
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-items: center;
+    gap: 8px;
+    box-sizing: border-box;
+    height: 32px;
+    margin: 0 8px;
+    padding: 0 16px 0 8px;
+    border: 1px solid var(--mat-sys-outline-variant);
+    border-radius: var(--mat-sys-corner-small);
+    color: var(--mat-sys-on-surface-variant);
+    font: var(--mat-sys-label-large);
+    letter-spacing: var(--mat-sys-label-large-tracking);
+    white-space: nowrap;
+
+    mat-icon {
+        width: 18px;
+        height: 18px;
+        font-size: 18px;
+    }
 }

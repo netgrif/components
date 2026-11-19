@@ -1,34 +1,40 @@
-<div fxLayout="column" fxLayoutAlign="start center" fxFlex>
-    <ng-container *ngIf="cases$ | async as cases">
-
-        <div *ngIf="(loading$ | async) === false && cases.length === 0" fxLayout="column"
-             fxLayoutAlign="center center" fxFlex>
-            <mat-icon color="accent" class="margin-bottom-default margin-top-default">{{ getEmptyContentIcon() }}</mat-icon>
-            <span *ngIf="!hasEmptyContentText()" class="font-size-20">{{ 'view-list.noCasesSatisfyingThisFilter' | translate}}</span>
-            <span *ngIf="hasEmptyContentText()" class="font-size-20">{{ getEmptyContentText() }}</span>
+<div class="list-viewport" [ncListViewport]="header">
+    <div class="list-content">
+        <div class="list-header" #header><ng-content select="[ncListHeader]"></ng-content></div>
+        @if (cases$ | async; as cases) {
+        @if ((loading$ | async) === false && cases.length === 0) {
+        <div class="nae-empty-state" role="status">
+            <mat-icon class="nae-empty-state-icon">{{ getEmptyContentIcon() }}</mat-icon>
+            <span class="nae-empty-state-title">{{ hasEmptyContentText() ? getEmptyContentText() : ("view-list.noCasesSatisfyingThisFilter" | translate) }}</span>
+            @if (!hasEmptyContentText()) { <span class="nae-empty-state-text">{{ "view-list.noCasesHint" | translate }}</span> }
         </div>
-
-        <mat-accordion multi="true" class="full-width" >
-            <div [ngStyle]="{'width': width ? width : '100%' }" class="fix-padding">
-                <nc-case-panel [responsiveBody]="responsiveBody"
-                               [textEllipsis]="textEllipsis"
-                               *ngFor="let case_ of cases;
-                                let first = first;
-                                let last = last;
-                                trackBy: trackById"
-                               [showCasePanelIcon]="showCasePanelIcon" [approval]="approval"
-                               [showDeleteMenu]="showDeleteMenu" [first]="first" [last]="last"
-                               [case_]="case_" [selectedHeaders$]="selectedHeaders$" (click)="onCaseClick(case_)">
-                </nc-case-panel>
-
-                <div *ngIf="loading$ | async" fxLayout="column" fxLayoutAlign="center center"
-                     class="margin-top-default">
-                    <mat-spinner color="primary" diameter="50"></mat-spinner>
-                </div>
-            </div>
+        }
+        <mat-accordion multi="true" [ngStyle]="{ width: width ? width : '100%' }">
+            @for (case_ of cases; track trackById($index, case_); let first = $first; let last = $last) {
+            <nc-case-panel [responsiveBody]="responsiveBody"
+                           [textEllipsis]="textEllipsis"
+                           [showCasePanelIcon]="showCasePanelIcon"
+                           [approval]="approval"
+                           [showDeleteMenu]="showDeleteMenu"
+                           [first]="first"
+                           [last]="last"
+                           [case_]="case_"
+                           [selectedHeaders$]="selectedHeaders$"
+                           (click)="onCaseClick(case_)"></nc-case-panel>
+            }
         </mat-accordion>
-        <mat-paginator [length]="length" [pageSize]="pageSize" [pageIndex]="pageIndex" color="primary" [disabled]="disabled"
-                       [pageSizeOptions]="pageSizeOptions" (page)="onPageChanged($event)" showFirstLastButtons>
-        </mat-paginator>
-    </ng-container>
+        }
+        @if (loading$ | async) {
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        }
+    </div>
 </div>
+@if (cases$ | async) {
+<mat-paginator [length]="length"
+               [pageSize]="pageSize"
+               [pageIndex]="pageIndex"
+               [disabled]="disabled"
+               [pageSizeOptions]="pageSizeOptions"
+               (page)="onPageChanged($event)"
+               showFirstLastButtons></mat-paginator>
+}

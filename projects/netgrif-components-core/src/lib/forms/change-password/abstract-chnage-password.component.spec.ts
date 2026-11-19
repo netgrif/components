@@ -2,8 +2,7 @@ import {AbstractChangePasswordComponent} from './abstract-change-password.compon
 import {waitForAsync, ComponentFixture, TestBed, inject} from '@angular/core/testing';
 import {MaterialModule} from '../../material/material.module';
 import {FlexLayoutModule} from '@ngbracket/ngx-layout';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
@@ -11,7 +10,7 @@ import {AuthenticationMethodService} from '../../authentication/services/authent
 import {
     NullAuthenticationService
 } from '../../authentication/services/methods/null-authentication/null-authentication.service';
-import {Component, Inject, NO_ERRORS_SCHEMA, Optional} from '@angular/core';
+import {Component, Inject, NO_ERRORS_SCHEMA, Optional, ChangeDetectionStrategy} from '@angular/core';
 import {FormBuilder} from '@angular/forms';
 import {LoggerService} from '../../logger/services/logger.service';
 import {TranslateService} from '@ngx-translate/core';
@@ -20,6 +19,7 @@ import {UserService} from "../../user/services/user.service";
 import {encodeBase64} from "../../utility/base64";
 import {MockProfileService} from "../../utility/tests/mocks/mock-profile.service";
 import {NAE_MIN_PASSWORD_LENGTH} from "../min-password-length-token";
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('AbstractChangePasswordComponent', () => {
     let component: TestRegFormComponent;
@@ -28,20 +28,20 @@ describe('AbstractChangePasswordComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
+            declarations: [TestRegFormComponent],
+            schemas: [NO_ERRORS_SCHEMA],
             imports: [
                 MaterialModule,
                 FlexLayoutModule,
-                NoopAnimationsModule,
-                HttpClientTestingModule,
                 TranslateLibModule
             ],
-            declarations: [TestRegFormComponent],
             providers: [
                 {provide: ProfileService, useClass: MockProfileService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
-                {provide: AuthenticationMethodService, useClass: NullAuthenticationService}
-            ],
-            schemas: [NO_ERRORS_SCHEMA]
+                {provide: AuthenticationMethodService, useClass: NullAuthenticationService},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
+            ]
         })
             .compileComponents();
     }));
@@ -83,7 +83,9 @@ describe('AbstractChangePasswordComponent', () => {
 
 @Component({
     selector: 'ncc-test-reg',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestRegFormComponent extends AbstractChangePasswordComponent {
     constructor(formBuilder: FormBuilder, profileService: ProfileService, user: UserService, log: LoggerService, translate: TranslateService, @Optional() @Inject(NAE_MIN_PASSWORD_LENGTH)  minPasswordLength) {

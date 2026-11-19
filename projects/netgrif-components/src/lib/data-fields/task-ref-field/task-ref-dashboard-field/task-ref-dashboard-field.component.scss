@@ -1,21 +1,16 @@
-.fill-available-space {
-    width: 100%;
-    height: 100%;
-}
-
-:host ::ng-deep .dashboard-workflow-view,
-:host ::ng-deep .dashboard-task-list,
-:host ::ng-deep .dashboard-case-list {
-    min-height: 320px !important;
+:host ::ng-deep nc-task-list,
+:host ::ng-deep nc-case-list,
+:host ::ng-deep .dashboard-workflow-view {
+    min-height: 320px;
 }
 
 :host ::ng-deep .dashboard-iframe-card {
-    min-height: 304px !important;
+    min-height: 304px;
 }
 
 :host ::ng-deep .dashboard-bar-chart,
 :host ::ng-deep .dashboard-pie-chart,
 :host ::ng-deep .dashboard-line-chart {
-    height: 320px !important;
-    width: 200px !important;
+    height: 320px;
+    width: 200px;
 }

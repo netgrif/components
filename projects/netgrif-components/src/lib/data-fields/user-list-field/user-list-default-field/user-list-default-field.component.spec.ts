@@ -10,11 +10,10 @@ import {
     WrappedBoolean,
     UserListValue
 } from "@netgrif/components-core";
-import {AngularResizeEventModule} from "angular-resize-event";
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {HttpClientTestingModule} from "@angular/common/http/testing";
-import {Component, CUSTOM_ELEMENTS_SCHEMA} from "@angular/core";
+import {provideHttpClientTesting} from "@angular/common/http/testing";
+import {Component, CUSTOM_ELEMENTS_SCHEMA, ChangeDetectionStrategy} from "@angular/core";
 import {FormControl} from "@angular/forms";
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('UserListDefaultFieldComponent', () => {
   let component: UserListDefaultFieldComponent;
@@ -22,9 +21,11 @@ describe('UserListDefaultFieldComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-        imports: [MaterialModule, AngularResizeEventModule, BrowserAnimationsModule, HttpClientTestingModule, TranslateLibModule],
-        declarations: [
-            UserListDefaultFieldComponent,
+        declarations: [UserListDefaultFieldComponent],
+        schemas: [CUSTOM_ELEMENTS_SCHEMA],
+        imports: [
+            MaterialModule,
+            TranslateLibModule
         ],
         providers: [
             SideMenuService,
@@ -40,8 +41,10 @@ describe('UserListDefaultFieldComponent', () => {
                     formControlRef: new FormControl(),
                     showLargeLayout: new WrappedBoolean()
                 } as DataFieldPortalData<UserListField>
-            }],
-        schemas: [CUSTOM_ELEMENTS_SCHEMA]
+            },
+            provideHttpClient(withXhr(), withInterceptorsFromDi()),
+            provideHttpClientTesting()
+        ]
     })
     .compileComponents();
   });
@@ -63,7 +66,9 @@ describe('UserListDefaultFieldComponent', () => {
 
 @Component({
     selector: 'nc-test-wrapper',
-    template: '<nc-user-list-default-field [dataField]="field"> </nc-user-list-default-field>'
+    template: '<nc-user-list-default-field [dataField]="field"> </nc-user-list-default-field>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestWrapperComponent {
     field = new UserListField('', '', {

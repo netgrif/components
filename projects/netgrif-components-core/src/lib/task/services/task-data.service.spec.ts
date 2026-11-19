@@ -2,7 +2,7 @@ import {TestBed} from '@angular/core/testing';
 import {TaskDataService} from './task-data.service';
 import {TaskRequestStateService} from './task-request-state.service';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
 import {MaterialModule} from '../../material/material.module';
@@ -10,7 +10,6 @@ import {DataFocusPolicyService} from './data-focus-policy.service';
 import {TaskContentService} from '../../task-content/services/task-content.service';
 import {NAE_TASK_OPERATIONS} from '../models/task-operations-injection-token';
 import {NullTaskOperations} from '../models/null-task-operations';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {UnlimitedTaskContentService} from '../../task-content/services/unlimited-task-content.service';
 import {TaskEventService} from '../../task-content/services/task-event.service';
 import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
@@ -33,6 +32,7 @@ import {createMockCase} from '../../utility/tests/utility/create-mock-case';
 import {createMockNet} from '../../utility/tests/utility/create-mock-net';
 import {Injectable} from "@angular/core";
 import {FrontActionService} from "../../actions/services/front-action.service";
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('TaskDataService', () => {
     let service: TaskDataService;
@@ -51,9 +51,7 @@ describe('TaskDataService', () => {
         TestBed.configureTestingModule({
             imports: [
                 TranslateLibModule,
-                HttpClientTestingModule,
                 MaterialModule,
-                NoopAnimationsModule,
                 SnackBarModule
             ],
             providers: [
@@ -68,6 +66,8 @@ describe('TaskDataService', () => {
                 {provide: NAE_TASK_OPERATIONS, useClass: NullTaskOperations},
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: TaskResourceService, useClass: MockTaskResourceService},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting(),
             ]
         });
         service = TestBed.inject(TaskDataService);

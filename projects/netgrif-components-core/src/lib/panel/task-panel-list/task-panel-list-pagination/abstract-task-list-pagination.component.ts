@@ -1,4 +1,4 @@
-import {Component, Inject, Input, Optional} from '@angular/core';
+import {Component, Inject, Input, Optional, ChangeDetectionStrategy} from '@angular/core';
 import {Observable} from 'rxjs';
 import {tap} from 'rxjs/operators';
 import {ActivatedRoute} from '@angular/router';
@@ -11,7 +11,9 @@ import {InjectedTabData} from '../../../tabs/interfaces';
 
 @Component({
     selector: 'ncc-abstract-task-list-pagination-component',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractTaskListPaginationComponent extends AbstractDefaultTaskListComponent {
 

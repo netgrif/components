@@ -1,6 +1,6 @@
 import {inject, TestBed} from '@angular/core/testing';
-import {HTTP_INTERCEPTORS, HttpClient} from '@angular/common/http';
-import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
+import {HTTP_INTERCEPTORS, HttpClient, provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
+import {HttpTestingController, provideHttpClientTesting} from '@angular/common/http/testing';
 import {TranslateInterceptor} from './translate-interceptor';
 import {ConfigurationService} from '../configuration/configuration.service';
 import {TestConfigurationService} from '../utility/tests/test-config';
@@ -11,7 +11,6 @@ import {MockAuthenticationService} from '../utility/tests/mocks/mock-authenticat
 import {UserResourceService} from '../resources/engine-endpoint/user-resource.service';
 import {MockUserResourceService} from '../utility/tests/mocks/mock-user-resource.service';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {MockAuthenticationMethodService} from '../utility/tests/mocks/mock-authentication-method-service';
 
 describe('TranslateInterceptor', () => {
@@ -19,10 +18,8 @@ describe('TranslateInterceptor', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
-                HttpClientTestingModule,
                 TranslateLibModule,
-                MatSnackBarModule,
-                NoopAnimationsModule
+                MatSnackBarModule
             ],
             providers: [
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
@@ -33,7 +30,9 @@ describe('TranslateInterceptor', () => {
                     provide: HTTP_INTERCEPTORS,
                     useClass: TranslateInterceptor,
                     multi: true
-                }
+                },
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
             ]
         });
     });

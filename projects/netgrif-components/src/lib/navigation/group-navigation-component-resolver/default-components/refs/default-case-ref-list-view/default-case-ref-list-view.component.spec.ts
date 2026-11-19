@@ -13,7 +13,6 @@ import {
     GroupNavigationConstants,
     SimpleFilter
 } from '@netgrif/components-core';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterTestingModule} from '@angular/router/testing';
 import {of} from 'rxjs';
 import {DefaultTabbedTaskViewComponent} from '../../tabbed/default-tabbed-task-view/default-tabbed-task-view.component';
@@ -27,7 +26,6 @@ describe('DefaultCaseRefListViewComponent', () => {
         imports: [
             NavigationComponentModule,
             TestMockDependenciesModule,
-            NoopAnimationsModule,
             RouterTestingModule.withRoutes([]),
         ],
         providers: [

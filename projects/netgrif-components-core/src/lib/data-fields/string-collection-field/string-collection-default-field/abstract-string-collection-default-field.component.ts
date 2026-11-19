@@ -1,4 +1,4 @@
-import {Component, ElementRef, Inject, OnInit, Optional, ViewChild} from '@angular/core';
+import {Component, ElementRef, Inject, OnInit, Optional, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {AbstractBaseDataFieldComponent} from '../../base-component/abstract-base-data-field.component';
 import {TranslateService} from '@ngx-translate/core';
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from '../../models/data-field-portal-data-injection-token';
@@ -10,6 +10,8 @@ import {Subscription} from 'rxjs';
 @Component({
     selector: 'ncc-abstract-string-collection-default-field',
     template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false,
 })
 export abstract class AbstractStringCollectionDefaultFieldComponent extends AbstractBaseDataFieldComponent<StringCollectionField> implements OnInit {
 

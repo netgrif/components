@@ -1,7 +1,6 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {CommonModule} from '@angular/common';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {HotkeyModule, HotkeysService} from 'angular2-hotkeys';
 import {of, Subject} from 'rxjs';
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
@@ -14,7 +13,7 @@ import {SnackBarModule} from '../../../snack-bar/snack-bar.module';
 import {TranslateLibModule} from '../../../translate/translate-lib.module';
 import {ErrorSnackBarComponent} from '../../../snack-bar/components/error-snack-bar/error-snack-bar.component';
 import {SuccessSnackBarComponent} from '../../../snack-bar/components/success-snack-bar/success-snack-bar.component';
-import {Component, Inject} from '@angular/core';
+import {Component, Inject, ChangeDetectionStrategy} from '@angular/core';
 import {SnackBarService} from '../../../snack-bar/services/snack-bar.service';
 import {AbstractNewCaseComponent} from './abstract-new-case.component';
 import {FormBuilder} from '@angular/forms';
@@ -22,6 +21,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {CaseResourceService} from '../../../resources/engine-endpoint/case-resource.service';
 import {tap} from 'rxjs/operators';
 import {PetriNetReferenceWithPermissions} from '../../../process/petri-net-reference-with-permissions';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('AbstractNewCaseComponent', () => {
     let component: TestNewCaseComponent;
@@ -33,11 +33,10 @@ describe('AbstractNewCaseComponent', () => {
         allowedNets$ = new Subject<Array<PetriNetReferenceWithPermissions>>();
 
         TestBed.configureTestingModule({
+            declarations: [TestNewCaseComponent],
             imports: [
                 CommonModule,
                 MaterialModule,
-                NoopAnimationsModule,
-                HttpClientTestingModule,
                 SnackBarModule,
                 TranslateLibModule,
                 HotkeyModule.forRoot()
@@ -51,10 +50,9 @@ describe('AbstractNewCaseComponent', () => {
                             allowedNetsTapCount++;
                         }))})
                 },
-                {provide: ConfigurationService, useClass: TestConfigurationService}
-            ],
-            declarations: [
-                TestNewCaseComponent,
+                {provide: ConfigurationService, useClass: TestConfigurationService},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
             ],
         }).compileComponents();
         allowedNetsTapCount = 0;
@@ -83,7 +81,9 @@ describe('AbstractNewCaseComponent', () => {
 
 @Component({
     selector: 'ncc-test-newcase',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestNewCaseComponent extends AbstractNewCaseComponent {
     constructor(@Inject(NAE_SIDE_MENU_CONTROL) protected _sideMenuControl: SideMenuControl,

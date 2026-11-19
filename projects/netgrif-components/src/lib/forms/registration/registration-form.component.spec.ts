@@ -2,9 +2,8 @@ import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {RegistrationFormComponent} from './registration-form.component';
 import {FlexLayoutModule} from '@ngbracket/ngx-layout';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {NO_ERRORS_SCHEMA} from '@angular/core';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {
     ConfigurationService,
     MaterialModule,
@@ -12,6 +11,7 @@ import {
     TestConfigurationService,
     TranslateLibModule
 } from '@netgrif/components-core';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('RegistrationPanelComponent', () => {
     let component: RegistrationFormComponent;
@@ -19,19 +19,19 @@ describe('RegistrationPanelComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
+            declarations: [RegistrationFormComponent],
+            schemas: [NO_ERRORS_SCHEMA],
             imports: [
                 MaterialModule,
                 FlexLayoutModule,
-                BrowserAnimationsModule,
-                HttpClientTestingModule,
                 TranslateLibModule
             ],
-            declarations: [RegistrationFormComponent],
             providers: [
                 SignUpService,
-                {provide: ConfigurationService, useClass: TestConfigurationService}
-            ],
-            schemas: [NO_ERRORS_SCHEMA]
+                {provide: ConfigurationService, useClass: TestConfigurationService},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
+            ]
         })
             .compileComponents();
     }));

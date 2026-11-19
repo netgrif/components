@@ -1,13 +1,18 @@
-import {AfterViewInit, Component, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {PortalWrapper} from '../models/portal-wrapper';
 import {SideMenuService} from '../services/side-menu.service';
 import {from, Observable} from 'rxjs';
 import {tap} from 'rxjs/operators';
 import {MatDrawerToggleResult, MatSidenav} from '@angular/material/sidenav';
 
+/**
+ * @deprecated the side menu is deprecated, the library opens dialogs instead (`DialogComponentsModule`)
+ */
 @Component({
     selector: 'ncc-abstract-side-menu-container',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractSideMenuContainerComponent implements AfterViewInit {
 

@@ -1,4 +1,4 @@
-import {Component, Inject, Optional} from '@angular/core';
+import {Component, Inject, Optional, ChangeDetectionStrategy} from '@angular/core';
 import {TranslateService} from "@ngx-translate/core";
 import {
     AbstractNumberDecimalFieldComponent,
@@ -12,7 +12,8 @@ import {MatFormFieldAppearance} from "@angular/material/form-field";
 @Component({
   selector: 'nc-number-decimal-field',
   templateUrl: './number-decimal-field.component.html',
-  styleUrls: ['./number-decimal-field.component.scss']
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class NumberDecimalFieldComponent extends AbstractNumberDecimalFieldComponent {
     constructor(decimalPipe: DecimalPipe,
@@ -22,12 +23,12 @@ export class NumberDecimalFieldComponent extends AbstractNumberDecimalFieldCompo
         super(decimalPipe, translate, dataFieldPortalData);
     }
 
+    /**
+     * @deprecated data fields of the library are always `outline` (Material 3 design),
+     * the `appearance` of the field layout is not used any more.
+     */
     getAppearance(): MatFormFieldAppearance {
-        if (!this.dataField?.materialAppearance) {
-            return 'fill';
-        }
-        const validAppearances: MatFormFieldAppearance[] = ['fill', 'outline'];
-        return validAppearances.includes(this.dataField.materialAppearance as MatFormFieldAppearance) ? this.dataField.materialAppearance as MatFormFieldAppearance : 'fill';
+            return 'outline';
     }
 
     onFocusOut(event: Event) {

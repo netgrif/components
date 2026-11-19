@@ -1,9 +1,8 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {CommonModule, CurrencyPipe} from '@angular/common';
 import {FlexModule} from '@ngbracket/ngx-layout';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {Component, NO_ERRORS_SCHEMA, Optional} from '@angular/core';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
+import {Component, NO_ERRORS_SCHEMA, Optional, ChangeDetectionStrategy} from '@angular/core';
 import {of} from 'rxjs';
 import {AbstractCasePanelComponent} from './abstract-case-panel.component';
 import {HeaderColumn, HeaderColumnType} from '../../header/models/header-column';
@@ -32,6 +31,7 @@ import {AllowedNetsService} from '../../allowed-nets/services/allowed-nets.servi
 import {AllowedNetsServiceFactory} from '../../allowed-nets/services/factory/allowed-nets-service-factory';
 import {PermissionService} from '../../authorization/permission/permission.service';
 import {PermissionType} from '../../process/permissions';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('AbstractCasePanelComponent', () => {
     let component: TestCasePanelComponent;
@@ -39,13 +39,13 @@ describe('AbstractCasePanelComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
+            declarations: [TestCasePanelComponent, TestWrapperComponent],
+            schemas: [NO_ERRORS_SCHEMA],
             imports: [
                 MaterialModule,
                 CommonModule,
                 FlexModule,
-                NoopAnimationsModule,
-                TranslateLibModule,
-                HttpClientTestingModule
+                TranslateLibModule
             ],
             providers: [
                 SnackBarService,
@@ -67,13 +67,10 @@ describe('AbstractCasePanelComponent', () => {
                     provide: AllowedNetsService,
                     useFactory: TestCaseViewAllowedNetsFactory,
                     deps: [AllowedNetsServiceFactory]
-                }
-            ],
-            declarations: [
-                TestCasePanelComponent,
-                TestWrapperComponent
-            ],
-            schemas: [NO_ERRORS_SCHEMA]
+                },
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
+            ]
         })
             .compileComponents();
         fixture = TestBed.createComponent(TestWrapperComponent);
@@ -102,7 +99,9 @@ describe('AbstractCasePanelComponent', () => {
 
 @Component({
     selector: 'ncc-test-case-panel',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestCasePanelComponent extends AbstractCasePanelComponent {
     constructor(protected _caseResourceService: CaseResourceService,
@@ -121,7 +120,9 @@ class TestCasePanelComponent extends AbstractCasePanelComponent {
 
 @Component({
     selector: 'ncc-test-wrapper',
-    template: '<ncc-test-case-panel [selectedHeaders$]="selectedHeaders" [case_]="case_"> </ncc-test-case-panel>'
+    template: '<ncc-test-case-panel [selectedHeaders$]="selectedHeaders" [case_]="case_"> </ncc-test-case-panel>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestWrapperComponent {
     selectedHeaders = of([

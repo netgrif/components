@@ -1,8 +1,16 @@
-<button *ngIf="!node.isAddingNode()" mat-icon-button (click)="addChild($event)">
-    <mat-icon *ngIf="!node.treeAddTextIcon()">add</mat-icon>
-    <mat-icon *ngIf="node.treeAddTextIcon()" [matTooltip]="node.treeAddTextIconTitle()" [svgIcon]="node.treeAddTextIcon()"></mat-icon>
+@if (!node.isAddingNode()) {
+<button mat-icon-button (click)="addChild($event)">
+    @if (!node.treeAddTextIcon()) {
+    <mat-icon>add</mat-icon>
+    } @if (node.treeAddTextIcon()) {
+    <mat-icon
+        [matTooltip]="node.treeAddTextIconTitle()"
+        [svgIcon]="node.treeAddTextIcon()"
+    ></mat-icon>
+    }
 </button>
-
-<div *ngIf="node.isAddingNode()" class="spinner-margin">
-    <mat-spinner [diameter]="24"></mat-spinner>
+} @if (node.isAddingNode()) {
+<div class="progress-slot">
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
 </div>
+}

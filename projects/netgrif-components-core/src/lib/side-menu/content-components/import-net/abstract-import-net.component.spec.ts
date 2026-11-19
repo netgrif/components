@@ -1,6 +1,5 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {MatIconModule} from '@angular/material/icon';
 import {Observable, of, Subject} from 'rxjs';
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
@@ -12,7 +11,7 @@ import {SideMenuControl} from '../../models/side-menu-control';
 import {TestConfigurationService} from '../../../utility/tests/test-config';
 import {ErrorSnackBarComponent} from '../../../snack-bar/components/error-snack-bar/error-snack-bar.component';
 import {SuccessSnackBarComponent} from '../../../snack-bar/components/success-snack-bar/success-snack-bar.component';
-import {Component, Inject} from '@angular/core';
+import {Component, Inject, ChangeDetectionStrategy} from '@angular/core';
 import {AbstractImportNetComponent} from './abstract-import-net.component';
 import {LoggerService} from '../../../logger/services/logger.service';
 import {SnackBarService} from '../../../snack-bar/services/snack-bar.service';
@@ -26,6 +25,7 @@ import {AuthenticationModule} from "../../../authentication/authentication.modul
 import {UriResourceService} from "../../../navigation/service/uri-resource.service";
 import {MockUriResourceService} from "../../../utility/tests/mocks/mock-uri-resource.service";
 import {SessionService} from '../../../authentication/session/services/session.service';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('AbstractImportNetComponent', () => {
     let component: TestImportComponent;
@@ -36,9 +36,8 @@ describe('AbstractImportNetComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
+            declarations: [TestImportComponent],
             imports: [
-                HttpClientTestingModule,
-                NoopAnimationsModule,
                 AuthenticationModule,
                 TranslateLibModule,
                 MatIconModule,
@@ -52,9 +51,10 @@ describe('AbstractImportNetComponent', () => {
                 {provide: UriResourceService, useClass: MockUriResourceService},
                 {provide: PetriNetResourceService, useClass: MyPetriNetResource},
                 UriService,
-                TranslateService
+                TranslateService,
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
             ],
-            declarations: [TestImportComponent],
         }).compileComponents();
     }));
 
@@ -108,7 +108,9 @@ class MyPetriNetResource {
 
 @Component({
     selector: 'ncc-test-import',
-    template: '<input type="file" id="sidemenu-fileUpload" name="fileUpload" multiple="multiple" accept="text/xml"/>'
+    template: '<input type="file" id="sidemenu-fileUpload" name="fileUpload" multiple="multiple" accept="text/xml"/>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestImportComponent extends AbstractImportNetComponent {
     constructor(@Inject(NAE_SIDE_MENU_CONTROL) protected _sideMenuControl: SideMenuControl,

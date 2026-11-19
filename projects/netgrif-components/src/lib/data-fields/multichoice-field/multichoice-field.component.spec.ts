@@ -1,15 +1,14 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {MultichoiceFieldComponent} from './multichoice-field.component';
-import {AngularResizeEventModule} from 'angular-resize-event';
-import {BrowserAnimationsModule, NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {DataFieldTemplateComponent} from '../data-field-template/data-field-template.component';
 import {RequiredLabelComponent} from '../required-label/required-label.component';
-import {Component, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA} from '@angular/core';
+import {Component, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA, ChangeDetectionStrategy} from '@angular/core';
 import {MultichoiceSelectFieldComponent} from './multichoice-select-field/multichoice-select-field.component';
 import {MultichoiceListFieldComponent} from './multichoice-list-field/multichoice-list-field.component';
 import {TranslateLibModule, MultichoiceField, MaterialModule} from '@netgrif/components-core';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('MultichoiceFieldComponent', () => {
     let component: MultichoiceFieldComponent;
@@ -17,14 +16,6 @@ describe('MultichoiceFieldComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
-            imports: [
-                MaterialModule,
-                AngularResizeEventModule,
-                BrowserAnimationsModule,
-                TranslateLibModule,
-                HttpClientTestingModule,
-                NoopAnimationsModule
-            ],
             declarations: [
                 DataFieldTemplateComponent,
                 MultichoiceFieldComponent,
@@ -33,7 +24,15 @@ describe('MultichoiceFieldComponent', () => {
                 RequiredLabelComponent,
                 TestWrapperComponent
             ],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
+            schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
+            imports: [
+                MaterialModule,
+                TranslateLibModule,
+            ],
+            providers: [
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
+            ]
         })
             .compileComponents();
         fixture = TestBed.createComponent(TestWrapperComponent);
@@ -52,7 +51,9 @@ describe('MultichoiceFieldComponent', () => {
 
 @Component({
     selector: 'nc-test-wrapper',
-    template: '<nc-multichoice-field [dataField]="field"></nc-multichoice-field>'
+    template: '<nc-multichoice-field [dataField]="field"></nc-multichoice-field>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestWrapperComponent {
     field = new MultichoiceField('', '', [''], [], {

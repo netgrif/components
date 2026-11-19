@@ -1,4 +1,4 @@
-import {Component, Inject, Optional} from '@angular/core';
+import {Component, Inject, Optional, ChangeDetectionStrategy} from '@angular/core';
 import {
     AbstractRichTextareaFieldComponent,
     DATA_FIELD_PORTAL_DATA,
@@ -10,7 +10,9 @@ import {TranslateService} from '@ngx-translate/core';
 @Component({
     selector: 'nc-rich-textarea-field',
     templateUrl: './rich-textarea-field.component.html',
-    styleUrls: ['./rich-textarea-field.component.scss']
+    styleUrls: ['./rich-textarea-field.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class RichTextareaFieldComponent extends AbstractRichTextareaFieldComponent {
     constructor(protected _translate: TranslateService,

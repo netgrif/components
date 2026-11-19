@@ -1,67 +1,122 @@
 <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="tree">
-    <mat-tree-node *matTreeNodeDef="let node;">
-        <div class="tree-offset netgrif-input">
+    <mat-tree-node *matTreeNodeDef="let node">
+        <div class="tree-offset">
             <mat-form-field appearance="outline">
-                <mat-label>{{ 'builder.dialogs.transition-edit.trigger-tree.setTriggerType' | translate }}</mat-label>
-                <mat-select [(ngModel)]="node.type" (selectionChange)="emitChanges()" [disabled]="_builderModeService.readOnly">
-                    <mat-option *ngFor="let opt of typeOptions" [value]="opt.key">
-                        {{opt.value}}
+                <mat-label>{{
+                    "builder.dialogs.transition-edit.trigger-tree.setTriggerType"
+                        | translate
+                }}</mat-label>
+                <mat-select
+                    [(ngModel)]="node.type"
+                    (selectionChange)="emitChanges()"
+                    [disabled]="_builderModeService.readOnly"
+                >
+                    @for (opt of typeOptions; track opt) {
+                    <mat-option [value]="opt.key">
+                        {{ opt.value }}
                     </mat-option>
+                    }
                 </mat-select>
             </mat-form-field>
-            <br *ngIf="node.type === 'time'">
-            <mat-form-field appearance="outline" *ngIf="node.type === 'time'">
-                <mat-label>{{ 'builder.dialogs.transition-edit.trigger-tree.setTimeType' | translate }}</mat-label>
-                <mat-select [(ngModel)]="node.option" (selectionChange)="makeChangeOption($event, node)" [disabled]="_builderModeService.readOnly">
-                    <mat-option *ngFor="let opt of optionOptions" [value]="opt.key">
-                        {{opt.value}}
+            @if (node.type === 'time') {
+            <br />
+            } @if (node.type === 'time') {
+            <mat-form-field appearance="outline">
+                <mat-label>{{
+                    "builder.dialogs.transition-edit.trigger-tree.setTimeType"
+                        | translate
+                }}</mat-label>
+                <mat-select
+                    [(ngModel)]="node.option"
+                    (selectionChange)="makeChangeOption($event, node)"
+                    [disabled]="_builderModeService.readOnly"
+                >
+                    @for (opt of optionOptions; track opt) {
+                    <mat-option [value]="opt.key">
+                        {{ opt.value }}
                     </mat-option>
+                    }
                 </mat-select>
             </mat-form-field>
-            <br *ngIf="node.type === 'time'">
-            <mat-form-field appearance="outline" *ngIf="node.option === 'delay' && node.type === 'time'">
-                <mat-label>{{ 'builder.dialogs.transition-edit.trigger-tree.setDelay' | translate }}</mat-label>
-                <input matInput type="text" [(ngModel)]="node.delay" (change)="emitChanges()" placeholder="Ex. PT5D" [disabled]="_builderModeService.readOnly">
+            } @if (node.type === 'time') {
+            <br />
+            } @if (node.option === 'delay' && node.type === 'time') {
+            <mat-form-field appearance="outline">
+                <mat-label>{{
+                    "builder.dialogs.transition-edit.trigger-tree.setDelay"
+                        | translate
+                }}</mat-label>
+                <input
+                    matInput
+                    type="text"
+                    [(ngModel)]="node.delay"
+                    (change)="emitChanges()"
+                    [placeholder]="'builder.dialogs.transition-edit.trigger-tree.delayPlaceholder' | translate"
+                    [disabled]="_builderModeService.readOnly"
+                />
             </mat-form-field>
-            <div *ngIf="node.option === 'exact' && node.type === 'time'">
+            } @if (node.option === 'exact' && node.type === 'time') {
+            <div>
                 <mat-form-field appearance="outline">
-                    <input matInput
-                           [ngxMatDatetimePicker]="picker"
-                           [placeholder]="'builder.dialogs.transition-edit.trigger-tree.setExact' | translate"
-                           [(ngModel)]="node.exact"
-                           (ngModelChange)="emitChanges()"
-                           [disabled]="_builderModeService.readOnly">
-                    <mat-datepicker-toggle matPrefix [for]="picker"></mat-datepicker-toggle>
-                    <ngx-mat-datetime-picker #picker
-                                             [showSpinners]="true"
-                                             [showSeconds]="true"
-                                             [stepHour]="1"
-                                             [stepMinute]="5"
-                                             [stepSecond]="5"
-                                             [color]="'primary'"
-                                             [enableMeridian]="false"
-                                             class="full-width">
-                    </ngx-mat-datetime-picker>
+                    <input
+                        matInput
+                        [matDatepicker]="picker"
+                        [placeholder]="
+                            'builder.dialogs.transition-edit.trigger-tree.setExact'
+                                | translate
+                        "
+                        [(ngModel)]="node.exact"
+                        (ngModelChange)="emitChanges()"
+                        [disabled]="_builderModeService.readOnly"
+                    />
+                    <mat-datepicker-toggle matIconPrefix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <input
+                        matInput
+                        [matTimepicker]="timepicker"
+                        [(ngModel)]="node.exact"
+                        (ngModelChange)="emitChanges()"
+                        [disabled]="_builderModeService.readOnly"
+                    />
+                    <mat-timepicker-toggle matIconSuffix [for]="timepicker"></mat-timepicker-toggle>
+                    <mat-timepicker #timepicker interval="5m"></mat-timepicker>
                 </mat-form-field>
             </div>
+            }
         </div>
     </mat-tree-node>
 
-    <mat-nested-tree-node *matTreeNodeDef="let node;when: isRoot">
+    <mat-nested-tree-node *matTreeNodeDef="let node; when: isRoot">
         <li class="shift-left">
             <div fxLayout="row">
-                <button mat-icon-button matTreeNodeToggle
-                        [attr.aria-label]="('builder.dialogs.transition-edit.trigger-tree.toggle' | translate) + ' ' + node.name">
+                <button
+                    mat-icon-button
+                    matTreeNodeToggle
+                    [attr.aria-label]="
+                        ('builder.dialogs.transition-edit.trigger-tree.toggle'
+                            | translate) +
+                        ' ' +
+                        node.name
+                    "
+                >
                     <mat-icon class="mat-icon-rtl-mirror">
-                        {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                        {{
+                            treeControl.isExpanded(node)
+                                ? "expand_more"
+                                : "chevron_right"
+                        }}
                     </mat-icon>
                 </button>
                 <div fxLayoutAlign="start center" class="height-tree">
-                    <span>{{node.name}}</span>
+                    <span>{{ node.name }}</span>
                 </div>
-                <button mat-icon-button (click)="addNewItem(node)" *ngIf="!_builderModeService.readOnly">
+                @if (!_builderModeService.readOnly) {
+                <button mat-icon-button (click)="addNewItem(node)">
                     <mat-icon>add</mat-icon>
                 </button>
+                }
             </div>
             <ul [class.tree-invisible]="!treeControl.isExpanded(node)">
                 <ng-container matTreeNodeOutlet></ng-container>
@@ -69,20 +124,34 @@
         </li>
     </mat-nested-tree-node>
 
-    <mat-nested-tree-node *matTreeNodeDef="let node;when: hasChildAndNotRoot">
+    <mat-nested-tree-node *matTreeNodeDef="let node; when: hasChildAndNotRoot">
         <li fxLayout="row">
-            <button mat-icon-button matTreeNodeToggle
-                    [attr.aria-label]="('builder.dialogs.transition-edit.trigger-tree.toggle' | translate) + ' ' + node.name">
+            <button
+                mat-icon-button
+                matTreeNodeToggle
+                [attr.aria-label]="
+                    ('builder.dialogs.transition-edit.trigger-tree.toggle'
+                        | translate) +
+                    ' ' +
+                    node.name
+                "
+            >
                 <mat-icon class="mat-icon-rtl-mirror">
-                    {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                    {{
+                        treeControl.isExpanded(node)
+                            ? "expand_more"
+                            : "chevron_right"
+                    }}
                 </mat-icon>
             </button>
             <div fxLayoutAlign="start center" class="height-tree">
-                <span>{{node.name}}</span>
+                <span>{{ node.name }}</span>
             </div>
-            <button mat-icon-button (click)="removeItem(node)" *ngIf="!_builderModeService.readOnly">
+            @if (!_builderModeService.readOnly) {
+            <button mat-icon-button (click)="removeItem(node)">
                 <mat-icon>remove</mat-icon>
             </button>
+            }
             <ul [class.tree-invisible]="!treeControl.isExpanded(node)">
                 <ng-container matTreeNodeOutlet></ng-container>
             </ul>

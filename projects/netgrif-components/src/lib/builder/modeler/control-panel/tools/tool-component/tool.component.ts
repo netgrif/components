@@ -1,4 +1,4 @@
-import {Component, Inject} from '@angular/core';
+import {Component, Inject, ChangeDetectionStrategy} from '@angular/core';
 import {TutorialService} from '../../../../tutorial/tutorial-service';
 import {NAB_CONTROL_PANEL_MODE, NAB_CONTROL_PANEL_TOOL} from '../../control-panel-tool-injection-token';
 import {ModeService} from '../../modes/mode-component/mode.service';
@@ -7,7 +7,9 @@ import {Tool} from '../tool';
 @Component({
     selector: 'nc-builder-tool',
     templateUrl: './tool.component.html',
-    styleUrls: ['./tool.component.scss']
+    styleUrls: ['./tool.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class ToolComponent {
 

@@ -1,4 +1,3 @@
-import {expect} from '@ngbracket/ngx-layout/_private-utils/testing';
 import {IsNonEmptyPipe} from './is-non-empty.pipe';
 
 describe('IsNonEmptyPipe', () => {

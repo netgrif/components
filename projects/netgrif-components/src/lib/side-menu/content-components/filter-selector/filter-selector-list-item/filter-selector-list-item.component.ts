@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, ChangeDetectionStrategy} from '@angular/core';
 import {AbstractFilterSelectorListItemComponent} from '@netgrif/components-core';
 
 /**
@@ -8,7 +8,8 @@ import {AbstractFilterSelectorListItemComponent} from '@netgrif/components-core'
 @Component({
     selector: 'nc-filter-selector-list-item',
     templateUrl: './filter-selector-list-item.component.html',
-    styleUrls: ['./filter-selector-list-item.component.scss']
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class FilterSelectorListItemComponent extends AbstractFilterSelectorListItemComponent {
 

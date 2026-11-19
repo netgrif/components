@@ -1,9 +1,9 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ChangeDetectionStrategy} from '@angular/core';
 import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {map, startWith, tap} from 'rxjs/operators';
 import {MaterialIconList} from './material-icon-list';
-import {AsyncPipe, NgForOf} from "@angular/common";
+import {AsyncPipe} from "@angular/common";
 import {MaterialModule} from "@netgrif/components-core";
 import {MatAutocomplete, MatAutocompleteTrigger} from "@angular/material/autocomplete";
 import {MatFormField, MatInput, MatLabel} from "@angular/material/input";
@@ -16,9 +16,9 @@ import {BuilderModeService} from "../../../services/builder-mode.service";
 @Component({
     selector: 'nc-builder-material-icon-picker',
     templateUrl: './material-icon-picker.component.html',
-    standalone: true,
     styleUrls: ['./material-icon-picker.component.scss'],
-    imports: [FormsModule, ReactiveFormsModule, AsyncPipe, MaterialModule, NgForOf, MatAutocomplete, MatFormField, MatLabel, MatOption, MatIcon, MatAutocompleteTrigger, MatInput, FlexModule, TranslateModule]
+    changeDetection: ChangeDetectionStrategy.Eager,
+    imports: [FormsModule, ReactiveFormsModule, AsyncPipe, MaterialModule, MatAutocomplete, MatFormField, MatLabel, MatOption, MatIcon, MatAutocompleteTrigger, MatInput, FlexModule, TranslateModule]
 })
 export class MaterialIconPickerComponent implements OnInit {
 

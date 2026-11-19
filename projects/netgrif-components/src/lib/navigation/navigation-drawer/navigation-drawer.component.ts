@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, ChangeDetectionStrategy} from '@angular/core';
 import 'hammerjs';
 import {BreakpointObserver} from '@angular/cdk/layout';
 import {AbstractNavigationDrawerComponent, LoggerService, UserPreferenceService} from '@netgrif/components-core';
@@ -6,7 +6,9 @@ import {AbstractNavigationDrawerComponent, LoggerService, UserPreferenceService}
 @Component({
     selector: 'nc-navigation-drawer',
     templateUrl: './navigation-drawer.component.html',
-    styleUrls: ['./navigation-drawer.component.scss']
+    styleUrls: ['./navigation-drawer.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class NavigationDrawerComponent extends AbstractNavigationDrawerComponent {
 

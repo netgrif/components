@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Inject, Injector, Optional } from '@angular/core';
+import { AfterViewInit, Component, Inject, Injector, Optional, ChangeDetectionStrategy} from '@angular/core';
 import { ComponentPortal } from '@angular/cdk/portal';
 import { FilterField } from './models/filter-field';
 import { NAE_BASE_FILTER } from '../../search/models/base-filter-injection-token';
@@ -16,7 +16,9 @@ import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../models/data-field-
 
 @Component({
     selector: 'ncc-abstract-filter-field-tab-view-content',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractFilterFieldTabViewContentComponent extends AbstractFilterFieldContentComponent implements AfterViewInit {
 

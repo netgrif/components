@@ -1,92 +1,88 @@
-<h2 mat-dialog-title>{{ 'builder.dialogs.transition-edit.title' | translate }}</h2>
-<mat-dialog-content class="padding-top-4px">
-    <div class="netgrif-input " fxLayout="column">
-        <mat-form-field fxFlex appearance="outline">
-            <mat-label>{{ 'builder.dialogs.transition-edit.id' | translate }}</mat-label>
-            <input type="text" matInput [(ngModel)]="transition.transition.id" [formControl]="form">
-            <mat-error *ngIf="form.errors && form.errors.required">{{ 'builder.dialogs.transition-edit.idRequired' | translate }}</mat-error>
-            <mat-error *ngIf="form.errors && form.errors.validUnique">{{ 'builder.dialogs.transition-edit.idExists' | translate }}</mat-error>
+<h2 mat-dialog-title>{{ "builder.dialogs.transition-edit.title" | translate }}</h2>
+<mat-dialog-content class="dialog-column">
+    <div class="links">
+        <button mat-stroked-button type="button" (click)="openFormBuilder()" mat-dialog-close>
+            <mat-icon>view_list</mat-icon>
+            {{ "builder.dialogs.transition-edit.form" | translate }}
+        </button>
+        <button mat-stroked-button type="button" (click)="openActions()" mat-dialog-close>
+            <mat-icon>code</mat-icon>
+            {{ "builder.dialogs.transition-edit.actions" | translate }} ({{ _modelService.numberOfTransitionActions(transition.transition) }})
+        </button>
+        <button mat-stroked-button type="button" (click)="openPermissions()" mat-dialog-close>
+            <mat-icon>admin_panel_settings</mat-icon>
+            {{ "builder.dialogs.transition-edit.permissions" | translate }} ({{ _modelService.numberOfTransitionPermissions(transition.transition) }})
+        </button>
+    </div>
+
+    <div class="grid">
+        <mat-form-field appearance="outline">
+            <mat-label>{{ "builder.dialogs.transition-edit.id" | translate }}</mat-label>
+            <input type="text" matInput [(ngModel)]="transition.transition.id" [formControl]="form"/>
+            @if (form.errors && form.errors.required) {
+            <mat-error>{{ "builder.dialogs.transition-edit.idRequired" | translate }}</mat-error>
+            } @if (form.errors && form.errors.validUnique) {
+            <mat-error>{{ "builder.dialogs.transition-edit.idExists" | translate }}</mat-error>
+            }
         </mat-form-field>
-        <mat-form-field fxFlex appearance="outline">
-            <mat-label>{{ 'builder.dialogs.transition-edit.label' | translate }}</mat-label>
-            <input type="text" matInput [(ngModel)]="transition.transition.label.value" [disabled]="_builderModeService.readOnly">
+        <mat-form-field appearance="outline">
+            <mat-label>{{ "builder.dialogs.transition-edit.label" | translate }}</mat-label>
+            <input type="text" matInput [(ngModel)]="transition.transition.label.value" [disabled]="_builderModeService.readOnly"/>
         </mat-form-field>
-<!--        @defer {-->
-            <nc-builder-material-icon-picker [(icon)]="transition.transition.icon"></nc-builder-material-icon-picker>
-<!--        } @placeholder {-->
-<!--            <div class="loading-text" fxLayoutAlign="start center">-->
-<!--                <span>...loading</span>-->
-<!--            </div>-->
-<!--        }-->
-        <mat-form-field fxFlex appearance="outline">
-            <mat-label>{{ 'builder.dialogs.transition-edit.assignPolicy' | translate }}</mat-label>
+        <mat-form-field appearance="outline">
+            <mat-label>{{ "builder.dialogs.transition-edit.assignPolicy" | translate }}</mat-label>
             <mat-select [(value)]="transition.transition.assignPolicy" [disabled]="_builderModeService.readOnly">
-                <mat-option *ngFor="let opt of assignPolicies" [value]="opt">
-                    {{opt}}
-                </mat-option>
+                @for (opt of assignPolicies; track opt) {
+                <mat-option [value]="opt">{{ opt }}</mat-option>
+                }
             </mat-select>
         </mat-form-field>
-        <mat-form-field fxFlex appearance="outline">
-            <mat-label>{{ 'builder.dialogs.transition-edit.finishPolicy' | translate }}</mat-label>
+        <mat-form-field appearance="outline">
+            <mat-label>{{ "builder.dialogs.transition-edit.finishPolicy" | translate }}</mat-label>
             <mat-select [(value)]="transition.transition.finishPolicy" [disabled]="_builderModeService.readOnly">
-                <mat-option *ngFor="let opt of finishPolicies" [value]="opt">
-                    {{opt}}
-                </mat-option>
+                @for (opt of finishPolicies; track opt) {
+                <mat-option [value]="opt">{{ opt }}</mat-option>
+                }
             </mat-select>
         </mat-form-field>
     </div>
-    <nc-builder-trigger-tree [triggers]="transition.transition.triggers">
-    </nc-builder-trigger-tree>
-    <div fxLayoutAlign="center center">
-        <span>{{ 'builder.dialogs.transition-edit.tags' | translate }}</span>
+    <nc-builder-material-icon-picker [(icon)]="transition.transition.icon"></nc-builder-material-icon-picker>
+
+    <nc-builder-trigger-tree [triggers]="transition.transition.triggers"></nc-builder-trigger-tree>
+
+    <h3 class="section-title">{{ "builder.dialogs.transition-edit.tags" | translate }}</h3>
+    @if (transition.transition?.tags?.size > 0) {
+    @for (tag of getTags(); track trackByFn(i, tag); let i = $index) {
+    <div class="tag-row">
+        <mat-form-field appearance="outline" subscriptSizing="dynamic">
+            <mat-label>{{ "builder.dialogs.transition-edit.key" | translate }}</mat-label>
+            <input matInput type="text" (change)="setKey($event, tag.key)" [value]="tag.key" [disabled]="_builderModeService.readOnly"/>
+        </mat-form-field>
+        <mat-form-field appearance="outline" subscriptSizing="dynamic">
+            <mat-label>{{ "builder.dialogs.transition-edit.value" | translate }}</mat-label>
+            <input matInput type="text" (change)="setValue($event, tag.key)" [value]="tag.value" [disabled]="_builderModeService.readOnly"/>
+        </mat-form-field>
+        @if (!_builderModeService.readOnly) {
+        <button mat-icon-button type="button" (click)="deleteTag(tag.key)">
+            <mat-icon>delete</mat-icon>
+        </button>
+        }
     </div>
-    <div fxLayout="row wrap" fxLayoutAlign="start center" class="netgrif-input builder-field-input">
-        <div fxFlex fxLayout="column">
-            <div >
-                <div *ngIf="transition.transition?.tags?.size > 0">
-                    <div *ngFor="let tag of getTags(); let i = index; trackBy:trackByFn" class="margin-html">
-                        <mat-form-field fxFlex="50" appearance="outline" class="margin-right8px">
-                            <mat-label>{{ 'builder.dialogs.transition-edit.key' | translate }}</mat-label>
-                            <input matInput (change)="setKey($event, tag.key)" type="text" [value]="tag.key" [disabled]="_builderModeService.readOnly">
-                        </mat-form-field>
-                        <mat-form-field fxFlex="50" appearance="outline" class="margin-right8px">
-                            <mat-label>{{ 'builder.dialogs.transition-edit.value' | translate }}</mat-label>
-                            <input matInput type="text" (change)="setValue($event, tag.key)" [value]="tag.value" [disabled]="_builderModeService.readOnly">
-                        </mat-form-field>
-                        <button fxFlex mat-icon-button (click)="deleteTag(tag.key)" *ngIf="!_builderModeService.readOnly">
-                            <mat-icon>delete</mat-icon>
-                        </button>
-                    </div>
-                </div>
-                <div fxLayoutAlign="center center" *ngIf="transition.transition?.tags?.size === 0"
-                     class="no-options">
-                    <span>{{ 'builder.dialogs.transition-edit.empty' | translate }}</span>
-                </div>
-            </div>
-            <div fxLayoutAlign="center center" class="margin-html">
-                <button mat-stroked-button class="button-text " (click)="addTag()" *ngIf="!_builderModeService.readOnly">
-                    <mat-icon>add</mat-icon>
-                    {{ 'builder.dialogs.transition-edit.addTag' | translate }}
-                </button>
-            </div>
-        </div>
+    }
+    } @else {
+    <p class="supporting-text">{{ "builder.dialogs.transition-edit.empty" | translate }}</p>
+    }
+    @if (!_builderModeService.readOnly) {
+    <div>
+        <button mat-button type="button" (click)="addTag()">
+            <mat-icon>add</mat-icon>
+            {{ "builder.dialogs.transition-edit.addTag" | translate }}
+        </button>
     </div>
+    }
 </mat-dialog-content>
-<mat-dialog-actions>
-    <button mat-stroked-button color="primary" (click)="openFormBuilder()" mat-dialog-close>
-        <mat-icon>view_list</mat-icon>
-        <span>{{ 'builder.dialogs.transition-edit.form' | translate }}</span>
-    </button>
-    <button mat-stroked-button color="primary" (click)="openActions()" mat-dialog-close>
-        <mat-icon>code</mat-icon>
-        <span>{{ 'builder.dialogs.transition-edit.actions' | translate }} ({{this._modelService.numberOfTransitionActions(transition.transition)}})</span>
-    </button>
-    <button mat-stroked-button color="primary" (click)="openPermissions()" mat-dialog-close>
-        <mat-icon>code</mat-icon>
-        <span>{{ 'builder.dialogs.transition-edit.permissions' | translate }} ({{this._modelService.numberOfTransitionPermissions(transition.transition)}})</span>
-    </button>
-    <button mat-flat-button color="primary" [mat-dialog-close]="transition" [disabled]="form.invalid || _builderModeService.readOnly">
-        <mat-icon>done</mat-icon>
-        <span>{{ 'builder.dialogs.transition-edit.save' | translate }}</span>
+<mat-dialog-actions align="end">
+    <button mat-flat-button [mat-dialog-close]="transition" [disabled]="form.invalid || _builderModeService.readOnly">
+        {{ "builder.dialogs.transition-edit.save" | translate }}
     </button>
 </mat-dialog-actions>

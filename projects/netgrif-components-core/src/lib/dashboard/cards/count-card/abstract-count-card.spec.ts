@@ -2,8 +2,7 @@ import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {MatCardModule} from '@angular/material/card';
 import {FlexLayoutModule} from '@ngbracket/ngx-layout';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {Component, Injector} from '@angular/core';
+import {Component, Injector, ChangeDetectionStrategy} from '@angular/core';
 import {AbstractCountCardComponent} from './abstract-count-card';
 import {CountCard} from '../model/count-card';
 import {FilterType} from '../../../filter/models/filter-type';
@@ -18,7 +17,7 @@ describe('AbstractCountCardComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
-            imports: [MatCardModule, FlexLayoutModule, MatProgressSpinnerModule, NoopAnimationsModule],
+            imports: [MatCardModule, FlexLayoutModule, MatProgressSpinnerModule],
             declarations: [TestCountCardComponent, TestWrapperComponent],
             providers: [{provide: CaseResourceService, useClass: EndpointMock}]
         })
@@ -42,7 +41,9 @@ describe('AbstractCountCardComponent', () => {
 
 @Component({
     selector: 'ncc-test-count-card',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestCountCardComponent extends AbstractCountCardComponent {
     constructor(protected _injector: Injector) {
@@ -52,7 +53,9 @@ class TestCountCardComponent extends AbstractCountCardComponent {
 
 @Component({
     selector: 'ncc-test-wrapper',
-    template: '<ncc-test-count-card [card]="card"></ncc-test-count-card>'
+    template: '<ncc-test-count-card [card]="card"></ncc-test-count-card>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestWrapperComponent {
     card: CountCard = {

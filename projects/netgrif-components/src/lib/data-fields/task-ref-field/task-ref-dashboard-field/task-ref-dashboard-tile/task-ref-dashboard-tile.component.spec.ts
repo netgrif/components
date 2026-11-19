@@ -1,6 +1,6 @@
 import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 import {TaskRefDashboardTileComponent} from './task-ref-dashboard-tile.component';
-import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+import {Component, CUSTOM_ELEMENTS_SCHEMA, ChangeDetectionStrategy} from '@angular/core';
 import {
     AuthenticationMethodService,
     AuthenticationService,
@@ -25,9 +25,8 @@ import {
 } from '@netgrif/components-core';
 import {FormControl} from '@angular/forms';
 import {TaskContentComponent} from '../../../../task-content/task-content/task-content.component';
-import {AngularResizeEventModule} from 'angular-resize-event';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('TaskRefDashboardTileComponent', () => {
     let component: TaskRefDashboardTileComponent;
@@ -35,12 +34,14 @@ describe('TaskRefDashboardTileComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
+            declarations: [
+                TaskRefDashboardTileComponent,
+                TestWrapperComponent
+            ],
+            schemas: [CUSTOM_ELEMENTS_SCHEMA],
             imports: [
                 MaterialModule,
-                AngularResizeEventModule,
-                BrowserAnimationsModule,
-                TranslateLibModule,
-                HttpClientTestingModule
+                TranslateLibModule
             ],
             providers: [
                 TaskDataService,
@@ -53,10 +54,10 @@ describe('TaskRefDashboardTileComponent', () => {
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
-                {provide: UserResourceService, useClass: MockUserResourceService}
-            ],
-            declarations: [TaskRefDashboardTileComponent, TestWrapperComponent],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA]
+                {provide: UserResourceService, useClass: MockUserResourceService},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
+            ]
         })
             .compileComponents();
         fixture = TestBed.createComponent(TestWrapperComponent);
@@ -76,13 +77,18 @@ describe('TaskRefDashboardTileComponent', () => {
 @Component({
     selector: 'nc-test-wrapper',
     template: `
-        <nc-task-ref-dashboard-tile [tile]="tile"
-                                    [taskRef]="field"
-                                    [fc]="formControl"
-                                    [gdColumn]="'1 / 2'"
-                                    [gdRow]="'1 / 2'"
-                                    [taskContentComponentClassReference]="taskContentComponentClass">
-        </nc-task-ref-dashboard-tile>`
+        <nc-task-ref-dashboard-tile
+            [tile]="tile"
+            [taskRef]="field"
+            [fc]="formControl"
+            [gdColumn]="'1 / 2'"
+            [gdRow]="'1 / 2'"
+            [taskContentComponentClassReference]="taskContentComponentClass"
+        >
+        </nc-task-ref-dashboard-tile>
+    `,
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestWrapperComponent {
     tile = {

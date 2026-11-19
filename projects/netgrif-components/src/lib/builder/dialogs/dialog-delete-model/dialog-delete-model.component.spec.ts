@@ -1,8 +1,9 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {DialogDeleteModelComponent} from './dialog-delete-model.component';
-import {HttpClientTestingModule} from "@angular/common/http/testing";
+import {provideHttpClientTesting} from "@angular/common/http/testing";
 import {TranslateLibModule} from "@netgrif/components-core";
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('DialogDeleteModelComponent', () => {
   let component: DialogDeleteModelComponent;
@@ -10,11 +11,14 @@ describe('DialogDeleteModelComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+        declarations: [DialogDeleteModelComponent],
         imports: [
-            TranslateLibModule,
-            HttpClientTestingModule,
+            TranslateLibModule
         ],
-      declarations: [ DialogDeleteModelComponent ]
+        providers: [
+            provideHttpClient(withXhr(), withInterceptorsFromDi()),
+            provideHttpClientTesting()
+        ]
     })
     .compileComponents();
   });

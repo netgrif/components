@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Inject, Optional, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, Inject, Optional, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {
     AbstractCaseViewComponent,
     AllowedNetsService,
@@ -55,6 +55,8 @@ const localAllowedNetsFactory = (factory: AllowedNetsServiceFactory) => {
         ViewIdService,
         {provide: NAE_SEARCH_CATEGORIES, useFactory: defaultCaseSearchCategoriesFactory, deps: [CategoryFactory]},
     ],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false,
 })
 export class DefaultCaseRefListViewComponent extends AbstractCaseViewComponent implements AfterViewInit {
 

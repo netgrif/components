@@ -1,9 +1,9 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { Component} from '@angular/core';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { AbstractPanelItemComponent } from './abstract-panel-item.component';
 import { FeaturedValue } from '../abstract/featured-value';
+import { provideHttpClient, withInterceptorsFromDi, withXhr } from '@angular/common/http';
 
 describe('AbstractPanelItemComponent', () => {
     let component: TestPanelItemComponent;
@@ -11,10 +11,13 @@ describe('AbstractPanelItemComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
+            declarations: [TestPanelItemComponent],
             imports: [
-                NoopAnimationsModule, HttpClientTestingModule
             ],
-            declarations: [TestPanelItemComponent]
+            providers: [
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
+            ]
         }).compileComponents();
     }));
 
@@ -43,7 +46,9 @@ describe('AbstractPanelItemComponent', () => {
 
 @Component({
     selector: 'ncc-test-immediate-filter-text',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestPanelItemComponent extends AbstractPanelItemComponent {
     constructor() {

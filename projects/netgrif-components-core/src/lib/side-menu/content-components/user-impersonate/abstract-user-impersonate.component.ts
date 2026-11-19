@@ -1,5 +1,5 @@
 import {SideMenuControl} from '../../models/side-menu-control';
-import {Component, Inject} from '@angular/core';
+import {Component, Inject, ChangeDetectionStrategy} from '@angular/core';
 import {NAE_SIDE_MENU_CONTROL} from '../../side-menu-injection-token';
 import {CaseViewService} from '../../../view/case-view/service/case-view-service';
 import {Case} from '../../../resources/interface/case';
@@ -7,9 +7,14 @@ import {AbstractCaseViewComponent} from '../../../view/case-view/abstract-case-v
 import {UserImpersonateConfigMetadata} from '../../../impersonation/models/user-impersonate-config-metadata';
 import {UserImpersonateInjectionData} from './model/user-impersonate-injection-data';
 
+/**
+ * @deprecated the side menu is deprecated, the library opens dialogs instead (`DialogComponentsModule`)
+ */
 @Component({
     selector: 'ncc-abstract-user-impersonate',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractUserImpersonateComponent extends AbstractCaseViewComponent {
 

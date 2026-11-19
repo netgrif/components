@@ -5,8 +5,8 @@ import {TestConfigurationService} from '../utility/tests/test-config';
 import {SimpleFilter} from './models/simple-filter';
 import {FilterType} from './models/filter-type';
 import {LoggerService} from '../logger/services/logger.service';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('FilterRepository', () => {
     let service: FilterRepository;
@@ -15,8 +15,11 @@ describe('FilterRepository', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopAnimationsModule, HttpClientTestingModule],
-            providers: [{provide: ConfigurationService, useClass: TestConfigurationService}]
+            imports: [],
+            providers: [{provide: ConfigurationService, useClass: TestConfigurationService},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
+            ]
         });
         service = TestBed.inject(FilterRepository);
         loggerService = TestBed.inject(LoggerService);

@@ -1,4 +1,4 @@
-import {Component, Inject} from '@angular/core';
+import {Component, Inject, ChangeDetectionStrategy} from '@angular/core';
 import {FormControl, ValidatorFn, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {Action, Event} from '@netgrif/petriflow';
@@ -13,7 +13,9 @@ export interface DialogRefactorData {
 @Component({
     selector: 'nc-builder-dialog-refactor',
     templateUrl: './dialog-refactor.component.html',
-    styleUrls: ['./dialog-refactor.component.scss']
+    styleUrls: ['./dialog-refactor.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class DialogRefactorComponent {
 

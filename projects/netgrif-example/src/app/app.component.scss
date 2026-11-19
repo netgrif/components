@@ -1,0 +1,69 @@
+@use '@angular/material' as mat;
+
+:host {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    @include mat.toolbar-overrides((
+        container-background-color: var(--mat-sys-surface-container),
+    ));
+    @include mat.sidenav-overrides((
+        container-background-color: var(--mat-sys-surface-container),
+        container-shape: 0,
+    ));
+    @include mat.list-overrides((
+        list-item-one-line-container-height: 40px,
+        active-indicator-shape: var(--mat-sys-corner-full),
+    ));
+}
+
+.toolbar {
+    flex: 0 0 auto;
+    gap: 8px;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: inherit;
+    text-decoration: none;
+}
+
+.logo {
+    height: 28px;
+}
+
+.spacer {
+    flex: 1 1 auto;
+}
+
+.container {
+    flex: 1 1 auto;
+}
+
+.sidenav {
+    width: 260px;
+    border-right: 0;
+
+    mat-nav-list {
+        padding: 0 12px 12px;
+    }
+}
+
+.content {
+    background: var(--mat-sys-surface);
+}
+
+// M3 navigation drawer: the label and the icon of the active item in on-secondary-container, readable on the active
+// indicator (secondary-container) in every color scheme (it is dark in the high contrast schemes)
+.mdc-list-item--activated {
+    @include mat.list-overrides((
+        list-item-label-text-color: var(--mat-sys-on-secondary-container),
+        list-item-hover-label-text-color: var(--mat-sys-on-secondary-container),
+        list-item-focus-label-text-color: var(--mat-sys-on-secondary-container),
+        list-item-leading-icon-color: var(--mat-sys-on-secondary-container),
+        list-item-hover-leading-icon-color: var(--mat-sys-on-secondary-container),
+    ));
+}

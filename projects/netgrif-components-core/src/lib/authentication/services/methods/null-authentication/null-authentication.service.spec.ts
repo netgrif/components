@@ -1,19 +1,21 @@
 import {TestBed} from '@angular/core/testing';
 import {ConfigurationService} from '../../../../configuration/configuration.service';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {NullAuthenticationService} from './null-authentication.service';
 import {TestConfigurationService} from '../../../../utility/tests/test-config';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('NullAuthenticationService', () => {
     let service: NullAuthenticationService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule, NoopAnimationsModule],
+            imports: [],
             providers: [
                 {provide: ConfigurationService, useClass: TestConfigurationService},
-                NullAuthenticationService
+                NullAuthenticationService,
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
             ]});
         service = TestBed.inject(NullAuthenticationService);
     });

@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, Input, OnInit, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {WorkflowViewService} from './workflow-view.service';
 import {AbstractHeaderComponent} from '../../header/abstract-header.component';
 import {AbstractViewWithHeadersComponent} from '../abstract/view-with-headers';
@@ -16,7 +16,9 @@ import {TranslateService} from "@ngx-translate/core";
 
 @Component({
     selector: 'ncc-abstract-workflow-view',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractWorkflowViewComponent extends AbstractViewWithHeadersComponent implements OnInit, AfterViewInit {
 
@@ -63,8 +65,6 @@ export abstract class AbstractWorkflowViewComponent extends AbstractViewWithHead
 
     public importSidemenuNet(component) {
         const dialogRef = this._dialog.open(component, {
-            width: '40%',
-            minWidth: '300px',
             panelClass: "dialog-responsive",
         });
         dialogRef.afterClosed().subscribe(event => {

@@ -1,311 +1,643 @@
-<h1 mat-dialog-title>{{data.type === 'transition' ? ('builder.modeler.edit-mode.context-menu.task' | translate) : ('builder.modeler.services.newProcess' | translate)}} {{ 'builder.dialogs.manage-roles.title' | translate }}</h1>
-<div mat-dialog-content>
-    <div> {{ 'builder.dialogs.manage-roles.rolePermissions' | translate }}
-        <table mat-table #firstTableSort="matSort" matSort [dataSource]="dataSource" (matSortChange)="sortRoleRefs($event)" class="table-right-padding">
+<h2 mat-dialog-title>
+    {{ (data.type === "transition" ? "builder.dialogs.manage-roles.titleTask" : "builder.dialogs.manage-roles.titleProcess") | translate }}
+</h2>
+<mat-dialog-content class="dialog-column">
+    <div>
+        <h3 class="section-title">{{ "builder.dialogs.manage-roles.rolePermissions" | translate }}</h3>
+        <table
+            mat-table
+            #firstTableSort="matSort"
+            matSort
+            [dataSource]="dataSource"
+            (matSortChange)="sortRoleRefs($event)"
+        >
             <caption></caption>
 
             <!-- Id Column -->
             <ng-container matColumnDef="id">
-                <th mat-header-cell id="id" *matHeaderCellDef mat-sort-header fxFlex class="padding-table-header"> {{ 'builder.dialogs.manage-roles.id' | translate }}
+                <th
+                    mat-header-cell
+                    id="id"
+                    *matHeaderCellDef
+                    mat-sort-header
+                >
+                    {{ "builder.dialogs.manage-roles.id" | translate }}
                 </th>
-                <td mat-cell *matCellDef="let element" fxFlex class="padding-table"> {{element.id}} </td>
+                <td
+                    mat-cell
+                    *matCellDef="let element"
+                >
+                    {{ element.id }}
+                </td>
             </ng-container>
 
             <!-- Perform Column -->
-            <ng-container matColumnDef="perform" *ngIf="data.type === 'transition'">
-                <th mat-header-cell id="perform" *matHeaderCellDef mat-sort-header fxFlex class="padding-table-header">
-                    {{ 'builder.dialogs.manage-roles.perform' | translate }}
+            @if (data.type === 'transition') {
+            <ng-container matColumnDef="perform">
+                <th
+                    mat-header-cell
+                    id="perform"
+                    *matHeaderCellDef
+                    mat-sort-header
+                >
+                    {{ "builder.dialogs.manage-roles.perform" | translate }}
                 </th>
-                <td mat-cell *matCellDef="let element" fxFlex fxLayout="row" fxLayoutAlign="start center">
-                    <mat-checkbox fxLayoutAlign="start center" class="height-row"
-                                  [checked]="getChecked(element.logic.perform)"
-                                  [indeterminate]="getIndeterminate(element.logic.perform)"
-                                  (click)="setValue(element.id, 'perform')"
-                                  [ngClass]="{'checkbox-background-warn': getIndeterminate(element.logic.perform), 'checkbox-background-green': getChecked(element.logic.perform)}"
-                                  [disabled]="_builderModeService.readOnly">
-                        <span>{{stringValue(element.logic.perform) | titlecase}}</span>
+                <td
+                    mat-cell
+                    *matCellDef="let element"
+                >
+                    <mat-checkbox
+                        [checked]="getChecked(element.logic.perform)"
+                        [indeterminate]="
+                            getIndeterminate(element.logic.perform)
+                        "
+                        (click)="setValue(element.id, 'perform')"
+                        [ngClass]="{
+                            'checkbox-background-warn': getIndeterminate(
+                                element.logic.perform
+                            )
+                        }"
+                        [disabled]="_builderModeService.readOnly"
+                    >
+                        <span>{{
+                            stringValue(element.logic.perform) | titlecase
+                        }}</span>
                     </mat-checkbox>
                 </td>
             </ng-container>
+            }
 
             <!-- Delegate Column -->
-            <ng-container matColumnDef="delegate" *ngIf="data.type === 'transition'">
-                <th mat-header-cell id="delegate" *matHeaderCellDef mat-sort-header fxFlex class="padding-table-header">
-                    {{ 'builder.dialogs.manage-roles.delegate' | translate }}
+            @if (data.type === 'transition') {
+            <ng-container matColumnDef="delegate">
+                <th
+                    mat-header-cell
+                    id="delegate"
+                    *matHeaderCellDef
+                    mat-sort-header
+                >
+                    {{ "builder.dialogs.manage-roles.delegate" | translate }}
                 </th>
-                <td mat-cell *matCellDef="let element" fxFlex fxLayout="row" fxLayoutAlign="start center">
-                    <mat-checkbox fxLayoutAlign="start center" class="height-row"
-                                  [checked]="getChecked(element.logic.delegate)"
-                                  [indeterminate]="getIndeterminate(element.logic.delegate)"
-                                  (click)="setValue(element.id, 'delegate')"
-                                  [ngClass]="{'checkbox-background-warn': getIndeterminate(element.logic.delegate), 'checkbox-background-green': getChecked(element.logic.delegate)}"
-                                  [disabled]="_builderModeService.readOnly">
-                        <span>{{stringValue(element.logic.delegate) | titlecase}}</span>
+                <td
+                    mat-cell
+                    *matCellDef="let element"
+                >
+                    <mat-checkbox
+                        [checked]="getChecked(element.logic.delegate)"
+                        [indeterminate]="
+                            getIndeterminate(element.logic.delegate)
+                        "
+                        (click)="setValue(element.id, 'delegate')"
+                        [ngClass]="{
+                            'checkbox-background-warn': getIndeterminate(
+                                element.logic.delegate
+                            )
+                        }"
+                        [disabled]="_builderModeService.readOnly"
+                    >
+                        <span>{{
+                            stringValue(element.logic.delegate) | titlecase
+                        }}</span>
                     </mat-checkbox>
                 </td>
             </ng-container>
+            }
 
             <!-- Cancel Column -->
-            <ng-container matColumnDef="cancel" *ngIf="data.type === 'transition'">
-                <th mat-header-cell id="cancel" *matHeaderCellDef mat-sort-header fxFlex class="padding-table-header">
-                    {{ 'builder.dialogs.manage-roles.cancel' | translate }}
+            @if (data.type === 'transition') {
+            <ng-container matColumnDef="cancel">
+                <th
+                    mat-header-cell
+                    id="cancel"
+                    *matHeaderCellDef
+                    mat-sort-header
+                >
+                    {{ "builder.dialogs.manage-roles.cancel" | translate }}
                 </th>
-                <td mat-cell *matCellDef="let element" fxFlex fxLayout="row" fxLayoutAlign="start center">
-                    <mat-checkbox fxLayoutAlign="start center" class="height-row"
-                                  [checked]="getChecked(element.logic.cancel)"
-                                  [indeterminate]="getIndeterminate(element.logic.cancel)"
-                                  (click)="setValue(element.id, 'cancel')"
-                                  [ngClass]="{'checkbox-background-warn': getIndeterminate(element.logic.cancel), 'checkbox-background-green': getChecked(element.logic.cancel)}"
-                                  [disabled]="_builderModeService.readOnly">
-                        <span>{{stringValue(element.logic.cancel) | titlecase}}</span>
+                <td
+                    mat-cell
+                    *matCellDef="let element"
+                >
+                    <mat-checkbox
+                        [checked]="getChecked(element.logic.cancel)"
+                        [indeterminate]="getIndeterminate(element.logic.cancel)"
+                        (click)="setValue(element.id, 'cancel')"
+                        [ngClass]="{
+                            'checkbox-background-warn': getIndeterminate(
+                                element.logic.cancel
+                            )
+                        }"
+                        [disabled]="_builderModeService.readOnly"
+                    >
+                        <span>{{
+                            stringValue(element.logic.cancel) | titlecase
+                        }}</span>
                     </mat-checkbox>
                 </td>
             </ng-container>
+            }
 
             <!-- Assign Column -->
-            <ng-container matColumnDef="assign" *ngIf="data.type === 'transition'">
-                <th mat-header-cell id="assign" *matHeaderCellDef mat-sort-header fxFlex class="padding-table-header">
-                    {{ 'builder.dialogs.manage-roles.assign' | translate }}
+            @if (data.type === 'transition') {
+            <ng-container matColumnDef="assign">
+                <th
+                    mat-header-cell
+                    id="assign"
+                    *matHeaderCellDef
+                    mat-sort-header
+                >
+                    {{ "builder.dialogs.manage-roles.assign" | translate }}
                 </th>
-                <td mat-cell *matCellDef="let element" fxFlex fxLayout="row" fxLayoutAlign="start center">
-                    <mat-checkbox fxLayoutAlign="start center" class="height-row"
-                                  [checked]="getChecked(element.logic.assign)"
-                                  [indeterminate]="getIndeterminate(element.logic.assign)"
-                                  (click)="setValue(element.id, 'assign')"
-                                  [ngClass]="{'checkbox-background-warn': getIndeterminate(element.logic.assign), 'checkbox-background-green': getChecked(element.logic.assign)}"
-                                  [disabled]="_builderModeService.readOnly">
-                        <span>{{stringValue(element.logic.assign) | titlecase}}</span>
+                <td
+                    mat-cell
+                    *matCellDef="let element"
+                >
+                    <mat-checkbox
+                        [checked]="getChecked(element.logic.assign)"
+                        [indeterminate]="getIndeterminate(element.logic.assign)"
+                        (click)="setValue(element.id, 'assign')"
+                        [ngClass]="{
+                            'checkbox-background-warn': getIndeterminate(
+                                element.logic.assign
+                            )
+                        }"
+                        [disabled]="_builderModeService.readOnly"
+                    >
+                        <span>{{
+                            stringValue(element.logic.assign) | titlecase
+                        }}</span>
                     </mat-checkbox>
                 </td>
             </ng-container>
+            }
 
             <!-- View Column -->
-            <ng-container matColumnDef="view" *ngIf="data.type === 'transition'">
-                <th mat-header-cell id="view" *matHeaderCellDef mat-sort-header fxFlex class="padding-table-header">
-                    {{ 'builder.dialogs.manage-roles.view' | translate }}
+            @if (data.type === 'transition') {
+            <ng-container matColumnDef="view">
+                <th
+                    mat-header-cell
+                    id="view"
+                    *matHeaderCellDef
+                    mat-sort-header
+                >
+                    {{ "builder.dialogs.manage-roles.view" | translate }}
                 </th>
-                <td mat-cell *matCellDef="let element" fxFlex fxLayout="row" fxLayoutAlign="start center">
-                    <mat-checkbox fxLayoutAlign="start center" class="height-row"
-                                  [checked]="getChecked(element.logic.view)"
-                                  [indeterminate]="getIndeterminate(element.logic.view)"
-                                  (click)="setValue(element.id, 'view')"
-                                  [ngClass]="{'checkbox-background-warn': getIndeterminate(element.logic.view), 'checkbox-background-green': getChecked(element.logic.view)}"
-                                  [disabled]="_builderModeService.readOnly">
-                        <span>{{stringValue(element.logic.view) | titlecase}}</span>
+                <td
+                    mat-cell
+                    *matCellDef="let element"
+                >
+                    <mat-checkbox
+                        [checked]="getChecked(element.logic.view)"
+                        [indeterminate]="getIndeterminate(element.logic.view)"
+                        (click)="setValue(element.id, 'view')"
+                        [ngClass]="{
+                            'checkbox-background-warn': getIndeterminate(
+                                element.logic.view
+                            )
+                        }"
+                        [disabled]="_builderModeService.readOnly"
+                    >
+                        <span>{{
+                            stringValue(element.logic.view) | titlecase
+                        }}</span>
                     </mat-checkbox>
                 </td>
             </ng-container>
+            }
 
             <!-- Create Column -->
-            <ng-container matColumnDef="create" *ngIf="data.type === 'process'">
-                <th mat-header-cell id="create" *matHeaderCellDef mat-sort-header fxFlex class="padding-table-header">
-                    {{ 'builder.dialogs.manage-roles.create' | translate }}
+            @if (data.type === 'process') {
+            <ng-container matColumnDef="create">
+                <th
+                    mat-header-cell
+                    id="create"
+                    *matHeaderCellDef
+                    mat-sort-header
+                >
+                    {{ "builder.dialogs.manage-roles.create" | translate }}
                 </th>
-                <td mat-cell *matCellDef="let element" fxFlex fxLayout="row" fxLayoutAlign="start center">
-                    <mat-checkbox fxLayoutAlign="start center" class="height-row"
-                                  [checked]="getChecked(element.logic.create)"
-                                  [indeterminate]="getIndeterminate(element.logic.create)"
-                                  (click)="setValue(element.id, 'create')"
-                                  [ngClass]="{'checkbox-background-warn': getIndeterminate(element.logic.create), 'checkbox-background-green': getChecked(element.logic.create)}"
-                                  [disabled]="_builderModeService.readOnly">
-                        <span>{{stringValue(element.logic.create) | titlecase}}</span>
+                <td
+                    mat-cell
+                    *matCellDef="let element"
+                >
+                    <mat-checkbox
+                        [checked]="getChecked(element.logic.create)"
+                        [indeterminate]="getIndeterminate(element.logic.create)"
+                        (click)="setValue(element.id, 'create')"
+                        [ngClass]="{
+                            'checkbox-background-warn': getIndeterminate(
+                                element.logic.create
+                            )
+                        }"
+                        [disabled]="_builderModeService.readOnly"
+                    >
+                        <span>{{
+                            stringValue(element.logic.create) | titlecase
+                        }}</span>
                     </mat-checkbox>
                 </td>
             </ng-container>
+            }
 
             <!-- Delete Column -->
-            <ng-container matColumnDef="delete" *ngIf="data.type === 'process'">
-                <th mat-header-cell id="delete" *matHeaderCellDef mat-sort-header fxFlex class="padding-table-header">
-                    {{ 'builder.dialogs.manage-roles.delete' | translate }}
+            @if (data.type === 'process') {
+            <ng-container matColumnDef="delete">
+                <th
+                    mat-header-cell
+                    id="delete"
+                    *matHeaderCellDef
+                    mat-sort-header
+                >
+                    {{ "builder.dialogs.manage-roles.delete" | translate }}
                 </th>
-                <td mat-cell *matCellDef="let element" fxFlex fxLayout="row" fxLayoutAlign="start center">
-                    <mat-checkbox fxLayoutAlign="start center" class="height-row"
-                                  [checked]="getChecked(element.logic.delete)"
-                                  [indeterminate]="getIndeterminate(element.logic.delete)"
-                                  (click)="setValue(element.id, 'delete')"
-                                  [ngClass]="{'checkbox-background-warn': getIndeterminate(element.logic.delete), 'checkbox-background-green': getChecked(element.logic.delete)}"
-                                  [disabled]="_builderModeService.readOnly">
-                        <span>{{stringValue(element.logic.delete) | titlecase}}</span>
+                <td
+                    mat-cell
+                    *matCellDef="let element"
+                >
+                    <mat-checkbox
+                        [checked]="getChecked(element.logic.delete)"
+                        [indeterminate]="getIndeterminate(element.logic.delete)"
+                        (click)="setValue(element.id, 'delete')"
+                        [ngClass]="{
+                            'checkbox-background-warn': getIndeterminate(
+                                element.logic.delete
+                            )
+                        }"
+                        [disabled]="_builderModeService.readOnly"
+                    >
+                        <span>{{
+                            stringValue(element.logic.delete) | titlecase
+                        }}</span>
                     </mat-checkbox>
                 </td>
             </ng-container>
+            }
 
             <!-- Process View Column -->
-            <ng-container matColumnDef="view" *ngIf="data.type === 'process'">
-                <th mat-header-cell id="view" *matHeaderCellDef mat-sort-header fxFlex
-                    class="padding-table-header">{{ 'builder.dialogs.manage-roles.view' | translate }}
+            @if (data.type === 'process') {
+            <ng-container matColumnDef="view">
+                <th
+                    mat-header-cell
+                    id="view"
+                    *matHeaderCellDef
+                    mat-sort-header
+                >
+                    {{ "builder.dialogs.manage-roles.view" | translate }}
                 </th>
-                <td mat-cell *matCellDef="let element" fxFlex fxLayout="row" fxLayoutAlign="start center">
-                    <mat-checkbox fxLayoutAlign="start center" class="height-row"
-                                  [checked]="getChecked(element.logic.view)"
-                                  [indeterminate]="getIndeterminate(element.logic.view)"
-                                  (click)="setValue(element.id, 'view')"
-                                  [ngClass]="{'checkbox-background-warn': getIndeterminate(element.logic.view), 'checkbox-background-green': getChecked(element.logic.view)}"
-                                  [disabled]="_builderModeService.readOnly">
-                        <span>{{stringValue(element.logic.view) | titlecase}}</span>
+                <td
+                    mat-cell
+                    *matCellDef="let element"
+                >
+                    <mat-checkbox
+                        [checked]="getChecked(element.logic.view)"
+                        [indeterminate]="getIndeterminate(element.logic.view)"
+                        (click)="setValue(element.id, 'view')"
+                        [ngClass]="{
+                            'checkbox-background-warn': getIndeterminate(
+                                element.logic.view
+                            )
+                        }"
+                        [disabled]="_builderModeService.readOnly"
+                    >
+                        <span>{{
+                            stringValue(element.logic.view) | titlecase
+                        }}</span>
                     </mat-checkbox>
                 </td>
             </ng-container>
+            }
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
         </table>
 
-        <mat-paginator #matPaginator [pageSize]="defaultPageSize" [pageSizeOptions]="pageSizes"
-                       showFirstLastButtons></mat-paginator>
+        <mat-paginator
+            #matPaginator
+            [pageSize]="defaultPageSize"
+            [pageSizeOptions]="pageSizes"
+            showFirstLastButtons
+        ></mat-paginator>
     </div>
-    <div> {{ 'builder.dialogs.manage-roles.userListPermissions' | translate }}
-        <table mat-table #secondTableSort="matSort" matSort [dataSource]="usersDataSource" (matSortChange)="sortUserRefs($event)" class="table-right-padding">
+    <div>
+        <h3 class="section-title">{{ "builder.dialogs.manage-roles.userListPermissions" | translate }}</h3>
+        <table
+            mat-table
+            #secondTableSort="matSort"
+            matSort
+            [dataSource]="usersDataSource"
+            (matSortChange)="sortUserRefs($event)"
+        >
             <caption></caption>
 
             <!-- Id Column -->
             <ng-container matColumnDef="id">
-                <th mat-header-cell id="id" *matHeaderCellDef mat-sort-header fxFlex class="padding-table-header"> {{ 'builder.dialogs.manage-roles.id' | translate }}
+                <th
+                    mat-header-cell
+                    id="id"
+                    *matHeaderCellDef
+                    mat-sort-header
+                >
+                    {{ "builder.dialogs.manage-roles.id" | translate }}
                 </th>
-                <td mat-cell *matCellDef="let element" fxFlex class="padding-table"> {{element.id}} </td>
+                <td
+                    mat-cell
+                    *matCellDef="let element"
+                >
+                    {{ element.id }}
+                </td>
             </ng-container>
 
             <!-- Perform Column -->
-            <ng-container matColumnDef="perform" *ngIf="data.type === 'transition'">
-                <th mat-header-cell id="perform" *matHeaderCellDef mat-sort-header fxFlex class="padding-table-header">
-                    {{ 'builder.dialogs.manage-roles.perform' | translate }}
+            @if (data.type === 'transition') {
+            <ng-container matColumnDef="perform">
+                <th
+                    mat-header-cell
+                    id="perform"
+                    *matHeaderCellDef
+                    mat-sort-header
+                >
+                    {{ "builder.dialogs.manage-roles.perform" | translate }}
                 </th>
-                <td mat-cell *matCellDef="let element" fxFlex fxLayout="row" fxLayoutAlign="start center">
-                    <mat-checkbox fxLayoutAlign="start center" class="height-row"
-                                  [checked]="getChecked(element.logic.perform)"
-                                  [indeterminate]="getIndeterminate(element.logic.perform)"
-                                  (click)="setUserValue(element.id, 'perform')"
-                                  [ngClass]="{'checkbox-background-warn': getIndeterminate(element.logic.perform), 'checkbox-background-green': getChecked(element.logic.perform)}"
-                                  [disabled]="_builderModeService.readOnly">
-                        <span>{{stringValue(element.logic.perform) | titlecase}}</span>
+                <td
+                    mat-cell
+                    *matCellDef="let element"
+                >
+                    <mat-checkbox
+                        [checked]="getChecked(element.logic.perform)"
+                        [indeterminate]="
+                            getIndeterminate(element.logic.perform)
+                        "
+                        (click)="setUserValue(element.id, 'perform')"
+                        [ngClass]="{
+                            'checkbox-background-warn': getIndeterminate(
+                                element.logic.perform
+                            )
+                        }"
+                        [disabled]="_builderModeService.readOnly"
+                    >
+                        <span>{{
+                            stringValue(element.logic.perform) | titlecase
+                        }}</span>
                     </mat-checkbox>
                 </td>
             </ng-container>
+            }
 
             <!-- Delegate Column -->
-            <ng-container matColumnDef="delegate" *ngIf="data.type === 'transition'">
-                <th mat-header-cell id="delegate" *matHeaderCellDef mat-sort-header fxFlex class="padding-table-header">
-                    {{ 'builder.dialogs.manage-roles.delegate' | translate }}
+            @if (data.type === 'transition') {
+            <ng-container matColumnDef="delegate">
+                <th
+                    mat-header-cell
+                    id="delegate"
+                    *matHeaderCellDef
+                    mat-sort-header
+                >
+                    {{ "builder.dialogs.manage-roles.delegate" | translate }}
                 </th>
-                <td mat-cell *matCellDef="let element" fxFlex fxLayout="row" fxLayoutAlign="start center">
-                    <mat-checkbox fxLayoutAlign="start center" class="height-row"
-                                  [checked]="getChecked(element.logic.delegate)"
-                                  [indeterminate]="getIndeterminate(element.logic.delegate)"
-                                  (click)="setUserValue(element.id, 'delegate')"
-                                  [ngClass]="{'checkbox-background-warn': getIndeterminate(element.logic.delegate), 'checkbox-background-green': getChecked(element.logic.delegate)}"
-                                  [disabled]="_builderModeService.readOnly">
-                        <span>{{stringValue(element.logic.delegate) | titlecase}}</span>
+                <td
+                    mat-cell
+                    *matCellDef="let element"
+                >
+                    <mat-checkbox
+                        [checked]="getChecked(element.logic.delegate)"
+                        [indeterminate]="
+                            getIndeterminate(element.logic.delegate)
+                        "
+                        (click)="setUserValue(element.id, 'delegate')"
+                        [ngClass]="{
+                            'checkbox-background-warn': getIndeterminate(
+                                element.logic.delegate
+                            )
+                        }"
+                        [disabled]="_builderModeService.readOnly"
+                    >
+                        <span>{{
+                            stringValue(element.logic.delegate) | titlecase
+                        }}</span>
                     </mat-checkbox>
                 </td>
             </ng-container>
+            }
 
             <!-- Cancel Column -->
-            <ng-container matColumnDef="cancel" *ngIf="data.type === 'transition'">
-                <th mat-header-cell id="cancel" *matHeaderCellDef mat-sort-header fxFlex class="padding-table-header">
-                    {{ 'builder.dialogs.manage-roles.cancel' | translate }}
+            @if (data.type === 'transition') {
+            <ng-container matColumnDef="cancel">
+                <th
+                    mat-header-cell
+                    id="cancel"
+                    *matHeaderCellDef
+                    mat-sort-header
+                >
+                    {{ "builder.dialogs.manage-roles.cancel" | translate }}
                 </th>
-                <td mat-cell *matCellDef="let element" fxFlex fxLayout="row" fxLayoutAlign="start center">
-                    <mat-checkbox fxLayoutAlign="start center" class="height-row"
-                                  [checked]="getChecked(element.logic.cancel)"
-                                  [indeterminate]="getIndeterminate(element.logic.cancel)"
-                                  (click)="setUserValue(element.id, 'cancel')"
-                                  [ngClass]="{'checkbox-background-warn': getIndeterminate(element.logic.cancel), 'checkbox-background-green': getChecked(element.logic.cancel)}"
-                                  [disabled]="_builderModeService.readOnly">
-                        <span>{{stringValue(element.logic.cancel) | titlecase}}</span>
+                <td
+                    mat-cell
+                    *matCellDef="let element"
+                >
+                    <mat-checkbox
+                        [checked]="getChecked(element.logic.cancel)"
+                        [indeterminate]="getIndeterminate(element.logic.cancel)"
+                        (click)="setUserValue(element.id, 'cancel')"
+                        [ngClass]="{
+                            'checkbox-background-warn': getIndeterminate(
+                                element.logic.cancel
+                            )
+                        }"
+                        [disabled]="_builderModeService.readOnly"
+                    >
+                        <span>{{
+                            stringValue(element.logic.cancel) | titlecase
+                        }}</span>
                     </mat-checkbox>
                 </td>
             </ng-container>
+            }
 
             <!-- Assign Column -->
-            <ng-container matColumnDef="assign" *ngIf="data.type === 'transition'">
-                <th mat-header-cell id="assign" *matHeaderCellDef mat-sort-header fxFlex class="padding-table-header">
-                    {{ 'builder.dialogs.manage-roles.assign' | translate }}
+            @if (data.type === 'transition') {
+            <ng-container matColumnDef="assign">
+                <th
+                    mat-header-cell
+                    id="assign"
+                    *matHeaderCellDef
+                    mat-sort-header
+                >
+                    {{ "builder.dialogs.manage-roles.assign" | translate }}
                 </th>
-                <td mat-cell *matCellDef="let element" fxFlex fxLayout="row" fxLayoutAlign="start center">
-                    <mat-checkbox fxLayoutAlign="start center" class="height-row"
-                                  [checked]="getChecked(element.logic.assign)"
-                                  [indeterminate]="getIndeterminate(element.logic.assign)"
-                                  (click)="setUserValue(element.id, 'assign')"
-                                  [ngClass]="{'checkbox-background-warn': getIndeterminate(element.logic.assign), 'checkbox-background-green': getChecked(element.logic.assign)}"
-                                  [disabled]="_builderModeService.readOnly">
-                        <span>{{stringValue(element.logic.assign) | titlecase}}</span>
+                <td
+                    mat-cell
+                    *matCellDef="let element"
+                >
+                    <mat-checkbox
+                        [checked]="getChecked(element.logic.assign)"
+                        [indeterminate]="getIndeterminate(element.logic.assign)"
+                        (click)="setUserValue(element.id, 'assign')"
+                        [ngClass]="{
+                            'checkbox-background-warn': getIndeterminate(
+                                element.logic.assign
+                            )
+                        }"
+                        [disabled]="_builderModeService.readOnly"
+                    >
+                        <span>{{
+                            stringValue(element.logic.assign) | titlecase
+                        }}</span>
                     </mat-checkbox>
                 </td>
             </ng-container>
+            }
 
             <!-- View Column -->
-            <ng-container matColumnDef="view" *ngIf="data.type === 'transition'">
-                <th mat-header-cell id="view" *matHeaderCellDef mat-sort-header fxFlex class="padding-table-header">
-                    {{ 'builder.dialogs.manage-roles.view' | translate }}
+            @if (data.type === 'transition') {
+            <ng-container matColumnDef="view">
+                <th
+                    mat-header-cell
+                    id="view"
+                    *matHeaderCellDef
+                    mat-sort-header
+                >
+                    {{ "builder.dialogs.manage-roles.view" | translate }}
                 </th>
-                <td mat-cell *matCellDef="let element" fxFlex fxLayout="row" fxLayoutAlign="start center">
-                    <mat-checkbox fxLayoutAlign="start center" class="height-row"
-                                  [checked]="getChecked(element.logic.view)"
-                                  [indeterminate]="getIndeterminate(element.logic.view)"
-                                  (click)="setUserValue(element.id, 'view')"
-                                  [ngClass]="{'checkbox-background-warn': getIndeterminate(element.logic.view), 'checkbox-background-green': getChecked(element.logic.view)}"
-                                  [disabled]="_builderModeService.readOnly">
-                        <span>{{stringValue(element.logic.view) | titlecase}}</span>
+                <td
+                    mat-cell
+                    *matCellDef="let element"
+                >
+                    <mat-checkbox
+                        [checked]="getChecked(element.logic.view)"
+                        [indeterminate]="getIndeterminate(element.logic.view)"
+                        (click)="setUserValue(element.id, 'view')"
+                        [ngClass]="{
+                            'checkbox-background-warn': getIndeterminate(
+                                element.logic.view
+                            )
+                        }"
+                        [disabled]="_builderModeService.readOnly"
+                    >
+                        <span>{{
+                            stringValue(element.logic.view) | titlecase
+                        }}</span>
                     </mat-checkbox>
                 </td>
             </ng-container>
+            }
 
             <!-- Create Column -->
-            <ng-container matColumnDef="create" *ngIf="data.type === 'process'">
-                <th mat-header-cell id="create" *matHeaderCellDef mat-sort-header fxFlex class="padding-table-header">
-                    {{ 'builder.dialogs.manage-roles.create' | translate }}
+            @if (data.type === 'process') {
+            <ng-container matColumnDef="create">
+                <th
+                    mat-header-cell
+                    id="create"
+                    *matHeaderCellDef
+                    mat-sort-header
+                >
+                    {{ "builder.dialogs.manage-roles.create" | translate }}
                 </th>
-                <td mat-cell *matCellDef="let element" fxFlex fxLayout="row" fxLayoutAlign="start center">
-                    <mat-checkbox fxLayoutAlign="start center" class="height-row"
-                                  [checked]="getChecked(element.logic.create)"
-                                  [indeterminate]="getIndeterminate(element.logic.create)"
-                                  (click)="setUserValue(element.id, 'create')"
-                                  [ngClass]="{'checkbox-background-warn': getIndeterminate(element.logic.create), 'checkbox-background-green': getChecked(element.logic.create)}"
-                                  [disabled]="_builderModeService.readOnly">
-                        <span>{{stringValue(element.logic.create) | titlecase}}</span>
+                <td
+                    mat-cell
+                    *matCellDef="let element"
+                >
+                    <mat-checkbox
+                        [checked]="getChecked(element.logic.create)"
+                        [indeterminate]="getIndeterminate(element.logic.create)"
+                        (click)="setUserValue(element.id, 'create')"
+                        [ngClass]="{
+                            'checkbox-background-warn': getIndeterminate(
+                                element.logic.create
+                            )
+                        }"
+                        [disabled]="_builderModeService.readOnly"
+                    >
+                        <span>{{
+                            stringValue(element.logic.create) | titlecase
+                        }}</span>
                     </mat-checkbox>
                 </td>
             </ng-container>
+            }
 
             <!-- Delete Column -->
-            <ng-container matColumnDef="delete" *ngIf="data.type === 'process'">
-                <th mat-header-cell id="delete" *matHeaderCellDef mat-sort-header fxFlex class="padding-table-header">
-                    {{ 'builder.dialogs.manage-roles.delete' | translate }}
+            @if (data.type === 'process') {
+            <ng-container matColumnDef="delete">
+                <th
+                    mat-header-cell
+                    id="delete"
+                    *matHeaderCellDef
+                    mat-sort-header
+                >
+                    {{ "builder.dialogs.manage-roles.delete" | translate }}
                 </th>
-                <td mat-cell *matCellDef="let element" fxFlex fxLayout="row" fxLayoutAlign="start center">
-                    <mat-checkbox fxLayoutAlign="start center" class="height-row"
-                                  [checked]="getChecked(element.logic.delete)"
-                                  [indeterminate]="getIndeterminate(element.logic.delete)"
-                                  (click)="setUserValue(element.id, 'delete')"
-                                  [ngClass]="{'checkbox-background-warn': getIndeterminate(element.logic.delete), 'checkbox-background-green': getChecked(element.logic.delete)}"
-                                  [disabled]="_builderModeService.readOnly">
-                        <span>{{stringValue(element.logic.delete) | titlecase}}</span>
+                <td
+                    mat-cell
+                    *matCellDef="let element"
+                >
+                    <mat-checkbox
+                        [checked]="getChecked(element.logic.delete)"
+                        [indeterminate]="getIndeterminate(element.logic.delete)"
+                        (click)="setUserValue(element.id, 'delete')"
+                        [ngClass]="{
+                            'checkbox-background-warn': getIndeterminate(
+                                element.logic.delete
+                            )
+                        }"
+                        [disabled]="_builderModeService.readOnly"
+                    >
+                        <span>{{
+                            stringValue(element.logic.delete) | titlecase
+                        }}</span>
                     </mat-checkbox>
                 </td>
             </ng-container>
+            }
 
             <!-- Process View Column -->
-            <ng-container matColumnDef="view" *ngIf="data.type === 'process'">
-                <th mat-header-cell id="view" *matHeaderCellDef mat-sort-header fxFlex
-                    class="padding-table-header"> {{ 'builder.dialogs.manage-roles.view' | translate }}
+            @if (data.type === 'process') {
+            <ng-container matColumnDef="view">
+                <th
+                    mat-header-cell
+                    id="view"
+                    *matHeaderCellDef
+                    mat-sort-header
+                >
+                    {{ "builder.dialogs.manage-roles.view" | translate }}
                 </th>
-                <td mat-cell *matCellDef="let element" fxFlex fxLayout="row" fxLayoutAlign="start center">
-                    <mat-checkbox fxLayoutAlign="start center" class="height-row"
-                                  [checked]="getChecked(element.logic.view)"
-                                  [indeterminate]="getIndeterminate(element.logic.view)"
-                                  (click)="setUserValue(element.id, 'view')"
-                                  [ngClass]="{'checkbox-background-warn': getIndeterminate(element.logic.view), 'checkbox-background-green': getChecked(element.logic.view)}"
-                                  [disabled]="_builderModeService.readOnly">
-                        <span>{{stringValue(element.logic.view) | titlecase}}</span>
+                <td
+                    mat-cell
+                    *matCellDef="let element"
+                >
+                    <mat-checkbox
+                        [checked]="getChecked(element.logic.view)"
+                        [indeterminate]="getIndeterminate(element.logic.view)"
+                        (click)="setUserValue(element.id, 'view')"
+                        [ngClass]="{
+                            'checkbox-background-warn': getIndeterminate(
+                                element.logic.view
+                            )
+                        }"
+                        [disabled]="_builderModeService.readOnly"
+                    >
+                        <span>{{
+                            stringValue(element.logic.view) | titlecase
+                        }}</span>
                     </mat-checkbox>
                 </td>
             </ng-container>
+            }
 
             <tr mat-header-row *matHeaderRowDef="usersDisplayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: usersDisplayedColumns;"></tr>
+            <tr
+                mat-row
+                *matRowDef="let row; columns: usersDisplayedColumns"
+            ></tr>
         </table>
 
-        <mat-paginator #matUserPaginator [pageSize]="defaultPageSize" [pageSizeOptions]="pageSizes"
-                       showFirstLastButtons></mat-paginator>
+        <mat-paginator
+            #matUserPaginator
+            [pageSize]="defaultPageSize"
+            [pageSizeOptions]="pageSizes"
+            showFirstLastButtons
+        ></mat-paginator>
     </div>
-</div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close cdkFocusInitial>{{ "dialog.close" | translate }}</button>
+</mat-dialog-actions>

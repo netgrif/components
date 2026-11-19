@@ -1,4 +1,4 @@
-import {Component, Inject, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, Inject, OnDestroy, OnInit, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {MAT_CHECKBOX_DEFAULT_OPTIONS, MatCheckboxDefaultOptions} from '@angular/material/checkbox';
 import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {MatPaginator} from '@angular/material/paginator';
@@ -37,7 +37,9 @@ export interface ManagePermissionData {
     styleUrls: ['./dialog-manage-roles.component.scss'],
     providers: [
         {provide: MAT_CHECKBOX_DEFAULT_OPTIONS, useValue: {clickAction: 'noop'} as MatCheckboxDefaultOptions}
-    ]
+    ],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class DialogManageRolesComponent implements OnInit, OnDestroy {
     pageSizes = [5, 10, 20];
@@ -110,11 +112,11 @@ export class DialogManageRolesComponent implements OnInit, OnDestroy {
         }
     }
 
-    private sortRefs(sort: MatSort, data: ((TransitionPermissionRef | ProcessPermissionRef)[])) {
+    private sortRefs(sort: MatSort, data: (TransitionPermissionRef | ProcessPermissionRef)[]) {
         if (sort.active === undefined) {
             return data;
         }
-        const order = sort.direction === 'desc' ? -1 : (sort.direction === 'asc' ? 1 : 0);
+        const order = sort.direction === 'desc' ? -1 :sort.direction === 'asc' ? 1 : 0
         return data.sort((a: TransitionPermissionRef | ProcessPermissionRef, b: TransitionPermissionRef | ProcessPermissionRef) => {
             const refA = this.refStringValue(a, sort.active);
             const refB = this.refStringValue(b, sort.active);
@@ -135,14 +137,14 @@ export class DialogManageRolesComponent implements OnInit, OnDestroy {
         this.usersDataSource.paginator = this.userPaginator;
         this.dataSource.sort = this.sort;
         this.usersDataSource.sort = this.userSort;
-        this.sort.sort(({
+        this.sort.sort({
             id: this._localStorageService.getItem(ModelerConfig.LOCALSTORAGE.PERMISSION_DIALOG.ROLE_SORT),
             start: this._localStorageService.getItem(ModelerConfig.LOCALSTORAGE.PERMISSION_DIALOG.ROLE_DIRECTION)
-        }) as MatSortable);
-        this.userSort.sort(({
+        } as MatSortable);
+        this.userSort.sort({
             id: this._localStorageService.getItem(ModelerConfig.LOCALSTORAGE.PERMISSION_DIALOG.USER_REF_SORT),
             start: this._localStorageService.getItem(ModelerConfig.LOCALSTORAGE.PERMISSION_DIALOG.USER_REF_DIRECTION)
-        }) as MatSortable);
+        } as MatSortable);
     }
 
     setValue(id: string, change: string) {

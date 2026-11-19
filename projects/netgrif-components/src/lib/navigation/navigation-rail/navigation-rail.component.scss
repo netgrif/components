@@ -1,3 +1,28 @@
 .margin-left-default {
     margin-left: 8px;
 }
+
+$rail-transition: 400ms cubic-bezier(0.25, 0.8, 0.25, 1);
+
+.rail {
+    box-sizing: content-box;
+    width: 48px;
+    min-width: 48px;
+    padding: 4px;
+    transition: width $rail-transition, min-width $rail-transition, padding $rail-transition;
+
+    &.rail-expanded {
+        width: 184px;
+        min-width: 184px;
+        padding: 8px;
+    }
+}
+
+.rail-content {
+    margin-left: 49px !important;
+    transition: margin-left $rail-transition;
+
+    &.rail-content-expanded {
+        margin-left: 185px !important;
+    }
+}

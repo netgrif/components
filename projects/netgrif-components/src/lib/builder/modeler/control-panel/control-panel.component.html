@@ -1,14 +1,25 @@
-<div class="control" style="display: flex; flex-direction: row; justify-content: start; align-items: center">
-<!-- TODO: panel height: 40px, button height: 28px, margin (l,r): 1px -->
-    <nc-builder-control-panel-mode *ngFor="let mode of getRegistryItems()"
-                            [mode]="mode"></nc-builder-control-panel-mode>
-
-    <mat-divider [vertical]="true" *ngIf="globalToolRegistry.getToolPortals()?.length > 0" class="style-fix"></mat-divider>
-
-    <ng-template *ngFor="let portal of globalToolRegistry.getToolPortals()" [cdkPortalOutlet]="portal"></ng-template>
-
-    <mat-divider [vertical]="true" *ngIf="controlPanelService.activeMode?.tools?.getToolPortals()?.length > 0" class="style-fix"></mat-divider>
-
-    <ng-template *ngFor="let portal of controlPanelService.activeMode?.tools?.getToolPortals()"
-                 [cdkPortalOutlet]="portal"></ng-template>
+<div class="control">
+    @for (mode of getRegistryItems(); track mode) {
+    <nc-builder-control-panel-mode
+        [mode]="mode"
+    ></nc-builder-control-panel-mode>
+    } @if (globalToolRegistry.getToolPortals()?.length > 0) {
+    <mat-divider [vertical]="true" class="style-fix"></mat-divider>
+    } @for (portal of globalToolRegistry.getToolPortals(); track portal) {
+    <ng-template [cdkPortalOutlet]="portal"></ng-template>
+    } @if (controlPanelService.activeMode?.tools?.getToolPortals()?.length > 0)
+    {
+    <mat-divider [vertical]="true" class="style-fix"></mat-divider>
+    } @for (portal of controlPanelService.activeMode?.tools?.getToolPortals();
+    track portal) {
+    <ng-template [cdkPortalOutlet]="portal"></ng-template>
+    }
+    @if (builderModeService.readOnly$ | async) {
+    <span class="spacer"></span>
+    <span class="read-only-status" tabindex="0" role="status"
+          [matTooltip]="'builder.readOnly' | translate" matTooltipPosition="below">
+        <mat-icon>lock</mat-icon>
+        {{ "builder.readOnlyShort" | translate }}
+    </span>
+    }
 </div>

@@ -1,26 +1,11 @@
-.icon-small-dimensions {
-    height: 20px;
-    line-height: normal;
-}
+.flag-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-.margin-left-default {
-    margin-left: 8px;
-}
-
-.icon-medium-dimensions {
-    height: 20px;
-    line-height: normal;
-}
-
-.icon-button-height {
-    height: 40px;
-}
-
-.menu-button {
-    margin: 0 auto;
-    border-radius: 8px;
-}
-
-.menu-font-color {
-    color: rgba(0, 0, 0, 0.7) !important;
+    ::ng-deep svg {
+        display: block;
+        width: 24px;
+        height: 18px;
+    }
 }

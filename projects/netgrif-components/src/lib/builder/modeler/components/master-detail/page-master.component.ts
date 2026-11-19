@@ -1,11 +1,13 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnInit, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {PageEvent} from '@angular/material/paginator';
 import {MatSort, Sort} from '@angular/material/sort';
 import {AbstractMasterComponent} from './abstract-master.component';
 
 @Component({
     selector: 'nc-builder-abstract-page-master-component',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class PageMasterComponent extends AbstractMasterComponent implements OnInit {
 
@@ -14,6 +16,8 @@ export abstract class PageMasterComponent extends AbstractMasterComponent implem
     protected _pageData: Array<any>;
     protected _pageSizeOptions: Array<number> = [10, 20, 50];
     @ViewChild(MatSort, {static: true}) protected _sort: MatSort;
+    /** current order of the list (sort menu of the M3 list) */
+    public currentSort: Sort;
 
     protected constructor() {
         super();
@@ -59,9 +63,23 @@ export abstract class PageMasterComponent extends AbstractMasterComponent implem
             event.direction = 'asc';
             this.pageIndex = 0;
         }
+        this.currentSort = {...event};
         this.masterService.setSortToLocalStorage(event);
         this._allData = this.masterService.getAllDataSorted(event);
         this.updatePage();
+    }
+
+    /** sort by the key, the same key again reverses the order */
+    sortBy(active: string): void {
+        const direction = this.currentSort?.active === active && this.currentSort?.direction === 'asc' ? 'desc' : 'asc';
+        this.sortData({active, direction});
+    }
+
+    sortIcon(active: string): string {
+        if (this.currentSort?.active !== active) {
+            return '';
+        }
+        return this.currentSort.direction === 'desc' ? 'arrow_downward' : 'arrow_upward';
     }
 
     get pageSize(): number {

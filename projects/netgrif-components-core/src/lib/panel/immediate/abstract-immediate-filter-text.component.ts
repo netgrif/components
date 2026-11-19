@@ -1,4 +1,4 @@
-import {Component, Injector, Input, OnInit, StaticProvider} from '@angular/core';
+import {Component, Injector, Input, OnInit, StaticProvider, ChangeDetectionStrategy} from '@angular/core';
 import {ComponentPortal, ComponentType} from '@angular/cdk/portal';
 import {AbstractImmediateFilterTextContentComponent} from './abstract-immediate-filter-text-content.component';
 import {NAE_FILTER_TEXT} from './model/filter-text-injection-token';
@@ -6,7 +6,9 @@ import {FilterType} from "../../filter/models/filter-type";
 
 @Component({
     selector: 'ncc-abstract-immediate-filter-text',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractImmediateFilterTextComponent implements OnInit {
 

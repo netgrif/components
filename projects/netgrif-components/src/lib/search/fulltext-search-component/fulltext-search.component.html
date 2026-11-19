@@ -1,10 +1,14 @@
-<div fxLayout="row" fxLayoutAlign="start center" class="full-size netgrif-input-primary-search-fix padding-top">
-    <mat-form-field appearance="outline" class="disable-error-margin fulltext-search">
-        <mat-label>{{'search.fullText' | translate}}</mat-label>
-        <mat-icon matPrefix class="prefix-icon">search</mat-icon>
-        <input type="text" matInput
-               [formControl]="fullTextFormControl"
-               (keydown.enter)="$event.target.blur()">
-    </mat-form-field>
-</div>
-
+<label class="search-bar" [class.disabled]="fullTextFormControl.disabled">
+    <mat-icon>search</mat-icon>
+    <input type="text"
+           [formControl]="fullTextFormControl"
+           [placeholder]="'search.fullText' | translate"
+           [attr.aria-label]="'search.fullText' | translate"
+           (keydown.enter)="$event.target.blur()">
+    @if (fullTextFormControl.value && fullTextFormControl.enabled) {
+    <button mat-icon-button type="button" (click)="fullTextFormControl.setValue('')">
+        <mat-icon>close</mat-icon>
+    </button>
+    }
+    <ng-content></ng-content>
+</label>

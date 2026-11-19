@@ -1,10 +1,9 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {CommonModule} from '@angular/common';
 import {RouterTestingModule} from '@angular/router/testing';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {of} from 'rxjs';
-import {Component} from '@angular/core';
+import {Component, ChangeDetectionStrategy} from '@angular/core';
 import {AbstractLogoutShortcutComponent} from './abstract-logout-shortcut.component';
 import {Router} from '@angular/router';
 import {UserService} from '../../../../user/services/user.service';
@@ -17,6 +16,7 @@ import {TestConfigurationService} from '../../../../utility/tests/test-config';
 import {MockAuthenticationMethodService} from '../../../../utility/tests/mocks/mock-authentication-method-service';
 import {AuthenticationService} from '../../../../authentication/services/authentication/authentication.service';
 import {MockAuthenticationService} from '../../../../utility/tests/mocks/mock-authentication.service';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('AbstractLogoutShortcutComponent', () => {
     let component: TestLogoutComponent;
@@ -30,15 +30,15 @@ describe('AbstractLogoutShortcutComponent', () => {
                 CommonModule,
                 RouterTestingModule.withRoutes([]),
                 MaterialModule,
-                HttpClientTestingModule,
-                TranslateLibModule,
-                NoopAnimationsModule
+                TranslateLibModule
             ],
             providers: [
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
-                {provide: UserService, useClass: MyUserService}
+                {provide: UserService, useClass: MyUserService},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
             ]
         })
             .compileComponents();
@@ -67,7 +67,9 @@ describe('AbstractLogoutShortcutComponent', () => {
 
 @Component({
     selector: 'ncc-test-logout',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestLogoutComponent extends AbstractLogoutShortcutComponent {
     constructor(protected _user: UserService,

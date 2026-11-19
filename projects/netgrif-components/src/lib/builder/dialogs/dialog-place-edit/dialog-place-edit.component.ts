@@ -1,4 +1,4 @@
-import {Component, Inject} from '@angular/core';
+import {Component, Inject, ChangeDetectionStrategy} from '@angular/core';
 import {FormControl, ValidatorFn, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {PlaceChange} from '../../modeler/history-mode/model/place/place-change';
@@ -15,7 +15,9 @@ export interface PlaceEditData {
 @Component({
     selector: 'nc-builder-dialog-place-edit',
     templateUrl: './dialog-place-edit.component.html',
-    styleUrls: ['./dialog-place-edit.component.scss']
+    styleUrls: ['./dialog-place-edit.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class DialogPlaceEditComponent {
 

@@ -1,8 +1,7 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {MatCardModule} from '@angular/material/card';
 import {FlexLayoutModule} from '@ngbracket/ngx-layout';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {Component} from '@angular/core';
+import {Component, ChangeDetectionStrategy} from '@angular/core';
 import {IframeCard} from '../model/iframe-card';
 import {DashboardCardTypes} from '../model/dashboard-card-types';
 import {AbstractIframeCardComponent} from './abstract-iframe-card';
@@ -14,7 +13,7 @@ describe('AbstractIframeCardComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
-            imports: [MatCardModule, FlexLayoutModule, NoopAnimationsModule],
+            imports: [MatCardModule, FlexLayoutModule],
             declarations: [TestIframeCardComponent, TestWrapperComponent]
         }).compileComponents();
     }));
@@ -36,7 +35,9 @@ describe('AbstractIframeCardComponent', () => {
 
 @Component({
     selector: 'ncc-test-iframe-card',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestIframeCardComponent extends AbstractIframeCardComponent {
     constructor(protected _sanitizer: DomSanitizer) {
@@ -46,7 +47,9 @@ class TestIframeCardComponent extends AbstractIframeCardComponent {
 
 @Component({
     selector: 'ncc-test-wrapper',
-    template: '<ncc-test-iframe-card [card]="card"></ncc-test-iframe-card>'
+    template: '<ncc-test-iframe-card [card]="card"></ncc-test-iframe-card>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestWrapperComponent {
     card: IframeCard = {

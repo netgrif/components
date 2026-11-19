@@ -1,10 +1,10 @@
 import {NgModule} from '@angular/core';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
 import {MockAuthenticationMethodService} from './mocks/mock-authentication-method-service';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from './test-config';
-
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 /**
  * A module that provides the most common test dependencies, so that they don't have to be provided in each test.
@@ -19,11 +19,12 @@ import {TestConfigurationService} from './test-config';
 @NgModule({
     declarations: [],
     imports: [
-        HttpClientTestingModule
     ],
     providers: [
         {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
-        {provide: ConfigurationService, useClass: TestConfigurationService}
+        {provide: ConfigurationService, useClass: TestConfigurationService},
+        provideHttpClient(withXhr(), withInterceptorsFromDi()),
+        provideHttpClientTesting()
     ]
 })
 export class TestMockDependenciesModule {

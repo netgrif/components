@@ -1,7 +1,9 @@
-<button *ngIf="!node.isBeingRemoved()" mat-icon-button (click)="removeNode($event)">
+@if (!node.isBeingRemoved()) {
+<button mat-icon-button (click)="removeNode($event)">
     <mat-icon>delete_forever</mat-icon>
 </button>
-
-<div *ngIf="node.isBeingRemoved()" class="spinner-margin">
-    <mat-spinner [diameter]="24"></mat-spinner>
+} @if (node.isBeingRemoved()) {
+<div class="progress-slot">
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
 </div>
+}

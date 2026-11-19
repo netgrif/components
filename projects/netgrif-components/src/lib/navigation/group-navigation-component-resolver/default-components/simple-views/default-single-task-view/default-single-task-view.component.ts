@@ -1,4 +1,4 @@
-import {Component, Inject, Optional, Type} from '@angular/core';
+import {Component, Inject, Optional, Type, ChangeDetectionStrategy} from '@angular/core';
 import {
     AbstractSingleTaskViewComponent,
     AllowedNetsService,
@@ -65,7 +65,9 @@ function allowedNetsFactory(factory: AllowedNetsServiceFactory,
         TaskEventService,
         {provide: NAE_TASK_OPERATIONS, useClass: SubjectTaskOperations},
         AsyncPipe
-    ]
+    ],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class DefaultSingleTaskViewComponent extends AbstractSingleTaskViewComponent {
 

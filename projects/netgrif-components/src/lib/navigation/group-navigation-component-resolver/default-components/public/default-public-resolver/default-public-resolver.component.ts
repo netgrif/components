@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {Subscription} from "rxjs";
 import {Router} from "@angular/router";
 import {
@@ -12,7 +12,9 @@ import {
 @Component({
     selector: 'nc-default-public-resolver',
     templateUrl: './default-public-resolver.component.html',
-    styleUrls: ['./default-public-resolver.component.scss']
+    styleUrls: ['./default-public-resolver.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class DefaultPublicResolverComponent implements OnInit, OnDestroy {
 
@@ -27,8 +29,7 @@ export class DefaultPublicResolverComponent implements OnInit, OnDestroy {
         this._userSub = this._userService.user$.subscribe(user => {
             if ((!!user && user.id !== '') || (!this._sessionService.verified && !this._sessionService.isVerifying &&
                 this._sessionService.isInitialized && !this._auth.isAuthenticated)) {
-                this._router.navigate([this.redirectService.parseRedirectPath(this._publicResolver.url)],
-                    {queryParams: this.redirectService.queryParams});
+                this.redirectService.navigateToUrl(this._publicResolver.url, this.redirectService.queryParams);
                 this._publicResolver.url = undefined;
             }
         });

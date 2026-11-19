@@ -1,28 +1,35 @@
-<div fxLayout="row wrap" class="padding-top-search" fxLayoutAlign="start center">
+@if (advancedSearchDisplayed) {
+<div class="filter-bar" [class.disabled]="disabled">
+    <mat-icon class="filter-bar-icon">filter_list</mat-icon>
+    <nc-advanced-search class="filter-bar-conditions" [editable]="!disabled"></nc-advanced-search>
+    <div class="filter-bar-actions">
+        <ng-container *ngTemplateOutlet="toggleButton"></ng-container>
+        @if (showAdvancedSearchHelp) {
+        <button mat-icon-button [matMenuTriggerFor]="menu" [attr.aria-label]="'search.tooltip.help' | translate" [disabled]="disabled">
+            <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu" xPosition="before">
+            <button mat-menu-item (click)="showHelp()">
+                <mat-icon>help</mat-icon>
+                <span>{{ "search.tooltip.help" | translate }}</span>
+            </button>
+        </mat-menu>
+        }
+    </div>
+</div>
+} @else {
+<nc-fulltext-search [disabled]="disabled">
+    <ng-container *ngTemplateOutlet="toggleButton"></ng-container>
+</nc-fulltext-search>
+}
 
-    <div *ngIf="advancedSearchDisplayed; then advancedSearch; else fullTextSearch"></div>
-
-    <ng-template #advancedSearch>
-        <nc-advanced-search [editable]="!disabled"></nc-advanced-search>
-    </ng-template>
-
-    <ng-template #fullTextSearch>
-        <nc-fulltext-search [disabled]="disabled" class="netgrif-input"></nc-fulltext-search>
-    </ng-template>
-
-    <button mat-stroked-button class="search-buttons-margin search-buttons-padding fix-filter-button" *ngIf="showSearchToggleButton" [disabled]="disabled"
+<ng-template #toggleButton>
+    @if (showSearchToggleButton) {
+    <button mat-icon-button type="button"
+            [disabled]="disabled"
             [matTooltip]="(advancedSearchDisplayed ? 'search.tooltip.toFullText' : 'search.tooltip.toAdvanced') | translate"
             (click)="toggleSearchMode()">
-        <mat-icon class="advanced-search-icon fix-mat-icon" svgIcon="filter-variant"></mat-icon>
+        <mat-icon>{{ advancedSearchDisplayed ? "search" : "filter_list" }}</mat-icon>
     </button>
-
-    <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="menu" class="fix-icon-button" *ngIf="advancedSearchDisplayed" [disabled]="disabled">
-        <mat-icon class="advanced-search-icon">more_vert</mat-icon>
-    </button>
-    <mat-menu #menu="matMenu" class="mat-menu-border-radius mat-menu-padding">
-        <button mat-menu-item *ngIf="showAdvancedSearchHelp" (click)="showHelp()">
-            <mat-icon class="prefix-icon">help</mat-icon>
-            <span>{{'search.tooltip.help' | translate}}</span>
-        </button>
-    </mat-menu>
-</div>
+    }
+</ng-template>

@@ -2,7 +2,6 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {DefaultTicketViewComponent} from './default-ticket-view.component';
 import {NavigationComponentModule} from "../../../../navigation.module";
-import {NoopAnimationsModule} from "@angular/platform-browser/animations";
 import {RouterTestingModule} from "@angular/router/testing";
 import {
     AuthenticationMethodService,
@@ -24,9 +23,10 @@ import {
     ViewIdService
 } from "@netgrif/components-core";
 import {of} from "rxjs";
-import {HttpClientTestingModule} from "@angular/common/http/testing";
+import {provideHttpClientTesting} from "@angular/common/http/testing";
 import {CommonModule} from "@angular/common";
 import {FlexLayoutModule, FlexModule} from "@ngbracket/ngx-layout";
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('DefaultTicketViewComponent', () => {
     let component: DefaultTicketViewComponent;
@@ -39,9 +39,7 @@ describe('DefaultTicketViewComponent', () => {
                 NavigationComponentModule,
                 TestMockDependenciesModule,
                 MaterialModule,
-                NoopAnimationsModule,
                 RouterTestingModule.withRoutes([]),
-                HttpClientTestingModule,
                 CommonModule,
                 FlexModule,
                 FlexLayoutModule,
@@ -72,7 +70,9 @@ describe('DefaultTicketViewComponent', () => {
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
-                {provide: UserPreferenceService, useClass: MockUserPreferenceService}
+                {provide: UserPreferenceService, useClass: MockUserPreferenceService},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
             ]
         })
             .compileComponents();

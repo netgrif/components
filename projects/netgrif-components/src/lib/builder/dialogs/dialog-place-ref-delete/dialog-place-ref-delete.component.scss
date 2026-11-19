@@ -1,7 +1,5 @@
-mat-dialog-content {
-    display: flex;
-    flex-direction: column;
-}
-.padding-top-4px {
-    padding-top: 4px !important;
-}
+@use '../../../dialog/dialog';
+
+@include dialog.styles;
+
+

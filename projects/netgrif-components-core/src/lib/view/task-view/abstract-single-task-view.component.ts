@@ -1,4 +1,4 @@
-import {Component, EventEmitter,  Input, Output} from '@angular/core';
+import {Component, EventEmitter,  Input, Output, ChangeDetectionStrategy} from '@angular/core';
 import {AbstractViewWithHeadersComponent} from '../abstract/view-with-headers';
 import {Observable} from 'rxjs';
 import {TaskPanelData} from '../../panel/task-panel-list/task-panel-data/task-panel-data';
@@ -9,7 +9,9 @@ import {AssignPolicy} from "../../task-content/model/policy";
 
 @Component({
     selector: 'ncc-abstract-single-task-view',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractSingleTaskViewComponent extends AbstractViewWithHeadersComponent {
 

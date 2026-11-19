@@ -1,0 +1,171 @@
+
+@use 'sass:map';
+@use 'sass:math';
+@use '@angular/material' as mat;
+@use './palettes';
+@use './components';
+@use './density' as nae-density;
+
+@forward './palettes' show $primary-palette, $tertiary-palette;
+@forward './scrollbar' show list-scrollbar;
+
+/// Full application theme: system tokens, light / dark mode, density, typography,
+/// base page styles and the dialog panel classes used by the library.
+/// @param {Map} $primary - M3 primary palette (incl. secondary, neutral, neutral-variant, error)
+/// @param {Map} $tertiary - M3 tertiary palette
+/// @param {String} $font - brand and plain font family
+/// @param {Number} $density - default density scale (0, -1, ... -5)
+/// @param {Boolean} $base - emit base `body` styles
+/// @param {Boolean} $components - emit the global helper classes used by the library (see `_components.scss`)
+/// @param {Number|null} $task-form-density - density of the task forms (`nc-task-content`) at the theme density, null =
+///        `$density`; it is the `forms` offset of `$density-blocks` (`$task-form-density - $density`)
+/// @param {Number|null} $task-form-field-density - density of the form fields in the task forms, null = `$task-form-density`;
+///        it is the `form-fields` offset (`$task-form-field-density - $task-form-density`)
+/// @param {Map} $density-blocks - offsets of the blocks from the global density: navigation, lists, forms, form-fields
+///        (from the forms), dialogs, builder (see `_density.scss`), e.g. `(lists: -1, dialogs: -1)`
+@mixin theme($primary: palettes.$primary-palette, $tertiary: palettes.$tertiary-palette, $font: Roboto, $density: 0, $base: true,
+             $components: true, $task-form-density: null, $task-form-field-density: null, $density-blocks: ()) {
+    @include system-tokens($primary, $tertiary, $font, $density);
+    $form-density: if-null($task-form-density, $density);
+    $field-density: if-null($task-form-field-density, $form-density);
+    @include nae-density.density($density, map.merge((
+        forms: $form-density - $density,
+        form-fields: $field-density - $form-density,
+    ), $density-blocks));
+    @include typography($primary, $font);
+    @include dialogs();
+    @include tabs();
+    @if $components {
+        @include components.component-classes();
+    }
+    @if $base {
+        @include base();
+    }
+}
+
+/// `--mat-sys-*` tokens. Light / dark follows the OS unless `html.light-theme` / `html.dark-theme`
+/// is set (navigation drawer toggle), all colors are emitted with light-dark() (theme-type: color-scheme).
+/// The runtime density levels (`html.nae-density-<n>`) are emitted by `density()` of `_density.scss`.
+@mixin system-tokens($primary: palettes.$primary-palette, $tertiary: palettes.$tertiary-palette, $font: Roboto, $density: 0) {
+    html {
+        color-scheme: light dark;
+        @include mat.theme((
+            color: (
+                primary: $primary,
+                tertiary: $tertiary,
+                theme-type: color-scheme,
+            ),
+            typography: $font,
+            density: $density,
+        ));
+
+        &.light-theme {
+            color-scheme: light;
+        }
+
+        &.dark-theme {
+            color-scheme: dark;
+        }
+    }
+}
+
+@function if-null($value, $fallback) {
+    @if $value == null {
+        @return $fallback;
+    }
+    @return $value;
+}
+
+/// Density of the task forms with absolute values (`nae.theme()` emits the forms through the density blocks of
+/// `_density.scss`, this mixin is for applications that compose the theme themselves).
+/// Without arguments the task forms follow the density of the page (the slider of the appearance dialog).
+/// Emitted with zero specificity, so any application rule can change it, e.g.
+/// `.my-view nc-task-content { @include mat.theme((density: 0)); }`.
+@mixin task-forms($density: null, $field-density: null) {
+    @if $density != null or $field-density != null {
+        :where(nc-task-content) {
+            @if $density != null {
+                @include mat.all-component-densities(mat.define-theme((density: (scale: $density))));
+            }
+            @if $field-density != null and $field-density != $density {
+                $height: 56px + 4px * math.max($field-density, -5);
+                @include mat.form-field-overrides((
+                    container-height: $height,
+                    container-vertical-padding: math.div($height - 24px, 2),
+                ));
+            }
+        }
+    }
+}
+
+/// `.mat-typography` / `.mat-body-*` classes, incl. the M2 class names still used in templates.
+@mixin typography($primary: palettes.$primary-palette, $font: Roboto) {
+    @include mat.typography-hierarchy(mat.define-theme((
+        color: (primary: $primary),
+        typography: (brand-family: $font, plain-family: $font),
+    )), $back-compat: true);
+}
+
+/// Primary tabs of the M3 specification (Angular Material uses on-surface labels and a 2px square indicator):
+/// active label in primary, inactive in on-surface-variant, 3px indicator with rounded top corners
+/// (the library tab groups fit it to the label, `fitInkBarToContent`), outline-variant divider.
+@mixin tabs() {
+    html {
+        @include mat.tabs-overrides((
+            active-label-text-color: var(--mat-sys-primary),
+            active-hover-label-text-color: var(--mat-sys-primary),
+            active-focus-label-text-color: var(--mat-sys-primary),
+            active-ripple-color: var(--mat-sys-primary),
+            inactive-label-text-color: var(--mat-sys-on-surface-variant),
+            inactive-hover-label-text-color: var(--mat-sys-on-surface),
+            inactive-focus-label-text-color: var(--mat-sys-on-surface),
+            active-indicator-height: 3px,
+            active-indicator-shape: 3px 3px 0 0,
+            divider-color: var(--mat-sys-outline-variant),
+        ));
+    }
+}
+
+/// Panel classes the library passes to `MatDialog.open` (`panelClass`).
+/// Dialogs host task forms, so the M3 560px width limit is dropped.
+@mixin dialogs() {
+    html {
+        @include mat.dialog-overrides((
+            container-max-width: 95vw,
+        ));
+    }
+
+    .dialog-responsive {
+        width: 560px;
+        min-width: 280px;
+        max-height: 90vh;
+    }
+
+    .dialog-task-responsive {
+        width: 70vw;
+        min-width: 300px;
+        max-height: 95vh;
+    }
+
+    @media (max-width: 599.98px) {
+        .dialog-responsive,
+        .dialog-task-responsive {
+            width: 100vw;
+        }
+    }
+}
+
+/// Page surface and text color from the theme.
+@mixin base() {
+    html,
+    body {
+        height: 100%;
+    }
+
+    body {
+        margin: 0;
+        background: var(--mat-sys-surface);
+        color: var(--mat-sys-on-surface);
+        font: var(--mat-sys-body-medium);
+    }
+}

@@ -1,12 +1,12 @@
 import {inject, TestBed} from '@angular/core/testing';
 import {ConfigurationService} from '../../../configuration/configuration.service';
 import {TestConfigurationService} from '../../../utility/tests/test-config';
-import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {HttpTestingController, provideHttpClientTesting} from '@angular/common/http/testing';
 import {RouterTestingModule} from '@angular/router/testing';
 import {ProfileService} from './profile.service';
 import {NetgrifApplicationEngine} from "../../../../commons/schema";
 import {UserChangePasswordRequest} from "../models/user-change-password-request";
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('ProfileService', () => {
     let service: ProfileService;
@@ -19,10 +19,12 @@ describe('ProfileService', () => {
     describe('standard endpoints configuration', () => {
         beforeEach(() => {
             TestBed.configureTestingModule({
-                imports: [HttpClientTestingModule, NoopAnimationsModule, RouterTestingModule.withRoutes([])],
+                imports: [ RouterTestingModule.withRoutes([])],
                 providers: [
                     ProfileService,
-                    {provide: ConfigurationService, useClass: TestConfigurationService}
+                    {provide: ConfigurationService, useClass: TestConfigurationService},
+                    provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                    provideHttpClientTesting()
                 ]
             });
             service = TestBed.inject(ProfileService);
@@ -54,10 +56,12 @@ describe('ProfileService', () => {
     describe('no endpoints configuration', () => {
         beforeEach(() => {
             TestBed.configureTestingModule({
-                imports: [HttpClientTestingModule, NoopAnimationsModule, RouterTestingModule.withRoutes([])],
+                imports: [ RouterTestingModule.withRoutes([])],
                 providers: [
                     ProfileService,
-                    {provide: ConfigurationService, useClass: MissingEndpointsConfigurationService}
+                    {provide: ConfigurationService, useClass: MissingEndpointsConfigurationService},
+                    provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                    provideHttpClientTesting()
                 ]
             });
         });

@@ -1,10 +1,10 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
-import {Component} from '@angular/core';
+import {Component, ChangeDetectionStrategy} from '@angular/core';
 import {AbstractLegalNoticeComponent} from './abstract-legal-notice.component';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('AbstractLegalFormComponent ', () => {
     let component: TestLegalFormComponent;
@@ -12,12 +12,12 @@ describe('AbstractLegalFormComponent ', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
-            imports: [
-                NoopAnimationsModule, HttpClientTestingModule
-            ],
             declarations: [TestLegalFormComponent],
+            imports: [],
             providers: [
-                {provide: ConfigurationService, useClass: TestConfigurationService}
+                {provide: ConfigurationService, useClass: TestConfigurationService},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
             ]
         }).compileComponents();
 
@@ -37,7 +37,9 @@ describe('AbstractLegalFormComponent ', () => {
 
 @Component({
     selector: 'ncc-test-legal',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestLegalFormComponent extends AbstractLegalNoticeComponent {
     constructor(config: ConfigurationService) {

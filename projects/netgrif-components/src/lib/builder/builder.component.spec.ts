@@ -1,4 +1,4 @@
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {NO_ERRORS_SCHEMA} from '@angular/core';
 import {TestBed} from '@angular/core/testing';
 import {MatDialog} from '@angular/material/dialog';
@@ -15,12 +15,14 @@ import {BuilderComponent} from './builder.component';
 import {ConfigurationService, TestConfigurationService} from '@netgrif/components-core';
 import {CommonModule} from "@angular/common";
 import {TranslateService} from "@ngx-translate/core";
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('BuilderComponent', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             declarations: [BuilderComponent],
-            imports: [HttpClientTestingModule, CommonModule],
+            schemas: [NO_ERRORS_SCHEMA],
+            imports: [ CommonModule],
             providers: [
                 ModelService,
                 ArcFactory,
@@ -33,9 +35,10 @@ describe('BuilderComponent', () => {
                 {provide: Router, useValue: {navigate: () => {}}},
                 {provide: ActivatedRoute, useValue: {queryParams: of({})}},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
-                {provide: TranslateService, useValue: { instant: (key: string) => `translated-${key}` }}
+                {provide: TranslateService, useValue: { instant: (key: string) => `translated-${key}` }},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
             ],
-            schemas: [NO_ERRORS_SCHEMA],
         });
     });
 

@@ -1,5 +1,5 @@
 import {GroupNavigationComponentResolverService} from './group-navigation-component-resolver.service';
-import {Component, Injector, OnDestroy, OnInit} from '@angular/core';
+import {Component, Injector, OnDestroy, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {ComponentPortal} from '@angular/cdk/portal';
 import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 import {GroupNavigationConstants} from '../model/group-navigation-constants';
@@ -10,7 +10,9 @@ import {LoggerService} from '../../logger/services/logger.service';
 
 @Component({
     selector: 'ncc-abstract-group-nagiation-resolver',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractGroupNavigationComponentResolverComponent implements OnInit, OnDestroy {
 
@@ -42,6 +44,8 @@ export abstract class AbstractGroupNavigationComponentResolverComponent implemen
 
     protected resolveComponent(): void {
         this.initialized = false;
+        this.errored = false;
+        destroySubscription(this._portalSub);
         this._portalSub = this._componentResolverService.createResolvedViewComponentPortal(
             this._activatedRoute.snapshot.paramMap.get(GroupNavigationConstants.GROUP_NAVIGATION_ROUTER_PARAM),
             this._parentInjector

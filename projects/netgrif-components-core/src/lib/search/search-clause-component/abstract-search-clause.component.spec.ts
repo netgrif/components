@@ -1,11 +1,11 @@
 import {AbstractSearchClauseComponent} from './abstract-search-clause.component';
-import {Component, OnDestroy} from '@angular/core';
+import {Component, OnDestroy, ChangeDetectionStrategy} from '@angular/core';
 import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 import {Subject} from 'rxjs';
 import {EditableClausePredicate} from '../models/predicate/editable-clause-predicate';
 import {BooleanOperator} from '../models/boolean-operator';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('AbstractSearchClauseComponent', () => {
     let component: TestSearchClauseComponent;
@@ -13,10 +13,11 @@ describe('AbstractSearchClauseComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
-            imports: [NoopAnimationsModule, HttpClientTestingModule],
-            declarations: [
-                TestSearchClauseComponent,
-                TestWrapperComponent
+            declarations: [TestSearchClauseComponent, TestWrapperComponent],
+            imports: [],
+            providers: [
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
             ]
         }).compileComponents();
     }));
@@ -38,7 +39,9 @@ describe('AbstractSearchClauseComponent', () => {
 
 @Component({
     selector: 'ncc-search-clause',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestSearchClauseComponent extends AbstractSearchClauseComponent {
     constructor() {
@@ -48,7 +51,9 @@ class TestSearchClauseComponent extends AbstractSearchClauseComponent {
 
 @Component({
     selector: 'ncc-test-wrapper',
-    template: '<ncc-search-clause [predicate]="predicate" [remove$]="remove$" [predicateId]="0"></ncc-search-clause>'
+    template: '<ncc-search-clause [predicate]="predicate" [remove$]="remove$" [predicateId]="0"></ncc-search-clause>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestWrapperComponent implements OnDestroy {
 

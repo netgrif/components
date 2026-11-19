@@ -1,4 +1,4 @@
-import {Component, Inject, OnDestroy, ViewChild} from '@angular/core';
+import {Component, Inject, OnDestroy, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {FormBuilder, FormControl, Validators} from '@angular/forms';
 import {StepperSelectionEvent} from '@angular/cdk/stepper';
 import {map, startWith, tap} from 'rxjs/operators';
@@ -23,9 +23,14 @@ interface Form {
     version?: string;
 }
 
+/**
+ * @deprecated the side menu is deprecated, the library opens dialogs instead (`DialogComponentsModule`)
+ */
 @Component({
     selector: 'ncc-abstract-new-case',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractNewCaseComponent implements OnDestroy {
 
@@ -51,6 +56,9 @@ export abstract class AbstractNewCaseComponent implements OnDestroy {
     protected _notInitialized$: BehaviorSubject<boolean>;
     private _allowedNetsSubscription: Subscription;
 
+    /** Enter in the component: the next step, removed with the component */
+    protected _enterHotkey: Hotkey;
+
     protected constructor(@Inject(NAE_SIDE_MENU_CONTROL) protected _sideMenuControl: SideMenuControl,
                           protected _formBuilder: FormBuilder,
                           protected _snackBarService: SnackBarService,
@@ -63,10 +71,11 @@ export abstract class AbstractNewCaseComponent implements OnDestroy {
         if (!this._injectedData) {
             this.closeNoNets();
         }
-        this._hotkeysService.add(new Hotkey('enter', (event: KeyboardEvent): boolean => {
+        this._enterHotkey = new Hotkey('enter', (event: KeyboardEvent): boolean => {
             this.nextStep();
             return false;
-        }));
+        });
+        this._hotkeysService.add(this._enterHotkey);
 
         this._hasMultipleNets$ = new ReplaySubject(1);
         this._notInitialized$ = new BehaviorSubject<boolean>(true);
@@ -115,7 +124,15 @@ export abstract class AbstractNewCaseComponent implements OnDestroy {
         );
     }
 
+    /** the snack bar after the creation: with the title of the case, without it when the case has none */
+    protected caseCreatedMessage(title: string | null | undefined): string {
+        return title
+            ? this._translate.instant('side-menu.new-case.caseCreated', {title})
+            : this._translate.instant('side-menu.new-case.caseCreatedDefaultName');
+    }
+
     ngOnDestroy(): void {
+        this._hotkeysService.remove(this._enterHotkey);
         this._hasMultipleNets$.complete();
         this.loadingSubmit.complete();
         this._allowedNetsSubscription.unsubscribe();
@@ -164,8 +181,8 @@ export abstract class AbstractNewCaseComponent implements OnDestroy {
                         this.loadingSubmit.off();
                         if (!!response.outcome) {
                             this._snackBarService.openSuccessSnackBar(response.outcome.message === undefined
-                                ? this._translate.instant('side-menu.new-case.createCase') + ' ' + newCase.title
-                                : response.outcome.message);
+                                ? this.caseCreatedMessage((response.outcome as CreateCaseEventOutcome).aCase?.title ?? newCase.title)
+                                    : response.outcome.message);
                             this._sideMenuControl.close({
                                 opened: false,
                                 message: response.outcome.message === undefined
@@ -175,7 +192,9 @@ export abstract class AbstractNewCaseComponent implements OnDestroy {
                                 data: (response.outcome as CreateCaseEventOutcome).aCase
                             });
                         } else if (!!response.error) {
-                            this._snackBarService.openWarningSnackBar(this._translate.instant('side-menu.new-case.createCaseError') + ' ' + newCase.title);
+                            this._snackBarService.openWarningSnackBar(newCase.title
+                                ? this._translate.instant('side-menu.new-case.caseCreatedActionsError', {title: newCase.title})
+                                : this._translate.instant('side-menu.new-case.caseCreatedDefaultNameActionsError'));
                             this._sideMenuControl.close({
                                 opened: false,
                                 message: response.error === undefined

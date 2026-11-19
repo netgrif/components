@@ -1,11 +1,10 @@
 import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 import { EnumerationAutocompleteDynamicFieldComponent } from './enumeration-autocomplete-dynamic-field.component';
-import {AngularResizeEventModule} from 'angular-resize-event';
-import {BrowserAnimationsModule, NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
+import {Component, CUSTOM_ELEMENTS_SCHEMA, ChangeDetectionStrategy} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {WrappedBoolean, MaterialModule, TranslateLibModule, DynamicEnumerationField} from '@netgrif/components-core';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('EnumerationAutocompleteDynamicFieldComponent', () => {
     let component: EnumerationAutocompleteDynamicFieldComponent;
@@ -13,16 +12,19 @@ describe('EnumerationAutocompleteDynamicFieldComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
+            declarations: [
+                EnumerationAutocompleteDynamicFieldComponent,
+                TestWrapperComponent
+            ],
+            schemas: [CUSTOM_ELEMENTS_SCHEMA],
             imports: [
                 MaterialModule,
-                AngularResizeEventModule,
-                BrowserAnimationsModule,
                 TranslateLibModule,
-                HttpClientTestingModule,
-                NoopAnimationsModule
             ],
-            declarations: [EnumerationAutocompleteDynamicFieldComponent, TestWrapperComponent],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA]
+            providers: [
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
+            ]
         })
             .compileComponents();
         fixture = TestBed.createComponent(TestWrapperComponent);
@@ -42,7 +44,9 @@ describe('EnumerationAutocompleteDynamicFieldComponent', () => {
 @Component({
     selector: 'nc-test-wrapper',
     template: '<nc-enumeration-autocomplete-dynamic-field [showLargeLayout]="label" [dataField]="field" [formControlRef]="form">' +
-        '</nc-enumeration-autocomplete-dynamic-field>'
+        '</nc-enumeration-autocomplete-dynamic-field>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestWrapperComponent {
     label = new WrappedBoolean();

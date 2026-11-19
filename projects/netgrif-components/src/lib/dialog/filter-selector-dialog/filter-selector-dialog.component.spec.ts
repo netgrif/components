@@ -4,8 +4,7 @@ import {FilterSelectorDialogComponent} from './filter-selector-dialog.component'
 import {
     SideMenuFilterSelectorComponentModule
 } from '../../side-menu/content-components/filter-selector/side-menu-filter-selector-component.module';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {
     AuthenticationMethodService,
     AuthenticationService, ConfigurationService,
@@ -20,6 +19,7 @@ import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from '@angular/material/
 import {RouterTestingModule} from "@angular/router/testing";
 import {NO_ERRORS_SCHEMA} from "@angular/core";
 import {PanelComponentModule} from "../../panel/panel.module";
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('FilterSelectorDialogComponent', () => {
     let component: FilterSelectorDialogComponent;
@@ -28,10 +28,9 @@ describe('FilterSelectorDialogComponent', () => {
     beforeEach(async () => {
         await TestBed.configureTestingModule({
             declarations: [FilterSelectorDialogComponent],
+            schemas: [NO_ERRORS_SCHEMA],
             imports: [
                 MaterialModule,
-                HttpClientTestingModule,
-                NoopAnimationsModule,
                 PanelComponentModule,
                 TranslateLibModule,
                 RouterTestingModule.withRoutes([]),
@@ -44,9 +43,10 @@ describe('FilterSelectorDialogComponent', () => {
                 { provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService },
                 { provide: ConfigurationService, useClass: TestConfigurationService },
                 { provide: AuthenticationService, useClass: MockAuthenticationService },
-                { provide: UserResourceService, useClass: MockUserResourceService }
-            ],
-            schemas: [NO_ERRORS_SCHEMA]
+                { provide: UserResourceService, useClass: MockUserResourceService },
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
+            ]
         })
             .compileComponents();
     });

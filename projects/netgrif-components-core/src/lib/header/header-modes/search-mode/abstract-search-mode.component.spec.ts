@@ -1,9 +1,8 @@
 import {waitForAsync, ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
 import {FlexLayoutModule, FlexModule} from '@ngbracket/ngx-layout';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {RouterTestingModule} from '@angular/router/testing';
-import {Component} from '@angular/core';
+import {Component, ChangeDetectionStrategy} from '@angular/core';
 import {AbstractSearchModeComponent} from './abstract-search-mode.component';
 import {CaseHeaderService} from '../../case-header/case-header.service';
 import {UserValue} from '../../../data-fields/user-field/models/user-value';
@@ -26,6 +25,7 @@ import {NAE_BASE_FILTER} from '../../../search/models/base-filter-injection-toke
 import {AllowedNetsService} from '../../../allowed-nets/services/allowed-nets.service';
 import {AllowedNetsServiceFactory} from '../../../allowed-nets/services/factory/allowed-nets-service-factory';
 import {MatDialog} from '@angular/material/dialog';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('AbstractSearchModeComponent', () => {
     let component: TestSeaarchModeComponent;
@@ -34,11 +34,10 @@ describe('AbstractSearchModeComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
+            declarations: [TestSeaarchModeComponent, TestWrapperComponent],
             imports: [
                 FlexModule,
                 FlexLayoutModule,
-                NoopAnimationsModule,
-                HttpClientTestingModule,
                 TranslateLibModule,
                 MaterialModule,
                 RouterTestingModule.withRoutes([])
@@ -56,9 +55,10 @@ describe('AbstractSearchModeComponent', () => {
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: ViewService, useClass: TestViewService},
                 CaseHeaderService,
-                {provide: AllowedNetsService, useFactory: TestCaseViewAllowedNetsFactory, deps: [AllowedNetsServiceFactory]}
+                {provide: AllowedNetsService, useFactory: TestCaseViewAllowedNetsFactory, deps: [AllowedNetsServiceFactory]},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
             ],
-            declarations: [TestSeaarchModeComponent, TestWrapperComponent],
         }).compileComponents();
     }));
 
@@ -93,7 +93,9 @@ describe('AbstractSearchModeComponent', () => {
 
 @Component({
     selector: 'ncc-test-search',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestSeaarchModeComponent extends AbstractSearchModeComponent {
     constructor(protected _dialog: MatDialog) {
@@ -103,7 +105,9 @@ class TestSeaarchModeComponent extends AbstractSearchModeComponent {
 
 @Component({
     selector: 'ncc-test-wrapper',
-    template: '<ncc-test-search [headerService]="service"></ncc-test-search>'
+    template: '<ncc-test-search [headerService]="service"></ncc-test-search>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestWrapperComponent {
     constructor(public service: CaseHeaderService) {

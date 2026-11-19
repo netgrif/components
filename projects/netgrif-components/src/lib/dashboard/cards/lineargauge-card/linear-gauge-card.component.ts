@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Injector, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Injector, OnInit, Output, ChangeDetectionStrategy} from '@angular/core';
 import {AbstractCustomCardComponent, DashboardEventContent, DashboardResourceService} from '@netgrif/components-core';
 import {TranslateService} from '@ngx-translate/core';
 import {AggregationResult, LoggerService} from '@netgrif/components-core';
@@ -6,7 +6,8 @@ import {AggregationResult, LoggerService} from '@netgrif/components-core';
 @Component({
     selector: 'nc-linear-gauge-card',
     templateUrl: './linear-gauge-card.component.html',
-    styleUrls: ['./linear-gauge-card.component.scss']
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class LinearGaugeCardComponent extends AbstractCustomCardComponent implements OnInit {
 

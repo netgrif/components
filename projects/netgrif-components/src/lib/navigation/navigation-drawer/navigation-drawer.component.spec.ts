@@ -4,8 +4,7 @@ import {CommonModule} from '@angular/common';
 import {FlexLayoutModule, FlexModule} from '@ngbracket/ngx-layout';
 import {QuickPanelComponentModule} from '../quick-panel/quick-panel.module';
 import {NavigationTreeComponent} from '../navigation-tree/navigation-tree.component';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {
     AuthenticationMethodService,
     AuthenticationService,
@@ -24,6 +23,7 @@ import {UserComponentModule} from '../../user/user.module';
 import {RouterTestingModule} from '@angular/router/testing';
 import {ResizableModule} from 'angular-resizable-element';
 import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('NavigationDrawerComponent', () => {
     let component: NavigationDrawerComponent;
@@ -32,6 +32,7 @@ describe('NavigationDrawerComponent', () => {
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             declarations: [NavigationDrawerComponent, NavigationTreeComponent],
+            schemas: [CUSTOM_ELEMENTS_SCHEMA],
             imports: [
                 CommonModule,
                 RouterTestingModule.withRoutes([]),
@@ -40,9 +41,7 @@ describe('NavigationDrawerComponent', () => {
                 FlexLayoutModule,
                 QuickPanelComponentModule,
                 UserComponentModule,
-                NoopAnimationsModule,
                 TranslateLibModule,
-                HttpClientTestingModule,
                 ResizableModule
             ],
             providers: [
@@ -50,9 +49,10 @@ describe('NavigationDrawerComponent', () => {
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
-                {provide: UserPreferenceService, useClass: MockUserPreferenceService}
-            ],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA]
+                {provide: UserPreferenceService, useClass: MockUserPreferenceService},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
+            ]
         })
             .compileComponents();
     }));

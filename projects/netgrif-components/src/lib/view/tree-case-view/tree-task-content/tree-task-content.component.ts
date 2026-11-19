@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, ChangeDetectionStrategy} from '@angular/core';
 import {
     AbstractTreeTaskContentComponent,
     AssignPolicyService,
@@ -39,7 +39,9 @@ import {
         FinishPolicyService,
         SelectedCaseService,
         {provide: NAE_TASK_OPERATIONS, useClass: SubjectTaskOperations},
-    ]
+    ],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class TreeTaskContentComponent extends AbstractTreeTaskContentComponent {
 

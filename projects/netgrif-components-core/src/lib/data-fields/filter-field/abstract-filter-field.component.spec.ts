@@ -1,12 +1,12 @@
 import {AbstractFilterFieldComponent} from './abstract-filter-field.component';
 import {ComponentFixture, TestBed} from '@angular/core/testing';
-import {Component, Inject, Optional} from '@angular/core';
+import {Component, Inject, Optional, ChangeDetectionStrategy} from '@angular/core';
 import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token';
 import {FilterField} from './models/filter-field';
 import {Subject} from 'rxjs';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {FieldTypeResource} from "../../task-content/model/field-type-resource";
+import {provideHttpClientTesting} from '@angular/common/http/testing';
+import {FieldTypeResource} from '../../task-content/model/field-type-resource';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('AbstractFilterFieldComponent', () => {
     let component: TestFilterComponent;
@@ -21,11 +21,11 @@ describe('AbstractFilterFieldComponent', () => {
         };
 
         TestBed.configureTestingModule({
-            imports: [NoopAnimationsModule, HttpClientTestingModule],
-            declarations: [
-                TestWrapperComponent,
-                TestFilterComponent,
-
+            declarations: [TestWrapperComponent, TestFilterComponent],
+            imports: [],
+            providers: [
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
             ]
         }).compileComponents();
         fixture = TestBed.createComponent(TestWrapperComponent);
@@ -44,7 +44,9 @@ describe('AbstractFilterFieldComponent', () => {
 
 @Component({
     selector: 'ncc-test-filter',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestFilterComponent extends AbstractFilterFieldComponent {
     constructor(@Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
@@ -54,7 +56,9 @@ class TestFilterComponent extends AbstractFilterFieldComponent {
 
 @Component({
     selector: 'ncc-test-wrapper',
-    template: '<ncc-test-filter [dataField]="field"></ncc-test-filter>'
+    template: '<ncc-test-filter [dataField]="field"></ncc-test-filter>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestWrapperComponent {
     field = new FilterField('', '', '', FieldTypeResource.CASE_FILTER, [], {}, '', '');

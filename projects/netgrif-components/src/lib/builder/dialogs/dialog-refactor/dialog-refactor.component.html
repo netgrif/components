@@ -1,20 +1,39 @@
-<h2 mat-dialog-title>{{ 'builder.dialogs.refactor.title' | translate }}</h2>
-<mat-dialog-content fxLayout="column" fxLayoutAlign="start stretch" class="netgrif-input padding-top-4px">
+<h2 mat-dialog-title>{{ "builder.dialogs.refactor.title" | translate }}</h2>
+<mat-dialog-content class="dialog-column">
     <mat-form-field appearance="outline">
-        <mat-label>{{ 'builder.dialogs.refactor.originalId' | translate }}</mat-label>
-        <input matInput disabled [(ngModel)]="data.originalId">
+        <mat-label>{{
+            "builder.dialogs.refactor.originalId" | translate
+        }}</mat-label>
+        <input matInput disabled [(ngModel)]="data.originalId" />
     </mat-form-field>
     <mat-form-field appearance="outline">
-        <mat-label>{{ 'builder.dialogs.refactor.newId' | translate }}</mat-label>
-        <input autocomplete="off" matInput [formControl]="formControl">
-        <mat-error *ngIf="formControl.errors && formControl.errors.required">{{ 'builder.dialogs.refactor.newIdRequired' | translate }}</mat-error>
-        <mat-error *ngIf="formControl.errors && formControl.errors.pattern">{{ 'builder.dialogs.refactor.idCharsOnly' | translate }}</mat-error>
-        <mat-error *ngIf="formControl.errors && formControl.errors.validUnique">{{ 'builder.dialogs.refactor.idUnique' | translate }}</mat-error>
+        <mat-label>{{
+            "builder.dialogs.refactor.newId" | translate
+        }}</mat-label>
+        <input autocomplete="off" matInput [formControl]="formControl" />
+        @if (formControl.errors && formControl.errors.required) {
+        <mat-error>{{
+            "builder.dialogs.refactor.newIdRequired" | translate
+        }}</mat-error>
+        } @if (formControl.errors && formControl.errors.pattern) {
+        <mat-error>{{
+            "builder.dialogs.refactor.idCharsOnly" | translate
+        }}</mat-error>
+        } @if (formControl.errors && formControl.errors.validUnique) {
+        <mat-error>{{
+            "builder.dialogs.refactor.idUnique" | translate
+        }}</mat-error>
+        }
     </mat-form-field>
-    <br>
-    <span class="warning">{{ 'builder.dialogs.refactor.warning' | translate }}</span>
+    <p class="supporting-text warning">{{
+        "builder.dialogs.refactor.warning" | translate
+    }}</p>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-    <button mat-button (click)="close()">{{ 'builder.dialogs.refactor.close' | translate }}</button>
-    <button mat-flat-button color="primary" (click)="refactor()">{{ 'builder.dialogs.refactor.refactor' | translate }}</button>
+    <button mat-button (click)="close()">
+        {{ "builder.dialogs.refactor.close" | translate }}
+    </button>
+    <button mat-flat-button (click)="refactor()">
+        {{ "builder.dialogs.refactor.refactor" | translate }}
+    </button>
 </mat-dialog-actions>

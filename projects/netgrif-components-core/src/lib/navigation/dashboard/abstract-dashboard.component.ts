@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy} from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpParams } from '@angular/common/http';
 import { PaginationParams } from '../../utility/pagination/pagination-params';
@@ -17,7 +17,9 @@ import { LoadingEmitter } from '../../utility/loading-emitter';
 
 @Component({
     selector: 'ncc-dashboard',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractDashboardComponent {
 

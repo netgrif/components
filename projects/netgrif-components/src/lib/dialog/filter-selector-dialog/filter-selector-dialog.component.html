@@ -1,32 +1,32 @@
-<div class="mat-dialog-title" fxLayout="column" fxLayoutAlign="center none">
-    {{ 'side-menu.filter-selector.choose-filter' | translate}}
-</div>
-<div mat-dialog-content class="filter-selector-root side-menu-root">
-    <div class="input-margin netgrif-input">
-        <mat-form-field class="full-width-input" appearance="outline">
-            <mat-label>{{'side-menu.filter-selector.search-filter' | translate}}</mat-label>
-            <input matInput type="text" [formControl]="searchFormControl">
-        </mat-form-field>
-    </div>
-    <div *ngIf="caseFilters.filtered.length > 0">
-        <h4 class="header-padding">{{ 'side-menu.filter-selector.case-filters' | translate}}</h4>
-        <mat-selection-list (selectionChange)="caseFilterSelected($event)" #caseFilterList>
-            <mat-list-option *ngFor="let filter of caseFilters.filtered" [value]="filter">
-                <nc-filter-selector-list-item [filter]="filter"></nc-filter-selector-list-item>
-            </mat-list-option>
-        </mat-selection-list>
-    </div>
-    <div *ngIf="taskFilters.filtered.length > 0">
-        <h4 class="header-padding">{{ 'side-menu.filter-selector.task-filters' | translate}}</h4>
-        <mat-selection-list (selectionChange)="taskFilterSelected($event)" #taskFilterList>
-            <mat-list-option *ngFor="let filter of taskFilters.filtered" [value]="filter">
-                <nc-filter-selector-list-item [filter]="filter"></nc-filter-selector-list-item>
-            </mat-list-option>
-        </mat-selection-list>
-    </div>
-    <div fxLayout="row" fxLayoutAlign="end center">
-        <button mat-raised-button color="primary" class="submit-button-padding"
-                (click)="filterSelectionConfirmed()">{{ 'side-menu.filter-selector.select' | translate }}</button>
-    </div>
-</div>
-
+<h2 mat-dialog-title>{{ "side-menu.filter-selector.choose-filter" | translate }}</h2>
+<mat-dialog-content class="dialog-column">
+    <mat-form-field class="search-field" subscriptSizing="dynamic">
+        <mat-icon matIconPrefix>search</mat-icon>
+        <mat-label>{{ "side-menu.filter-selector.search-filter" | translate }}</mat-label>
+        <input matInput type="text" [formControl]="searchFormControl"/>
+    </mat-form-field>
+    @if (caseFilters.filtered.length > 0) {
+    <mat-selection-list #caseFilterList [multiple]="false" (selectionChange)="caseFilterSelected($event)">
+        <div mat-subheader>{{ "side-menu.filter-selector.case-filters" | translate }}</div>
+        @for (filter of caseFilters.filtered; track filter) {
+        <mat-list-option togglePosition="before" [value]="filter">
+            <nc-filter-selector-list-item [filter]="filter"></nc-filter-selector-list-item>
+        </mat-list-option>
+        }
+    </mat-selection-list>
+    }
+    @if (taskFilters.filtered.length > 0) {
+    <mat-selection-list #taskFilterList [multiple]="false" (selectionChange)="taskFilterSelected($event)">
+        <div mat-subheader>{{ "side-menu.filter-selector.task-filters" | translate }}</div>
+        @for (filter of taskFilters.filtered; track filter) {
+        <mat-list-option togglePosition="before" [value]="filter">
+            <nc-filter-selector-list-item [filter]="filter"></nc-filter-selector-list-item>
+        </mat-list-option>
+        }
+    </mat-selection-list>
+    }
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>{{ "dialog.close" | translate }}</button>
+    <button mat-flat-button [disabled]="!hasSelectedFilter" (click)="filterSelectionConfirmed()">{{ "side-menu.filter-selector.select" | translate }}</button>
+</mat-dialog-actions>

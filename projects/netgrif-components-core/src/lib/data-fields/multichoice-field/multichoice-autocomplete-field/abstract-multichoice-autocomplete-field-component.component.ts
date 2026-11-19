@@ -1,4 +1,4 @@
-import {Component, ElementRef, Inject, OnDestroy, OnInit, Optional, ViewChild} from '@angular/core';
+import {Component, ElementRef, Inject, OnDestroy, OnInit, Optional, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {MultichoiceField, MultichoiceFieldValue} from '../models/multichoice-field';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {MatChipInputEvent} from '@angular/material/chips';
@@ -9,7 +9,9 @@ import {AbstractBaseDataFieldComponent} from "../../base-component/abstract-base
 
 @Component({
     selector: 'ncc-abstract-multichoice-autocomplete-field',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractMultichoiceAutocompleteFieldComponentComponent extends AbstractBaseDataFieldComponent<MultichoiceField> implements OnInit, OnDestroy {
 

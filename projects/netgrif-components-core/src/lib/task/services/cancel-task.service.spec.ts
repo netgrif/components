@@ -2,8 +2,7 @@ import {TestBed} from '@angular/core/testing';
 import {CancelTaskService} from './cancel-task.service';
 import {MaterialModule} from '../../material/material.module';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
 import {TaskEventService} from '../../task-content/services/task-event.service';
@@ -36,6 +35,7 @@ import {ChangedFieldsService} from '../../changed-fields/services/changed-fields
 import {User} from '../../user/models/user';
 import {ProcessRole} from '../../resources/interface/process-role';
 import {FrontActionService} from "../../actions/services/front-action.service";
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('CancelTaskService', () => {
     let service: CancelTaskService;
@@ -49,8 +49,6 @@ describe('CancelTaskService', () => {
             imports: [
                 MaterialModule,
                 TranslateLibModule,
-                HttpClientTestingModule,
-                NoopAnimationsModule,
                 SnackBarModule
             ],
             providers: [
@@ -66,7 +64,9 @@ describe('CancelTaskService', () => {
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: TaskResourceService, useClass: TestTaskResourceService},
-                {provide: UserService, useClass: TestUserService}
+                {provide: UserService, useClass: TestUserService},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
             ]
         }).compileComponents();
         service = TestBed.inject(CancelTaskService);

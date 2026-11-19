@@ -13,12 +13,11 @@ import {
     TestConfigurationService,
     TranslateLibModule
 } from '@netgrif/components-core';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {of} from 'rxjs';
 import {PanelComponentModule} from '../../../../panel/panel.module';
-import {BrowserAnimationsModule, NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterTestingModule} from '@angular/router/testing';
-
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('CaseListComponent', () => {
     let component: CaseListComponent;
@@ -26,13 +25,11 @@ describe('CaseListComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
+            declarations: [CaseListComponent],
             imports: [
-                HttpClientTestingModule,
                 MaterialModule,
                 TranslateLibModule,
                 PanelComponentModule,
-                BrowserAnimationsModule,
-                NoopAnimationsModule,
                 RouterTestingModule.withRoutes([])
             ],
             providers: [
@@ -45,9 +42,10 @@ describe('CaseListComponent', () => {
                     provide: NAE_BASE_FILTER,
                     useFactory: TestCaseBaseFilterProvider
                 },
-                {provide: AllowedNetsService, useFactory: TestCaseViewAllowedNetsFactory, deps: [AllowedNetsServiceFactory]}
-            ],
-            declarations: [CaseListComponent]
+                {provide: AllowedNetsService, useFactory: TestCaseViewAllowedNetsFactory, deps: [AllowedNetsServiceFactory]},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
+            ]
         })
             .compileComponents();
     }));

@@ -1,5 +1,4 @@
-import {NestedTreeControl} from '@angular/cdk/tree';
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {MatTreeNestedDataSource} from '@angular/material/tree';
 import {DataVariable, FunctionScope, PetriflowFunction, Role, Transition} from '@netgrif/petriflow';
 import {HistoryService} from '../../services/history/history.service';
@@ -20,13 +19,14 @@ import {BuilderModeService} from "../../../services/builder-mode.service";
 @Component({
   selector: 'nc-builder-action-detail',
   templateUrl: './action-detail.component.html',
-  styleUrl: './action-detail.component.scss'
+  styleUrl: './action-detail.component.scss',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class ActionDetailComponent implements OnInit, OnDestroy {
 
     functionScopes: Array<Scope>;
     // TREE
-    public treeControl = new NestedTreeControl<TreeNode>(node => node.children);
     public dataSource = new MatTreeNestedDataSource<TreeNode>();
     public loading: boolean;
 
@@ -49,6 +49,10 @@ export class ActionDetailComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this._masterService.getSelected$().subscribe(item => {
+            this.selectedDatarefIndex = 0;
+            if (item === undefined || item === null) {
+                this.dataSource.data = [];
+            }
             if (this.actionEditorService.historySave) {
                 this._historyService.save(this._translateService.instant('builder.modeler.actions-mode.action-detail.actionsChanged'));
                 this.actionEditorService.historySave = false;
@@ -56,14 +60,14 @@ export class ActionDetailComponent implements OnInit, OnDestroy {
             if (item instanceof Transition) {
                 const transition = this._modelService.model.getTransition(item.id);
                 this.actionEditorService.populateEditedActionsFromTransition(transition);
-                this.dataSource.data = this._actionEditorTreeService.createTransitionTreeStructure(this.actionEditorService.editedActions, (leaf: TreeNode, actionCount: number) => this.collapseParentCallback(leaf, actionCount));
+                this.dataSource.data = this._actionEditorTreeService.createTransitionTreeStructure(this.actionEditorService.editedActions, () => {});
             } else if (item instanceof DataVariable) {
                 const dataVar = this._modelService.model.getData(item.id);
                 this.actionEditorService.populateEditedActionsFromDataVariable(dataVar);
                 const hiddenParent = {
                     type: ActionType.DATA,
                     actionCount: undefined, // attribute is required but the hiddenParent doesn't use it
-                    children: this._actionEditorTreeService.createDatafieldTreeStructure(this.actionEditorService.editedActions[0].editableActions, (leaf: TreeNode, actionCount: number) => this.collapseParentCallback(leaf, actionCount))
+                    children: this._actionEditorTreeService.createDatafieldTreeStructure(this.actionEditorService.editedActions[0].editableActions, () => {})
                 };
                 hiddenParent.children.forEach(child => {
                     child.parent = hiddenParent;
@@ -78,7 +82,7 @@ export class ActionDetailComponent implements OnInit, OnDestroy {
                 const hiddenParent = {
                     type: item.type,
                     actionCount: undefined,
-                    children: this._actionEditorTreeService.createCaseTreeStructure(this.actionEditorService.editedActions[0].editableActions, item.type, (leaf: TreeNode, actionCount: number) => this.collapseParentCallback(leaf, actionCount))
+                    children: this._actionEditorTreeService.createCaseTreeStructure(this.actionEditorService.editedActions[0].editableActions, item.type, () => {})
                 };
                 hiddenParent.children.forEach(child => {
                     child.parent = hiddenParent;
@@ -87,7 +91,7 @@ export class ActionDetailComponent implements OnInit, OnDestroy {
             } else if (item instanceof Role) {
                 const role = this._modelService.model.getRole(item.id);
                 this.actionEditorService.populateEditedActionsFromRole(role);
-                this.dataSource.data = this._actionEditorTreeService.createRoleTreeStructure(this.actionEditorService.editedActions[0].editableActions, (leaf: TreeNode, actionCount: number) => this.collapseParentCallback(leaf, actionCount));
+                this.dataSource.data = this._actionEditorTreeService.createRoleTreeStructure(this.actionEditorService.editedActions[0].editableActions, () => {});
             }
         })
     }
@@ -105,7 +109,6 @@ export class ActionDetailComponent implements OnInit, OnDestroy {
 
     newAction(node: TreeNode): void {
         const newAction = (node.children[0] as LeafNode).addAction(node.type, node.event, node.phase);
-        this.treeControl.expand(node);
 
         newAction.changeType = ChangeType.CREATED;
         this.actionEditorService.saveActionChange(newAction);
@@ -136,12 +139,44 @@ export class ActionDetailComponent implements OnInit, OnDestroy {
         }
     }
 
-    isInnerNode(_: number, node: TreeNode): boolean {
-        return !!node.children && node.children.length > 0 && !node.canAdd;
+    /** index of the selected event tab */
+    public selectedEventIndex = 0;
+
+    /** the top level of the tree are events (transitions, data fields), their phases are shown in tabs */
+    hasEventLevel(): boolean {
+        const nodes = this.dataSource.data ?? [];
+        return nodes.length > 0 && nodes.every(node => !node.canAdd && !(node instanceof LeafNode) && node.children?.length > 0);
     }
 
-    isAddNode(_: number, node: TreeNode): boolean {
-        return !!node.canAdd;
+    /** tabs: the events (of the transition, data field, role, case or process), data references share one tab */
+    eventTabs(): Array<TreeNode> {
+        return (this.dataSource.data ?? []).filter(node => node.type !== ActionType.DATAREF);
+    }
+
+    /** data references of the transition (fields of its form), one is shown at a time */
+    datarefNodes(): Array<TreeNode> {
+        return (this.dataSource.data ?? []).filter(node => node.type === ActionType.DATAREF);
+    }
+
+    /** index of the selected data reference */
+    public selectedDatarefIndex = 0;
+
+    selectedDataref(): TreeNode | undefined {
+        const nodes = this.datarefNodes();
+        return nodes[Math.min(this.selectedDatarefIndex, nodes.length - 1)];
+    }
+
+    datarefActionCount(): number {
+        return this.datarefNodes().reduce((sum, node) => sum + this.count(node), 0);
+    }
+
+    /** the nodes are the phases (pre / post) of one event */
+    hasPhases(nodes: Array<TreeNode> | undefined): boolean {
+        return !!nodes?.some(node => node.canAdd);
+    }
+
+    count(node: TreeNode | undefined): number {
+        return node?.actionCount?.getValue() ?? 0;
     }
 
     isLeafNode(_: number, node: TreeNode): boolean {
@@ -151,12 +186,6 @@ export class ActionDetailComponent implements OnInit, OnDestroy {
     actionsExpandable(parentNode: TreeNode): boolean {
         const child = parentNode.children[0];
         return child instanceof LeafNode && child.hasDisplayableActions();
-    }
-
-    collapseParentCallback(leaf: TreeNode, actionCount: number) {
-        if (actionCount === 0) {
-            this.treeControl.collapse(leaf.parent);
-        }
     }
 
     get selectedFn(): PetriflowFunction {
@@ -175,6 +204,5 @@ export class ActionDetailComponent implements OnInit, OnDestroy {
             };
         });
     }
-
 
 }

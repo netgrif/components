@@ -1,25 +1,24 @@
-.breadcrumbs {
-    margin: 4px 0;
-    -webkit-box-align: center;
-    align-items: center;
-    align-self: center;
-    display: flex;
-    -webkit-box-flex: 1;
-    flex-grow: 1;
-    flex-wrap: wrap;
+@use "@angular/material" as mat;
+
+:host {
+    @include mat.button-overrides((
+        text-label-text-color: var(--mat-sys-on-surface-variant),
+        text-label-text-size: var(--mat-sys-label-medium-size),
+        text-container-height: calc(32px + 2px * var(--nae-density-scale, 0)),
+        text-horizontal-padding: 8px,
+    ));
+    color: var(--mat-sys-on-surface-variant);
 }
 
-.breadcrumbs-span {
-    font-weight: 400;
-    font-size: 12px;
-    line-height: 16px;
-    letter-spacing: 0.4px;
+mat-icon {
+    width: 18px;
+    height: 18px;
+    font-size: 18px;
 }
 
-.breadcrumbs-span:hover {
-    cursor: pointer;
-}
-
-.delimeter {
-    margin: 0 8px;
+.current {
+    padding: 0 8px;
+    color: var(--mat-sys-on-surface);
+    font: var(--mat-sys-label-medium);
+    letter-spacing: var(--mat-sys-label-medium-tracking);
 }

@@ -1,4 +1,4 @@
-import {Component, Inject, Optional} from "@angular/core";
+import {Component, Inject, Optional, ChangeDetectionStrategy} from "@angular/core";
 import {TranslateService} from "@ngx-translate/core";
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
 import {DateField} from "../models/date-field";
@@ -10,7 +10,9 @@ import {LanguageService} from "../../../translate/language.service";
 
 @Component({
     selector: 'ncc-abstract-date-default-field',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractDateDefaultFieldComponent extends AbstractTimeInstanceFieldComponent<DateField> {
 

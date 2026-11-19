@@ -1,6 +1,6 @@
 import {fakeAsync, TestBed, tick} from '@angular/core/testing';
 import {ConfigurationService} from '../../../configuration/configuration.service';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {MaterialModule} from '../../../material/material.module';
 import {TaskViewService} from './task-view.service';
 import {AuthenticationMethodService} from '../../../authentication/services/authentication-method.service';
@@ -14,7 +14,6 @@ import {AuthenticationService} from '../../../authentication/services/authentica
 import {MockAuthenticationService} from '../../../utility/tests/mocks/mock-authentication.service';
 import {UserResourceService} from '../../../resources/engine-endpoint/user-resource.service';
 import {MockUserResourceService} from '../../../utility/tests/mocks/mock-user-resource.service';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations'
 import {Task} from '../../../resources/interface/task';
 import {delay, tap} from 'rxjs/operators';
 import {createMockTask} from '../../../utility/tests/utility/create-mock-task';
@@ -28,6 +27,7 @@ import {NAE_BASE_FILTER} from '../../../search/models/base-filter-injection-toke
 import {AllowedNetsService} from '../../../allowed-nets/services/allowed-nets.service';
 import {AllowedNetsServiceFactory} from '../../../allowed-nets/services/factory/allowed-nets-service-factory';
 import {RouterTestingModule} from "@angular/router/testing";
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('TaskViewService', () => {
     let service: TaskViewService;
@@ -36,11 +36,10 @@ describe('TaskViewService', () => {
 
     beforeEach(async () => {
         TestBed.configureTestingModule({
+            declarations: [],
             imports: [
-                HttpClientTestingModule,
                 MaterialModule,
                 TranslateLibModule,
-                NoopAnimationsModule,
                 SnackBarModule,
                 RouterTestingModule.withRoutes([])
             ],
@@ -56,9 +55,10 @@ describe('TaskViewService', () => {
                     useFactory: TestTaskBaseFilterProvider
                 },
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
-                {provide: AllowedNetsService, useFactory: TestTaskViewAllowedNetsFactory, deps: [AllowedNetsServiceFactory]}
-            ],
-            declarations: []
+                {provide: AllowedNetsService, useFactory: TestTaskViewAllowedNetsFactory, deps: [AllowedNetsServiceFactory]},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
+            ]
         });
         service = TestBed.inject(TaskViewService);
         searchService = TestBed.inject(SearchService);

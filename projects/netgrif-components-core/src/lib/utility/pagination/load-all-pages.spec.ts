@@ -1,10 +1,9 @@
 import {Pagination} from '../../resources/interface/pagination';
-import {HttpParams} from '@angular/common/http';
+import {HttpParams, provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 import {loadAllPages} from './load-all-pages';
 import {MockEndpoint} from '../tests/mocks/mock-endpoint';
 import {TestBed} from '@angular/core/testing';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 
 
 describe('loadAllPages', () => {
@@ -18,9 +17,10 @@ describe('loadAllPages', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                HttpClientTestingModule,
-                NoopAnimationsModule
+            imports: [],
+            providers: [
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
             ]
         });
     });

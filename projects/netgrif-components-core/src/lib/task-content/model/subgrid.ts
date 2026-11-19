@@ -63,10 +63,13 @@ export class Subgrid {
     }
 
     /**
+     * Equal columns that never grow over their share: `minmax(0, 1fr)` instead of `1fr` (minimum `auto`), otherwise a
+     * field wider than its column (form field infix of 180px) overflows it and covers the fields next to it.
+     *
      * @returns the columns configuration for the grid layout
      */
     public getGridColumns(): string {
-        return 'repeat(' + this.cols + ', 1fr)';
+        return 'repeat(' + this.cols + ', minmax(0, 1fr))';
     }
 
     public getRunningTitleCount(): IncrementingCounter {

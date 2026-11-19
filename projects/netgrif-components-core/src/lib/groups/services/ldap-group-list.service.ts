@@ -1,5 +1,6 @@
 import {Injectable, OnDestroy} from '@angular/core';
 import {BehaviorSubject, forkJoin, Observable, of, Subject, timer} from 'rxjs';
+import {RoleChangeQueue} from '../../user/services/role-change-queue';
 import {LoadingEmitter} from '../../utility/loading-emitter';
 import {Pagination} from '../../resources/interface/pagination';
 import {LoggerService} from '../../logger/services/logger.service';
@@ -8,7 +9,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {catchError, map, mergeMap, scan, tap} from 'rxjs/operators';
 import {HttpParams} from '@angular/common/http';
 import {PaginationParams} from '../../utility/pagination/pagination-params';
-import {LdapGroup, LdapGroupResponseBody} from '../../resources/interface/ldapGroupResponseBody';
+import type {LdapGroup, LdapGroupResponseBody} from '../../resources/interface/ldapGroupResponseBody';
 import {LdapGroupResourceService} from '../../resources/engine-endpoint/ldap-group-resource.service';
 import {MessageResource} from '../../resources/interface/message-resource';
 
@@ -59,6 +60,8 @@ export class LdapGroupListService implements OnDestroy {
      */
     public negativeRolesQuery: Array<string>;
     protected _updateProgress$: LoadingEmitter;
+    /** the changes of the roles, one after another */
+    protected _roleChanges: RoleChangeQueue;
     protected _ldapGroupsReload$: Subject<void>;
 
 
@@ -78,6 +81,7 @@ export class LdapGroupListService implements OnDestroy {
                 protected _translate: TranslateService) {
         this._loading$ = new LoadingEmitter();
         this._updateProgress$ = new LoadingEmitter();
+        this._roleChanges = new RoleChangeQueue(this._updateProgress$, this._log, this._snackbar, this._translate);
         this._ldapGroupsReload$ = new Subject<void>();
         this._nextPage$ = new BehaviorSubject<number>(null);
         this._endOfData = false;
@@ -196,6 +200,17 @@ export class LdapGroupListService implements OnDestroy {
     }
 
     /**
+     * Adds the roles to / removes them from each of the LDAP groups. Every group keeps the other roles: the request of a
+     * group contains all of its roles with the change (the engine replaces the roles of the group with the sent ones).
+     * @param selectedGroups LDAP groups to change
+     * @param roleIds roles to add or remove
+     * @param add `true` adds the roles, `false` removes them
+     */
+    public changeRoles(selectedGroups: Array<LdapGroupListItem>, roleIds: Array<string>, add: boolean): Observable<Array<MessageResource>> {
+        return this._roleChanges.change(selectedGroups, roleIds, add, (group, roles) => this._resources.assignRolesToLdapGroup({groupDn: group.dn, roleIds: roles}));
+    }
+
+    /**
      * Reload page with ldapGroups.
      */
     public reload(newSearchQuery = ''): void {
@@ -213,6 +228,7 @@ export class LdapGroupListService implements OnDestroy {
         });
     }
 
+    /** @deprecated replaces the roles of all selected groups, use {@link changeRoles} (adds / removes one role and keeps the others) */
     public updateRoles(selectedLdapGroups: Array<LdapGroupListItem>, selectedRoles: Array<string> = []):
     Observable<Array<MessageResource>> {
         if (!selectedLdapGroups || selectedLdapGroups.length === 0) {

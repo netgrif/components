@@ -1,0 +1,26 @@
+@use '@angular/material' as mat;
+@use '@netgrif/components/theming' as nae;
+
+// Material 3 theme of the component library (Netgrif brand palettes)
+@include nae.theme();
+
+// configuration column of simple demos (ne-demo-page [demoConfig])
+.ne-config {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    // room for the floating label of the first outlined field below the card title
+    padding-top: 8px;
+}
+
+// density preview of the demos (`ne-density-0` ... `ne-density-5` = density 0 ... -5), also of the task forms
+// inside (an application may give them their own density with `nae.theme($task-form-density)`)
+@for $i from 0 through 5 {
+    .ne-density-#{$i},
+    .ne-density-#{$i} nc-task-content {
+        // all density tokens, also for scale 0 (`mat.theme` emits nothing for 0)
+        @include mat.all-component-densities(mat.define-theme((density: (scale: -$i))));
+        // the custom heights of the library components
+        --nae-density-scale: #{-$i};
+    }
+}

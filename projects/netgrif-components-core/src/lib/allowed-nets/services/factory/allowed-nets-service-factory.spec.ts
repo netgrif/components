@@ -1,9 +1,9 @@
 import {TestBed} from '@angular/core/testing';
 import {AllowedNetsServiceFactory} from './allowed-nets-service-factory';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {ConfigurationService} from '../../../configuration/configuration.service';
 import {TestConfigurationService} from '../../../utility/tests/test-config';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('AllowedNetsServiceFactory', () => {
     let service: AllowedNetsServiceFactory;
@@ -11,11 +11,11 @@ describe('AllowedNetsServiceFactory', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
-                HttpClientTestingModule,
-                NoopAnimationsModule
             ],
             providers: [
-                {provide: ConfigurationService, useClass: TestConfigurationService}
+                {provide: ConfigurationService, useClass: TestConfigurationService},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
             ]
         });
         service = TestBed.inject(AllowedNetsServiceFactory);

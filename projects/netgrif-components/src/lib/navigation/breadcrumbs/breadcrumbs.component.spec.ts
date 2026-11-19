@@ -11,8 +11,9 @@ import {
     TestConfigurationService, TranslateLibModule, AuthenticationModule
 } from '@netgrif/components-core';
 import {FlexLayoutModule, FlexModule} from '@ngbracket/ngx-layout';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('BreadcrumbsComponent', () => {
     let component: BreadcrumbsComponent;
@@ -21,21 +22,22 @@ describe('BreadcrumbsComponent', () => {
     beforeEach(async () => {
         await TestBed.configureTestingModule({
             declarations: [BreadcrumbsComponent],
+            schemas: [CUSTOM_ELEMENTS_SCHEMA],
             imports: [
                 CommonModule,
                 RouterTestingModule.withRoutes([]),
                 MaterialModule,
                 FlexModule,
                 FlexLayoutModule,
-                HttpClientTestingModule,
                 TranslateLibModule,
                 AuthenticationModule
             ],
             providers: [
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
-                {provide: ConfigurationService, useClass: TestConfigurationService}
-            ],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA]
+                {provide: ConfigurationService, useClass: TestConfigurationService},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
+            ]
         })
             .compileComponents();
     });

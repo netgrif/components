@@ -1,14 +1,14 @@
 import {BreakpointObserver} from '@angular/cdk/layout';
 import {CommonModule} from '@angular/common';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
+import {Component, CUSTOM_ELEMENTS_SCHEMA, ChangeDetectionStrategy} from '@angular/core';
 import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 import {FlexLayoutModule, FlexModule} from '@ngbracket/ngx-layout';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {ActivatedRoute, Router} from '@angular/router';
 import {RouterTestingModule} from '@angular/router/testing';
 import {ResizableModule} from 'angular-resizable-element';
-import {timer} from 'rxjs';
+import {firstValueFrom, timer} from 'rxjs';
+import {filter} from 'rxjs/operators';
 import {AuthenticationModule} from '../../authentication/authentication.module';
 import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
 import {AuthenticationService} from '../../authentication/services/authentication/authentication.service';
@@ -43,8 +43,9 @@ import {RedirectService} from "../../routing/redirect-service/redirect.service";
 import {ProcessService} from "../../process/process.service";
 import {SnackBarService} from "../../snack-bar/services/snack-bar.service";
 import {MatDialog} from "@angular/material/dialog";
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
-xdescribe('AbstractNavigationDoubleDrawerComponent', () => {
+describe('AbstractNavigationDoubleDrawerComponent', () => {
     let component: TestDrawerComponent;
     let fixture: ComponentFixture<TestDrawerComponent>;
     let uriService: UriService;
@@ -52,15 +53,14 @@ xdescribe('AbstractNavigationDoubleDrawerComponent', () => {
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             declarations: [TestDrawerComponent],
+            schemas: [CUSTOM_ELEMENTS_SCHEMA],
             imports: [
                 CommonModule,
                 RouterTestingModule.withRoutes([]),
                 MaterialModule,
                 FlexModule,
                 FlexLayoutModule,
-                NoopAnimationsModule,
                 TranslateLibModule,
-                HttpClientTestingModule,
                 ResizableModule,
                 AuthenticationModule,
             ],
@@ -72,8 +72,9 @@ xdescribe('AbstractNavigationDoubleDrawerComponent', () => {
                 {provide: UserPreferenceService, useClass: MockUserPreferenceService},
                 {provide: CaseResourceService, useClass: MockCaseResourceService},
                 {provide: UriResourceService, useClass: MockUriResourceService},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
             ],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA],
         }).compileComponents();
         uriService = TestBed.inject(UriService);
         fixture = TestBed.createComponent(TestDrawerComponent);
@@ -82,6 +83,13 @@ xdescribe('AbstractNavigationDoubleDrawerComponent', () => {
         spyOn(component, 'toggleRightMenu');
         fixture.detectChanges();
     }));
+
+    // the root node is loaded after a verified session, which the test environment doesn't emit
+    beforeEach(async () => {
+        (uriService as any).loadRoot();
+        await firstValueFrom(uriService.rootLoaded$.pipe(filter(loading => !loading)));
+        fixture.detectChanges();
+    });
 
     afterEach(() => {
         TestBed.resetTestingModule();
@@ -141,6 +149,8 @@ xdescribe('AbstractNavigationDoubleDrawerComponent', () => {
 @Component({
     selector: 'ncc-test-nav-drawer',
     template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false,
 })
 class TestDrawerComponent extends AbstractNavigationDoubleDrawerComponent {
     constructor(_router: Router,

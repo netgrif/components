@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {AbstractHeaderService} from '../../abstract-header-service';
 import {HeaderColumn} from '../../models/header-column';
 import {FormControl} from '@angular/forms';
@@ -17,7 +17,9 @@ export interface HeaderOption {
 
 @Component({
     selector: 'ncc-abstract-edit-mode',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractEditModeComponent extends AbstractHeaderModeComponent implements OnInit, OnDestroy {
     public formControls: Array<FormControl<any>> = [];

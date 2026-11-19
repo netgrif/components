@@ -1,5 +1,5 @@
 import {LetDirective} from './let.directive';
-import {Component} from "@angular/core";
+import {Component, ChangeDetectionStrategy} from "@angular/core";
 import {ComponentFixture, TestBed} from "@angular/core/testing";
 
 describe('LetDirective', () => {
@@ -29,7 +29,9 @@ describe('LetDirective', () => {
 
 @Component({
     selector: 'ncc-test-component',
-    template: '<div *nccLet="this.nmr"></div>'
+    template: '<div *nccLet="this.nmr"></div>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestComponent {
     nmr: number;

@@ -1,4 +1,4 @@
-import {Component, Inject, Injector, OnDestroy, OnInit, Optional} from '@angular/core';
+import {Component, Inject, Injector, OnDestroy, OnInit, Optional, ChangeDetectionStrategy} from '@angular/core';
 import {ComponentPortal} from '@angular/cdk/portal';
 import {
     AbstractDashboardPortalTextFieldComponent, ComponentRegistryService,
@@ -12,7 +12,8 @@ import {Subscription} from 'rxjs';
 @Component({
     selector: 'nc-dashboard-portal-text-field',
     templateUrl: './dashboard-portal-text-field.component.html',
-    styleUrls: ['./dashboard-portal-text-field.component.scss']
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class DashboardPortalTextFieldComponent extends AbstractDashboardPortalTextFieldComponent implements OnInit, OnDestroy {
     protected _subValue: Subscription;

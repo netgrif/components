@@ -21,13 +21,13 @@ import {
 } from '@netgrif/components-core';
 import {CommonModule} from '@angular/common';
 import {FlexModule} from '@ngbracket/ngx-layout';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {DataFieldsComponentModule} from '../../data-fields/data-fields.module';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {PanelComponent} from '../panel.component';
-import {Component} from '@angular/core';
+import {Component, ChangeDetectionStrategy} from '@angular/core';
 import {of} from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('PublicWorkflowPanelComponent', () => {
     let component: PublicWorkflowPanelComponent;
@@ -35,14 +35,18 @@ describe('PublicWorkflowPanelComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
+        declarations: [
+            PublicWorkflowPanelComponent,
+            PanelComponent,
+            PublicTestWrapperComponent
+        ],
         imports: [
+            // PanelComponent still binds [@.disabled] on mat-expansion-panel, which needs an animations provider
             MaterialModule,
             CommonModule,
             FlexModule,
-            BrowserAnimationsModule,
             DataFieldsComponentModule,
             TranslateLibModule,
-            HttpClientTestingModule,
             RouterTestingModule.withRoutes([])
         ],
         providers: [
@@ -51,9 +55,10 @@ describe('PublicWorkflowPanelComponent', () => {
             {provide: UserResourceService, useClass: MockUserResourceService},
             {provide: ConfigurationService, useClass: TestConfigurationService},
             WorkflowViewService,
-            OverflowService
-        ],
-      declarations: [ PublicWorkflowPanelComponent, PanelComponent, PublicTestWrapperComponent]
+            OverflowService,
+            provideHttpClient(withXhr(), withInterceptorsFromDi()),
+            provideHttpClientTesting()
+        ]
     })
     .compileComponents();
   }));
@@ -75,7 +80,9 @@ describe('PublicWorkflowPanelComponent', () => {
 
 @Component({
     selector: 'nc-public-test-wrapper',
-    template: '<nc-public-workflow-panel [workflow]="workflow" [selectedHeaders$]="selectedHeaders"></nc-public-workflow-panel>'
+    template: '<nc-public-workflow-panel [workflow]="workflow" [selectedHeaders$]="selectedHeaders"></nc-public-workflow-panel>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class PublicTestWrapperComponent {
     public selectedHeaders = of([

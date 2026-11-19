@@ -14,9 +14,9 @@ import {
     MockUserResourceService,
     UserResourceService
 } from '@netgrif/components-core';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
+import {provideHttpClientTesting} from '@angular/common/http/testing';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('UserAssignDialogComponent', () => {
     let component: UserAssignDialogComponent;
@@ -24,10 +24,9 @@ describe('UserAssignDialogComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
+            declarations: [UserAssignDialogComponent],
             imports: [
                 MaterialModule,
-                BrowserAnimationsModule,
-                HttpClientTestingModule,
                 TranslateLibModule,
                 SnackBarModule
             ],
@@ -38,10 +37,9 @@ describe('UserAssignDialogComponent', () => {
                 { provide: AuthenticationService, useClass: MockAuthenticationService },
                 { provide: UserResourceService, useClass: MockUserResourceService },
                 UserListService,
-                {provide: ConfigurationService, useClass: TestConfigurationService}
-            ],
-            declarations: [
-                UserAssignDialogComponent,
+                {provide: ConfigurationService, useClass: TestConfigurationService},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
             ]
         })
             .compileComponents();

@@ -1,8 +1,7 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {RemoveNodeComponent} from './remove-node.component';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {Component} from '@angular/core';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
+import {Component, ChangeDetectionStrategy} from '@angular/core';
 import {
     CaseTreeNode,
     CaseTreeService,
@@ -12,6 +11,7 @@ import {
     TranslateLibModule,
     TreeCaseViewService
 } from '@netgrif/components-core';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('RemoveNodeComponent', () => {
     let component: RemoveNodeComponent;
@@ -19,20 +19,17 @@ describe('RemoveNodeComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
+            declarations: [TestComponent, RemoveNodeComponent],
             imports: [
                 MaterialModule,
-                NoopAnimationsModule,
-                HttpClientTestingModule,
                 TranslateLibModule
             ],
             providers: [
                 CaseTreeService,
                 TreeCaseViewService,
-                {provide: ConfigurationService, useClass: TestConfigurationService}
-            ],
-            declarations: [
-                TestComponent,
-                RemoveNodeComponent
+                {provide: ConfigurationService, useClass: TestConfigurationService},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
             ]
         }).compileComponents();
     }));
@@ -54,7 +51,9 @@ describe('RemoveNodeComponent', () => {
 
 @Component({
     selector: 'nc-test-wrapper',
-    template: '<nc-remove-node [node]="node"></nc-remove-node>'
+    template: '<nc-remove-node [node]="node"></nc-remove-node>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestComponent {
     node = new CaseTreeNode(undefined, undefined);

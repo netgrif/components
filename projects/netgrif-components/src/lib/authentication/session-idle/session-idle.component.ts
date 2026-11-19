@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, ChangeDetectionStrategy} from '@angular/core';
 import {
     AbstractSessionIdleComponent,
     ConfigurationService,
@@ -14,7 +14,9 @@ import {take} from "rxjs/operators";
 @Component({
     selector: 'nc-session-idle',
     templateUrl: './session-idle.component.html',
-    styleUrls: []
+    styleUrls: [],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class SessionIdleComponent extends AbstractSessionIdleComponent {
 

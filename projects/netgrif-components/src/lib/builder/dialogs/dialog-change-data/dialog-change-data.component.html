@@ -1,16 +1,29 @@
-<h2 mat-dialog-title>{{dataSet.length > 1 ? ('builder.dialogs.change-data.titleMulti' | translate) : ('builder.dialogs.change-data.title' | translate)}}</h2>
-<mat-dialog-content class="netgrif-input padding-top-4px">
-    <mat-form-field fxFlex appearance="outline" *ngFor="let data of dataSet; let i = index">
-        <mat-label>{{data.id}}</mat-label>
-        <input type="number" step="1" min="0" matInput [formControl]="getControl(i)">
-        <mat-error *ngIf="getControl(i).errors?.required">{{ 'builder.dialogs.change-data.valueRequired' | translate }}</mat-error>
-        <mat-error *ngIf="getControl(i).errors?.validMultiplicity">{{ 'builder.dialogs.change-data.valueNotNegative' | translate }}</mat-error>
+<h2 mat-dialog-title>
+    {{
+        dataSet.length > 1
+            ? ("builder.dialogs.change-data.titleMulti" | translate)
+            : ("builder.dialogs.change-data.title" | translate)
+    }}
+</h2>
+<mat-dialog-content class="dialog-column">
+    @for (data of dataSet; track data.id; let i = $index) {
+    <mat-form-field appearance="outline">
+        <mat-label>{{ data.id }}</mat-label>
+        <input type="number" step="1" min="0" matInput [formControl]="getControl(i)" />
+        @if (getControl(i).errors?.required) {
+        <mat-error>{{ "builder.dialogs.change-data.valueRequired" | translate }}</mat-error>
+        }
+        @if (getControl(i).errors?.validMultiplicity) {
+        <mat-error>{{ "builder.dialogs.change-data.valueNotNegative" | translate }}</mat-error>
+        }
     </mat-form-field>
-    <span *ngIf="dataSet.length === 0">{{ 'builder.dialogs.change-data.noData' | translate }}</span>
+    } @if (dataSet.length === 0) {
+    <p class="supporting-text">{{ "builder.dialogs.change-data.noData" | translate }}</p>
+    }
 </mat-dialog-content>
-<mat-dialog-actions>
-    <button mat-flat-button color="primary" [mat-dialog-close]="onSave()" [disabled]="formArray.invalid">
-        <mat-icon>done</mat-icon>
-        <span>{{ 'builder.dialogs.change-data.save' | translate }}</span>
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>{{ "builder.dialogs.change-data.cancel" | translate }}</button>
+    <button mat-flat-button [mat-dialog-close]="onSave()" [disabled]="formArray.invalid">
+        {{ "builder.dialogs.change-data.save" | translate }}
     </button>
 </mat-dialog-actions>

@@ -1,5 +1,6 @@
 import {Injectable, OnDestroy} from '@angular/core';
 import {BehaviorSubject, forkJoin, Observable, of, Subject, timer} from 'rxjs';
+import {RoleChangeQueue} from './role-change-queue';
 import {LoadingEmitter} from '../../utility/loading-emitter';
 import {Pagination} from '../../resources/interface/pagination';
 import {UserResourceService} from '../../resources/engine-endpoint/user-resource.service';
@@ -73,6 +74,8 @@ export class UserListService implements OnDestroy {
      */
     public negativeRolesQuery: Array<string>;
     private _updateProgress$: LoadingEmitter;
+    /** the changes of the roles, one after another */
+    protected _roleChanges: RoleChangeQueue;
     private _usersReload$: Subject<void>;
 
     /**
@@ -91,6 +94,7 @@ export class UserListService implements OnDestroy {
                 private _translate: TranslateService) {
         this._loading$ = new LoadingEmitter();
         this._updateProgress$ = new LoadingEmitter();
+        this._roleChanges = new RoleChangeQueue(this._updateProgress$, this._log, this._snackbar, this._translate);
         this._usersReload$ = new Subject<void>();
         this._endOfData = false;
         this._nextPage$ = new BehaviorSubject<number>(null);
@@ -206,6 +210,17 @@ export class UserListService implements OnDestroy {
     }
 
     /**
+     * Adds the roles to / removes them from each of the users. Every user keeps the other roles: the request of a user
+     * contains all of his roles with the change (the engine replaces the roles of the user with the sent ones).
+     * @param selectedUsers users to change
+     * @param roleIds roles to add or remove
+     * @param add `true` adds the roles, `false` removes them
+     */
+    public changeRoles(selectedUsers: Array<UserListItem>, roleIds: Array<string>, add: boolean): Observable<Array<MessageResource>> {
+        return this._roleChanges.change(selectedUsers, roleIds, add, (user, roles) => this._resources.assignRoles(user.id + '', roles));
+    }
+
+    /**
      * Reload page with users.
      */
     public reload(newSearchQuery = ''): void {
@@ -223,6 +238,7 @@ export class UserListService implements OnDestroy {
         });
     }
 
+    /** @deprecated replaces the roles of all selected users, use {@link changeRoles} (adds / removes one role and keeps the others) */
     public updateRoles(selectedUsers: Array<UserListItem>, selectedRoles: Array<string> = []): Observable<Array<MessageResource>> {
         if (!selectedUsers || selectedUsers.length === 0) {
             return of([]);

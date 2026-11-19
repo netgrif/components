@@ -1,34 +1,48 @@
 <mat-accordion #accordion id="accordion" class="list-accordion">
-    <mat-expansion-panel class="actions-list-expansion-panel" #panel *ngFor="let actions of menuItems"
-                         [disabled]="actions.actions.length === 0">
+    @for (actions of menuItems; track actions) {
+    <mat-expansion-panel
+        class="actions-list-expansion-panel"
+        #panel
+        [disabled]="actions.actions.length === 0"
+    >
         <mat-expansion-panel-header>
             <mat-panel-title>
                 <span class="menu-span">
                     <mat-icon class="description-info-button">
-                        {{actions.badge}}
+                        {{ actions.badge }}
                     </mat-icon>
-                    <p class="menu-label">{{actions.label}}</p>
+                    <p class="menu-label">{{ actions.label }}</p>
                 </span>
             </mat-panel-title>
         </mat-expansion-panel-header>
         <ng-template matExpansionPanelContent>
             <mat-list>
-                <mat-list-item *ngFor="let item of actions.actions" class="menu-list-item">
+                @for (item of actions.actions; track item) {
+                <mat-list-item>
                     <div fxLayout="row" fxFlex fxLayoutAlign="start center">
-                        <span class="menu-span-item" matTooltip="{{item.label}}" (click)="addTextToEditor(item.action)">
-                            {{item.label}}
+                        <span
+                            class="menu-span-item"
+                            matTooltip="{{ item.label }}"
+                            (click)="addTextToEditor(item.action)"
+                        >
+                            {{ item.label }}
                         </span>
                     </div>
                     <div fxLayout="row" fxLayoutAlign="end center">
-                        <button mat-icon-button
-                                *ngIf="item.description || item.header"
-                                class="description-info-button"
-                                (click)="handleClick(item)">
+                        @if (item.description || item.header) {
+                        <button
+                            mat-icon-button
+                            class="description-info-button"
+                            (click)="handleClick(item)"
+                        >
                             <mat-icon>info</mat-icon>
                         </button>
+                        }
                     </div>
                 </mat-list-item>
+                }
             </mat-list>
         </ng-template>
     </mat-expansion-panel>
+    }
 </mat-accordion>

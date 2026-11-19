@@ -1,14 +1,15 @@
-h2 {
-    vertical-align: top;
-    display: inline-flex;
+@use '../../../dialog/dialog';
+
+@include dialog.styles;
+
+.hero-title {
+    display: flex;
+    flex-direction: column;
     align-items: center;
-}
+    gap: 16px;
+    text-align: center;
 
-mat-icon {
-    padding-right: 5px;
-    color: darkgoldenrod;
-}
-
-.padding-top-4px {
-    padding-top: 4px !important;
+    mat-icon {
+        color: var(--mat-sys-secondary);
+    }
 }

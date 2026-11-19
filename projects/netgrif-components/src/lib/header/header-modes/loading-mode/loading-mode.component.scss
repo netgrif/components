@@ -1,48 +1,29 @@
-.phl-row {
-    width: 100%;
-    flex-wrap: wrap;
-}
-
-.phl-col {
-    height: 20px;
-    flex: 0 0 55%;
-    background-color: #ced4da;
-    border-radius: 6px;
-
-}
-
-.phl-item {
+.skeleton {
     position: relative;
-    display: flex;
-    flex-wrap: wrap;
+    width: 55%;
+    height: 16px;
     overflow: hidden;
-    border-radius: 6px;
+    border-radius: var(--mat-sys-corner-full);
+    background: var(--mat-sys-surface-container-highest);
 
     &::after {
         position: absolute;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
+        inset: 0;
         transform: translateX(-100%);
-        background-image: linear-gradient(
-                90deg,
-                rgba(#fff, 0) 0,
-                rgba(#fff, 0.2) 20%,
-                rgba(#fff, 0.5) 60%,
-                rgba(#fff, 0)
-        );
-        animation: shimmer 1s infinite;
+        background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--mat-sys-surface) 50%, transparent), transparent);
+        animation: nc-header-skeleton-shimmer 1.2s infinite;
         content: '';
-    }
-
-    @keyframes shimmer {
-        100% {
-            transform: translateX(100%);
-        }
     }
 }
 
-.phl-item, .phl-item *, .phl-item::after, .phl-item::before {
-    box-sizing: border-box;
+@keyframes nc-header-skeleton-shimmer {
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .skeleton::after {
+        animation: none;
+    }
 }

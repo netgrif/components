@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, ChangeDetectionStrategy} from '@angular/core';
 import {AbstractSideMenuContainerComponent, SideMenuService} from '@netgrif/components-core';
 
 /**
@@ -7,7 +7,9 @@ import {AbstractSideMenuContainerComponent, SideMenuService} from '@netgrif/comp
 @Component({
     selector: 'nc-side-menu-container',
     templateUrl: './side-menu-container.component.html',
-    styleUrls: ['./side-menu-container.component.scss']
+    styleUrls: ['./side-menu-container.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class SideMenuContainerComponent extends AbstractSideMenuContainerComponent {
 

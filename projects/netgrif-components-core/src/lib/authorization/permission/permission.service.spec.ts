@@ -2,9 +2,8 @@ import {TestBed, waitForAsync} from '@angular/core/testing';
 import {MaterialModule} from '../../material/material.module';
 import {CommonModule} from '@angular/common';
 import {FlexModule} from '@ngbracket/ngx-layout';
-import {BrowserAnimationsModule, NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {PermissionService} from './permission.service';
 import {NO_ERRORS_SCHEMA} from '@angular/core';
 import {MockUserService} from '../../utility/tests/mocks/mock-user.service';
@@ -14,6 +13,7 @@ import {AssignPolicy, DataFocusPolicy, FinishPolicy} from '../../task-content/mo
 import {PermissionType} from '../../process/permissions';
 import {Net} from '../../process/net';
 import {DeploymentState} from "../../resources/interface/petri-net-reference";
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('PermissionService', () => {
     let permissionService: PermissionService;
@@ -21,21 +21,20 @@ describe('PermissionService', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
+            declarations: [],
+            schemas: [NO_ERRORS_SCHEMA],
             imports: [
                 MaterialModule,
                 CommonModule,
                 FlexModule,
-                NoopAnimationsModule,
-                BrowserAnimationsModule,
-                TranslateLibModule,
-                HttpClientTestingModule
+                TranslateLibModule
             ],
             providers: [
                 PermissionService,
                 {provide: UserService, useClass: MockUserService},
-            ],
-            declarations: [],
-            schemas: [NO_ERRORS_SCHEMA]
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
+            ]
         });
         permissionService = TestBed.inject(PermissionService);
         userService = TestBed.inject(UserService);

@@ -1,10 +1,11 @@
-import {Component, Injector} from '@angular/core';
+import {Component, Injector, ChangeDetectionStrategy} from '@angular/core';
 import {AbstractDataFieldTemplateComponent, PaperViewService, ConfigurationService, ComponentRegistryService} from '@netgrif/components-core';
 
 @Component({
     selector: 'nc-data-field-template',
     templateUrl: './data-field-template.component.html',
-    styleUrls: ['./data-field-template.component.scss']
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class DataFieldTemplateComponent extends AbstractDataFieldTemplateComponent {
 

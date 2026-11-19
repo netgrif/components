@@ -11,8 +11,8 @@ import {
 } from '@netgrif/components-core';
 import {CommonModule} from '@angular/common';
 import {RouterTestingModule} from '@angular/router/testing';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('ImpersonateQuickPanelComponent', () => {
     let component: ImpersonateQuickPanelComponent;
@@ -20,19 +20,19 @@ describe('ImpersonateQuickPanelComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
+            declarations: [ImpersonateQuickPanelComponent],
             imports: [
                 CommonModule,
                 RouterTestingModule.withRoutes([]),
                 MaterialModule,
-                TranslateLibModule,
-                HttpClientTestingModule,
-                NoopAnimationsModule
+                TranslateLibModule
             ],
-            declarations: [ImpersonateQuickPanelComponent],
             providers: [
                 SnackBarService,
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting(),
             ]
         })
             .compileComponents();

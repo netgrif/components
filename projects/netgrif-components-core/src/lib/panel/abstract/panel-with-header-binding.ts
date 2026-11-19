@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit, Optional} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit, Optional, ChangeDetectionStrategy} from '@angular/core';
 import {Observable, Subscription} from 'rxjs';
 import {HeaderColumn, HeaderColumnType} from '../../header/models/header-column';
 import {FeaturedValue} from './featured-value';
@@ -6,7 +6,9 @@ import {OverflowService} from '../../header/services/overflow.service';
 
 @Component({
     selector: 'ncc-abstract-panel-with-header-binding',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractPanelWithHeaderBindingComponent implements OnInit, OnDestroy {
     @Input() public selectedHeaders$: Observable<Array<HeaderColumn>>;

@@ -20,7 +20,7 @@ export const MENU_IDENTIFIERS = [
 ];
 export const SETTINGS_TRANSITION_ID = 'item_settings';
 
-export const LEFT_DRAWER_DEFAULT_WIDTH = 60;
+export const LEFT_DRAWER_DEFAULT_WIDTH = 80;
 export const RIGHT_DRAWER_DEFAULT_WIDTH = 240;
 export const RIGHT_DRAWER_DEFAULT_MIN_WIDTH = 180;
 export const RIGHT_DRAWER_MAX_WIDTH = 460;

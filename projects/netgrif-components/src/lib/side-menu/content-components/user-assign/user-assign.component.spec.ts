@@ -9,12 +9,12 @@ import {
     TranslateLibModule,
     UserListService
 } from '@netgrif/components-core';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {Observable} from 'rxjs';
 import {UserAssignComponent} from './user-assign.component';
 import {UserAssignListComponent} from './user-assign-list/user-assign-list.component';
 import {UserAssignItemComponent} from './user-assign-list/user-assign-item/user-assign-item.component';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('UserAssignComponent', () => {
     let component: UserAssignComponent;
@@ -22,10 +22,13 @@ describe('UserAssignComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
+            declarations: [
+                UserAssignComponent,
+                UserAssignListComponent,
+                UserAssignItemComponent
+            ],
             imports: [
                 MaterialModule,
-                BrowserAnimationsModule,
-                HttpClientTestingModule,
                 TranslateLibModule,
                 SnackBarModule
             ],
@@ -35,12 +38,9 @@ describe('UserAssignComponent', () => {
                     provide: NAE_SIDE_MENU_CONTROL, useValue: new SideMenuControl(() => {
                     }, new Observable<boolean>(), null)
                 },
-                {provide: ConfigurationService, useClass: TestConfigurationService}
-            ],
-            declarations: [
-                UserAssignComponent,
-                UserAssignListComponent,
-                UserAssignItemComponent
+                {provide: ConfigurationService, useClass: TestConfigurationService},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
             ]
         }).compileComponents();
     }));

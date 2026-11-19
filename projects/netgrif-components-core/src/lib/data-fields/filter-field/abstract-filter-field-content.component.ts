@@ -1,4 +1,4 @@
-import {Component, Inject, OnDestroy, Optional} from '@angular/core';
+import {Component, Inject, OnDestroy, Optional, ChangeDetectionStrategy} from '@angular/core';
 import {NAE_FILTER_FIELD} from './models/filter-field-injection-token';
 import {FilterField} from './models/filter-field';
 import {SearchService} from '../../search/search-service/search.service';
@@ -10,7 +10,9 @@ import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../models/data-field-
 
 @Component({
     selector: 'ncc-abstract-filtercontent-field',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractFilterFieldContentComponent extends AbstractBaseDataFieldComponent<FilterField> implements OnDestroy {
 

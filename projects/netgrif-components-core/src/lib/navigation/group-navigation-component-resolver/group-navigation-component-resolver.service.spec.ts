@@ -1,12 +1,12 @@
 import {TestBed} from '@angular/core/testing';
 import {GroupNavigationComponentResolverService} from './group-navigation-component-resolver.service';
-import {Component, Injectable, Type} from '@angular/core';
+import {Component, Injectable, Type, ChangeDetectionStrategy} from '@angular/core';
 import {LoggerService} from '../../logger/services/logger.service';
 import {TestMockDependenciesModule} from '../../utility/tests/test-mock-dependencies.module';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {TaskResourceService} from "../../resources/engine-endpoint/task-resource.service";
 import {CaseResourceService} from "../../resources/engine-endpoint/case-resource.service";
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('GroupNavigationComponentResolverService', () => {
     let service: GroupNavigationComponentResolverService;
@@ -14,12 +14,12 @@ describe('GroupNavigationComponentResolverService', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
-                NoopAnimationsModule,
-                HttpClientTestingModule,
                 TestMockDependenciesModule
             ],
             providers: [
                 {provide: GroupNavigationComponentResolverService, useClass: TestGroupNavigationComponentResolverService},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting(),
             ]
         });
         service = TestBed.inject(GroupNavigationComponentResolverService);
@@ -36,7 +36,9 @@ describe('GroupNavigationComponentResolverService', () => {
 
 @Component({
     selector: 'ncc-test-portal',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestPortalComponent {
     constructor() {

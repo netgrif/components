@@ -10,13 +10,12 @@ import {
     TestConfigurationService,
     TranslateLibModule
 } from '@netgrif/components-core';
-import {AngularResizeEventModule} from 'angular-resize-event';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {FlexLayoutModule} from '@ngbracket/ngx-layout';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {NO_ERRORS_SCHEMA} from '@angular/core';
 import {of} from 'rxjs';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('PreviewDialogComponent', () => {
     let component: PreviewDialogComponent;
@@ -24,15 +23,13 @@ describe('PreviewDialogComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
+            declarations: [PreviewDialogComponent],
+            schemas: [NO_ERRORS_SCHEMA],
             imports: [
                 MaterialModule,
                 FlexLayoutModule,
-                AngularResizeEventModule,
-                HttpClientTestingModule,
-                TranslateLibModule,
-                NoopAnimationsModule
+                TranslateLibModule
             ],
-            declarations: [PreviewDialogComponent],
             providers: [
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
@@ -48,9 +45,10 @@ describe('PreviewDialogComponent', () => {
                         }, {file: null, name: ''})
                     }
                 },
-                {provide: MatDialogRef, useValue: {}}
-            ],
-            schemas: [NO_ERRORS_SCHEMA]
+                {provide: MatDialogRef, useValue: {}},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
+            ]
         })
             .compileComponents();
     }));

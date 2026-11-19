@@ -1,0 +1,21 @@
+.code {
+    position: relative;
+    background: var(--mat-sys-surface-container-highest);
+    border-radius: var(--mat-sys-corner-medium);
+    margin-top: 12px;
+}
+
+.copy {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+}
+
+pre {
+    margin: 0;
+    padding: 16px 56px 16px 16px;
+    overflow: auto;
+    max-height: 480px;
+    font: 13px / 20px 'Roboto Mono', monospace;
+    color: var(--mat-sys-on-surface);
+}

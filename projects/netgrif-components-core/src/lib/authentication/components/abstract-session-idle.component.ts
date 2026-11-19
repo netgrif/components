@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit} from "@angular/core";
+import {Component, Input, OnDestroy, OnInit, ChangeDetectionStrategy} from "@angular/core";
 import {Subscription} from "rxjs";
 import {Router} from "@angular/router";
 import {SessionIdleTimerService} from "../session/services/session-idle-timer.service";
@@ -9,7 +9,9 @@ import {ConfigurationService} from "../../configuration/configuration.service";
 
 @Component({
     selector: 'ncc-abstract-session-idle',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractSessionIdleComponent implements OnInit, OnDestroy {
 

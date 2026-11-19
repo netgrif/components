@@ -25,7 +25,6 @@ import {FlexLayoutModule, FlexModule} from '@ngbracket/ngx-layout';
 import {FormsModule} from '@angular/forms';
 import {HotkeyModule} from 'angular2-hotkeys';
 import {ImportNetDialogComponent} from './import-net-dialog/import-net-dialog.component';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {UserAssignDialogComponent} from './user-assign-dialog/user-assign-dialog.component';
 import {AdminImpersonateDialogComponent} from './admin-impersonate-dialog/admin-impersonate-dialog.component';
 import {
@@ -71,7 +70,6 @@ import {openTaskDialog} from "./model/dialog-actions";
         TaskViewDialogComponent
     ],
     imports: [
-        BrowserAnimationsModule,
         SideMenuUserAssignComponentModule,
         TranslateLibModule,
         CommonModule,

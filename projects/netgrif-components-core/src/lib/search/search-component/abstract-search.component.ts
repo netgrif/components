@@ -3,7 +3,7 @@ import {LoggerService} from '../../logger/services/logger.service';
 import {DialogService} from '../../dialog/services/dialog.service';
 import {TranslateService} from '@ngx-translate/core';
 import {NAE_SEARCH_COMPONENT_CONFIGURATION} from '../models/component-configuration/search-component-configuration-injection-token';
-import {Component, EventEmitter, Inject, Input, OnInit, Optional, Output, Type} from '@angular/core';
+import {Component, EventEmitter, Inject, Input, OnInit, Optional, Output, Type, ChangeDetectionStrategy} from '@angular/core';
 import {SearchComponentConfiguration} from '../models/component-configuration/search-component-configuration';
 import {SearchMode} from '../models/component-configuration/search-mode';
 import {AllowedNetsService} from '../../allowed-nets/services/allowed-nets.service';
@@ -30,7 +30,9 @@ import {DataGroup} from '../../resources/interface/data-groups';
  */
 @Component({
     selector: 'ncc-abstract-search',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractSearchComponent implements SearchComponentConfiguration, OnInit {
 

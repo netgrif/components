@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {DashboardParams} from './dashboard-params';
 import {DashboardCardTypes} from '../cards/model/dashboard-card-types';
 import {CardGridElement} from '../cards/model/card-grid-element';
@@ -8,7 +8,9 @@ import {ComponentPortal} from '@angular/cdk/portal';
 
 @Component({
     selector: 'ncc-abstract-dashboard-content',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractDashboardContentComponent implements OnInit {
 

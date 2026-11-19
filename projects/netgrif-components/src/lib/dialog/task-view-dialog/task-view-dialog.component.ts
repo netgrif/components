@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Inject, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, Inject, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {
     AllowedNetsService,
     AllowedNetsServiceFactory,
@@ -33,7 +33,6 @@ export function taskViewFilterFactory(dialogControl: TaskViewDialogInjectionData
 @Component({
     selector: 'nc-task-view-dialog',
     templateUrl: './task-view-dialog.component.html',
-    styleUrls: ['./task-view-dialog.component.scss'],
     providers: [
         TaskViewService,
         SearchService,
@@ -47,7 +46,9 @@ export function taskViewFilterFactory(dialogControl: TaskViewDialogInjectionData
             useFactory: localAllowedNetsFactory,
             deps: [AllowedNetsServiceFactory]
         }
-    ]
+    ],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class TaskViewDialogComponent extends AbstractTaskViewComponent implements AfterViewInit {
 

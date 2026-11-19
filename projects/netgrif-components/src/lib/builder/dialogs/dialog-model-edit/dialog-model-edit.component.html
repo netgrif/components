@@ -1,87 +1,94 @@
-<h2 mat-dialog-title>{{ 'builder.dialogs.model-edit.title' | translate }}</h2>
-<mat-dialog-content class="netgrif-input padding-top-4px">
-    <mat-form-field fxFlex appearance="outline">
-        <mat-label>Id</mat-label>
-        <input type="text" matInput [(ngModel)]="model.model.id" [formControl]="idCtrl">
-        <mat-error *ngIf="idCtrl.errors && idCtrl.errors.required">{{ 'builder.dialogs.model-edit.idRequired' | translate }}</mat-error>
-    </mat-form-field>
-    <mat-form-field fxFlex appearance="outline">
-        <mat-label>{{ 'builder.dialogs.model-edit.version' | translate }}</mat-label>
-        <input type="text" matInput [(ngModel)]="model.model.version" [formControl]="versionCtrl">
-        <!--        TODO: release/4.0.0 should be version required? -->
-        <!--        <mat-error *ngIf="versionCtrl.errors && versionCtrl.errors.required">Version is required</mat-error>-->
-        <mat-error *ngIf="versionCtrl.errors && versionCtrl.errors.format">{{ 'builder.dialogs.model-edit.versionFormat' | translate }}</mat-error>
-    </mat-form-field>
-    <mat-form-field fxFlex appearance="outline">
-        <mat-label>{{ 'builder.dialogs.model-edit.modelTitle' | translate }}</mat-label>
-        <input type="text" matInput [(ngModel)]="model.model.title.value" [formControl]="titleCtrl">
-        <mat-error *ngIf="titleCtrl.errors && titleCtrl.errors.required">{{ 'builder.dialogs.model-edit.idRequired2' | translate }}</mat-error>
-    </mat-form-field>
-    <mat-form-field fxFlex appearance="outline">
-        <mat-label>{{ 'builder.dialogs.model-edit.initials' | translate }}</mat-label>
-        <input type="text" matInput [(ngModel)]="model.model.initials" [formControl]="initialsCtrl">
-        <mat-error *ngIf="initialsCtrl.errors && initialsCtrl.errors.required">{{ 'builder.dialogs.model-edit.idRequired2' | translate }}</mat-error>
-    </mat-form-field>
+<h2 mat-dialog-title>{{ "builder.dialogs.model-edit.title" | translate }}</h2>
+<mat-dialog-content class="dialog-column">
+    <div class="links">
+        <button mat-stroked-button type="button" (click)="openActions()" mat-dialog-close>
+            <mat-icon>code</mat-icon>
+            {{ "builder.dialogs.model-edit.actions" | translate }} ({{ modelService.numberOfActions() }})
+        </button>
+        <button mat-stroked-button type="button" (click)="openPermissions()" mat-dialog-close>
+            <mat-icon>admin_panel_settings</mat-icon>
+            {{ "builder.dialogs.model-edit.permissions" | translate }} ({{ modelService.numberOfPermissions() }})
+        </button>
+    </div>
+
+    <div class="grid">
+        <mat-form-field appearance="outline">
+            <mat-label>{{ "builder.dialogs.model-edit.id" | translate }}</mat-label>
+            <input type="text" matInput [(ngModel)]="model.model.id" [formControl]="idCtrl"/>
+            @if (idCtrl.errors && idCtrl.errors.required) {
+            <mat-error>{{ "builder.dialogs.model-edit.idRequired" | translate }}</mat-error>
+            }
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>{{ "builder.dialogs.model-edit.version" | translate }}</mat-label>
+            <input type="text" matInput [(ngModel)]="model.model.version" [formControl]="versionCtrl"/>
+            @if (versionCtrl.errors && versionCtrl.errors.format) {
+            <mat-error>{{ "builder.dialogs.model-edit.versionFormat" | translate }}</mat-error>
+            }
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>{{ "builder.dialogs.model-edit.modelTitle" | translate }}</mat-label>
+            <input type="text" matInput [(ngModel)]="model.model.title.value" [formControl]="titleCtrl"/>
+            @if (titleCtrl.errors && titleCtrl.errors.required) {
+            <mat-error>{{ "builder.dialogs.model-edit.idRequired2" | translate }}</mat-error>
+            }
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>{{ "builder.dialogs.model-edit.initials" | translate }}</mat-label>
+            <input type="text" matInput [(ngModel)]="model.model.initials" [formControl]="initialsCtrl"/>
+            @if (initialsCtrl.errors && initialsCtrl.errors.required) {
+            <mat-error>{{ "builder.dialogs.model-edit.idRequired2" | translate }}</mat-error>
+            }
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="span-all">
+            <mat-label>{{ "builder.dialogs.model-edit.defaultCaseName" | translate }}</mat-label>
+            <input type="text" matInput [(ngModel)]="model.model.caseName.value" [disabled]="_builderModeService.readOnly"/>
+        </mat-form-field>
+    </div>
     <nc-builder-material-icon-picker [(icon)]="model.model.icon"></nc-builder-material-icon-picker>
-    <div fxFlex>
-        <mat-slide-toggle fxFlex [(ngModel)]="model.model.defaultRole" [disabled]="_builderModeService.readOnly">
-            {{ 'builder.dialogs.model-edit.defaultRole' | translate }}
+    <div class="toggles">
+        <mat-slide-toggle [(ngModel)]="model.model.defaultRole" [disabled]="_builderModeService.readOnly">
+            {{ "builder.dialogs.model-edit.defaultRole" | translate }}
         </mat-slide-toggle>
-        <mat-slide-toggle fxFlex [(ngModel)]="model.model.anonymousRole" [disabled]="_builderModeService.readOnly">
-            {{ 'builder.dialogs.model-edit.anonymousRole' | translate }}
+        <mat-slide-toggle [(ngModel)]="model.model.anonymousRole" [disabled]="_builderModeService.readOnly">
+            {{ "builder.dialogs.model-edit.anonymousRole" | translate }}
         </mat-slide-toggle>
     </div>
-    <mat-form-field fxFlex appearance="outline" class="padding-top">
-        <mat-label>{{ 'builder.dialogs.model-edit.defaultCaseName' | translate }}</mat-label>
-        <input type="text" matInput [(ngModel)]="model.model.caseName.value" [disabled]="_builderModeService.readOnly">
-    </mat-form-field>
-    <div fxLayoutAlign="center center">
-        <span>{{ 'builder.dialogs.model-edit.tags' | translate }}</span>
+
+    <h3 class="section-title">{{ "builder.dialogs.model-edit.tags" | translate }}</h3>
+    @if (model.model?.tags?.size > 0) {
+    @for (tag of getTags(); track trackByFn(i, tag); let i = $index) {
+    <div class="tag-row">
+        <mat-form-field appearance="outline" subscriptSizing="dynamic">
+            <mat-label>{{ "builder.dialogs.model-edit.key" | translate }}</mat-label>
+            <input matInput type="text" (change)="setKey($event, tag.key)" [value]="tag.key" [disabled]="_builderModeService.readOnly"/>
+        </mat-form-field>
+        <mat-form-field appearance="outline" subscriptSizing="dynamic">
+            <mat-label>{{ "builder.dialogs.model-edit.value" | translate }}</mat-label>
+            <input matInput type="text" (change)="setValue($event, tag.key)" [value]="tag.value" [disabled]="_builderModeService.readOnly"/>
+        </mat-form-field>
+        @if (!_builderModeService.readOnly) {
+        <button mat-icon-button type="button" (click)="deleteTag(tag.key)">
+            <mat-icon>delete</mat-icon>
+        </button>
+        }
     </div>
-    <div fxLayout="row wrap" fxLayoutAlign="start center"  class="builder-field-input">
-        <div fxFlex fxLayout="column">
-            <div >
-                <div *ngIf="model.model?.tags?.size > 0">
-                    <div *ngFor="let tag of getTags(); let i = index; trackBy:trackByFn" class="margin-html">
-                        <mat-form-field fxFlex="50" appearance="outline" class="margin-right8px">
-                            <mat-label>{{ 'builder.dialogs.model-edit.key' | translate }}</mat-label>
-                            <input matInput (change)="setKey($event, tag.key)" type="text" [value]="tag.key" [disabled]="_builderModeService.readOnly">
-                        </mat-form-field>
-                        <mat-form-field fxFlex="50" appearance="outline" class="margin-right8px">
-                            <mat-label>{{ 'builder.dialogs.model-edit.value' | translate }}</mat-label>
-                            <input matInput type="text" (change)="setValue($event, tag.key)" [value]="tag.value" [disabled]="_builderModeService.readOnly">
-                        </mat-form-field>
-                        <button fxFlex mat-icon-button (click)="deleteTag(tag.key)" *ngIf="!_builderModeService.readOnly">
-                            <mat-icon>delete</mat-icon>
-                        </button>
-                    </div>
-                </div>
-                <div fxLayoutAlign="center center" *ngIf="model.model?.tags?.size === 0"
-                     class="no-options">
-                    <span>{{ 'builder.dialogs.model-edit.empty' | translate }}</span>
-                </div>
-            </div>
-            <div fxLayoutAlign="center center" class="margin-html">
-                <button mat-stroked-button class="button-text " (click)="addTag()" *ngIf="!_builderModeService.readOnly">
-                    <mat-icon>add</mat-icon>
-                    {{ 'builder.dialogs.model-edit.addTag' | translate }}
-                </button>
-            </div>
-        </div>
+    }
+    } @else {
+    <p class="supporting-text">{{ "builder.dialogs.model-edit.empty" | translate }}</p>
+    }
+    @if (!_builderModeService.readOnly) {
+    <div>
+        <button mat-button type="button" (click)="addTag()">
+            <mat-icon>add</mat-icon>
+            {{ "builder.dialogs.model-edit.addTag" | translate }}
+        </button>
     </div>
+    }
 </mat-dialog-content>
-<mat-dialog-actions>
-    <button mat-stroked-button color="primary" (click)="openActions()" mat-dialog-close>
-        <mat-icon>code</mat-icon>
-        <span>{{ 'builder.dialogs.model-edit.actions' | translate }} ({{this.modelService.numberOfActions()}})</span>
-    </button>
-    <button mat-stroked-button color="primary" (click)="openPermissions()" mat-dialog-close>
-        <mat-icon>code</mat-icon>
-        <span>{{ 'builder.dialogs.model-edit.permissions' | translate }} ({{this.modelService.numberOfPermissions()}})</span>
-    </button>
-    <button mat-flat-button color="primary" [mat-dialog-close]="{model}"
+<mat-dialog-actions align="end">
+    <button mat-flat-button [mat-dialog-close]="{model}"
             [disabled]="idCtrl.invalid || versionCtrl.invalid || initialsCtrl.invalid || titleCtrl.invalid || _builderModeService.readOnly">
-        <mat-icon>done</mat-icon>
-        <span>{{ 'builder.dialogs.model-edit.save' | translate }}</span>
+        {{ "builder.dialogs.model-edit.save" | translate }}
     </button>
 </mat-dialog-actions>

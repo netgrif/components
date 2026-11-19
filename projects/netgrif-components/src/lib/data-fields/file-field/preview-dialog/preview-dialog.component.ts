@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, Inject, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {FilePreviewType, PreviewDialogData} from '@netgrif/components-core';
 import {SafeUrl} from '@angular/platform-browser';
@@ -7,7 +7,9 @@ import {SafeUrl} from '@angular/platform-browser';
 @Component({
     selector: 'nc-preview-dialog',
     templateUrl: './preview-dialog.component.html',
-    styleUrls: ['./preview-dialog.component.scss']
+    styleUrls: ['./preview-dialog.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class PreviewDialogComponent {
     image: SafeUrl;

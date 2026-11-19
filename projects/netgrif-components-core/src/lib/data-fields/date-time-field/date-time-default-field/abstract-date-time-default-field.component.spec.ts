@@ -1,10 +1,7 @@
 import {ComponentFixture, TestBed, waitForAsync} from "@angular/core/testing";
 import {MaterialModule} from "../../../material/material.module";
-import {AngularResizeEventModule} from "angular-resize-event";
-import {NgxMatDateAdapter, NgxMatDatetimePickerModule} from "@angular-material-components/datetime-picker";
 import {TranslateLibModule} from "../../../translate/translate-lib.module";
-import {HttpClientTestingModule} from "@angular/common/http/testing";
-import {NoopAnimationsModule} from "@angular/platform-browser/animations";
+import {provideHttpClientTesting} from "@angular/common/http/testing";
 import {AuthenticationMethodService} from "../../../authentication/services/authentication-method.service";
 import {MockAuthenticationMethodService} from "../../../utility/tests/mocks/mock-authentication-method-service";
 import {AuthenticationService} from "../../../authentication/services/authentication/authentication.service";
@@ -13,7 +10,7 @@ import {UserResourceService} from "../../../resources/engine-endpoint/user-resou
 import {MockUserResourceService} from "../../../utility/tests/mocks/mock-user-resource.service";
 import {ConfigurationService} from "../../../configuration/configuration.service";
 import {TestConfigurationService} from "../../../utility/tests/test-config";
-import {Component, CUSTOM_ELEMENTS_SCHEMA, Inject, Optional} from "@angular/core";
+import {Component, CUSTOM_ELEMENTS_SCHEMA, Inject, Optional, ChangeDetectionStrategy} from "@angular/core";
 import {TranslateService} from "@ngx-translate/core";
 import {DateTimeField} from "../models/date-time-field";
 import moment from "moment/moment";
@@ -24,7 +21,7 @@ import {WrappedBoolean} from "../../data-field-template/models/wrapped-boolean";
 import {DateAdapter, MAT_DATE_LOCALE} from "@angular/material/core";
 import {CustomDateAdapter} from "../../date-field/models/custom-date-adapter";
 import {LanguageService} from "../../../translate/language.service";
-import {NgxMatMomentModule} from "@angular-material-components/moment-adapter";
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('AbstractDatetimeDefaultFieldComponent', () => {
     let component: TestDateTimeFieldComponent;
@@ -32,14 +29,14 @@ describe('AbstractDatetimeDefaultFieldComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
+            declarations: [
+                TestDateTimeFieldComponent,
+                TestWrapperComponent
+            ],
+            schemas: [CUSTOM_ELEMENTS_SCHEMA],
             imports: [
                 MaterialModule,
-                AngularResizeEventModule,
-                NgxMatDatetimePickerModule,
-                TranslateLibModule,
-                NgxMatMomentModule,
-                HttpClientTestingModule,
-                NoopAnimationsModule
+                TranslateLibModule
             ],
             providers: [
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
@@ -62,13 +59,10 @@ describe('AbstractDatetimeDefaultFieldComponent', () => {
                         showLargeLayout: new WrappedBoolean()
                     } as DataFieldPortalData<DateTimeField>
                 },
-                {provide: DateAdapter, useClass: CustomDateAdapter}
-            ],
-            declarations: [
-                TestDateTimeFieldComponent,
-                TestWrapperComponent
-            ],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA]
+                {provide: DateAdapter, useClass: CustomDateAdapter},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
+            ]
         }).compileComponents();
         fixture = TestBed.createComponent(TestWrapperComponent);
         component = fixture.debugElement.children[0].componentInstance;
@@ -90,11 +84,13 @@ describe('AbstractDatetimeDefaultFieldComponent', () => {
 
 @Component({
     selector: 'ncc-test-date-time',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestDateTimeFieldComponent extends AbstractDateTimeDefaultFieldComponent {
     constructor(_translate: TranslateService,
-                _adapter: NgxMatDateAdapter<any>,
+                _adapter: DateAdapter<any>,
                 @Inject(MAT_DATE_LOCALE) _locale: string,
                 _languageService: LanguageService,
                 @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<DateTimeField>) {
@@ -104,7 +100,9 @@ class TestDateTimeFieldComponent extends AbstractDateTimeDefaultFieldComponent {
 
 @Component({
     selector: 'ncc-test-wrapper',
-    template: '<ncc-test-date-time></ncc-test-date-time>'
+    template: '<ncc-test-date-time></ncc-test-date-time>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestWrapperComponent {
 }

@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Inject, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, Inject, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {
     NAE_TAB_DATA,
     TaskViewService,
@@ -48,7 +48,9 @@ function baseFilterFactory(injectedTabData: InjectedTabbedTaskViewData) {
             useFactory: tabbedTaskViewConfigurationFactory,
             deps: [NAE_TAB_DATA]
         }
-    ]
+    ],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class FilterFieldTabbedTaskViewComponent extends AbstractTabbedTaskViewComponent implements AfterViewInit {
 

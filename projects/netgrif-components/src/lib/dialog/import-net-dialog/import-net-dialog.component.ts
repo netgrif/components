@@ -1,4 +1,4 @@
-import {AfterViewInit, Component} from '@angular/core';
+import {AfterViewInit, Component, ChangeDetectionStrategy} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {
     EventOutcomeMessageResource,
@@ -9,7 +9,6 @@ import {
 } from '@netgrif/components-core';
 import {TranslateService} from '@ngx-translate/core';
 import {MatDialogRef} from '@angular/material/dialog';
-import {animate, state, style, transition, trigger} from '@angular/animations';
 
 interface FileList {
     [key: string]: FileUploadModel;
@@ -19,14 +18,8 @@ interface FileList {
     selector: 'nc-import-net-dialog',
     templateUrl: './import-net-dialog.component.html',
     styleUrls: ['./import-net-dialog.component.scss'],
-    animations: [
-        trigger('fadeInOut', [
-            state('in', style({opacity: 100})),
-            transition('* => void', [
-                animate(300, style({opacity: 0}))
-            ])
-        ])
-    ]
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class ImportNetDialogComponent implements AfterViewInit {
 

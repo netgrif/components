@@ -17,13 +17,12 @@ import {
     UserResourceService,
     WrappedBoolean
 } from "@netgrif/components-core";
-import {AngularResizeEventModule} from "angular-resize-event";
-import {HttpClientTestingModule} from "@angular/common/http/testing";
-import {NoopAnimationsModule} from "@angular/platform-browser/animations";
+import {provideHttpClientTesting} from "@angular/common/http/testing";
 import {ButtonFieldComponent} from "../button-field.component";
 import {DataFieldTemplateComponent} from "../../data-field-template/data-field-template.component";
 import {RequiredLabelComponent} from "../../required-label/required-label.component";
 import {FormControl} from "@angular/forms";
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('ButtonDefaultFieldComponent', () => {
   let component: ButtonDefaultFieldComponent;
@@ -31,11 +30,15 @@ describe('ButtonDefaultFieldComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+        declarations: [
+            ButtonFieldComponent,
+            DataFieldTemplateComponent,
+            RequiredLabelComponent,
+            ButtonDefaultFieldComponent
+        ],
         imports: [
             MaterialModule,
-            AngularResizeEventModule,
-            TranslateLibModule,
-            HttpClientTestingModule, NoopAnimationsModule
+            TranslateLibModule
         ],
         providers: [
             {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
@@ -49,13 +52,9 @@ describe('ButtonDefaultFieldComponent', () => {
                     formControlRef: new FormControl(),
                     showLargeLayout: new WrappedBoolean()
                 } as DataFieldPortalData<ButtonField>
-            }
-        ],
-        declarations: [
-            ButtonFieldComponent,
-            DataFieldTemplateComponent,
-            RequiredLabelComponent,
-            ButtonDefaultFieldComponent
+            },
+            provideHttpClient(withXhr(), withInterceptorsFromDi()),
+            provideHttpClientTesting()
         ],
     })
     .compileComponents();

@@ -1,26 +1,53 @@
-nab-flag {
-    width: 40px;
-    max-width: 40px;
-    padding-right: 16px;
+:host {
+    display: block;
 }
 
-.button-line {
-    width: 40px;
-    max-width: 40px;
-    height: 40px;
-    max-height: 40px;
-    padding: 8px;
+:host + :host .item {
+    border-top: 1px solid var(--mat-sys-outline-variant);
 }
 
-.card {
-    padding: 0 16px;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
-}
-
-.card:hover {
-    background-color: #f0f0f0;
+.item {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    min-height: 56px;
+    padding-right: 8px;
 }
 
 .select {
+    display: flex;
+    flex: 1 1 auto;
+    align-items: center;
+    gap: 16px;
+    min-width: 0;
+    align-self: stretch;
+    padding: 0 8px 0 16px;
+    border: 0;
+    background: transparent;
+    color: var(--mat-sys-on-surface);
+    font: var(--mat-sys-body-large);
+    letter-spacing: var(--mat-sys-body-large-tracking);
+    text-align: start;
     cursor: pointer;
+
+    &:hover {
+        background: color-mix(in srgb, var(--mat-sys-on-surface) 8%, transparent);
+    }
+
+    &:focus-visible {
+        outline: 2px solid var(--mat-sys-primary);
+        outline-offset: -2px;
+    }
+}
+
+.name {
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.chevron {
+    color: var(--mat-sys-on-surface-variant);
 }

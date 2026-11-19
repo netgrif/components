@@ -13,11 +13,11 @@ import {
     TranslateLibModule
 } from '@netgrif/components-core';
 import {CaseListPaginatorComponent} from './case-list-paginator.component';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {PanelComponentModule} from '../../../../panel/panel.module';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterTestingModule} from '@angular/router/testing';
 import {of} from 'rxjs';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('CaseListPaginatorComponent', () => {
     let component: CaseListPaginatorComponent;
@@ -25,12 +25,11 @@ describe('CaseListPaginatorComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
+            declarations: [CaseListPaginatorComponent],
             imports: [
-                HttpClientTestingModule,
                 MaterialModule,
                 TranslateLibModule,
                 PanelComponentModule,
-                NoopAnimationsModule,
                 RouterTestingModule.withRoutes([])
             ],
             providers: [
@@ -47,9 +46,10 @@ describe('CaseListPaginatorComponent', () => {
                     provide: AllowedNetsService,
                     useFactory: TestCaseViewAllowedNetsFactory,
                     deps: [AllowedNetsServiceFactory]
-                }
-            ],
-            declarations: [CaseListPaginatorComponent]
+                },
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
+            ]
         })
             .compileComponents();
     }));

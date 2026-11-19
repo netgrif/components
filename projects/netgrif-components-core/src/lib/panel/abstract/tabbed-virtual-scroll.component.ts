@@ -1,12 +1,14 @@
 import {InjectedTabData} from '../../tabs/interfaces';
-import {Component, Inject, OnDestroy, Optional} from '@angular/core';
+import {Component, Inject, OnDestroy, Optional, ChangeDetectionStrategy} from '@angular/core';
 import {NAE_TAB_DATA} from '../../tabs/tab-data-injection-token/tab-data-injection-token';
 import {filter, take} from 'rxjs/operators';
 import {Subscription} from 'rxjs';
 
 @Component({
     selector: 'ncc-abstract-tabbed-virtual-scroll',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class TabbedVirtualScrollComponent implements OnDestroy {
 

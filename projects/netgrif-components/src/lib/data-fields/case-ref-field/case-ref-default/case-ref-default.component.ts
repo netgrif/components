@@ -1,4 +1,4 @@
-import {Component, Inject, Injector, Optional} from '@angular/core';
+import {Component, Inject, Injector, Optional, ChangeDetectionStrategy} from '@angular/core';
 import {
     AbstractCaseRefDefaultComponent,
     DATA_FIELD_PORTAL_DATA,
@@ -12,7 +12,8 @@ import {
 @Component({
   selector: 'nc-case-ref-default',
   templateUrl: './case-ref-default.component.html',
-  styleUrls: ['./case-ref-default.component.scss']
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class CaseRefDefaultComponent extends AbstractCaseRefDefaultComponent {
 

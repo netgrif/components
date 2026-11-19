@@ -1,4 +1,4 @@
-import {Component, Inject, Injector, Optional, StaticProvider} from '@angular/core';
+import {Component, Inject, Injector, Optional, StaticProvider, ChangeDetectionStrategy} from '@angular/core';
 import {ComponentPortal} from '@angular/cdk/portal';
 import {
     AbstractTaskPanelComponent,
@@ -55,7 +55,9 @@ import {CurrencyPipe} from '@angular/common';
         FinishPolicyService,
         ChangedFieldsService,
         {provide: NAE_TASK_OPERATIONS, useClass: SubjectTaskOperations},
-    ]
+    ],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class TaskPanelComponent extends AbstractTaskPanelComponent {
 

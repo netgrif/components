@@ -1,5 +1,5 @@
 import {OpenedTab} from './opened-tab';
-import {Component} from '@angular/core';
+import {Component, ChangeDetectionStrategy} from '@angular/core';
 import {TestBed} from '@angular/core/testing';
 
 describe('OpenedTab', () => {
@@ -21,7 +21,9 @@ describe('OpenedTab', () => {
 
 @Component({
     selector: 'ncc-tab-test-component',
-    template: '<div></div>'
+    template: '<div></div>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class TabTestComponent {
 }

@@ -1,13 +1,13 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {CommonModule} from '@angular/common';
 import {FlexLayoutModule, FlexModule} from '@ngbracket/ngx-layout';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
 import {MaterialModule} from '../../material/material.module';
 import {RouterTestingModule} from '@angular/router/testing';
-import {Component} from '@angular/core';
+import {Component, ChangeDetectionStrategy} from '@angular/core';
 import {AbstractNavigationRailComponent} from './abstract-navigation-rail.component';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('AbstractNavigationRailComponent', () => {
     let component: TestRailComponent;
@@ -22,9 +22,11 @@ describe('AbstractNavigationRailComponent', () => {
                 MaterialModule,
                 FlexModule,
                 FlexLayoutModule,
-                NoopAnimationsModule,
-                TranslateLibModule,
-                HttpClientTestingModule
+                TranslateLibModule
+            ],
+            providers: [
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
             ],
         }).compileComponents();
     }));
@@ -62,7 +64,9 @@ describe('AbstractNavigationRailComponent', () => {
 
 @Component({
     selector: 'ncc-test-nav-rail',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestRailComponent extends AbstractNavigationRailComponent {
     constructor() {

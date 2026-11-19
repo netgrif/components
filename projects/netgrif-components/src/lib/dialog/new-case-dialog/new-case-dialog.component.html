@@ -1,68 +1,72 @@
-<div #toolbar class="mat-dialog-title" fxLayout="column" fxLayoutAlign="center none">
-    {{titleResolving()}}
-</div>
-<div mat-dialog-content class="dialog-field-fix">
-    <mat-vertical-stepper *ngIf="hasMultipleNets$ | async" linear #stepper1 class=" netgrif-input">
-        <mat-step [stepControl]="processFormControl" errorMessage="{{'side-menu.new-case.errFirst' | translate}}" >
-            <ng-template matStepLabel>{{'side-menu.new-case.choose' | translate}}</ng-template>
-            <mat-form-field color="primary" appearance="outline" class="margin-top-field">
-                <mat-label>
-                    {{'side-menu.new-case.choose' | translate}}
-                </mat-label>
-                <input type="text" matInput [formControl]="processFormControl" [matAutocomplete]="auto" required
-                       (keyup.enter)="nextStep()" (change)="checkVersion(processFormControl.value)">
-                <span class="version-span" *ngIf="isVersionVisible" matSuffix>{{netVersion}}</span>
-                <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn"
-                                  (optionSelected)="showVersion($event.option)">
-                    <mat-option *ngFor="let option of filteredOptions$ | async" [value]="option">
-                        {{option.viewValue}}
-                        <span class="version-span" *ngIf="isVersionVisible">{{option.version}}</span>
-                    </mat-option>
-                </mat-autocomplete>
-            </mat-form-field>
-            <div mat-dialog-actions class="cvti-button-field" >
-                <button *ngIf="isCaseTitleEnabled()"  mat-stroked-button (click)="toNextStep(processFormControl.value)">{{'side-menu.new-case.next' | translate}}</button>
-                <button *ngIf="!isCaseTitleEnabled()" mat-raised-button color="primary" (click)="createNewCase()" [class.spinner]="loadingSubmit | async"
-                        [disabled]="loadingSubmit | async">{{'side-menu.new-case.create' | translate}}</button>
-            </div>
-        </mat-step>
-        <mat-step *ngIf="isCaseTitleEnabled()" [stepControl]="titleFormControl" errorMessage="{{'side-menu.new-case.errSecond' | translate}}" >
-            <ng-template matStepLabel>{{'side-menu.new-case.caseTitle' | translate}}</ng-template>
-            <mat-form-field color="primary" appearance="outline" class="margin-top-field">
-                <mat-label>
-                    {{'side-menu.new-case.caseTitle' | translate}}
-                </mat-label>
-                <input matInput autocomplete="off" [formControl]="titleFormControl" [required]="isCaseTitleRequired()" (keyup.enter)="nextStep()">
-            </mat-form-field>
-            <div mat-dialog-actions class="cvti-button-field">
-                <button mat-button class="margin-right" (click)="stepper1.reset(); checkVersion(processFormControl.value)">{{'side-menu.new-case.reset' | translate}}</button>
-                <button mat-stroked-button color="primary" class="min-height-36px" (click)="createNewCase()" [class.spinner]="loadingSubmit | async"
-                        [disabled]="loadingSubmit | async">
-                    <span *ngIf="(loadingSubmit | async) === false"
-                          fxFlex>{{'side-menu.new-case.create' | translate}}</span>
-                </button>
-            </div>
-        </mat-step>
-    </mat-vertical-stepper>
-    <mat-vertical-stepper *ngIf="(hasMultipleNets$ | async) === false" linear #stepper2 class=" netgrif-input">
-        <mat-step [stepControl]="titleFormControl" errorMessage="{{'side-menu.new-case.errSecond' | translate}}" >
-            <ng-template matStepLabel>{{'side-menu.new-case.caseTitle' | translate}}</ng-template>
-            <mat-form-field color="primary" appearance="outline" class="margin-top-field">
-                <mat-label>
-                    {{'side-menu.new-case.caseTitle' | translate}}
-                </mat-label>
-                <input matInput  autocomplete="off" [formControl]="titleFormControl" [required]="isCaseTitleRequired()" (keyup.enter)="nextStep()">
-            </mat-form-field>
-            <div mat-dialog-actions class="cvti-button-field">
-                <button mat-stroked-button (click)="stepper2.reset()">{{'side-menu.new-case.reset' | translate}}</button>
-                <button mat-raised-button color="primary" (click)="createNewCase()" [class.spinner]="loadingSubmit | async"
-                        [disabled]="loadingSubmit | async">{{'side-menu.new-case.create' | translate}}</button>
-            </div>
-        </mat-step>
-    </mat-vertical-stepper>
-    <div *ngIf="(notInitialized$ | async)" class="spinner-padding" fxLayout="row" fxLayoutAlign="center center">
-        <mat-spinner></mat-spinner>
-    </div>
-
-</div>
-
+@if (step === 'process') {
+<h2 mat-dialog-title>{{ "side-menu.new-case.case" | translate }}</h2>
+<mat-dialog-content class="dialog-column">
+    <p class="supporting-text">{{ "side-menu.new-case.choose" | translate }}</p>
+    @if (notInitialized$ | async) {
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    }
+    @if (options.length > searchThreshold) {
+    <mat-form-field class="field" subscriptSizing="dynamic">
+        <mat-icon matIconPrefix>search</mat-icon>
+        <input type="text" matInput class="process-input" autocomplete="off" cdkFocusInitial
+               [placeholder]="'side-menu.new-case.searchProcess' | translate"
+               [formControl]="searchFormControl"
+               (keyup.enter)="nextStep()"/>
+    </mat-form-field>
+    }
+    <mat-action-list class="process-list">
+        @for (option of filteredOptions$ | async; track option.value) {
+        <button mat-list-item [disabled]="loadingSubmit | async" (click)="selectProcess(option)">
+            <span matListItemTitle>{{ option.viewValue }}</span>
+            @if (isVersionVisible && option.version) {
+            <span matListItemMeta class="option-version">{{ option.version }}</span>
+            }
+        </button>
+        } @empty {
+        @if ((notInitialized$ | async) === false) {
+        <p class="supporting-text no-process">{{ "side-menu.new-case.noProcessFound" | translate }}</p>
+        }
+        }
+    </mat-action-list>
+    @if (loadingSubmit | async) {
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    }
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>{{ "dialog.cancel" | translate }}</button>
+</mat-dialog-actions>
+} @else {
+<h2 mat-dialog-title class="title-with-back">
+    @if (options.length > 1) {
+    <button mat-icon-button class="back" (click)="backToProcess()" [matTooltip]="'toolbar.menu.back' | translate">
+        <mat-icon>arrow_back</mat-icon>
+    </button>
+    }
+    <span>{{ "side-menu.new-case.case" | translate }}</span>
+</h2>
+<mat-dialog-content class="dialog-column">
+    @if (selectedProcess(); as process) {
+    <p class="supporting-text">
+        {{ process.viewValue }}@if (isVersionVisible && process.version) {<span class="option-version"> · {{ process.version }}</span>}
+    </p>
+    }
+    @if (isTitleFieldVisible()) {
+    <mat-form-field class="field">
+        <mat-label>{{ "side-menu.new-case.caseTitle" | translate }}</mat-label>
+        <input matInput autocomplete="off" cdkFocusInitial [formControl]="titleFormControl" [required]="isCaseTitleRequired()" (keyup.enter)="nextStep()"/>
+        @if (titleFormControl.touched && titleFormControl.invalid && isCaseTitleRequired()) {
+        <mat-error>{{ "side-menu.new-case.errSecond" | translate }}</mat-error>
+        }
+    </mat-form-field>
+    }
+    @if (loadingSubmit | async) {
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    }
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>{{ "dialog.cancel" | translate }}</button>
+    <button mat-flat-button (click)="createNewCase()" [disabled]="!canCreate() || (loadingSubmit | async)">
+        {{ "side-menu.new-case.create" | translate }}
+    </button>
+</mat-dialog-actions>
+}

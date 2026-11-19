@@ -1,28 +1,29 @@
-<div *ngIf="loading$ | async; else notLoading" fxLayout="column" fxLayoutAlign="center center">
-    <mat-spinner color="primary"></mat-spinner>
-</div>
-
-<ng-template #notLoading>
-    <div *ngIf="hasDataToDisplay$ | async; else noContentToDisplay"
-         [ngClass]="{'paper-view-content mat-elevation-z10': isPaperView(), 'scrolling_data': this.scrollingNeeded()}"
-         [ngStyle]="{'max-height': this.resolveContentHeightCss()}">
-        <div fxLayout="column" fxLayoutAlign="start stretch"
-             *ngFor="let subgrid of dataSource; trackBy: trackBySubgridFn">
-            <div [gdAreas]="subgrid.gridAreas" [gdColumns]="subgrid.getGridColumns()" class="grid-rows-auto" [ngClass.lt-sm]="{'responsive-grid': true}">
-                <div *ngFor="let item of subgrid.content; trackBy: trackByFn"
-                     [gdArea]="item.gridAreaId"
-                     class="border" fxLayout="row" [fxLayoutAlign]="getItemAlignment(item)">
-                    <nc-field-component-resolver [id]="item?.item?.stringId" [gridElement]="item"
-                                                 [taskContentComponentClassReference]="taskContentComponentClass" fxFlex  class="width-100"></nc-field-component-resolver>
-                </div>
-            </div>
+@if (loading$ | async) {
+<mat-progress-bar mode="indeterminate"></mat-progress-bar>
+} @else if (hasDataToDisplay$ | async) {
+<div [class.paper-view]="isPaperView()"
+     [style.overflow-y]="scrollingNeeded() ? 'auto' : null"
+     [ngStyle]="{ 'max-height': resolveContentHeightCss() }">
+    @for (subgrid of dataSource; track trackBySubgridFn($index, subgrid)) {
+    <div class="data-group-grid" gdRows="auto" gdGap="8px 16px"
+         [gdAreas]="subgrid.gridAreas"
+         [gdColumns]="subgrid.getGridColumns()">
+        @for (item of subgrid.content; track trackByFn($index, item)) {
+        <div class="data-group-item" fxLayout="row" [gdArea]="item.gridAreaId" [fxLayoutAlign]="getItemAlignment(item)">
+            <nc-field-component-resolver fxFlex
+                                         [id]="item?.item?.stringId"
+                                         [gridElement]="item"
+                                         [taskContentComponentClassReference]="taskContentComponentClass"></nc-field-component-resolver>
         </div>
+        }
     </div>
-</ng-template>
-
-<ng-template #noContentToDisplay>
-    <div fxLayout="column" fxLayoutAlign="center center">
-        <mat-icon *ngIf="displayNoDataIcon">{{noDataIcon ? noDataIcon : 'block'}}</mat-icon>
-        <span>{{(noDataText ? noDataText : 'tasks.view.noData') | translate}}</span>
-    </div>
-</ng-template>
+    }
+</div>
+} @else {
+<div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="8px">
+    @if (displayNoDataIcon) {
+    <mat-icon>{{ noDataIcon ? noDataIcon : "block" }}</mat-icon>
+    }
+    <span class="mat-body-large">{{ (noDataText ? noDataText : "tasks.view.noData") | translate }}</span>
+</div>
+}

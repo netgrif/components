@@ -1,11 +1,10 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {CommonModule} from '@angular/common';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {SideMenuService} from '../services/side-menu.service';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
 import {MaterialModule} from '../../material/material.module';
-import {Component, CUSTOM_ELEMENTS_SCHEMA, Inject} from '@angular/core';
+import {Component, CUSTOM_ELEMENTS_SCHEMA, Inject, ChangeDetectionStrategy} from '@angular/core';
 import {AbstractSideMenuContainerComponent} from './abstract-side-menu-container.component';
 import {AbstractImportNetComponent} from '../content-components/import-net/abstract-import-net.component';
 import {NAE_SIDE_MENU_CONTROL} from '../side-menu-injection-token';
@@ -15,6 +14,8 @@ import {LoggerService} from '../../logger/services/logger.service';
 import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 import {TranslateService} from '@ngx-translate/core';
 import {UriService} from "../../navigation/service/uri.service";
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
+import {take} from 'rxjs/operators';
 
 describe('AbstractSideMenuContainerComponent', () => {
     let component: TestSideMenuComponent;
@@ -23,18 +24,18 @@ describe('AbstractSideMenuContainerComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
+            declarations: [TestSideMenuComponent],
+            schemas: [CUSTOM_ELEMENTS_SCHEMA],
             imports: [
                 CommonModule,
                 MaterialModule,
-                NoopAnimationsModule,
-                TranslateLibModule,
-                HttpClientTestingModule
+                TranslateLibModule
             ],
-            declarations: [TestSideMenuComponent],
             providers: [
-                TranslateService
-            ],
-            schemas: [ CUSTOM_ELEMENTS_SCHEMA]
+                TranslateService,
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
+            ]
         })
             .compileComponents();
     }));
@@ -51,7 +52,8 @@ describe('AbstractSideMenuContainerComponent', () => {
     });
 
     it('should open and close', (done) => {
-        service.open(TestImportComponent).onClose.subscribe(event => {
+        // the drawer may report a second (unexpected) close once the fixture is torn down
+        service.open(TestImportComponent).onClose.pipe(take(1)).subscribe(event => {
             expect(event).toBeTruthy();
             done();
         });
@@ -73,7 +75,9 @@ describe('AbstractSideMenuContainerComponent', () => {
         '    <mat-sidenav-content>\n' +
         '        <ng-content></ng-content>\n' +
         '    </mat-sidenav-content>\n' +
-        '</mat-sidenav-container>'
+        '</mat-sidenav-container>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestSideMenuComponent extends AbstractSideMenuContainerComponent {
     constructor(protected _sideMenuService: SideMenuService) {
@@ -83,7 +87,9 @@ class TestSideMenuComponent extends AbstractSideMenuContainerComponent {
 
 @Component({
     selector: 'ncc-test-import',
-    template: '<input type="file" id="sidemenu-fileUpload" name="fileUpload" multiple="multiple" accept="text/xml"/>'
+    template: '<input type="file" id="sidemenu-fileUpload" name="fileUpload" multiple="multiple" accept="text/xml"/>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestImportComponent extends AbstractImportNetComponent {
     constructor(@Inject(NAE_SIDE_MENU_CONTROL) protected _sideMenuControl: SideMenuControl,

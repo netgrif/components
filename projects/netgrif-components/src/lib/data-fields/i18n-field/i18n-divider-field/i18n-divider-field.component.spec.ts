@@ -10,9 +10,8 @@ import {
     TranslateLibModule, UserResourceService,
     WrappedBoolean
 } from '@netgrif/components-core';
-import {AngularResizeEventModule} from 'angular-resize-event';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('I18nDividerFieldComponent', () => {
     let component: I18nDividerFieldComponent;
@@ -20,21 +19,20 @@ describe('I18nDividerFieldComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
+            declarations: [I18nDividerFieldComponent, TestWrapperComponent],
+            schemas: [CUSTOM_ELEMENTS_SCHEMA],
             imports: [
                 MaterialModule,
-                AngularResizeEventModule,
-                BrowserAnimationsModule,
-                TranslateLibModule,
-                HttpClientTestingModule
+                TranslateLibModule
             ],
             providers: [
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
-                {provide: UserResourceService, useClass: MockUserResourceService}
-            ],
-            declarations: [I18nDividerFieldComponent, TestWrapperComponent],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA]
+                {provide: UserResourceService, useClass: MockUserResourceService},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
+            ]
         }).compileComponents();
         fixture = TestBed.createComponent(TestWrapperComponent);
         component = fixture.debugElement.children[0].componentInstance;
@@ -52,7 +50,8 @@ describe('I18nDividerFieldComponent', () => {
     @Component({
         selector: 'nc-test-wrapper',
         template: '<nc-i18n-divider-field [formControlRef]="fc" [dataField]="field" [showLargeLayout]="boolean">' +
-            '</nc-i18n-divider-field>'
+            '</nc-i18n-divider-field>',
+        standalone: false
     })
     class TestWrapperComponent {
         field = new I18nField('', '',

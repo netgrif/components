@@ -1,4 +1,4 @@
-import {Component, Optional} from '@angular/core';
+import {Component, Optional, ChangeDetectionStrategy} from '@angular/core';
 import {AbstractWorkflowPanelComponent,
         LoggerService,
         WorkflowViewService,
@@ -10,7 +10,9 @@ import {TranslateService} from '@ngx-translate/core';
 @Component({
     selector: 'nc-workflow-panel',
     templateUrl: './workflow-panel.component.html',
-    styleUrls: ['./workflow-panel.component.scss']
+    styleUrls: ['./workflow-panel.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class WorkflowPanelComponent extends AbstractWorkflowPanelComponent {
     constructor(log: LoggerService,

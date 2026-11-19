@@ -1,4 +1,4 @@
-import {PetriflowCanvasElement} from '@netgrif/petriflow.svg/lib/svg-elements/petriflow-canvas-element';
+import {PetriflowCanvasElement} from '@netgrif/petriflow.svg';
 
 export abstract class CanvasObject<M, S extends PetriflowCanvasElement> {
 

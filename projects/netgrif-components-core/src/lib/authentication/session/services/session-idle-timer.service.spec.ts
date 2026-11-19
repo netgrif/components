@@ -1,18 +1,21 @@
 import {TestBed} from "@angular/core/testing";
-import {NoopAnimationsModule} from "@angular/platform-browser/animations";
-import {HttpClientTestingModule} from "@angular/common/http/testing";
+import {provideHttpClientTesting} from "@angular/common/http/testing";
 import {RouterTestingModule} from "@angular/router/testing";
 import {ConfigurationService} from "../../../configuration/configuration.service";
 import {TestConfigurationService} from "../../../utility/tests/test-config";
 import {SessionIdleTimerService} from "./session-idle-timer.service";
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('SessionIdleTimerService', () => {
     let service: SessionIdleTimerService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopAnimationsModule, HttpClientTestingModule, RouterTestingModule.withRoutes([])],
-            providers: [{provide: ConfigurationService, useClass: TestConfigurationService}]
+            imports: [ RouterTestingModule.withRoutes([])],
+            providers: [{provide: ConfigurationService, useClass: TestConfigurationService},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
+            ]
         });
         service = TestBed.inject(SessionIdleTimerService);
     });

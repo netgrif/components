@@ -1,4 +1,4 @@
-import {Component, Inject, Optional} from '@angular/core';
+import {Component, Inject, Optional, ChangeDetectionStrategy} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {DashboardCardTypes} from '../../../dashboard/cards/model/dashboard-card-types';
 import {CustomIframeCard} from '../../../dashboard/cards/model/custom-dashboard-model/custom-iframe-card';
@@ -8,7 +8,9 @@ import {TextField} from "../models/text-field";
 
 @Component({
     selector: 'ncc-abstract-dashboard-iframe-text-field',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractDashboardIframeTextFieldComponent extends AbstractDashboardTextFieldComponent {
 

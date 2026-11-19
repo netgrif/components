@@ -1,4 +1,4 @@
-import {Component, Inject, Input, Optional} from '@angular/core';
+import {Component, Inject, Input, Optional, ChangeDetectionStrategy} from '@angular/core';
 import {DateTimeField} from './models/date-time-field';
 import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token';
 import {AbstractDataFieldComponent} from "../models/abstract-data-field-component";
@@ -8,7 +8,9 @@ import {AbstractDataFieldComponent} from "../models/abstract-data-field-componen
  * */
 @Component({
     selector: 'ncc-abstract-date-time-field',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractDateTimeFieldComponent extends AbstractDataFieldComponent {
 

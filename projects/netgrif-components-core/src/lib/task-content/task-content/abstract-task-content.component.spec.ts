@@ -1,6 +1,5 @@
 import {ComponentFixture, fakeAsync, TestBed, tick, waitForAsync} from '@angular/core/testing';
 import {MatExpansionModule} from '@angular/material/expansion';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {CommonModule} from '@angular/common';
 import {MaterialModule} from '../../material/material.module';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
@@ -8,13 +7,14 @@ import {TaskViewService} from '../../view/task-view/service/task-view.service';
 import {TaskContentService} from '../services/task-content.service';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
-import {Component, Inject, Optional} from '@angular/core';
+import {Component, Inject, Optional, ChangeDetectionStrategy} from '@angular/core';
 import {AbstractTaskContentComponent} from './abstract-task-content.component';
 import {FieldConverterService} from '../services/field-converter.service';
 import {PaperViewService} from '../../navigation/quick-panel/components/paper-view.service';
 import {LoggerService} from '../../logger/services/logger.service';
 import {TaskEventService} from '../services/task-event.service';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 import {DataGroupAlignment} from '../../resources/interface/data-groups';
 import {DataGroupCompact, DataGroupHideEmptyRows, DataGroupLayoutType} from '../../resources/interface/data-group-layout';
 import {IncrementingCounter} from '../../utility/incrementing-counter';
@@ -38,13 +38,13 @@ describe('AbstractTaskContentComponent', () => {
     const imports = [
         MatExpansionModule,
         MaterialModule,
-        NoopAnimationsModule,
         CommonModule,
-        TranslateLibModule,
-        HttpClientTestingModule
+        TranslateLibModule
     ];
 
     const providers = [
+        provideHttpClient(withXhr(), withInterceptorsFromDi()),
+        provideHttpClientTesting(),
         TaskViewService,
         {provide: TaskContentService, useClass: UnlimitedTaskContentService},
         {provide: ConfigurationService, useClass: TestConfigurationService}
@@ -1031,7 +1031,9 @@ function transformStringToGrid(gridString: string): Array<Array<string>> {
 
 @Component({
     selector: 'ncc-test-panel',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestTaskContentComponent extends AbstractTaskContentComponent {
     constructor(protected _fieldConverter: FieldConverterService,

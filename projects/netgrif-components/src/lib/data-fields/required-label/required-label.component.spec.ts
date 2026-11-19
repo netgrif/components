@@ -1,7 +1,6 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {RequiredLabelComponent} from './required-label.component';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('RequiredLabelComponent', () => {
     let component: RequiredLabelComponent;
@@ -9,7 +8,7 @@ describe('RequiredLabelComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
-            imports: [NoopAnimationsModule],
+            imports: [],
             declarations: [RequiredLabelComponent]
         })
             .compileComponents();

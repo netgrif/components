@@ -4,9 +4,9 @@ import {MaterialModule} from '../../../material/material.module';
 import {PromptDialogComponent} from './prompt-dialog.component';
 import {DialogModule} from '../../dialog.module';
 import {TranslateLibModule} from '../../../translate/translate-lib.module';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('QuestionDialogWithAnswerComponent', () => {
     let component: PromptDialogComponent;
@@ -14,13 +14,15 @@ describe('QuestionDialogWithAnswerComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
-            imports: [MaterialModule, DialogModule, NoopAnimationsModule, TranslateLibModule, HttpClientTestingModule],
             declarations: [],
+            schemas: [NO_ERRORS_SCHEMA],
+            imports: [MaterialModule, DialogModule, TranslateLibModule],
             providers: [
                 { provide: MAT_DIALOG_DATA, useValue: {} },
-                { provide: MatDialogRef, useValue: {} }
-            ],
-            schemas: [NO_ERRORS_SCHEMA]
+                { provide: MatDialogRef, useValue: {} },
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
+            ]
         }).compileComponents();
     }));
 

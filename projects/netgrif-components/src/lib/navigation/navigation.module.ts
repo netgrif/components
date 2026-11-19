@@ -1,6 +1,5 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {NavigationDrawerComponent} from './navigation-drawer/navigation-drawer.component';
 import {FlexLayoutModule, FlexModule} from '@ngbracket/ngx-layout';
 import {RouterModule} from '@angular/router';
@@ -44,6 +43,7 @@ import {PanelComponentModule} from '../panel/panel.module';
 import {TabsComponentModule} from '../tabs/tabs.module';
 import {CaseViewComponentModule} from '../view/case-view/case-view.module';
 import { NavigationDoubleDrawerComponent } from './navigation-double-drawer/navigation-double-drawer.component';
+import { AppearanceDialogComponent } from './navigation-double-drawer/appearance-dialog/appearance-dialog.component';
 import { MatDividerModule } from '@angular/material/divider';
 import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
 import { DefaultTaskViewComponent } from './group-navigation-component-resolver/default-components/refs/default-task-view/default-task-view.component';
@@ -59,6 +59,8 @@ import {ToolbarComponentModule} from '../toolbar/toolbar.module';
 import { DefaultTabbedSingleTaskViewComponent } from './group-navigation-component-resolver/default-components/tabbed/default-tabbed-single-task-view/default-tabbed-single-task-view.component';
 import { DefaultSingleTaskViewComponent } from './group-navigation-component-resolver/default-components/simple-views/default-single-task-view/default-single-task-view.component';
 import { DefaultTicketViewComponent } from './group-navigation-component-resolver/default-components/tabbed/default-ticket-view/default-ticket-view.component';
+import { DefaultProcessViewComponent } from './group-navigation-component-resolver/default-components/tabbed/default-process-view/default-process-view.component';
+import { DefaultProcessCaseViewComponent } from './group-navigation-component-resolver/default-components/tabbed/default-process-case-view/default-process-case-view.component';
 import {reloadMenu} from "./model/reload-menu";
 
 
@@ -74,6 +76,7 @@ import {reloadMenu} from "./model/reload-menu";
         DefaultTabbedCaseViewComponent,
         DefaultTabViewComponent,
         NavigationDoubleDrawerComponent,
+        AppearanceDialogComponent,
         BreadcrumbsComponent,
         DefaultTaskViewComponent,
         DefaultCaseRefListViewComponent,
@@ -86,7 +89,9 @@ import {reloadMenu} from "./model/reload-menu";
         DashboardComponent,
         DefaultTabbedSingleTaskViewComponent,
         DefaultSingleTaskViewComponent,
-        DefaultTicketViewComponent
+        DefaultTicketViewComponent,
+        DefaultProcessViewComponent,
+        DefaultProcessCaseViewComponent
     ],
     imports: [
         CommonModule,
@@ -98,7 +103,6 @@ import {reloadMenu} from "./model/reload-menu";
         TranslateLibModule,
         UserComponentModule,
         ResizableModule,
-        MatProgressSpinnerModule,
         SearchComponentModule,
         HeaderComponentModule,
         PanelComponentModule,
@@ -128,7 +132,9 @@ import {reloadMenu} from "./model/reload-menu";
         DashboardComponent,
         DefaultTabbedSingleTaskViewComponent,
         DefaultSingleTaskViewComponent,
-        DefaultTicketViewComponent
+        DefaultTicketViewComponent,
+        DefaultProcessViewComponent,
+        DefaultProcessCaseViewComponent
     ],
     providers: [
         { provide: NAE_GROUP_NAVIGATION_COMPONENT_RESOLVER_COMPONENT, useValue: GroupNavigationComponentResolverComponent },

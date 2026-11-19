@@ -1,18 +1,13 @@
-<div fxLayout="row" fxLayoutAlign="start center" class="netgrif-input builder-field-input">
-    <span fxFlex="20">{{name}}</span>
-    <div fxFlex="1"></div>
-    <mat-form-field appearance="outline" fxFlex="19">
-        <mat-label>{{ 'builder.modeler.i18n-mode.stringId' | translate }}</mat-label>
-        <input matInput [(ngModel)]="field.name" disabled>
+<div class="row">
+    <div class="what">
+        <span class="name">{{ name }}</span>
+        <span class="string-id" [title]="('builder.modeler.i18n-mode.stringId' | translate) + ': ' + field.name">{{ field.name }}</span>
+    </div>
+    <span class="default" [class.empty]="!field.value" [title]="'builder.modeler.i18n-mode.defaultValue' | translate">{{ field.value || '–' }}</span>
+    @if (translationField) {
+    <mat-form-field class="translation" subscriptSizing="dynamic">
+        <mat-label>{{ "builder.modeler.i18n-mode.translation" | translate }}</mat-label>
+        <input matInput [(ngModel)]="translationField.value" (change)="changeTranslation()" [disabled]="_builderModeService.readOnly"/>
     </mat-form-field>
-    <div fxFlex="1"></div>
-    <mat-form-field appearance="outline" fxFlex="29">
-        <mat-label *ngIf="field.value">{{ 'builder.modeler.i18n-mode.defaultValue' | translate }}</mat-label>
-        <input matInput [(ngModel)]="field.value" disabled>
-    </mat-form-field>
-    <div fxFlex="1"></div>
-    <mat-form-field appearance="outline" fxFlex="29" *ngIf="translationField">
-        <mat-label>{{ 'builder.modeler.i18n-mode.translation' | translate }}</mat-label>
-        <input matInput [(ngModel)]="translationField.value" (change)="changeTranslation()" [disabled]="_builderModeService.readOnly">
-    </mat-form-field>
+    }
 </div>

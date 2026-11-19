@@ -1,9 +1,10 @@
 import {passwordValidator} from '../models/password.validator';
+import {formSubmitErrorText} from '../models/abstract-registration.component';
 import {LoggerService} from '../../logger/services/logger.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MessageResource} from '../../resources/interface/message-resource';
 import {TranslateService} from '@ngx-translate/core';
-import {Component, EventEmitter, Inject, OnDestroy, Optional, Output} from '@angular/core';
+import {Component, EventEmitter, Inject, OnDestroy, Optional, Output, ChangeDetectionStrategy} from '@angular/core';
 import {FormSubmitEvent, HasForm} from "../has-form";
 import {LoadingEmitter} from "../../utility/loading-emitter";
 import {take} from "rxjs/operators";
@@ -19,7 +20,9 @@ export const CONFIRM_PASSWORD = 'confirmPassword';
 
 @Component({
     selector: 'ncc-abstract-change-password',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractChangePasswordComponent implements HasForm, OnDestroy {
 
@@ -31,6 +34,9 @@ export abstract class AbstractChangePasswordComponent implements HasForm, OnDest
 
     @Output() public formSubmit: EventEmitter<FormSubmitEvent>;
     @Output() public changePassword: EventEmitter<MessageResource>;
+    /** result of the last submit, shown by the form */
+    public submitError: string | undefined;
+    public submitSuccess = false;
 
     public loadingSubmit: LoadingEmitter;
 
@@ -90,14 +96,19 @@ export abstract class AbstractChangePasswordComponent implements HasForm, OnDest
         this.formSubmit.emit(request);
 
         this.loadingSubmit.on();
+        this.submitError = undefined;
+        this.submitSuccess = false;
         this.profileService.changePassword(request).pipe(take(1)).subscribe(message => {
             if (message.error) {
+                this.submitError = message.error;
                 this.changePassword.emit({error: message.error});
             } else {
+                this.submitSuccess = true;
                 this.changePassword.emit({success: message.success});
             }
             this.loadingSubmit.off();
         }, error => {
+            this.submitError = formSubmitErrorText(error) ?? this._translate.instant('forms.submitFailed');
             this.changePassword.emit({error});
             this.loadingSubmit.off();
         });

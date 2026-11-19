@@ -11,6 +11,9 @@ import {SideMenuEvent} from '../models/side-menu-event';
 import {MatDrawerToggleResult} from '@angular/material/sidenav';
 import {NAE_NET_ALL_VERSIONS, NAE_NET_VERSION_VISIBLE} from '../net-version-visible-injection-token';
 
+/**
+ * @deprecated the side menu is deprecated, the library opens dialogs instead (`DialogComponentsModule`)
+ */
 @Injectable({
     providedIn: 'root'
 })

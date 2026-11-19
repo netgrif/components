@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Injector, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Injector, OnInit, Output, ChangeDetectionStrategy} from '@angular/core';
 import {
     AbstractCustomCardComponent,
     DashboardEventContent,
@@ -12,7 +12,8 @@ import {AggregationResult, LoggerService} from '@netgrif/components-core';
 @Component({
     selector: 'nc-line-chart-card',
     templateUrl: './line-chart-card.component.html',
-    styleUrls: ['./line-chart-card.component.scss']
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class LineChartCardComponent extends AbstractCustomCardComponent implements OnInit {
 

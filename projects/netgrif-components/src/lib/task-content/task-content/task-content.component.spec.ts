@@ -1,7 +1,6 @@
 import {TaskContentComponent} from './task-content.component';
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {PanelComponentModule} from '../../panel/panel.module';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {CommonModule} from '@angular/common';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {
@@ -24,7 +23,6 @@ describe('TaskContentComponent', () => {
                 MatExpansionModule,
                 PanelComponentModule,
                 MaterialModule,
-                NoopAnimationsModule,
                 CommonModule,
                 TranslateLibModule,
                 RouterTestingModule.withRoutes([])

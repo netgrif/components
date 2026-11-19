@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Inject, Injector, OnDestroy, Optional, Type} from "@angular/core";
+import {AfterViewInit, Component, Inject, Injector, OnDestroy, Optional, Type, ChangeDetectionStrategy} from "@angular/core";
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
 import {ComponentPortal} from "@angular/cdk/portal";
 import {MultichoiceField} from '../models/multichoice-field';
@@ -7,7 +7,9 @@ import {Subscription} from 'rxjs';
 
 @Component({
     selector: 'ncc-abstract-multi-case-ref-default',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractMultichoiceCaseRefComponent extends AbstractCaseRefBaseFieldComponent<MultichoiceField> implements AfterViewInit, OnDestroy {
 

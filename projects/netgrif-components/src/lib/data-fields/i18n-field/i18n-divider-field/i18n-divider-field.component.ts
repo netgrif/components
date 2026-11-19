@@ -1,4 +1,4 @@
-import {Component, Inject, Optional} from '@angular/core';
+import {Component, Inject, Optional, ChangeDetectionStrategy} from '@angular/core';
 import {
     AbstractI18nDividerFieldComponent,
     DATA_FIELD_PORTAL_DATA,
@@ -9,7 +9,9 @@ import {
 @Component({
     selector: 'nc-i18n-divider-field',
     templateUrl: './i18n-divider-field.component.html',
-    styleUrls: ['./i18n-divider-field.component.scss']
+    styleUrls: ['./i18n-divider-field.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class I18nDividerFieldComponent extends AbstractI18nDividerFieldComponent {
     constructor(@Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<I18nField>) {

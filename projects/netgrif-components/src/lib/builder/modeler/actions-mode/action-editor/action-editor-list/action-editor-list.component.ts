@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Input, Output, ChangeDetectionStrategy} from '@angular/core';
 import {LeafNode} from '../classes/leaf-node';
 import {ActionChangedEvent} from "./action-changed-event";
 
@@ -6,6 +6,8 @@ import {ActionChangedEvent} from "./action-changed-event";
   selector: 'nc-builder-action-editor-list',
   templateUrl: './action-editor-list.component.html',
   styleUrls: ['./action-editor-list.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false,
 })
 export class ActionEditorListComponent {
 

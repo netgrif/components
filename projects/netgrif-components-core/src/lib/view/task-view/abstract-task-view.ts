@@ -1,5 +1,5 @@
 import {Observable} from 'rxjs';
-import {Component, OnDestroy} from '@angular/core';
+import {Component, OnDestroy, ChangeDetectionStrategy} from '@angular/core';
 import {TaskPanelData} from '../../panel/task-panel-list/task-panel-data/task-panel-data';
 import {TaskViewService} from './service/task-view.service';
 import {AbstractViewWithHeadersComponent} from '../abstract/view-with-headers';
@@ -7,7 +7,9 @@ import { ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'ncc-abstract-task-view',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractTaskViewComponent extends AbstractViewWithHeadersComponent implements OnDestroy {
 

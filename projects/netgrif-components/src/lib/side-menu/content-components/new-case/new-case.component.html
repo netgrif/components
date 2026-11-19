@@ -1,64 +1,73 @@
-<div #toolbar class="custom-mat-toolbar" fxLayout="column" fxLayoutAlign="center none">
-    {{titleShortening()}}
+<mat-toolbar #toolbar>{{ titleShortening() }}</mat-toolbar>
+<div class="content">
+    @if (notInitialized$ | async) {
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    }
+    @if (hasMultipleNets$ | async) {
+    <mat-stepper orientation="vertical" linear #stepper1>
+        <mat-step [stepControl]="processFormControl" errorMessage="{{ 'side-menu.new-case.errFirst' | translate }}">
+            <ng-template matStepLabel>{{ "side-menu.new-case.choose" | translate }}</ng-template>
+            <mat-form-field>
+                <mat-label>{{ "side-menu.new-case.choose" | translate }}</mat-label>
+                <input type="text" matInput required
+                       [formControl]="processFormControl"
+                       [matAutocomplete]="auto"
+                       (keyup.enter)="nextStep()"
+                       (change)="checkVersion(processFormControl.value)"/>
+                @if (isVersionVisible) {
+                <span matTextSuffix>{{ netVersion }}</span>
+                }
+                <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn" (optionSelected)="showVersion($event.option)">
+                    @for (option of filteredOptions$ | async; track option) {
+                    <mat-option [value]="option">
+                        {{ option.viewValue }}
+                        @if (isVersionVisible) {
+                        <small>{{ option.version }}</small>
+                        }
+                    </mat-option>
+                    }
+                </mat-autocomplete>
+            </mat-form-field>
+            <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px">
+                @if (isCaseTitleEnabled()) {
+                <button mat-flat-button (click)="toNextStep(processFormControl.value)">{{ "side-menu.new-case.next" | translate }}</button>
+                } @else {
+                <button mat-flat-button (click)="createNewCase()" [disabled]="loadingSubmit | async">{{ "side-menu.new-case.create" | translate }}</button>
+                }
+            </div>
+        </mat-step>
+        @if (isCaseTitleEnabled()) {
+        <mat-step [stepControl]="titleFormControl" errorMessage="{{ 'side-menu.new-case.errSecond' | translate }}">
+            <ng-template matStepLabel>{{ "side-menu.new-case.caseTitle" | translate }}</ng-template>
+            <ng-container *ngTemplateOutlet="titleField"></ng-container>
+            <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px">
+                <button mat-button (click)="stepper1.reset(); checkVersion(processFormControl.value)">{{ "side-menu.new-case.reset" | translate }}</button>
+                <button mat-flat-button (click)="createNewCase()" [disabled]="loadingSubmit | async">{{ "side-menu.new-case.create" | translate }}</button>
+            </div>
+        </mat-step>
+        }
+    </mat-stepper>
+    }
+    @if ((hasMultipleNets$ | async) === false) {
+    <mat-stepper orientation="vertical" linear #stepper2>
+        <mat-step [stepControl]="titleFormControl" errorMessage="{{ 'side-menu.new-case.errSecond' | translate }}">
+            <ng-template matStepLabel>{{ "side-menu.new-case.caseTitle" | translate }}</ng-template>
+            <ng-container *ngTemplateOutlet="titleField"></ng-container>
+            <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px">
+                <button mat-button (click)="stepper2.reset()">{{ "side-menu.new-case.reset" | translate }}</button>
+                <button mat-flat-button (click)="createNewCase()" [disabled]="loadingSubmit | async">{{ "side-menu.new-case.create" | translate }}</button>
+            </div>
+        </mat-step>
+    </mat-stepper>
+    }
+    @if (loadingSubmit | async) {
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    }
 </div>
-<mat-vertical-stepper *ngIf="hasMultipleNets$ | async" linear #stepper1 class="netgrif-input">
-    <mat-step [stepControl]="processFormControl" errorMessage="{{'side-menu.new-case.errFirst' | translate}}">
-        <ng-template matStepLabel>{{'side-menu.new-case.choose' | translate}}</ng-template>
-        <mat-form-field appearance="outline">
-            <input type="text" matInput [formControl]="processFormControl" [matAutocomplete]="auto" required
-                   (keyup.enter)="nextStep()" (change)="checkVersion(processFormControl.value)">
-            <span class="version-span" *ngIf="isVersionVisible" matSuffix>{{netVersion}}</span>
-            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn"
-                              (optionSelected)="showVersion($event.option)">
-                <mat-option *ngFor="let option of filteredOptions$ | async" [value]="option">
-                    {{option.viewValue}}
-                    <span class="version-span" *ngIf="isVersionVisible">{{option.version}}</span>
-                </mat-option>
-            </mat-autocomplete>
-        </mat-form-field>
-        <div>
-            <button *ngIf="isCaseTitleEnabled()" mat-button
-                    (click)="toNextStep(processFormControl.value)">{{'side-menu.new-case.next' | translate}}</button>
-            <button *ngIf="!isCaseTitleEnabled()" mat-raised-button color="primary"
-                    (click)="createNewCase()">{{'side-menu.new-case.create' | translate}}</button>
-        </div>
-    </mat-step>
-    <mat-step *ngIf="isCaseTitleEnabled()" [stepControl]="titleFormControl"
-              errorMessage="{{'side-menu.new-case.errSecond' | translate}}">
-        <ng-template matStepLabel>{{'side-menu.new-case.caseTitle' | translate}}</ng-template>
-        <mat-form-field appearance="outline">
-            <input matInput placeholder="Title" autocomplete="off" [formControl]="titleFormControl"
-                   [required]="isCaseTitleRequired()" (keyup.enter)="nextStep()">
-        </mat-form-field>
-        <div>
-            <button mat-button
-                    (click)="stepper1.reset(); checkVersion(processFormControl.value)">{{'side-menu.new-case.reset' | translate}}</button>
-            <button mat-button (click)="createNewCase()">
-                <mat-spinner *ngIf="loadingSubmit | async"
-                             mode="indeterminate"
-                             diameter="36"
-                             color="accent"
-                             fxFlex></mat-spinner>
-                <span *ngIf="(loadingSubmit | async) === false"
-                      fxFlex>{{'side-menu.new-case.create' | translate}}</span>
-            </button>
-        </div>
-    </mat-step>
-</mat-vertical-stepper>
-<mat-vertical-stepper *ngIf="(hasMultipleNets$ | async) === false" linear #stepper2 class="netgrif-input">
-    <mat-step [stepControl]="titleFormControl" errorMessage="{{'side-menu.new-case.errSecond' | translate}}">
-        <ng-template matStepLabel>{{'side-menu.new-case.caseTitle' | translate}}</ng-template>
-        <mat-form-field appearance="outline">
-            <input matInput placeholder="Title" autocomplete="off" [formControl]="titleFormControl"
-                   [required]="isCaseTitleRequired()" (keyup.enter)="nextStep()">
-        </mat-form-field>
-        <div>
-            <button mat-button (click)="stepper2.reset()">{{'side-menu.new-case.reset' | translate}}</button>
-            <button mat-raised-button color="primary"
-                    (click)="createNewCase()">{{'side-menu.new-case.create' | translate}}</button>
-        </div>
-    </mat-step>
-</mat-vertical-stepper>
-<div *ngIf="(notInitialized$ | async)" fxLayout="row" fxLayoutAlign="center center">
-    <mat-spinner class="spinner-margin"></mat-spinner>
-</div>
+
+<ng-template #titleField>
+    <mat-form-field>
+        <mat-label>{{ "side-menu.new-case.caseTitle" | translate }}</mat-label>
+        <input matInput autocomplete="off" [formControl]="titleFormControl" [required]="isCaseTitleRequired()" (keyup.enter)="nextStep()"/>
+    </mat-form-field>
+</ng-template>

@@ -1,8 +1,6 @@
 import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
-import {AngularResizeEventModule} from 'angular-resize-event';
-import {BrowserAnimationsModule, NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {Component, CUSTOM_ELEMENTS_SCHEMA, ElementRef, Inject, Optional} from '@angular/core';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
+import {Component, CUSTOM_ELEMENTS_SCHEMA, ElementRef, Inject, Optional, ChangeDetectionStrategy} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {TranslateLibModule} from '../../../translate/translate-lib.module';
 import {MaterialModule} from '../../../material/material.module';
@@ -11,6 +9,7 @@ import {EnumerationField} from '../models/enumeration-field';
 import {AbstractEnumerationStepperFieldComponent} from './abstract-enumeration-stepper-field.component';
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
 import {DynamicEnumerationField} from "../models/dynamic-enumeration-field";
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('AbstractEnumerationStepperFieldComponent', () => {
     let component: TestEnumStepperComponent;
@@ -18,13 +17,11 @@ describe('AbstractEnumerationStepperFieldComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
+            declarations: [TestEnumStepperComponent, TestWrapperComponent],
+            schemas: [CUSTOM_ELEMENTS_SCHEMA],
             imports: [
                 MaterialModule,
-                AngularResizeEventModule,
-                BrowserAnimationsModule,
-                TranslateLibModule,
-                HttpClientTestingModule,
-                NoopAnimationsModule
+                TranslateLibModule
             ],
             providers: [
                 {provide: DATA_FIELD_PORTAL_DATA, useValue: {
@@ -38,10 +35,10 @@ describe('AbstractEnumerationStepperFieldComponent', () => {
                         formControlRef: new FormControl(),
                         showLargeLayout: new WrappedBoolean()
                     } as DataFieldPortalData<EnumerationField>
-                }
-            ],
-            declarations: [TestEnumStepperComponent, TestWrapperComponent],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA]
+                },
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
+            ]
         })
             .compileComponents();
         fixture = TestBed.createComponent(TestWrapperComponent);
@@ -60,7 +57,9 @@ describe('AbstractEnumerationStepperFieldComponent', () => {
 
 @Component({
     selector: 'ncc-test-enum-stepper',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestEnumStepperComponent extends AbstractEnumerationStepperFieldComponent {
     constructor(protected ref: ElementRef,
@@ -71,7 +70,9 @@ class TestEnumStepperComponent extends AbstractEnumerationStepperFieldComponent 
 
 @Component({
     selector: 'ncc-test-wrapper',
-    template: '<ncc-test-enum-stepper></ncc-test-enum-stepper>'
+    template: '<ncc-test-enum-stepper></ncc-test-enum-stepper>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestWrapperComponent {
 }

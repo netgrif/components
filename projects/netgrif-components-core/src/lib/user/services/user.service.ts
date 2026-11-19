@@ -73,8 +73,8 @@ export class UserService implements OnDestroy {
     ngOnDestroy(): void {
         this._userChange$.complete();
         this._anonymousUserChange$.complete();
-        this._subAuth.unsubscribe();
-        this._subAnonym.unsubscribe();
+        this._subAuth?.unsubscribe();
+        this._subAnonym?.unsubscribe();
     }
 
     /**

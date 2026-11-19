@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, ChangeDetectionStrategy} from '@angular/core';
 import {Router} from '@angular/router';
 import {
     RedirectService,
@@ -11,7 +11,9 @@ import {
 @Component({
     selector: 'nc-authentication-overlay',
     templateUrl: './authentication-overlay.component.html',
-    styleUrls: ['./authentication-overlay.component.scss']
+    styleUrls: ['./authentication-overlay.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class AuthenticationOverlayComponent extends AbstractAuthenticationOverlayComponent {
 

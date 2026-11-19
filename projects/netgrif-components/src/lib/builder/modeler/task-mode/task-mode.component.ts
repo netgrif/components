@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {FlexModule} from "@ngbracket/ngx-layout";
 import {HeaderComponentModule} from "../../../header/header.module";
 import {PanelComponentModule} from "../../../panel/panel.module";
@@ -32,7 +32,6 @@ const localAllowedNetsFactory = (factory: AllowedNetsServiceFactory) => {
 
 @Component({
     selector: 'nc-builder-task-mode',
-    standalone: true,
     imports: [
         FlexModule,
         HeaderComponentModule,
@@ -41,6 +40,7 @@ const localAllowedNetsFactory = (factory: AllowedNetsServiceFactory) => {
     ],
     templateUrl: './task-mode.component.html',
     styleUrl: './task-mode.component.scss',
+    changeDetection: ChangeDetectionStrategy.Eager,
     providers: [
         CategoryFactory,
         TaskViewService,

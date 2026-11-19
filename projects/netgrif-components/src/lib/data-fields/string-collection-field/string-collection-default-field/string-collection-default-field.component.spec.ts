@@ -1,8 +1,9 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {StringCollectionDefaultFieldComponent} from './string-collection-default-field.component';
-import {Component} from '@angular/core';
+import {Component, ChangeDetectionStrategy} from '@angular/core';
 import {StringCollectionField, TranslateLibModule} from '@netgrif/components-core';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('StringCollectionDefaultFieldComponent', () => {
     let component: StringCollectionDefaultFieldComponent;
@@ -10,11 +11,14 @@ describe('StringCollectionDefaultFieldComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
+            declarations: [StringCollectionDefaultFieldComponent],
             imports: [
-                TranslateLibModule,
-                HttpClientTestingModule
+                TranslateLibModule
             ],
-            declarations: [StringCollectionDefaultFieldComponent]
+            providers: [
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
+            ]
         })
             .compileComponents();
     });
@@ -37,7 +41,9 @@ describe('StringCollectionDefaultFieldComponent', () => {
 
 @Component({
     selector: 'nc-test-wrapper',
-    template: '<nc-string-collection-default-field [dataField]="field"></nc-string-collection-default-field>'
+    template: '<nc-string-collection-default-field [dataField]="field"></nc-string-collection-default-field>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestWrapperComponent {
     field = new StringCollectionField('', '', ['633c6187bb12a90925e0a17e'], {

@@ -1,12 +1,11 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {MultichoiceListFieldComponent} from './multichoice-list-field.component';
-import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
-import {AngularResizeEventModule} from 'angular-resize-event';
-import {BrowserAnimationsModule, NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {Component, CUSTOM_ELEMENTS_SCHEMA, ChangeDetectionStrategy} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {MaterialModule, MultichoiceField, TranslateLibModule, WrappedBoolean} from '@netgrif/components-core';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('MultichoiceListFieldComponent', () => {
     let component: MultichoiceListFieldComponent;
@@ -14,16 +13,19 @@ describe('MultichoiceListFieldComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
+            declarations: [
+                MultichoiceListFieldComponent,
+                TestWrapperComponent
+            ],
+            schemas: [CUSTOM_ELEMENTS_SCHEMA],
             imports: [
                 MaterialModule,
-                AngularResizeEventModule,
-                BrowserAnimationsModule,
                 TranslateLibModule,
-                HttpClientTestingModule,
-                NoopAnimationsModule
             ],
-            declarations: [MultichoiceListFieldComponent, TestWrapperComponent],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA]
+            providers: [
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
+            ]
         })
             .compileComponents();
 
@@ -44,7 +46,9 @@ describe('MultichoiceListFieldComponent', () => {
 @Component({
     selector: 'nc-test-wrapper',
     template: '<nc-multichoice-list-field [showLargeLayout]="label" [dataField]="field" [formControlRef]="form">' +
-        '</nc-multichoice-list-field>'
+        '</nc-multichoice-list-field>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestWrapperComponent {
     label = new WrappedBoolean();

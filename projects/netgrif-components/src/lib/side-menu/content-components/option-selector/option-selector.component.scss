@@ -1,3 +1,11 @@
-.select-field-margin {
-    margin: 8px 16px;
+:host {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.content {
+    flex: 1 1 auto;
+    overflow: auto;
+    padding: 16px;
 }

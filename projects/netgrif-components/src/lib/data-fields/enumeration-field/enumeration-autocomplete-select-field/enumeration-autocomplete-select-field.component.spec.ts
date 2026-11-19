@@ -1,12 +1,11 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {EnumerationAutocompleteSelectFieldComponent} from './enumeration-autocomplete-select-field.component';
-import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
-import {AngularResizeEventModule} from 'angular-resize-event';
-import {BrowserAnimationsModule, NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {Component, CUSTOM_ELEMENTS_SCHEMA, ChangeDetectionStrategy} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {EnumerationField, MaterialModule, TranslateLibModule, WrappedBoolean} from '@netgrif/components-core';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('EnumerationAutocompleteSelectFieldComponent', () => {
     let component: EnumerationAutocompleteSelectFieldComponent;
@@ -14,16 +13,19 @@ describe('EnumerationAutocompleteSelectFieldComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
+            declarations: [
+                EnumerationAutocompleteSelectFieldComponent,
+                TestWrapperComponent
+            ],
+            schemas: [CUSTOM_ELEMENTS_SCHEMA],
             imports: [
                 MaterialModule,
-                AngularResizeEventModule,
-                BrowserAnimationsModule,
                 TranslateLibModule,
-                HttpClientTestingModule,
-                NoopAnimationsModule
             ],
-            declarations: [EnumerationAutocompleteSelectFieldComponent, TestWrapperComponent],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA]
+            providers: [
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
+            ]
         })
             .compileComponents();
         fixture = TestBed.createComponent(TestWrapperComponent);
@@ -43,7 +45,9 @@ describe('EnumerationAutocompleteSelectFieldComponent', () => {
 @Component({
     selector: 'nc-test-wrapper',
     template: '<nc-enumeration-autocomplete-select-field [showLargeLayout]="label" [dataField]="field" [formControlRef]="form">' +
-        '</nc-enumeration-autocomplete-select-field>'
+        '</nc-enumeration-autocomplete-select-field>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestWrapperComponent {
     label = new WrappedBoolean();

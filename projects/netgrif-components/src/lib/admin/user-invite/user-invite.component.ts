@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, ChangeDetectionStrategy} from '@angular/core';
 import {
     AbstractUserInviteComponent,
     OrganizationListService,
@@ -11,7 +11,9 @@ import {TranslateService} from '@ngx-translate/core';
 @Component({
     selector: 'nc-user-invite',
     templateUrl: './user-invite.component.html',
-    styleUrls: ['./user-invite.component.scss']
+    styleUrls: ['./user-invite.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class UserInviteComponent extends AbstractUserInviteComponent {
 

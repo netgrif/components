@@ -1,47 +1,44 @@
-<div *ngIf="item !== undefined; else elseBlock" fxFlex fxLayout="column" class="height-fix netgrif-input">
-    <div fxLayout="row wrap" fxLayoutAlign="start center" class="margin-top32px">
-        <div fxFlex="2.5"></div>
-
-        <mat-form-field appearance="outline" fxFlex="45">
-            <mat-label>{{ 'builder.modeler.role-mode.id' | translate }}</mat-label>
-            <input matInput [(ngModel)]="role.role.id" (change)="changeId($event)" [formControl]="roleIdForm">
-            <mat-error *ngIf="roleIdForm.errors && roleIdForm.errors.required">{{ 'builder.modeler.role-mode.idRequired' | translate }}</mat-error>
-            <mat-error *ngIf="roleIdForm.errors && roleIdForm.errors.validUnique">
-                {{ 'builder.modeler.role-mode.idExists' | translate }}
-            </mat-error>
-        </mat-form-field>
-
-        <div fxFlex="2.5"></div>
-
-        <mat-form-field appearance="outline" fxFlex="45">
-            <mat-label>{{ 'builder.modeler.role-mode.title' | translate }}</mat-label>
-            <input matInput [ngModel]="role.role.title.value" (change)="changeTitle($event)" [disabled]="_builderModeService.readOnly">
-        </mat-form-field>
-
-        <div fxFlex="2.5"></div>
-    </div>
-    <div fxLayout="row wrap" fxLayoutAlign="start center">
-        <div fxFlex="2.5"></div>
-
-        <div fxFlex="45">
-            <mat-checkbox [ngModel]="role.role.global" (change)="changeGlobalFlag($event)" [disabled]="_builderModeService.readOnly">
-                {{ 'builder.modeler.role-mode.isGlobal' | translate }}
-            </mat-checkbox>
+@if (item !== undefined) {
+<div class="detail">
+    <header class="detail-header">
+        <div class="detail-heading">
+            <h2 class="detail-title">{{ role.role.title?.value || role.role.id }}</h2>
+            <span class="detail-id">{{ role.role.id }}</span>
         </div>
-
-        <div fxFlex="2.5"></div>
-
-        <button mat-stroked-button color="primary" (click)="openActions()" mat-dialog-close>
+        <button mat-stroked-button (click)="openActions()" mat-dialog-close>
             <mat-icon>code</mat-icon>
-            <span>{{ 'builder.modeler.role-mode.editActions' | translate }} ({{ numberOfActions() }})</span>
+            {{ "builder.modeler.role-mode.editActions" | translate }} ({{ numberOfActions() }})
         </button>
+    </header>
 
-        <div fxFlex></div>
-    </div>
+    <section class="section">
+        <h3 class="section-title">{{ "builder.modeler.data-mode.general" | translate }}</h3>
+        <div class="grid">
+            <mat-form-field>
+                <mat-label>{{ "builder.modeler.role-mode.id" | translate }}</mat-label>
+                <input matInput [(ngModel)]="role.role.id" (change)="changeId($event)" [formControl]="roleIdForm" />
+                @if (roleIdForm.errors && roleIdForm.errors.required) {
+                <mat-error>{{ "builder.modeler.role-mode.idRequired" | translate }}</mat-error>
+                }
+                @if (roleIdForm.errors && roleIdForm.errors.validUnique) {
+                <mat-error>{{ "builder.modeler.role-mode.idExists" | translate }}</mat-error>
+                }
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>{{ "builder.modeler.role-mode.title" | translate }}</mat-label>
+                <input matInput [ngModel]="role.role.title.value" (change)="changeTitle($event)" [disabled]="_builderModeService.readOnly" />
+            </mat-form-field>
+            <div class="checkbox-cell">
+                <mat-checkbox [ngModel]="role.role.global" (change)="changeGlobalFlag($event)" [disabled]="_builderModeService.readOnly">
+                    {{ "builder.modeler.role-mode.isGlobal" | translate }}
+                </mat-checkbox>
+            </div>
+        </div>
+    </section>
 </div>
-
-<ng-template #elseBlock>
-    <div fxLayoutAlign="center center" class="height-fix full-width">
-        <span>{{ 'builder.modeler.role-mode.noRoleSelected' | translate }}</span>
-    </div>
-</ng-template>
+} @else {
+<div class="nae-empty-state" role="status">
+    <mat-icon class="nae-empty-state-icon">person</mat-icon>
+    <span class="nae-empty-state-title">{{ "builder.modeler.role-mode.noRoleSelected" | translate }}</span>
+</div>
+}

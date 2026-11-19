@@ -1,0 +1,55 @@
+@use '@angular/material' as mat;
+
+/// Users / LDAP groups of the role assignment: two-line rows of 64px shrinking with the density (4px a level, 44px at
+/// -5: the two lines without the vertical padding), the `itemSize` of the virtual scroll uses the same formula
+/// (`DensityItemSize`); the avatar, the lines and the checkbox centered in the row (Material aligns a two-line item to
+/// the top and puts the text on baselines).
+@mixin two-line-rows($selector) {
+    #{$selector} {
+        @include mat.list-overrides((
+            list-item-two-line-container-height: calc(64px + 4px * var(--nae-density-scale, 0)),
+        ));
+    }
+
+    :host ::ng-deep #{$selector}.mdc-list-item--with-two-lines {
+        .mdc-list-item__start,
+        .mdc-list-item__end {
+            align-self: center;
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+
+        .mdc-list-item__content {
+            align-self: center;
+        }
+
+        .mdc-list-item__primary-text {
+            margin-bottom: 0;
+
+            &::before,
+            &::after {
+                display: none;
+            }
+        }
+
+        .mdc-list-item__secondary-text {
+            margin-top: 0;
+
+            &::before {
+                display: none;
+            }
+        }
+    }
+}
+
+/// Role checkboxes with a label on more lines: the checkbox next to the first line (Material centers it on the whole
+/// label), the first line in the middle of the checkbox in every density.
+@mixin top-aligned-checkboxes() {
+    :host ::ng-deep mat-checkbox .mdc-form-field {
+        align-items: flex-start;
+
+        > label {
+            padding-top: calc((var(--mat-checkbox-state-layer-size, 40px) - var(--mat-sys-body-medium-line-height, 20px)) / 2);
+        }
+    }
+}

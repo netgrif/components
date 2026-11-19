@@ -1,3 +1,0 @@
-<div class="workflow-view-container" fxLayout="column" fxLayoutAlign="start stretch">
-    <nc-workflow-view fxFlex [showDeleteMenu]="<%= showDeleteMenu %>"></nc-workflow-view>
-</div>

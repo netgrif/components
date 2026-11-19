@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, Input, OnDestroy, OnInit, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {SearchInputType} from '../models/category/search-input-type';
 import {Observable, Subscription} from 'rxjs';
@@ -9,7 +9,9 @@ import {DATE_FORMAT_STRING, DATE_TIME_FORMAT_STRING} from '../../moment/time-for
 
 @Component({
     selector: 'ncc-abstract-search-operand-input',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractSearchOperandInputComponent implements OnInit, OnDestroy {
 

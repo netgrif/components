@@ -1,4 +1,4 @@
-import {Component, Inject, Optional} from '@angular/core';
+import {Component, Inject, Optional, ChangeDetectionStrategy} from '@angular/core';
 import {AbstractButtonFieldComponent, NAE_INFORM_ABOUT_INVALID_DATA} from '@netgrif/components-core';
 
 /**
@@ -7,7 +7,8 @@ import {AbstractButtonFieldComponent, NAE_INFORM_ABOUT_INVALID_DATA} from '@netg
 @Component({
     selector: 'nc-button-field',
     templateUrl: './button-field.component.html',
-    styleUrls: ['./button-field.component.scss']
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class ButtonFieldComponent extends AbstractButtonFieldComponent {
 

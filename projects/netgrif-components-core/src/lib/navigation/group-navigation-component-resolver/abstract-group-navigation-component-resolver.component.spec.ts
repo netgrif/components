@@ -1,18 +1,18 @@
 import {AbstractGroupNavigationComponentResolverComponent} from './abstract-group-navigation-component-resolver.component';
-import {Component, Injector} from '@angular/core';
+import {Component, Injector, ChangeDetectionStrategy} from '@angular/core';
 import {LoggerService} from '../../logger/services/logger.service';
 import {GroupNavigationComponentResolverService} from './group-navigation-component-resolver.service';
 import {ActivatedRoute, convertToParamMap, Router, RouterModule} from '@angular/router';
 import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 import {MaterialModule} from '../../material/material.module';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
 import {TestGroupNavigationComponentResolverService} from './group-navigation-component-resolver.service.spec';
 import {DataGroup} from "../../resources/interface/data-groups";
 import {of, Observable} from "rxjs";
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('AbstractGroupNavigationComponentResolverComponent', () => {
     let component: TestAbstractGroupNavigationComponentResolverComponent;
@@ -20,11 +20,12 @@ describe('AbstractGroupNavigationComponentResolverComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
+            declarations: [
+                TestAbstractGroupNavigationComponentResolverComponent
+            ],
             imports: [
                 MaterialModule,
                 TranslateLibModule,
-                HttpClientTestingModule,
-                NoopAnimationsModule,
                 RouterModule.forRoot([])
             ],
             providers: [
@@ -37,10 +38,9 @@ describe('AbstractGroupNavigationComponentResolverComponent', () => {
                             paramMap: convertToParamMap({itemCaseId: 'thisIsEncodedCaseId'})
                         }
                     }
-                }
-            ],
-            declarations: [
-                TestAbstractGroupNavigationComponentResolverComponent,
+                },
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
             ]
         }).compileComponents();
     }));
@@ -62,7 +62,9 @@ describe('AbstractGroupNavigationComponentResolverComponent', () => {
 
 @Component({
     selector: 'ncc-test-group-navigation',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestAbstractGroupNavigationComponentResolverComponent extends AbstractGroupNavigationComponentResolverComponent {
     constructor(componentResolverService: GroupNavigationComponentResolverService,

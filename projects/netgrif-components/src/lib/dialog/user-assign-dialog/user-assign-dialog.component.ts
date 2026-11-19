@@ -1,4 +1,4 @@
-import {Component, Inject} from '@angular/core';
+import {Component, Inject, ChangeDetectionStrategy} from '@angular/core';
 import {
     ProcessRole,
     UserListInjectedData, UserListService,
@@ -11,7 +11,9 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
     selector: 'nc-user-assign-dialog',
     templateUrl: './user-assign-dialog.component.html',
     styleUrls: ['./user-assign-dialog.component.scss'],
-    providers: [UserListService]
+    providers: [UserListService],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class UserAssignDialogComponent {
     /**
@@ -44,7 +46,8 @@ export class UserAssignDialogComponent {
      * The user that is initially selected, or `undefined` if none is
      */
     public get initiallySelectedUser(): UserValue | undefined {
-        return this.injectedData ? this.injectedData.value as UserValue : undefined;
+        return this.injectedData ? (this.injectedData.value as UserValue)
+            : undefined;
     }
 
     public get roles(): Array<string> | Array<ProcessRole> {

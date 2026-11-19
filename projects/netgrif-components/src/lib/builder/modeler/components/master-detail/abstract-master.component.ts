@@ -1,10 +1,12 @@
 import {ComponentType} from '@angular/cdk/overlay';
-import {Component, Input} from '@angular/core';
+import {Component, Input, ChangeDetectionStrategy} from '@angular/core';
 import {AbstractMasterDetailService} from './abstract-master-detail.service';
 
 @Component({
     selector: 'nc-builder-abstract-master-component',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractMasterComponent {
     protected _allData: Array<any>;
@@ -15,6 +17,8 @@ export abstract class AbstractMasterComponent {
     @Input() secondColName: string;
     @Input() buttonTooltip: string;
     @Input() showAddButton: boolean = true;
+    /** sort menu above the list (by the name / by the id) */
+    @Input() sortable: boolean = true;
 
     public select(item: any): void {
         this.masterService.select(item);

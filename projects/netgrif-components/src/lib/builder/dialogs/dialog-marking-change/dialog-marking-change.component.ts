@@ -1,4 +1,4 @@
-import {Component, Inject} from '@angular/core';
+import {Component, Inject, ChangeDetectionStrategy} from '@angular/core';
 import {FormControl, ValidatorFn, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {Place} from '@netgrif/petriflow';
@@ -9,7 +9,9 @@ import {PlaceEditData} from '../dialog-place-edit/dialog-place-edit.component';
 @Component({
     selector: 'nc-builder-dialog-marking-change',
     templateUrl: './dialog-marking-change.component.html',
-    styleUrl: './dialog-marking-change.component.scss'
+    styleUrl: './dialog-marking-change.component.scss',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class DialogMarkingChangeComponent {
 

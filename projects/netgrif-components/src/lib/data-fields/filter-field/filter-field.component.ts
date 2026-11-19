@@ -1,4 +1,4 @@
-import {Component, Inject, Optional} from '@angular/core';
+import {Component, Inject, Optional, ChangeDetectionStrategy} from '@angular/core';
 import {
     AbstractFilterFieldComponent,
     NAE_INFORM_ABOUT_INVALID_DATA
@@ -10,7 +10,8 @@ import {
 @Component({
     selector: 'nc-filter-field',
     templateUrl: './filter-field.component.html',
-    styleUrls: ['./filter-field.component.scss']
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class FilterFieldComponent extends AbstractFilterFieldComponent {
 

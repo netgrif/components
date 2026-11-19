@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Inject, Injector, OnDestroy, Optional, Type} from "@angular/core";
+import {AfterViewInit, Component, Inject, Injector, OnDestroy, Optional, Type, ChangeDetectionStrategy} from "@angular/core";
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
 import {EnumerationField} from '../models/enumeration-field';
 import {Subscription} from 'rxjs';
@@ -6,7 +6,9 @@ import {AbstractCaseRefBaseFieldComponent} from '../../case-ref-field/model/abst
 
 @Component({
     selector: 'ncc-abstract-enumeration-case-ref-default',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractEnumerationCaseRefComponent extends AbstractCaseRefBaseFieldComponent<EnumerationField> implements AfterViewInit, OnDestroy {
 

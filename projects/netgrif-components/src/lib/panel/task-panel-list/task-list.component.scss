@@ -1,11 +1,14 @@
-.font-size-20 {
-    font-size: 20px;
+@use '../../../../theming/scrollbar' as scrollbar;
+:host {
+    display: flex;
+    flex-direction: column;
 }
 
-.full-width {
-    width: 100%;
-}
-
-.full-height {
+mat-accordion, cdk-virtual-scroll-viewport {
+    flex: 1 1 auto;
     height: 100%;
+}
+
+cdk-virtual-scroll-viewport.cdk-virtual-scrollable {
+    @include scrollbar.list-scrollbar();
 }

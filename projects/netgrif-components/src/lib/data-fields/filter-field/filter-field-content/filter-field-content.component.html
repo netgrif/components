@@ -1,1 +1,3 @@
-<nc-advanced-search *ngIf="filterLoaded" [editable]="editable"></nc-advanced-search>
+@if (filterLoaded) {
+<nc-advanced-search [editable]="editable"></nc-advanced-search>
+}

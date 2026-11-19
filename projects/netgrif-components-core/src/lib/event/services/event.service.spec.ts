@@ -5,7 +5,6 @@ import {createMockSetDataOutcome} from '../../utility/tests/utility/create-mock-
 import {createMockTask} from '../../utility/tests/utility/create-mock-task';
 import {createMockCase} from '../../utility/tests/utility/create-mock-case';
 import {ChangedFieldsMap} from './interfaces/changed-fields-map';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('EventService', () => {
     let service: EventService;
@@ -59,7 +58,7 @@ describe('EventService', () => {
     };
 
     beforeEach(() => {
-        TestBed.configureTestingModule({imports: [NoopAnimationsModule]});
+        TestBed.configureTestingModule({imports: []});
         service = TestBed.inject(EventService);
     });
 

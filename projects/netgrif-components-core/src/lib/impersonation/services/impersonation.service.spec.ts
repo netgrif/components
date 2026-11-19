@@ -1,8 +1,7 @@
 import {inject, TestBed} from '@angular/core/testing';
-import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
+import {HttpTestingController, provideHttpClientTesting} from '@angular/common/http/testing';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {ImpersonationService} from './impersonation.service';
 import {UserService} from '../../user/services/user.service';
 import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
@@ -22,6 +21,7 @@ import {ProcessRole} from '../../resources/interface/process-role';
 import {Observable, ReplaySubject} from 'rxjs';
 import {UserPreferenceService} from '../../user/services/user-preference.service';
 import {MockUserPreferenceService} from '../../utility/tests/mocks/mock-user-preference.service';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('ImpersonationService', () => {
     let service: ImpersonationService;
@@ -29,7 +29,7 @@ describe('ImpersonationService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule, MaterialModule, TranslateLibModule, NoopAnimationsModule, SnackBarModule, RouterTestingModule],
+            imports: [ MaterialModule, TranslateLibModule, SnackBarModule, RouterTestingModule],
             providers: [
                 SnackBarService,
                 FilterRepository,
@@ -40,7 +40,10 @@ describe('ImpersonationService', () => {
                 {provide: UserService, useClass: TestUserService},
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
-                {provide: ConfigurationService, useClass: TestConfigurationService}]
+                {provide: ConfigurationService, useClass: TestConfigurationService},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
+            ]
         });
         service = TestBed.inject(ImpersonationService);
         userService = (TestBed.inject(UserService) as any) as TestUserService;

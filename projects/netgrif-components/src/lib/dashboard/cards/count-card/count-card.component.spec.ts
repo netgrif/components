@@ -1,7 +1,7 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {CountCardComponent} from './count-card.component';
 import {FlexLayoutModule} from '@ngbracket/ngx-layout';
-import {Component} from '@angular/core';
+import {Component, ChangeDetectionStrategy} from '@angular/core';
 import {Observable, of} from 'rxjs';
 import {MatCardModule} from '@angular/material/card';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
@@ -41,7 +41,9 @@ describe('CountCardComponent', () => {
 
 @Component({
     selector: 'nc-test-wrapper',
-    template: '<nc-count-card [card]="card"></nc-count-card>'
+    template: '<nc-count-card [card]="card"></nc-count-card>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestWrapperComponent {
     card: CountCard = {

@@ -1,32 +1,31 @@
-<div class="predicate-body netgrif-input-search-fix netgrif-input-primary-search-fix" fxLayout="row" fxLayoutAlign="start center">
-    <div *ngIf="!selectedCategory; then categorySelection else categoryDisplay"></div>
-    <ng-template #categorySelection>
-        <mat-form-field class="mat-form-field-wrapper-search" appearance="outline">
-            <mat-icon matPrefix class="prefix-icon">search</mat-icon>
-            <mat-label>{{'search.category.select' | translate}}</mat-label>
-            <mat-select (selectionChange)="categoryChanged($event.value)" #categoryInput [disabled]="!editable">
-                <mat-option *ngFor="let category of searchCategories"
-                            [value]="category">{{category.translationPath | translate}}</mat-option>
-            </mat-select>
-        </mat-form-field>
-    </ng-template>
-    <ng-template #categoryDisplay>
-        <div fxLayout="row" fxLayoutAlign="start center" class="text-margin"
-             [ngClass]="{'bold-text': selectedCategory.displayBold}"
-             (click)="clearCategorySelection()">
-            {{selectedCategory.translationPath | translate}}
-        </div>
-    </ng-template>
-
-    <div *ngIf="selectedCategory" fxLayout="row" fxLayoutAlign="start center">
-        <ng-template ngFor let-configurationInput [ngForOf]="selectedCategory.configurationInputs$ | async">
-            <nc-search-configuration-input [configuration]="configurationInput" [selectedCategory]="selectedCategory"
-                                           [editable]="editable"></nc-search-configuration-input>
-        </ng-template>
-    </div>
-    <div *ngIf="editable" fxLayout="row" fxLayoutAlign="center center">
-        <button mat-stroked-button color="warn" (click)="remove()" class="advanced-search-buttons">
-            <mat-icon class="fix-mat-icon">clear</mat-icon>
-        </button>
-    </div>
+@if (!selectedCategory) {
+<mat-form-field class="category-select" subscriptSizing="dynamic">
+    <mat-label>{{ "search.category.select" | translate }}</mat-label>
+    <mat-select #categoryInput (selectionChange)="categoryChanged($event.value)" [disabled]="!editable" [panelWidth]="null">
+        @for (category of searchCategories; track category) {
+        <mat-option [value]="category">{{ category.translationPath | translate }}</mat-option>
+        }
+    </mat-select>
+</mat-form-field>
+@if (editable) {
+<button mat-icon-button class="remove" (click)="remove()" [attr.aria-label]="'search.remove' | translate">
+    <mat-icon>close</mat-icon>
+</button>
+}
+} @else {
+<div class="condition">
+    <button type="button" class="condition-category" [disabled]="!editable" (click)="clearCategorySelection()">
+        {{ selectedCategory.translationPath | translate }}
+    </button>
+    @for (configurationInput of selectedCategory.configurationInputs$ | async; track configurationInput) {
+    <nc-search-configuration-input [configuration]="configurationInput"
+                                   [selectedCategory]="selectedCategory"
+                                   [editable]="editable"></nc-search-configuration-input>
+    }
+    @if (editable) {
+    <button mat-icon-button class="remove" (click)="remove()" [attr.aria-label]="'search.remove' | translate">
+        <mat-icon>close</mat-icon>
+    </button>
+    }
 </div>
+}

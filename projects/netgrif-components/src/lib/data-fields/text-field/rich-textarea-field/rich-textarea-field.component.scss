@@ -1,15 +1,14 @@
-.height-100 {
-    height: 100%;
+@use '../../field-label' as label;
+
+@include label.styles;
+
+:host {
+    display: block;
 }
 
-.border {
-    border: 1px solid #CBD5E1;
-    border-radius: 6px;
-    padding: 10px;
-    z-index: 1;
-    word-wrap: break-word;
-}
-
-.padding-bottom-custom {
-    padding-bottom: 8px;
+.outlined {
+    border: 1px solid var(--mat-sys-outline-variant);
+    border-radius: var(--mat-sys-corner-extra-small);
+    padding: 8px 16px;
+    overflow-wrap: break-word;
 }

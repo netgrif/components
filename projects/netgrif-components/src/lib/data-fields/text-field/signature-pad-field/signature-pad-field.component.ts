@@ -6,8 +6,7 @@ import {
     Inject,
     NgZone,
     Optional,
-    ViewChild
-} from '@angular/core';
+    ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {
     DATA_FIELD_PORTAL_DATA,
@@ -20,7 +19,9 @@ import {filter} from 'rxjs/operators';
 @Component({
     selector: 'nc-signature-pad-field',
     templateUrl: './signature-pad-field.component.html',
-    styleUrls: ['./signature-pad-field.component.scss']
+    styleUrls: ['./signature-pad-field.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class SignaturePadFieldComponent extends AbstractSimpleTextFieldComponent implements AfterViewInit {
 

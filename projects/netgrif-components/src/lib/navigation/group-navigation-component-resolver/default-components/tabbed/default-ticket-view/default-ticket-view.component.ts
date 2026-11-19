@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit, Optional} from '@angular/core';
+import {Component, Inject, OnInit, Optional, ChangeDetectionStrategy} from '@angular/core';
 import {Router} from '@angular/router';
 import {
     Case,
@@ -42,7 +42,9 @@ export interface DataGroupCaseIdPair {
 @Component({
     selector: 'nc-default-ticket-view',
     templateUrl: './default-ticket-view.component.html',
-    styleUrls: ['./default-ticket-view.component.scss']
+    styleUrls: ['./default-ticket-view.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class DefaultTicketViewComponent implements OnInit {
 

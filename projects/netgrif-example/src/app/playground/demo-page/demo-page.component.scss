@@ -1,0 +1,88 @@
+:host {
+    display: block;
+    box-sizing: border-box;
+    max-width: 1400px;
+    padding: 24px;
+}
+
+.header {
+    margin-bottom: 24px;
+
+    h1 {
+        margin: 0 0 4px;
+    }
+}
+
+.description {
+    margin: 0 0 12px;
+    color: var(--mat-sys-on-surface-variant);
+}
+
+.api {
+    font-family: 'Roboto Mono', monospace;
+}
+
+.columns {
+    display: grid;
+    grid-template-columns: minmax(0, 3fr) minmax(320px, 2fr);
+    gap: 24px;
+    align-items: start;
+}
+
+@media (max-width: 1100px) {
+    .columns {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+
+.columns.stacked {
+    grid-template-columns: minmax(0, 1fr);
+
+    .config {
+        position: static;
+    }
+}
+
+.preview-column {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    min-width: 0;
+}
+
+.preview-content {
+    padding-top: 16px;
+    min-height: 120px;
+}
+
+.config {
+    position: sticky;
+    top: 0;
+}
+
+.code {
+    margin-top: 24px;
+}
+
+// views fill the preview (they size themselves to 100% of their container); the preview content is projected,
+// so the rules need ::ng-deep to reach it
+.preview-content.fixed-height {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    padding: 0;
+    margin-top: 16px;
+    border-top: 1px solid var(--mat-sys-outline-variant);
+
+    ::ng-deep > [demoPreview] {
+        display: flex;
+        flex-direction: column;
+        flex: 1 1 auto;
+        min-height: 0;
+
+        > * {
+            flex: 1 1 auto;
+            min-height: 0;
+        }
+    }
+}

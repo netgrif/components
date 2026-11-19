@@ -1,16 +1,17 @@
-<div class="mat-dialog-title" fxLayout="column" fxLayoutAlign="center none" *nccLet="(task$ | async) as taskPanelData">
-    {{!!taskPanelData?.task?.title ? taskPanelData?.task?.title : taskPanelData?.task?.transitionId}}
-</div>
-<div mat-dialog-content class="task-view-container side-menu-root">
-    <nc-header [hidden]='true' #header type="task" class="task-panel-padding-mini"></nc-header>
-    <nc-single-task class="virtual-scroll-padding" [task$]="task$"
+<ng-container *nccLet="(task$ | async) as taskPanelData">
+    <h2 mat-dialog-title>{{ !!taskPanelData?.task?.title ? taskPanelData?.task?.title : taskPanelData?.task?.transitionId }}</h2>
+</ng-container>
+<mat-dialog-content>
+    <nc-header [hidden]="true" #header type="task"></nc-header>
+    <nc-single-task [task$]="task$"
                     [loading$]="loading$"
                     [selectedHeaders$]="selectedHeaders$"
-                    (taskEvent)="processTaskEvents($event)"
-                    [actionRowJustifyContent]='"center"'
+                    [actionRowJustifyContent]="'center'"
                     [preventCollapse]="preventCollapse"
                     [showPageHeader]="false"
                     [showPageFooter]="false"
-                    fxFlex>
-    </nc-single-task>
-</div>
+                    (taskEvent)="processTaskEvents($event)"></nc-single-task>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>{{ "dialog.close" | translate }}</button>
+</mat-dialog-actions>

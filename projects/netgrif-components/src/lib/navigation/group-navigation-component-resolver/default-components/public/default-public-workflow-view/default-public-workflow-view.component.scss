@@ -1,32 +1,33 @@
-.workflow-container {
-    padding: 8px;
-}
-
-.workflow-header {
-    margin-top: 8px;
-}
-
-.workflow-panels-container {
-    margin-top: 8px;
-}
-
-.full-width {
-    width: 100%;
-}
-
-.full-height {
+:host {
+    display: block;
     height: 100%;
 }
 
-.font-size-20 {
-    font-size: 20px;
+.view {
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    height: 100%;
+    padding: 16px 24px;
 }
 
-.font-size-40 {
-    font-size: 40px;
+.list {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    min-height: 0;
 }
 
-.block-size-40 {
-    width: 40px;
-    height: 40px;
+.accordion {
+    display: block;
+    flex: 1 1 auto;
+    min-height: 0;
+}
+
+.viewport {
+    height: 100%;
+}
+
+.loading {
+    padding: 16px;
 }

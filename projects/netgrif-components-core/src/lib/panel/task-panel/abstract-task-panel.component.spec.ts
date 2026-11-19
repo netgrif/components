@@ -1,11 +1,10 @@
 import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {CommonModule, CurrencyPipe} from '@angular/common';
-import {AfterViewInit, Component, Inject, Injector, NO_ERRORS_SCHEMA, Optional, ViewChild} from '@angular/core';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {AfterViewInit, Component, Inject, Injector, NO_ERRORS_SCHEMA, Optional, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {Observable, of, Subject, throwError} from 'rxjs';
 import {map} from 'rxjs/operators';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
 import {RouterTestingModule} from '@angular/router/testing';
 import {AbstractTaskPanelComponent} from './abstract-task-panel.component';
@@ -66,6 +65,7 @@ import {FrontActionService} from "../../actions/services/front-action.service";
 import {NAE_TAB_DATA} from '../../tabs/tab-data-injection-token/tab-data-injection-token';
 import {InjectedTabData} from '../../tabs/interfaces';
 import { UserComparatorService } from "../../user/services/user-comparator.service";
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('AbtsractTaskPanelComponent', () => {
     let component: TestTaskPanelComponent;
@@ -79,13 +79,13 @@ describe('AbtsractTaskPanelComponent', () => {
         };
 
         TestBed.configureTestingModule({
+            declarations: [TestTaskPanelComponent, TestWrapperComponent],
+            schemas: [NO_ERRORS_SCHEMA],
             imports: [
                 MatExpansionModule,
                 MaterialModule,
-                NoopAnimationsModule,
                 CommonModule,
                 TranslateLibModule,
-                HttpClientTestingModule,
                 SnackBarModule,
                 RouterTestingModule.withRoutes([])
             ],
@@ -122,13 +122,10 @@ describe('AbtsractTaskPanelComponent', () => {
                     provide: AllowedNetsService,
                     useFactory: TestTaskViewAllowedNetsFactory,
                     deps: [AllowedNetsServiceFactory]
-                }
-            ],
-            declarations: [
-                TestTaskPanelComponent,
-                TestWrapperComponent,
-            ],
-            schemas: [NO_ERRORS_SCHEMA]
+                },
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
+            ]
         }).overrideProvider(AssignPolicyService, {useValue: mockAssignPolicyService}
         ).compileComponents();
 
@@ -183,7 +180,9 @@ describe('AbtsractTaskPanelComponent', () => {
 @Component({
     selector: 'ncc-test-task-panel',
     template: '<mat-expansion-panel #matExpansionPanel>' +
-        '</mat-expansion-panel>'
+        '</mat-expansion-panel>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestTaskPanelComponent extends AbstractTaskPanelComponent implements AfterViewInit {
 
@@ -230,7 +229,9 @@ class TestTaskPanelComponent extends AbstractTaskPanelComponent implements After
 
 @Component({
     selector: 'ncc-test-wrapper',
-    template: '<ncc-test-task-panel [taskPanelData]="taskPanel" [selectedHeaders$]="selectedHeaders$"></ncc-test-task-panel>'
+    template: '<ncc-test-task-panel [taskPanelData]="taskPanel" [selectedHeaders$]="selectedHeaders$"></ncc-test-task-panel>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestWrapperComponent {
     taskPanel: TaskPanelData = {

@@ -11,6 +11,7 @@ export * from './breadcrumbs/abstract-breadcrumbs.component';
 export * from './dashboard/abstract-dashboard.component';
 
 /* SERVICES */
+export * from './breadcrumbs/breadcrumbs-detail.service';
 export * from './group-navigation-component-resolver/group-navigation-component-resolver.service';
 export * from './utility/filter-extraction.service';
 export * from './service/uri.service';

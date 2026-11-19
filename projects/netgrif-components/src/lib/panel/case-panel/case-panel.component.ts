@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit, Optional} from '@angular/core';
+import {Component, Inject, OnInit, Optional, ChangeDetectionStrategy} from '@angular/core';
 import {
     AbstractCasePanelComponent,
     CaseViewService, DATA_FIELD_PORTAL_DATA, DataFieldPortalData, EnumerationField,
@@ -14,7 +14,8 @@ import {CurrencyPipe} from '@angular/common';
 @Component({
     selector: 'nc-case-panel',
     templateUrl: './case-panel.component.html',
-    styleUrls: ['./case-panel.component.scss']
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class CasePanelComponent extends AbstractCasePanelComponent implements OnInit {
     protected _changeValue: boolean;

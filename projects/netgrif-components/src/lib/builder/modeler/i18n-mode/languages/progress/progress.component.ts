@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Input, Output, ChangeDetectionStrategy} from '@angular/core';
 import {Locale} from '../../classes/locale';
 import {I18nControlService} from '../../i18n-control.service';
 import {BuilderModeService} from "../../../../services/builder-mode.service";
@@ -6,7 +6,9 @@ import {BuilderModeService} from "../../../../services/builder-mode.service";
 @Component({
     selector: 'nc-builder-progress',
     templateUrl: './progress.component.html',
-    styleUrls: ['./progress.component.scss']
+    styleUrls: ['./progress.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class ProgressComponent {
 

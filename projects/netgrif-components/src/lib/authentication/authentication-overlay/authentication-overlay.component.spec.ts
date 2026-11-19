@@ -1,6 +1,6 @@
 import {AuthenticationOverlayComponent} from './authentication-overlay.component';
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {OverlayModule} from '@angular/cdk/overlay';
 import {RouterTestingModule} from '@angular/router/testing';
 import {
@@ -9,6 +9,7 @@ import {
     MockAuthenticationMethodService,
     TestConfigurationService
 } from '@netgrif/components-core';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('AuthenticationOverlayComponent', () => {
     let component: AuthenticationOverlayComponent;
@@ -17,9 +18,12 @@ describe('AuthenticationOverlayComponent', () => {
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             declarations: [AuthenticationOverlayComponent],
-            imports: [HttpClientTestingModule, OverlayModule, RouterTestingModule.withRoutes([])],
+            imports: [ OverlayModule, RouterTestingModule.withRoutes([])],
             providers: [{provide: ConfigurationService, useClass: TestConfigurationService},
-                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService}]
+                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
+            ]
         })
             .compileComponents();
     }));

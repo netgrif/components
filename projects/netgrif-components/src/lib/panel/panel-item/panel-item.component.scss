@@ -1,37 +1,24 @@
-.text-column-margin {
-    margin-right: 15px;
-    line-height: 24px;
+:host {
+    contain: inline-size;
+    min-width: var(--nc-column-min-width, 0);
 }
 
-.panel-icon {
-    padding-right: 8px;
+:host {
+    display: block;
+    min-width: 0;
 }
 
-.text-column-ellipsis {
-    white-space: nowrap !important;
-    overflow: hidden !important;
-    text-overflow: ellipsis !important;
+span {
+    min-width: 0;
+    white-space: pre-line;
 }
 
-.text-column-word-wrap {
-    word-break: break-word !important;
-    white-space: pre-line !important;
+.ellipsis {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-.pre-line-dialog {
-    white-space: pre-line !important;
+mat-icon {
+    flex: 0 0 auto;
 }
-
-.width-100 {
-    width: 100%;
-}
-
-.panel-text {
-    font-style: normal;
-    font-weight: 500;
-    font-size: 14px;
-    line-height: 20px;
-    letter-spacing: 0.1px;
-
-}
-

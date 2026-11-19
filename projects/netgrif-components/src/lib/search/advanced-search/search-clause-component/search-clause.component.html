@@ -1,8 +1,9 @@
-<div fxLayout="row wrap" fxLayoutAlign="start center">
-    <div *ngFor="let item of getPredicateMap() | keyvalue; trackBy: trackByPredicates" fxLayout="row"
-         fxLayoutAlign="start center">
-        <nc-search-predicate [predicate]="item.value.wrappedPredicate" [predicateId]="item.key"
-                             [remove$]="removeChild$" [generator]="item.value.generator"
-                             [editable]="editable"></nc-search-predicate>
-    </div>
+<div class="clause">
+    @for (item of getPredicateMap() | keyvalue; track trackByPredicates($index, item)) {
+    <nc-search-predicate [predicate]="item.value.wrappedPredicate"
+                         [predicateId]="item.key"
+                         [remove$]="removeChild$"
+                         [generator]="item.value.generator"
+                         [editable]="editable"></nc-search-predicate>
+    }
 </div>

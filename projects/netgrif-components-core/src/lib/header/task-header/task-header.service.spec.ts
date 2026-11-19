@@ -1,7 +1,7 @@
 import {TestBed} from '@angular/core/testing';
 import {TaskHeaderService} from './task-header.service';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
 import {AuthenticationService} from '../../authentication/services/authentication/authentication.service';
 import {MockAuthenticationService} from '../../utility/tests/mocks/mock-authentication.service';
@@ -16,7 +16,6 @@ import {SuccessSnackBarComponent} from '../../snack-bar/components/success-snack
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatIconModule} from '@angular/material/icon';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterTestingModule} from '@angular/router/testing';
 import {SnackBarModule} from '../../snack-bar/snack-bar.module';
 import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
@@ -29,6 +28,7 @@ import {SearchService} from '../../search/search-service/search.service';
 import {NAE_BASE_FILTER} from '../../search/models/base-filter-injection-token';
 import {AllowedNetsService} from '../../allowed-nets/services/allowed-nets.service';
 import {AllowedNetsServiceFactory} from '../../allowed-nets/services/factory/allowed-nets-service-factory';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('TaskHeaderService', () => {
     let service: TaskHeaderService;
@@ -37,9 +37,8 @@ describe('TaskHeaderService', () => {
         TestBed.configureTestingModule({
             imports: [
                 TranslateLibModule,
-                HttpClientTestingModule,
                 MatSnackBarModule,
-                MatIconModule, NoopAnimationsModule,
+                MatIconModule,
                 RouterTestingModule.withRoutes([]),
                 SnackBarModule
             ],
@@ -56,7 +55,9 @@ describe('TaskHeaderService', () => {
                 {provide: UserResourceService, useClass: MockUserResourceService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: ViewService, useClass: TestViewService},
-                {provide: AllowedNetsService, useFactory: TestTaskViewAllowedNetsFactory, deps: [AllowedNetsServiceFactory]}
+                {provide: AllowedNetsService, useFactory: TestTaskViewAllowedNetsFactory, deps: [AllowedNetsServiceFactory]},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
             ]
         });
         service = TestBed.inject(TaskHeaderService);

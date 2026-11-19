@@ -1,10 +1,11 @@
-@import '../../side-menu.theme';
-
-.version-span{
-    padding-left: 8px;
-    color: gray;
+:host {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
-.spinner-margin {
-    margin-top: 16px;
+.content {
+    flex: 1 1 auto;
+    overflow: auto;
+    padding: 16px;
 }

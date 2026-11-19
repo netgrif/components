@@ -1,5 +1,5 @@
 import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
-import {Component, OnDestroy} from '@angular/core';
+import {Component, OnDestroy, ChangeDetectionStrategy} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
 import {MatDialog} from '@angular/material/dialog';
@@ -38,14 +38,16 @@ import {DataModeService} from "../data-mode.service";
 
 
 export interface HistoryDataSave {
-    item: DataVariable,
+    item: DataVariable;
     save: boolean;
 }
 
 @Component({
     selector: 'nc-builder-data-detail',
     templateUrl: './data-detail.component.html',
-    styleUrl: './data-detail.component.scss'
+    styleUrl: './data-detail.component.scss',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class DataDetailComponent implements OnDestroy {
 
@@ -128,8 +130,7 @@ export class DataDetailComponent implements OnDestroy {
 
     openRefactorDialog(): void {
         const dialogRef = this.dialog.open(DialogRefactorComponent, {
-            width: '50%',
-            panelClass: "dialog-width-50",
+            panelClass: 'dialog-responsive',
             data: {
                 originalId: this.item.id,
                 modelService: this._modelService
@@ -160,7 +161,7 @@ export class DataDetailComponent implements OnDestroy {
             }
             case 'type': {
                 this.removeSpecificAttributeOnChange();
-                this.item.type = ($event.value as DataType);
+                this.item.type =$event.value as DataType
                 break;
             }
             case 'immediate': {
@@ -256,9 +257,9 @@ export class DataDetailComponent implements OnDestroy {
         }
     }
 
-    formatDateTime(event) {
-        if (event.target.value) {
-            this.item.init.value = event.target.value.toISOString();
+    formatDateTime(value) {
+        if (value) {
+            this.item.init.value =value.toISOString();
         } else {
             this.item.init.value = '';
         }

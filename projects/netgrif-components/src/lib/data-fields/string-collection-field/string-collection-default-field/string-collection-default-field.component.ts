@@ -1,4 +1,4 @@
-import {Component, Inject, Optional} from '@angular/core';
+import {Component, Inject, Optional, ChangeDetectionStrategy} from '@angular/core';
 import {
     AbstractStringCollectionDefaultFieldComponent,
     DATA_FIELD_PORTAL_DATA,
@@ -10,7 +10,8 @@ import {TranslateService} from '@ngx-translate/core';
 @Component({
   selector: 'nc-string-collection-default-field',
   templateUrl: './string-collection-default-field.component.html',
-  styleUrls: ['./string-collection-default-field.component.scss']
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class StringCollectionDefaultFieldComponent extends AbstractStringCollectionDefaultFieldComponent {
 

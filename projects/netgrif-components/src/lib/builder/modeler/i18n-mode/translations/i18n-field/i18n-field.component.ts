@@ -1,10 +1,8 @@
-import {CommonModule} from '@angular/common';
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {MaterialModule} from '@netgrif/components-core';
 import {I18nString, I18nTranslations} from '@netgrif/petriflow';
 import {I18nControlService} from "../../i18n-control.service";
 import {MatFormField, MatInput, MatLabel} from "@angular/material/input";
-import {FlexLayoutModule} from "@ngbracket/ngx-layout";
 import {TranslateModule} from "@ngx-translate/core";
 import {BuilderModeService} from "../../../../services/builder-mode.service";
 
@@ -12,8 +10,8 @@ import {BuilderModeService} from "../../../../services/builder-mode.service";
     selector: 'nc-builder-i18n-field',
     templateUrl: './i18n-field.component.html',
     styleUrls: ['./i18n-field.component.scss'],
-    standalone: true,
-    imports: [MaterialModule, CommonModule, MatFormField, MatLabel, FlexLayoutModule, MatInput, TranslateModule,]
+    changeDetection: ChangeDetectionStrategy.Eager,
+    imports: [MaterialModule, MatFormField, MatLabel, MatInput, TranslateModule,]
 })
 export class I18nFieldComponent implements OnInit {
 

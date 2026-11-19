@@ -2,8 +2,9 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {DefaultNoFilterProvidedComponent} from './default-no-filter-provided.component';
 import {TranslateLibModule} from '@netgrif/components-core';
-import {HttpClientTestingModule} from "@angular/common/http/testing";
+import {provideHttpClientTesting} from "@angular/common/http/testing";
 import {MatIconModule} from "@angular/material/icon";
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('DefaultNoFilterProvidedComponent', () => {
     let component: DefaultNoFilterProvidedComponent;
@@ -14,8 +15,11 @@ describe('DefaultNoFilterProvidedComponent', () => {
             declarations: [DefaultNoFilterProvidedComponent],
             imports: [
                 TranslateLibModule,
-                HttpClientTestingModule,
                 MatIconModule
+            ],
+            providers: [
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
             ]
         })
             .compileComponents();

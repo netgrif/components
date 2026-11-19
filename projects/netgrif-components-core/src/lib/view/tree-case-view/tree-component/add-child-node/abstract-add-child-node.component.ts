@@ -1,10 +1,12 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, ChangeDetectionStrategy} from '@angular/core';
 import {CaseTreeService} from '../case-tree.service';
 import {CaseTreeNode} from '../model/case-tree-node';
 
 @Component({
     selector: 'ncc-abstract-add-child-node',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractAddChildNodeComponent {
 

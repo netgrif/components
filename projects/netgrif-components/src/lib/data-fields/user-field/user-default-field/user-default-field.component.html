@@ -1,39 +1,29 @@
-<div fxLayoutAlign="center center" fxLayout="row">
-    <div fxFlex="100" [ngClass]="{'netgrif-user-padding': !(!dataField.isInvalid(formControlRef) && hasHint()) && !dataField.isInvalid(formControlRef)}">
-        <div #userLabel class="user-field-label" [ngClass]="{'netgrif-label-disabled': formControlRef.disabled}">
-            {{dataField.title}}
-            <nc-required-label *ngIf="dataField.behavior.required" [isIn]="!dataField.disabled"></nc-required-label>
-        </div>
-        <div class="form-input button-icon-input full-width" fxLayout="row" fxLayoutAlign="start center"
-             [ngClass]="{'form-input-disabled': formControlRef.disabled, 'form-input-error': dataField.isInvalid(formControlRef)}"
-             [ngStyle]="{
-                    '-webkit-clip-path': getCutProperty(userLabel),
-                    'clip-path': getCutProperty(userLabel)
-            }">
-            <button mat-icon-button
-                    *ngIf="!!dataField.value"
-                    [disabled]="formControlRef.disabled"
-                    color="primary"
-                    (click)='deleteUser()'
-                    [matTooltip]="'dataField.user.deleteUser' | translate"
-                    [class.do-not-click]="formControlRef.disabled">
-                <mat-icon color='warn' *ngIf='!formControlRef.disabled'>close</mat-icon>
-            </button>
-            <button mat-icon-button
-                    *ngIf="!dataField.value"
-                    [disabled]="formControlRef.disabled"
-                    color="primary"
-                    (click)="selectUser()"
-                    [matTooltip]="'dataField.user.selectUser' | translate"
-                    [class.do-not-click]="formControlRef.disabled">
-                <mat-icon>person_add</mat-icon>
-            </button>
-            <span fxFlex class="input-name-ellipsis" [ngClass]="{'input-placeholder': !!dataField.value, 'no-cursor': !!dataField.value && formControlRef.disabled}">
-                    {{!!dataField.value ? dataField.value.fullName : 'dataField.user.selectUser' | translate}}</span>
-        </div>
-        <mat-hint class="user-hint-error" [ngClass]="{'mat-hint-disabled': formControlRef.disabled}"
-                  *ngIf="!dataField.isInvalid(formControlRef) && hasHint()">{{dataField.description}}</mat-hint>
-        <mat-error class="user-hint-error"
-                   *ngIf="dataField.isInvalid(formControlRef)">{{'dataField.validations.required' | translate}}</mat-error>
-    </div>
-</div>
+<mat-form-field appearance="outline" class="user-field">
+    @if (hasTitle()) {
+    <mat-label>{{ dataField.title }}</mat-label>
+    }
+    @if (dataField.value) {
+    <span matIconPrefix class="avatar" aria-hidden="true">{{ initials(dataField.value) }}</span>
+    }
+    <input matInput readonly
+           [value]="dataField.value?.fullName ?? ''"
+           [placeholder]="dataField.placeholder || ('dataField.user.selectUser' | translate)"
+           [required]="dataField.behavior.required"
+           [disabled]="formControlRef.disabled"
+           [errorStateMatcher]="dataFieldErrorStateMatcher"
+           [matTooltip]="dataField.value?.email ?? ''"
+           matTooltipShowDelay="600"
+           (click)="!dataField.value && selectUser()"/>
+    @if (!formControlRef.disabled && dataField.value) {
+    <button mat-icon-button matIconSuffix type="button" (click)="deleteUser()" [matTooltip]="'dataField.user.deleteUser' | translate">
+        <mat-icon>close</mat-icon>
+    </button>
+    }
+    @if (!formControlRef.disabled && !dataField.value) {
+    <button mat-icon-button matIconSuffix type="button" (click)="selectUser()" [matTooltip]="'dataField.user.selectUser' | translate">
+        <mat-icon>person_add</mat-icon>
+    </button>
+    }
+    <mat-hint>{{ dataField.description }}</mat-hint>
+    <mat-error>{{ "dataField.validations.required" | translate }}</mat-error>
+</mat-form-field>

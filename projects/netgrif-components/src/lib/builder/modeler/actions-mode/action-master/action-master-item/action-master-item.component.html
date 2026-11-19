@@ -1,14 +1,6 @@
-<mat-list-item class="item-bottom-border" fxFlex
-               [ngClass]="{'item-selected': selected && selected.id === item.id}"
-               (click)="select()">
-    <div fxFlex="40" fxLayoutAlign="start center">
-        <span  class="text-ellipsis" matTooltip="{{item.id}}">
-            <strong>{{ item.id }}</strong>
-        </span>
-    </div>
-    <div fxFlex="60" fxLayoutAlign="start center">
-        <span  class="text-ellipsis" matTooltip="{{getItemTitle(item)}}">
-            {{ getItemTitle(item) }}
-        </span>
-    </div>
+<mat-list-item class="master-row" [class.item-selected]="selected && selected.id === item.id" (click)="select()">
+    <span matListItemTitle>{{ getItemTitle(item) || item.id }}</span>
+    @if (getItemTitle(item) && getItemTitle(item) !== item.id) {
+    <span matListItemLine class="supporting">{{ item.id }}</span>
+    }
 </mat-list-item>

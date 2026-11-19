@@ -43,8 +43,7 @@ export class ChangeDataTool extends SimulationTool {
     onClick() {
         super.onClick();
         this.openDialog(DialogChangeDataComponent, {
-            width: '50%',
-            panelClass: "dialog-width-50",
+            panelClass: 'dialog-responsive',
             data: {
                 dataSet: this.simulationModeService.data
             } as DataSet

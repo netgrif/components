@@ -1,11 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {RedirectService} from '@netgrif/components-core';
 import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'nc-redirect',
   templateUrl: './redirect.component.html',
-  styleUrls: ['./redirect.component.scss']
+  styleUrls: ['./redirect.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class RedirectComponent implements OnInit {
 

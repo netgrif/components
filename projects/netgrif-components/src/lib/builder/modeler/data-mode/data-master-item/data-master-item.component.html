@@ -1,23 +1,14 @@
-<mat-list-item class="item-bottom-border" [ngClass]="{'item-selected': selected && selected.id === item.id}"
-               (click)="select()" (mouseenter)="showIcons = true" (mouseleave)="showIcons = false">
-    <div fxFlex="40" fxLayoutAlign="start center">
-        <span  class="text-ellipsis" matTooltip="{{item.id}}">
-            <strong>{{ item.id }}</strong>
-        </span>
-    </div>
-    <div fxFlex="40" fxLayoutAlign="start center">
-        <span class="text-ellipsis"  matTooltip="{{item.title.value}}">{{ item.title.value }}</span>
-    </div>
-    <div fxFlex="10">
-        <button mat-icon-button matTooltip="{{'builder.modeler.data-mode.deleteDataField' | translate}}" (click)="onDelete($event, item)"
-                [ngClass]="{'data-edit-list-icon-hidden': !showIcons}" *ngIf="!_builderModeService.readOnly">
-            <mat-icon>delete</mat-icon>
-        </button>
-    </div>
-    <div fxFlex="10">
-        <button mat-icon-button matTooltip="{{'builder.modeler.data-mode.duplicateDataField' | translate}}" (click)="onDuplicate($event, item)"
-                [ngClass]="{'data-edit-list-icon-hidden': !showIcons}" *ngIf="!_builderModeService.readOnly">
+<mat-list-item class="master-row" [class.item-selected]="selected && selected.id === item.id" (click)="select()">
+    <span matListItemTitle>{{ item.title.value || item.id }}</span>
+    <span matListItemLine class="supporting">{{ item.id }}</span>
+    <span matListItemMeta class="row-actions">
+        @if (!_builderModeService.readOnly) {
+        <button mat-icon-button [matTooltip]="'builder.modeler.data-mode.duplicateDataField' | translate" (click)="onDuplicate($event, item)">
             <mat-icon>add_to_photos</mat-icon>
         </button>
-    </div>
+        <button mat-icon-button [matTooltip]="'builder.modeler.data-mode.deleteDataField' | translate" (click)="onDelete($event, item)">
+            <mat-icon>delete</mat-icon>
+        </button>
+        }
+    </span>
 </mat-list-item>

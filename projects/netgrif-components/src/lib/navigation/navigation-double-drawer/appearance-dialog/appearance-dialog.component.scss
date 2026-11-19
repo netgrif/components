@@ -1,0 +1,89 @@
+@use '@angular/material' as mat;
+
+.swatches {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.swatch {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border: 0;
+    border-radius: var(--mat-sys-corner-full);
+    color: #fff;
+    cursor: pointer;
+
+    &.selected {
+        outline: 3px solid var(--mat-sys-outline);
+        outline-offset: 2px;
+    }
+}
+
+.picker {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.preview {
+    flex: 0 0 72px;
+    height: 72px;
+    border-radius: var(--mat-sys-corner-large);
+}
+
+.sliders {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+}
+
+.track {
+    height: 12px;
+    margin: 18px 0;
+    border-radius: var(--mat-sys-corner-full);
+
+    mat-slider {
+        width: 100%;
+        margin: -18px 0;
+        @include mat.slider-overrides((
+            active-track-color: transparent,
+            inactive-track-color: transparent,
+        ));
+    }
+}
+
+mat-form-field {
+    flex: 0 0 120px;
+}
+
+h3 {
+    margin: 16px 0 8px;
+}
+
+mat-divider {
+    margin-top: 16px;
+}
+
+.density {
+    display: flex;
+    flex-direction: column;
+    max-width: 320px;
+
+    mat-slider {
+        margin: 0;
+    }
+}
+
+.density-ends {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 8px;
+    color: var(--mat-sys-on-surface-variant);
+}

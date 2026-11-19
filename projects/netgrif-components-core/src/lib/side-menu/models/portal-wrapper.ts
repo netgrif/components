@@ -1,6 +1,9 @@
 import {Portal} from '@angular/cdk/portal';
 import {SideMenuSize} from './side-menu-size';
 
+/**
+ * @deprecated the side menu is deprecated, the library opens dialogs instead (`DialogComponentsModule`)
+ */
 export class PortalWrapper<T = any> {
     constructor(private _portal: Portal<T>, private _width?: SideMenuSize) {}
 

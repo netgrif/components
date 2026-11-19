@@ -9,16 +9,17 @@ import {
     Optional,
     Output,
     TemplateRef,
-    Type
+    Type,
+    ChangeDetectionStrategy
 } from '@angular/core';
 import {MatExpansionPanel} from '@angular/material/expansion';
 import {ComponentPortal} from '@angular/cdk/portal';
 import {TaskContentService} from '../../task-content/services/task-content.service';
 import {LoggerService} from '../../logger/services/logger.service';
 import {TaskPanelData} from '../task-panel-list/task-panel-data/task-panel-data';
-import {Observable, Subscription} from 'rxjs';
+import {Observable, race, Subscription, timer} from 'rxjs';
 import {TaskViewService} from '../../view/task-view/service/task-view.service';
-import {filter, map, take} from 'rxjs/operators';
+import {filter, map, take, takeUntil} from 'rxjs/operators';
 import {HeaderColumn} from '../../header/models/header-column';
 import {toMoment} from '../../resources/types/nae-date-type';
 import {DATE_TIME_FORMAT_STRING} from '../../moment/time-formats';
@@ -57,9 +58,14 @@ import {UserComparatorService} from "../../user/services/user-comparator.service
 
 @Component({
     selector: 'ncc-abstract-legal-notice',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractTaskPanelComponent extends AbstractPanelWithImmediateDataComponent implements OnInit, AfterViewInit, OnDestroy {
+
+    /** ms after the opening when the panel is taken as expanded without the afterExpand event (transition 225ms) */
+    protected static readonly AFTER_EXPAND_FALLBACK = 300;
 
     /**
      * @ignore
@@ -100,7 +106,6 @@ export abstract class AbstractTaskPanelComponent extends AbstractPanelWithImmedi
         isLoading: () => this.isLoading
     };
 
-
     @Input()
     set forceLoadDataOnOpen(force: boolean) {
         this._forceLoadDataOnOpen = force;
@@ -121,6 +126,8 @@ export abstract class AbstractTaskPanelComponent extends AbstractPanelWithImmedi
     protected _subTaskData: Subscription;
     protected _subPanelUpdate: Subscription;
     protected _taskDisableButtonFunctions: DisableButtonFuntions;
+    /** a finish from the button of the panel is waiting for the save of the data or is running */
+    protected _finishFromButtonPending = false;
     protected _unsub: Subscription;
     protected _canReload: boolean;
 
@@ -232,26 +239,34 @@ export abstract class AbstractTaskPanelComponent extends AbstractPanelWithImmedi
             if (!this._taskState.isLoading()) {
                 this._assignPolicyService.performAssignPolicy(true);
             }
+            race(this.panelRef.afterExpand, timer(AbstractTaskPanelComponent.AFTER_EXPAND_FALLBACK))
+                .pipe(take(1), takeUntil(this.panelRef.closed))
+                .subscribe(() => this.afterExpand());
         });
         this.panelRef.closed.subscribe(() => {
             if (!this._taskState.isLoading()) {
                 this._assignPolicyService.performAssignPolicy(false);
             }
         });
-        this.panelRef.afterExpand.subscribe(() => {
-            this._taskContentService.$shouldCreate.pipe(take(1)).subscribe(() => {
-                this._taskContentService.blockFields(this.hasNoFinishPermission());
-                this._taskPanelData.initiallyExpanded = true;
-            });
-            this._taskContentService.expansionFinished();
-        });
         this.panelRef.afterCollapse.subscribe(() => {
             this._taskPanelData.initiallyExpanded = false;
         });
 
         if (this._taskPanelData.initiallyExpanded || this._taskForceOpen) {
-            this.panelRef.expanded = true;
+            Promise.resolve().then(() => this.panelRef.expanded = true);
         }
+    }
+
+    /**
+     * The panel is expanded: blocks the fields of the task when the user cannot finish it (not assigned to the user)
+     * and finishes the expansion of the task content.
+     */
+    protected afterExpand(): void {
+        this._taskContentService.$shouldCreate.pipe(take(1)).subscribe(() => {
+            this._taskContentService.blockFields(this.hasNoFinishPermission());
+            this._taskPanelData.initiallyExpanded = true;
+        });
+        this._taskContentService.expansionFinished();
     }
 
     protected abstract createContentPortal(): void;
@@ -308,20 +323,49 @@ export abstract class AbstractTaskPanelComponent extends AbstractPanelWithImmedi
         }));
     }
 
+    /**
+     * Finish from the button of the panel, which stays clickable while it is disabled (`disabledInteractive`): the button
+     * is disabled while the data of the task are being saved, which typically starts on the press of the button itself (the
+     * edited field loses the focus and saves its value) - the click came to a disabled button and was lost. A finish
+     * clicked while the data are being saved waits for the save ({@link FinishTaskService#validateDataAndFinish}), a
+     * click while a request of the task is running or the button is disabled by the application is ignored.
+     */
+    public finishFromButton(): void {
+        const taskId = this.taskPanelData?.task?.stringId;
+        if (!!taskId && !!this._taskState.isLoading(taskId) && !this._taskState.isUpdating(taskId)) {
+            return;
+        }
+        const busy = !!taskId && (!!this._taskState.isLoading(taskId) || !!this._taskState.isUpdating(taskId));
+        if ((this._finishFromButtonPending && busy) || this._taskDisableButtonFunctions.finish({...this._taskContentService.task})) {
+            return;
+        }
+        if (!this._taskContentService.validateTaskData()) {
+            this.showInvalidData();
+            return;
+        }
+        this._finishFromButtonPending = true;
+        this._finishTaskService.validateDataAndFinish(this._callChain.create(() => this._finishFromButtonPending = false));
+    }
+
     finish() {
         if (!this._taskContentService.validateTaskData()) {
-            if (this._taskContentService.task.dataSize <= 0) {
-                this._taskDataService.initializeTaskDataFields();
-            }
-            const invalidFields = this._taskContentService.getInvalidTaskData();
-            document.getElementById(invalidFields[0].stringId).scrollIntoView({
-                behavior: 'smooth',
-                block: 'start',
-                inline: 'nearest'
-            });
+            this.showInvalidData();
         } else {
             this._finishTaskService.validateDataAndFinish();
         }
+    }
+
+    /** the data of the task are not valid: scrolls to the first invalid field */
+    protected showInvalidData(): void {
+        if (this._taskContentService.task.dataSize <= 0) {
+            this._taskDataService.initializeTaskDataFields();
+        }
+        const invalidFields = this._taskContentService.getInvalidTaskData();
+        document.getElementById(invalidFields[0].stringId).scrollIntoView({
+            behavior: 'smooth',
+            block: 'start',
+            inline: 'nearest'
+        });
     }
 
     collapse() {

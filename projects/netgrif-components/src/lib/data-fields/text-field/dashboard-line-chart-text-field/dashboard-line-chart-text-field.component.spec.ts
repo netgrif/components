@@ -1,6 +1,6 @@
 import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 import {DashboardLineChartTextFieldComponent} from './dashboard-line-chart-text-field.component';
-import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+import {Component, CUSTOM_ELEMENTS_SCHEMA, ChangeDetectionStrategy} from '@angular/core';
 import {
     AuthenticationMethodService,
     AuthenticationService,
@@ -16,9 +16,8 @@ import {
     WrappedBoolean
 } from '@netgrif/components-core';
 import {FormControl} from '@angular/forms';
-import {AngularResizeEventModule} from 'angular-resize-event';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('DashboardLineChartTextFieldComponent', () => {
     let component: DashboardLineChartTextFieldComponent;
@@ -26,21 +25,23 @@ describe('DashboardLineChartTextFieldComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
+            declarations: [
+                DashboardLineChartTextFieldComponent,
+                TestWrapperComponent
+            ],
+            schemas: [CUSTOM_ELEMENTS_SCHEMA],
             imports: [
                 MaterialModule,
-                AngularResizeEventModule,
-                BrowserAnimationsModule,
-                TranslateLibModule,
-                HttpClientTestingModule
+                TranslateLibModule
             ],
             providers: [
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
-                {provide: UserResourceService, useClass: MockUserResourceService}
-            ],
-            declarations: [DashboardLineChartTextFieldComponent, TestWrapperComponent],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA]
+                {provide: UserResourceService, useClass: MockUserResourceService},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
+            ]
         })
             .compileComponents();
         fixture = TestBed.createComponent(TestWrapperComponent);
@@ -60,10 +61,15 @@ describe('DashboardLineChartTextFieldComponent', () => {
 @Component({
     selector: 'nc-test-wrapper',
     template: `
-        <nc-dashboard-line-chart-text-field [showLargeLayout]="label"
-                                            [dataField]="field"
-                                            [formControlRef]="formControl">
-        </nc-dashboard-line-chart-text-field>`
+        <nc-dashboard-line-chart-text-field
+            [showLargeLayout]="label"
+            [dataField]="field"
+            [formControlRef]="formControl"
+        >
+        </nc-dashboard-line-chart-text-field>
+    `,
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestWrapperComponent {
     label = new WrappedBoolean();

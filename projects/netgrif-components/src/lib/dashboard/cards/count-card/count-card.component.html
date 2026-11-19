@@ -1,9 +1,12 @@
-<mat-card fxLayout="column" fxLayoutAlign="center center" class="dashboard-card">
-    <span>{{card.title}}</span>
-    <ng-template [ngIf]="loading" [ngIfElse]="result">
-        <mat-spinner color="primary"></mat-spinner>
-    </ng-template>
-    <ng-template #result>
-        <span class="number">{{count}}</span>
-    </ng-template>
+<mat-card appearance="outlined" fxFlexFill>
+    <mat-card-header>
+        <mat-card-title>{{ card.title }}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content fxLayout="row" fxLayoutAlign="center center" fxFlex>
+        @if (loading) {
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        } @else {
+        <span class="mat-display-large">{{ count }}</span>
+        }
+    </mat-card-content>
 </mat-card>

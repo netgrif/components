@@ -1,0 +1,210 @@
+<ne-demo-page [title]="spec.label + ' field'" [description]="spec.description"
+              [api]="[spec.className, 'nc-data-field-template', field?.getTypedComponentType() ?? '']"
+              [snippets]="snippets">
+
+    <div demoPreview>
+        @if (error) {
+        <p class="error">{{ error }}</p>
+        }
+        @if (hiddenByBehavior) {
+        <p class="note">
+            <mat-icon>visibility_off</mat-icon>
+            Behavior <b>hidden</b>: the field is not rendered, the same way the task form
+            (<code>nc-field-component-resolver</code>) skips it. Its value still exists on the model.
+        </p>
+        } @else {
+        <div [class]="'ne-density-' + -config.density">
+            @for (field of fields; track $index) {
+            <nc-data-field-template [additionalFieldProperties]="spec.additionalProperties" [dataField]="field"></nc-data-field-template>
+            }
+        </div>
+        }
+    </div>
+
+    <mat-card demoState appearance="outlined">
+        <mat-card-header>
+            <mat-card-title class="mat-title-medium">Value</mat-card-title>
+            <mat-card-subtitle>
+                <code>field.value</code>
+                @if (!valid) {
+                <span class="invalid">invalid</span>
+                }
+            </mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+            <pre class="value">{{ stringify(currentValue) }}</pre>
+        </mat-card-content>
+    </mat-card>
+
+    <div demoConfig class="config">
+        <div class="section">
+            <h3 class="mat-title-small">Component</h3>
+            <mat-form-field>
+                <mat-label>Component</mat-label>
+                <mat-select [(ngModel)]="config.variant" (ngModelChange)="variantChanged()">
+                    @for (variant of spec.variants; track variant.name) {
+                    <mat-option [value]="variant.name">{{ variant.label }}</mat-option>
+                    }
+                </mat-select>
+                <mat-hint>&lt;component&gt;&lt;name&gt;{{ config.variant }}&lt;/name&gt;</mat-hint>
+            </mat-form-field>
+            @for (property of variantProperties; track property.key) {
+            @switch (property.type) {
+            @case ('boolean') {
+            <mat-slide-toggle [(ngModel)]="config.properties[property.key]" (ngModelChange)="changed(0)">
+                {{ property.label }} <code>{{ property.key }}</code>
+            </mat-slide-toggle>
+            }
+            @default {
+            <mat-form-field>
+                <mat-label>{{ property.label }} ({{ property.key }})</mat-label>
+                <input matInput [type]="property.type" [(ngModel)]="config.properties[property.key]" (ngModelChange)="changed()">
+                @if (property.hint) {
+                <mat-hint>{{ property.hint }}</mat-hint>
+                }
+            </mat-form-field>
+            }
+            }
+            }
+        </div>
+
+        <div class="section">
+            <h3 class="mat-title-small">Value</h3>
+            @if (spec.hasChoices) {
+            <mat-form-field>
+                <mat-label>Options</mat-label>
+                <textarea matInput rows="4" [(ngModel)]="config.choices" (ngModelChange)="changed()"></textarea>
+                <mat-hint>one <code>key: Label</code> per line</mat-hint>
+            </mat-form-field>
+            }
+            @switch (spec.valueKind) {
+            @case ('text') {
+            <mat-form-field>
+                <mat-label>Initial value</mat-label>
+                <input matInput [(ngModel)]="config.value" (ngModelChange)="changed()">
+            </mat-form-field>
+            }
+            @case ('number') {
+            <mat-form-field>
+                <mat-label>Initial value</mat-label>
+                <input matInput type="number" [(ngModel)]="config.value" (ngModelChange)="changed()">
+            </mat-form-field>
+            }
+            @case ('boolean') {
+            <mat-slide-toggle [(ngModel)]="config.value" (ngModelChange)="changed(0)">Initial value</mat-slide-toggle>
+            }
+            @case ('choice') {
+            <mat-form-field>
+                <mat-label>Initial value</mat-label>
+                <mat-select [(ngModel)]="config.value" (ngModelChange)="changed(0)">
+                    <mat-option [value]="undefined">–</mat-option>
+                    @for (key of choiceKeys; track key) {
+                    <mat-option [value]="key">{{ key }}</mat-option>
+                    }
+                </mat-select>
+            </mat-form-field>
+            }
+            @case ('choices') {
+            <mat-form-field>
+                <mat-label>Initial value</mat-label>
+                <mat-select multiple [(ngModel)]="config.value" (ngModelChange)="changed(0)">
+                    @for (key of choiceKeys; track key) {
+                    <mat-option [value]="key">{{ key }}</mat-option>
+                    }
+                </mat-select>
+            </mat-form-field>
+            }
+            @case ('date') {
+            <mat-form-field>
+                <mat-label>Initial value</mat-label>
+                <input matInput type="date" [(ngModel)]="config.value" (ngModelChange)="changed()">
+            </mat-form-field>
+            }
+            @case ('datetime') {
+            <mat-form-field>
+                <mat-label>Initial value</mat-label>
+                <input matInput type="datetime-local" [(ngModel)]="config.value" (ngModelChange)="changed()">
+            </mat-form-field>
+            }
+            @case ('lines') {
+            <mat-form-field>
+                <mat-label>Initial value</mat-label>
+                <textarea matInput rows="3" [(ngModel)]="lines" (ngModelChange)="changed()"></textarea>
+                <mat-hint>one item per line</mat-hint>
+            </mat-form-field>
+            }
+            @case ('none') {
+            <p class="mat-body-small hint">The value is the number of clicks.</p>
+            }
+            }
+        </div>
+
+        <div class="section">
+            <div class="section-title">
+                <h3 class="mat-title-small">Texts</h3>
+                <button mat-button (click)="fillLongTexts()"><mat-icon>notes</mat-icon> Long texts</button>
+            </div>
+            <mat-form-field>
+                <mat-label>Title</mat-label>
+                <input matInput [(ngModel)]="config.title" (ngModelChange)="changed()">
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Placeholder</mat-label>
+                <input matInput [(ngModel)]="config.placeholder" (ngModelChange)="changed()">
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Description</mat-label>
+                <input matInput [(ngModel)]="config.description" (ngModelChange)="changed()">
+            </mat-form-field>
+        </div>
+
+        <div class="section">
+            <h3 class="mat-title-small">Behavior</h3>
+            <mat-button-toggle-group [(ngModel)]="config.behavior" (ngModelChange)="changed(0)" hideSingleSelectionIndicator>
+                @for (b of behaviors; track b) {
+                <mat-button-toggle [value]="b">{{ b }}</mat-button-toggle>
+                }
+            </mat-button-toggle-group>
+            <mat-slide-toggle [(ngModel)]="config.required" (ngModelChange)="changed(0)">required</mat-slide-toggle>
+        </div>
+
+        <div class="section">
+            <h3 class="mat-title-small">Layout</h3>
+            <div class="row">
+                <mat-form-field>
+                    <mat-label>Template</mat-label>
+                    <mat-select [(ngModel)]="config.template" (ngModelChange)="changed(0)">
+                        @for (t of templates; track t) {
+                        <mat-option [value]="t">{{ t }}</mat-option>
+                        }
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Density</mat-label>
+                    <mat-select [(ngModel)]="config.density">
+                        @for (d of densities; track d) {
+                        <mat-option [value]="d">{{ d }}{{ d === 0 ? ' (default)' : '' }}</mat-option>
+                        }
+                    </mat-select>
+                    <mat-hint>app wide: <code>&#64;include nae.theme($density: {{ config.density }})</code></mat-hint>
+                </mat-form-field>
+            </div>
+        </div>
+
+        @if (spec.validations?.length) {
+        <div class="section">
+            <h3 class="mat-title-small">Validations</h3>
+            @for (validation of spec.validations; track validation.rule) {
+            <mat-checkbox [checked]="isValidationActive(validation.rule)" (change)="toggleValidation(validation.rule, $event.checked)">
+                <code>{{ validation.label }}</code>
+            </mat-checkbox>
+            }
+        </div>
+        }
+
+        <button mat-button (click)="reset()">
+            <mat-icon>restart_alt</mat-icon>
+            Reset
+        </button>
+    </div>
+</ne-demo-page>

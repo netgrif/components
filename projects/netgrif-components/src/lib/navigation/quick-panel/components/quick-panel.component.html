@@ -1,17 +1,35 @@
-<div fxLayout="row" fxLayoutAlign="space-between center" class="quick-panel" [style.width.px]="width">
-    <nc-language-selector *ngIf="items.includes('language')"></nc-language-selector>
-    <nc-internal-link *ngIf="items.includes('settings')" icon="settings" link="/settings"></nc-internal-link>
-    <nc-impersonate-quick-panel *ngIf="items.includes('impersonation')"></nc-impersonate-quick-panel>
-    <nc-logout-shortcut *ngIf="items.includes('logout')"></nc-logout-shortcut>
+<div
+    fxLayout="row"
+    fxLayoutAlign="space-between center"
+    class="quick-panel"
+    [style.width.px]="width"
+>
+    @if (items.includes('language')) {
+    <nc-language-selector></nc-language-selector>
+    } @if (items.includes('settings')) {
+    <nc-internal-link icon="settings" link="/settings"></nc-internal-link>
+    } @if (items.includes('impersonation')) {
+    <nc-impersonate-quick-panel></nc-impersonate-quick-panel>
+    } @if (items.includes('logout')) {
+    <nc-logout-shortcut></nc-logout-shortcut>
+    }
 
     <button mat-icon-button [matMenuTriggerFor]="quickPanelMoreMenu">
-        <mat-icon class="quick-panel-more-icon">more_vert</mat-icon>
+        <mat-icon>more_vert</mat-icon>
     </button>
 </div>
 <mat-menu #quickPanelMoreMenu="matMenu">
-    <button mat-menu-item (click)="setPaperView()" fxLayout="row" fxLayoutAlign="start center">
-        <mat-icon *ngIf="isPaperView()">cancel</mat-icon>
-        <mat-icon *ngIf="!isPaperView()">check</mat-icon>
-        <span>{{isPaperView() ? 'Disable' : 'Enable'}} Paper View</span>
+    <button
+        mat-menu-item
+        (click)="setPaperView()"
+        fxLayout="row"
+        fxLayoutAlign="start center"
+    >
+        @if (isPaperView()) {
+        <mat-icon>cancel</mat-icon>
+        } @if (!isPaperView()) {
+        <mat-icon>check</mat-icon>
+        }
+        <span>{{ isPaperView() ? "Disable" : "Enable" }} Paper View</span>
     </button>
 </mat-menu>

@@ -1,8 +1,11 @@
-import {EventEmitter, Injectable, OnDestroy} from '@angular/core';
-import {BehaviorSubject, Observable, of, Subscription} from 'rxjs';
+import {EventEmitter, Injectable, OnDestroy, inject} from '@angular/core';
+import {BehaviorSubject, concat, Observable, of, Subscription, throwError} from 'rxjs';
 import {UriService} from "../../service/uri.service";
 import {LoadingEmitter} from "../../../utility/loading-emitter";
-import {filter, map, take, switchMap} from "rxjs/operators";
+import {catchError, filter, last, map, take, switchMap} from "rxjs/operators";
+import {moveItemInArray} from '@angular/cdk/drag-drop';
+import {TaskResourceService} from '../../../resources/engine-endpoint/task-resource.service';
+import {EventOutcomeMessageResource} from '../../../resources/interface/message-resource';
 import {Case} from "../../../resources/interface/case";
 import {LoggerService} from "../../../logger/services/logger.service";
 import {DoubleDrawerUtils} from "../util/double-drawer-utils";
@@ -84,6 +87,7 @@ export class DoubleDrawerNavigationService implements OnDestroy {
     protected itemClicked: EventEmitter<MenuItemClickEvent>;
     protected itemLoaded: EventEmitter<MenuItemLoadedEvent>;
     protected _sessionClearSubscription: Subscription;
+    protected _taskResourceService = inject(TaskResourceService);
 
     constructor(protected _uriService: UriService,
                 protected _log: LoggerService,
@@ -386,6 +390,72 @@ export class DoubleDrawerNavigationService implements OnDestroy {
         currentLeftItems.sort((a, b) => multiplier * (a?.navigation as NavigationItem)?.title.localeCompare((b?.navigation as NavigationItem)?.title));
         this.rightItems$.next(currentRightItems);
         this.leftItems$.next(currentLeftItems);
+    }
+
+    /**
+     * Moves a right side item to the position of another one and persists the new order in the parent item
+     * (its `childItemIds`). The order can't be set directly (case refs are not settable over the API), so the
+     * moved item's `order_up` / `order_down` buttons are pressed through the parent's `children_order` task,
+     * one swap per step. The items are reordered immediately and reloaded if persisting fails.
+     *
+     * The shown order may differ from the persisted one (sorted by {@link switchOrder}): the moved item is persisted next
+     * to the item it was dropped next to - before the following item when moved up, after the preceding one when moved
+     * down (the position of the drop target in the persisted order moved it elsewhere, even in the other direction).
+     *
+     * @param previousIndex index of the moved item in the right side items
+     * @param currentIndex index it was dropped at
+     * @returns emits once the order is persisted
+     */
+    public moveRightItem(previousIndex: number, currentIndex: number): Observable<void> {
+        const items = this.rightItems;
+        const moved = items[previousIndex]?.resource as Case;
+        if (previousIndex === currentIndex || !moved || !items[currentIndex]?.resource) {
+            return of(undefined);
+        }
+        moveItemInArray(items, previousIndex, currentIndex);
+        this._rightItems$.next(items);
+        const movedDown = currentIndex > previousIndex;
+        const anchor = items[movedDown ? currentIndex - 1 : currentIndex + 1]?.resource as Case;
+
+        const check = (outcome: EventOutcomeMessageResource) => outcome?.error ? throwError(() => new Error(outcome.error)) : of(outcome);
+        return this._uriService.getItemCaseByNodePath(this.currentNode).pipe(
+            take(1),
+            switchMap(page => {
+                const parent = page.content[0];
+                const ids = DoubleDrawerUtils.extractChildCaseIds(parent) ?? [];
+                const others = ids.filter(id => id !== moved.stringId);
+                const anchorIndex = others.indexOf(anchor?.stringId);
+                const steps = (movedDown ? anchorIndex + 1 : anchorIndex) - ids.indexOf(moved.stringId);
+                const orderTask = parent.tasks?.find(t => t.transition === 'children_order')?.task;
+                const rowTask = moved.tasks?.find(t => t.transition === 'row_for_ordering')?.task;
+                if (!orderTask || !rowTask || ids.indexOf(moved.stringId) < 0 || anchorIndex < 0) {
+                    return throwError(() => new Error('Menu item order can not be changed'));
+                }
+                if (steps === 0) {
+                    return of(undefined);
+                }
+                const button = steps > 0 ? 'order_down' : 'order_up';
+                const swaps = Array.from({length: Math.abs(steps)}, () =>
+                        this._taskResourceService.setData(orderTask, {[rowTask]: {[button]: {type: 'button', value: 1}}}).pipe(switchMap(check)));
+                return concat(
+                    this._taskResourceService.assignTask(orderTask).pipe(catchError(() => of(undefined))),
+                    ...swaps,
+                    this._taskResourceService.finishTask(orderTask).pipe(catchError(() => of(undefined)))
+                ).pipe(
+                    last(),
+                    map(() => undefined),
+                    catchError(error => this._taskResourceService.cancelTask(orderTask).pipe(
+                        catchError(() => of(undefined)),
+                        switchMap(() => throwError(() => error))
+                    ))
+                );
+            }),
+            catchError(error => {
+                this._log.error('Persisting menu item order failed', error);
+                this.loadRightSide();
+                return throwError(() => error);
+            })
+        );
     }
 
     public isAscending(): boolean {

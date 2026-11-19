@@ -1,23 +1,32 @@
-<div fxLayout="col wrap">
-    <div fxFlex="100" class="netgrif-input" fxLayout="row">
-        <mat-form-field appearance="outline" fxFlex="25">
-            <mat-label>{{ 'builder.modeler.i18n-mode.addNewLanguage' | translate }}</mat-label>
-            <input type="text" matInput [formControl]="newLocaleFormControl" [matAutocomplete]="auto">
+<section class="languages">
+    <h2 class="section-title">{{ "builder.modeler.i18n-mode.languages" | translate }}</h2>
+    <div class="add-row">
+        <mat-form-field class="add-field" subscriptSizing="dynamic">
+            <mat-icon matPrefix>translate</mat-icon>
+            <mat-label>{{ "builder.modeler.i18n-mode.addNewLanguage" | translate }}</mat-label>
+            <input type="text" matInput [formControl]="newLocaleFormControl" [matAutocomplete]="auto"/>
             <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="displayFn">
-                <mat-option *ngFor="let locale of filteredLocales | async" [value]="locale">
-                    {{locale?.language}}
-                </mat-option>
+                @for (locale of filteredLocales | async; track locale) {
+                <mat-option [value]="locale">{{ locale?.language }}</mat-option>
+                }
             </mat-autocomplete>
         </mat-form-field>
-        <button mat-icon-button class="button-line" matTooltip="{{ 'builder.modeler.i18n-mode.addLocale' | translate }}"
-                (click)="addLocal()" [disabled]="invalidLocale() || _builderModeService.readOnly">
+        <button mat-flat-button type="button" (click)="addLocal()" [disabled]="invalidLocale() || _builderModeService.readOnly">
             <mat-icon>add</mat-icon>
+            {{ "builder.modeler.i18n-mode.addLocale" | translate }}
         </button>
     </div>
 
-    <div fxFlex="100" *ngIf="usedLocales().length > 0">
-        <h2 class="margin-none">{{ 'builder.modeler.i18n-mode.translations' | translate }}:</h2>
-        <nc-builder-progress *ngFor="let locale of usedLocales()" (deleteLocale)="deleteLocale()" (selectLocale)="selectLocale($event)" [locale]="locale">
-        </nc-builder-progress>
+    @if (usedLocales().length > 0) {
+    <div class="language-list" role="list">
+        @for (locale of usedLocales(); track locale) {
+        <nc-builder-progress role="listitem" (deleteLocale)="deleteLocale()" (selectLocale)="selectLocale($event)" [locale]="locale"></nc-builder-progress>
+        }
     </div>
-</div>
+    } @else {
+    <div class="nae-empty-state" role="status">
+        <mat-icon class="nae-empty-state-icon">translate</mat-icon>
+        <span class="nae-empty-state-title">{{ "builder.modeler.i18n-mode.noLanguageAvailable" | translate }}</span>
+    </div>
+    }
+</section>

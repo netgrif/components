@@ -8,8 +8,8 @@ import {
     TestCaseBaseFilterProvider, TestConfigurationService
 } from '@netgrif/components-core';
 import {SearchComponentModule} from '../search.module';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('FulltextSearchComponent', () => {
     let component: FulltextSearchComponent;
@@ -19,9 +19,7 @@ describe('FulltextSearchComponent', () => {
         await TestBed.configureTestingModule({
             imports: [
                 MaterialModule,
-                SearchComponentModule,
-                NoopAnimationsModule,
-                HttpClientTestingModule,
+                SearchComponentModule
             ],
             providers: [
                 SearchService,
@@ -29,7 +27,9 @@ describe('FulltextSearchComponent', () => {
                     provide: NAE_BASE_FILTER,
                     useFactory: TestCaseBaseFilterProvider
                 },
-                {provide: ConfigurationService, useClass: TestConfigurationService}
+                {provide: ConfigurationService, useClass: TestConfigurationService},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
             ]
         })
             .compileComponents();

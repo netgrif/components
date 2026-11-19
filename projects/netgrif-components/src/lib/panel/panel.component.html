@@ -1,14 +1,18 @@
-<mat-expansion-panel [@.disabled]="expansionDisabled" hideToggle (afterExpand)="emitExpand()"
-                     (afterCollapse)="emitCollapse()" #matExpansionPanel class="panel-body"
-                     [ngClass]="{'margin-bottom':last, 'panel-last':last, 'panel-first': first}" [disabled]='preventCollapse'>
-    <mat-expansion-panel-header *ngIf="showPanelHeader()"
-                                (click)="expandPanel()" class="panel-color header-padding header-min-height"
-                                [ngStyle]="{'background': caseColor, 'color': getCaseFontColor()}">
-        <mat-panel-description *ngTemplateOutlet="panelHeader">
-        </mat-panel-description>
+<mat-expansion-panel #matExpansionPanel
+                     hideToggle
+                     [class.nc-expansion-no-animation]="expansionDisabled"
+                     [disabled]="preventCollapse"
+                     (afterExpand)="emitExpand()"
+                     (afterCollapse)="emitCollapse()">
+    @if (showPanelHeader()) {
+    <mat-expansion-panel-header (click)="expandPanel()" [ngStyle]="caseColor?.startsWith('#') ? { background: caseColor, color: getCaseFontColor() } : null">
+        <mat-panel-description *ngTemplateOutlet="panelHeader"></mat-panel-description>
     </mat-expansion-panel-header>
+    }
     <ng-template matExpansionPanelContent>
-        <div *ngTemplateOutlet="panelContent"></div>
+        <ng-container *ngTemplateOutlet="panelContent"></ng-container>
     </ng-template>
 </mat-expansion-panel>
-
+@if (!last) {
+<mat-divider></mat-divider>
+}

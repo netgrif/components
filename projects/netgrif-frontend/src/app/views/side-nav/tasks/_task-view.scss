@@ -1,0 +1,20 @@
+// layout of the task views of the application (all tasks, tasks of a case): search above the list, the list scrolls
+// and the paginator stays at the bottom of the view
+:host {
+    display: block;
+    height: 100%;
+}
+
+.view {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    box-sizing: border-box;
+    height: 100%;
+    padding: 16px 24px;
+}
+
+.list {
+    flex: 1 1 auto;
+    min-height: 0;
+}

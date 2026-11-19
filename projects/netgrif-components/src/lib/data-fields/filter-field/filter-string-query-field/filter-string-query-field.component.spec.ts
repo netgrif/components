@@ -12,9 +12,9 @@ import {
     TestConfigurationService,
     WrappedBoolean
 } from '@netgrif/components-core';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {HttpClientTestingModule} from "@angular/common/http/testing";
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('FilterStringQueryFieldComponent', () => {
     let component: FilterStringQueryFieldComponent;
@@ -25,9 +25,7 @@ describe('FilterStringQueryFieldComponent', () => {
             declarations: [FilterStringQueryFieldComponent],
             imports: [
                 TranslateLibModule,
-                HttpClientTestingModule,
                 MaterialModule,
-                NoopAnimationsModule,
                 ReactiveFormsModule
             ],
             providers: [
@@ -37,7 +35,9 @@ describe('FilterStringQueryFieldComponent', () => {
                         formControlRef: new FormControl(),
                         showLargeLayout: new WrappedBoolean()
                     } as DataFieldPortalData<FilterField>
-                }
+                },
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
             ]
         })
             .compileComponents();

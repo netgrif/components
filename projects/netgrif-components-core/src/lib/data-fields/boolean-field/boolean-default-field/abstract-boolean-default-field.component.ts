@@ -1,4 +1,4 @@
-import {Component, Inject, Optional} from "@angular/core";
+import {Component, Inject, Optional, ChangeDetectionStrategy} from "@angular/core";
 import {BooleanField, BooleanFieldValidation} from "../models/boolean-field";
 import {TranslateService} from "@ngx-translate/core";
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
@@ -6,7 +6,9 @@ import {AbstractBaseDataFieldComponent} from "../../base-component/abstract-base
 
 @Component({
     selector: 'ncc-abstract-boolean-default-field',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractBooleanDefaultFieldComponent extends AbstractBaseDataFieldComponent<BooleanField> {
 
@@ -25,6 +27,7 @@ export abstract class AbstractBooleanDefaultFieldComponent extends AbstractBaseD
         return '';
     }
 
+    /** @deprecated the switch of the M3 boolean field shows its value by the handle, no value label is rendered */
     public createValueLabel(): string {
         return this._translate.instant('dataField.values.boolean.' + this.dataField.value);
     }

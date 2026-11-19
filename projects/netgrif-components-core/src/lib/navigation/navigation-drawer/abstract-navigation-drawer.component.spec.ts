@@ -1,12 +1,11 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {CommonModule} from '@angular/common';
 import {FlexLayoutModule, FlexModule} from '@ngbracket/ngx-layout';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {MaterialModule} from '../../material/material.module';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
 import {ConfigurationService} from '../../configuration/configuration.service';
-import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+import {Component, CUSTOM_ELEMENTS_SCHEMA, ChangeDetectionStrategy} from '@angular/core';
 import {AbstractNavigationDrawerComponent} from './abstract-navigation-drawer.component';
 import {BreakpointObserver} from '@angular/cdk/layout';
 import {LoggerService} from '../../logger/services/logger.service';
@@ -21,6 +20,7 @@ import {AuthenticationService} from '../../authentication/services/authenticatio
 import {UserResourceService} from '../../resources/engine-endpoint/user-resource.service';
 import {MockAuthenticationService} from '../../utility/tests/mocks/mock-authentication.service';
 import {MockUserResourceService} from '../../utility/tests/mocks/mock-user-resource.service';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('AbstractNavigationDrawerComponent', () => {
     let component: TestDrawerComponent;
@@ -29,15 +29,14 @@ describe('AbstractNavigationDrawerComponent', () => {
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             declarations: [TestDrawerComponent],
+            schemas: [CUSTOM_ELEMENTS_SCHEMA],
             imports: [
                 CommonModule,
                 RouterTestingModule.withRoutes([]),
                 MaterialModule,
                 FlexModule,
                 FlexLayoutModule,
-                NoopAnimationsModule,
                 TranslateLibModule,
-                HttpClientTestingModule,
                 ResizableModule
             ],
             providers: [
@@ -45,9 +44,10 @@ describe('AbstractNavigationDrawerComponent', () => {
                 {provide: ConfigurationService, useClass: TestLoggingConfigurationService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
-                {provide: UserPreferenceService, useClass: MockUserPreferenceService}
-            ],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA]
+                {provide: UserPreferenceService, useClass: MockUserPreferenceService},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
+            ]
         }).compileComponents();
         spyOn(console, 'info');
     }));
@@ -98,7 +98,9 @@ describe('AbstractNavigationDrawerComponent', () => {
         '    <mat-sidenav-content>\n' +
         '        <ng-content></ng-content>\n' +
         '    </mat-sidenav-content>\n' +
-        '</mat-sidenav-container>'
+        '</mat-sidenav-container>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestDrawerComponent extends AbstractNavigationDrawerComponent {
     constructor(protected breakpoint: BreakpointObserver,

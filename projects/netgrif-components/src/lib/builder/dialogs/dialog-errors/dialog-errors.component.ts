@@ -1,4 +1,4 @@
-import {Component, Inject} from '@angular/core';
+import {Component, Inject, ChangeDetectionStrategy} from '@angular/core';
 import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 
 export interface DialogErrorsData {
@@ -10,7 +10,9 @@ export interface DialogErrorsData {
 @Component({
     selector: 'nc-builder-dialog-errors',
     templateUrl: './dialog-errors.component.html',
-    styleUrls: ['./dialog-errors.component.scss']
+    styleUrls: ['./dialog-errors.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class DialogErrorsComponent {
 

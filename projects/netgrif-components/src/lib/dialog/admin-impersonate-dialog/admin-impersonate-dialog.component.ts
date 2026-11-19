@@ -1,4 +1,4 @@
-import {Component, Inject} from '@angular/core';
+import {Component, Inject, ChangeDetectionStrategy} from '@angular/core';
 import {
     ImpersonationUserListService,
     ProcessRole,
@@ -15,7 +15,9 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
     styleUrls: ['./admin-impersonate-dialog.component.scss'],
     providers: [{
         provide: UserListService, useClass: ImpersonationUserListService
-    }]
+    }],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class AdminImpersonateDialogComponent {
     /**
@@ -48,7 +50,8 @@ export class AdminImpersonateDialogComponent {
      * The user that is initially selected, or `undefined` if none is
      */
     public get initiallySelectedUser(): UserValue | undefined {
-        return this.injectedData ? this.injectedData.value as UserValue : undefined;
+        return this.injectedData ? (this.injectedData.value as UserValue)
+            : undefined;
     }
 
     public get roles(): Array<string> | Array<ProcessRole> {

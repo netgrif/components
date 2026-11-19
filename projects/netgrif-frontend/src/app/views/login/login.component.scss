@@ -1,0 +1,121 @@
+// Material 3 login page: one column (top bar, card) on small screens, a brand pane on the left from 1024px
+// (the same layout as the Keycloak login theme of Netgrif)
+:host {
+    display: block;
+    height: 100%;
+}
+
+.login-page {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    box-sizing: border-box;
+    min-height: 100%;
+    background: var(--mat-sys-surface);
+    color: var(--mat-sys-on-surface);
+}
+
+.hero {
+    display: none;
+}
+
+.login-main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 0;
+    padding: 16px 16px 24px;
+}
+
+.topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    width: 100%;
+    max-width: 448px;
+    min-height: 56px;
+    margin-bottom: 8px;
+}
+
+.topbar-logo {
+    height: 32px;
+}
+
+.login-card {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 448px;
+    margin: auto 0;
+    padding: 32px 24px;
+    border: 1px solid var(--mat-sys-outline-variant);
+    border-radius: var(--mat-sys-corner-extra-large);
+    background: var(--mat-sys-surface-container-low);
+}
+
+.headline {
+    margin: 0 0 8px;
+    color: var(--mat-sys-on-surface);
+    font: var(--mat-sys-headline-medium);
+    letter-spacing: var(--mat-sys-headline-medium-tracking);
+}
+
+.subtitle {
+    margin: 0 0 24px;
+    color: var(--mat-sys-on-surface-variant);
+    font: var(--mat-sys-body-medium);
+    letter-spacing: var(--mat-sys-body-medium-tracking);
+}
+
+@media (min-width: 1024px) {
+    .login-page {
+        grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+    }
+
+    // brand pane: primary gradient with a square grid fading out from the top left corner
+    .hero {
+        position: sticky;
+        top: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: calc(100vh - 32px);
+        margin: 16px 0 16px 16px;
+        overflow: hidden;
+        border-radius: var(--mat-sys-corner-extra-large);
+        background: linear-gradient(155deg,
+            color-mix(in srgb, var(--mat-sys-primary) 75%, black) 0%,
+            color-mix(in srgb, var(--mat-sys-primary) 20%, black) 100%);
+
+        &::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: linear-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+            background-size: 40px 40px;
+            mask-image: linear-gradient(135deg, #000 0%, transparent 70%);
+        }
+    }
+
+    .hero-logo {
+        position: relative;
+        width: min(360px, 60%);
+    }
+
+    .login-main {
+        padding: 16px 32px 24px;
+    }
+
+    // the logo is in the brand pane, the top bar keeps only the language
+    .topbar {
+        max-width: none;
+    }
+
+    .topbar-logo {
+        visibility: hidden;
+    }
+
+    .login-card {
+        padding: 40px;
+    }
+}

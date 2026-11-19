@@ -1,7 +1,7 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {SearchClauseComponent} from './search-clause.component';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {Component, OnDestroy} from '@angular/core';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
+import {Component, OnDestroy, ChangeDetectionStrategy} from '@angular/core';
 import {Subject} from 'rxjs';
 import {
     AuthenticationMethodService,
@@ -23,9 +23,9 @@ import {
     TestNoAllowedNetsFactory,
     NAE_DEFAULT_CASE_SEARCH_CATEGORIES, DefaultSearchCategoriesModule
 } from '@netgrif/components-core';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {AdvancedSearchComponentModule} from '../advanced-search.module';
-import {RouterTestingModule} from "@angular/router/testing";
+import {RouterTestingModule} from '@angular/router/testing';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('SearchClauseComponent', () => {
     let component: SearchClauseComponent;
@@ -33,17 +33,13 @@ describe('SearchClauseComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
+            declarations: [TestWrapperComponent],
             imports: [
                 AdvancedSearchComponentModule,
-                HttpClientTestingModule,
                 MaterialModule,
                 TranslateLibModule,
-                NoopAnimationsModule,
                 DefaultSearchCategoriesModule,
                 RouterTestingModule.withRoutes([])
-            ],
-            declarations: [
-                TestWrapperComponent
             ],
             providers: [
                 CategoryFactory,
@@ -56,7 +52,9 @@ describe('SearchClauseComponent', () => {
                 },
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 AdvancedSearchComponentInitializationService,
-                {provide: AllowedNetsService, useFactory: TestNoAllowedNetsFactory, deps: [AllowedNetsServiceFactory]}
+                {provide: AllowedNetsService, useFactory: TestNoAllowedNetsFactory, deps: [AllowedNetsServiceFactory]},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
             ]
         }).compileComponents();
     }));
@@ -78,7 +76,9 @@ describe('SearchClauseComponent', () => {
 
 @Component({
     selector: 'nc-test-wrapper',
-    template: '<nc-search-clause [predicate]="predicate" [remove$]="remove$" [predicateId]="0"></nc-search-clause>'
+    template: '<nc-search-clause [predicate]="predicate" [remove$]="remove$" [predicateId]="0"></nc-search-clause>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestWrapperComponent implements OnDestroy {
 

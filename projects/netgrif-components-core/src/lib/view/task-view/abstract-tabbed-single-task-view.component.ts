@@ -1,4 +1,4 @@
-import {Component, Inject, Input, OnDestroy} from "@angular/core";
+import {Component, Inject, Input, OnDestroy, ChangeDetectionStrategy} from "@angular/core";
 import {Subscription} from "rxjs";
 import {TaskViewService} from "./service/task-view.service";
 import {NAE_TAB_DATA} from "../../tabs/tab-data-injection-token/tab-data-injection-token";
@@ -8,7 +8,9 @@ import {AbstractSingleTaskViewComponent} from "./abstract-single-task-view.compo
 
 @Component({
     selector: 'ncc-abstract-tabbed-single-task-view',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractTabbedSingleTaskViewComponent extends AbstractSingleTaskViewComponent implements OnDestroy {
     protected subTaskView: Subscription;

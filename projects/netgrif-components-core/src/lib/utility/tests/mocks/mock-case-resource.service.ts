@@ -46,6 +46,14 @@ export class MockCaseResourceService {
                 },
             });
         }
-        return of(undefined);
+        return of({
+            content: [],
+            pagination: {
+                totalElements: 0,
+                number: 0,
+                size: 0,
+                totalPages: 0,
+            },
+        });
     }
 }

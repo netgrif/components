@@ -5,9 +5,8 @@ import {LanguageSelectorComponent} from './language-selector/language-selector.c
 import {InternalLinkComponent} from './internal-link/internal-link.component';
 import {LogoutShortcutComponent} from './logout-shortcut/logout-shortcut.component';
 import {RouterTestingModule} from '@angular/router/testing';
-import {Component} from '@angular/core';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {Component, ChangeDetectionStrategy} from '@angular/core';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {
     AuthenticationMethodService,
     AuthenticationService,
@@ -20,6 +19,7 @@ import {
     TranslateLibModule,
     UserResourceService
 } from '@netgrif/components-core';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('QuickPanelComponent', () => {
     let component: QuickPanelComponent;
@@ -27,26 +27,26 @@ describe('QuickPanelComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
-            imports: [
-                CommonModule,
-                RouterTestingModule,
-                MaterialModule,
-                TranslateLibModule,
-                HttpClientTestingModule,
-                NoopAnimationsModule
-            ],
-            providers: [
-                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
-                {provide: AuthenticationService, useClass: MockAuthenticationService},
-                {provide: UserResourceService, useClass: MockUserResourceService},
-                {provide: ConfigurationService, useClass: TestConfigurationService},
-            ],
             declarations: [
                 QuickPanelComponent,
                 LanguageSelectorComponent,
                 InternalLinkComponent,
                 LogoutShortcutComponent,
                 TestWrapperComponent
+            ],
+            imports: [
+                CommonModule,
+                RouterTestingModule,
+                MaterialModule,
+                TranslateLibModule
+            ],
+            providers: [
+                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
+                {provide: AuthenticationService, useClass: MockAuthenticationService},
+                {provide: UserResourceService, useClass: MockUserResourceService},
+                {provide: ConfigurationService, useClass: TestConfigurationService},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
             ]
         })
             .compileComponents();
@@ -67,7 +67,9 @@ describe('QuickPanelComponent', () => {
 
 @Component({
     selector: 'nc-test-wrapper',
-    template: '<nc-quick-panel [items]="items"></nc-quick-panel>'
+    template: '<nc-quick-panel [items]="items"></nc-quick-panel>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestWrapperComponent {
     items = [];

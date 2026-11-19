@@ -1,62 +1,48 @@
-<div [ngSwitch]="mode" class="no-outline">
-    <div *ngSwitchCase="'full'" #fullShowcase fxLayout="column" fxLayoutAlign="start center"
-         class="full-showcase-container no-outline margin-bottom-x2" [style.width.px]="width"
-         [routerLink]="link">
-        <ng-template [ngIf]="!userBannerExists()">
-            <div class="banner-wrapper mat-elevation-z6" matRipple [matRippleTrigger]="fullShowcase">
-                <div [style.backgroundImage]="'url(assets/netgrif-cubes-upper-left.png)'" class="cube-upper-left">
-                    <div [style.backgroundImage]="'url(assets/netgrif-cubes-down-right.png)'" class="cube-down-right"></div>
-                </div>
-            </div>
-        </ng-template>
-        <ng-template [ngIf]="userBannerExists()">
-            <div [style.backgroundImage]="'url('+userBanner+')'" class="full-width user-banner mat-elevation-z6" matRipple
-                 [matRippleTrigger]="fullShowcase"></div>
-        </ng-template>
-        <div class="user-avatar-large margin-bottom-default mat-elevation-z6" matRipple
-             [matRippleTrigger]="fullShowcase">
-            <img [src]="userAvatar" alt="user avatar" class="full-width full-height">
-        </div>
-        <div fxLayout="column" fxLayoutAlign="center center" class="full-width full-showcase-text padding-default">
-            <span>{{user.fullName}}</span>
-            <span class="impersonated-user-name" *ngIf="user.isImpersonating()">{{'side-menu.impersonation.impersonating' | translate }} {{user.getSelfOrImpersonated().fullName}}</span>
-            <span>{{user.email}}</span>
-        </div>
-    </div>
-    <div *ngSwitchCase="'horizontal'" fxLayout="row" fxLayoutAlign="start center"
-         class="horizontal-showcase-container no-outline padding-default" [routerLink]="link" matRipple>
-        <div class="user-avatar-large mat-elevation-z6">
-            <img [src]="userAvatar" alt="user avatar" class="full-width full-height">
-        </div>
-        <div fxLayout="column" fxLayoutAlign="center center" class="full-width full-showcase-text">
-            <span>{{user.fullName}}</span>
-            <span>{{user.email}}</span>
-        </div>
-    </div>
-    <div *ngSwitchCase="'vertical'" fxLayout="column" fxLayoutAlign="start center"
-         class="vertical-showcase-container no-outline padding-default"
-         [routerLink]="link" matRipple>
-        <div class="user-avatar-large mat-elevation-z6">
-            <img [src]="userAvatar" alt="user avatar" class="full-width full-height">
-        </div>
-        <div fxLayout="column" fxLayoutAlign="center center" class="full-width full-showcase-text">
-            <span>{{user.fullName}}</span>
-            <span>{{user.email}}</span>
-        </div>
-    </div>
-    <div *ngSwitchCase="'icon'" [routerLink]="link">
-        <div class="mat-elevation-z6 no-outline"
-             [ngClass]="{'user-avatar-large':iconStyle === 'large', 'user-avatar-small':iconStyle==='small'}"
-             [matTooltip]="user.fullName+'\n'+user.email"
-             matTooltipHideDelay="1000"
-             [matTooltipPosition]="tooltipPosition"
-             matRipple>
-            <img [src]="userAvatar" alt="user avatar" class="full-width full-height">
-        </div>
-    </div>
-    <div *ngSwitchDefault>
-        <span>{{ 'side-menu.user.showcase' | translate}}</span>
-    </div>
-</div>
+<ng-template #avatar let-size="size">
+    <span class="avatar" [class.avatar-small]="size === 'small'" aria-hidden="true">
+        @if (hasAvatar) {
+        <img [src]="userAvatar" alt=""/>
+        } @else {
+        {{ initials }}
+        }
+    </span>
+</ng-template>
 
-
+@if (user) {
+@switch (mode) {
+@case ('full') {
+<a class="card full" [class.clickable]="!!link" [routerLink]="link" [style.width.px]="width" matRipple [matRippleDisabled]="!link">
+    <div class="banner" [style.backgroundImage]="userBannerExists() ? 'url(' + userBanner + ')' : null"></div>
+    <ng-container *ngTemplateOutlet="avatar; context: {size: 'large'}"></ng-container>
+    <span class="name">{{ user.fullName }}</span>
+    @if (user.isImpersonating()) {
+    <span class="impersonating">{{ "side-menu.impersonation.impersonating" | translate }} {{ user.getSelfOrImpersonated().fullName }}</span>
+    }
+    <span class="email">{{ user.email }}</span>
+</a>
+}
+@case ('horizontal') {
+<a class="card horizontal" [class.clickable]="!!link" [routerLink]="link" matRipple [matRippleDisabled]="!link">
+    <ng-container *ngTemplateOutlet="avatar; context: {size: 'large'}"></ng-container>
+    <span class="texts">
+        <span class="name">{{ user.fullName }}</span>
+        <span class="email">{{ user.email }}</span>
+    </span>
+</a>
+}
+@case ('vertical') {
+<a class="card vertical" [class.clickable]="!!link" [routerLink]="link" matRipple [matRippleDisabled]="!link">
+    <ng-container *ngTemplateOutlet="avatar; context: {size: 'large'}"></ng-container>
+    <span class="name">{{ user.fullName }}</span>
+    <span class="email">{{ user.email }}</span>
+</a>
+}
+@case ('icon') {
+<a class="icon" [class.clickable]="!!link" [routerLink]="link"
+   [matTooltip]="user.fullName + '\n' + user.email" matTooltipClass="nc-user-card-tooltip" [matTooltipPosition]="tooltipPosition"
+   [attr.aria-label]="user.fullName">
+    <ng-container *ngTemplateOutlet="avatar; context: {size: iconStyle}"></ng-container>
+</a>
+}
+}
+}

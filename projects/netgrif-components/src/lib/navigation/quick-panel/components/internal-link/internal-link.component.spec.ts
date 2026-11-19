@@ -4,7 +4,6 @@ import {InternalLinkComponent} from './internal-link.component';
 import {MaterialModule} from '@netgrif/components-core';
 import {CommonModule} from '@angular/common';
 import {RouterTestingModule} from '@angular/router/testing';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('InternalLinkComponent', () => {
     let component: InternalLinkComponent;
@@ -16,7 +15,7 @@ describe('InternalLinkComponent', () => {
             imports: [
                 CommonModule,
                 RouterTestingModule.withRoutes([]),
-                MaterialModule, NoopAnimationsModule
+                MaterialModule
             ]
         })
             .compileComponents();

@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {AbstractTaskViewComponent,
     AllowedNetsService,
@@ -38,7 +38,9 @@ const localAllowedNetsServiceFactory = (factory: AllowedNetsServiceFactory, rout
         {provide: NAE_VIEW_ID_SEGMENT, useValue: 'publicView'},
         {provide: AllowedNetsServiceFactory, useClass: AllowedNetsServiceFactory},
         ViewIdService,
-    ]
+    ],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class DefaultPublicTaskViewComponent extends AbstractTaskViewComponent implements AfterViewInit {
 

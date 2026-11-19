@@ -1,47 +1,62 @@
-<div [ngClass]="{'netgrif-file-padding': !(!dataField.isInvalid(formControlRef) && hasHint()) && !dataField.isInvalid(formControlRef)}">
-    <div #fileLabel class="file-field-label" [ngClass]="{'netgrif-label-disabled': formControlRef.disabled}">
-        {{dataField.title}}
-        <nc-required-label *ngIf="dataField.behavior.required" [isIn]="!dataField.disabled"></nc-required-label>
-    </div>
-    <div class="form-input button-icon-input full-width" fxLayout="row" fxLayoutAlign="start center"
-         [ngClass]="{'form-input-disabled': formControlRef.disabled, 'form-input-error': dataField.isInvalid(formControlRef)}"
-         [ngStyle]="{
-                    '-webkit-clip-path': getCutProperty(fileLabel),
-                    'clip-path': getCutProperty(fileLabel)
-            }">
-        <button mat-icon-button matPrefix
-                class="file-button-size"
-                [disabled]="formControlRef.disabled"
-                color="primary"
-                (click)="chooseFile()"
-                [matTooltip]="'dataField.file.clickToUpload' | translate"
-                [class.do-not-click]="state.uploading">
-            <mat-icon>file_upload</mat-icon>
-        </button>
-        <span *ngIf="uploadedFiles.length === 0" (click)="chooseFile()" fxFlex
-              [ngClass]="{'no-cursor': formControlRef.disabled}"
-              class="input-placeholder input-name-ellipsis">{{constructDisplayName()}}</span>
-        <div *ngIf="uploadedFiles.length !== 0" class="input-name-ellipsis" fxFlex>
-            <div *ngFor="let name of uploadedFiles" fxLayoutAlign="start center">
-                    <span (click)="download(name)" fxFlex
-                          [matTooltip]="'dataField.file.clickToDownload' | translate : {fileName: name}"
-                          class="input-name-ellipsis file-list-item">{{name}}</span>
-                <button (click)="deleteFile(name)" [matTooltip]="'dataField.file.clickToDelete' | translate"
-                        mat-icon-button  class="file-button-size"
-                        *ngIf="!formControlRef.disabled">
-                    <mat-icon color="warn">close</mat-icon>
+<div class="file-field"
+     [class.empty]="uploadedFiles.length === 0"
+     [class.invalid]="dataField.isInvalid(formControlRef)"
+     [class.disabled]="!canUpload"
+     [class.drag-over]="dragOver"
+     (dragover)="onDragOver($event)"
+     (dragleave)="onDragLeave($event)"
+     (drop)="onDrop($event, true)">
+    <fieldset class="file-outline">
+        @if (hasTitle()) {
+        <legend>{{ dataField.title }}@if (dataField.behavior.required) {<span class="required" aria-hidden="true">*</span>}</legend>
+        }
+        @for (name of uploadedFiles; track name) {
+        <div class="file-line">
+            <mat-icon class="file-icon">{{ fileIcon(name) }}</mat-icon>
+            <button type="button" class="file-name" (click)="download(name)"
+                    [matTooltip]="'dataField.file.clickToDownload' | translate: { fileName: name }" matTooltipShowDelay="600">{{ name }}</button>
+            <span class="file-actions">
+                <button mat-icon-button type="button" (click)="download(name)" [matTooltip]="'dataField.file.download' | translate">
+                    <mat-icon>download</mat-icon>
                 </button>
-            </div>
+                @if (canUpload) {
+                <button mat-icon-button type="button" (click)="deleteFile(name)" [matTooltip]="'dataField.file.delete' | translate">
+                    <mat-icon>delete</mat-icon>
+                </button>
+                }
+            </span>
         </div>
-    </div>
-    <mat-progress-bar *ngIf="state.uploading || state.downloading" color="primary" [value]="state.progress"
-                      [mode]="state.uploading ? 'determinate' : 'indeterminate'"
-                      class="margin-bottom-default"></mat-progress-bar>
-    <input type="file" #fileUploadInput name="fileUpload" [multiple]="true"
-           accept="{{dataField.allowTypes}}" class="invisible-input"/>
-    <input type="text" [formControl]="formControlRef" class="invisible-input">
-    <mat-hint class="file-hint-error" [ngClass]="{'mat-hint-disabled': formControlRef.disabled}"
-              *ngIf="!dataField.isInvalid(formControlRef) && hasHint()">{{dataField.description}}</mat-hint>
-    <mat-error class="file-hint-error"
-               *ngIf="dataField.isInvalid(formControlRef)">{{'dataField.validations.required' | translate}}</mat-error>
+        }
+        @if (canUpload || uploadedFiles.length === 0) {
+        <div class="file-line drop"
+             [attr.role]="canUpload ? 'button' : null"
+             [attr.tabindex]="canUpload ? 0 : null"
+             [attr.aria-label]="dataField.title"
+             (click)="canUpload && chooseFile()"
+             (keydown.enter)="chooseFile()"
+             (keydown.space)="$event.preventDefault(); chooseFile()">
+            <mat-icon class="lead-icon">{{ uploadedFiles.length === 0 ? "upload_file" : "add" }}</mat-icon>
+            <span class="drop-text">
+                @if (!canUpload) {
+                {{ dataField.placeholder || ("dataField.file.noFile" | translate) }}
+                } @else if (dragOver) {
+                {{ "dataField.file.dropToUpload" | translate }}
+                } @else {
+                {{ "dataField.file.dropMany" | translate }}
+                <button type="button" class="browse" (click)="$event.stopPropagation(); chooseFile()">{{ "dataField.file.browseMany" | translate }}</button>
+                }
+            </span>
+        </div>
+        }
+    </fieldset>
+    @if (state.uploading || state.downloading) {
+    <mat-progress-bar [value]="state.progress" [mode]="state.uploading ? 'determinate' : 'indeterminate'"></mat-progress-bar>
+    }
+    @if (dataField.isInvalid(formControlRef)) {
+    <span class="supporting error">{{ "dataField.validations.required" | translate }}</span>
+    } @else if (supportingText()) {
+    <span class="supporting">{{ supportingText() }}</span>
+    }
+    <input hidden type="file" #fileUploadInput name="fileUpload" [multiple]="true" accept="{{ dataField.allowTypes }}"/>
+    <input hidden type="text" [formControl]="formControlRef"/>
 </div>

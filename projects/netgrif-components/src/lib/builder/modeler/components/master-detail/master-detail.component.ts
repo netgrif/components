@@ -1,12 +1,14 @@
 import {ComponentType} from '@angular/cdk/overlay';
 import {ComponentPortal} from '@angular/cdk/portal';
-import {Component, Injector, Input, OnInit} from '@angular/core';
+import {Component, Injector, Input, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {AbstractMasterDetailService} from './abstract-master-detail.service';
 
 @Component({
     selector: 'nc-builder-master-detail',
     templateUrl: './master-detail.component.html',
-    styleUrl: './master-detail.component.scss'
+    styleUrl: './master-detail.component.scss',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class MasterDetailComponent implements OnInit {
 
@@ -21,6 +23,7 @@ export class MasterDetailComponent implements OnInit {
     @Input() secondColName: string;
     @Input() buttonTooltip: string;
     @Input() showAddButton: boolean = true;
+    @Input() sortable: boolean = true;
     masterPortal: ComponentPortal<any>;
     detailPortal: ComponentPortal<any>;
 

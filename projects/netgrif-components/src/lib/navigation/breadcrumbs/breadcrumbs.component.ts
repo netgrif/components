@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, ChangeDetectionStrategy} from '@angular/core';
 import {
     UriService,
     AbstractBreadcrumbsComponent, CaseResourceService, DynamicNavigationRouteProviderService, LoggerService,
@@ -10,7 +10,10 @@ import {TranslateService} from "@ngx-translate/core";
 @Component({
     selector: 'nc-breadcrumbs',
     templateUrl: './breadcrumbs.component.html',
-    styleUrls: ['./breadcrumbs.component.scss']
+    styleUrls: ['./breadcrumbs.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false,
+    host: {'[hidden]': '!active'}
 })
 export class BreadcrumbsComponent extends AbstractBreadcrumbsComponent {
 

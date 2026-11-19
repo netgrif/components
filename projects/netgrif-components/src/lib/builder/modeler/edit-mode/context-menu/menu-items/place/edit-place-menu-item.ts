@@ -20,8 +20,7 @@ export class EditPlaceMenuItem extends MenuItem {
             'edit',
             () => {
                 tool.openDialog(DialogPlaceEditComponent, {
-                    width: '50%',
-                    panelClass: "dialog-width-50",
+                    panelClass: 'dialog-responsive',
                     data: {
                         placeId: place.modelPlace.id,
                         modelService: tool.modelService

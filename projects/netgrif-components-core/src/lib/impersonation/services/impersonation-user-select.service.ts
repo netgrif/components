@@ -48,7 +48,7 @@ export class ImpersonationUserSelectService {
             });
         } else {
             const dialogRef = this._dialog.open(this._userImpersonateComponent, {
-                panelClass: "dialog-responsive",
+                panelClass: 'dialog-task-responsive',
                 data: this.injectedData(),
             });
             dialogRef.afterClosed().subscribe(event => {

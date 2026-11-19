@@ -421,11 +421,11 @@ export class GridsterFieldToEngineFieldService {
         switch (dataField.dataRef.layout?.alignment) {
             case Alignment.BOTTOM:
                 return FieldAlignment.BOTTOM;
-            case Alignment.TOP:
-                return FieldAlignment.TOP;
             case Alignment.CENTER:
-            default:
                 return FieldAlignment.CENTER;
+            case Alignment.TOP:
+            default:
+                return FieldAlignment.TOP;
         }
     }
 

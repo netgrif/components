@@ -1,0 +1,23 @@
+<header class="header">
+    <h1 class="mat-headline-medium">Netgrif components playground</h1>
+    <p class="mat-body-large">
+        Components of <code>&#64;netgrif/components</code> and <code>&#64;netgrif/components-core</code> with their
+        configuration and usage. The playground runs without Netgrif Application Engine and without login,
+        all data are created in the browser.
+    </p>
+</header>
+
+@for (group of groups; track group.label) {
+<section>
+    <h2 class="mat-title-large">{{ group.label }}</h2>
+    <div class="grid">
+        @for (item of group.items; track item.path) {
+        <a class="card" [routerLink]="item.path">
+            <mat-icon>{{ item.icon }}</mat-icon>
+            <span class="mat-title-medium">{{ item.label }}</span>
+            <span class="mat-body-medium description">{{ item.description }}</span>
+        </a>
+        }
+    </div>
+</section>
+}

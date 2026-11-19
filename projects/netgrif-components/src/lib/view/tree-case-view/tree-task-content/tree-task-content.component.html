@@ -1,17 +1,27 @@
-<div class="panel-main-content" fxLayout="column">
+<div fxLayout="column">
     <div class="task-panel-body" fxFlex="100">
-        <nc-task-content [noDataText]="taskContentText$ | async"></nc-task-content>
+        <nc-task-content
+            [noDataText]="taskContentText$ | async"
+        ></nc-task-content>
 
-        <div *ngIf="!processingTaskChange && displayTaskControlButtons" fxLayoutAlign="center center">
-            <button *ngIf="canAssign()" color="primary" (click)="assign()" mat-raised-button>
-                {{ getAssignTitle() | translate | uppercase }}</button>
-            <button *ngIf="canCancel()" color="warn" (click)="cancel()" mat-stroked-button>
-                {{ getCancelTitle() | translate | uppercase }}</button>
-            <button *ngIf="canFinish()" color="primary" (click)="finish()" mat-raised-button>
-                {{ getFinishTitle() | translate | uppercase }}</button>
+        @if (!processingTaskChange && displayTaskControlButtons) {
+        <div fxLayoutAlign="center center">
+            @if (canAssign()) {
+            <button color="primary" (click)="assign()" mat-raised-button>
+                {{ getAssignTitle() | translate }}
+            </button>
+            } @if (canCancel()) {
+            <button color="warn" (click)="cancel()" mat-stroked-button>
+                {{ getCancelTitle() | translate }}
+            </button>
+            } @if (canFinish()) {
+            <button color="primary" (click)="finish()" mat-raised-button>
+                {{ getFinishTitle() | translate }}
+            </button>
+            }
         </div>
-        <div *ngIf="processingTaskChange" fxLayoutAlign="center center">
-            <mat-spinner [diameter]="40"></mat-spinner>
-        </div>
+        } @if (processingTaskChange) {
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        }
     </div>
 </div>

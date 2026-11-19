@@ -16,7 +16,9 @@ export abstract class ViewService {
     private _nameToClass: Map<string, Type<any>>;
 
     /**
-     * @param componentClasses Class objects of view components that should be dynamically routed
+     * @param componentClasses Class objects of view components that should be dynamically routed.
+     * Prefer `{id: 'MyViewComponent', class: MyViewComponent}` entries: a bare class is registered under its runtime
+     * `name`, which is mangled by minification (production builds), so nae.json `componentName` wouldn't match it.
      * @param configService application's ConfigurationService
      * @param _router the application's Router
      * @param _logger application's logging service
@@ -29,6 +31,8 @@ export abstract class ViewService {
         this._nameToClass = new Map<string, Type<any>>();
         componentClasses.forEach(component => {
             if (component instanceof Type) {
+                this._logger?.warn(`View component '${component.name}' is registered without an id, its class name may change`
+                    + ` in a minified build. Register it as {id: '<ComponentName>', class: <ComponentName>}.`);
                 this._nameToClass.set(component.name, component);
             } else {
                 this._nameToClass.set(component.id, component.class);

@@ -1,5 +1,20 @@
-.full-width {
-    display: block;
-    margin: 0 auto;
-    width: 100%;
+@use '@angular/material' as mat;
+
+mat-chip-grid {
+    @include mat.chips-overrides((
+        container-height: 24px,
+    ));
+
+    ::ng-deep .mdc-evolution-chip-set__chips {
+        row-gap: 4px;
+    }
+}
+
+mat-chip-grid mat-chip-row.mat-mdc-chip {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+input.mat-mdc-chip-input {
+    height: 24px;
 }

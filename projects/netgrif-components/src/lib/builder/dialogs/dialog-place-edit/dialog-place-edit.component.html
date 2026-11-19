@@ -1,28 +1,67 @@
-<h2 mat-dialog-title>{{ 'builder.dialogs.place-edit.title' | translate }}</h2>
-<mat-dialog-content class="netgrif-input padding-top-4px">
-    <mat-form-field fxFlex appearance="outline">
-        <mat-label>{{ 'builder.dialogs.place-edit.id' | translate }}</mat-label>
-        <input type="text" matInput [(ngModel)]="place.place.id" [formControl]="idCtrl">
-        <mat-error *ngIf="idCtrl.errors && idCtrl.errors.required">{{ 'builder.dialogs.place-edit.idRequired' | translate }}</mat-error>
-        <mat-error *ngIf="idCtrl.errors && idCtrl.errors.validUnique">{{ 'builder.dialogs.place-edit.idExists' | translate }}</mat-error>
+<h2 mat-dialog-title>{{ "builder.dialogs.place-edit.title" | translate }}</h2>
+<mat-dialog-content class="dialog-column">
+    <mat-form-field appearance="outline">
+        <mat-label>{{ "builder.dialogs.place-edit.id" | translate }}</mat-label>
+        <input
+            type="text"
+            matInput
+            [(ngModel)]="place.place.id"
+            [formControl]="idCtrl"
+        />
+        @if (idCtrl.errors && idCtrl.errors.required) {
+        <mat-error>{{
+            "builder.dialogs.place-edit.idRequired" | translate
+        }}</mat-error>
+        } @if (idCtrl.errors && idCtrl.errors.validUnique) {
+        <mat-error>{{
+            "builder.dialogs.place-edit.idExists" | translate
+        }}</mat-error>
+        }
     </mat-form-field>
-    <mat-form-field fxFlex appearance="outline">
-        <mat-label>{{ 'builder.dialogs.place-edit.label' | translate }}</mat-label>
-        <input type="text" matInput [(ngModel)]="place.place.label.value" [disabled]="_builderModeService.readOnly">
+    <mat-form-field appearance="outline">
+        <mat-label>{{
+            "builder.dialogs.place-edit.label" | translate
+        }}</mat-label>
+        <input
+            type="text"
+            matInput
+            [(ngModel)]="place.place.label.value"
+            [disabled]="_builderModeService.readOnly"
+        />
     </mat-form-field>
-    <mat-form-field fxFlex appearance="outline">
-        <mat-label>{{ 'builder.dialogs.place-edit.tokens' | translate }}</mat-label>
-        <input type="number" min="0" step="1" matInput [(ngModel)]="place.place.marking" [formControl]="markingCtrl">
-        <mat-error *ngIf="markingCtrl.errors && markingCtrl.errors.required">{{ 'builder.dialogs.place-edit.tokensRequired' | translate }}</mat-error>
-        <mat-error *ngIf="markingCtrl.errors && markingCtrl.errors.validMarking">
-            {{ 'builder.dialogs.place-edit.tokensNonNegative' | translate }}
+    <mat-form-field appearance="outline">
+        <mat-label>{{
+            "builder.dialogs.place-edit.tokens" | translate
+        }}</mat-label>
+        <input
+            type="number"
+            min="0"
+            step="1"
+            matInput
+            [(ngModel)]="place.place.marking"
+            [formControl]="markingCtrl"
+        />
+        @if (markingCtrl.errors && markingCtrl.errors.required) {
+        <mat-error>{{
+            "builder.dialogs.place-edit.tokensRequired" | translate
+        }}</mat-error>
+        } @if (markingCtrl.errors && markingCtrl.errors.validMarking) {
+        <mat-error>
+            {{ "builder.dialogs.place-edit.tokensNonNegative" | translate }}
         </mat-error>
+        }
     </mat-form-field>
 </mat-dialog-content>
-<mat-dialog-actions>
-    <button mat-flat-button color="primary" [mat-dialog-close]="place"
-            [disabled]="markingCtrl.invalid || idCtrl.invalid || _builderModeService.readOnly">
-        <mat-icon>done</mat-icon>
-        <span>{{ 'builder.dialogs.place-edit.save' | translate }}</span>
+<mat-dialog-actions align="end">
+    <button
+        mat-flat-button
+        [mat-dialog-close]="place"
+        [disabled]="
+            markingCtrl.invalid ||
+            idCtrl.invalid ||
+            _builderModeService.readOnly
+        "
+    >
+        {{ "builder.dialogs.place-edit.save" | translate }}
     </button>
 </mat-dialog-actions>

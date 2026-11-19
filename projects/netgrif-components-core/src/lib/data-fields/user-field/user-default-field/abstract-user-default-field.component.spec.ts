@@ -1,13 +1,11 @@
 import {ComponentFixture, TestBed, waitForAsync} from "@angular/core/testing";
 import {MaterialModule} from "../../../material/material.module";
-import {AngularResizeEventModule} from "angular-resize-event";
-import {NoopAnimationsModule} from "@angular/platform-browser/animations";
-import {HttpClientTestingModule} from "@angular/common/http/testing";
+import {provideHttpClientTesting} from "@angular/common/http/testing";
 import {TranslateLibModule} from "../../../translate/translate-lib.module";
 import {SnackBarModule} from "../../../snack-bar/snack-bar.module";
 import {SideMenuService} from "../../../side-menu/services/side-menu.service";
 import {TranslateService} from "@ngx-translate/core";
-import {Component, CUSTOM_ELEMENTS_SCHEMA, Inject, Optional} from "@angular/core";
+import {Component, CUSTOM_ELEMENTS_SCHEMA, Inject, Optional, ChangeDetectionStrategy} from "@angular/core";
 import {SnackBarService} from "../../../snack-bar/services/snack-bar.service";
 import {UserField} from "../models/user-field";
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
@@ -15,6 +13,7 @@ import {AbstractUserDefaultFieldComponent} from "./abstract-user-default-field.c
 import {FormControl} from "@angular/forms";
 import {WrappedBoolean} from "../../data-field-template/models/wrapped-boolean";
 import {MatDialog} from '@angular/material/dialog';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('AbstractUserDefaultFieldComponent', () => {
     let component: TestUserComponent;
@@ -22,15 +21,13 @@ describe('AbstractUserDefaultFieldComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
+            declarations: [TestUserComponent, TestWrapperComponent],
+            schemas: [CUSTOM_ELEMENTS_SCHEMA],
             imports: [
                 MaterialModule,
-                AngularResizeEventModule,
-                NoopAnimationsModule,
-                HttpClientTestingModule,
                 TranslateLibModule,
                 SnackBarModule
             ],
-            declarations: [TestUserComponent, TestWrapperComponent],
             providers: [
                 SideMenuService,
                 TranslateService,
@@ -45,9 +42,10 @@ describe('AbstractUserDefaultFieldComponent', () => {
                         formControlRef: new FormControl(),
                         showLargeLayout: new WrappedBoolean()
                     } as DataFieldPortalData<UserField>
-                }
-            ],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA]
+                },
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
+            ]
         })
             .compileComponents();
         fixture = TestBed.createComponent(TestWrapperComponent);
@@ -66,7 +64,9 @@ describe('AbstractUserDefaultFieldComponent', () => {
 
 @Component({
     selector: 'ncc-test-user',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestUserComponent extends AbstractUserDefaultFieldComponent {
     constructor(matDialog: MatDialog,
@@ -79,7 +79,9 @@ class TestUserComponent extends AbstractUserDefaultFieldComponent {
 
 @Component({
     selector: 'ncc-test-wrapper',
-    template: '<ncc-test-user></ncc-test-user>'
+    template: '<ncc-test-user></ncc-test-user>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestWrapperComponent {
 

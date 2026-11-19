@@ -1,0 +1,78 @@
+@use '@angular/material' as mat;
+
+:host {
+    display: block;
+}
+
+.avatar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: var(--mat-sys-primary-container);
+    color: var(--mat-sys-on-primary-container);
+    font: var(--mat-sys-title-small);
+    text-transform: uppercase;
+}
+
+.check {
+    pointer-events: none;
+}
+
+:host,
+a[mat-list-item] {
+    min-width: 0;
+    max-width: 100%;
+}
+
+a[mat-list-item] {
+    @include mat.list-overrides((
+        list-item-two-line-container-height: 64px,
+        active-indicator-color: var(--mat-sys-secondary-container),
+        active-indicator-shape: var(--mat-sys-corner-medium),
+    ));
+}
+
+a[mat-list-item].mdc-list-item--activated {
+    @include mat.list-overrides((
+        list-item-label-text-color: var(--mat-sys-on-secondary-container),
+        list-item-hover-label-text-color: var(--mat-sys-on-secondary-container),
+        list-item-focus-label-text-color: var(--mat-sys-on-secondary-container),
+        list-item-supporting-text-color: var(--mat-sys-on-secondary-container),
+    ));
+}
+
+a[mat-list-item].mdc-list-item--activated .avatar {
+    background: var(--mat-sys-primary);
+    color: var(--mat-sys-on-primary);
+}
+
+:host ::ng-deep a[mat-list-item].mdc-list-item--with-two-lines {
+    .mdc-list-item__start,
+    .mdc-list-item__end {
+        align-self: center;
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+
+    .mdc-list-item__content {
+        align-self: center;
+    }
+
+    .mdc-list-item__primary-text {
+        margin-bottom: 0;
+
+        &::before,
+        &::after {
+            display: none;
+        }
+    }
+
+    .mdc-list-item__secondary-text {
+        margin-top: 0;
+
+        &::before {
+            display: none;
+        }
+    }
+}

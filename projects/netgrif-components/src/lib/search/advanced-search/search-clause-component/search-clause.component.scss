@@ -1,16 +1,6 @@
-.bool-operator-margin {
-    margin: 0 8px 0 4px;
+.clause {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
 }
-
-.bool-operator-button {
-    margin-left: 4px;
-}
-
-.advanced-search-buttons {
-    min-height: 43px;
-}
-
-.prefix-icon{
-    color: #64748B;
-}
-

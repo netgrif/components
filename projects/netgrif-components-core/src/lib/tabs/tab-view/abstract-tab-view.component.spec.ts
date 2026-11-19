@@ -1,6 +1,5 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {Component, Injector} from '@angular/core';
+import {Component, Injector, ChangeDetectionStrategy} from '@angular/core';
 import {AbstractTabViewComponent} from './abstract-tab-view.component';
 import {ViewService} from '../../routing/view-service/view.service';
 import {LoggerService} from '../../logger/services/logger.service';
@@ -17,7 +16,8 @@ import {MockAuthenticationService} from '../../utility/tests/mocks/mock-authenti
 import {TestConfigurationService} from '../../utility/tests/test-config';
 import {TestViewService} from '../../utility/tests/test-view-service';
 import {MockUserResourceService} from '../../utility/tests/mocks/mock-user-resource.service';
-import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
+import {HttpTestingController, provideHttpClientTesting} from '@angular/common/http/testing';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('AbstractTabViewComponent', () => {
     let component: TestTabComponent;
@@ -25,10 +25,13 @@ describe('AbstractTabViewComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
+            declarations: [
+                TestComponent,
+                TestTabComponent,
+                TestWrapperComponent
+            ],
             imports: [
                 MaterialModule,
-                NoopAnimationsModule,
-                HttpClientTestingModule,
                 RouterTestingModule.withRoutes([])
             ],
             providers: [
@@ -36,12 +39,9 @@ describe('AbstractTabViewComponent', () => {
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
-                {provide: ViewService, useClass: TestViewService}
-            ],
-            declarations: [
-                TestComponent,
-                TestTabComponent,
-                TestWrapperComponent,
+                {provide: ViewService, useClass: TestViewService},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
             ]
         }).compileComponents();
 
@@ -62,7 +62,9 @@ describe('AbstractTabViewComponent', () => {
 
 @Component({
     selector: 'ncc-test-tabs',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestTabComponent extends AbstractTabViewComponent {
     constructor(protected _viewService: ViewService, protected _logger: LoggerService, parentInjector: Injector) {
@@ -72,7 +74,9 @@ class TestTabComponent extends AbstractTabViewComponent {
 
 @Component({
     selector: 'ncc-test-wrapper',
-    template: '<ncc-test-tabs [initialTabs]="tabs"></ncc-test-tabs>'
+    template: '<ncc-test-tabs [initialTabs]="tabs"></ncc-test-tabs>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestWrapperComponent {
     tabs: Array<TabContent> = [
@@ -89,7 +93,9 @@ class TestWrapperComponent {
 
 @Component({
     selector: 'ncc-test-div',
-    template: '<div></div>'
+    template: '<div></div>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestComponent {
 }

@@ -1,7 +1,17 @@
-<div fxLayout="row wrap" fxLayoutAlign="start center" class="netgrif-input">
-    <div *ngFor="let item of getPredicateMap() | keyvalue; trackBy: trackByPredicates; first as first" fxLayout="row" fxLayoutAlign="start center">
-        <div *ngIf="!first" class="bool-operator-margin">{{'search.and' | translate | uppercase}}</div>
-        <nc-search-clause [predicate]="item.value" [predicateId]="item.key" [remove$]="removeChild$" [editable]="editable"></nc-search-clause>
-    </div>
-    <button *ngIf="editable" mat-stroked-button (click)="addChildPredicate()" class="bool-operator-margin advanced-search-buttons">+ {{'search.and' | translate | uppercase}}</button>
+<div class="conditions">
+    @for (item of getPredicateMap() | keyvalue; track trackByPredicates($index, item); let first = $first) {
+    @if (!first) {
+    <span class="joiner">{{ "search.and" | translate }}</span>
+    }
+    <nc-search-clause [predicate]="item.value"
+                      [predicateId]="item.key"
+                      [remove$]="removeChild$"
+                      [editable]="editable"></nc-search-clause>
+    }
+    @if (editable) {
+    <button mat-button class="add-condition" (click)="addChildPredicate()">
+        <mat-icon>add</mat-icon>
+        {{ "search.addCondition" | translate }}
+    </button>
+    }
 </div>

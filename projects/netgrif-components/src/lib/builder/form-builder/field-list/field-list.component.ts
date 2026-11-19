@@ -1,10 +1,10 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {MatExpansionPanel} from '@angular/material/expansion';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {Router} from '@angular/router';
 import {DataType, DataVariable, Property} from '@netgrif/petriflow';
-import {GridsterItem} from 'angular-gridster2';
+import {GridsterItemConfig} from 'angular-gridster2';
 import {timer} from 'rxjs';
 import {DialogDeleteComponent} from '../../dialogs/dialog-delete/dialog-delete.component';
 import {SelectedTransitionService} from '../../modeler/selected-transition.service';
@@ -23,7 +23,9 @@ export interface Data {
 @Component({
     selector: 'nc-builder-field-list',
     templateUrl: './field-list.component.html',
-    styleUrls: ['./field-list.component.scss']
+    styleUrls: ['./field-list.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class FieldListComponent implements OnInit, AfterViewInit {
 
@@ -137,7 +139,7 @@ export class FieldListComponent implements OnInit, AfterViewInit {
         this.transitionService.id = undefined;
         this._builderModeService.mode = BuilderMode.MODELER;
         this.gridsterService.placedDataFields = [];
-        this.gridsterService.options.api.optionsChanged();
+        this.gridsterService.refreshOptions();
     }
 
     typeTitle(type: DataType): string {
@@ -161,13 +163,14 @@ export class FieldListComponent implements OnInit, AfterViewInit {
             y: 0,
             rows: meta.rows,
             cols: meta.cols
-        } as GridsterItem);
+        } as GridsterItemConfig
+        );
         if (meta.name && meta.properties && Array.isArray(meta.properties) && meta.properties.length > 0) {
             for (const property of meta.properties) {
                 dataRef.component.properties.push(new Property(property.name, property.defaultValue));
             }
         }
-        this.gridsterService.options.api.optionsChanged();
+        this.gridsterService.refreshOptions();
     }
 
     deleteField(item: DataVariable, event: MouseEvent): void {

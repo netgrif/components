@@ -1,13 +1,34 @@
-<div fxLayout="row" fxLayoutAlign="start center" class="gridster-item-content min-row-height netgrif-input" *ngIf="!isHidden()">
-    <span *ngIf="fieldListService.isPlaceholderField(dataField)"
-          class="placeholder-text">{{ 'builder.form-builder.gridster.placeholderFor' | translate }} {{dataField.dataVariable.type}} {{ 'builder.form-builder.gridster.withId' | translate }} '{{dataField.dataVariable?.id}}'</span>
-
-    <nc-data-field-template *ngIf="!fieldListService.isPlaceholderField(dataField)"
-                            [additionalFieldProperties]="{taskId: ''}" [dataField]="engineField" [offset]="0" fxFlex
-                            [ngClass]="{'date-field-fix': isDateField()}">
+@if (!isHidden()) {
+<div
+    fxLayout="row"
+    fxLayoutAlign="start center"
+    class="gridster-item-content"
+>
+    @if (fieldListService.isPlaceholderField(dataField)) {
+    <span class="placeholder-text"
+        >{{ "builder.form-builder.gridster.placeholderFor" | translate }}
+        {{ dataField.dataVariable.type }}
+        {{ "builder.form-builder.gridster.withId" | translate }} '{{
+            dataField.dataVariable?.id
+        }}'</span
+    >
+    } @if (!fieldListService.isPlaceholderField(dataField)) {
+    <nc-data-field-template
+        [additionalFieldProperties]="{ taskId: '' }"
+        [dataField]="engineField"
+        [offset]="0"
+        fxFlex
+    >
     </nc-data-field-template>
+    }
 </div>
-<div *ngIf="isHidden()" fxLayout="row" fxLayoutAlign="center center" class="gridster-item-content min-row-height hidden-field">
+} @if (isHidden()) {
+<div
+    fxLayout="row"
+    fxLayoutAlign="center center"
+    class="gridster-item-content hidden-field"
+>
     <mat-icon>visibility_off</mat-icon>
-    <span>{{name()}}</span>
+    <span>{{ name() }}</span>
 </div>
+}

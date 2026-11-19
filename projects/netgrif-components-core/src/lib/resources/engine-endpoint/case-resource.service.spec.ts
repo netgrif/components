@@ -1,21 +1,23 @@
 import {inject, TestBed} from '@angular/core/testing';
-import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
+import {HttpTestingController, provideHttpClientTesting} from '@angular/common/http/testing';
 import {CaseResourceService} from './case-resource.service';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
 import {SimpleFilter} from '../../filter/models/simple-filter';
 import {FilterType} from '../../filter/models/filter-type';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {CreateCaseEventOutcome} from '../../event/model/event-outcomes/case-outcomes/create-case-event-outcome';
-import {HttpParams} from "@angular/common/http";
+import {HttpParams, provideHttpClient, withInterceptorsFromDi, withXhr} from "@angular/common/http";
 
 describe('CaseResourceService', () => {
     let service: CaseResourceService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule, NoopAnimationsModule],
-            providers: [{provide: ConfigurationService, useClass: TestConfigurationService}]
+            imports: [],
+            providers: [{provide: ConfigurationService, useClass: TestConfigurationService},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
+            ]
         });
         service = TestBed.inject(CaseResourceService);
     });

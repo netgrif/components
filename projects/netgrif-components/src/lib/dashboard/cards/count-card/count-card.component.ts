@@ -1,11 +1,12 @@
-import {Component, Injector} from '@angular/core';
+import {Component, Injector, ChangeDetectionStrategy} from '@angular/core';
 import {AbstractCountCardComponent} from '@netgrif/components-core';
 
 
 @Component({
     selector: 'nc-count-card',
     templateUrl: './count-card.component.html',
-    styleUrls: ['./count-card.component.scss']
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class CountCardComponent extends AbstractCountCardComponent {
 

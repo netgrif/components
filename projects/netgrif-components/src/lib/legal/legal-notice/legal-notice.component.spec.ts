@@ -1,9 +1,10 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {LegalNoticeComponent} from './legal-notice.component';
-import {Component} from '@angular/core';
+import {Component, ChangeDetectionStrategy} from '@angular/core';
 import {LegalNoticeModule} from './legal-notice.module';
 import {ConfigurationService, TestConfigurationService} from '@netgrif/components-core';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('LegalNoticeComponent', () => {
     let component: LegalNoticeComponent;
@@ -12,8 +13,11 @@ describe('LegalNoticeComponent', () => {
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             declarations: [TestWrapperComponent],
-            imports: [LegalNoticeModule, HttpClientTestingModule],
-            providers: [{provide: ConfigurationService, useClass: TestConfigurationService}]
+            imports: [LegalNoticeModule],
+            providers: [{provide: ConfigurationService, useClass: TestConfigurationService},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
+            ]
         })
             .compileComponents();
     }));
@@ -35,7 +39,9 @@ describe('LegalNoticeComponent', () => {
 
 @Component({
     selector: 'nc-test-wrapper',
-    template: '<nc-legal-notice buttonName="name"></nc-legal-notice>'
+    template: '<nc-legal-notice buttonName="name"></nc-legal-notice>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestWrapperComponent {
     constructor() {

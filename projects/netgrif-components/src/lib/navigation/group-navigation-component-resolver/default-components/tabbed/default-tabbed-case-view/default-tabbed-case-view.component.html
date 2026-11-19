@@ -1,35 +1,38 @@
-<div class="case-view-container" fxLayout="column" fxLayoutAlign="start stretch">
-    <nc-breadcrumbs></nc-breadcrumbs>
-
-    <div class="case-view-search-container">
-        <div fxLayout="row" class="max-height" fxLayoutAlign="space-between">
-            <div fxLayoutAlign="start center" fxFlex>
-                <nc-search class="search-width search-fix" *ngIf="(enableSearch)" [showSearchToggleButton]="showToggleButton"
-                           [initialSearchMode]="initialSearchMode"></nc-search>
-            </div>
-            <div fxLayoutAlign="end center" *ngIf="allowExport">
-                <button mat-mini-fab color="primary" class="export-mat-mini-fab" (click)="export()"
-                        [disabled]="isLoading()">
-                    <mat-icon class="net-upload" *ngIf="(isLoading()) === false" aria-hidden="false" >save_alt</mat-icon>
-                    <mat-icon class="net-upload" *ngIf="isLoading()" aria-hidden="false">schedule</mat-icon>
-                </button>
-            </div>
-            <div fxLayoutAlign="end center" *ngIf="showCreateCaseButton">
-                <nc-create-case-button [newCaseCreationConfig]="newCaseCreationConfig" (caseCreatedEvent)="handleCaseClick($event)"></nc-create-case-button>
-            </div>
+<div class="view" fxLayout="column">
+    <div class="search-row">
+        <div class="search">
+            @if (enableSearch) {
+            <nc-search [showSearchToggleButton]="showToggleButton" [initialSearchMode]="initialSearchMode"></nc-search>
+            }
         </div>
+        @if (allowExport) {
+        <button mat-mini-fab (click)="export()" [disabled]="isLoading()">
+            <mat-icon>{{ isLoading() ? "schedule" : "save_alt" }}</mat-icon>
+        </button>
+        }
+        @if (showCreateCaseButton) {
+        <nc-create-case-button [newCaseCreationConfig]="newCaseCreationConfig"
+                               (caseCreatedEvent)="handleCaseClick($event)"></nc-create-case-button>
+        }
     </div>
 
-    <div class="full-height transform-div custom-scrollbar"
-         [ngClass]="{'overflow-div': getOverflowStatus()}" fxLayout="column" fxLayoutAlign="start stretch">
-        <div class="full-height transform-div max-width-fix" fxLayout="column" fxLayoutAlign="start stretch">
-            <nc-header #header [type]="headerType" [responsiveHeaders]="true" [ngStyle]="{'width': getWidth()}" [hideHeaderMenu]="!headersChangeable" [showEditButton]="isMenuOptionEnabled('edit')"
-                       [showSortButton]="isMenuOptionEnabled('sort')" [showSearchButton]="isMenuOptionEnabled('search')"
-                       [showTableSection]="allowTableMode" class="case-header-padding"></nc-header>
-
-            <nc-case-list [selectedHeaders$]="selectedHeaders$" [textEllipsis]="true" [showDeleteMenu]="showDeleteMenu" [width]="getWidth()"
-                          (caseClick)="handleCaseClick($event)" [responsiveBody]="true" [emptyContentText]="emptyContentText"
-                          [emptyContentIcon]="emptyContentIcon" fxFlex></nc-case-list>
-        </div>
-    </div>
+    <nc-case-list-paginator class="list" fxFlex
+                            [selectedHeaders$]="selectedHeaders$"
+                            [textEllipsis]="true"
+                            [showDeleteMenu]="showDeleteMenu"
+                            [width]="getWidth()"
+                            [responsiveBody]="true"
+                            [emptyContentText]="emptyContentText"
+                            [emptyContentIcon]="emptyContentIcon"
+                            (caseClick)="handleCaseClick($event)">
+        <nc-header #header ncListHeader
+                   [type]="headerType"
+                   [responsiveHeaders]="true"
+                   [ngStyle]="{ width: getWidth() }"
+                   [hideHeaderMenu]="!headersChangeable"
+                   [showEditButton]="isMenuOptionEnabled('edit')"
+                   [showSortButton]="isMenuOptionEnabled('sort')"
+                   [showSearchButton]="isMenuOptionEnabled('search')"
+                   [showTableSection]="allowTableMode"></nc-header>
+    </nc-case-list-paginator>
 </div>

@@ -47,7 +47,18 @@ export class RedirectService {
 
     public redirectFromUrl() {
         this.lastQueryParams = this._route.snapshot.queryParams;
-        this._router.navigate([this.parseRedirectPath(this._router.url)], { queryParams: this.lastQueryParams });
+        this.navigateToUrl(this._router.url, this.lastQueryParams);
+    }
+
+    /**
+     * Navigates to a url of the router (`Router.url`, its segments are encoded) with the given query params instead of
+     * the ones of the url. `Router.navigate([path])` would encode the segments again (`=` of a base64 parameter became
+     * `%253D`, e.g. the process of a public view after the anonymous login).
+     */
+    public navigateToUrl(url: string, queryParams?: Params): Promise<boolean> {
+        const tree = this._router.parseUrl(this.parseRedirectPath(url) || '/');
+        tree.queryParams = queryParams ?? {};
+        return this._router.navigateByUrl(tree);
     }
 
     public resolveLoginPath(): string {

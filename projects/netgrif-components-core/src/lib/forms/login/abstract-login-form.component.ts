@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnDestroy, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, Output, ChangeDetectionStrategy} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {FormSubmitEvent, HasForm} from '../has-form';
 import {UserService} from '../../user/services/user.service';
@@ -8,12 +8,16 @@ import {take} from 'rxjs/operators';
 
 @Component({
     selector: 'ncc-abstract-login-field',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractLoginFormComponent implements HasForm, OnDestroy {
 
     public rootFormGroup: FormGroup;
     public hidePassword = true;
+    /** the last login failed (wrong credentials or no connection), the form shows an error message */
+    public loginFailed = false;
     public loading: LoadingEmitter;
 
     @Input() public showSignUpButton: boolean;
@@ -50,9 +54,13 @@ export abstract class AbstractLoginFormComponent implements HasForm, OnDestroy {
         const credential = {username: this.rootFormGroup.controls['login'].value, password: this.rootFormGroup.controls['password'].value};
 
         this.loading.on();
+        this.loginFailed = false;
         this.formSubmit.emit(credential);
         this._userService.login(credential).pipe(take(1)).subscribe((user: User) => {
             this.login.emit(user);
+            this.loading.off();
+        }, () => {
+            this.loginFailed = true;
             this.loading.off();
         });
     }

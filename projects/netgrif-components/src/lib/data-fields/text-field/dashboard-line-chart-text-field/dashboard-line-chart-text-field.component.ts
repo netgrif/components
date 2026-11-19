@@ -1,4 +1,4 @@
-import {Component, Inject, Optional} from '@angular/core';
+import {Component, Inject, Optional, ChangeDetectionStrategy} from '@angular/core';
 import {
     AbstractDashboardLineChartTextFieldComponent,
     DATA_FIELD_PORTAL_DATA,
@@ -10,7 +10,8 @@ import {TranslateService} from '@ngx-translate/core';
 @Component({
     selector: 'nc-dashboard-line-chart-text-field',
     templateUrl: './dashboard-line-chart-text-field.component.html',
-    styleUrls: ['./dashboard-line-chart-text-field.component.scss']
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class DashboardLineChartTextFieldComponent extends AbstractDashboardLineChartTextFieldComponent {
 

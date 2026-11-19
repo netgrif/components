@@ -1,3 +1,7 @@
+@use '../snack-bar';
+
 .warning-color {
-    color: #ffbb33;
+    color: light-dark(#ffbb33, #8a5a00);
 }
+
+@include snack-bar.close-action;

@@ -1,8 +1,4 @@
-import {
-    Component,
-    Inject,
-    Optional,
-} from '@angular/core';
+import {Component, Inject, Optional, ChangeDetectionStrategy} from '@angular/core';
 import {
     InjectedTabData,
     LoggerService,
@@ -18,7 +14,9 @@ import {MatPaginatorIntl} from '@angular/material/paginator';
     selector: 'nc-task-list-pagination',
     templateUrl: './task-list-pagination.component.html',
     styleUrls: ['./task-list-pagination.component.scss'],
-    providers: [{provide: MatPaginatorIntl, useClass: NetgrifPaginatorIntl}]
+    providers: [{provide: MatPaginatorIntl, useClass: NetgrifPaginatorIntl}],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class TaskListPaginationComponent extends AbstractTaskListPaginationComponent {
     constructor(protected _taskViewService: TaskViewService,

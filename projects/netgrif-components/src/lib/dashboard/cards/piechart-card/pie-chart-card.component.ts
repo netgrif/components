@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Injector, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Injector, OnInit, Output, ChangeDetectionStrategy} from '@angular/core';
 import {AbstractCustomCardComponent, DashboardEventContent, DashboardResourceService, DashboardSingleData} from '@netgrif/components-core';
 import {TranslateService} from '@ngx-translate/core';
 import {AggregationResult, LoggerService} from '@netgrif/components-core';
@@ -6,7 +6,8 @@ import {AggregationResult, LoggerService} from '@netgrif/components-core';
 @Component({
     selector: 'nc-pie-chart-card',
     templateUrl: './pie-chart-card.component.html',
-    styleUrls: ['./pie-chart-card.component.scss']
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class PieChartCardComponent extends AbstractCustomCardComponent implements OnInit {
 

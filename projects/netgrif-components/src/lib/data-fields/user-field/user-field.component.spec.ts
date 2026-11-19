@@ -1,11 +1,10 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {UserFieldComponent} from './user-field.component';
-import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
-import {AngularResizeEventModule} from 'angular-resize-event';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {Component, CUSTOM_ELEMENTS_SCHEMA, ChangeDetectionStrategy} from '@angular/core';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {MaterialModule, SideMenuService, TranslateLibModule, UserField} from '@netgrif/components-core';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('UserFieldComponent', () => {
     let component: UserFieldComponent;
@@ -13,10 +12,16 @@ describe('UserFieldComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
-            imports: [MaterialModule, AngularResizeEventModule, BrowserAnimationsModule, HttpClientTestingModule, TranslateLibModule],
             declarations: [UserFieldComponent, TestWrapperComponent],
-            providers: [SideMenuService],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA]
+            schemas: [CUSTOM_ELEMENTS_SCHEMA],
+            imports: [
+                MaterialModule,
+                TranslateLibModule
+            ],
+            providers: [SideMenuService,
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
+            ]
         })
             .compileComponents();
         fixture = TestBed.createComponent(TestWrapperComponent);
@@ -35,7 +40,9 @@ describe('UserFieldComponent', () => {
 
 @Component({
     selector: 'nc-test-wrapper',
-    template: '<nc-user-field [dataField]="field"> </nc-user-field>'
+    template: '<nc-user-field [dataField]="field"> </nc-user-field>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestWrapperComponent {
     field = new UserField('', '', {

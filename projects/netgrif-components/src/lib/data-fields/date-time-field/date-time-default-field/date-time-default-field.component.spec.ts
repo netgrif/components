@@ -17,31 +17,28 @@ import {
     UserResourceService,
     WrappedBoolean
 } from "@netgrif/components-core";
-import {AngularResizeEventModule} from "angular-resize-event";
-import {NgxMatDatetimePickerModule, NgxMatNativeDateModule} from "@angular-material-components/datetime-picker";
-import {HttpClientTestingModule} from "@angular/common/http/testing";
-import {NoopAnimationsModule} from "@angular/platform-browser/animations";
+import {provideHttpClientTesting} from "@angular/common/http/testing";
 import {DataFieldTemplateComponent} from "../../data-field-template/data-field-template.component";
 import {RequiredLabelComponent} from "../../required-label/required-label.component";
 import moment from "moment";
 import {FormControl} from "@angular/forms";
 import {DateAdapter} from "@angular/material/core";
-import {NgxMatMomentModule} from "@angular-material-components/moment-adapter";
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('DateTimeDefaultFieldComponent', () => {
   let component: DateTimeDefaultFieldComponent;
   let fixture: ComponentFixture<DateTimeDefaultFieldComponent>;
 
   beforeEach(async () => {
-    await TestBed.configureTestingModule({imports: [
+    await TestBed.configureTestingModule({
+        declarations: [
+            DateTimeDefaultFieldComponent,
+            DataFieldTemplateComponent,
+            RequiredLabelComponent
+        ],
+        imports: [
             MaterialModule,
-            AngularResizeEventModule,
-            NgxMatDatetimePickerModule,
-            TranslateLibModule,
-            HttpClientTestingModule,
-            NoopAnimationsModule,
-            NgxMatNativeDateModule,
-            NgxMatMomentModule
+            TranslateLibModule
         ],
         providers: [
             {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
@@ -64,12 +61,9 @@ describe('DateTimeDefaultFieldComponent', () => {
                     showLargeLayout: new WrappedBoolean()
                 } as DataFieldPortalData<DateTimeField>
             },
-            {provide: DateAdapter, useClass: CustomDateAdapter}
-        ],
-        declarations: [
-            DateTimeDefaultFieldComponent,
-            DataFieldTemplateComponent,
-            RequiredLabelComponent,
+            {provide: DateAdapter, useClass: CustomDateAdapter},
+            provideHttpClient(withXhr(), withInterceptorsFromDi()),
+            provideHttpClientTesting()
         ],
     })
     .compileComponents();

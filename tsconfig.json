@@ -8,15 +8,11 @@
         "downlevelIteration": true,
         "experimentalDecorators": true,
         "module": "esnext",
-        "moduleResolution": "node",
+        "moduleResolution": "bundler",
         "importHelpers": true,
         "target": "ES2022",
         "typeRoots": [
             "node_modules/@types"
-        ],
-        "lib": [
-            "es2018",
-            "dom"
         ],
         "paths": {
             "netgrif-components-core": [
@@ -29,7 +25,10 @@
                 "./node_modules/jszip/dist/jszip.min.js"
             ]
         },
-        "resolveJsonModule": true
+        "resolveJsonModule": true,
+        "strict": false,
+        "ignoreDeprecations": "6.0",
+        "skipLibCheck": true
     },
     "angularCompilerOptions": {
         "fullTemplateTypeCheck": true,

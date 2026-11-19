@@ -1,0 +1,8 @@
+/// M3 snack bar: the close icon button has the color of the snack bar text (shared by all the snack bars)
+@mixin close-action {
+    .mat-mdc-snack-bar-action {
+        --mat-icon-button-icon-color: var(--mat-sys-inverse-on-surface);
+        --mat-icon-button-state-layer-color: var(--mat-sys-inverse-on-surface);
+        color: var(--mat-sys-inverse-on-surface);
+    }
+}

@@ -15,7 +15,8 @@ import {TranslateService} from "@ngx-translate/core";
     styleUrls: ['gridster.component.scss'],
     templateUrl: './gridster.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    encapsulation: ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class GridsterComponent implements OnInit, OnDestroy {
 
@@ -45,7 +46,7 @@ export class GridsterComponent implements OnInit, OnDestroy {
         if (!transition) {
             // TODO: check
             this.gridsterService.placedDataFields = [];
-            this.gridsterService.options?.api?.optionsChanged();
+            this.gridsterService.refreshOptions();
             this._builderModeService.mode = BuilderMode.MODELER;
         }
         this.gridsterService.updatePlacedDataFields();

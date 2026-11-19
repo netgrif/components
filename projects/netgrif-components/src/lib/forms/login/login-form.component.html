@@ -1,48 +1,42 @@
-<div fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="8px">
-    <form [formGroup]="rootFormGroup" (ngSubmit)="onSubmit()" class="full-width netgrif-input netgrif-input-fix">
-        <div fxLayout="row" fxLayoutAlign="center center">
-            <mat-icon color="primary" class="padding-bottom-22px">account_circle</mat-icon>
-            <mat-form-field fxFlex="100" appearance="outline">
-                <mat-label>{{ 'forms.login.login' | translate}}</mat-label>
-                <input matInput formControlName="login" minlength="4"
-                       required autocomplete="username">
-                <mat-error *ngIf="rootFormGroup.controls['login'].hasError('minlength')">
-                    {{ 'forms.login.length' | translate}}
-                </mat-error>
-            </mat-form-field>
-        </div>
-        <div fxLayout="row" fxLayoutAlign="center center" class="padding-top">
-            <mat-icon color="primary" class="padding-bottom-22px">vpn_key</mat-icon>
-            <mat-form-field fxFlex="100" appearance="outline">
-                <mat-label>{{ 'forms.login.enterPass' | translate}}</mat-label>
-                <input matInput
-                       [type]="hidePassword ? 'password' : 'text'"
-                       formControlName="password" required autocomplete="current-password">
-                <button mat-icon-button matSuffix type="button"
-                        (click)="hidePassword = !hidePassword"
-                        (keypress)="false"
-                        [attr.aria-label]="'Hide password'"
-                        [attr.aria-pressed]="hidePassword">
-                    <mat-icon
-                        [color]="hidePassword ? undefined : 'accent'">{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
-                </button>
-            </mat-form-field>
-        </div>
-        <div fxLayout="row" [fxLayoutAlign]="getButtonsFxLayoutAlign()" fxLayoutAlign.xs="center" class="margin-top-4">
-            <button mat-stroked-button type="button" *ngIf="showForgottenPasswordButton && !showSignUpButton" (click)="resetEmit()" color="primary" class="margin-left-40">{{ 'forms.login.reset' | translate}}</button>
-            <button mat-stroked-button type="button" *ngIf="showSignUpButton" (click)="signUpEmit()" color="primary" class="margin-left-40">{{ 'forms.login.sign' | translate}}</button>
-            <button color="primary" type="submit" mat-raised-button fxLayout="row" fxLayoutAlign="center center">
-                <mat-spinner *ngIf="loading | async"
-                             mode="indeterminate"
-                             diameter="36"
-                             color="accent"
-                             fxFlex></mat-spinner>
-                <span *ngIf="(loading | async) === false" fxFlex>{{ 'forms.login.loginButton' | translate}}</span>
-            </button>
-        </div>
-    </form>
-
-    <div *ngIf="showSignUpButton && showForgottenPasswordButton" fxLayout="row" class="width-100" fxLayoutAlign="end">
-        <button mat-button *ngIf="showForgottenPasswordButton" (click)="resetEmit()" color="primary">{{ 'forms.login.reset' | translate}}</button>
+<form class="auth-form" [formGroup]="rootFormGroup" (ngSubmit)="onSubmit()" novalidate>
+    @if (loginFailed) {
+    <div class="auth-alert" role="alert">
+        <mat-icon>error</mat-icon>
+        <span>{{ "forms.login.wrongCredentials" | translate }}</span>
     </div>
-</div>
+    }
+    <mat-form-field>
+        <mat-label>{{ "forms.login.login" | translate }}</mat-label>
+        <input matInput formControlName="login" minlength="4" required autocomplete="username" autofocus/>
+        @if (rootFormGroup.controls['login'].hasError('minlength')) {
+        <mat-error>{{ "forms.login.length" | translate }}</mat-error>
+        }
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>{{ "forms.login.enterPass" | translate }}</mat-label>
+        <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password" required autocomplete="current-password"/>
+        <button mat-icon-button matIconSuffix type="button"
+                (click)="hidePassword = !hidePassword"
+                [attr.aria-label]="(hidePassword ? 'forms.showPassword' : 'forms.hidePassword') | translate"
+                [attr.aria-pressed]="!hidePassword">
+            <mat-icon>{{ hidePassword ? "visibility" : "visibility_off" }}</mat-icon>
+        </button>
+    </mat-form-field>
+    @if (showForgottenPasswordButton) {
+    <div class="auth-end">
+        <button mat-button type="button" (click)="resetEmit()">{{ "forms.login.reset" | translate }}</button>
+    </div>
+    }
+    <button mat-flat-button class="auth-submit" type="submit" [disabled]="loading | async">
+        {{ "forms.login.loginButton" | translate }}
+    </button>
+    @if (loading | async) {
+    <mat-progress-bar class="auth-progress" mode="indeterminate"></mat-progress-bar>
+    }
+    @if (showSignUpButton) {
+    <div class="auth-footer">
+        <span>{{ "forms.login.noAccount" | translate }}</span>
+        <button matButton="tonal" type="button" (click)="signUpEmit()">{{ "forms.login.sign" | translate }}</button>
+    </div>
+    }
+</form>

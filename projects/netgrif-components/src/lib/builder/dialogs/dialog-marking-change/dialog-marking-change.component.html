@@ -1,15 +1,17 @@
-<h2 mat-dialog-title>Change marking of place {{CanvasNodeElement.pretty(place)}}</h2>
-<mat-dialog-content class="netgrif-input padding-top-4px">
-    <mat-form-field fxFlex appearance="outline">
-        <mat-label>Tokens</mat-label>
-        <input type="number" min="0" step="1" matInput [(ngModel)]="place.marking" [formControl]="markingCtrl">
-        <mat-error *ngIf="markingCtrl.errors && markingCtrl.errors.required">Number of tokens is required</mat-error>
-        <mat-error *ngIf="markingCtrl.errors && markingCtrl.errors.validMultiplicity">Number of tokens must be a non-negative integer</mat-error>
+<h2 mat-dialog-title>{{ "builder.dialogs.marking-change.title" | translate }} {{ CanvasNodeElement.pretty(place) }}</h2>
+<mat-dialog-content class="dialog-column">
+    <mat-form-field appearance="outline">
+        <mat-label>{{ "builder.dialogs.marking-change.tokens" | translate }}</mat-label>
+        <input type="number" min="0" step="1" matInput [(ngModel)]="place.marking" [formControl]="markingCtrl"/>
+        @if (markingCtrl.errors && markingCtrl.errors.required) {
+        <mat-error>{{ "builder.dialogs.marking-change.tokensRequired" | translate }}</mat-error>
+        } @if (markingCtrl.errors && markingCtrl.errors.validMultiplicity) {
+        <mat-error>{{ "builder.dialogs.marking-change.tokensNonNegative" | translate }}</mat-error>
+        }
     </mat-form-field>
 </mat-dialog-content>
-<mat-dialog-actions>
-    <button mat-flat-button color="primary" [mat-dialog-close]="place.marking" [disabled]="markingCtrl.invalid">
-        <mat-icon>done</mat-icon>
-        <span>Save</span>
+<mat-dialog-actions align="end">
+    <button mat-flat-button [mat-dialog-close]="place.marking" [disabled]="markingCtrl.invalid">
+        {{ "builder.dialogs.marking-change.save" | translate }}
     </button>
 </mat-dialog-actions>

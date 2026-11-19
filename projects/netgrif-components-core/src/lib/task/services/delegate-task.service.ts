@@ -1,5 +1,5 @@
-import {Inject, Injectable, Optional} from '@angular/core';
-import {SideMenuSize} from '../../side-menu/models/side-menu-size';
+import {Inject, inject, Injectable, Optional} from '@angular/core';
+import {MatDialog} from '@angular/material/dialog';
 import {LoggerService} from '../../logger/services/logger.service';
 import {SideMenuService} from '../../side-menu/services/side-menu.service';
 import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
@@ -14,6 +14,7 @@ import {UserListInjectedData} from '../../side-menu/content-components/user-assi
 import {UserValue} from '../../data-fields/user-field/models/user-value';
 import {SelectedCaseService} from './selected-case.service';
 import {NAE_USER_ASSIGN_COMPONENT} from '../../side-menu/content-components/injection-tokens';
+import {NAE_USER_ASSIGN_DIALOG_COMPONENT} from '../../dialog/injection-tokens';
 import {createTaskEventNotification} from '../../task-content/model/task-event-notification';
 import {TaskEvent} from '../../task-content/model/task-event';
 import {TaskEventService} from '../../task-content/services/task-event.service';
@@ -29,13 +30,27 @@ import {EventService} from '../../event/services/event.service';
 import {ChangedFieldsMap} from '../../event/services/interfaces/changed-fields-map';
 import {TaskEventOutcome} from '../../event/model/event-outcomes/task-outcomes/task-event-outcome';
 
-
 /**
  * Service that handles the logic of delegating a task.
  */
 @Injectable()
 export class DelegateTaskService extends TaskHandlingService {
 
+    /**
+     * Opens the dialog to pick the user the task is delegated to
+     */
+    protected _dialog = inject(MatDialog);
+
+    /**
+     * The dialog to pick the user (`UserAssignDialogComponent` provided by `DialogComponentsModule`)
+     */
+    protected _userAssignDialogComponent = inject(NAE_USER_ASSIGN_DIALOG_COMPONENT, {optional: true});
+
+    /**
+     * @param _sideMenuService deprecated, not used any more - the user is picked in a dialog
+     * ({@link NAE_USER_ASSIGN_DIALOG_COMPONENT}); kept so that the constructors of the subclasses do not change
+     * @param _userAssignComponent deprecated, not used any more (the side menu user assign component)
+     */
     constructor(protected _log: LoggerService,
                 protected _sideMenuService: SideMenuService,
                 protected _taskResourceService: TaskResourceService,
@@ -73,19 +88,23 @@ export class DelegateTaskService extends TaskHandlingService {
         if (this._taskState.isLoading(delegatedTaskId)) {
             return;
         }
-        this._sideMenuService.open(this._userAssignComponent, SideMenuSize.MEDIUM,
-            {
-                roles: Object.keys(this._safeTask.roles).filter(role =>
-                    this._safeTask.roles[role]['assign'] !== undefined && this._safeTask.roles[role]['assign']),
-                value: !this._safeTask.user ? undefined : new UserValue(
-                    this._safeTask.user.id, this._safeTask.user.name, this._safeTask.user.surname, this._safeTask.user.email
-                ),
-                negativeRoles: Object.keys(this._safeTask.roles).filter(role =>
-                    this._safeTask.roles[role]['assign'] !== undefined && !this._safeTask.roles[role]['assign'])
-            } as UserListInjectedData).onClose.subscribe(event => {
+        const data = {
+            roles: Object.keys(this._safeTask.roles).filter(role =>
+                this._safeTask.roles[role]['assign'] !== undefined && this._safeTask.roles[role]['assign']),
+            value: !this._safeTask.user ? undefined : new UserValue(
+                this._safeTask.user.id, this._safeTask.user.name, this._safeTask.user.surname, this._safeTask.user.email
+            ),
+            negativeRoles: Object.keys(this._safeTask.roles).filter(role =>
+                this._safeTask.roles[role]['assign'] !== undefined && !this._safeTask.roles[role]['assign'])
+        } as UserListInjectedData;
+        if (!this._userAssignDialogComponent) {
+            this._log.error('No user assign dialog is provided (NAE_USER_ASSIGN_DIALOG_COMPONENT), import DialogComponentsModule');
+            return;
+        }
+        this._dialog.open(this._userAssignDialogComponent, {panelClass: 'dialog-responsive', data}).afterClosed().subscribe(event => {
 
-            this._log.debug('Delegate sidemenu event:' + event);
-            if (event.data === undefined) {
+            this._log.debug('Delegate dialog event:', event);
+            if (event?.data === undefined) {
                 return;
             }
 
@@ -93,7 +112,7 @@ export class DelegateTaskService extends TaskHandlingService {
                 () => {
                     const result = this.isTaskRelevant(delegatedTaskId);
                     if (!result) {
-                        this._log.debug('current task changed before the delegate side menu data was received, discarding...');
+                        this._log.debug('current task changed before the delegate dialog data was received, discarding...');
                     }
                     return result;
                 },
@@ -132,6 +151,9 @@ export class DelegateTaskService extends TaskHandlingService {
                 this.completeSuccess(afterAction, nextEvent, outcomeResource.outcome as DelegateTaskEventOutcome);
             } else if (outcomeResource.error) {
                 this._snackBar.openErrorSnackBar(outcomeResource.error);
+                this.completeActions(afterAction, nextEvent, false);
+            } else {
+                this._snackBar.openErrorSnackBar(`${this._translate.instant('tasks.snackbar.delegateTask')} ${this._translate.instant('tasks.snackbar.failed')}`);
                 this.completeActions(afterAction, nextEvent, false);
             }
         }, error => {

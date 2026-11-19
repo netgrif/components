@@ -1,0 +1,21 @@
+:host {
+    display: block;
+    height: 100%;
+}
+
+.resolving {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    box-sizing: border-box;
+    height: 100%;
+    padding: 24px;
+    color: var(--mat-sys-on-surface-variant);
+    font: var(--mat-sys-body-medium);
+}
+
+.resolving-progress {
+    max-width: 320px;
+}

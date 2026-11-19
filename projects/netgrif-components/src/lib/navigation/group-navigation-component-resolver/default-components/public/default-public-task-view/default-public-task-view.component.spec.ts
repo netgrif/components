@@ -1,7 +1,6 @@
 import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 
 import {DefaultPublicTaskViewComponent} from './default-public-task-view.component';
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {RouterTestingModule} from "@angular/router/testing";
 import {Observable} from "rxjs";
 import {
@@ -34,7 +33,6 @@ describe('DefaultPublicTaskViewComponent', () => {
                 MaterialModule,
                 HeaderComponentModule,
                 PanelComponentModule,
-                BrowserAnimationsModule,
                 RouterTestingModule.withRoutes([])
             ],
             providers: [

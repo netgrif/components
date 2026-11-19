@@ -19,13 +19,13 @@ import {
     TestTaskBaseFilterProvider, TestTaskViewAllowedNetsFactory,
     UserResourceService
 } from '@netgrif/components-core';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {CommonModule} from '@angular/common';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {AuthenticationComponentModule} from '../../authentication/auth.module';
 import {RouterTestingModule} from '@angular/router/testing';
-import {Component} from '@angular/core';
+import {Component, ChangeDetectionStrategy} from '@angular/core';
 import {of} from 'rxjs';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('TaskListPaginationComponent', () => {
     let component: TaskListPaginationComponent;
@@ -33,17 +33,15 @@ describe('TaskListPaginationComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
+            declarations: [TestWrapperComponent],
             imports: [
                 MatExpansionModule,
                 PanelComponentModule,
                 MaterialModule,
-                NoopAnimationsModule,
                 CommonModule,
-                HttpClientTestingModule,
                 AuthenticationComponentModule,
                 RouterTestingModule.withRoutes([])
             ],
-            declarations: [TestWrapperComponent],
             providers: [
                 TaskViewService,
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
@@ -59,7 +57,9 @@ describe('TaskListPaginationComponent', () => {
                     useClass: TestConfigurationService
                 },
                 {provide: TaskResourceService, useClass: MyResources},
-                {provide: AllowedNetsService, useFactory: TestTaskViewAllowedNetsFactory, deps: [AllowedNetsServiceFactory]}
+                {provide: AllowedNetsService, useFactory: TestTaskViewAllowedNetsFactory, deps: [AllowedNetsServiceFactory]},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
             ]
         })
             .compileComponents();
@@ -81,7 +81,9 @@ describe('TaskListPaginationComponent', () => {
 
 @Component({
     selector: 'nc-test-wrapper',
-    template: '<nc-task-list-pagination [tasks$]="taskPanels"></nc-task-list-pagination>'
+    template: '<nc-task-list-pagination [tasks$]="taskPanels"></nc-task-list-pagination>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestWrapperComponent {
     taskPanels = of([]);

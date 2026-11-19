@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {Subject} from 'rxjs';
 import {KeyValue} from '@angular/common';
 import {EditableClausePredicateWithGenerators} from '../models/predicate/editable-clause-predicate-with-generators';
@@ -11,7 +11,9 @@ import {PredicateWithGenerator} from '../models/predicate/predicate-with-generat
  */
 @Component({
     selector: 'ncc-abstract-search-clause',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractSearchClauseComponent implements OnInit, OnDestroy {
 

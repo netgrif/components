@@ -1,4 +1,4 @@
-import {Component, Inject, Optional} from '@angular/core';
+import {Component, Inject, Optional, ChangeDetectionStrategy} from '@angular/core';
 import {
     AbstractMultichoiceListFieldComponent,
     DATA_FIELD_PORTAL_DATA,
@@ -9,7 +9,9 @@ import {
 @Component({
     selector: 'nc-multichoice-list-field',
     templateUrl: './multichoice-list-field.component.html',
-    styleUrls: ['./multichoice-list-field.component.scss']
+    styleUrls: ['./multichoice-list-field.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class MultichoiceListFieldComponent extends AbstractMultichoiceListFieldComponent {
 

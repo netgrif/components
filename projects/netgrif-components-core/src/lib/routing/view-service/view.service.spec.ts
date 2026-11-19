@@ -1,11 +1,12 @@
 import {ViewService} from './view.service';
-import {Component, Type} from '@angular/core';
+import {Component, Type, ChangeDetectionStrategy} from '@angular/core';
 import {ViewEntry} from './model/view-entry';
 import {TestBed} from '@angular/core/testing';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
-
+// esbuild may rename classes in the test bundle (e.g. Test1Component2), the registry is keyed by Type.name,
+// so the expectations use the runtime class names instead of string literals
 describe('ViewService', () => {
 
     it('should create', () => {
@@ -14,15 +15,19 @@ describe('ViewService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopAnimationsModule, HttpClientTestingModule]
+            imports: [],
+            providers: [
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
+            ]
         });
     });
 
     it('should create with components', () => {
         const service = new TestViewService([Test1Component, Test2Component]);
         expect(service).toBeTruthy();
-        expect(service.resolveNameToClass('Test1Component')).toBe(Test1Component);
-        expect(service.resolveNameToClass('Test2Component')).toBe(Test2Component);
+        expect(service.resolveNameToClass(Test1Component.name)).toBe(Test1Component);
+        expect(service.resolveNameToClass(Test2Component.name)).toBe(Test2Component);
         expect(service.resolveNameToClass('unregistered')).toBe(undefined);
     });
 
@@ -34,15 +39,15 @@ describe('ViewService', () => {
         expect(service).toBeTruthy();
         expect(service.resolveNameToClass('view1')).toBe(Test1Component);
         expect(service.resolveNameToClass('view2')).toBe(Test2Component);
-        expect(service.resolveNameToClass('Test1Component')).toBe(undefined);
+        expect(service.resolveNameToClass(Test1Component.name)).toBe(undefined);
     });
 
     it('should create with mixed input', () => {
         const service = new TestViewService([Test1Component, {id: 'view2', class: Test2Component}]);
         expect(service).toBeTruthy();
-        expect(service.resolveNameToClass('Test1Component')).toBe(Test1Component);
+        expect(service.resolveNameToClass(Test1Component.name)).toBe(Test1Component);
         expect(service.resolveNameToClass('view2')).toBe(Test2Component);
-        expect(service.resolveNameToClass('Test2Component')).toBe(undefined);
+        expect(service.resolveNameToClass(Test2Component.name)).toBe(undefined);
     });
 
     afterEach(() => {
@@ -59,7 +64,9 @@ class TestViewService extends ViewService {
 @Component({
     selector: 'ncc-test-1',
     template: '',
-    styles: []
+    styles: [],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class Test1Component {
 }
@@ -67,7 +74,9 @@ class Test1Component {
 @Component({
     selector: 'ncc-test-2',
     template: '',
-    styles: []
+    styles: [],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class Test2Component {
 }

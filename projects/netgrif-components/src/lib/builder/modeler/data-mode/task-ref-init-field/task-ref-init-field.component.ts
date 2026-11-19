@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, ViewChild} from '@angular/core';
+import {Component, ElementRef, Input, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
 import {MatChipInputEvent} from '@angular/material/chips';
@@ -9,7 +9,9 @@ import {BuilderModeService} from "../../../services/builder-mode.service";
 @Component({
   selector: 'nc-builder-task-ref-init-field',
   templateUrl: './task-ref-init-field.component.html',
-  styleUrl: './task-ref-init-field.component.scss'
+  styleUrl: './task-ref-init-field.component.scss',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class TaskRefInitFieldComponent {
 

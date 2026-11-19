@@ -19,6 +19,8 @@ export * from './group-navigation-component-resolver/default-components/tabbed/d
 export * from './group-navigation-component-resolver/default-components/tabbed/default-tabbed-task-view/default-tabbed-task-view.component';
 export * from './group-navigation-component-resolver/default-components/tabbed/default-tabbed-single-task-view/default-tabbed-single-task-view.component';
 export * from './group-navigation-component-resolver/default-components/tabbed/default-ticket-view/default-ticket-view.component';
+export * from './group-navigation-component-resolver/default-components/tabbed/default-process-view/default-process-view.component';
+export * from './group-navigation-component-resolver/default-components/tabbed/default-process-case-view/default-process-case-view.component';
 export * from './breadcrumbs/breadcrumbs.component';
 export * from './group-navigation-component-resolver/default-components/refs/default-task-view/default-task-view.component';
 export * from './group-navigation-component-resolver/default-components/public/default-public-resolver/default-public-resolver.component';
@@ -40,3 +42,4 @@ export * from './group-navigation-component-resolver/default-components/model/in
 
 /* SERVICES */
 export * from './group-navigation-component-resolver/default-group-navigation-component-resolver.service';
+export * from './navigation-double-drawer/appearance-dialog/appearance-dialog.component';

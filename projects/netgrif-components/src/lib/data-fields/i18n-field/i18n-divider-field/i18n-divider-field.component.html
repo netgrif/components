@@ -1,13 +1,8 @@
-<div fxFlex fxLayout="row" fxLayoutAlign="center center">
-    <div *ngIf='!!dataField.value?.defaultValue && dataField.value?.defaultValue.length > 0' fxFlex="20" class="divider-line"
-         [ngClass]="{'divider-line-lgbt': isDividerLGBTQ(), 'primary-background-color': !checkPropertyInComponent('dividerColor')}"
-         [ngStyle]="checkPropertyInComponent('dividerColor') && {'background': getDividerColor()}"></div>
-    <span *ngIf='!!dataField.value' [ngClass]="{'margin-default': dataField.value?.defaultValue !== ''}"
-          [ngStyle]="checkPropertyInComponent('fontSize') && {'font-size': getDividerFontSize()}">
-        {{dataField.value?.defaultValue ?? ''}}
-    </span>
-    <div fxFlex class="divider-line"
-         [ngClass]="{'divider-line-lgbt': isDividerLGBTQ(), 'primary-background-color': !checkPropertyInComponent('dividerColor')}"
-         [ngStyle]="checkPropertyInComponent('dividerColor') && {'background': getDividerColor()}"></div>
+<div class="divider-field">
+    <mat-divider [class.lgbtq]="isDividerLGBTQ()"
+                 [ngStyle]="checkPropertyInComponent('dividerColor') && { 'border-top-color': getDividerColor() }"></mat-divider>
+    @if (!!dataField.value?.defaultValue) {
+    <span class="divider-text" role="heading" aria-level="3"
+          [ngStyle]="checkPropertyInComponent('fontSize') && { 'font-size': getDividerFontSize() }">{{ dataField.value.defaultValue }}</span>
+    }
 </div>
-

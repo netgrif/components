@@ -1,9 +1,7 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {FileFieldComponent} from './file-field.component';
-import {AngularResizeEventModule} from 'angular-resize-event';
-import {BrowserAnimationsModule, NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {Component, CUSTOM_ELEMENTS_SCHEMA, ChangeDetectionStrategy} from '@angular/core';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {
     AuthenticationMethodService,
     AuthenticationService,
@@ -21,6 +19,7 @@ import {
     UserResourceService
 } from '@netgrif/components-core';
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('FileFieldComponent', () => {
     let component: FileFieldComponent;
@@ -28,27 +27,25 @@ describe('FileFieldComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
-            imports: [
-                MaterialModule,
-                AngularResizeEventModule,
-                BrowserAnimationsModule,
-                HttpClientTestingModule,
-                TranslateLibModule,
-                NoopAnimationsModule
-            ],
-            providers: [
-                SideMenuService,
-                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
-                {provide: AuthenticationService, useClass: MockAuthenticationService},
-                {provide: UserResourceService, useClass: MockUserResourceService},
-                {provide: ConfigurationService, useClass: TestConfigurationService}
-            ],
             schemas: [CUSTOM_ELEMENTS_SCHEMA],
             declarations: [
                 FileFieldComponent,
                 TestWrapperComponent,
                 ErrorSnackBarComponent,
                 SuccessSnackBarComponent
+            ],
+            imports: [
+                MaterialModule,
+                TranslateLibModule
+            ],
+            providers: [
+                SideMenuService,
+                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
+                {provide: AuthenticationService, useClass: MockAuthenticationService},
+                {provide: UserResourceService, useClass: MockUserResourceService},
+                {provide: ConfigurationService, useClass: TestConfigurationService},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
             ],
         }).compileComponents();
         fixture = TestBed.createComponent(TestWrapperComponent);
@@ -67,7 +64,9 @@ describe('FileFieldComponent', () => {
 
 @Component({
     selector: 'nc-test-wrapper',
-    template: '<nc-file-field [dataField]="field" taskId="666"></nc-file-field>'
+    template: '<nc-file-field [dataField]="field" taskId="666"></nc-file-field>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestWrapperComponent {
     field = new FileField('', '', {

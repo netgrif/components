@@ -1,9 +1,8 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {SearchOperandInputComponent} from './search-operand-input.component';
-import {Component} from '@angular/core';
+import {Component, ChangeDetectionStrategy} from '@angular/core';
 import {MaterialModule, SearchInputType} from '@netgrif/components-core';
 import {FormControl} from '@angular/forms';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {AdvancedSearchComponentModule} from '../advanced-search.module';
 
 describe('SearchOperandInputComponent', () => {
@@ -14,8 +13,7 @@ describe('SearchOperandInputComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 AdvancedSearchComponentModule,
-                MaterialModule,
-                NoopAnimationsModule
+                MaterialModule
             ],
             declarations: [
                 TestWrapperComponent
@@ -42,7 +40,9 @@ describe('SearchOperandInputComponent', () => {
 @Component({
     selector: 'nc-test-wrapper',
     template: '<nc-search-operand-input [inputType]="searchInputType.TEXT" [inputFormControl]="fc" [first]="true">' +
-        '</nc-search-operand-input>'
+        '</nc-search-operand-input>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestWrapperComponent {
 

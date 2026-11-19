@@ -9,9 +9,9 @@ import {
     TranslateLibModule
 } from '@netgrif/components-core';
 import {FlexLayoutModule} from '@ngbracket/ngx-layout';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {NO_ERRORS_SCHEMA} from '@angular/core';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('ForgottenPasswordFormComponent', () => {
     let component: ForgottenPasswordFormComponent;
@@ -19,19 +19,19 @@ describe('ForgottenPasswordFormComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
+            declarations: [ForgottenPasswordFormComponent],
+            schemas: [NO_ERRORS_SCHEMA],
             imports: [
                 MaterialModule,
                 FlexLayoutModule,
-                BrowserAnimationsModule,
-                HttpClientTestingModule,
                 TranslateLibModule
             ],
-            declarations: [ForgottenPasswordFormComponent],
             providers: [
                 SignUpService,
-                {provide: ConfigurationService, useClass: TestConfigurationService}
-            ],
-            schemas: [NO_ERRORS_SCHEMA]
+                {provide: ConfigurationService, useClass: TestConfigurationService},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
+            ]
         })
             .compileComponents();
     }));

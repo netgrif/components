@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {AbstractControl, FormControl, ValidatorFn, Validators} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
@@ -15,7 +15,9 @@ import {BuilderModeService} from "../../../services/builder-mode.service";
 @Component({
     selector: 'nc-builder-languages',
     templateUrl: './languages.component.html',
-    styleUrls: ['./languages.component.scss']
+    styleUrls: ['./languages.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class LanguagesComponent implements OnInit, OnDestroy {
 

@@ -3,7 +3,6 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {DefaultTabbedSingleTaskViewComponent} from './default-tabbed-single-task-view.component';
 import {HeaderComponentModule} from "../../../../../header/header.module";
 import {PanelComponentModule} from "../../../../../panel/panel.module";
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {RouterTestingModule} from "@angular/router/testing";
 import {Observable} from "rxjs";
 import {
@@ -24,7 +23,6 @@ describe('DefaultTabbedSingleTaskViewComponent', () => {
                 MaterialModule,
                 HeaderComponentModule,
                 PanelComponentModule,
-                BrowserAnimationsModule,
                 RouterTestingModule.withRoutes([])
             ],
             providers: [

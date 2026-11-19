@@ -1,10 +1,11 @@
-<div class="height-100" [ngClass]="{'padding-bottom-custom': !formControlRef.disabled}">
-    <nc-easymde-wrapper *ngIf="!formControlRef.disabled" [formControlRef]="formControlRef" [textAreaField]="dataField"></nc-easymde-wrapper>
-    <mat-error *ngIf="dataField.isInvalid(formControlRef)">{{getErrorMessage()}}</mat-error>
-
-    <input type="hidden" [formControl]="formControlRef">
-
-    <div [ngClass]="{'border': dataField.materialAppearance === 'outline'}" *ngIf="formControlRef.disabled">
-        <td-markdown>{{dataField.value}}</td-markdown>
-    </div>
-</div>
+@if (!formControlRef.disabled) {
+<nc-easymde-wrapper [formControlRef]="formControlRef" [textAreaField]="dataField"></nc-easymde-wrapper>
+} @else {
+<div class="outlined" [innerHTML]="dataField.value | ncMarkdown"></div>
+}
+@if (dataField.isInvalid(formControlRef)) {
+<span class="field-supporting indented error">{{ getErrorMessage() }}</span>
+} @else if (hasHint()) {
+<span class="field-supporting indented">{{ dataField.description }}</span>
+}
+<input type="hidden" [formControl]="formControlRef"/>

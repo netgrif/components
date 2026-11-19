@@ -1,13 +1,3 @@
-.text-ellipsis {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
+@use '../../components/master-detail/master-item' as item;
 
-.data-edit-list-icon-hidden {
-    visibility: hidden;
-}
-
-.item-bottom-border {
-    border-bottom: 0.5px solid #DDDDDD;
-}
+@include item.styles;

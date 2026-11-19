@@ -1,4 +1,4 @@
-import {Component, Inject, Input, Optional} from '@angular/core';
+import {Component, Inject, Input, Optional, ChangeDetectionStrategy} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {tap} from 'rxjs/operators';
 import {Case} from '../../../../resources/interface/case';
@@ -12,7 +12,9 @@ import {LanguageService} from "../../../../translate/language.service";
 
 @Component({
     selector: 'ncc-abstract-case-list-paginator',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export abstract class AbstractCaseListPaginatorComponent extends AbstractDefaultCaseListComponent {
 

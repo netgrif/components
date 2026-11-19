@@ -9,6 +9,8 @@ import RolesAndPermissions from '../../../process/rolesAndPermissions';
 
 export interface ExtendedProcessRole extends NetRole {
     selected: boolean;
+    /** only some of the selected users / groups have the role (the checkbox is indeterminate) */
+    indeterminate?: boolean;
     processIdentifier: string;
 
     toggle(): void;
@@ -34,6 +36,8 @@ export class ProcessList {
     private _processes: Array<ProcessListItem>;
     private readonly _rolesIndex: { [k: string]: Array<ExtendedProcessRole> };
     private _selectedRoles: Set<string>;
+    /** roles of only some of the selected users / groups, also applied to the roles loaded later */
+    private _partialRoles: Set<string> = new Set<string>();
 
     constructor(private _resources: PetriNetResourceService, private _log: LoggerService) {
         this._loading$ = new LoadingEmitter();
@@ -133,9 +137,26 @@ export class ProcessList {
             .map(r => this._rolesIndex[r].length !== 0 ? this._rolesIndex[r][0].processIdentifier : null));
     }
 
+    /**
+     * Marks the roles that only some of the selected users / groups have (indeterminate checkboxes), the other roles are
+     * not marked.
+     * @param roleIds roles of some, not all, selected users / groups
+     */
+    public markPartialRoles(roleIds: Set<string>): void {
+        this._partialRoles = new Set<string>(roleIds ?? []);
+        Object.keys(this._rolesIndex).forEach(id => {
+            const partial = !!roleIds?.has(id);
+            this._rolesIndex[id].forEach(r => r.indeterminate = partial);
+        });
+    }
+
     public updateSelectedRoles(role: ExtendedProcessRole): void {
         role.selected ? this._selectedRoles.add(role.stringId) : this._selectedRoles.delete(role.stringId);
-        this._rolesIndex[role.stringId].forEach(r => r.selected = role.selected);
+        this._rolesIndex[role.stringId].forEach(r => {
+            r.selected = role.selected;
+            r.indeterminate = false;
+        });
+        this._partialRoles.delete(role.stringId);
     }
 
     public loadProcessItemRoles(item: ProcessListItem): void {
@@ -179,6 +200,8 @@ export class ProcessList {
                 }
                 if (this._selectedRoles.has(role.stringId)) {
                     role.selected = true;
+                } else if (this._partialRoles.has(role.stringId)) {
+                    role.indeterminate = true;
                 }
             }))
         );

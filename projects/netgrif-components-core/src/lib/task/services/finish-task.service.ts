@@ -27,7 +27,6 @@ import {TaskEventOutcome} from '../../event/model/event-outcomes/task-outcomes/t
 import {FrontActionService} from '../../actions/services/front-action.service';
 import {FrontAction} from '../../data-fields/models/changed-fields';
 
-
 /**
  * Service that handles the logic of finishing a task.
  */
@@ -69,6 +68,8 @@ export class FinishTaskService extends TaskHandlingService {
                 if (this._safeTask.dataSize <= 0 ||
                     (this._taskContentService.validateDynamicEnumField() && this._taskContentService.validateTaskData())) {
                     this.queueFinishTaskRequest(afterAction);
+                } else {
+                    afterAction.resolve(false);
                 }
             }));
         } else if (this._taskContentService.validateDynamicEnumField() && this._taskContentService.validateTaskData()) {
@@ -78,12 +79,18 @@ export class FinishTaskService extends TaskHandlingService {
                         this._taskDataService.updateSuccess$.pipe(take(1)).subscribe(bool => {
                             if (bool) {
                                 this.queueFinishTaskRequest(afterAction);
+                            } else {
+                                afterAction.resolve(false);
                             }
                         });
                     } else if (success) {
                         this.queueFinishTaskRequest(afterAction);
+                    } else {
+                        afterAction.resolve(false);
                     }
             }));
+        } else {
+            afterAction.resolve(false);
         }
     }
 
@@ -120,6 +127,7 @@ export class FinishTaskService extends TaskHandlingService {
 
         // this is probably no longer necessary because of the event queue
         if (this._taskState.isLoading(finishedTaskId)) {
+            afterAction.resolve(false);
             nextEvent.resolve(true);
             return;
         }
@@ -131,6 +139,7 @@ export class FinishTaskService extends TaskHandlingService {
             this._taskState.stopLoading(finishedTaskId);
             if (!this.isTaskRelevant(finishedTaskId)) {
                 this._log.debug('current task changed before the finish response could be received, discarding...');
+                afterAction.resolve(false);
                 nextEvent.resolve(false);
                 return;
             }
@@ -162,6 +171,10 @@ export class FinishTaskService extends TaskHandlingService {
                     this._changedFieldsService.emitChangedFields(changedFieldsMap);
                 }
                 this.completeActions(afterAction, nextEvent, false);
+            } else {
+                this._snackBar.openErrorSnackBar(`${this._translate.instant('tasks.snackbar.finishTask')}
+             ${this._task.title} ${this._translate.instant('tasks.snackbar.failed')}`);
+                this.completeActions(afterAction, nextEvent, false);
             }
         }, error => {
             this._taskState.stopLoading(finishedTaskId);
@@ -169,6 +182,7 @@ export class FinishTaskService extends TaskHandlingService {
 
             if (!this.isTaskRelevant(finishedTaskId)) {
                 this._log.debug('current task changed before the finish error could be received');
+                afterAction.resolve(false);
                 nextEvent.resolve(false);
                 return;
             }

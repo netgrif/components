@@ -4,10 +4,10 @@ import {PanelComponent} from './panel.component';
 import {MaterialModule, TranslateLibModule} from '@netgrif/components-core';
 import {CommonModule} from '@angular/common';
 import {FlexModule} from '@ngbracket/ngx-layout';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {NO_ERRORS_SCHEMA} from '@angular/core';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('PanelComponent', () => {
     let component: PanelComponent;
@@ -15,17 +15,20 @@ describe('PanelComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
+            declarations: [PanelComponent],
+            schemas: [NO_ERRORS_SCHEMA],
             imports: [
+                // PanelComponent still binds [@.disabled] on mat-expansion-panel, which needs an animations provider
                 MaterialModule,
                 CommonModule,
                 FlexModule,
-                NoopAnimationsModule,
                 TranslateLibModule,
-                HttpClientTestingModule,
                 RouterTestingModule.withRoutes([])
             ],
-            declarations: [PanelComponent],
-            schemas: [NO_ERRORS_SCHEMA]
+            providers: [
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
+            ]
         })
             .compileComponents();
     }));

@@ -27,7 +27,6 @@ import {TaskEventOutcome} from '../../event/model/event-outcomes/task-outcomes/t
 import {FrontActionService} from '../../actions/services/front-action.service';
 import {FrontAction} from '../../data-fields/models/changed-fields';
 
-
 /**
  * Service that handles the logic of assigning a task.
  */
@@ -144,6 +143,9 @@ export class AssignTaskService extends TaskHandlingService {
                         const changedFieldsMap = this._eventService.parseChangedFieldsFromOutcomeTree(outcomeResource.outcome);
                         this._changedFieldsService.emitChangedFields(changedFieldsMap);
                     }
+                    this.completeActions(afterAction, nextEvent, false);
+                } else {
+                    this._snackBar.openErrorSnackBar(`${this._translate.instant('tasks.snackbar.assignTask')} ${this._translate.instant('tasks.snackbar.failed')}`);
                     this.completeActions(afterAction, nextEvent, false);
                 }
             }, error => {

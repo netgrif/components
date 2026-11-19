@@ -1,7 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SingleTaskViewDialogComponent } from './single-task-view-dialog.component';
-import {HttpClientTestingModule} from "@angular/common/http/testing";
-import {NoopAnimationsModule} from "@angular/platform-browser/animations";
+import {provideHttpClientTesting} from "@angular/common/http/testing";
 import {PanelComponentModule} from "../../panel/panel.module";
 import {RouterTestingModule} from "@angular/router/testing";
 import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from "@angular/material/dialog";
@@ -19,6 +18,7 @@ import {
     MockUserResourceService
 } from '@netgrif/components-core';
 import {HeaderComponentModule} from "../../header/header.module";
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('SingleTaskViewDialogComponent', () => {
     let component: SingleTaskViewDialogComponent;
@@ -27,10 +27,9 @@ describe('SingleTaskViewDialogComponent', () => {
     beforeEach(async () => {
         await TestBed.configureTestingModule({
             declarations: [SingleTaskViewDialogComponent],
+            schemas: [NO_ERRORS_SCHEMA],
             imports: [
                 MaterialModule,
-                HttpClientTestingModule,
-                NoopAnimationsModule,
                 PanelComponentModule,
                 TranslateLibModule,
                 RouterTestingModule.withRoutes([]),
@@ -43,9 +42,10 @@ describe('SingleTaskViewDialogComponent', () => {
                 { provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService },
                 { provide: ConfigurationService, useClass: TestConfigurationService },
                 { provide: AuthenticationService, useClass: MockAuthenticationService },
-                { provide: UserResourceService, useClass: MockUserResourceService }
-            ],
-            schemas: [NO_ERRORS_SCHEMA]
+                { provide: UserResourceService, useClass: MockUserResourceService },
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
+            ]
         })
             .compileComponents();
     });

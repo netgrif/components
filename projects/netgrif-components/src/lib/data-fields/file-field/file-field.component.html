@@ -1,5 +1,8 @@
-<nc-data-field-template *ngIf="!dataField.behavior.hidden"
-                        [additionalFieldProperties]="{taskId}"
-                        [dataField]="dataField"
-                        [offset]="taskOffset">
+@if (!dataField.behavior.hidden) {
+<nc-data-field-template
+    [additionalFieldProperties]="{taskId}"
+    [dataField]="dataField"
+    [offset]="taskOffset"
+>
 </nc-data-field-template>
+}

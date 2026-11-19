@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Injector, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Injector, OnInit, Output, ChangeDetectionStrategy} from '@angular/core';
 import {
     AbstractCustomCardComponent,
     AggregationResult, DashboardEventContent,
@@ -12,7 +12,8 @@ import {TranslateService} from '@ngx-translate/core';
 @Component({
     selector: 'nc-barchart-card',
     templateUrl: './barchart-card.component.html',
-    styleUrls: ['./barchart-card.component.scss']
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class BarchartCardComponent extends AbstractCustomCardComponent implements OnInit {
 

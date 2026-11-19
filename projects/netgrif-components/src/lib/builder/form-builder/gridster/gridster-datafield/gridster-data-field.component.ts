@@ -1,5 +1,5 @@
-import {Component, Input, OnDestroy, OnInit, QueryList, TemplateRef, ViewChildren} from '@angular/core';
-import {DataField, EnumerationField, MultichoiceField, DateField, DateTimeField} from '@netgrif/components-core';
+import {Component, Input, OnDestroy, OnInit, QueryList, TemplateRef, ViewChildren, ChangeDetectionStrategy} from '@angular/core';
+import {DataField, EnumerationField, MultichoiceField} from '@netgrif/components-core';
 import {DataRefBehavior, DataType, I18nWithDynamic} from '@netgrif/petriflow';
 import moment from 'moment';
 import {Subscription} from 'rxjs';
@@ -12,7 +12,9 @@ import {BuilderModeService} from "../../../services/builder-mode.service";
 @Component({
     selector: 'nc-builder-gridster-datafield',
     templateUrl: './gridster-data-field.component.html',
-    styleUrls: ['./gridster-data-field.component.scss']
+    styleUrls: ['./gridster-data-field.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class GridsterDataFieldComponent implements OnInit, OnDestroy {
 
@@ -43,7 +45,8 @@ export class GridsterDataFieldComponent implements OnInit, OnDestroy {
                 if (value) {
                     this.dataField.dataVariable.init = new I18nWithDynamic(moment(value).toISOString());
                 }
-            } else if (!(value instanceof Object) && value || this.dataField.dataVariable.type === DataType.BOOLEAN) {
+            } else if (
+                (!(value instanceof Object) && value) || this.dataField.dataVariable.type === DataType.BOOLEAN) {
                 this.dataField.dataVariable.init = new I18nWithDynamic(value.toString());
             }
         });
@@ -77,14 +80,6 @@ export class GridsterDataFieldComponent implements OnInit, OnDestroy {
 
     public isHidden(): boolean {
         return this.dataField.dataRef.logic.behavior === DataRefBehavior.HIDDEN;
-    }
-
-    /**
-     * Mirrors the `date-field-fix` wrapper class applied by `FieldComponentResolverComponent`
-     * in the regular task view, so the datepicker toggle does not overlap the field title.
-     */
-    public isDateField(): boolean {
-        return this.engineField instanceof DateField || this.engineField instanceof DateTimeField;
     }
 
     public name(): string {

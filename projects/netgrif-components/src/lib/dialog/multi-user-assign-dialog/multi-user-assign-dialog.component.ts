@@ -1,4 +1,4 @@
-import {Component, Inject} from '@angular/core';
+import {Component, Inject, ChangeDetectionStrategy} from '@angular/core';
 import {ProcessRole, UserListInjectedData, UserListService, UserListValue, UserValue} from '@netgrif/components-core';
 import {FormControl} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
@@ -7,7 +7,9 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
     selector: 'nc-multi-user-assign-dialog',
     templateUrl: './multi-user-assign-dialog.component.html',
     styleUrls: ['./multi-user-assign-dialog.component.scss'],
-    providers: [UserListService]
+    providers: [UserListService],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class MultiUserAssignDialogComponent {
 
@@ -29,7 +31,8 @@ export class MultiUserAssignDialogComponent {
     }
 
     public get initiallySelectedUsers(): Array<UserValue> | undefined {
-        return this.injectedData?.value ? [...(this.injectedData.value as UserListValue).userValues?.values()] : undefined;
+        const userValues = (this.injectedData?.value as UserListValue)?.userValues;
+        return userValues ? [...userValues.values()] : undefined;
     }
 
     public get roles(): Array<string> | Array<ProcessRole> {

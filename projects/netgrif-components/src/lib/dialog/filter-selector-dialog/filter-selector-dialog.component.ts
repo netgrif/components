@@ -1,4 +1,4 @@
-import {Component, Inject, OnDestroy, ViewChild} from '@angular/core';
+import {Component, Inject, OnDestroy, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {
     Filter, FilteredArray,
     FilterRepository,
@@ -13,7 +13,9 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 @Component({
   selector: 'nc-filter-selector-dialog',
   templateUrl: './filter-selector-dialog.component.html',
-  styleUrls: ['./filter-selector-dialog.component.scss']
+  styleUrls: ['./filter-selector-dialog.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class FilterSelectorDialogComponent implements OnDestroy {
 
@@ -139,9 +141,14 @@ export class FilterSelectorDialogComponent implements OnDestroy {
         }
     }
 
+    /** the confirming action is disabled until a filter is selected (M3 dialogs) */
+    public get hasSelectedFilter(): boolean {
+        return !!this._selectedFilter;
+    }
+
     /**
      * @ignore
-     * Clears selection of task filters and ensures that only one case filter can be selected at once.
+     * Clears selection of task filters (a single selection list allows only one case filter).
      * @param event list change event published byt the material component
      */
     public caseFilterSelected(event: MatSelectionListChange): void {
@@ -150,10 +157,6 @@ export class FilterSelectorDialogComponent implements OnDestroy {
             if (this.taskFilterList) {
                 this.taskFilterList.deselectAll();
             }
-            // TODO 20.4.2020 - change to [multiple] input attribute on MatSelectionList in HTML,
-            //  once Covalent supports material 9.1.0 or above
-            this.caseFilterList.deselectAll();
-            event.options[0].selected = true;
         } else {
             this.filterSelected(undefined);
         }
@@ -161,7 +164,7 @@ export class FilterSelectorDialogComponent implements OnDestroy {
 
     /**
      * @ignore
-     * Clears selection of case filters and ensures that only one task filter can be selected at once.
+     * Clears selection of case filters (a single selection list allows only one task filter).
      * @param event list change event published byt the material component
      */
     public taskFilterSelected(event: MatSelectionListChange): void {
@@ -170,10 +173,6 @@ export class FilterSelectorDialogComponent implements OnDestroy {
             if (this.caseFilterList) {
                 this.caseFilterList.deselectAll();
             }
-            // TODO 20.4.2020 - change to [multiple] input attribute on MatSelectionList in HTML,
-            //  once Covalent supports material 9.1.0 or above
-            this.taskFilterList.deselectAll();
-            event.options[0].selected = true;
         } else {
             this.filterSelected(undefined);
         }

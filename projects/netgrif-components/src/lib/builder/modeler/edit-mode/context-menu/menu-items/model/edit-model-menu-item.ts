@@ -12,8 +12,8 @@ export class EditModelMenuItem extends MenuItem {
             'edit',
             () => {
                 tool.openDialog(DialogModelEditComponent, {
-                    width: '50%',
-                    panelClass: "dialog-width-50",
+                    width: '720px',
+                    panelClass: 'dialog-responsive',
                     data: {
                         model: new ModelChange(tool.model, tool.model.clone()),
                         context: tool.context

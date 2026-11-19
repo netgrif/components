@@ -2,13 +2,12 @@ import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {CommonModule} from '@angular/common';
 import {FlexLayoutModule, FlexModule} from '@ngbracket/ngx-layout';
 import {RouterTestingModule} from '@angular/router/testing';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {MaterialModule} from '../../material/material.module';
 import {TestConfigurationService} from '../../utility/tests/test-config';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
-import {Component, Injectable} from '@angular/core';
+import {Component, Injectable, ChangeDetectionStrategy} from '@angular/core';
 import {AbstractNavigationTreeComponent} from './abstract-navigation-tree.component';
 import {Router} from '@angular/router';
 import {LoggerService} from '../../logger/services/logger.service';
@@ -30,8 +29,9 @@ import {
     DynamicNavigationRouteProviderService
 } from '../../routing/dynamic-navigation-route-provider/dynamic-navigation-route-provider.service';
 import {AccessService} from "../../authorization/permission/access.service";
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
-xdescribe('AbstractNavigationTreeComponent', () => {
+describe('AbstractNavigationTreeComponent', () => {
     let component: TestTreeComponent;
     let fixture: ComponentFixture<TestTreeComponent>;
     let configService: ConfigurableTestConfigurationService;
@@ -40,23 +40,23 @@ xdescribe('AbstractNavigationTreeComponent', () => {
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             declarations: [TestTreeComponent],
-            providers: [
-                ConfigurableTestConfigurationService,
-                TestUserService,
-                {provide: ConfigurationService, useExisting: ConfigurableTestConfigurationService},
-                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
-                {provide: UserService, useExisting: TestUserService}
-            ],
             imports: [
                 CommonModule,
                 MaterialModule,
                 FlexModule,
                 FlexLayoutModule,
                 RouterTestingModule.withRoutes([]),
-                HttpClientTestingModule,
                 TranslateLibModule,
-                NoopAnimationsModule,
-                AuthenticationModule,
+                AuthenticationModule
+            ],
+            providers: [
+                ConfigurableTestConfigurationService,
+                TestUserService,
+                {provide: ConfigurationService, useExisting: ConfigurableTestConfigurationService},
+                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
+                {provide: UserService, useExisting: TestUserService},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
             ]
         }).compileComponents();
         configService = TestBed.inject(ConfigurableTestConfigurationService);
@@ -349,7 +349,9 @@ xdescribe('AbstractNavigationTreeComponent', () => {
 
 @Component({
     selector: 'ncc-test-nav-tree',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestTreeComponent extends AbstractNavigationTreeComponent {
     constructor(config: ConfigurationService,

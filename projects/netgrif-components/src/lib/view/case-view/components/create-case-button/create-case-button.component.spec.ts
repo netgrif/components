@@ -14,13 +14,12 @@ import {
     TestConfigurationService,
     TranslateLibModule
 } from '@netgrif/components-core';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {PanelComponentModule} from '../../../../panel/panel.module';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterTestingModule} from '@angular/router/testing';
 import {of} from 'rxjs';
-import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
-
+import {Component, CUSTOM_ELEMENTS_SCHEMA, ChangeDetectionStrategy} from '@angular/core';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('CreateCaseButtonComponent', () => {
     let component: TestWrapperComponent;
@@ -28,12 +27,12 @@ describe('CreateCaseButtonComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
+            declarations: [TestWrapperComponent],
+            schemas: [CUSTOM_ELEMENTS_SCHEMA],
             imports: [
-                HttpClientTestingModule,
                 MaterialModule,
                 TranslateLibModule,
                 PanelComponentModule,
-                NoopAnimationsModule,
                 RouterTestingModule.withRoutes([])
             ],
             providers: [
@@ -50,10 +49,10 @@ describe('CreateCaseButtonComponent', () => {
                     provide: AllowedNetsService,
                     useFactory: TestCaseViewAllowedNetsFactory,
                     deps: [AllowedNetsServiceFactory]
-                }
-            ],
-            declarations: [TestWrapperComponent],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA]
+                },
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
+            ]
         })
             .compileComponents();
     }));
@@ -93,7 +92,9 @@ class MyResources {
 
 @Component({
     selector: 'nc-test-wrapper',
-    template: '<nc-create-case-button [newCaseCreationConfig]="newCaseCreationConfig"></nc-create-case-button>'
+    template: '<nc-create-case-button [newCaseCreationConfig]="newCaseCreationConfig"></nc-create-case-button>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestWrapperComponent {
     newCaseCreationConfig = {

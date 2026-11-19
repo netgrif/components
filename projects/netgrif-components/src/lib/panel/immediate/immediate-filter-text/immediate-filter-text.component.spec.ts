@@ -7,7 +7,7 @@ import {
     User, AuthenticationModule, UserService,
 } from '@netgrif/components-core';
 import {PanelComponentModule} from '../../panel.module';
-import {Component, Injectable} from '@angular/core';
+import {Component, Injectable, ChangeDetectionStrategy} from '@angular/core';
 import {RouterTestingModule} from "@angular/router/testing";
 
 describe('ImmediateFilterTextComponent', () => {
@@ -48,7 +48,9 @@ describe('ImmediateFilterTextComponent', () => {
 
 @Component({
     selector: 'nc-test-wrapper',
-    template: '<nc-immediate-filter-text [ellipsis]="true" [query]="\'cases: creationDate eq 2026-08-31\'" [type]="\'case\'" ></nc-immediate-filter-text>'
+    template: '<nc-immediate-filter-text [ellipsis]="true" [query]="\'cases: creationDate eq 2026-08-31\'" [type]="\'case\'" ></nc-immediate-filter-text>',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 class TestWrapperComponent {
 

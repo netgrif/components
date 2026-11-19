@@ -1,16 +1,19 @@
 import {TestBed} from '@angular/core/testing';
 
 import {TreeCaseViewService} from './tree-case-view.service';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('TreeCaseViewService', () => {
     let service: TreeCaseViewService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopAnimationsModule, HttpClientTestingModule],
-            providers: [TreeCaseViewService]
+            imports: [],
+            providers: [TreeCaseViewService,
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
+            ]
         });
         service = TestBed.inject(TreeCaseViewService);
     });

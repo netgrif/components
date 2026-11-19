@@ -1,37 +1,40 @@
-<div fxLayout="column" fxLayoutAlign="start center" fxFlex>
-    <ng-container *ngIf="tasks$ | async as tasks">
-
-        <div *ngIf="(loading$ | async) === false && tasks.length === 0" fxLayout="column" fxLayoutAlign="center center"
-             fxFlex>
-            <mat-icon color="accent">check_box</mat-icon>
-            <span class="font-size-20">{{ 'tasks.view.noTasksSatisfyingThisFilter' | translate }}</span>
+<div class="list-viewport" [ncListViewport]="header">
+    <div class="list-content">
+        <div class="list-header" #header><ng-content select="[ncListHeader]"></ng-content></div>
+        @if (tasks$ | async; as tasks) {
+        @if ((loading$ | async) === false && tasks.length === 0) {
+        <div class="nae-empty-state" role="status">
+            <mat-icon class="nae-empty-state-icon">check_box</mat-icon>
+            <span class="nae-empty-state-title">{{ "tasks.view.noTasksSatisfyingThisFilter" | translate }}</span>
+            <span class="nae-empty-state-text">{{ "tasks.view.noTasksHint" | translate }}</span>
         </div>
-
-        <mat-accordion [multi]="allowMultiOpen" class="full-width" >
-            <div class="fix-padding">
-                <nc-task-panel #panel
-                    [textEllipsis]="textEllipsis"
-                    *ngFor="let task of tasks | slice: (pageIndex) * pageSize : (pageIndex + 1) * pageSize;
-                                    let i = index;
-                                    let first = first;
-                                    let last = last;
-                                    trackBy: trackBy"
-                    [taskPanelData]="task" [selectedHeaders$]="selectedHeaders$" [first]="first" [last]="last"
-                    [forceLoadDataOnOpen]="forceLoadDataOnOpen"
-                    [responsiveBody]="responsiveBody"
-                    (taskEvent)="emitTaskEvent($event)"
-                    (panelRefOutput)="addToPanelRefs(task, $event)"
-                    [showMoreMenu]="showMoreMenu"
-                    class="panel-expanded-spacing" [ngClass]="{'single-task-fix': tasks.length === 1 && panel.isExpanded()}">
-                </nc-task-panel>
-
-                <div *ngIf="loading$ | async" fxLayout="column" fxLayoutAlign="center center">
-                    <mat-spinner color="primary" diameter="52"></mat-spinner>
-                </div>
-            </div>
+        }
+        <mat-accordion [multi]="allowMultiOpen">
+            @for (task of tasks | slice: pageIndex * pageSize : (pageIndex + 1) * pageSize; track trackBy(i, task); let i = $index; let first = $first; let last = $last) {
+            <nc-task-panel [textEllipsis]="textEllipsis"
+                           [taskPanelData]="task"
+                           [selectedHeaders$]="selectedHeaders$"
+                           [first]="first"
+                           [last]="last"
+                           [forceLoadDataOnOpen]="forceLoadDataOnOpen"
+                           [responsiveBody]="responsiveBody"
+                           [showMoreMenu]="showMoreMenu"
+                           (taskEvent)="emitTaskEvent($event)"
+                           (panelRefOutput)="addToPanelRefs(task, $event)"></nc-task-panel>
+            }
         </mat-accordion>
-        <mat-paginator [length]="length" [pageSize]="pageSize" [pageIndex]="pageIndex" color="primary" [disabled]="disabled"
-                       [pageSizeOptions]="pageSizeOptions" (page)="onPageChanged($event)" showFirstLastButtons>
-        </mat-paginator>
-    </ng-container>
+        }
+        @if (loading$ | async) {
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        }
+    </div>
 </div>
+@if (tasks$ | async) {
+<mat-paginator [length]="length"
+               [pageSize]="pageSize"
+               [pageIndex]="pageIndex"
+               [disabled]="disabled"
+               [pageSizeOptions]="pageSizeOptions"
+               (page)="onPageChanged($event)"
+               showFirstLastButtons></mat-paginator>
+}

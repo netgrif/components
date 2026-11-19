@@ -18,9 +18,9 @@ import {
     AllowedNetsServiceFactory,
     ViewIdService
 } from '@netgrif/components-core';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {RouterTestingModule} from "@angular/router/testing";
+import {provideHttpClientTesting} from '@angular/common/http/testing';
+import {RouterTestingModule} from '@angular/router/testing';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 
 describe('TaskSearchComponent', () => {
     let component: TaskSearchComponent;
@@ -30,8 +30,6 @@ describe('TaskSearchComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 SearchComponentModule,
-                HttpClientTestingModule,
-                NoopAnimationsModule,
                 RouterTestingModule.withRoutes([])
             ],
             providers: [
@@ -45,7 +43,9 @@ describe('TaskSearchComponent', () => {
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
                 {provide: AllowedNetsService, useFactory: TestNoAllowedNetsFactory, deps: [AllowedNetsServiceFactory]},
-                {provide: ViewIdService, useValue: {viewId: 'test_view_id'}}
+                {provide: ViewIdService, useValue: {viewId: 'test_view_id'}},
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
+                provideHttpClientTesting()
             ]
         })
             .compileComponents();
