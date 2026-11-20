@@ -9,13 +9,64 @@
 
         <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
 	   <link rel="stylesheet" href="../styles/style.css">
-        <link rel="stylesheet" href="../styles/dark.css" media="(prefers-color-scheme: dark)">
+        <link rel="stylesheet" href="../styles/dark.css">
     </head>
     <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
 
-        <div class="navbar navbar-default navbar-fixed-top visible-xs">
-            <a href="../" class="navbar-brand">Netgrif Components Core library Documentation</a>
-            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">Netgrif Components Core library Documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
         </div>
 
         <div class="xs-menu menu" id="mobile-menu">
@@ -24,7 +75,7 @@
 
         <div class="container-fluid main">
            <div class="row main">
-               <div class="hidden-xs menu">
+               <div class="d-none d-md-block menu">
                    <compodoc-menu mode="normal"></compodoc-menu>
                </div>
                <!-- START CONTENT -->
@@ -41,22 +92,29 @@
 
 
 
+
 <ol class="breadcrumb">
-  <li>Classes</li>
-  <li >Filter</li>
+  <li class="breadcrumb-item">Classes</li>
+  <li class="breadcrumb-item" >Filter</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
-        <li class="active">
-            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        <li class="nav-item">
+            <a href="#info" 
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
         </li>
-        <li >
-            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        <li class="nav-item">
+            <a href="#source" 
+                class="nav-link"
+                
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
         </li>
 </ul>
 
 <div class="tab-content">
-    <div class="tab-pane fade active in" id="c-info">
+    <div class="tab-pane fade active in" id="info">
         <p class="comment">
             <h3>File</h3>
         </p>
@@ -76,7 +134,7 @@
 
 
 
-            <section>
+            <section data-compodoc="block-index">
     <h3 id="index">Index</h3>
     <table class="table table-sm table-bordered index-table">
         <tbody>
@@ -92,7 +150,17 @@
                             <li>
                                     <span class="modifier">Public</span>
                                     <span class="modifier">Abstract</span>
+                                <a href="#addFullTextFields" >addFullTextFields</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                    <span class="modifier">Abstract</span>
                                 <a href="#bodyContainsQuery" >bodyContainsQuery</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                    <span class="modifier">Abstract</span>
+                                <a href="#clearFullTextFields" >clearFullTextFields</a>
                             </li>
                             <li>
                                     <span class="modifier">Public</span>
@@ -100,8 +168,18 @@
                                 <a href="#clone" >clone</a>
                             </li>
                             <li>
+                                    <span class="modifier">Public</span>
+                                    <span class="modifier">Abstract</span>
+                                <a href="#containsFullTextFields" >containsFullTextFields</a>
+                            </li>
+                            <li>
                                     <span class="modifier">Protected</span>
                                 <a href="#deepCopy" >deepCopy</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                    <span class="modifier">Abstract</span>
+                                <a href="#getFullTextFields" >getFullTextFields</a>
                             </li>
                             <li>
                                     <span class="modifier">Public</span>
@@ -137,6 +215,9 @@
                                     <a href="#id" >id</a>
                                 </li>
                                 <li>
+                                    <a href="#isPfql" >isPfql</a>
+                                </li>
+                                <li>
                                     <a href="#type" >type</a>
                                 </li>
                                 <li>
@@ -149,14 +230,14 @@
     </table>
 </section>
 
-            <section>
+            <section data-compodoc="block-constructor">
     <h3 id="constructor">Constructor</h3>
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
                     <td class="col-md-4">
                                 <span class="modifier">Protected</span>
-                        <code>constructor(_id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, _type: <a href="../classes/Filter.html" target="_self">FilterType</a>, _title: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                        <code>constructor(_id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, _type: <a href="../undefineds/FilterType.html" target="_self">FilterType</a>, _title: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, _isPfql: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank">boolean</a>)</code>
                     </td>
                 </tr>
                         <tr>
@@ -193,15 +274,15 @@
                                                     </td>
                                                     
                                                         <td>
-                                                                <code><p>identifier of the filter</p>
-</code>
+                                                                <p>identifier of the filter</p>
+
                                                         </td>
                                                 </tr>
                                                 <tr>
                                                         <td>_type</td>
                                                   
                                                         <td>
-                                                                        <code><a href="../classes/Filter.html" target="_self" >FilterType</a></code>
+                                                                        <code><a href="../miscellaneous/enumerations.html#FilterType" target="_self" >FilterType</a></code>
                                                         </td>
                                                   
                                                     <td>
@@ -209,8 +290,8 @@
                                                     </td>
                                                     
                                                         <td>
-                                                                <code><p>type of resources that the filter can query</p>
-</code>
+                                                                <p>type of resources that the filter can query</p>
+
                                                         </td>
                                                 </tr>
                                                 <tr>
@@ -225,8 +306,24 @@
                                                     </td>
                                                     
                                                         <td>
-                                                                <code><p>human readable filter name</p>
-</code>
+                                                                <p>human readable filter name</p>
+
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>_isPfql</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <p>true if the Filter should cooperate with PFQL API</p>
+
                                                         </td>
                                                 </tr>
                                         </tbody>
@@ -239,7 +336,7 @@
 </section>
 
 
-            <section>
+            <section data-compodoc="block-methods">
     
     <h3 id="methods">
         Methods
@@ -248,10 +345,82 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="addFullTextFields"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                            <span class="modifier">Abstract</span>
+                        <span ><b>addFullTextFields</b></span>
+                        <a href="#addFullTextFields"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>addFullTextFields(fullTextFields: literal type)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="87"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/filter/models/filter.ts:87</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Adds the full-text fields into filter implementation. It can be later used for a search request</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>fullTextFields</td>
+                                            <td>
+                                                        <code>literal type</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="bodyContainsQuery"></a>
                     <span class="name">
-                        <span class="modifier">Public</span>
-                        <span class="modifier">Abstract</span>
+                            <span class="modifier">Public</span>
+                            <span class="modifier">Abstract</span>
                         <span ><b>bodyContainsQuery</b></span>
                         <a href="#bodyContainsQuery"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -259,33 +428,73 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>bodyContainsQuery()</code>
                 </td>
             </tr>
 
 
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="82"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/filter/models/filter.ts:82</a></div>
+                        </td>
+                    </tr>
+
+
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="72"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/filter/models/filter.ts:72</a></div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p><code>true</code> if at least one of the filter bodies contains the <code>query</code> attribute. Returns <code>false</code> otherwise.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="clearFullTextFields"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                            <span class="modifier">Abstract</span>
+                        <span ><b>clearFullTextFields</b></span>
+                        <a href="#clearFullTextFields"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>clearFullTextFields()</code>
                 </td>
             </tr>
 
 
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="92"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/filter/models/filter.ts:92</a></div>
+                        </td>
+                    </tr>
+
+
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Clears full-text fields</p>
+</div>
 
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
-                    </div>
-                    <div class="io-description">
-                        <p><code>true</code> if at least one of the filter bodies contains the <code>query</code> attribute. Returns <code>false</code> otherwise.</p>
-
-                    </div>
+                        </div>
                 </td>
             </tr>
         </tbody>
@@ -296,8 +505,8 @@
                 <td class="col-md-4">
                     <a name="clone"></a>
                     <span class="name">
-                        <span class="modifier">Public</span>
-                        <span class="modifier">Abstract</span>
+                            <span class="modifier">Public</span>
+                            <span class="modifier">Abstract</span>
                         <span ><b>clone</b></span>
                         <a href="#clone"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -305,35 +514,77 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>clone()</code>
                 </td>
             </tr>
 
 
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="62"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/filter/models/filter.ts:62</a></div>
+                        </td>
+                    </tr>
+
+
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="52"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/filter/models/filter.ts:52</a></div>
+                        <div class="io-description"><p>Creates a deep copy of the filter object.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../classes/Filter.html" target="_self" >Filter</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>deep copy of the filter object</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="containsFullTextFields"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                            <span class="modifier">Abstract</span>
+                        <span ><b>containsFullTextFields</b></span>
+                        <a href="#containsFullTextFields"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>containsFullTextFields()</code>
                 </td>
             </tr>
 
 
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="97"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/filter/models/filter.ts:97</a></div>
+                        </td>
+                    </tr>
+
+
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Creates a deep copy of the filter object.</p>
-</div>
 
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="../classes/Filter.html" target="_self" >Filter</a></code>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
 
-                    </div>
-                    <div class="io-description">
-                        <p>deep copy of the filter object</p>
+                        </div>
+                            <div class="io-description">
+                                <p><code>true</code> if the filter contains any full-text field</p>
 
-                    </div>
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -344,7 +595,7 @@
                 <td class="col-md-4">
                     <a name="deepCopy"></a>
                     <span class="name">
-                        <span class="modifier">Protected</span>
+                            <span class="modifier">Protected</span>
                         <span ><b>deepCopy</b></span>
                         <a href="#deepCopy"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -352,66 +603,109 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>deepCopy(obj: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank">object</a>)</code>
                 </td>
             </tr>
 
 
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="118"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/filter/models/filter.ts:118</a></div>
+                        </td>
+                    </tr>
+
+
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="88"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/filter/models/filter.ts:88</a></div>
+                        <div class="io-description"><p>Creates a deep copy of a simple object.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>obj</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank" >object</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>object that should be copied</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank" >object</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>a deep copy of the argument</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getFullTextFields"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                            <span class="modifier">Abstract</span>
+                        <span ><b>getFullTextFields</b></span>
+                        <a href="#getFullTextFields"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getFullTextFields()</code>
                 </td>
             </tr>
 
 
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="102"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/filter/models/filter.ts:102</a></div>
+                        </td>
+                    </tr>
+
+
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Creates a deep copy of a simple object.</p>
-</div>
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                    <td>Description</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>obj</td>
-                                    <td>
-                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank" >object</a></code>
-                                    </td>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>literal type</code>
 
-                                    <td>
-                                        No
-                                    </td>
+                        </div>
+                            <div class="io-description">
+                                <p>map of full-text fields loaded in the filter</p>
 
-
-                                    <td>
-                                        <p>object that should be copied</p>
-
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank" >object</a></code>
-
-                    </div>
-                    <div class="io-description">
-                        <p>a deep copy of the argument</p>
-
-                    </div>
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -422,8 +716,8 @@
                 <td class="col-md-4">
                     <a name="getRequestBody"></a>
                     <span class="name">
-                        <span class="modifier">Public</span>
-                        <span class="modifier">Abstract</span>
+                            <span class="modifier">Public</span>
+                            <span class="modifier">Abstract</span>
                         <span ><b>getRequestBody</b></span>
                         <a href="#getRequestBody"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -431,33 +725,31 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>getRequestBody()</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="66"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/filter/models/filter.ts:66</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="76"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/filter/models/filter.ts:76</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
 
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="../miscellaneous/enumerations.html#CaseSearch" target="_self" >TaskSearchRequestBody | CaseSearchRequestBody | Array | Array</a></code>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../miscellaneous/enumerations.html#CaseSearch" target="_self" >TaskSearchRequestBody | CaseSearchRequestBody | Array | Array</a></code>
 
-                    </div>
-                    <div class="io-description">
-                        <p>search request body specified by this filter. Type of the result is determined by the <code>type</code> of the Filter instance.</p>
+                        </div>
+                            <div class="io-description">
+                                <p>search request body specified by this filter. Type of the result is determined by the <code>type</code> of the Filter instance.</p>
 
-                    </div>
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -468,7 +760,7 @@
                 <td class="col-md-4">
                     <a name="getRequestParams"></a>
                     <span class="name">
-                        <span class="modifier">Public</span>
+                            <span class="modifier">Public</span>
                         <span ><b>getRequestParams</b></span>
                         <a href="#getRequestParams"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -476,36 +768,34 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>getRequestParams()</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="79"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/filter/models/filter.ts:79</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="109"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/filter/models/filter.ts:109</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Returns the necessary request params for the filter. Default implementation returns an empty object.
+                        <div class="io-description"><p>Returns the necessary request params for the filter. Default implementation returns an empty object.
 The params are added on top of the request when sending it to the backend by the respective service methods.</p>
 </div>
 
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="../miscellaneous/typealiases.html#Params" target="_self" >Params</a></code>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../miscellaneous/typealiases.html#Params" target="_self" >Params</a></code>
 
-                    </div>
-                    <div class="io-description">
-                        <p>an empty object <code>{}</code></p>
+                        </div>
+                            <div class="io-description">
+                                <p>an empty object <code>{}</code></p>
 
-                    </div>
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -516,8 +806,8 @@ The params are added on top of the request when sending it to the backend by the
                 <td class="col-md-4">
                     <a name="merge"></a>
                     <span class="name">
-                        <span class="modifier">Public</span>
-                        <span class="modifier">Abstract</span>
+                            <span class="modifier">Public</span>
+                            <span class="modifier">Abstract</span>
                         <span ><b>merge</b></span>
                         <a href="#merge"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -525,84 +815,83 @@ The params are added on top of the request when sending it to the backend by the
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>merge(filter: <a href="../classes/Filter.html" target="_self">Filter</a>, operator: <a href="../classes/Operator.html" target="_self">MergeOperator</a>)</code>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>merge(filter: <a href="../classes/Filter.html" target="_self">Filter</a>, operator: <a href="../undefineds/MergeOperator.html" target="_self">MergeOperator</a>)</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="61"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/filter/models/filter.ts:61</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="71"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/filter/models/filter.ts:71</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Combines two filters together with the given operator.
-Library implementation always returns a <a href="../classess/MergedFilter.html">MergedFilter</a> object instance.</p>
+                        <div class="io-description"><p>Combines two filters together with the given operator.
+Library implementation always returns a <a href="../classes/MergedFilter.html">MergedFilter</a> object instance.</p>
 </div>
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                    <td>Description</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>filter</td>
-                                    <td>
-                                                <code><a href="../classes/Filter.html" target="_self" >Filter</a></code>
-                                    </td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>filter</td>
+                                            <td>
+                                                            <code><a href="../classes/Filter.html" target="_self" >Filter</a></code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                    <td>
-                                        <p>filter that should be combined with this filter</p>
-
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>operator</td>
-                                    <td>
-                                                <code><a href="../classes/Operator.html" target="_self" >MergeOperator</a></code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                    <td>
-                                        <p>operator that is used to combine the two filters</p>
+                                            <td>
+                                                    <p>filter that should be combined with this filter</p>
 
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="../classes/Filter.html" target="_self" >Filter</a></code>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>operator</td>
+                                            <td>
+                                                            <code><a href="../miscellaneous/enumerations.html#MergeOperator" target="_self" >MergeOperator</a></code>
+                                            </td>
 
-                    </div>
-                    <div class="io-description">
-                        <p>a new filter that is the combination of this filter and the filter passed trough the argument.
-Library implementation always returns a {</p>
+                                            <td>
+                                                    No
+                                            </td>
 
-                    </div>
+
+                                            <td>
+                                                    <p>operator that is used to combine the two filters</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../classes/Filter.html" target="_self" >Filter</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>a new filter that is the combination of this filter and the filter passed trough the argument.
+Library implementation always returns a {@link MergedFilter} object instance.</p>
+
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -613,7 +902,7 @@ Library implementation always returns a {</p>
 
 
 
-            <section>
+            <section data-compodoc="block-accessors">
     <h3 id="accessors">
         Accessors
     </h3>
@@ -633,7 +922,7 @@ Library implementation always returns a {</p>
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="24" class="link-to-prism">projects/netgrif-components-core/src/lib/filter/models/filter.ts:24</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="26" class="link-to-prism">projects/netgrif-components-core/src/lib/filter/models/filter.ts:26</a></div>
                                 </td>
                             </tr>
                     <tr>
@@ -655,7 +944,7 @@ Library implementation always returns a {</p>
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="28" class="link-to-prism">projects/netgrif-components-core/src/lib/filter/models/filter.ts:28</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="30" class="link-to-prism">projects/netgrif-components-core/src/lib/filter/models/filter.ts:30</a></div>
                                 </td>
                             </tr>
                     <tr>
@@ -701,6 +990,75 @@ Library implementation always returns a {</p>
             <tbody>
                 <tr>
                     <td class="col-md-4">
+                        <a name="isPfql"></a>
+                        <span class="name"><b>isPfql</b><a href="#isPfql"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>isPfql()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="34" class="link-to-prism">projects/netgrif-components-core/src/lib/filter/models/filter.ts:34</a></div>
+                                </td>
+                            </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>set</b><code>isPfql(isPfql: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank">boolean</a>)</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="38" class="link-to-prism">projects/netgrif-components-core/src/lib/filter/models/filter.ts:38</a></div>
+                                </td>
+                            </tr>
+                    <tr>
+                        <td class="col-md-4">
+
+                                <div class="io-description">
+                                        <b>Parameters :</b>
+                                        <table class="params">
+                                            <thead>
+                                                <tr>
+                                                    <td>Name</td>
+                                                        <td>Type</td>
+                                                    <td>Optional</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                    <tr>
+                                                            <td>isPfql</td>
+                                                    
+                                                            <td>
+                                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+                                                            </td>
+                                                    
+                                                        <td>
+                                                                No
+                                                        </td>
+                                                        
+                                                    </tr>
+                                            </tbody>
+                                        </table>
+                                </div>
+                                <div>
+                                </div>
+                                <div class="io-description">
+                                    <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                                </div>
+                        </td>
+                    </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
                         <a name="type"></a>
                         <span class="name"><b>type</b><a href="#type"><span class="icon ion-ios-link"></span></a></span>
                     </td>
@@ -713,7 +1071,7 @@ Library implementation always returns a {</p>
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="35" class="link-to-prism">projects/netgrif-components-core/src/lib/filter/models/filter.ts:35</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="45" class="link-to-prism">projects/netgrif-components-core/src/lib/filter/models/filter.ts:45</a></div>
                                 </td>
                             </tr>
                     <tr>
@@ -722,7 +1080,7 @@ Library implementation always returns a {</p>
 </div>
 
                                 <div class="io-description">
-                                    <b>Returns : </b>        <code><a href="../classes/Filter.html" target="_self" >FilterType</a></code>
+                                    <b>Returns : </b>        <code><a href="../miscellaneous/enumerations.html#FilterType" target="_self" >FilterType</a></code>
 
                                 </div>
                         </td>
@@ -746,7 +1104,7 @@ Library implementation always returns a {</p>
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="44" class="link-to-prism">projects/netgrif-components-core/src/lib/filter/models/filter.ts:44</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="54" class="link-to-prism">projects/netgrif-components-core/src/lib/filter/models/filter.ts:54</a></div>
                                 </td>
                             </tr>
                     <tr>
@@ -768,7 +1126,7 @@ Library implementation always returns a {</p>
     </div>
 
 
-    <div class="tab-pane fade  tab-source-code" id="c-source">
+    <div class="tab-pane fade  tab-source-code" id="source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {MergeOperator} from &#x27;./merge-operator&#x27;;
 import {TaskSearchRequestBody} from &#x27;./task-search-request-body&#x27;;
 import {CaseSearchRequestBody} from &#x27;./case-search-request-body&#x27;;
@@ -785,8 +1143,10 @@ export abstract class Filter {
      * @param _id identifier of the filter
      * @param _type type of resources that the filter can query
      * @param _title human readable filter name
+     * @param _isPfql true if the Filter should cooperate with PFQL API
      */
-    protected constructor(protected _id: string, protected readonly _type: FilterType, protected readonly _title: string &#x3D; &#x27;&#x27;) {
+    protected constructor(protected _id: string, protected readonly _type: FilterType, protected readonly _title: string &#x3D; &#x27;&#x27;,
+                          protected _isPfql: boolean &#x3D; false) {
     }
 
     /**
@@ -798,6 +1158,14 @@ export abstract class Filter {
 
     public set id(id: string) {
         this._id &#x3D; id;
+    }
+
+    public get isPfql(): boolean {
+        return this._isPfql;
+    }
+
+    public set isPfql(isPfql: boolean) {
+        this._isPfql &#x3D; isPfql;
     }
 
     /**
@@ -843,6 +1211,26 @@ export abstract class Filter {
     public abstract bodyContainsQuery(): boolean;
 
     /**
+     * Adds the full-text fields into filter implementation. It can be later used for a search request
+     */
+    public abstract addFullTextFields(fullTextFields: {[fieldId: string]: number}): void;
+
+    /**
+     * Clears full-text fields
+     */
+    public abstract clearFullTextFields(): void;
+
+    /**
+     * @returns &#x60;true&#x60; if the filter contains any full-text field
+     */
+    public abstract containsFullTextFields(): boolean;
+
+    /**
+     * @returns map of full-text fields loaded in the filter
+     */
+    public abstract getFullTextFields(): {[fieldId: string]: number};
+
+    /**
      * Returns the necessary request params for the filter. Default implementation returns an empty object.
      * The params are added on top of the request when sending it to the backend by the respective service methods.
      * @returns an empty object &#x60;{}&#x60;
@@ -866,14 +1254,15 @@ export abstract class Filter {
 
 
 
-                   
+
+
 
 
 
 
                    </div><div class="search-results">
     <div class="has-results">
-        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
         <ul class="search-results-list"></ul>
     </div>
     <div class="no-results">
@@ -885,6 +1274,15 @@ export abstract class Filter {
            </div>
        </div>
 
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'class';
@@ -892,10 +1290,23 @@ export abstract class Filter {
             var MAX_SEARCH_RESULTS = 15;
        </script>
 
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
        <script src="../js/libs/custom-elements.min.js"></script>
        <script src="../js/libs/lit-html.js"></script>
-       
-       <script type="module" src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/menu-wc.js" defer></script>
        <script nomodule src="../js/menu-wc_es5.js" defer></script>
 
        <script src="../js/libs/bootstrap-native.js"></script>

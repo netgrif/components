@@ -9,13 +9,64 @@
 
         <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
 	   <link rel="stylesheet" href="../styles/style.css">
-        <link rel="stylesheet" href="../styles/dark.css" media="(prefers-color-scheme: dark)">
+        <link rel="stylesheet" href="../styles/dark.css">
     </head>
     <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
 
-        <div class="navbar navbar-default navbar-fixed-top visible-xs">
-            <a href="../" class="navbar-brand">Netgrif Components Core library Documentation</a>
-            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">Netgrif Components Core library Documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
         </div>
 
         <div class="xs-menu menu" id="mobile-menu">
@@ -24,7 +75,7 @@
 
         <div class="container-fluid main">
            <div class="row main">
-               <div class="hidden-xs menu">
+               <div class="d-none d-md-block menu">
                    <compodoc-menu mode="normal"></compodoc-menu>
                </div>
                <!-- START CONTENT -->
@@ -42,24 +93,31 @@
 
 
 
+
 <ol class="breadcrumb">
-  <li>Interfaces</li>
-  <li
+  <li class="breadcrumb-item">Interfaces</li>
+  <li class="breadcrumb-item"
   >
   Datafield</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
-        <li class="active">
-            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        <li class="nav-item">
+            <a href="#info" 
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
         </li>
-        <li >
-            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        <li class="nav-item">
+            <a href="#source" 
+                class="nav-link"
+                
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
         </li>
 </ul>
 
 <div class="tab-content">
-    <div class="tab-pane fade active in" id="c-info">
+    <div class="tab-pane fade active in" id="info">
         <p class="comment">
             <h3>File</h3>
         </p>
@@ -70,7 +128,7 @@
 
 
 
-        <section>
+        <section data-compodoc="block-index">
             <h3 id="index">Index</h3>
             <table class="table table-sm table-bordered index-table">
                 <tbody>
@@ -109,7 +167,7 @@
 
 
 
-            <section>
+            <section data-compodoc="block-properties">
                 <h3 id="inputs">Properties</h3>
                     <table class="table table-sm table-bordered">
                         <tbody>
@@ -214,7 +272,7 @@
     </div>
 
 
-    <div class="tab-pane fade  tab-source-code" id="c-source">
+    <div class="tab-pane fade  tab-source-code" id="source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { OperatorService } from &#x27;../../../operator-service/operator.service&#x27;;
 import { LoggerService } from &#x27;../../../../logger/services/logger.service&#x27;;
 import { Operator } from &#x27;../../operator/operator&#x27;;
@@ -229,14 +287,14 @@ import { EqualsDate } from &#x27;../../operator/equals-date&#x27;;
 import { Substring } from &#x27;../../operator/substring&#x27;;
 import { EqualsDateTime } from &#x27;../../operator/equals-date-time&#x27;;
 import { Equals } from &#x27;../../operator/equals&#x27;;
-import { BehaviorSubject, Observable, of, ReplaySubject, Subscription } from &#x27;rxjs&#x27;;
+import {BehaviorSubject, Observable, of, ReplaySubject, Subject, Subscription} from &#x27;rxjs&#x27;;
 import { Category } from &#x27;../category&#x27;;
 import { NotEquals } from &#x27;../../operator/not-equals&#x27;;
+import { IsNull } from &#x27;../../operator/is-null&#x27;;
+import { Like } from &#x27;../../operator/like&#x27;;
 import { MoreThan } from &#x27;../../operator/more-than&#x27;;
 import { LessThan } from &#x27;../../operator/less-than&#x27;;
 import { InRange } from &#x27;../../operator/in-range&#x27;;
-import { IsNull } from &#x27;../../operator/is-null&#x27;;
-import { Like } from &#x27;../../operator/like&#x27;;
 import { NotEqualsDate } from &#x27;../../operator/not-equals-date&#x27;;
 import { MoreThanDate } from &#x27;../../operator/more-than-date&#x27;;
 import { LessThanDate } from &#x27;../../operator/less-than-date&#x27;;
@@ -246,11 +304,9 @@ import { LessThanDateTime } from &#x27;../../operator/less-than-date-time&#x27;;
 import { InRangeDateTime } from &#x27;../../operator/in-range-date-time&#x27;;
 import { AutocompleteOptions } from &#x27;../autocomplete-options&#x27;;
 import { ConfigurationInput } from &#x27;../../configuration-input&#x27;;
-import { SearchIndex } from &#x27;../../search-index&#x27;;
 import { Categories } from &#x27;../categories&#x27;;
 import { FormControl } from &#x27;@angular/forms&#x27;;
 import moment, { Moment } from &#x27;moment&#x27;;
-import { CategoryMetadataConfiguration } from &#x27;../../persistance/generator-metadata&#x27;;
 import { MoreThanEqual } from &#x27;../../operator/more-than-equal&#x27;;
 import { LessThanEqual } from &#x27;../../operator/less-than-equal&#x27;;
 import { MoreThanEqualDate } from &#x27;../../operator/more-than-equal-date&#x27;;
@@ -259,6 +315,11 @@ import { MoreThanEqualDateTime } from &#x27;../../operator/more-than-equal-date-
 import { LessThanEqualDateTime } from &#x27;../../operator/less-than-equal-date-time&#x27;;
 import { FilterTextSegment } from &#x27;../../persistance/filter-text-segment&#x27;;
 import { UserAutocomplete } from &#x27;../user-autocomplete&#x27;;
+import {ResourceTypeQueryPrefix} from &quot;../resource-type-query-prefix&quot;;
+import {FieldTypeResource} from &quot;../../../../task-content/model/field-type-resource&quot;;
+import {SimpleExpression} from &quot;../../../../pfql/model/simple-expression&quot;;
+import {DataSimpleExpression} from &quot;../../../../pfql/model/data-simple-expression&quot;;
+import {take, map, debounceTime} from &quot;rxjs/operators&quot;;
 
 interface Datafield {
     netIdentifier: string;
@@ -269,7 +330,9 @@ interface Datafield {
 export class CaseDataset extends Category&lt;Datafield&gt; implements AutocompleteOptions {
 
     private static readonly _i18n &#x3D; &#x27;search.category.case.dataset&#x27;;
-    protected static DISABLED_TYPES &#x3D; [&#x27;button&#x27;, &#x27;taskRef&#x27;, &#x27;caseRef&#x27;, &#x27;filter&#x27;];
+    protected static DISABLED_TYPES &#x3D; [FieldTypeResource.BUTTON.valueOf(), FieldTypeResource.TASK_REF.valueOf(),
+        FieldTypeResource.CASE_REF.valueOf(), FieldTypeResource.CASE_FILTER.valueOf(), FieldTypeResource.TASK_FILTER.valueOf(),
+        FieldTypeResource.PROCESS_FILTER.valueOf()];
     protected static readonly DATAFIELD_METADATA &#x3D; &#x27;datafield&#x27;;
     private static readonly AUTOCOMPLETE_ICON &#x3D; &#x27;account_circle&#x27;;
 
@@ -281,21 +344,24 @@ export class CaseDataset extends Category&lt;Datafield&gt; implements Autocomple
 
     protected _datafieldOptions: Map&lt;string, Array&lt;Datafield&gt;&gt;;
 
-    private _datafieldOptionsInitialized$: ReplaySubject&lt;void&gt;;
-    private _allowedNetsSub: Subscription;
-    private _userAutocomplete: UserAutocomplete;
+    protected _datafieldOptionsInitialized$: ReplaySubject&lt;void&gt;;
+    protected _allowedNetsSub: Subscription;
+    protected _userAutocomplete: UserAutocomplete;
+
+    protected _isLoadedFromPfql: boolean &#x3D; false;
+    protected _operatorWasLoadedFromPfql &#x3D; false;
 
     public static FieldTypeToInputType(fieldType: string): SearchInputType {
         switch (fieldType) {
-            case &#x27;date&#x27;:
+            case FieldTypeResource.DATE.valueOf():
                 return SearchInputType.DATE;
-            case &#x27;dateTime&#x27;:
+            case FieldTypeResource.DATE_TIME.valueOf():
                 return SearchInputType.DATE_TIME;
-            case &#x27;number&#x27;:
+            case FieldTypeResource.NUMBER.valueOf():
                 return SearchInputType.NUMBER;
-            case &#x27;boolean&#x27;:
+            case FieldTypeResource.BOOLEAN.valueOf():
                 return SearchInputType.BOOLEAN;
-            case &#x27;user&#x27;:
+            case FieldTypeResource.USER.valueOf():
                 return SearchInputType.AUTOCOMPLETE;
             default:
                 return SearchInputType.TEXT;
@@ -308,8 +374,8 @@ export class CaseDataset extends Category&lt;Datafield&gt; implements Autocomple
             &#x60;${CaseDataset._i18n}.name&#x60;,
             undefined,
             logger,
-            operators);
-
+            operators,
+            ResourceTypeQueryPrefix.CASES);
         this._processCategory &#x3D; this._optionalDependencies.categoryFactory.get(CaseProcess) as CaseProcess;
         this._processCategory.selectDefaultOperator();
 
@@ -317,26 +383,44 @@ export class CaseDataset extends Category&lt;Datafield&gt; implements Autocomple
         this._userAutocomplete &#x3D; new UserAutocomplete(this._optionalDependencies);
         this.createDatafieldOptions();
 
-        this._DATAFIELD_INPUT &#x3D; new ConfigurationInput(
-            SearchInputType.AUTOCOMPLETE,
-            &#x27;search.category.case.dataset.placeholder.field&#x27;,
-            true,
-            this._datafieldOptions,
-            (mapKeys, newValue) &#x3D;&gt; {
-                return mapKeys.map(serializedMapKey &#x3D;&gt; DatafieldMapKey.parse(serializedMapKey))
-                    .filter(mapKey &#x3D;&gt; mapKey.title.toLocaleLowerCase().startsWith(newValue));
-            }
-        );
+        let dataFieldInputDebounceTime &#x3D; 0;
+        if (!!this._optionalDependencies.ignoreNetsOnAutocompleteCategories) {
+            this._DATAFIELD_INPUT &#x3D; new ConfigurationInput(
+                SearchInputType.TEXT,
+                &#x27;search.category.case.dataset.placeholder.plainField&#x27;,
+                true,
+                new Map&lt;string, Array&lt;unknown&gt;&gt;(),
+                () &#x3D;&gt; { return [] }
+            );
+            dataFieldInputDebounceTime &#x3D; 500;
+        } else {
+            this._DATAFIELD_INPUT &#x3D; new ConfigurationInput(
+                SearchInputType.AUTOCOMPLETE,
+                &#x27;search.category.case.dataset.placeholder.field&#x27;,
+                true,
+                this._datafieldOptions,
+                (mapKeys, newValue) &#x3D;&gt; {
+                    return mapKeys.map(serializedMapKey &#x3D;&gt; DatafieldMapKey.parse(serializedMapKey))
+                        .filter(mapKey &#x3D;&gt; mapKey.title.toLocaleLowerCase().startsWith(newValue));
+                }
+            );
+        }
 
         this._configurationInputs$ &#x3D; new BehaviorSubject&lt;Array&lt;ConfigurationInput&gt;&gt;([this._DATAFIELD_INPUT]);
 
-        this._DATAFIELD_INPUT.valueChanges$().subscribe(newValue &#x3D;&gt; {
-            if (newValue &#x3D;&#x3D;&#x3D; undefined || typeof newValue &#x3D;&#x3D;&#x3D; &#x27;string&#x27;) {
+        this._DATAFIELD_INPUT.valueChanges$().pipe(debounceTime(dataFieldInputDebounceTime)).subscribe(newValue &#x3D;&gt; {
+            if (newValue &#x3D;&#x3D;&#x3D; undefined
+                || (this._DATAFIELD_INPUT.type &#x3D;&#x3D;&#x3D; SearchInputType.AUTOCOMPLETE &amp;&amp; typeof newValue &#x3D;&#x3D;&#x3D; &#x27;string&#x27;)) {
                 this._configurationInputs$.next([this._DATAFIELD_INPUT]);
-            } else if (this._configurationInputs$.getValue().length &#x3D;&#x3D;&#x3D; 1) {
+            } else if (this._configurationInputs$.getValue().length &#x3D;&#x3D;&#x3D; 1
+                || (this._DATAFIELD_INPUT.type &#x3D;&#x3D;&#x3D; SearchInputType.TEXT &amp;&amp; typeof newValue &#x3D;&#x3D;&#x3D; &#x27;string&#x27;)) {
                 this._configurationInputs$.next([this._DATAFIELD_INPUT, this._OPERATOR_INPUT]);
             }
-            this._operatorFormControl.setValue(undefined);
+            if (this._operatorWasLoadedFromPfql) {
+                this._operatorWasLoadedFromPfql &#x3D; false;
+            } else {
+                this._operatorFormControl.setValue(undefined);
+            }
         });
     }
 
@@ -358,6 +442,9 @@ export class CaseDataset extends Category&lt;Datafield&gt; implements Autocomple
         if (!this.hasSelectedDatafields) {
             throw new Error(&#x27;Input type of arguments cannot be determined before selecting a data field during the configuration.&#x27;);
         }
+        if (!this._selectedDatafields) {
+            return SearchInputType.TEXT;
+        }
         return CaseDataset.FieldTypeToInputType(this._selectedDatafields[0].fieldType);
     }
 
@@ -373,8 +460,23 @@ export class CaseDataset extends Category&lt;Datafield&gt; implements Autocomple
         if (!this.hasSelectedDatafields) {
             return [];
         }
+        const defaultOperators &#x3D; [
+            this._operatorService.getOperator(Substring),
+            this._operatorService.getOperator(Equals),
+            this._operatorService.getOperator(NotEquals),
+            this._operatorService.getOperator(MoreThan),
+            this._operatorService.getOperator(MoreThanEqual),
+            this._operatorService.getOperator(LessThan),
+            this._operatorService.getOperator(LessThanEqual),
+            this._operatorService.getOperator(IsNull),
+            this._operatorService.getOperator(Like)
+        ];
+
+        if (!this._selectedDatafields) {
+            return defaultOperators;
+        }
         switch (this._selectedDatafields[0].fieldType) {
-            case &#x27;number&#x27;:
+            case FieldTypeResource.NUMBER.valueOf():
                 return [
                     this._operatorService.getOperator(Equals),
                     this._operatorService.getOperator(NotEquals),
@@ -385,19 +487,19 @@ export class CaseDataset extends Category&lt;Datafield&gt; implements Autocomple
                     this._operatorService.getOperator(InRange),
                     this._operatorService.getOperator(IsNull)
                 ];
-            case &#x27;boolean&#x27;:
+            case FieldTypeResource.BOOLEAN.valueOf():
                 return [
                     this._operatorService.getOperator(Equals),
                     this._operatorService.getOperator(NotEquals)
                 ];
-            case &#x27;user&#x27;:
-            case &#x27;userList&#x27;:
+            case FieldTypeResource.USER.valueOf():
+            case FieldTypeResource.USER_LIST.valueOf():
                 return [
                     this._operatorService.getOperator(Equals),
                     this._operatorService.getOperator(NotEquals),
                     this._operatorService.getOperator(IsNull)
                 ];
-            case &#x27;date&#x27;:
+            case FieldTypeResource.DATE.valueOf():
                 return [
                     this._operatorService.getOperator(EqualsDate),
                     this._operatorService.getOperator(NotEqualsDate),
@@ -408,7 +510,7 @@ export class CaseDataset extends Category&lt;Datafield&gt; implements Autocomple
                     this._operatorService.getOperator(InRangeDate),
                     this._operatorService.getOperator(IsNull)
                 ];
-            case &#x27;dateTime&#x27;:
+            case FieldTypeResource.DATE_TIME.valueOf():
                 return [
                     this._operatorService.getOperator(EqualsDateTime),
                     this._operatorService.getOperator(MoreThanDateTime),
@@ -419,13 +521,7 @@ export class CaseDataset extends Category&lt;Datafield&gt; implements Autocomple
                     this._operatorService.getOperator(IsNull)
                 ];
             default:
-                return [
-                    this._operatorService.getOperator(Substring),
-                    this._operatorService.getOperator(Equals),
-                    this._operatorService.getOperator(NotEquals),
-                    this._operatorService.getOperator(IsNull),
-                    this._operatorService.getOperator(Like)
-                ];
+                return defaultOperators;
         }
     }
 
@@ -453,39 +549,14 @@ export class CaseDataset extends Category&lt;Datafield&gt; implements Autocomple
         return new CaseDataset(this._operatorService, this._log, this._optionalDependencies);
     }
 
-    protected get elasticKeywords(): Array&lt;string&gt; {
+    protected get pfqlKeywords(): Array&lt;string&gt; {
         if (!this.hasSelectedDatafields) {
             return [];
+        } else if (!this._selectedDatafields) {
+            const fieldId: string &#x3D; this._DATAFIELD_INPUT.formControl.value
+            return [&#x60;data.${fieldId}.value&#x60;];
         } else {
-            return this._selectedDatafields.map(datafield &#x3D;&gt; this.resolveElasticKeyword(datafield));
-        }
-    }
-
-    protected resolveElasticKeyword(datafield: Datafield): string {
-        const resolver &#x3D; this._optionalDependencies.searchIndexResolver;
-        switch (datafield.fieldType) {
-            case &#x27;number&#x27;:
-                return resolver.getIndex(datafield.fieldId, SearchIndex.NUMBER);
-            case &#x27;date&#x27;:
-            case &#x27;dateTime&#x27;:
-                return resolver.getIndex(datafield.fieldId, SearchIndex.TIMESTAMP);
-            case &#x27;boolean&#x27;:
-                return resolver.getIndex(datafield.fieldId, SearchIndex.BOOLEAN);
-            case &#x27;file&#x27;:
-            case &#x27;fileList&#x27;:
-                return resolver.getIndex(datafield.fieldId, SearchIndex.FILE_NAME,
-                    this.isSelectedOperator(Equals) || this.isSelectedOperator(NotEquals) || this.isSelectedOperator(Substring)
-                    || this.isSelectedOperator(IsNull));
-            case &#x27;user&#x27;:
-            case &#x27;userList&#x27;:
-                return resolver.getIndex(datafield.fieldId, SearchIndex.USER_ID);
-            case &#x27;i18n&#x27;:
-                return resolver.getIndex(datafield.fieldId, SearchIndex.TEXT, this.isSelectedOperator(Equals) || this.isSelectedOperator(NotEquals) || this.isSelectedOperator(Substring)
-                    || this.isSelectedOperator(IsNull));
-            default:
-                return resolver.getIndex(datafield.fieldId, SearchIndex.FULLTEXT,
-                    this.isSelectedOperator(Equals) || this.isSelectedOperator(NotEquals) || this.isSelectedOperator(Substring)
-                    || this.isSelectedOperator(IsNull));
+            return this._selectedDatafields.map(dataField &#x3D;&gt; &#x60;data.${dataField.fieldId}.value&#x60;);
         }
     }
 
@@ -510,23 +581,34 @@ export class CaseDataset extends Category&lt;Datafield&gt; implements Autocomple
             queryGenerationStrategy &#x3D; (d, ui) &#x3D;&gt; this.standardQueryGenerationStrategy(d, ui);
         }
 
-        const queries &#x3D; this._selectedDatafields.map(datafield &#x3D;&gt; queryGenerationStrategy(datafield, userInput));
+        let queries;
+        if (!this._selectedDatafields) {
+            queries &#x3D; [queryGenerationStrategy({
+                netIdentifier: undefined,
+                fieldId: this._DATAFIELD_INPUT.formControl.value,
+                fieldType: &#x27;string&#x27;}, userInput)];
+        } else {
+            queries &#x3D; this._selectedDatafields.map(datafield &#x3D;&gt; queryGenerationStrategy(datafield, userInput));
+        }
         return Query.combineQueries(queries, BooleanOperator.OR);
     }
 
     protected standardQueryGenerationStrategy(datafield: Datafield, userInput: Array&lt;unknown&gt;, escapeInput &#x3D; true): Query {
-        const valueQuery &#x3D; this.selectedOperator.createQuery(this.elasticKeywords, userInput, escapeInput);
+        const valueQuery &#x3D; this.selectedOperator.createQuery(this.pfqlKeywords, userInput, escapeInput);
         const netQuery &#x3D; this.generateNetConstraint(datafield);
-        return Query.combineQueries([valueQuery, netQuery], BooleanOperator.AND);
+        const query: Query &#x3D; Query.combineQueries([valueQuery, netQuery], BooleanOperator.AND);
+        return query.ensurePrefixAndGet(ResourceTypeQueryPrefix.CASES);
     }
 
     protected isNullOperatorQueryGenerationStrategy(datafield: Datafield): Query {
         const constraint &#x3D; this.generateNetConstraint(datafield);
-        return (this._operatorService.getOperator(IsNull) as IsNull).createQueryWithConstraint(this.elasticKeywords, constraint);
+        return (this._operatorService.getOperator(IsNull) as IsNull).createQueryWithConstraint(this.pfqlKeywords, constraint)
+            .ensurePrefixAndGet(ResourceTypeQueryPrefix.CASES);
     }
 
     protected generateNetConstraint(datafield: Datafield): Query {
-        return this._processCategory.generatePredicate([[datafield.netIdentifier]]).query;
+        return this._isLoadedFromPfql || this._DATAFIELD_INPUT.type &#x3D;&#x3D;&#x3D; SearchInputType.TEXT ? new Query(undefined, ResourceTypeQueryPrefix.CASES, true)
+            : this._processCategory.generatePredicate([[datafield.netIdentifier]]).query;
     }
 
     protected createDatafieldOptions(): void {
@@ -537,15 +619,15 @@ export class CaseDataset extends Category&lt;Datafield&gt; implements Autocomple
                     .filter(immediateData &#x3D;&gt; {
                         return immediateData.title !&#x3D;&#x3D; undefined
                             &amp;&amp; immediateData.title.trim().length &gt; 0
-                            &amp;&amp; !CaseDataset.DISABLED_TYPES.includes(immediateData.type);
+                            &amp;&amp; !CaseDataset.DISABLED_TYPES?.includes(immediateData.type);
                     })
                     .forEach(immediateData &#x3D;&gt; {
                         let type &#x3D; immediateData.type;
 
                         // for search purposes, enumeration and multichoice maps are equivalent to their simpler counterparts
-                        if (type &#x3D;&#x3D;&#x3D; &#x27;enumeration_map&#x27;) {
+                        if (type &#x3D;&#x3D;&#x3D; FieldTypeResource.ENUMERATION_MAP.valueOf()) {
                             type &#x3D; &#x27;enumeration&#x27;;
-                        } else if (type &#x3D;&#x3D;&#x3D; &#x27;multichoice_map&#x27;) {
+                        } else if (type &#x3D;&#x3D;&#x3D; FieldTypeResource.MULTICHOICE_MAP.valueOf()) {
                             type &#x3D; &#x27;multichoice&#x27;;
                         }
 
@@ -582,6 +664,21 @@ export class CaseDataset extends Category&lt;Datafield&gt; implements Autocomple
         if (selectDefaultOperator) {
             this.selectDefaultOperator();
         }
+    }
+
+    public selectDataFieldsByPfqlExpression(expression: DataSimpleExpression): void {
+        let dataFieldMapKey: string | undefined;
+        for (const [key, dataFields] of this._datafieldOptions.entries()) {
+            if (dataFields.some(dataField &#x3D;&gt; dataField.fieldId &#x3D;&#x3D;&#x3D; expression.dataFieldId)) {
+                dataFieldMapKey &#x3D; key;
+                break;
+            }
+        }
+        if (dataFieldMapKey &#x3D;&#x3D;&#x3D; undefined) {
+            this._log.warn(&#x60;No data field option found for dataFieldId &#x27;${expression.dataFieldId}&#x27;&#x60;);
+            return;
+        }
+        this._DATAFIELD_INPUT.formControl.setValue(DatafieldMapKey.parse(dataFieldMapKey));
     }
 
     /**
@@ -652,27 +749,34 @@ export class CaseDataset extends Category&lt;Datafield&gt; implements Autocomple
         }
     }
 
-    protected createMetadataConfiguration(): CategoryMetadataConfiguration {
-        const config &#x3D; super.createMetadataConfiguration();
-        config[CaseDataset.DATAFIELD_METADATA] &#x3D; (this._DATAFIELD_INPUT.formControl.value as DatafieldMapKey).toSerializedForm();
-        return config;
-    }
+    public override loadFromPfqlExpression(expression: SimpleExpression): Observable&lt;void&gt; {
+        if (!(expression instanceof DataSimpleExpression)) {
+            this._log.error(&quot;Cannot load category CaseDataSet from wrong PFQL expression&quot;)
+            return of(undefined);
+        }
 
-    protected loadConfigurationFromMetadata(configuration: CategoryMetadataConfiguration): Observable&lt;void&gt; {
-        const result$ &#x3D; new ReplaySubject&lt;void&gt;(1);
-        this.datafieldOptionsInitialized$.subscribe(() &#x3D;&gt; {
-            const serializedMapKey &#x3D; configuration[CaseDataset.DATAFIELD_METADATA] as string;
-            this.selectDatafields(serializedMapKey, false);
-            if (!this.hasSelectedDatafields) {
-                throw new Error(&#x60;Searched data fields cannot be restored from the provided configuration (${serializedMapKey
-                }). Make sure, that the correct allowed nets are provided in this view.&#x60;);
+        if (this._DATAFIELD_INPUT.type &#x3D;&#x3D;&#x3D; SearchInputType.TEXT) {
+            this._DATAFIELD_INPUT.formControl.setValue(expression.dataFieldId);
+            this._DATAFIELD_INPUT.confirmInput();
+            if (!this.selectOperatorFromPfqlExpression(expression)) {
+                return of(undefined);
             }
-            super.loadConfigurationFromMetadata(configuration).subscribe(() &#x3D;&gt; {
-                result$.next();
-                result$.complete();
-            });
-        });
-        return result$.asObservable();
+            this._operatorWasLoadedFromPfql &#x3D; true;
+            this.setOperands([expression.operandValue]);
+            return of(undefined);
+        }
+
+        return this._datafieldOptionsInitialized$.pipe(
+            take(1),
+            map(() &#x3D;&gt; {
+                this._isLoadedFromPfql &#x3D; true;
+                this.selectDataFieldsByPfqlExpression(expression);
+                if (!this.selectOperatorFromPfqlExpression(expression)) {
+                    return;
+                }
+                this.setOperands(Array.isArray(expression.operandValue) ? expression.operandValue : [expression.operandValue]);
+            })
+        );
     }
 
     protected deserializeOperandValue(value: unknown): Observable&lt;any&gt; {
@@ -688,7 +792,12 @@ export class CaseDataset extends Category&lt;Datafield&gt; implements Autocomple
     }
 
     protected createConfigurationFilterTextSegments(): Array&lt;FilterTextSegment&gt; {
-        return [{segment: this._configurationInputs$.value[0].formControl.value.text, bold: true}];
+        const configInput &#x3D; this._configurationInputs$.value[0];
+        let dataFieldId: string &#x3D; configInput.formControl.value.text;
+        if (!dataFieldId) {
+            dataFieldId &#x3D; configInput.formControl.value
+        }
+        return [{segment: dataFieldId, bold: true}];
     }
 }
 </code></pre>
@@ -696,14 +805,15 @@ export class CaseDataset extends Category&lt;Datafield&gt; implements Autocomple
 </div>
 
 
-                   
+
+
 
 
 
 
                    </div><div class="search-results">
     <div class="has-results">
-        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
         <ul class="search-results-list"></ul>
     </div>
     <div class="no-results">
@@ -715,6 +825,15 @@ export class CaseDataset extends Category&lt;Datafield&gt; implements Autocomple
            </div>
        </div>
 
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'interface';
@@ -722,10 +841,23 @@ export class CaseDataset extends Category&lt;Datafield&gt; implements Autocomple
             var MAX_SEARCH_RESULTS = 15;
        </script>
 
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
        <script src="../js/libs/custom-elements.min.js"></script>
        <script src="../js/libs/lit-html.js"></script>
-       
-       <script type="module" src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/menu-wc.js" defer></script>
        <script nomodule src="../js/menu-wc_es5.js" defer></script>
 
        <script src="../js/libs/bootstrap-native.js"></script>

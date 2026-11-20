@@ -1,0 +1,3368 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Netgrif Components Core library Documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">Netgrif Components Core library Documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content injectable">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Injectables</li>
+  <li class="breadcrumb-item" >DoubleDrawerNavigationService</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" 
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" 
+                class="nav-link"
+                
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>projects/netgrif-components-core/src/lib/navigation/navigation-double-drawer/service/double-drawer-navigation.service.ts</code>
+        </p>
+
+
+            <p class="comment">
+                <h3>Description</h3>
+            </p>
+            <p class="comment">
+                <p>Service for managing navigation in double-drawer</p>
+
+            </p>
+
+
+
+            <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#_childCustomViews" >_childCustomViews</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#_currentNavigationItem" >_currentNavigationItem</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#_currentNode" >_currentNode</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#_currentNodeSubscription" >_currentNodeSubscription</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#_hiddenCustomItems$" >_hiddenCustomItems$</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#_leftItems$" >_leftItems$</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#_leftLoading$" >_leftLoading$</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#_moreItems$" >_moreItems$</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#_nodeLoading$" >_nodeLoading$</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#_rightItems$" >_rightItems$</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#_rightLoading$" >_rightLoading$</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#_sessionClearSubscription" >_sessionClearSubscription</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#customItemsInitialized" >customItemsInitialized</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#defaultViewIcon" >defaultViewIcon</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#hiddenCustomItemsInitialized" >hiddenCustomItemsInitialized</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#itemClicked" >itemClicked</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#itemLoaded" >itemLoaded</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#itemsOrder" >itemsOrder</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#getItemCasesByIds" >getItemCasesByIds</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#getItemCasesByIdsInOnePage" >getItemCasesByIdsInOnePage</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#getItemRoutingPath" >getItemRoutingPath</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#getTranslation" >getTranslation</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#initializeCustomViewsOfView" >initializeCustomViewsOfView</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#isAscending" >isAscending</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#loadLeftSide" >loadLeftSide</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#loadMoreItems" >loadMoreItems</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#loadNavigationItems" >loadNavigationItems</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#loadRightSide" >loadRightSide</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#ngOnDestroy" >ngOnDestroy</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#onBackClick" >onBackClick</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#onHomeClick" >onHomeClick</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#onItemClick" >onItemClick</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#openAvailableView" >openAvailableView</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#resolveCustomViewsInLeftSide" >resolveCustomViewsInLeftSide</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#resolveCustomViewsInRightSide" >resolveCustomViewsInRightSide</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#resolveHiddenMenuItemFromChildViews" >resolveHiddenMenuItemFromChildViews</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#resolveItemCaseToNavigationItem" >resolveItemCaseToNavigationItem</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#resolveUriForChildViews" >resolveUriForChildViews</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#switchOrder" >switchOrder</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <h6><b>Accessors</b></h6>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <ul class="index-list">
+                                <li>
+                                    <a href="#canGoBackLoading$" >canGoBackLoading$</a>
+                                </li>
+                                <li>
+                                    <a href="#currentNode" >currentNode</a>
+                                </li>
+                                <li>
+                                    <a href="#itemClicked$" >itemClicked$</a>
+                                </li>
+                                <li>
+                                    <a href="#itemLoaded$" >itemLoaded$</a>
+                                </li>
+                                <li>
+                                    <a href="#rightItems$" >rightItems$</a>
+                                </li>
+                                <li>
+                                    <a href="#leftItems$" >leftItems$</a>
+                                </li>
+                                <li>
+                                    <a href="#moreItems$" >moreItems$</a>
+                                </li>
+                                <li>
+                                    <a href="#hiddenCustomItems$" >hiddenCustomItems$</a>
+                                </li>
+                                <li>
+                                    <a href="#rightItems" >rightItems</a>
+                                </li>
+                                <li>
+                                    <a href="#leftItems" >leftItems</a>
+                                </li>
+                                <li>
+                                    <a href="#moreItems" >moreItems</a>
+                                </li>
+                                <li>
+                                    <a href="#hiddenCustomItems" >hiddenCustomItems</a>
+                                </li>
+                                <li>
+                                    <a href="#leftLoading$" >leftLoading$</a>
+                                </li>
+                                <li>
+                                    <a href="#rightLoading$" >rightLoading$</a>
+                                </li>
+                                <li>
+                                    <a href="#nodeLoading$" >nodeLoading$</a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+        </tbody>
+    </table>
+</section>
+
+            <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(_uriService: <a href="../injectables/UriService.html" target="_self">UriService</a>, _log: <a href="../injectables/LoggerService.html" target="_self">LoggerService</a>, _userService: <a href="../injectables/UserService.html" target="_self">UserService</a>, _config: <a href="../classes/ConfigurationService.html" target="_self">ConfigurationService</a>, _activatedRoute: ActivatedRoute, _caseResourceService: <a href="../injectables/CaseResourceService.html" target="_self">CaseResourceService</a>, _accessService: <a href="../injectables/AccessService.html" target="_self">AccessService</a>, _translateService: TranslateService, _dynamicRoutingService: <a href="../injectables/DynamicNavigationRouteProviderService.html" target="_self">DynamicNavigationRouteProviderService</a>, _redirectService: <a href="../injectables/RedirectService.html" target="_self">RedirectService</a>, _authorityGuardService: <a href="../guards/AuthorityGuardService.html" target="_self">AuthorityGuardService</a>, _sessionClearService: <a href="../injectables/SessionClearService.html" target="_self">SessionClearService</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="86" class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/navigation-double-drawer/service/double-drawer-navigation.service.ts:86</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>_uriService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/UriService.html" target="_self" >UriService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_log</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/LoggerService.html" target="_self" >LoggerService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_userService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/UserService.html" target="_self" >UserService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_config</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../classes/ConfigurationService.html" target="_self" >ConfigurationService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_activatedRoute</td>
+                                                  
+                                                        <td>
+                                                                    <code>ActivatedRoute</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_caseResourceService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/CaseResourceService.html" target="_self" >CaseResourceService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_accessService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/AccessService.html" target="_self" >AccessService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_translateService</td>
+                                                  
+                                                        <td>
+                                                                    <code>TranslateService</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_dynamicRoutingService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/DynamicNavigationRouteProviderService.html" target="_self" >DynamicNavigationRouteProviderService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_redirectService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/RedirectService.html" target="_self" >RedirectService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_authorityGuardService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../guards/AuthorityGuardService.html" target="_self" >AuthorityGuardService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_sessionClearService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/SessionClearService.html" target="_self" >SessionClearService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+            <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getItemCasesByIds"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>getItemCasesByIds</b></span>
+                        <a href="#getItemCasesByIds"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getItemCasesByIds(caseIds: string[], pageNumber: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, pageSize: string | number)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="492"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/navigation-double-drawer/service/double-drawer-navigation.service.ts:492</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>caseIds</td>
+                                            <td>
+                                                        <code>string[]</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>pageNumber</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>pageSize</td>
+                                            <td>
+                                                        <code>string | number</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Observable&lt;Page&lt;Case&gt;&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getItemCasesByIdsInOnePage"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>getItemCasesByIdsInOnePage</b></span>
+                        <a href="#getItemCasesByIdsInOnePage"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getItemCasesByIdsInOnePage(caseIds: string[])</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="488"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/navigation-double-drawer/service/double-drawer-navigation.service.ts:488</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>caseIds</td>
+                                            <td>
+                                                        <code>string[]</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Observable&lt;Page&lt;Case&gt;&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getItemRoutingPath"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>getItemRoutingPath</b></span>
+                        <a href="#getItemRoutingPath"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getItemRoutingPath(itemCase: <a href="../interfaces/Case.html" target="_self">Case</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="587"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/navigation-double-drawer/service/double-drawer-navigation.service.ts:587</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>itemCase</td>
+                                            <td>
+                                                            <code><a href="../interfaces/Case.html" target="_self" >Case</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getTranslation"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>getTranslation</b></span>
+                        <a href="#getTranslation"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getTranslation(value: <a href="../interfaces/I18nFieldValue.html" target="_self">I18nFieldValue</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="582"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/navigation-double-drawer/service/double-drawer-navigation.service.ts:582</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>value</td>
+                                            <td>
+                                                            <code><a href="../interfaces/I18nFieldValue.html" target="_self" >I18nFieldValue</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="initializeCustomViewsOfView"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>initializeCustomViewsOfView</b></span>
+                        <a href="#initializeCustomViewsOfView"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>initializeCustomViewsOfView(view: <a href="../interfaces/View.html" target="_self">View</a>, viewConfigPath: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="359"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/navigation-double-drawer/service/double-drawer-navigation.service.ts:359</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>view</td>
+                                            <td>
+                                                            <code><a href="../interfaces/View.html" target="_self" >View</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>viewConfigPath</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isAscending"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>isAscending</b></span>
+                        <a href="#isAscending"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>isAscending()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="391"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/navigation-double-drawer/service/double-drawer-navigation.service.ts:391</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadLeftSide"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>loadLeftSide</b></span>
+                        <a href="#loadLeftSide"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>loadLeftSide()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="395"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/navigation-double-drawer/service/double-drawer-navigation.service.ts:395</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadMoreItems"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>loadMoreItems</b></span>
+                        <a href="#loadMoreItems"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>loadMoreItems()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="344"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/navigation-double-drawer/service/double-drawer-navigation.service.ts:344</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadNavigationItems"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>loadNavigationItems</b></span>
+                        <a href="#loadNavigationItems"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>loadNavigationItems(node: <a href="../interfaces/UriNodeResource.html" target="_self">UriNodeResource</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="239"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/navigation-double-drawer/service/double-drawer-navigation.service.ts:239</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>node</td>
+                                            <td>
+                                                            <code><a href="../interfaces/UriNodeResource.html" target="_self" >UriNodeResource</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadRightSide"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>loadRightSide</b></span>
+                        <a href="#loadRightSide"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>loadRightSide()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="440"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/navigation-double-drawer/service/double-drawer-navigation.service.ts:440</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnDestroy"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>ngOnDestroy</b></span>
+                        <a href="#ngOnDestroy"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>ngOnDestroy()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="133"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/navigation-double-drawer/service/double-drawer-navigation.service.ts:133</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onBackClick"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>onBackClick</b></span>
+                        <a href="#onBackClick"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>onBackClick()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="269"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/navigation-double-drawer/service/double-drawer-navigation.service.ts:269</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>On back click, the parent is set to parent of left nodes, that will solve
+the right side menu (elements that were in left side, after backward
+navigation will be on the right side).
+Current level is set to a lower number in order to set the left side menu.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onHomeClick"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>onHomeClick</b></span>
+                        <a href="#onHomeClick"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>onHomeClick()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="255"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/navigation-double-drawer/service/double-drawer-navigation.service.ts:255</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>On home click, the current level is set to 0, and current parent is
+set to root node.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onItemClick"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>onItemClick</b></span>
+                        <a href="#onItemClick"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>onItemClick(item: <a href="../interfaces/NavigationItem.html" target="_self">NavigationItem</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="282"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/navigation-double-drawer/service/double-drawer-navigation.service.ts:282</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>On item click, the selected item&#39;s view is rendered (by routerLink). If the selected item has children items, the menu is updated
+and view, that is rendered is selected by the defined rule. The rule is: On first check for default view in children.
+On second check if the clicked item has a view. On third, pick any other children&#39;s view, else show nothing.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>item</td>
+                                            <td>
+                                                            <code><a href="../interfaces/NavigationItem.html" target="_self" >NavigationItem</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="openAvailableView"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>openAvailableView</b></span>
+                        <a href="#openAvailableView"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>openAvailableView()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="324"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/navigation-double-drawer/service/double-drawer-navigation.service.ts:324</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Opens a view of the current right items in the menu by defined rule. The rule is: On first check for default
+view in children. On second check if the clicked item has a view. On third, pick any other children&#39;s view, else
+show nothing.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="resolveCustomViewsInLeftSide"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>resolveCustomViewsInLeftSide</b></span>
+                        <a href="#resolveCustomViewsInLeftSide"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>resolveCustomViewsInLeftSide()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="541"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/navigation-double-drawer/service/double-drawer-navigation.service.ts:541</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="resolveCustomViewsInRightSide"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>resolveCustomViewsInRightSide</b></span>
+                        <a href="#resolveCustomViewsInRightSide"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>resolveCustomViewsInRightSide()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="549"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/navigation-double-drawer/service/double-drawer-navigation.service.ts:549</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="resolveHiddenMenuItemFromChildViews"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>resolveHiddenMenuItemFromChildViews</b></span>
+                        <a href="#resolveHiddenMenuItemFromChildViews"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>resolveHiddenMenuItemFromChildViews(configPath: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, childView: <a href="../interfaces/View.html" target="_self">View</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="569"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/navigation-double-drawer/service/double-drawer-navigation.service.ts:569</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>configPath</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>childView</td>
+                                            <td>
+                                                            <code><a href="../interfaces/View.html" target="_self" >View</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="resolveItemCaseToNavigationItem"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>resolveItemCaseToNavigationItem</b></span>
+                        <a href="#resolveItemCaseToNavigationItem"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>resolveItemCaseToNavigationItem(itemCase: <a href="../interfaces/Case.html" target="_self">Case</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="514"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/navigation-double-drawer/service/double-drawer-navigation.service.ts:514</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>itemCase</td>
+                                            <td>
+                                                            <code><a href="../interfaces/Case.html" target="_self" >Case</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../interfaces/NavigationItem.html" target="_self" >NavigationItem | undefined</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="resolveUriForChildViews"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>resolveUriForChildViews</b></span>
+                        <a href="#resolveUriForChildViews"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>resolveUriForChildViews(configPath: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, childView: <a href="../interfaces/View.html" target="_self">View</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="557"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/navigation-double-drawer/service/double-drawer-navigation.service.ts:557</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>configPath</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>childView</td>
+                                            <td>
+                                                            <code><a href="../interfaces/View.html" target="_self" >View</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="switchOrder"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>switchOrder</b></span>
+                        <a href="#switchOrder"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>switchOrder()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="377"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/navigation-double-drawer/service/double-drawer-navigation.service.ts:377</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+            <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="_childCustomViews"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>_childCustomViews</b></span>
+                        <a href="#_childCustomViews"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>literal type</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="66" class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/navigation-double-drawer/service/double-drawer-navigation.service.ts:66</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>List of custom items</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="_currentNavigationItem"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>_currentNavigationItem</b></span>
+                        <a href="#_currentNavigationItem"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/NavigationItem.html" target="_self" >NavigationItem</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="80" class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/navigation-double-drawer/service/double-drawer-navigation.service.ts:80</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Currently selected navigation item</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="_currentNode"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>_currentNode</b></span>
+                        <a href="#_currentNode"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/UriNodeResource.html" target="_self" >UriNodeResource</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="76" class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/navigation-double-drawer/service/double-drawer-navigation.service.ts:76</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Currently display uri
+Siblings of the node are on the left, children are on the right</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="_currentNodeSubscription"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>_currentNodeSubscription</b></span>
+                        <a href="#_currentNodeSubscription"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>Subscription</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="71" class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/navigation-double-drawer/service/double-drawer-navigation.service.ts:71</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="_hiddenCustomItems$"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>_hiddenCustomItems$</b></span>
+                        <a href="#_hiddenCustomItems$"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>BehaviorSubject&lt;Array&lt;NavigationItem&gt;&gt;</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="62" class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/navigation-double-drawer/service/double-drawer-navigation.service.ts:62</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>List of custom items in more menu</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="_leftItems$"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>_leftItems$</b></span>
+                        <a href="#_leftItems$"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>BehaviorSubject&lt;Array&lt;NavigationItem&gt;&gt;</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="50" class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/navigation-double-drawer/service/double-drawer-navigation.service.ts:50</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>List of displayed items on the left side</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="_leftLoading$"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>_leftLoading$</b></span>
+                        <a href="#_leftLoading$"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../classes/LoadingEmitter.html" target="_self" >LoadingEmitter</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="68" class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/navigation-double-drawer/service/double-drawer-navigation.service.ts:68</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="_moreItems$"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>_moreItems$</b></span>
+                        <a href="#_moreItems$"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>BehaviorSubject&lt;Array&lt;NavigationItem&gt;&gt;</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="58" class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/navigation-double-drawer/service/double-drawer-navigation.service.ts:58</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>List of hidden items</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="_nodeLoading$"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>_nodeLoading$</b></span>
+                        <a href="#_nodeLoading$"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../classes/LoadingEmitter.html" target="_self" >LoadingEmitter</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="70" class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/navigation-double-drawer/service/double-drawer-navigation.service.ts:70</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="_rightItems$"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>_rightItems$</b></span>
+                        <a href="#_rightItems$"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>BehaviorSubject&lt;Array&lt;NavigationItem&gt;&gt;</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="54" class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/navigation-double-drawer/service/double-drawer-navigation.service.ts:54</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>List of displayed items on the right side</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="_rightLoading$"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>_rightLoading$</b></span>
+                        <a href="#_rightLoading$"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../classes/LoadingEmitter.html" target="_self" >LoadingEmitter</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="69" class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/navigation-double-drawer/service/double-drawer-navigation.service.ts:69</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="_sessionClearSubscription"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>_sessionClearSubscription</b></span>
+                        <a href="#_sessionClearSubscription"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>Subscription</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="86" class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/navigation-double-drawer/service/double-drawer-navigation.service.ts:86</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="customItemsInitialized"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>customItemsInitialized</b></span>
+                        <a href="#customItemsInitialized"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="82" class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/navigation-double-drawer/service/double-drawer-navigation.service.ts:82</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="defaultViewIcon"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>defaultViewIcon</b></span>
+                        <a href="#defaultViewIcon"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;filter_alt&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="81" class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/navigation-double-drawer/service/double-drawer-navigation.service.ts:81</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="hiddenCustomItemsInitialized"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>hiddenCustomItemsInitialized</b></span>
+                        <a href="#hiddenCustomItemsInitialized"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="83" class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/navigation-double-drawer/service/double-drawer-navigation.service.ts:83</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="itemClicked"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>itemClicked</b></span>
+                        <a href="#itemClicked"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/MenuItemClickEvent.html" target="_self" >EventEmitter&lt;MenuItemClickEvent&gt;</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="84" class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/navigation-double-drawer/service/double-drawer-navigation.service.ts:84</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="itemLoaded"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>itemLoaded</b></span>
+                        <a href="#itemLoaded"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/MenuItemLoadedEvent.html" target="_self" >EventEmitter&lt;MenuItemLoadedEvent&gt;</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="85" class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/navigation-double-drawer/service/double-drawer-navigation.service.ts:85</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="itemsOrder"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>itemsOrder</b></span>
+                        <a href="#itemsOrder"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../miscellaneous/enumerations.html#MenuOrder" target="_self" >MenuOrder</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="67" class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/navigation-double-drawer/service/double-drawer-navigation.service.ts:67</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+            <section data-compodoc="block-accessors">
+    <h3 id="accessors">
+        Accessors
+    </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="canGoBackLoading$"></a>
+                        <span class="name"><b>canGoBackLoading$</b><a href="#canGoBackLoading$"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>canGoBackLoading$()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="143" class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/navigation-double-drawer/service/double-drawer-navigation.service.ts:143</a></div>
+                                </td>
+                            </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="currentNode"></a>
+                        <span class="name"><b>currentNode</b><a href="#currentNode"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>currentNode()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="147" class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/navigation-double-drawer/service/double-drawer-navigation.service.ts:147</a></div>
+                                </td>
+                            </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>set</b><code>currentNode(node: <a href="../interfaces/UriNodeResource.html" target="_self">UriNodeResource</a>)</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="151" class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/navigation-double-drawer/service/double-drawer-navigation.service.ts:151</a></div>
+                                </td>
+                            </tr>
+                    <tr>
+                        <td class="col-md-4">
+
+                                <div class="io-description">
+                                        <b>Parameters :</b>
+                                        <table class="params">
+                                            <thead>
+                                                <tr>
+                                                    <td>Name</td>
+                                                        <td>Type</td>
+                                                    <td>Optional</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                    <tr>
+                                                            <td>node</td>
+                                                    
+                                                            <td>
+                                                                            <code><a href="../interfaces/UriNodeResource.html" target="_self" >UriNodeResource</a></code>
+                                                            </td>
+                                                    
+                                                        <td>
+                                                                No
+                                                        </td>
+                                                        
+                                                    </tr>
+                                            </tbody>
+                                        </table>
+                                </div>
+                                <div>
+                                </div>
+                                <div class="io-description">
+                                    <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                                </div>
+                        </td>
+                    </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="itemClicked$"></a>
+                        <span class="name"><b>itemClicked$</b><a href="#itemClicked$"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>itemClicked$()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="187" class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/navigation-double-drawer/service/double-drawer-navigation.service.ts:187</a></div>
+                                </td>
+                            </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="itemLoaded$"></a>
+                        <span class="name"><b>itemLoaded$</b><a href="#itemLoaded$"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>itemLoaded$()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="191" class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/navigation-double-drawer/service/double-drawer-navigation.service.ts:191</a></div>
+                                </td>
+                            </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="rightItems$"></a>
+                        <span class="name"><b>rightItems$</b><a href="#rightItems$"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>rightItems$()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="195" class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/navigation-double-drawer/service/double-drawer-navigation.service.ts:195</a></div>
+                                </td>
+                            </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="leftItems$"></a>
+                        <span class="name"><b>leftItems$</b><a href="#leftItems$"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>leftItems$()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="199" class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/navigation-double-drawer/service/double-drawer-navigation.service.ts:199</a></div>
+                                </td>
+                            </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="moreItems$"></a>
+                        <span class="name"><b>moreItems$</b><a href="#moreItems$"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>moreItems$()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="203" class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/navigation-double-drawer/service/double-drawer-navigation.service.ts:203</a></div>
+                                </td>
+                            </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="hiddenCustomItems$"></a>
+                        <span class="name"><b>hiddenCustomItems$</b><a href="#hiddenCustomItems$"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>hiddenCustomItems$()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="207" class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/navigation-double-drawer/service/double-drawer-navigation.service.ts:207</a></div>
+                                </td>
+                            </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="rightItems"></a>
+                        <span class="name"><b>rightItems</b><a href="#rightItems"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>rightItems()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="211" class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/navigation-double-drawer/service/double-drawer-navigation.service.ts:211</a></div>
+                                </td>
+                            </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="leftItems"></a>
+                        <span class="name"><b>leftItems</b><a href="#leftItems"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>leftItems()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="215" class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/navigation-double-drawer/service/double-drawer-navigation.service.ts:215</a></div>
+                                </td>
+                            </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="moreItems"></a>
+                        <span class="name"><b>moreItems</b><a href="#moreItems"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>moreItems()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="219" class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/navigation-double-drawer/service/double-drawer-navigation.service.ts:219</a></div>
+                                </td>
+                            </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="hiddenCustomItems"></a>
+                        <span class="name"><b>hiddenCustomItems</b><a href="#hiddenCustomItems"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>hiddenCustomItems()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="223" class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/navigation-double-drawer/service/double-drawer-navigation.service.ts:223</a></div>
+                                </td>
+                            </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="leftLoading$"></a>
+                        <span class="name"><b>leftLoading$</b><a href="#leftLoading$"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>leftLoading$()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="227" class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/navigation-double-drawer/service/double-drawer-navigation.service.ts:227</a></div>
+                                </td>
+                            </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="rightLoading$"></a>
+                        <span class="name"><b>rightLoading$</b><a href="#rightLoading$"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>rightLoading$()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="231" class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/navigation-double-drawer/service/double-drawer-navigation.service.ts:231</a></div>
+                                </td>
+                            </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="nodeLoading$"></a>
+                        <span class="name"><b>nodeLoading$</b><a href="#nodeLoading$"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>nodeLoading$()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="235" class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/navigation-double-drawer/service/double-drawer-navigation.service.ts:235</a></div>
+                                </td>
+                            </tr>
+
+            </tbody>
+        </table>
+</section>
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {EventEmitter, Injectable, OnDestroy} from &#x27;@angular/core&#x27;;
+import {BehaviorSubject, Observable, of, Subscription} from &#x27;rxjs&#x27;;
+import {UriService} from &quot;../../service/uri.service&quot;;
+import {LoadingEmitter} from &quot;../../../utility/loading-emitter&quot;;
+import {filter, map, take, switchMap} from &quot;rxjs/operators&quot;;
+import {Case} from &quot;../../../resources/interface/case&quot;;
+import {LoggerService} from &quot;../../../logger/services/logger.service&quot;;
+import {DoubleDrawerUtils} from &quot;../util/double-drawer-utils&quot;;
+import {Page} from &quot;../../../resources/interface/page&quot;;
+import {CaseSearchRequestBody, PetriNetSearchRequest} from &quot;../../../filter/models/case-search-request-body&quot;;
+import {HttpParams} from &quot;@angular/common/http&quot;;
+import {PaginationParams} from &quot;../../../utility/pagination/pagination-params&quot;;
+import {SimpleFilter} from &quot;../../../filter/models/simple-filter&quot;;
+import {CaseResourceService} from &quot;../../../resources/engine-endpoint/case-resource.service&quot;;
+import {I18nFieldValue} from &quot;../../../data-fields/i18n-field/models/i18n-field-value&quot;;
+import {TranslateService} from &quot;@ngx-translate/core&quot;;
+import {
+    DynamicNavigationRouteProviderService
+} from &quot;../../../routing/dynamic-navigation-route-provider/dynamic-navigation-route-provider.service&quot;;
+import {RedirectService} from &quot;../../../routing/redirect-service/redirect.service&quot;;
+import {AccessService} from &quot;../../../authorization/permission/access.service&quot;;
+import {ActivatedRoute} from &quot;@angular/router&quot;;
+import {ConfigurationService} from &quot;../../../configuration/configuration.service&quot;;
+import {View} from &quot;../../../../commons/schema&quot;;
+import {encodeBase64} from &quot;../../../utility/base64&quot;;
+import {
+    MENU_IDENTIFIERS,
+    MenuOrder,
+    NavigationItem, RIGHT_SIDE_INIT_PAGE_SIZE,
+    RIGHT_SIDE_NEW_PAGE_SIZE
+} from &#x27;../../model/navigation-configs&#x27;;
+import { UriNodeResource } from &#x27;../../model/uri-resource&#x27;;
+import {MenuItemClickEvent, MenuItemLoadedEvent} from &#x27;../../model/navigation-menu-events&#x27;;
+import {GroupNavigationConstants} from &quot;../../model/group-navigation-constants&quot;;
+import {SessionClearService} from &#x27;../../../authentication/session/services/session-clear.service&#x27;;
+import {UserService} from &quot;../../../user/services/user.service&quot;;
+import {AuthorityGuardService} from &quot;../../../authorization/authority/authority-guard.service&quot;;
+
+/**
+ * Service for managing navigation in double-drawer
+ * */
+@Injectable({
+    providedIn: &#x27;root&#x27;,
+})
+export class DoubleDrawerNavigationService implements OnDestroy {
+
+    /**
+     * List of displayed items on the left side
+     * */
+    protected _leftItems$: BehaviorSubject&lt;Array&lt;NavigationItem&gt;&gt;;
+    /**
+     * List of displayed items on the right side
+     * */
+    protected _rightItems$: BehaviorSubject&lt;Array&lt;NavigationItem&gt;&gt;;
+    /**
+     * List of hidden items
+     * */
+    protected _moreItems$: BehaviorSubject&lt;Array&lt;NavigationItem&gt;&gt;;
+    /**
+     * List of custom items in more menu
+     * */
+    protected _hiddenCustomItems$: BehaviorSubject&lt;Array&lt;NavigationItem&gt;&gt;;
+    /**
+     * List of custom items
+     * */
+    protected _childCustomViews: { [uri: string]: { [key: string]: NavigationItem } };
+    protected itemsOrder: MenuOrder;
+    protected _leftLoading$: LoadingEmitter;
+    protected _rightLoading$: LoadingEmitter;
+    protected _nodeLoading$: LoadingEmitter;
+    protected _currentNodeSubscription: Subscription;
+    /**
+     * Currently display uri
+     * Siblings of the node are on the left, children are on the right
+     */
+    protected _currentNode: UriNodeResource;
+    /**
+     * Currently selected navigation item
+     */
+    protected _currentNavigationItem: NavigationItem;
+    protected defaultViewIcon: string &#x3D; &#x27;filter_alt&#x27;;
+    protected customItemsInitialized: boolean;
+    protected hiddenCustomItemsInitialized: boolean;
+    protected itemClicked: EventEmitter&lt;MenuItemClickEvent&gt;;
+    protected itemLoaded: EventEmitter&lt;MenuItemLoadedEvent&gt;;
+    protected _sessionClearSubscription: Subscription;
+
+    constructor(protected _uriService: UriService,
+                protected _log: LoggerService,
+                protected _userService: UserService,
+                protected _config: ConfigurationService,
+                protected _activatedRoute: ActivatedRoute,
+                protected _caseResourceService: CaseResourceService,
+                protected _accessService: AccessService,
+                protected _translateService: TranslateService,
+                protected _dynamicRoutingService: DynamicNavigationRouteProviderService,
+                protected _redirectService: RedirectService,
+                protected _authorityGuardService: AuthorityGuardService,
+                private _sessionClearService: SessionClearService) {
+        this._leftItems$ &#x3D; new BehaviorSubject([]);
+        this._rightItems$ &#x3D; new BehaviorSubject([]);
+        this._moreItems$ &#x3D; new BehaviorSubject([]);
+        this._hiddenCustomItems$ &#x3D; new BehaviorSubject([]);
+        this._childCustomViews &#x3D; {};
+        this._leftLoading$ &#x3D; new LoadingEmitter();
+        this._rightLoading$ &#x3D; new LoadingEmitter();
+        this._nodeLoading$ &#x3D; new LoadingEmitter();
+        this._currentNavigationItem &#x3D; null;
+        this.itemsOrder &#x3D; MenuOrder.Ascending;
+        this.customItemsInitialized &#x3D; false;
+        this.hiddenCustomItemsInitialized &#x3D; false;
+        this.itemClicked &#x3D; new EventEmitter&lt;MenuItemClickEvent&gt;();
+        this.itemLoaded &#x3D; new EventEmitter&lt;MenuItemLoadedEvent&gt;();
+
+        this._currentNodeSubscription &#x3D; this._userService.user$.pipe(
+            filter(user &#x3D;&gt; !this._userService.isUserEmpty(user)),
+            switchMap(() &#x3D;&gt; this._uriService.activeNode$)
+        ).subscribe(node &#x3D;&gt; {
+            this.currentNode &#x3D; node;
+        });
+
+        this._sessionClearSubscription &#x3D; this._sessionClearService.sessionCleared.subscribe({
+            next: () &#x3D;&gt; {
+                this._currentNavigationItem &#x3D; null;
+                this._childCustomViews &#x3D; {};
+                this.customItemsInitialized &#x3D; false;
+                this.hiddenCustomItemsInitialized &#x3D; false;
+                this._currentNode &#x3D; null;
+            }
+        });
+    }
+
+    public ngOnDestroy(): void {
+        this._currentNodeSubscription?.unsubscribe();
+        this._sessionClearSubscription?.unsubscribe();
+        this._leftLoading$.complete();
+        this._rightLoading$.complete();
+        this._nodeLoading$.complete();
+        this.itemClicked.complete();
+        this.itemLoaded.complete();
+    }
+
+    public get canGoBackLoading$(): Observable&lt;boolean&gt; {
+        return this._nodeLoading$;
+    }
+
+    public get currentNode(): UriNodeResource {
+        return this._currentNode;
+    }
+
+    public set currentNode(node: UriNodeResource) {
+        if (node &#x3D;&#x3D;&#x3D; this._currentNode || this._leftLoading$.isActive || this._rightLoading$.isActive) {
+            return;
+        }
+        this._currentNode &#x3D; node;
+        if (!node) {
+            return;
+        }
+        if (node.parentId &amp;&amp; !node.parent) {
+            if (node.parentId &#x3D;&#x3D;&#x3D; this._uriService.root.id) {
+                node.parent &#x3D; this._uriService.root;
+            } else {
+                this._nodeLoading$.on();
+                this._uriService.getNodeByPath(this._uriService.resolveParentPath(node)).pipe(take(1)).subscribe({
+                    next: n &#x3D;&gt; {
+                        node.parent &#x3D; !n ? this._uriService.root : n;
+                        this._nodeLoading$.off();
+                    },
+                    error: error &#x3D;&gt; {
+                        this._log.error(error);
+                        this._nodeLoading$.off();
+                    }});
+            }
+        }
+        if (this._nodeLoading$.isActive) {
+            this._nodeLoading$.pipe(
+                filter(isActive &#x3D;&gt; !isActive),
+                take(1)
+            ).subscribe(() &#x3D;&gt; {
+                this.loadNavigationItems(node);
+            });
+        } else {
+            this.loadNavigationItems(node);
+        }
+    }
+
+    public get itemClicked$(): EventEmitter&lt;MenuItemClickEvent&gt; {
+        return this.itemClicked;
+    }
+
+    public get itemLoaded$(): EventEmitter&lt;MenuItemLoadedEvent&gt; {
+        return this.itemLoaded;
+    }
+
+    public get rightItems$(): BehaviorSubject&lt;Array&lt;NavigationItem&gt;&gt; {
+        return this._rightItems$;
+    }
+
+    public get leftItems$(): BehaviorSubject&lt;Array&lt;NavigationItem&gt;&gt; {
+        return this._leftItems$;
+    }
+
+    public get moreItems$(): BehaviorSubject&lt;Array&lt;NavigationItem&gt;&gt; {
+        return this._moreItems$;
+    }
+
+    public get hiddenCustomItems$(): BehaviorSubject&lt;Array&lt;NavigationItem&gt;&gt; {
+        return this._hiddenCustomItems$;
+    }
+
+    public get rightItems(): Array&lt;NavigationItem&gt; {
+        return this._rightItems$.getValue();
+    }
+
+    public get leftItems(): Array&lt;NavigationItem&gt; {
+        return this._leftItems$.getValue();
+    }
+
+    public get moreItems(): Array&lt;NavigationItem&gt; {
+        return this._moreItems$.getValue();
+    }
+
+    public get hiddenCustomItems(): Array&lt;NavigationItem&gt; {
+        return this._hiddenCustomItems$.getValue();
+    }
+
+    public get leftLoading$(): LoadingEmitter {
+        return this._leftLoading$;
+    }
+
+    public get rightLoading$(): LoadingEmitter {
+        return this._rightLoading$;
+    }
+
+    public get nodeLoading$(): LoadingEmitter {
+        return this._nodeLoading$;
+    }
+
+    public loadNavigationItems(node: UriNodeResource) {
+        if (this._uriService.isRoot(node)) {
+            this._leftItems$.next([]);
+            this.loadRightSide();
+        } else {
+            if (!this._leftItems$.getValue().find(item &#x3D;&gt; DoubleDrawerUtils.isNodeCorrespondingToItem(node, item))) {
+                this.loadLeftSide();
+            }
+            this.loadRightSide();
+        }
+    }
+
+    /**
+     * On home click, the current level is set to 0, and current parent is
+     * set to root node.
+     * */
+    public onHomeClick(): void {
+        if (this._leftLoading$.isActive || this._rightLoading$.isActive) {
+            return;
+        }
+        this._uriService.activeNode &#x3D; this._uriService.root;
+        this.itemClicked.emit({uriNode: this._uriService.activeNode, isHome: true});
+    }
+
+    /**
+     * On back click, the parent is set to parent of left nodes, that will solve
+     * the right side menu (elements that were in left side, after backward
+     * navigation will be on the right side).
+     * Current level is set to a lower number in order to set the left side menu.
+     * */
+    public onBackClick(): void {
+        if (this._leftLoading$.isActive || this._rightLoading$.isActive || this._uriService.isRoot(this._currentNode)) {
+            return;
+        }
+        this._uriService.activeNode &#x3D; this._currentNode.parent;
+        this.itemClicked.emit({uriNode: this._uriService.activeNode, isHome: false});
+    }
+
+    /**
+     * On item click, the selected item&#x27;s view is rendered (by routerLink). If the selected item has children items, the menu is updated
+     * and view, that is rendered is selected by the defined rule. The rule is: On first check for default view in children.
+     * On second check if the clicked item has a view. On third, pick any other children&#x27;s view, else show nothing.
+     * */
+    public onItemClick(item: NavigationItem): void {
+        this._currentNavigationItem &#x3D; item;
+        if (item.resource &#x3D;&#x3D;&#x3D; undefined) {
+            // custom view represented only in nae.json
+            if (item.processUri &#x3D;&#x3D;&#x3D; this.currentNode.uriPath) {
+                this._uriService.activeNode &#x3D; this._currentNode;
+            } else {
+                this._uriService.activeNode &#x3D; this._currentNode.parent;
+            }
+            this.itemClicked.emit({uriNode: this._uriService.activeNode, isHome: false});
+        } else {
+            const path &#x3D; item.resource.immediateData.find(f &#x3D;&gt; f.stringId &#x3D;&#x3D;&#x3D; GroupNavigationConstants.ITEM_FIELD_ID_NODE_PATH)?.value;
+            if (DoubleDrawerUtils.isFolder(item) &amp;&amp; !this._leftLoading$.isActive &amp;&amp; !this._rightLoading$.isActive) {
+                this._uriService.getNodeByPath(path).pipe(take(1)).subscribe({
+                    next: node &#x3D;&gt; {
+                        this._uriService.activeNode &#x3D; node;
+                        this.itemClicked.emit({uriNode: this._uriService.activeNode, isHome: false});
+                        this._rightLoading$.pipe(
+                            filter(isRightLoading &#x3D;&gt; isRightLoading &#x3D;&#x3D;&#x3D; false),
+                            take(1)
+                        ).subscribe(()&#x3D;&gt; {
+                            this.openAvailableView();
+                        })
+                    },
+                    error: error &#x3D;&gt; {
+                        this._log.error(error);
+                    }});
+            } else if (!path.includes(this.currentNode.uriPath)) {
+                this._uriService.activeNode &#x3D; this._currentNode.parent;
+                this.itemClicked.emit({uriNode: this._uriService.activeNode, isHome: false});
+            } else {
+                this._uriService.activeNode &#x3D; this._currentNode;
+                this.itemClicked.emit({uriNode: this._uriService.activeNode, isHome: false});
+            }
+        }
+    }
+
+    /**
+     * Opens a view of the current right items in the menu by defined rule. The rule is: On first check for default
+     * view in children. On second check if the clicked item has a view. On third, pick any other children&#x27;s view, else
+     * show nothing.
+     * */
+    public openAvailableView() {
+        let allItems: Array&lt;NavigationItem&gt; &#x3D; this.rightItems.concat(this.moreItems);
+
+        let autoOpenItems: Array&lt;NavigationItem&gt; &#x3D; allItems.filter(item &#x3D;&gt; DoubleDrawerUtils.hasItemAutoOpenView(item));
+        if (autoOpenItems.length &gt; 0) {
+            this._redirectService.redirect(autoOpenItems[0].routing.path);
+            return;
+        }
+
+        if (DoubleDrawerUtils.isNotFolder(this._currentNavigationItem)) {
+            // is routed by routerLink on item click
+            return;
+        }
+
+        let itemsWithView: Array&lt;NavigationItem&gt; &#x3D; allItems.filter(item &#x3D;&gt; DoubleDrawerUtils.isNotFolder(item));
+        if (itemsWithView.length &gt; 0) {
+            this._redirectService.redirect(itemsWithView[0].routing.path);
+        }
+    }
+
+    public loadMoreItems() {
+        if (this.moreItems.length &gt; RIGHT_SIDE_NEW_PAGE_SIZE) {
+            let currentRightItems &#x3D; this.rightItems;
+            let currentMoreItems &#x3D; this.moreItems;
+            currentRightItems.push(...currentMoreItems.splice(0, RIGHT_SIDE_NEW_PAGE_SIZE));
+            this.rightItems$.next(currentRightItems);
+            this.moreItems$.next(currentMoreItems);
+        } else {
+            let currentRightItems &#x3D; this.rightItems;
+            currentRightItems.push(...this.moreItems);
+            this.rightItems$.next(currentRightItems);
+            this.moreItems$.next([]);
+        }
+    }
+
+    public initializeCustomViewsOfView(view: View, viewConfigPath: string): void {
+        if (!view || this.customItemsInitialized || this.hiddenCustomItemsInitialized) return;
+
+        this._userService.user$.pipe(filter(user &#x3D;&gt; !this._userService.isUserEmpty(user)), take(1)).subscribe(user &#x3D;&gt; {
+            Object.entries(view.children).forEach(([key, childView]) &#x3D;&gt; {
+                const childViewConfigPath: string &#x3D; viewConfigPath + &#x27;/&#x27; + key;
+                this.resolveUriForChildViews(childViewConfigPath, childView);
+                this.resolveHiddenMenuItemFromChildViews(childViewConfigPath, childView);
+            });
+
+            this.resolveCustomViewsInRightSide();
+            this.resolveCustomViewsInLeftSide();
+
+            this.customItemsInitialized &#x3D; true;
+            this.hiddenCustomItemsInitialized &#x3D; true;
+        });
+    }
+
+    public switchOrder(): void {
+        this.itemsOrder &#x3D; (this.itemsOrder + 1) % 2;
+        let multiplier &#x3D; 1;
+        if (this.itemsOrder &#x3D;&#x3D;&#x3D; MenuOrder.Descending) {
+            multiplier &#x3D; -1;
+        }
+        let currentRightItems &#x3D; this.rightItems;
+        let currentLeftItems &#x3D; this.leftItems;
+        currentRightItems.sort((a, b) &#x3D;&gt; multiplier * (a?.navigation as NavigationItem)?.title.localeCompare((b?.navigation as NavigationItem)?.title));
+        currentLeftItems.sort((a, b) &#x3D;&gt; multiplier * (a?.navigation as NavigationItem)?.title.localeCompare((b?.navigation as NavigationItem)?.title));
+        this.rightItems$.next(currentRightItems);
+        this.leftItems$.next(currentLeftItems);
+    }
+
+    public isAscending(): boolean {
+        return this.itemsOrder &#x3D;&#x3D;&#x3D; MenuOrder.Ascending;
+    }
+
+    protected loadLeftSide() {
+        if (this._uriService.isRoot(this._currentNode)) {
+            this._leftItems$.next([])
+            return;
+        }
+        this._leftLoading$.on();
+        this._uriService.getItemCaseByNodePath(this.currentNode.parent).pipe(take(1)).subscribe({
+            next: page &#x3D;&gt; {
+                let childCases$;
+                let targetItem;
+                let orderedChildCaseIds;
+
+                if (page?.pagination?.totalElements &#x3D;&#x3D;&#x3D; 0) {
+                    childCases$ &#x3D; of([]);
+                } else {
+                    targetItem &#x3D; page.content[0];
+                    orderedChildCaseIds &#x3D; DoubleDrawerUtils.extractChildCaseIds(targetItem);
+                    childCases$ &#x3D; this.getItemCasesByIdsInOnePage(orderedChildCaseIds).pipe(
+                        map(p &#x3D;&gt; p.content),
+                    );
+                }
+
+                childCases$.pipe(take(1)).subscribe({
+                    next: result &#x3D;&gt; {
+                        result &#x3D; result.map(folder &#x3D;&gt; this.resolveItemCaseToNavigationItem(folder)).filter(i &#x3D;&gt; !!i);
+                        this._leftItems$.next(result.sort((a, b) &#x3D;&gt; orderedChildCaseIds.indexOf(a.resource.stringId) - orderedChildCaseIds.indexOf(b.resource.stringId)));
+                        this.resolveCustomViewsInLeftSide();
+                        this._leftLoading$.off();
+                        this.itemLoaded.emit({menu: &#x27;left&#x27;, items: this.leftItems});
+                    },
+                    error: error &#x3D;&gt; {
+                        this._log.error(error);
+                        this._leftItems$.next([])
+                        this.resolveCustomViewsInLeftSide();
+                        this._leftLoading$.off();
+                    }});
+            },
+            error: error &#x3D;&gt; {
+                this._log.error(error);
+                this._leftItems$.next([])
+                this.resolveCustomViewsInLeftSide();
+                this._leftLoading$.off();
+            }});
+    }
+
+    protected loadRightSide() {
+        this._rightLoading$.on();
+        this._moreItems$.next([])
+        this._uriService.getItemCaseByNodePath(this.currentNode).pipe(take(1)).subscribe({
+            next: page &#x3D;&gt; {
+                let childCases$;
+                let targetItem;
+                let orderedChildCaseIds;
+
+                if (page?.pagination?.totalElements &#x3D;&#x3D;&#x3D; 0) {
+                    childCases$ &#x3D; of([]);
+                } else {
+                    targetItem &#x3D; page.content[0];
+                    orderedChildCaseIds &#x3D; DoubleDrawerUtils.extractChildCaseIds(targetItem);
+                    childCases$ &#x3D; this.getItemCasesByIdsInOnePage(orderedChildCaseIds).pipe(
+                        map(p &#x3D;&gt; p.content),
+                    );
+                }
+
+                childCases$.pipe(take(1)).subscribe(result &#x3D;&gt; {
+                    result &#x3D; (result as Case[]).sort((a, b) &#x3D;&gt; orderedChildCaseIds.indexOf(a.stringId) - orderedChildCaseIds.indexOf(b.stringId));
+                    if (result.length &gt; RIGHT_SIDE_INIT_PAGE_SIZE) {
+                        const rawRightItems: Case[] &#x3D; result.splice(0, RIGHT_SIDE_INIT_PAGE_SIZE);
+                        this._rightItems$.next(rawRightItems.map(folder &#x3D;&gt; this.resolveItemCaseToNavigationItem(folder)).filter(i &#x3D;&gt; !!i));
+                        this._moreItems$.next(result.map(folder &#x3D;&gt; this.resolveItemCaseToNavigationItem(folder)).filter(i &#x3D;&gt; !!i));
+                    } else {
+                        this._rightItems$.next(result.map(folder &#x3D;&gt; this.resolveItemCaseToNavigationItem(folder)).filter(i &#x3D;&gt; !!i));
+                    }
+                    this.resolveCustomViewsInRightSide();
+                    this._rightLoading$.off();
+                    this.itemLoaded.emit({menu: &#x27;right&#x27;, items: this.rightItems});
+                }, error &#x3D;&gt; {
+                    this._log.error(error);
+                    this._rightItems$.next([]);
+                    this._moreItems$.next([]);
+                    this.resolveCustomViewsInRightSide();
+                    this._rightLoading$.off();
+                });
+            },
+            error: error &#x3D;&gt; {
+                this._log.error(error);
+                this._rightItems$.next([]);
+                this._moreItems$.next([]);
+                this.resolveCustomViewsInRightSide();
+                this._rightLoading$.off();
+            }});
+    }
+
+    protected getItemCasesByIdsInOnePage(caseIds: string[]): Observable&lt;Page&lt;Case&gt;&gt; {
+        return this.getItemCasesByIds(caseIds, 0, caseIds.length);
+    }
+
+    protected getItemCasesByIds(caseIds: string[], pageNumber: number, pageSize: string | number): Observable&lt;Page&lt;Case&gt;&gt; {
+        if (!caseIds || caseIds.length &#x3D;&#x3D;&#x3D; 0) {
+            return of({
+                content: [], pagination: {
+                    number: -1,
+                    size: 0,
+                    totalPages: 0,
+                    totalElements: 0
+                }
+            });
+        }
+        const searchBody: CaseSearchRequestBody &#x3D; {
+            stringId: caseIds,
+            process: MENU_IDENTIFIERS.map(id &#x3D;&gt; ({identifier: id} as PetriNetSearchRequest)),
+        };
+
+        let httpParams &#x3D; new HttpParams()
+            .set(PaginationParams.PAGE_SIZE, pageSize)
+            .set(PaginationParams.PAGE_NUMBER, pageNumber);
+        return this._caseResourceService.searchCases(SimpleFilter.fromCaseQuery(searchBody), httpParams);
+    }
+
+    public resolveItemCaseToNavigationItem(itemCase: Case): NavigationItem | undefined {
+        if (DoubleDrawerUtils.representsRootNode(itemCase)) {
+            return;
+        }
+        const item: NavigationItem &#x3D; {
+            access: {},
+            navigation: {
+                icon: itemCase.immediateData.find(f &#x3D;&gt; f.stringId &#x3D;&#x3D;&#x3D; GroupNavigationConstants.ITEM_FIELD_ID_MENU_ICON)?.value || this.defaultViewIcon,
+                title: this.getTranslation(itemCase.immediateData.find(f &#x3D;&gt; f.stringId &#x3D;&#x3D;&#x3D; GroupNavigationConstants.ITEM_FIELD_ID_MENU_NAME)?.value) || itemCase.title,
+            },
+            routing: {
+                path: this.getItemRoutingPath(itemCase),
+            },
+            id: itemCase.stringId,
+            resource: itemCase,
+        };
+        if (!this._authorityGuardService.canAccessNavigationItem(item)) {
+            return;
+        }
+        const resolvedRoles &#x3D; DoubleDrawerUtils.resolveAccessRoles(itemCase, GroupNavigationConstants.ITEM_FIELD_ID_ALLOWED_ROLES);
+        const resolvedBannedRoles &#x3D; DoubleDrawerUtils.resolveAccessRoles(itemCase, GroupNavigationConstants.ITEM_FIELD_ID_BANNED_ROLES);
+        if (!!resolvedRoles) item.access[&#x27;role&#x27;] &#x3D; resolvedRoles;
+        if (!!resolvedBannedRoles) item.access[&#x27;bannedRole&#x27;] &#x3D; resolvedBannedRoles;
+        if (!this._accessService.canAccessView(item, item.routingPath)) return;
+        return item;
+    }
+
+    protected resolveCustomViewsInLeftSide() {
+        if (!!this._currentNode?.parent &amp;&amp; !!this._childCustomViews[this._currentNode.parent.uriPath]) {
+            let currentLeftItems &#x3D; this._leftItems$.getValue();
+            currentLeftItems.push(...Object.values(this._childCustomViews[this._currentNode.parent.uriPath]));
+            this._leftItems$.next(currentLeftItems);
+        }
+    }
+
+    protected resolveCustomViewsInRightSide() {
+        if (!!this._currentNode &amp;&amp; !!this._childCustomViews[this._currentNode.uriPath]) {
+            let currentRightItems &#x3D; this._rightItems$.getValue();
+            currentRightItems.push(...Object.values(this._childCustomViews[this._currentNode.uriPath]));
+            this._rightItems$.next(currentRightItems);
+        }
+    }
+
+    protected resolveUriForChildViews(configPath: string, childView: View): void {
+        if (!childView.processUri) return;
+        if (!this._accessService.canAccessView(childView, configPath)) return;
+        if (!this._childCustomViews[childView.processUri]) {
+            this._childCustomViews[childView.processUri] &#x3D; {};
+        }
+        this._childCustomViews[childView.processUri][configPath] &#x3D; {
+            id: configPath,
+            ...childView,
+        };
+    }
+
+    protected resolveHiddenMenuItemFromChildViews(configPath: string, childView: View): void {
+        if (!childView.navigation) return;
+        if (!this._accessService.canAccessView(childView, configPath)) return;
+        if (!!((childView?.navigation as any)?.hidden)) {
+            let currentHiddenCustomItems &#x3D; this._hiddenCustomItems$.getValue();
+            currentHiddenCustomItems.push({
+                id: configPath,
+                ...childView,
+            });
+            this._hiddenCustomItems$.next(currentHiddenCustomItems);
+        }
+    }
+
+    protected getTranslation(value: I18nFieldValue): string {
+        const locale &#x3D; this._translateService.currentLang.split(&#x27;-&#x27;)[0];
+        return locale in value.translations ? value.translations[locale] : value.defaultValue;
+    }
+
+    public getItemRoutingPath(itemCase: Case) {
+        const url &#x3D; this._dynamicRoutingService.route;
+        return &#x60;/${url}/${encodeBase64(itemCase.stringId)}&#x60;;
+    }
+}
+</code></pre>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'injectable';
+            var COMPODOC_CURRENT_PAGE_URL = 'DoubleDrawerNavigationService.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

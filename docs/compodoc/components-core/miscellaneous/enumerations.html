@@ -9,13 +9,64 @@
 
         <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
 	   <link rel="stylesheet" href="../styles/style.css">
-        <link rel="stylesheet" href="../styles/dark.css" media="(prefers-color-scheme: dark)">
+        <link rel="stylesheet" href="../styles/dark.css">
     </head>
     <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
 
-        <div class="navbar navbar-default navbar-fixed-top visible-xs">
-            <a href="../" class="navbar-brand">Netgrif Components Core library Documentation</a>
-            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">Netgrif Components Core library Documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
         </div>
 
         <div class="xs-menu menu" id="mobile-menu">
@@ -24,7 +75,7 @@
 
         <div class="container-fluid main">
            <div class="row main">
-               <div class="hidden-xs menu">
+               <div class="d-none d-md-block menu">
                    <compodoc-menu mode="normal"></compodoc-menu>
                </div>
                <!-- START CONTENT -->
@@ -44,14 +95,16 @@
 
 
 
-                   
+
+
+
 
 <ol class="breadcrumb">
-  <li>Miscellaneous</li>
-  <li>Enumerations</li>
+  <li class="breadcrumb-item">Miscellaneous</li>
+  <li class="breadcrumb-item">Enumerations</li>
 </ol>
 
-<section>
+<section data-compodoc="block-index">
     <h3 id="index">Index</h3>
     <table class="table table-sm table-bordered index-table">
         <tbody>
@@ -74,7 +127,7 @@
                             <a href="#ButtonFieldValidation" title="projects/netgrif-components-core/src/lib/data-fields/button-field/models/button-field.ts" ><b>ButtonFieldValidation</b>&nbsp;&nbsp;&nbsp;(projects/.../button-field.ts)</a>
                         </li>
                         <li>
-                            <a href="#CaseMetaField" title="projects/netgrif-components-core/src/lib/header/case-header/case-menta-enum.ts" ><b>CaseMetaField</b>&nbsp;&nbsp;&nbsp;(projects/.../case-menta-enum.ts)</a>
+                            <a href="#CaseMetaField" title="projects/netgrif-components-core/src/lib/header/case-header/case-meta-enum.ts" ><b>CaseMetaField</b>&nbsp;&nbsp;&nbsp;(projects/.../case-meta-enum.ts)</a>
                         </li>
                         <li>
                             <a href="#CaseSearch" title="projects/netgrif-components-core/src/lib/search/models/category/case/case-search.enum.ts" ><b>CaseSearch</b>&nbsp;&nbsp;&nbsp;(projects/.../case-search.enum.ts)</a>
@@ -110,6 +163,9 @@
                             <a href="#DataGroupLayoutType" title="projects/netgrif-components-core/src/lib/resources/interface/data-group-layout.ts" ><b>DataGroupLayoutType</b>&nbsp;&nbsp;&nbsp;(projects/.../data-group-layout.ts)</a>
                         </li>
                         <li>
+                            <a href="#DeploymentState" title="projects/netgrif-components-core/src/lib/resources/interface/petri-net-reference.ts" ><b>DeploymentState</b>&nbsp;&nbsp;&nbsp;(projects/.../petri-net-reference.ts)</a>
+                        </li>
+                        <li>
                             <a href="#EnumerationAutocompleteFilterProperty" title="projects/netgrif-components-core/src/lib/data-fields/enumeration-field/enumeration-autocomplete-select-field/enumeration-autocomplete-filter-property.ts" ><b>EnumerationAutocompleteFilterProperty</b>&nbsp;&nbsp;&nbsp;(projects/.../enumeration-autocomplete-filter-property.ts)</a>
                         </li>
                         <li>
@@ -132,6 +188,9 @@
                         </li>
                         <li>
                             <a href="#FileUploadMIMEType" title="projects/netgrif-components-core/src/lib/data-fields/file-field/models/file-field.ts" ><b>FileUploadMIMEType</b>&nbsp;&nbsp;&nbsp;(projects/.../file-field.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#FilterFieldValidation" title="projects/netgrif-components-core/src/lib/data-fields/filter-field/models/filter-field.ts" ><b>FilterFieldValidation</b>&nbsp;&nbsp;&nbsp;(projects/.../filter-field.ts)</a>
                         </li>
                         <li>
                             <a href="#FilterType" title="projects/netgrif-components-core/src/lib/filter/models/filter-type.ts" ><b>FilterType</b>&nbsp;&nbsp;&nbsp;(projects/.../filter-type.ts)</a>
@@ -200,6 +259,12 @@
                             <a href="#ProgressType" title="projects/netgrif-components-core/src/lib/resources/resource-provider.service.ts" ><b>ProgressType</b>&nbsp;&nbsp;&nbsp;(projects/.../resource-provider.service.ts)</a>
                         </li>
                         <li>
+                            <a href="#QueryItemType" title="projects/netgrif-components-core/src/lib/pfql/model/query-item-type.ts" ><b>QueryItemType</b>&nbsp;&nbsp;&nbsp;(projects/.../query-item-type.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#ResourceTypeQueryPrefix" title="projects/netgrif-components-core/src/lib/search/models/category/resource-type-query-prefix.ts" ><b>ResourceTypeQueryPrefix</b>&nbsp;&nbsp;&nbsp;(projects/.../resource-type-query-prefix.ts)</a>
+                        </li>
+                        <li>
                             <a href="#SearchIndex" title="projects/netgrif-components-core/src/lib/search/models/search-index.ts" ><b>SearchIndex</b>&nbsp;&nbsp;&nbsp;(projects/.../search-index.ts)</a>
                         </li>
                         <li>
@@ -263,9 +328,6 @@
                             <a href="#UriContentType" title="projects/netgrif-components-core/src/lib/navigation/model/uri-resource.ts" ><b>UriContentType</b>&nbsp;&nbsp;&nbsp;(projects/.../uri-resource.ts)</a>
                         </li>
                         <li>
-                            <a href="#UserFilterConstants" title="projects/netgrif-components-core/src/lib/filter/models/user-filter-constants.ts" ><b>UserFilterConstants</b>&nbsp;&nbsp;&nbsp;(projects/.../user-filter-constants.ts)</a>
-                        </li>
-                        <li>
                             <a href="#UserImpersonationConstants" title="projects/netgrif-components-core/src/lib/impersonation/models/user-impersonation-constants.ts" ><b>UserImpersonationConstants</b>&nbsp;&nbsp;&nbsp;(projects/.../user-impersonation-constants.ts)</a>
                         </li>
                         <li>
@@ -279,7 +341,7 @@
 </section>
 
     <h3>projects/netgrif-components-core/src/lib/data-fields/time-instance-abstract-field/models/abstract-time-instance-field.ts</h3>
-    <section>
+    <section data-compodoc="block-enums">
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
@@ -362,7 +424,7 @@
         </table>
 </section>
     <h3>projects/netgrif-components-core/src/lib/task-content/model/policy.ts</h3>
-    <section>
+    <section data-compodoc="block-enums">
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
@@ -476,7 +538,7 @@
         </table>
 </section>
     <h3>projects/netgrif-components-core/src/lib/data-fields/boolean-field/models/boolean-field.ts</h3>
-    <section>
+    <section data-compodoc="block-enums">
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
@@ -509,7 +571,7 @@
         </table>
 </section>
     <h3>projects/netgrif-components-core/src/lib/search/models/boolean-operator.ts</h3>
-    <section>
+    <section data-compodoc="block-enums">
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
@@ -520,7 +582,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-description"><p>Determines the way <a href="../classess/Predicate.html">Predicate</a>s are combined together.</p>
+                            <div class="io-description"><p>Determines the way <a href="../classes/Predicate.html">Predicate</a>s are combined together.</p>
 </div>
                         </td>
                     </tr>
@@ -548,7 +610,7 @@
         </table>
 </section>
     <h3>projects/netgrif-components-core/src/lib/data-fields/button-field/models/button-field.ts</h3>
-    <section>
+    <section data-compodoc="block-enums">
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
@@ -570,8 +632,8 @@
             </tbody>
         </table>
 </section>
-    <h3>projects/netgrif-components-core/src/lib/header/case-header/case-menta-enum.ts</h3>
-    <section>
+    <h3>projects/netgrif-components-core/src/lib/header/case-header/case-meta-enum.ts</h3>
+    <section data-compodoc="block-enums">
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
@@ -588,16 +650,6 @@
                         <tr>
                             <td class="col-md-4">
                                 <i>Value : </i><code>mongoId</code>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                &nbsp;VISUAL_ID
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                <i>Value : </i><code>visualId</code>
                             </td>
                         </tr>
                         <tr>
@@ -630,11 +682,31 @@
                                 <i>Value : </i><code>creationDate</code>
                             </td>
                         </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                &nbsp;PROCESS_IDENTIFIER
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Value : </i><code>processIdentifier</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                &nbsp;PETRI_NET_ID
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Value : </i><code>petriNetId</code>
+                            </td>
+                        </tr>
             </tbody>
         </table>
 </section>
     <h3>projects/netgrif-components-core/src/lib/search/models/category/case/case-search.enum.ts</h3>
-    <section>
+    <section data-compodoc="block-enums">
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
@@ -656,7 +728,7 @@
                         </tr>
                         <tr>
                             <td class="col-md-4">
-                                <i>Value : </i><code>creationDateSortable</code>
+                                <i>Value : </i><code>creationDate</code>
                             </td>
                         </tr>
                         <tr>
@@ -726,14 +798,14 @@
                         </tr>
                         <tr>
                             <td class="col-md-4">
-                                <i>Value : </i><code>stringId</code>
+                                <i>Value : </i><code>id</code>
                             </td>
                         </tr>
             </tbody>
         </table>
 </section>
     <h3>projects/netgrif-components-core/src/lib/search/models/category/categories.ts</h3>
-    <section>
+    <section data-compodoc="block-enums">
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
@@ -800,32 +872,12 @@
                         </tr>
                         <tr>
                             <td class="col-md-4">
-                                &nbsp;CASE_ROLE
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                <i>Value : </i><code>case_role</code>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="col-md-4">
                                 &nbsp;CASE_SIMPLE_DATASET
                             </td>
                         </tr>
                         <tr>
                             <td class="col-md-4">
                                 <i>Value : </i><code>case_simple_dataset</code>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                &nbsp;CASE_TASK
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                <i>Value : </i><code>case_task</code>
                             </td>
                         </tr>
                         <tr>
@@ -840,22 +892,22 @@
                         </tr>
                         <tr>
                             <td class="col-md-4">
-                                &nbsp;CASE_VISUAL_ID
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                <i>Value : </i><code>case_visual_id</code>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="col-md-4">
                                 &nbsp;CASE_STRING_ID
                             </td>
                         </tr>
                         <tr>
                             <td class="col-md-4">
                                 <i>Value : </i><code>case_string_id</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                &nbsp;CASE_PLAIN_QUERY
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Value : </i><code>case_plain_query</code>
                             </td>
                         </tr>
                         <tr>
@@ -880,16 +932,6 @@
                         </tr>
                         <tr>
                             <td class="col-md-4">
-                                &nbsp;TASK_ROLE
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                <i>Value : </i><code>task_role</code>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="col-md-4">
                                 &nbsp;TASK_TASK
                             </td>
                         </tr>
@@ -898,11 +940,21 @@
                                 <i>Value : </i><code>task_task</code>
                             </td>
                         </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                &nbsp;TASK_PLAIN_QUERY
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Value : </i><code>task_plain_query</code>
+                            </td>
+                        </tr>
             </tbody>
         </table>
 </section>
     <h3>projects/netgrif-components-core/src/lib/data-fields/models/component.ts</h3>
-    <section>
+    <section data-compodoc="block-enums">
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
@@ -1043,6 +1095,16 @@
                         </tr>
                         <tr>
                             <td class="col-md-4">
+                                &nbsp;PROCESS_REF
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Value : </i><code>process-ref-</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
                                 &nbsp;TEXT
                             </td>
                         </tr>
@@ -1085,7 +1147,7 @@
         </table>
 </section>
     <h3>projects/netgrif-components-core/src/lib/panel/configuration/config-params.ts</h3>
-    <section>
+    <section data-compodoc="block-enums">
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
@@ -1108,7 +1170,7 @@
         </table>
 </section>
     <h3>projects/netgrif-components-core/src/lib/data-fields/text-field/dashboard-portal-text-field/dashboard-view-constants.ts</h3>
-    <section>
+    <section data-compodoc="block-enums">
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
@@ -1181,7 +1243,7 @@
         </table>
 </section>
     <h3>projects/netgrif-components-core/src/lib/dashboard/cards/model/dashboard-card-types.ts</h3>
-    <section>
+    <section data-compodoc="block-enums">
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
@@ -1294,7 +1356,7 @@
         </table>
 </section>
     <h3>projects/netgrif-components-core/src/lib/resources/interface/data-groups.ts</h3>
-    <section>
+    <section data-compodoc="block-enums">
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
@@ -1343,7 +1405,7 @@
         </table>
 </section>
     <h3>projects/netgrif-components-core/src/lib/resources/interface/data-group-layout.ts</h3>
-    <section>
+    <section data-compodoc="block-enums">
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
@@ -1473,8 +1535,61 @@
             </tbody>
         </table>
 </section>
+    <h3>projects/netgrif-components-core/src/lib/resources/interface/petri-net-reference.ts</h3>
+    <section data-compodoc="block-enums">
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="DeploymentState"></a>
+                        <span class="name "><b>DeploymentState</b><a href="#DeploymentState"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                &nbsp;DRAFT
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Value : </i><code>DRAFT</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                &nbsp;DEPLOYED
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Value : </i><code>DEPLOYED</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                &nbsp;ARCHIVED
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Value : </i><code>ARCHIVED</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                &nbsp;TRASH
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Value : </i><code>TRASH</code>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+</section>
     <h3>projects/netgrif-components-core/src/lib/data-fields/enumeration-field/enumeration-autocomplete-select-field/enumeration-autocomplete-filter-property.ts</h3>
-    <section>
+    <section data-compodoc="block-enums">
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
@@ -1507,7 +1622,7 @@
         </table>
 </section>
     <h3>projects/netgrif-components-core/src/lib/data-fields/enumeration-field/models/enumeration-field.ts</h3>
-    <section>
+    <section data-compodoc="block-enums">
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
@@ -1540,7 +1655,7 @@
         </table>
 </section>
     <h3>projects/netgrif-components-core/src/lib/event/model/event-constants.ts</h3>
-    <section>
+    <section data-compodoc="block-enums">
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
@@ -1573,7 +1688,7 @@
         </table>
 </section>
     <h3>projects/netgrif-components-core/src/lib/resources/interface/field-alignment.ts</h3>
-    <section>
+    <section data-compodoc="block-enums">
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
@@ -1622,7 +1737,7 @@
         </table>
 </section>
     <h3>projects/netgrif-components-core/src/lib/task-content/model/field-type-resource.ts</h3>
-    <section>
+    <section data-compodoc="block-enums">
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
@@ -1799,12 +1914,42 @@
                         </tr>
                         <tr>
                             <td class="col-md-4">
-                                &nbsp;FILTER
+                                &nbsp;PROCESS_REF
                             </td>
                         </tr>
                         <tr>
                             <td class="col-md-4">
-                                <i>Value : </i><code>filter</code>
+                                <i>Value : </i><code>processRef</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                &nbsp;CASE_FILTER
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Value : </i><code>caseFilter</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                &nbsp;TASK_FILTER
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Value : </i><code>taskFilter</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                &nbsp;PROCESS_FILTER
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Value : </i><code>processFilter</code>
                             </td>
                         </tr>
                         <tr>
@@ -1831,7 +1976,7 @@
         </table>
 </section>
     <h3>projects/netgrif-components-core/src/lib/data-fields/file-list-field/models/file-list-field.ts</h3>
-    <section>
+    <section data-compodoc="block-enums">
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
@@ -1854,7 +1999,7 @@
         </table>
 </section>
     <h3>projects/netgrif-components-core/src/lib/data-fields/file-field/models/file-field.ts</h3>
-    <section>
+    <section data-compodoc="block-enums">
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
@@ -1988,8 +2133,31 @@
             </tbody>
         </table>
 </section>
+    <h3>projects/netgrif-components-core/src/lib/data-fields/filter-field/models/filter-field.ts</h3>
+    <section data-compodoc="block-enums">
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="FilterFieldValidation"></a>
+                        <span class="name "><b>FilterFieldValidation</b><a href="#FilterFieldValidation"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                &nbsp;REQUIRED
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Value : </i><code>required</code>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+</section>
     <h3>projects/netgrif-components-core/src/lib/filter/models/filter-type.ts</h3>
-    <section>
+    <section data-compodoc="block-enums">
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
@@ -2029,7 +2197,7 @@
         </table>
 </section>
     <h3>projects/netgrif-components-core/src/lib/navigation/model/group-navigation-constants.ts</h3>
-    <section>
+    <section data-compodoc="block-enums">
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
@@ -2055,7 +2223,7 @@
                         </tr>
                         <tr>
                             <td class="col-md-4">
-                                <i>Value : </i><code>filterCaseId</code>
+                                <i>Value : </i><code>itemCaseId</code>
                             </td>
                         </tr>
                         <tr>
@@ -2086,16 +2254,6 @@
                         <tr>
                             <td class="col-md-4">
                                 <i>Value : </i><code>tab_icon</code>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                &nbsp;ITEM_FIELD_ID_FILTER_TASKREF
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                <i>Value : </i><code>current_filter_preview</code>
                             </td>
                         </tr>
                         <tr>
@@ -2160,16 +2318,6 @@
                         </tr>
                         <tr>
                             <td class="col-md-4">
-                                &nbsp;ITEM_FIELD_ID_ADDITIONAL_FILTER_TASKREF
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                <i>Value : </i><code>current_additional_filter_preview</code>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="col-md-4">
                                 &nbsp;ITEM_FIELD_ID_CASE_SHOW_MORE_MENU
                             </td>
                         </tr>
@@ -2185,7 +2333,7 @@
                         </tr>
                         <tr>
                             <td class="col-md-4">
-                                <i>Value : </i><code>case_require_title_in_creation</code>
+                                <i>Value : </i><code>require_title_in_creation</code>
                             </td>
                         </tr>
                         <tr>
@@ -2195,7 +2343,7 @@
                         </tr>
                         <tr>
                             <td class="col-md-4">
-                                <i>Value : </i><code>case_banned_nets_in_creation</code>
+                                <i>Value : </i><code>banned_nets_in_creation</code>
                             </td>
                         </tr>
                         <tr>
@@ -2240,6 +2388,16 @@
                         </tr>
                         <tr>
                             <td class="col-md-4">
+                                &nbsp;ITEM_FIELD_ID_CASE_ALLOW_EXPORT
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Value : </i><code>case_allow_export</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
                                 &nbsp;ITEM_FIELD_ID_CASE_HEADERS_CHANGEABLE
                             </td>
                         </tr>
@@ -2250,12 +2408,52 @@
                         </tr>
                         <tr>
                             <td class="col-md-4">
+                                &nbsp;ITEM_FIELD_ID_CASE_EMPTY_CONTENT_TEXT
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Value : </i><code>case_empty_content_text</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                &nbsp;ITEM_FIELD_ID_CASE_EMPTY_CONTENT_ICON
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Value : </i><code>case_empty_content_icon</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
                                 &nbsp;ITEM_FIELD_ID_TASK_HEADERS_MODE
                             </td>
                         </tr>
                         <tr>
                             <td class="col-md-4">
                                 <i>Value : </i><code>task_headers_mode</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                &nbsp;ITEM_FIELD_ID_TASK_EMPTY_CONTENT_TEXT
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Value : </i><code>task_empty_content_text</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                &nbsp;ITEM_FIELD_ID_TASK_EMPTY_CONTENT_ICON
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Value : </i><code>task_empty_content_icon</code>
                             </td>
                         </tr>
                         <tr>
@@ -2330,6 +2528,16 @@
                         </tr>
                         <tr>
                             <td class="col-md-4">
+                                &nbsp;ITEM_FIELD_ID_ALLOWED_AUTHORITIES
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Value : </i><code>allowed_authorities</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
                                 &nbsp;ITEM_FIELD_ID_ALLOWED_ROLES
                             </td>
                         </tr>
@@ -2380,12 +2588,12 @@
                         </tr>
                         <tr>
                             <td class="col-md-4">
-                                &nbsp;ITEM_FIELD_ID_HAS_CHILDREN
+                                &nbsp;ITEM_FIELD_ID_IS_FOLDER
                             </td>
                         </tr>
                         <tr>
                             <td class="col-md-4">
-                                <i>Value : </i><code>hasChildren</code>
+                                <i>Value : </i><code>is_folder</code>
                             </td>
                         </tr>
                         <tr>
@@ -2398,11 +2606,191 @@
                                 <i>Value : </i><code>childItemIds</code>
                             </td>
                         </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                &nbsp;ITEM_FIELD_ID_IS_AUTO_SELECT
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Value : </i><code>is_auto_select</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                &nbsp;ITEM_FIELD_SHOW_PAGE_HEADER
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Value : </i><code>show_page_header</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                &nbsp;ITEM_FIELD_SHOW_PAGE_FOOTER
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Value : </i><code>show_page_footer</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                &nbsp;ITEM_FIELD_CASE_FILTER
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Value : </i><code>case_filter</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                &nbsp;ITEM_FIELD_TASK_FILTER
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Value : </i><code>task_filter</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                &nbsp;ITEM_FIELD_CASE_ALLOWED_NETS
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Value : </i><code>case_allowed_nets</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                &nbsp;ITEM_FIELD_CASE_ALL_ALLOWED_NETS
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Value : </i><code>case_all_allowed_nets</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                &nbsp;ITEM_FIELD_CASE_INHERIT_ALLOWED_NETS
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Value : </i><code>case_inherit_allowed_nets</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                &nbsp;ITEM_FIELD_TASK_ALLOWED_NETS
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Value : </i><code>task_allowed_nets</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                &nbsp;ITEM_FIELD_TASK_ALL_ALLOWED_NETS
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Value : </i><code>task_all_allowed_nets</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                &nbsp;ITEM_FIELD_TASK_INHERIT_ALLOWED_NETS
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Value : </i><code>task_inherit_allowed_nets</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                &nbsp;ITEM_FIELD_CASE_HEADERS_SORT_MODE_ACTIVE
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Value : </i><code>case_headers_sort_mode_active</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                &nbsp;ITEM_FIELD_CASE_HEADERS_SORT_MODE_DIRECTION
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Value : </i><code>case_headers_sort_mode_direction</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                &nbsp;ITEM_FIELD_TASK_HEADERS_SORT_MODE_ACTIVE
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Value : </i><code>task_headers_sort_mode_active</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                &nbsp;ITEM_FIELD_TASK_HEADERS_SORT_MODE_DIRECTION
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Value : </i><code>task_headers_sort_mode_direction</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                &nbsp;ITEM_TRANS_ID_ALL_DATA
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Value : </i><code>all_menu_data</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                &nbsp;ITEM_FIELD_VIEW_CONFIGURATION_TYPE
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Value : </i><code>view_configuration_type</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                &nbsp;ITEM_FIELD_CASE_FULLTEXT_FIELDS
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Value : </i><code>case_fulltext_fields</code>
+                            </td>
+                        </tr>
             </tbody>
         </table>
 </section>
     <h3>projects/netgrif-components-core/src/lib/header/models/user-changes/header-change-type.ts</h3>
-    <section>
+    <section data-compodoc="block-enums">
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
@@ -2455,7 +2843,7 @@
         </table>
 </section>
     <h3>projects/netgrif-components-core/src/lib/header/models/header-column.ts</h3>
-    <section>
+    <section data-compodoc="block-enums">
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
@@ -2488,7 +2876,7 @@
         </table>
 </section>
     <h3>projects/netgrif-components-core/src/lib/header/models/header-mode.ts</h3>
-    <section>
+    <section data-compodoc="block-enums">
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
@@ -2531,7 +2919,7 @@
         </table>
 </section>
     <h3>projects/netgrif-components-core/src/lib/header/models/header-type.ts</h3>
-    <section>
+    <section data-compodoc="block-enums">
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
@@ -2574,7 +2962,7 @@
         </table>
 </section>
     <h3>projects/netgrif-components-core/src/lib/data-fields/i18n-field/models/i18n-field.ts</h3>
-    <section>
+    <section data-compodoc="block-enums">
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
@@ -2617,7 +3005,7 @@
         </table>
 </section>
     <h3>projects/netgrif-components-core/src/lib/data-fields/models/icon.ts</h3>
-    <section>
+    <section data-compodoc="block-enums">
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
@@ -2650,7 +3038,7 @@
         </table>
 </section>
     <h3>projects/netgrif-components-core/src/lib/logger/logLevel.ts</h3>
-    <section>
+    <section data-compodoc="block-enums">
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
@@ -2662,11 +3050,6 @@
                         <tr>
                             <td class="col-md-4">
                                 &nbsp;ALL
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                <i>Value : </i><code>0</code>
                             </td>
                         </tr>
                         <tr>
@@ -2723,7 +3106,7 @@
         </table>
 </section>
     <h3>projects/netgrif-components-core/src/lib/logger/services/log-level.ts</h3>
-    <section>
+    <section data-compodoc="block-enums">
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
@@ -2735,11 +3118,6 @@
                         <tr>
                             <td class="col-md-4">
                                 &nbsp;ALL
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                <i>Value : </i><code>0</code>
                             </td>
                         </tr>
                         <tr>
@@ -2796,7 +3174,7 @@
         </table>
 </section>
     <h3>projects/netgrif-components-core/src/lib/data-fields/models/material-appearance.ts</h3>
-    <section>
+    <section data-compodoc="block-enums">
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
@@ -2808,7 +3186,7 @@
                     <tr>
                         <td class="col-md-4">
                             <div class="io-description"><p>Appearance of rendered material form field.</p>
-<p>See <a href="https://material.angular.io/components/form-field/overview#form-field-appearance-variants">Material documentation</a>
+<p>See [Material documentation]://material.angular.io/components/form-field/overview#form-field-appearance-variants<a href="https">https</a>
 for more information.</p>
 </div>
                         </td>
@@ -2857,7 +3235,7 @@ for more information.</p>
         </table>
 </section>
     <h3>projects/netgrif-components-core/src/lib/navigation/model/navigation-configs.ts</h3>
-    <section>
+    <section data-compodoc="block-enums">
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
@@ -2880,7 +3258,7 @@ for more information.</p>
         </table>
 </section>
     <h3>projects/netgrif-components-core/src/lib/filter/models/merge-operator.ts</h3>
-    <section>
+    <section data-compodoc="block-enums">
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
@@ -2892,7 +3270,7 @@ for more information.</p>
                     <tr>
                         <td class="col-md-4">
                             <div class="io-description"><p>Determines whether the combination of Filters is an union (AND) or an intersection (OR).</p>
-<p>See <a href="../classess/MergedFilter.html">MergedFilter</a> for more information.</p>
+<p>See <a href="../classes/MergedFilter.html">MergedFilter</a> for more information.</p>
 </div>
                         </td>
                     </tr>
@@ -2920,7 +3298,7 @@ for more information.</p>
         </table>
 </section>
     <h3>projects/netgrif-components-core/src/lib/data-fields/multichoice-field/multichoice-autocomplete-field/multichoice-autocomplete-filter-property.ts</h3>
-    <section>
+    <section data-compodoc="block-enums">
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
@@ -2953,7 +3331,7 @@ for more information.</p>
         </table>
 </section>
     <h3>projects/netgrif-components-core/src/lib/data-fields/number-field/models/number-field.ts</h3>
-    <section>
+    <section data-compodoc="block-enums">
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
@@ -3106,7 +3484,7 @@ for more information.</p>
         </table>
 </section>
     <h3>projects/netgrif-components-core/src/lib/search/models/operator/operators.ts</h3>
-    <section>
+    <section data-compodoc="block-enums">
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
@@ -3365,7 +3743,7 @@ for more information.</p>
         </table>
 </section>
     <h3>projects/netgrif-components-core/src/lib/search/models/operator-template-part-type.ts</h3>
-    <section>
+    <section data-compodoc="block-enums">
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
@@ -3404,7 +3782,7 @@ for more information.</p>
         </table>
 </section>
     <h3>projects/netgrif-components-core/src/lib/utility/pagination/pagination-params.ts</h3>
-    <section>
+    <section data-compodoc="block-enums">
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
@@ -3453,7 +3831,7 @@ for more information.</p>
         </table>
 </section>
     <h3>projects/netgrif-components-core/src/lib/utility/pagination/pagination-sort.ts</h3>
-    <section>
+    <section data-compodoc="block-enums">
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
@@ -3492,7 +3870,7 @@ for more information.</p>
         </table>
 </section>
     <h3>projects/netgrif-components-core/src/lib/process/permissions.ts</h3>
-    <section>
+    <section data-compodoc="block-enums">
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
@@ -3585,7 +3963,7 @@ for more information.</p>
         </table>
 </section>
     <h3>projects/netgrif-components-core/src/lib/resources/resource-provider.service.ts</h3>
-    <section>
+    <section data-compodoc="block-enums">
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
@@ -3617,8 +3995,140 @@ for more information.</p>
             </tbody>
         </table>
 </section>
+    <h3>projects/netgrif-components-core/src/lib/pfql/model/query-item-type.ts</h3>
+    <section data-compodoc="block-enums">
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="QueryItemType"></a>
+                        <span class="name "><b>QueryItemType</b><a href="#QueryItemType"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                &nbsp;SIMPLE_EXPRESSION
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                &nbsp;COMPLEX_EXPRESSION
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                &nbsp;LOGICAL_OPERATOR
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                &nbsp;RAW_EXPRESSION
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+</section>
+    <h3>projects/netgrif-components-core/src/lib/search/models/category/resource-type-query-prefix.ts</h3>
+    <section data-compodoc="block-enums">
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="ResourceTypeQueryPrefix"></a>
+                        <span class="name "><b>ResourceTypeQueryPrefix</b><a href="#ResourceTypeQueryPrefix"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-description"><p>Resource type prefix in PFQL query</p>
+</div>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                &nbsp;CASES
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Value : </i><code>cases</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                &nbsp;CASE
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Value : </i><code>case</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                &nbsp;TASKS
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Value : </i><code>tasks</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                &nbsp;TASK
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Value : </i><code>task</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                &nbsp;PROCESSES
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Value : </i><code>processes</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                &nbsp;PROCESS
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Value : </i><code>process</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                &nbsp;USERS
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Value : </i><code>users</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                &nbsp;USER
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Value : </i><code>user</code>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+</section>
     <h3>projects/netgrif-components-core/src/lib/search/models/search-index.ts</h3>
-    <section>
+    <section data-compodoc="block-enums">
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
@@ -3751,7 +4261,7 @@ for more information.</p>
         </table>
 </section>
     <h3>projects/netgrif-components-core/src/lib/search/models/category/search-input-type.ts</h3>
-    <section>
+    <section data-compodoc="block-enums">
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
@@ -3774,6 +4284,16 @@ for more information.</p>
                         <tr>
                             <td class="col-md-4">
                                 <i>Value : </i><code>text</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                &nbsp;PLAIN_QUERY
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Value : </i><code>plain_query</code>
                             </td>
                         </tr>
                         <tr>
@@ -3840,7 +4360,7 @@ for more information.</p>
         </table>
 </section>
     <h3>projects/netgrif-components-core/src/lib/search/models/component-configuration/search-mode.ts</h3>
-    <section>
+    <section data-compodoc="block-enums">
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
@@ -3869,7 +4389,7 @@ for more information.</p>
         </table>
 </section>
     <h3>projects/netgrif-components-core/src/lib/side-menu/models/side-menu-size.ts</h3>
-    <section>
+    <section data-compodoc="block-enums">
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
@@ -3922,7 +4442,7 @@ for more information.</p>
         </table>
 </section>
     <h3>projects/netgrif-components-core/src/lib/snack-bar/models/snack-bar-enums.ts</h3>
-    <section>
+    <section data-compodoc="block-enums">
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
@@ -3995,7 +4515,7 @@ for more information.</p>
         </table>
 </section>
     <h3>projects/netgrif-components-core/src/lib/task-content/model/task-content-element-type.ts</h3>
-    <section>
+    <section data-compodoc="block-enums">
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
@@ -4044,7 +4564,7 @@ for more information.</p>
         </table>
 </section>
     <h3>projects/netgrif-components-core/src/lib/view/task-view/models/task-endpoint.ts</h3>
-    <section>
+    <section data-compodoc="block-enums">
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
@@ -4078,7 +4598,7 @@ for more information.</p>
         </table>
 </section>
     <h3>projects/netgrif-components-core/src/lib/task-content/model/task-event.ts</h3>
-    <section>
+    <section data-compodoc="block-enums">
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
@@ -4151,7 +4671,7 @@ for more information.</p>
         </table>
 </section>
     <h3>projects/netgrif-components-core/src/lib/header/task-header/task-meta-enum.ts</h3>
-    <section>
+    <section data-compodoc="block-enums">
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
@@ -4234,7 +4754,7 @@ for more information.</p>
         </table>
 </section>
     <h3>projects/netgrif-components-core/src/lib/data-fields/task-ref-field/model/task-ref-components.ts</h3>
-    <section>
+    <section data-compodoc="block-enums">
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
@@ -4263,7 +4783,7 @@ for more information.</p>
         </table>
 </section>
     <h3>projects/netgrif-components-core/src/lib/data-fields/task-ref-field/model/task-ref-dashboard-constants.ts</h3>
-    <section>
+    <section data-compodoc="block-enums">
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
@@ -4312,7 +4832,7 @@ for more information.</p>
         </table>
 </section>
     <h3>projects/netgrif-components-core/src/lib/data-fields/task-ref-field/model/task-ref-dashboard-tile-constants.ts</h3>
-    <section>
+    <section data-compodoc="block-enums">
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
@@ -4391,7 +4911,7 @@ for more information.</p>
         </table>
 </section>
     <h3>projects/netgrif-components-core/src/lib/data-fields/models/template-appearance.ts</h3>
-    <section>
+    <section data-compodoc="block-enums">
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
@@ -4434,7 +4954,7 @@ The form filed still uses material design with this setting.</p>
         </table>
 </section>
     <h3>projects/netgrif-components-core/src/lib/data-fields/text-field/models/text-field.ts</h3>
-    <section>
+    <section data-compodoc="block-enums">
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
@@ -4733,7 +5253,7 @@ The form filed still uses material design with this setting.</p>
         </table>
 </section>
     <h3>projects/netgrif-components-core/src/lib/view/tree-case-view/model/tree-petriflow-identifiers.ts</h3>
-    <section>
+    <section data-compodoc="block-enums">
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
@@ -4832,7 +5352,7 @@ The form filed still uses material design with this setting.</p>
         </table>
 </section>
     <h3>projects/netgrif-components-core/src/lib/data-fields/models/update-strategy.ts</h3>
-    <section>
+    <section data-compodoc="block-enums">
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
@@ -4875,7 +5395,7 @@ The form filed still uses material design with this setting.</p>
         </table>
 </section>
     <h3>projects/netgrif-components-core/src/lib/navigation/model/uri-resource.ts</h3>
-    <section>
+    <section data-compodoc="block-enums">
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
@@ -4897,117 +5417,8 @@ The form filed still uses material design with this setting.</p>
             </tbody>
         </table>
 </section>
-    <h3>projects/netgrif-components-core/src/lib/filter/models/user-filter-constants.ts</h3>
-    <section>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-4">
-                        <a name="UserFilterConstants"></a>
-                        <span class="name "><b>UserFilterConstants</b><a href="#UserFilterConstants"><span class="icon ion-ios-link"></span></a></span>
-                    </td>
-                </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <div class="io-description"><p>Holds all identifiers of the Filter process in an accessible manner</p>
-</div>
-                        </td>
-                    </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                &nbsp;FILTER_NET_IDENTIFIER
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                <i>Value : </i><code>filter</code>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                &nbsp;SET_FILTER_METADATA_TRANSITION_ID
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                <i>Value : </i><code>frontend_create</code>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                &nbsp;NEW_FILTER_TRANSITION_ID
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                <i>Value : </i><code>newFilter</code>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                &nbsp;FILTER_FIELD_ID
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                <i>Value : </i><code>filter</code>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                &nbsp;FILTER_TYPE_FIELD_ID
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                <i>Value : </i><code>filter_type</code>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                &nbsp;ORIGIN_VIEW_ID_FIELD_ID
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                <i>Value : </i><code>origin_view_id</code>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                &nbsp;FILTER_CASE_ID_FIELD_ID
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                <i>Value : </i><code>filter_case_id</code>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                &nbsp;PARENT_FILTER_CASE_ID_FIELD_ID
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                <i>Value : </i><code>parent_filter_id</code>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                &nbsp;ALLOWED_NETS_FIELD_ID
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                <i>Value : </i><code>allowed_nets</code>
-                            </td>
-                        </tr>
-            </tbody>
-        </table>
-</section>
     <h3>projects/netgrif-components-core/src/lib/impersonation/models/user-impersonation-constants.ts</h3>
-    <section>
+    <section data-compodoc="block-enums">
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
@@ -5066,7 +5477,7 @@ The form filed still uses material design with this setting.</p>
         </table>
 </section>
     <h3>projects/netgrif-components-core/src/lib/header/workflow-header/workflow-meta-enum.ts</h3>
-    <section>
+    <section data-compodoc="block-enums">
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
@@ -5143,7 +5554,7 @@ The form filed still uses material design with this setting.</p>
 
                    </div><div class="search-results">
     <div class="has-results">
-        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
         <ul class="search-results-list"></ul>
     </div>
     <div class="no-results">
@@ -5155,6 +5566,15 @@ The form filed still uses material design with this setting.</p>
            </div>
        </div>
 
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'miscellaneous-enumerations';
@@ -5162,10 +5582,23 @@ The form filed still uses material design with this setting.</p>
             var MAX_SEARCH_RESULTS = 15;
        </script>
 
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
        <script src="../js/libs/custom-elements.min.js"></script>
        <script src="../js/libs/lit-html.js"></script>
-       
-       <script type="module" src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/menu-wc.js" defer></script>
        <script nomodule src="../js/menu-wc_es5.js" defer></script>
 
        <script src="../js/libs/bootstrap-native.js"></script>

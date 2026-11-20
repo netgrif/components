@@ -9,13 +9,64 @@
 
         <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
 	   <link rel="stylesheet" href="../styles/style.css">
-        <link rel="stylesheet" href="../styles/dark.css" media="(prefers-color-scheme: dark)">
+        <link rel="stylesheet" href="../styles/dark.css">
     </head>
     <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
 
-        <div class="navbar navbar-default navbar-fixed-top visible-xs">
-            <a href="../" class="navbar-brand">Netgrif Components Core library Documentation</a>
-            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">Netgrif Components Core library Documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
         </div>
 
         <div class="xs-menu menu" id="mobile-menu">
@@ -24,7 +75,7 @@
 
         <div class="container-fluid main">
            <div class="row main">
-               <div class="hidden-xs menu">
+               <div class="d-none d-md-block menu">
                    <compodoc-menu mode="normal"></compodoc-menu>
                </div>
                <!-- START CONTENT -->
@@ -37,22 +88,29 @@
 
 
 
+
 <ol class="breadcrumb">
-  <li>Injectables</li>
-  <li >CategoryFactory</li>
+  <li class="breadcrumb-item">Injectables</li>
+  <li class="breadcrumb-item" >CategoryFactory</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
-        <li class="active">
-            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        <li class="nav-item">
+            <a href="#info" 
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
         </li>
-        <li >
-            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        <li class="nav-item">
+            <a href="#source" 
+                class="nav-link"
+                
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
         </li>
 </ul>
 
 <div class="tab-content">
-    <div class="tab-pane fade active in" id="c-info">
+    <div class="tab-pane fade active in" id="info">
         <p class="comment">
             <h3>File</h3>
         </p>
@@ -75,7 +133,7 @@ is still provided for the library components that use it.</p>
 
 
 
-            <section>
+            <section data-compodoc="block-index">
     <h3 id="index">Index</h3>
     <table class="table table-sm table-bordered index-table">
         <tbody>
@@ -113,10 +171,6 @@ is still provided for the library components that use it.</p>
                             </li>
                             <li>
                                     <span class="modifier">Public</span>
-                                <a href="#getFromMetadata" >getFromMetadata</a>
-                            </li>
-                            <li>
-                                    <span class="modifier">Public</span>
                                 <a href="#getWithDefaultOperator" >getWithDefaultOperator</a>
                             </li>
                         </ul>
@@ -131,18 +185,18 @@ is still provided for the library components that use it.</p>
     </table>
 </section>
 
-            <section>
+            <section data-compodoc="block-constructor">
     <h3 id="constructor">Constructor</h3>
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(_operators: <a href="../injectables/OperatorService.html" target="_self">OperatorService</a>, _log: <a href="../injectables/LoggerService.html" target="_self">LoggerService</a>, _searchIndexResolverService: <a href="../injectables/SearchIndexResolverService.html" target="_self">SearchIndexResolverService</a>, _categoryResolver: <a href="../injectables/CategoryResolverService.html" target="_self">CategoryResolverService</a>, _allowedNetsService: <a href="../injectables/AllowedNetsService.html" target="_self">AllowedNetsService</a>, _userResourceService: <a href="../injectables/UserResourceService.html" target="_self">UserResourceService</a>)</code>
+<code>constructor(_operators: <a href="../injectables/OperatorService.html" target="_self">OperatorService</a>, _log: <a href="../injectables/LoggerService.html" target="_self">LoggerService</a>, _searchIndexResolverService: <a href="../injectables/SearchIndexResolverService.html" target="_self">SearchIndexResolverService</a>, _categoryResolver: <a href="../injectables/CategoryResolverService.html" target="_self">CategoryResolverService</a>, _allowedNetsService: <a href="../injectables/AllowedNetsService.html" target="_self">AllowedNetsService</a>, _userResourceService: <a href="../injectables/UserResourceService.html" target="_self">UserResourceService</a>, _ignoreNetsOnAutocompleteCategories: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank">boolean</a>)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="24" class="link-to-prism">projects/netgrif-components-core/src/lib/search/category-factory/category-factory.ts:24</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="23" class="link-to-prism">projects/netgrif-components-core/src/lib/search/category-factory/category-factory.ts:23</a></div>
                             </td>
                         </tr>
 
@@ -231,6 +285,18 @@ is still provided for the library components that use it.</p>
                                                     </td>
                                                     
                                                 </tr>
+                                                <tr>
+                                                        <td>_ignoreNetsOnAutocompleteCategories</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
                                         </tbody>
                                     </table>
                             </div>
@@ -240,7 +306,7 @@ is still provided for the library components that use it.</p>
         </table>
 </section>
 
-            <section>
+            <section data-compodoc="block-methods">
     
     <h3 id="methods">
         Methods
@@ -251,7 +317,7 @@ is still provided for the library components that use it.</p>
                 <td class="col-md-4">
                     <a name="get"></a>
                     <span class="name">
-                        <span class="modifier">Public</span>
+                            <span class="modifier">Public</span>
                         <span ><b>get</b></span>
                         <a href="#get"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -259,66 +325,65 @@ is still provided for the library components that use it.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>get(categoryClass: <a href="../classes/Category.html" target="_self">Type&lt;Category&lt;any&gt;&gt;</a>)</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="45"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/search/category-factory/category-factory.ts:45</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="46"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/search/category-factory/category-factory.ts:46</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Create an instance of <a href="../classes/Category.html">Category</a> class.</p>
+                        <div class="io-description"><p>Create an instance of <a href="../classes/Category.html">Category</a> class.</p>
 </div>
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                    <td>Description</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>categoryClass</td>
-                                    <td>
-                                                <code><a href="../classes/Category.html" target="_self" >Type&lt;Category&lt;any&gt;&gt;</a></code>
-                                    </td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>categoryClass</td>
+                                            <td>
+                                                            <code><a href="../classes/Category.html" target="_self" >Type&lt;Category&lt;any&gt;&gt;</a></code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                    <td>
-                                        <p>the class that should be instantiated</p>
+                                            <td>
+                                                    <p>the class that should be instantiated</p>
 
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="../classes/Category.html" target="_self" >Category&lt;any&gt;</a></code>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../classes/Category.html" target="_self" >Category&lt;any&gt;</a></code>
 
-                    </div>
-                    <div class="io-description">
-                        <p>a new instance of the provided class</p>
+                        </div>
+                            <div class="io-description">
+                                <p>a new instance of the provided class</p>
 
-                    </div>
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -329,7 +394,7 @@ is still provided for the library components that use it.</p>
                 <td class="col-md-4">
                     <a name="getByNameWithDefaultOperator"></a>
                     <span class="name">
-                        <span class="modifier">Public</span>
+                            <span class="modifier">Public</span>
                         <span ><b>getByNameWithDefaultOperator</b></span>
                         <a href="#getByNameWithDefaultOperator"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -337,148 +402,66 @@ is still provided for the library components that use it.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>getByNameWithDefaultOperator(serializedCategoryClass: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="66"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/search/category-factory/category-factory.ts:66</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="67"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/search/category-factory/category-factory.ts:67</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Attempts to deserialize the provided <code>string</code> into a <a href="../classes/Category.html">Category</a> class,
+                        <div class="io-description"><p>Attempts to deserialize the provided <code>string</code> into a <a href="../classes/Category.html">Category</a> class,
 create an instance from it and preselect it&#39;s default operator.</p>
 </div>
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                    <td>Description</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>serializedCategoryClass</td>
-                                    <td>
-                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
-                                    </td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>serializedCategoryClass</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                    <td>
-                                        <p>the serialized form of a {</p>
-
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="../classes/Category.html" target="_self" >Category&lt;any&gt;</a></code>
-
-                    </div>
-                    <div class="io-description">
-                        <p>a new instance of the provided class with the default operator selected</p>
-
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="getFromMetadata"></a>
-                    <span class="name">
-                        <span class="modifier">Public</span>
-                        <span ><b>getFromMetadata</b></span>
-                        <a href="#getFromMetadata"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>getFromMetadata(metadata: <a href="../interfaces/CategoryGeneratorMetadata.html" target="_self">CategoryGeneratorMetadata</a>)</code>
-                </td>
-            </tr>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="76"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/search/category-factory/category-factory.ts:76</a></div>
-                </td>
-            </tr>
+                                            <td>
+                                                    <p>the serialized form of a <a href="../classes/Category.html">Category</a> class</p>
 
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../classes/Category.html" target="_self" >Category&lt;any&gt;</a></code>
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-description"><p>Reconstructs a <a href="../classes/Category.html">Category</a> from saved metadata. The category is NOT in its initial state.
-It is in its final state instead and immediately provides a search predicate.</p>
-</div>
+                        </div>
+                            <div class="io-description">
+                                <p>a new instance of the provided class with the default operator selected</p>
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                    <td>Description</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>metadata</td>
-                                    <td>
-                                                <code><a href="../interfaces/CategoryGeneratorMetadata.html" target="_self" >CategoryGeneratorMetadata</a></code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                    <td>
-                                        <ul>
-<li>the saved metadata generated by a previous {</li>
-</ul>
-
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="../classes/Category.html" target="_self" >Observable&lt;Category&lt;any&gt;&gt;</a></code>
-
-                    </div>
-                    <div class="io-description">
-                        <p>an Observable, that emits the deserialized Category, once the deserialization finishes</p>
-
-                    </div>
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -489,7 +472,7 @@ It is in its final state instead and immediately provides a search predicate.</p
                 <td class="col-md-4">
                     <a name="getWithDefaultOperator"></a>
                     <span class="name">
-                        <span class="modifier">Public</span>
+                            <span class="modifier">Public</span>
                         <span ><b>getWithDefaultOperator</b></span>
                         <a href="#getWithDefaultOperator"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -497,72 +480,71 @@ It is in its final state instead and immediately provides a search predicate.</p
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>getWithDefaultOperator(categoryClass: <a href="../classes/Category.html" target="_self">Type&lt;Category&lt;any&gt;&gt;</a>)</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="54"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/search/category-factory/category-factory.ts:54</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="55"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/search/category-factory/category-factory.ts:55</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Create an instance of <a href="../classes/Category.html">Category</a> class and preselects it&#39;s default operator.</p>
+                        <div class="io-description"><p>Create an instance of <a href="../classes/Category.html">Category</a> class and preselects it&#39;s default operator.</p>
 </div>
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                    <td>Description</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>categoryClass</td>
-                                    <td>
-                                                <code><a href="../classes/Category.html" target="_self" >Type&lt;Category&lt;any&gt;&gt;</a></code>
-                                    </td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>categoryClass</td>
+                                            <td>
+                                                            <code><a href="../classes/Category.html" target="_self" >Type&lt;Category&lt;any&gt;&gt;</a></code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                    <td>
-                                        <p>the class that should be instantiated</p>
+                                            <td>
+                                                    <p>the class that should be instantiated</p>
 
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="../classes/Category.html" target="_self" >Category&lt;any&gt;</a></code>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../classes/Category.html" target="_self" >Category&lt;any&gt;</a></code>
 
-                    </div>
-                    <div class="io-description">
-                        <p>a new instance of the provided class with the default operator selected</p>
+                        </div>
+                            <div class="io-description">
+                                <p>a new instance of the provided class with the default operator selected</p>
 
-                    </div>
+                            </div>
                 </td>
             </tr>
         </tbody>
     </table>
 </section>
-            <section>
+            <section data-compodoc="block-properties">
     
     <h3 id="inputs">
         Properties
@@ -587,7 +569,7 @@ It is in its final state instead and immediately provides a search predicate.</p
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="24" class="link-to-prism">projects/netgrif-components-core/src/lib/search/category-factory/category-factory.ts:24</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="23" class="link-to-prism">projects/netgrif-components-core/src/lib/search/category-factory/category-factory.ts:23</a></div>
                         </td>
                     </tr>
 
@@ -599,18 +581,17 @@ It is in its final state instead and immediately provides a search predicate.</p
     </div>
 
 
-    <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Injectable, Optional, Type} from &#x27;@angular/core&#x27;;
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Inject, Injectable, Optional, Type} from &#x27;@angular/core&#x27;;
 import {LoggerService} from &#x27;../../logger/services/logger.service&#x27;;
 import {OperatorService} from &#x27;../operator-service/operator.service&#x27;;
 import {Category} from &#x27;../models/category/category&#x27;;
 import {OptionalDependencies} from &#x27;./optional-dependencies&#x27;;
 import {UserResourceService} from &#x27;../../resources/engine-endpoint/user-resource.service&#x27;;
 import {SearchIndexResolverService} from &#x27;../search-keyword-resolver-service/search-index-resolver.service&#x27;;
-import {CategoryGeneratorMetadata} from &#x27;../models/persistance/generator-metadata&#x27;;
 import {CategoryResolverService} from &#x27;./category-resolver.service&#x27;;
 import {AllowedNetsService} from &#x27;../../allowed-nets/services/allowed-nets.service&#x27;;
-import {Observable, ReplaySubject} from &#x27;rxjs&#x27;;
+import {NAE_IGNORE_NETS_ON_AUTOCOMPLETE_CATEGORY} from &quot;./search-categories-injection-token&quot;;
 
 /**
  * Can be used to generate {@link Category} class instances.
@@ -630,12 +611,14 @@ export class CategoryFactory {
                 protected _searchIndexResolverService: SearchIndexResolverService,
                 protected _categoryResolver: CategoryResolverService,
                 protected _allowedNetsService: AllowedNetsService,
-                @Optional() protected _userResourceService: UserResourceService) {
+                @Optional() protected _userResourceService: UserResourceService,
+                @Optional() @Inject(NAE_IGNORE_NETS_ON_AUTOCOMPLETE_CATEGORY) protected _ignoreNetsOnAutocompleteCategories: boolean) {
         this._optionalDependencies &#x3D; {
             categoryFactory: this,
             searchIndexResolver: this._searchIndexResolverService,
             allowedNetsService: this._allowedNetsService,
             userResourceService: this._userResourceService,
+            ignoreNetsOnAutocompleteCategories: this._ignoreNetsOnAutocompleteCategories,
         };
     }
 
@@ -668,22 +651,6 @@ export class CategoryFactory {
     public getByNameWithDefaultOperator(serializedCategoryClass: string): Category&lt;any&gt; {
         return this.getWithDefaultOperator(this._categoryResolver.toClass(serializedCategoryClass));
     }
-
-    /**
-     * Reconstructs a {@link Category} from saved metadata. The category is NOT in its initial state.
-     * It is in its final state instead and immediately provides a search predicate.
-     * @param metadata - the saved metadata generated by a previous {@link Category} instance
-     * @returns an Observable, that emits the deserialized Category, once the deserialization finishes
-     */
-    public getFromMetadata(metadata: CategoryGeneratorMetadata): Observable&lt;Category&lt;any&gt;&gt; {
-        const result$ &#x3D; new ReplaySubject&lt;Category&lt;any&gt;&gt;(1);
-        const category &#x3D; this.get(this._categoryResolver.toClass(metadata.category));
-        category.loadFromMetadata(metadata).subscribe(() &#x3D;&gt; {
-            result$.next(category);
-            result$.complete();
-        });
-        return result$.asObservable();
-    }
 }
 </code></pre>
     </div>
@@ -696,14 +663,15 @@ export class CategoryFactory {
 
 
 
-                   
+
+
 
 
 
 
                    </div><div class="search-results">
     <div class="has-results">
-        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
         <ul class="search-results-list"></ul>
     </div>
     <div class="no-results">
@@ -715,6 +683,15 @@ export class CategoryFactory {
            </div>
        </div>
 
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'injectable';
@@ -722,10 +699,23 @@ export class CategoryFactory {
             var MAX_SEARCH_RESULTS = 15;
        </script>
 
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
        <script src="../js/libs/custom-elements.min.js"></script>
        <script src="../js/libs/lit-html.js"></script>
-       
-       <script type="module" src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/menu-wc.js" defer></script>
        <script nomodule src="../js/menu-wc_es5.js" defer></script>
 
        <script src="../js/libs/bootstrap-native.js"></script>

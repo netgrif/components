@@ -1,6 +1,5 @@
 'use strict';
 
-
 customElements.define('compodoc-menu', class extends HTMLElement {
     constructor() {
         super();
@@ -17,7 +16,7 @@ customElements.define('compodoc-menu', class extends HTMLElement {
             <ul class="list">
                 <li class="title">
                     <a href="index.html" data-type="index-link">
-                        <img alt="" class="img-responsive" data-type="compodoc-logo" data-src=images/docs-title-logo.png> 
+                        <img alt="" class="img-responsive" data-type="custom-logo" data-src="images/docs-title-logo.png">
                     </a>
                 </li>
 
@@ -51,12 +50,17 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                         <span class="icon ion-ios-list"></span>Dependencies
                                     </a>
                                 </li>
+                                <li class="link">
+                                    <a href="properties.html" data-type="chapter-link">
+                                        <span class="icon ion-ios-apps"></span>Properties
+                                    </a>
+                                </li>
                     </ul>
                 </li>
                     <li class="chapter modules">
                         <a data-type="chapter-link" href="modules.html">
-                            <div class="menu-toggler linked" data-toggle="collapse" ${ isNormalMode ?
-                                'data-target="#modules-links"' : 'data-target="#xs-modules-links"' }>
+                            <div class="menu-toggler linked" data-bs-toggle="collapse" ${ isNormalMode ?
+                                'data-bs-target="#modules-links"' : 'data-bs-target="#xs-modules-links"' }>
                                 <span class="icon ion-ios-archive"></span>
                                 <span class="link-name">Modules</span>
                                 <span class="icon ion-ios-arrow-down"></span>
@@ -66,14 +70,14 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                             <li class="link">
                                 <a href="modules/AlertDialogModule.html" data-type="entity-link" >AlertDialogModule</a>
                                     <li class="chapter inner">
-                                        <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ?
-                                            'data-target="#components-links-module-AlertDialogModule-40330a12c81588a6d27cca7d41d1740d"' : 'data-target="#xs-components-links-module-AlertDialogModule-40330a12c81588a6d27cca7d41d1740d"' }>
+                                        <div class="simple menu-toggler" data-bs-toggle="collapse" ${ isNormalMode ?
+                                            'data-bs-target="#components-links-module-AlertDialogModule-052f024ff717d2017941998aa18bdc8a01138919cc4cda376ced71670e0f06aecf5e6c74efa8686b2d5904ea6f5b06396e7628714e07166df8785e93825eb189"' : 'data-bs-target="#xs-components-links-module-AlertDialogModule-052f024ff717d2017941998aa18bdc8a01138919cc4cda376ced71670e0f06aecf5e6c74efa8686b2d5904ea6f5b06396e7628714e07166df8785e93825eb189"' }>
                                             <span class="icon ion-md-cog"></span>
                                             <span>Components</span>
                                             <span class="icon ion-ios-arrow-down"></span>
                                         </div>
-                                        <ul class="links collapse" ${ isNormalMode ? 'id="components-links-module-AlertDialogModule-40330a12c81588a6d27cca7d41d1740d"' :
-                                            'id="xs-components-links-module-AlertDialogModule-40330a12c81588a6d27cca7d41d1740d"' }>
+                                        <ul class="links collapse" ${ isNormalMode ? 'id="components-links-module-AlertDialogModule-052f024ff717d2017941998aa18bdc8a01138919cc4cda376ced71670e0f06aecf5e6c74efa8686b2d5904ea6f5b06396e7628714e07166df8785e93825eb189"' :
+                                            'id="xs-components-links-module-AlertDialogModule-052f024ff717d2017941998aa18bdc8a01138919cc4cda376ced71670e0f06aecf5e6c74efa8686b2d5904ea6f5b06396e7628714e07166df8785e93825eb189"' }>
                                             <li class="link">
                                                 <a href="components/AlertDialogComponent.html" data-type="entity-link" data-context="sub-entity" data-context-id="modules" >AlertDialogComponent</a>
                                             </li>
@@ -86,14 +90,14 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                             <li class="link">
                                 <a href="modules/ConfirmDialogModule.html" data-type="entity-link" >ConfirmDialogModule</a>
                                     <li class="chapter inner">
-                                        <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ?
-                                            'data-target="#components-links-module-ConfirmDialogModule-04c13e846dab613d52b777bdc77b1c74"' : 'data-target="#xs-components-links-module-ConfirmDialogModule-04c13e846dab613d52b777bdc77b1c74"' }>
+                                        <div class="simple menu-toggler" data-bs-toggle="collapse" ${ isNormalMode ?
+                                            'data-bs-target="#components-links-module-ConfirmDialogModule-0adeeb753cdafda0f5aeeb910fc4e4524cf208609ff8c757a73b6aefbf7e65fd9fadff87c932a83cc921cc70e05e4715241255c1ab6b3da5a27b532bfd07c145"' : 'data-bs-target="#xs-components-links-module-ConfirmDialogModule-0adeeb753cdafda0f5aeeb910fc4e4524cf208609ff8c757a73b6aefbf7e65fd9fadff87c932a83cc921cc70e05e4715241255c1ab6b3da5a27b532bfd07c145"' }>
                                             <span class="icon ion-md-cog"></span>
                                             <span>Components</span>
                                             <span class="icon ion-ios-arrow-down"></span>
                                         </div>
-                                        <ul class="links collapse" ${ isNormalMode ? 'id="components-links-module-ConfirmDialogModule-04c13e846dab613d52b777bdc77b1c74"' :
-                                            'id="xs-components-links-module-ConfirmDialogModule-04c13e846dab613d52b777bdc77b1c74"' }>
+                                        <ul class="links collapse" ${ isNormalMode ? 'id="components-links-module-ConfirmDialogModule-0adeeb753cdafda0f5aeeb910fc4e4524cf208609ff8c757a73b6aefbf7e65fd9fadff87c932a83cc921cc70e05e4715241255c1ab6b3da5a27b532bfd07c145"' :
+                                            'id="xs-components-links-module-ConfirmDialogModule-0adeeb753cdafda0f5aeeb910fc4e4524cf208609ff8c757a73b6aefbf7e65fd9fadff87c932a83cc921cc70e05e4715241255c1ab6b3da5a27b532bfd07c145"' }>
                                             <li class="link">
                                                 <a href="components/ConfirmDialogComponent.html" data-type="entity-link" data-context="sub-entity" data-context-id="modules" >ConfirmDialogComponent</a>
                                             </li>
@@ -127,14 +131,14 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                             <li class="link">
                                 <a href="modules/PromptDialogModule.html" data-type="entity-link" >PromptDialogModule</a>
                                     <li class="chapter inner">
-                                        <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ?
-                                            'data-target="#components-links-module-PromptDialogModule-4a544ac69e13e01371cfd37977f7ab8d"' : 'data-target="#xs-components-links-module-PromptDialogModule-4a544ac69e13e01371cfd37977f7ab8d"' }>
+                                        <div class="simple menu-toggler" data-bs-toggle="collapse" ${ isNormalMode ?
+                                            'data-bs-target="#components-links-module-PromptDialogModule-ab0b05b7d60bba9f3bdd4f72b76faece9bca940dc31b3890f7a52039548fe0f29a6b665e7e36971dc16308b02fd6d53bf0236aa310337b833bd0be06a7c94ec3"' : 'data-bs-target="#xs-components-links-module-PromptDialogModule-ab0b05b7d60bba9f3bdd4f72b76faece9bca940dc31b3890f7a52039548fe0f29a6b665e7e36971dc16308b02fd6d53bf0236aa310337b833bd0be06a7c94ec3"' }>
                                             <span class="icon ion-md-cog"></span>
                                             <span>Components</span>
                                             <span class="icon ion-ios-arrow-down"></span>
                                         </div>
-                                        <ul class="links collapse" ${ isNormalMode ? 'id="components-links-module-PromptDialogModule-4a544ac69e13e01371cfd37977f7ab8d"' :
-                                            'id="xs-components-links-module-PromptDialogModule-4a544ac69e13e01371cfd37977f7ab8d"' }>
+                                        <ul class="links collapse" ${ isNormalMode ? 'id="components-links-module-PromptDialogModule-ab0b05b7d60bba9f3bdd4f72b76faece9bca940dc31b3890f7a52039548fe0f29a6b665e7e36971dc16308b02fd6d53bf0236aa310337b833bd0be06a7c94ec3"' :
+                                            'id="xs-components-links-module-PromptDialogModule-ab0b05b7d60bba9f3bdd4f72b76faece9bca940dc31b3890f7a52039548fe0f29a6b665e7e36971dc16308b02fd6d53bf0236aa310337b833bd0be06a7c94ec3"' }>
                                             <li class="link">
                                                 <a href="components/PromptDialogComponent.html" data-type="entity-link" data-context="sub-entity" data-context-id="modules" >PromptDialogComponent</a>
                                             </li>
@@ -147,14 +151,14 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                             <li class="link">
                                 <a href="modules/SnackBarModule.html" data-type="entity-link" >SnackBarModule</a>
                                     <li class="chapter inner">
-                                        <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ?
-                                            'data-target="#components-links-module-SnackBarModule-9ebd22ef52e0633880cf163e85dc8bb5"' : 'data-target="#xs-components-links-module-SnackBarModule-9ebd22ef52e0633880cf163e85dc8bb5"' }>
+                                        <div class="simple menu-toggler" data-bs-toggle="collapse" ${ isNormalMode ?
+                                            'data-bs-target="#components-links-module-SnackBarModule-2e7c37842d63e561bc5a8c20acc42c01ddd9e8df28537624a663f75fe9db4a846566d877b2c9a2cafbf51f09ca57f9d5459aac46794d8ce9aa640e9a79f82433"' : 'data-bs-target="#xs-components-links-module-SnackBarModule-2e7c37842d63e561bc5a8c20acc42c01ddd9e8df28537624a663f75fe9db4a846566d877b2c9a2cafbf51f09ca57f9d5459aac46794d8ce9aa640e9a79f82433"' }>
                                             <span class="icon ion-md-cog"></span>
                                             <span>Components</span>
                                             <span class="icon ion-ios-arrow-down"></span>
                                         </div>
-                                        <ul class="links collapse" ${ isNormalMode ? 'id="components-links-module-SnackBarModule-9ebd22ef52e0633880cf163e85dc8bb5"' :
-                                            'id="xs-components-links-module-SnackBarModule-9ebd22ef52e0633880cf163e85dc8bb5"' }>
+                                        <ul class="links collapse" ${ isNormalMode ? 'id="components-links-module-SnackBarModule-2e7c37842d63e561bc5a8c20acc42c01ddd9e8df28537624a663f75fe9db4a846566d877b2c9a2cafbf51f09ca57f9d5459aac46794d8ce9aa640e9a79f82433"' :
+                                            'id="xs-components-links-module-SnackBarModule-2e7c37842d63e561bc5a8c20acc42c01ddd9e8df28537624a663f75fe9db4a846566d877b2c9a2cafbf51f09ca57f9d5459aac46794d8ce9aa640e9a79f82433"' }>
                                             <li class="link">
                                                 <a href="components/ErrorSnackBarComponent.html" data-type="entity-link" data-context="sub-entity" data-context-id="modules" >ErrorSnackBarComponent</a>
                                             </li>
@@ -176,14 +180,14 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                             <li class="link">
                                 <a href="modules/TranslateLibModule.html" data-type="entity-link" >TranslateLibModule</a>
                                 <li class="chapter inner">
-                                    <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ?
-                                        'data-target="#injectables-links-module-TranslateLibModule-d0af318455dcd43cb1dbe190a596d247"' : 'data-target="#xs-injectables-links-module-TranslateLibModule-d0af318455dcd43cb1dbe190a596d247"' }>
+                                    <div class="simple menu-toggler" data-bs-toggle="collapse" ${ isNormalMode ?
+                                        'data-bs-target="#injectables-links-module-TranslateLibModule-121cb82068992c6e16d95c87a52d8764d370d5e26c7f78ea58f37b7a187fabc8a4765562d73bef6ccbde99938b9716a4cb771fb0c39eca2064fa8923afd4226e"' : 'data-bs-target="#xs-injectables-links-module-TranslateLibModule-121cb82068992c6e16d95c87a52d8764d370d5e26c7f78ea58f37b7a187fabc8a4765562d73bef6ccbde99938b9716a4cb771fb0c39eca2064fa8923afd4226e"' }>
                                         <span class="icon ion-md-arrow-round-down"></span>
                                         <span>Injectables</span>
                                         <span class="icon ion-ios-arrow-down"></span>
                                     </div>
-                                    <ul class="links collapse" ${ isNormalMode ? 'id="injectables-links-module-TranslateLibModule-d0af318455dcd43cb1dbe190a596d247"' :
-                                        'id="xs-injectables-links-module-TranslateLibModule-d0af318455dcd43cb1dbe190a596d247"' }>
+                                    <ul class="links collapse" ${ isNormalMode ? 'id="injectables-links-module-TranslateLibModule-121cb82068992c6e16d95c87a52d8764d370d5e26c7f78ea58f37b7a187fabc8a4765562d73bef6ccbde99938b9716a4cb771fb0c39eca2064fa8923afd4226e"' :
+                                        'id="xs-injectables-links-module-TranslateLibModule-121cb82068992c6e16d95c87a52d8764d370d5e26c7f78ea58f37b7a187fabc8a4765562d73bef6ccbde99938b9716a4cb771fb0c39eca2064fa8923afd4226e"' }>
                                         <li class="link">
                                             <a href="injectables/LanguageService.html" data-type="entity-link" data-context="sub-entity" data-context-id="modules" >LanguageService</a>
                                         </li>
@@ -193,28 +197,28 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                             <li class="link">
                                 <a href="modules/UtilityModule.html" data-type="entity-link" >UtilityModule</a>
                                 <li class="chapter inner">
-                                    <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ?
-                                        'data-target="#directives-links-module-UtilityModule-71b7821c6d1a72e2b84e1d35bb5253ed"' : 'data-target="#xs-directives-links-module-UtilityModule-71b7821c6d1a72e2b84e1d35bb5253ed"' }>
+                                    <div class="simple menu-toggler" data-bs-toggle="collapse" ${ isNormalMode ?
+                                        'data-bs-target="#directives-links-module-UtilityModule-192c3fd735faa9b711f1dfdaa32802794747d5037f2934922a5e1978be8f50f1f7a3e2077cc5ae9b4d7f5b8fa85310676da4924e0644f0c4a6b13a58e2c767ad"' : 'data-bs-target="#xs-directives-links-module-UtilityModule-192c3fd735faa9b711f1dfdaa32802794747d5037f2934922a5e1978be8f50f1f7a3e2077cc5ae9b4d7f5b8fa85310676da4924e0644f0c4a6b13a58e2c767ad"' }>
                                         <span class="icon ion-md-code-working"></span>
                                         <span>Directives</span>
                                         <span class="icon ion-ios-arrow-down"></span>
                                     </div>
-                                    <ul class="links collapse" ${ isNormalMode ? 'id="directives-links-module-UtilityModule-71b7821c6d1a72e2b84e1d35bb5253ed"' :
-                                        'id="xs-directives-links-module-UtilityModule-71b7821c6d1a72e2b84e1d35bb5253ed"' }>
+                                    <ul class="links collapse" ${ isNormalMode ? 'id="directives-links-module-UtilityModule-192c3fd735faa9b711f1dfdaa32802794747d5037f2934922a5e1978be8f50f1f7a3e2077cc5ae9b4d7f5b8fa85310676da4924e0644f0c4a6b13a58e2c767ad"' :
+                                        'id="xs-directives-links-module-UtilityModule-192c3fd735faa9b711f1dfdaa32802794747d5037f2934922a5e1978be8f50f1f7a3e2077cc5ae9b4d7f5b8fa85310676da4924e0644f0c4a6b13a58e2c767ad"' }>
                                         <li class="link">
                                             <a href="directives/LetDirective.html" data-type="entity-link" data-context="sub-entity" data-context-id="modules" >LetDirective</a>
                                         </li>
                                     </ul>
                                 </li>
                                     <li class="chapter inner">
-                                        <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ?
-                                            'data-target="#pipes-links-module-UtilityModule-71b7821c6d1a72e2b84e1d35bb5253ed"' : 'data-target="#xs-pipes-links-module-UtilityModule-71b7821c6d1a72e2b84e1d35bb5253ed"' }>
+                                        <div class="simple menu-toggler" data-bs-toggle="collapse" ${ isNormalMode ?
+                                            'data-bs-target="#pipes-links-module-UtilityModule-192c3fd735faa9b711f1dfdaa32802794747d5037f2934922a5e1978be8f50f1f7a3e2077cc5ae9b4d7f5b8fa85310676da4924e0644f0c4a6b13a58e2c767ad"' : 'data-bs-target="#xs-pipes-links-module-UtilityModule-192c3fd735faa9b711f1dfdaa32802794747d5037f2934922a5e1978be8f50f1f7a3e2077cc5ae9b4d7f5b8fa85310676da4924e0644f0c4a6b13a58e2c767ad"' }>
                                             <span class="icon ion-md-add"></span>
                                             <span>Pipes</span>
                                             <span class="icon ion-ios-arrow-down"></span>
                                         </div>
-                                        <ul class="links collapse" ${ isNormalMode ? 'id="pipes-links-module-UtilityModule-71b7821c6d1a72e2b84e1d35bb5253ed"' :
-                                            'id="xs-pipes-links-module-UtilityModule-71b7821c6d1a72e2b84e1d35bb5253ed"' }>
+                                        <ul class="links collapse" ${ isNormalMode ? 'id="pipes-links-module-UtilityModule-192c3fd735faa9b711f1dfdaa32802794747d5037f2934922a5e1978be8f50f1f7a3e2077cc5ae9b4d7f5b8fa85310676da4924e0644f0c4a6b13a58e2c767ad"' :
+                                            'id="xs-pipes-links-module-UtilityModule-192c3fd735faa9b711f1dfdaa32802794747d5037f2934922a5e1978be8f50f1f7a3e2077cc5ae9b4d7f5b8fa85310676da4924e0644f0c4a6b13a58e2c767ad"' }>
                                             <li class="link">
                                                 <a href="pipes/ContainsPipe.html" data-type="entity-link" data-context="sub-entity" data-context-id="modules" >ContainsPipe</a>
                                             </li>
@@ -230,8 +234,8 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                 </ul>
                 </li>
                     <li class="chapter">
-                        <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ? 'data-target="#components-links"' :
-                            'data-target="#xs-components-links"' }>
+                        <div class="simple menu-toggler" data-bs-toggle="collapse" ${ isNormalMode ? 'data-bs-target="#components-links"' :
+                            'data-bs-target="#xs-components-links"' }>
                             <span class="icon ion-md-cog"></span>
                             <span>Components</span>
                             <span class="icon ion-ios-arrow-down"></span>
@@ -296,6 +300,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                             </li>
                             <li class="link">
                                 <a href="components/AbstractDashboardBarChartTextFieldComponent.html" data-type="entity-link" >AbstractDashboardBarChartTextFieldComponent</a>
+                            </li>
+                            <li class="link">
+                                <a href="components/AbstractDashboardComponent.html" data-type="entity-link" >AbstractDashboardComponent</a>
                             </li>
                             <li class="link">
                                 <a href="components/AbstractDashboardContentComponent.html" data-type="entity-link" >AbstractDashboardContentComponent</a>
@@ -412,6 +419,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="components/AbstractFilterSelectorComponent.html" data-type="entity-link" >AbstractFilterSelectorComponent</a>
                             </li>
                             <li class="link">
+                                <a href="components/AbstractFilterStringQueryFieldComponent.html" data-type="entity-link" >AbstractFilterStringQueryFieldComponent</a>
+                            </li>
+                            <li class="link">
                                 <a href="components/AbstractForgottenPasswordComponent.html" data-type="entity-link" >AbstractForgottenPasswordComponent</a>
                             </li>
                             <li class="link">
@@ -464,9 +474,6 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                             </li>
                             <li class="link">
                                 <a href="components/AbstractLegalNoticeComponent.html" data-type="entity-link" >AbstractLegalNoticeComponent</a>
-                            </li>
-                            <li class="link">
-                                <a href="components/AbstractLoadFilterComponent.html" data-type="entity-link" >AbstractLoadFilterComponent</a>
                             </li>
                             <li class="link">
                                 <a href="components/AbstractLoadingModeComponent.html" data-type="entity-link" >AbstractLoadingModeComponent</a>
@@ -547,6 +554,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="components/AbstractPasswordTextFieldComponent.html" data-type="entity-link" >AbstractPasswordTextFieldComponent</a>
                             </li>
                             <li class="link">
+                                <a href="components/AbstractProcessRefDefaultComponent.html" data-type="entity-link" >AbstractProcessRefDefaultComponent</a>
+                            </li>
+                            <li class="link">
                                 <a href="components/AbstractProfileComponent.html" data-type="entity-link" >AbstractProfileComponent</a>
                             </li>
                             <li class="link">
@@ -566,9 +576,6 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                             </li>
                             <li class="link">
                                 <a href="components/AbstractRoleAssignmentComponent.html" data-type="entity-link" >AbstractRoleAssignmentComponent</a>
-                            </li>
-                            <li class="link">
-                                <a href="components/AbstractSaveFilterComponent.html" data-type="entity-link" >AbstractSaveFilterComponent</a>
                             </li>
                             <li class="link">
                                 <a href="components/AbstractSearchClauseComponent.html" data-type="entity-link" >AbstractSearchClauseComponent</a>
@@ -614,6 +621,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                             </li>
                             <li class="link">
                                 <a href="components/AbstractTabbedCaseViewComponent.html" data-type="entity-link" >AbstractTabbedCaseViewComponent</a>
+                            </li>
+                            <li class="link">
+                                <a href="components/AbstractTabbedSingleTaskViewComponent.html" data-type="entity-link" >AbstractTabbedSingleTaskViewComponent</a>
                             </li>
                             <li class="link">
                                 <a href="components/AbstractTabbedTaskViewComponent.html" data-type="entity-link" >AbstractTabbedTaskViewComponent</a>
@@ -717,8 +727,8 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                         </ul>
                     </li>
                     <li class="chapter">
-                        <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ? 'data-target="#classes-links"' :
-                            'data-target="#xs-classes-links"' }>
+                        <div class="simple menu-toggler" data-bs-toggle="collapse" ${ isNormalMode ? 'data-bs-target="#classes-links"' :
+                            'data-bs-target="#xs-classes-links"' }>
                             <span class="icon ion-ios-paper"></span>
                             <span>Classes</span>
                             <span class="icon ion-ios-arrow-down"></span>
@@ -746,7 +756,22 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="classes/AuthenticationMethodService.html" data-type="entity-link" >AuthenticationMethodService</a>
                             </li>
                             <li class="link">
+                                <a href="classes/AuthorBasicContext.html" data-type="entity-link" >AuthorBasicContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/AuthorComparisonContext.html" data-type="entity-link" >AuthorComparisonContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/AuthorListContext.html" data-type="entity-link" >AuthorListContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/AuthorNullContext.html" data-type="entity-link" >AuthorNullContext</a>
+                            </li>
+                            <li class="link">
                                 <a href="classes/AutocompleteCategory.html" data-type="entity-link" >AutocompleteCategory</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/BooleanComparisonContext.html" data-type="entity-link" >BooleanComparisonContext</a>
                             </li>
                             <li class="link">
                                 <a href="classes/BooleanField.html" data-type="entity-link" >BooleanField</a>
@@ -755,7 +780,37 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="classes/ButtonField.html" data-type="entity-link" >ButtonField</a>
                             </li>
                             <li class="link">
+                                <a href="classes/CaseAndExpressionContext.html" data-type="entity-link" >CaseAndExpressionContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/CaseAttributeContext.html" data-type="entity-link" >CaseAttributeContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/CaseAttributeOrderingContext.html" data-type="entity-link" >CaseAttributeOrderingContext</a>
+                            </li>
+                            <li class="link">
                                 <a href="classes/CaseAuthor.html" data-type="entity-link" >CaseAuthor</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/CaseComparisonsContext.html" data-type="entity-link" >CaseComparisonsContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/CaseConditionContext.html" data-type="entity-link" >CaseConditionContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/CaseConditionGroupBasicContext.html" data-type="entity-link" >CaseConditionGroupBasicContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/CaseConditionGroupContext.html" data-type="entity-link" >CaseConditionGroupContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/CaseConditionGroupParenthesisContext.html" data-type="entity-link" >CaseConditionGroupParenthesisContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/CaseConditionsAndPagingContext.html" data-type="entity-link" >CaseConditionsAndPagingContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/CaseConditionsContext.html" data-type="entity-link" >CaseConditionsContext</a>
                             </li>
                             <li class="link">
                                 <a href="classes/CaseCreationDate.html" data-type="entity-link" >CaseCreationDate</a>
@@ -767,25 +822,43 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="classes/CaseDataset.html" data-type="entity-link" >CaseDataset</a>
                             </li>
                             <li class="link">
+                                <a href="classes/CaseIdBasicContext.html" data-type="entity-link" >CaseIdBasicContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/CaseIdComparisonContext.html" data-type="entity-link" >CaseIdComparisonContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/CaseIdListContext.html" data-type="entity-link" >CaseIdListContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/CaseIdNullContext.html" data-type="entity-link" >CaseIdNullContext</a>
+                            </li>
+                            <li class="link">
                                 <a href="classes/CaseNetAttributeAutocompleteCategory.html" data-type="entity-link" >CaseNetAttributeAutocompleteCategory</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/CaseOrExpressionContext.html" data-type="entity-link" >CaseOrExpressionContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/CasePlainQuery.html" data-type="entity-link" >CasePlainQuery</a>
                             </li>
                             <li class="link">
                                 <a href="classes/CaseProcess.html" data-type="entity-link" >CaseProcess</a>
                             </li>
                             <li class="link">
-                                <a href="classes/CaseRefField.html" data-type="entity-link" >CaseRefField</a>
+                                <a href="classes/CaseQueryContext.html" data-type="entity-link" >CaseQueryContext</a>
                             </li>
                             <li class="link">
-                                <a href="classes/CaseRole.html" data-type="entity-link" >CaseRole</a>
+                                <a href="classes/CaseRefField.html" data-type="entity-link" >CaseRefField</a>
                             </li>
                             <li class="link">
                                 <a href="classes/CaseSimpleDataset.html" data-type="entity-link" >CaseSimpleDataset</a>
                             </li>
                             <li class="link">
-                                <a href="classes/CaseStringId.html" data-type="entity-link" >CaseStringId</a>
+                                <a href="classes/CaseSortingContext.html" data-type="entity-link" >CaseSortingContext</a>
                             </li>
                             <li class="link">
-                                <a href="classes/CaseTask.html" data-type="entity-link" >CaseTask</a>
+                                <a href="classes/CaseStringId.html" data-type="entity-link" >CaseStringId</a>
                             </li>
                             <li class="link">
                                 <a href="classes/CaseTitle.html" data-type="entity-link" >CaseTitle</a>
@@ -794,13 +867,28 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="classes/CaseTreeNode.html" data-type="entity-link" >CaseTreeNode</a>
                             </li>
                             <li class="link">
-                                <a href="classes/CaseVisualId.html" data-type="entity-link" >CaseVisualId</a>
-                            </li>
-                            <li class="link">
                                 <a href="classes/Category.html" data-type="entity-link" >Category</a>
                             </li>
                             <li class="link">
+                                <a href="classes/CdDateBasicContext.html" data-type="entity-link" >CdDateBasicContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/CdDateListContext.html" data-type="entity-link" >CdDateListContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/CdDateRangeContext.html" data-type="entity-link" >CdDateRangeContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/CdDateTimeBasicContext.html" data-type="entity-link" >CdDateTimeBasicContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/CdNullContext.html" data-type="entity-link" >CdNullContext</a>
+                            </li>
+                            <li class="link">
                                 <a href="classes/ClausePredicate.html" data-type="entity-link" >ClausePredicate</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/ComplexExpression.html" data-type="entity-link" >ComplexExpression</a>
                             </li>
                             <li class="link">
                                 <a href="classes/ConfigurationInput.html" data-type="entity-link" >ConfigurationInput</a>
@@ -812,10 +900,28 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="classes/ConsoleLogPublisher.html" data-type="entity-link" >ConsoleLogPublisher</a>
                             </li>
                             <li class="link">
+                                <a href="classes/CreationDateComparisonContext.html" data-type="entity-link" >CreationDateComparisonContext</a>
+                            </li>
+                            <li class="link">
                                 <a href="classes/DashboardMultiData.html" data-type="entity-link" >DashboardMultiData</a>
                             </li>
                             <li class="link">
                                 <a href="classes/DashboardSingleData.html" data-type="entity-link" >DashboardSingleData</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/DataBooleanContext.html" data-type="entity-link" >DataBooleanContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/DataDateContext.html" data-type="entity-link" >DataDateContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/DataDateListContext.html" data-type="entity-link" >DataDateListContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/DataDateRangeContext.html" data-type="entity-link" >DataDateRangeContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/DataDatetimeContext.html" data-type="entity-link" >DataDatetimeContext</a>
                             </li>
                             <li class="link">
                                 <a href="classes/DataField.html" data-type="entity-link" >DataField</a>
@@ -824,10 +930,91 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="classes/DatafieldMapKey.html" data-type="entity-link" >DatafieldMapKey</a>
                             </li>
                             <li class="link">
+                                <a href="classes/DataNullContext.html" data-type="entity-link" >DataNullContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/DataNumberContext.html" data-type="entity-link" >DataNumberContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/DataNumberListContext.html" data-type="entity-link" >DataNumberListContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/DataNumberRangeContext.html" data-type="entity-link" >DataNumberRangeContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/DataOptionsBasicContext.html" data-type="entity-link" >DataOptionsBasicContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/DataOptionsComparisonContext.html" data-type="entity-link" >DataOptionsComparisonContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/DataOptionsContext.html" data-type="entity-link" >DataOptionsContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/DataOptionsListContext.html" data-type="entity-link" >DataOptionsListContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/DataOptionsNullContext.html" data-type="entity-link" >DataOptionsNullContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/DataOptionsRangeContext.html" data-type="entity-link" >DataOptionsRangeContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/DataSimpleExpression.html" data-type="entity-link" >DataSimpleExpression</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/DataStringContext.html" data-type="entity-link" >DataStringContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/DataStringLikeContext.html" data-type="entity-link" >DataStringLikeContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/DataStringListContext.html" data-type="entity-link" >DataStringListContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/DataStringRangeContext.html" data-type="entity-link" >DataStringRangeContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/DataValueComparisonContext.html" data-type="entity-link" >DataValueComparisonContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/DataValueContext.html" data-type="entity-link" >DataValueContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/DateComparisonContext.html" data-type="entity-link" >DateComparisonContext</a>
+                            </li>
+                            <li class="link">
                                 <a href="classes/DateField.html" data-type="entity-link" >DateField</a>
                             </li>
                             <li class="link">
+                                <a href="classes/DateListContext.html" data-type="entity-link" >DateListContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/DateRangeContext.html" data-type="entity-link" >DateRangeContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/DateTimeComparisonContext.html" data-type="entity-link" >DateTimeComparisonContext</a>
+                            </li>
+                            <li class="link">
                                 <a href="classes/DateTimeField.html" data-type="entity-link" >DateTimeField</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/DateTimeListContext.html" data-type="entity-link" >DateTimeListContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/DateTimeRangeContext.html" data-type="entity-link" >DateTimeRangeContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/DelimeterContext.html" data-type="entity-link" >DelimeterContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/DoubleDrawerUtils.html" data-type="entity-link" >DoubleDrawerUtils</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/DoubleListContext.html" data-type="entity-link" >DoubleListContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/DoubleRangeContext.html" data-type="entity-link" >DoubleRangeContext</a>
                             </li>
                             <li class="link">
                                 <a href="classes/DynamicEnumerationField.html" data-type="entity-link" >DynamicEnumerationField</a>
@@ -849,6 +1036,21 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                             </li>
                             <li class="link">
                                 <a href="classes/ElementaryPredicate.html" data-type="entity-link" >ElementaryPredicate</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/EmailBasicContext.html" data-type="entity-link" >EmailBasicContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/EmailComparisonContext.html" data-type="entity-link" >EmailComparisonContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/EmailListContext.html" data-type="entity-link" >EmailListContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/EmailNullContext.html" data-type="entity-link" >EmailNullContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/EmailRangeContext.html" data-type="entity-link" >EmailRangeContext</a>
                             </li>
                             <li class="link">
                                 <a href="classes/EnumerationField.html" data-type="entity-link" >EnumerationField</a>
@@ -899,10 +1101,49 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="classes/I18nField.html" data-type="entity-link" >I18nField</a>
                             </li>
                             <li class="link">
+                                <a href="classes/IdBasicContext.html" data-type="entity-link" >IdBasicContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/IdComparisonContext.html" data-type="entity-link" >IdComparisonContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/IdentifierBasicContext.html" data-type="entity-link" >IdentifierBasicContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/IdentifierComparisonContext.html" data-type="entity-link" >IdentifierComparisonContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/IdentifierListContext.html" data-type="entity-link" >IdentifierListContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/IdentifierNullContext.html" data-type="entity-link" >IdentifierNullContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/IdentifierRangeContext.html" data-type="entity-link" >IdentifierRangeContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/IdListContext.html" data-type="entity-link" >IdListContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/IdNullContext.html" data-type="entity-link" >IdNullContext</a>
+                            </li>
+                            <li class="link">
                                 <a href="classes/ImportToAdd.html" data-type="entity-link" >ImportToAdd</a>
                             </li>
                             <li class="link">
                                 <a href="classes/IncrementingCounter.html" data-type="entity-link" >IncrementingCounter</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/InListDateComparisonContext.html" data-type="entity-link" >InListDateComparisonContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/InListNumberComparisonContext.html" data-type="entity-link" >InListNumberComparisonContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/InListStringComparisonContext.html" data-type="entity-link" >InListStringComparisonContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/InListVersionComparisonContext.html" data-type="entity-link" >InListVersionComparisonContext</a>
                             </li>
                             <li class="link">
                                 <a href="classes/InRange.html" data-type="entity-link" >InRange</a>
@@ -911,10 +1152,52 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="classes/InRangeDate.html" data-type="entity-link" >InRangeDate</a>
                             </li>
                             <li class="link">
+                                <a href="classes/InRangeDateComparisonContext.html" data-type="entity-link" >InRangeDateComparisonContext</a>
+                            </li>
+                            <li class="link">
                                 <a href="classes/InRangeDateTime.html" data-type="entity-link" >InRangeDateTime</a>
                             </li>
                             <li class="link">
+                                <a href="classes/InRangeNumberComparisonContext.html" data-type="entity-link" >InRangeNumberComparisonContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/InRangeStringComparisonContext.html" data-type="entity-link" >InRangeStringComparisonContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/InRangeVersionComparisonContext.html" data-type="entity-link" >InRangeVersionComparisonContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/IntListContext.html" data-type="entity-link" >IntListContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/IntRangeContext.html" data-type="entity-link" >IntRangeContext</a>
+                            </li>
+                            <li class="link">
                                 <a href="classes/IsNull.html" data-type="entity-link" >IsNull</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/JavaIdContext.html" data-type="entity-link" >JavaIdContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/LaDateBasicContext.html" data-type="entity-link" >LaDateBasicContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/LaDateListContext.html" data-type="entity-link" >LaDateListContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/LaDateRangeContext.html" data-type="entity-link" >LaDateRangeContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/LaDateTimeBasicContext.html" data-type="entity-link" >LaDateTimeBasicContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/LaNullContext.html" data-type="entity-link" >LaNullContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/LastAssignComparisonContext.html" data-type="entity-link" >LastAssignComparisonContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/LastFinishComparisonContext.html" data-type="entity-link" >LastFinishComparisonContext</a>
                             </li>
                             <li class="link">
                                 <a href="classes/LessThan.html" data-type="entity-link" >LessThan</a>
@@ -938,6 +1221,21 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="classes/LetContext.html" data-type="entity-link" >LetContext</a>
                             </li>
                             <li class="link">
+                                <a href="classes/LfDateBasicContext.html" data-type="entity-link" >LfDateBasicContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/LfDateListContext.html" data-type="entity-link" >LfDateListContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/LfDateRangeContext.html" data-type="entity-link" >LfDateRangeContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/LfDateTimeBasicContext.html" data-type="entity-link" >LfDateTimeBasicContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/LfNullContext.html" data-type="entity-link" >LfNullContext</a>
+                            </li>
+                            <li class="link">
                                 <a href="classes/Like.html" data-type="entity-link" >Like</a>
                             </li>
                             <li class="link">
@@ -953,13 +1251,16 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="classes/LogEntry.html" data-type="entity-link" >LogEntry</a>
                             </li>
                             <li class="link">
+                                <a href="classes/LoggedUserStringAttributeContext.html" data-type="entity-link" >LoggedUserStringAttributeContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/LogicalOperator.html" data-type="entity-link" >LogicalOperator</a>
+                            </li>
+                            <li class="link">
                                 <a href="classes/LogPublisher.html" data-type="entity-link" >LogPublisher</a>
                             </li>
                             <li class="link">
                                 <a href="classes/MergedFilter.html" data-type="entity-link" >MergedFilter</a>
-                            </li>
-                            <li class="link">
-                                <a href="classes/MockAuthenticationMethodService.html" data-type="entity-link" >MockAuthenticationMethodService</a>
                             </li>
                             <li class="link">
                                 <a href="classes/MockEndpoint.html" data-type="entity-link" >MockEndpoint</a>
@@ -992,6 +1293,21 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="classes/MultichoiceField.html" data-type="entity-link" >MultichoiceField</a>
                             </li>
                             <li class="link">
+                                <a href="classes/NameBasicContext.html" data-type="entity-link" >NameBasicContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/NameComparisonContext.html" data-type="entity-link" >NameComparisonContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/NameListContext.html" data-type="entity-link" >NameListContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/NameNullContext.html" data-type="entity-link" >NameNullContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/NameRangeContext.html" data-type="entity-link" >NameRangeContext</a>
+                            </li>
+                            <li class="link">
                                 <a href="classes/NetAttributeAutocompleteCategory.html" data-type="entity-link" >NetAttributeAutocompleteCategory</a>
                             </li>
                             <li class="link">
@@ -1013,13 +1329,22 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="classes/NotEqualsDateTime.html" data-type="entity-link" >NotEqualsDateTime</a>
                             </li>
                             <li class="link">
+                                <a href="classes/NullComparisonContext.html" data-type="entity-link" >NullComparisonContext</a>
+                            </li>
+                            <li class="link">
                                 <a href="classes/NullStorage.html" data-type="entity-link" >NullStorage</a>
                             </li>
                             <li class="link">
                                 <a href="classes/NullTaskOperations.html" data-type="entity-link" >NullTaskOperations</a>
                             </li>
                             <li class="link">
+                                <a href="classes/NumberComparisonContext.html" data-type="entity-link" >NumberComparisonContext</a>
+                            </li>
+                            <li class="link">
                                 <a href="classes/NumberField.html" data-type="entity-link" >NumberField</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/ObjectIdComparisonContext.html" data-type="entity-link" >ObjectIdComparisonContext</a>
                             </li>
                             <li class="link">
                                 <a href="classes/OpenedTab.html" data-type="entity-link" >OpenedTab</a>
@@ -1034,6 +1359,30 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="classes/PageLoadRequestContext.html" data-type="entity-link" >PageLoadRequestContext</a>
                             </li>
                             <li class="link">
+                                <a href="classes/PagingContext.html" data-type="entity-link" >PagingContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/PlacesBasicContext.html" data-type="entity-link" >PlacesBasicContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/PlacesComparisonContext.html" data-type="entity-link" >PlacesComparisonContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/PlacesContext.html" data-type="entity-link" >PlacesContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/PlacesListContext.html" data-type="entity-link" >PlacesListContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/PlacesNullContext.html" data-type="entity-link" >PlacesNullContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/PlacesRangeContext.html" data-type="entity-link" >PlacesRangeContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/PlainQueryCategory.html" data-type="entity-link" >PlainQueryCategory</a>
+                            </li>
+                            <li class="link">
                                 <a href="classes/PortalWrapper.html" data-type="entity-link" >PortalWrapper</a>
                             </li>
                             <li class="link">
@@ -1043,7 +1392,88 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="classes/PredicateWithGenerator.html" data-type="entity-link" >PredicateWithGenerator</a>
                             </li>
                             <li class="link">
+                                <a href="classes/ProcessAndExpressionContext.html" data-type="entity-link" >ProcessAndExpressionContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/ProcessAttributeContext.html" data-type="entity-link" >ProcessAttributeContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/ProcessAttributeOrderingContext.html" data-type="entity-link" >ProcessAttributeOrderingContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/ProcessComparisonsContext.html" data-type="entity-link" >ProcessComparisonsContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/ProcessConditionContext.html" data-type="entity-link" >ProcessConditionContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/ProcessConditionGroupBasicContext.html" data-type="entity-link" >ProcessConditionGroupBasicContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/ProcessConditionGroupContext.html" data-type="entity-link" >ProcessConditionGroupContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/ProcessConditionGroupParenthesisContext.html" data-type="entity-link" >ProcessConditionGroupParenthesisContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/ProcessConditionsAndPagingContext.html" data-type="entity-link" >ProcessConditionsAndPagingContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/ProcessConditionsContext.html" data-type="entity-link" >ProcessConditionsContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/ProcessIdBasicContext.html" data-type="entity-link" >ProcessIdBasicContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/ProcessIdComparisonContext.html" data-type="entity-link" >ProcessIdComparisonContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/ProcessIdentifierBasicContext.html" data-type="entity-link" >ProcessIdentifierBasicContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/ProcessIdentifierComparisonContext.html" data-type="entity-link" >ProcessIdentifierComparisonContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/ProcessIdentifierListContext.html" data-type="entity-link" >ProcessIdentifierListContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/ProcessIdentifierNullContext.html" data-type="entity-link" >ProcessIdentifierNullContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/ProcessIdentifierRangeContext.html" data-type="entity-link" >ProcessIdentifierRangeContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/ProcessIdListContext.html" data-type="entity-link" >ProcessIdListContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/ProcessIdNullContext.html" data-type="entity-link" >ProcessIdNullContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/ProcessIdObjIdBasicContext.html" data-type="entity-link" >ProcessIdObjIdBasicContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/ProcessIdObjIdComparisonContext.html" data-type="entity-link" >ProcessIdObjIdComparisonContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/ProcessIdObjIdListContext.html" data-type="entity-link" >ProcessIdObjIdListContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/ProcessIdObjNullContext.html" data-type="entity-link" >ProcessIdObjNullContext</a>
+                            </li>
+                            <li class="link">
                                 <a href="classes/ProcessList.html" data-type="entity-link" >ProcessList</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/ProcessOrExpressionContext.html" data-type="entity-link" >ProcessOrExpressionContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/ProcessQueryContext.html" data-type="entity-link" >ProcessQueryContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/ProcessRefField.html" data-type="entity-link" >ProcessRefField</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/ProcessSortingContext.html" data-type="entity-link" >ProcessSortingContext</a>
                             </li>
                             <li class="link">
                                 <a href="classes/Profile.html" data-type="entity-link" >Profile</a>
@@ -1052,10 +1482,25 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="classes/Query.html" data-type="entity-link" >Query</a>
                             </li>
                             <li class="link">
+                                <a href="classes/QueryContext.html" data-type="entity-link" >QueryContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/QueryLangLexer.html" data-type="entity-link" >QueryLangLexer</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/QueryLangParser.html" data-type="entity-link" >QueryLangParser</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/QueryLangVisitor.html" data-type="entity-link" >QueryLangVisitor</a>
+                            </li>
+                            <li class="link">
                                 <a href="classes/Queue.html" data-type="entity-link" >Queue</a>
                             </li>
                             <li class="link">
                                 <a href="classes/QueuedEvent.html" data-type="entity-link" >QueuedEvent</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/RawExpression.html" data-type="entity-link" >RawExpression</a>
                             </li>
                             <li class="link">
                                 <a href="classes/ResultWithAfterActions.html" data-type="entity-link" >ResultWithAfterActions</a>
@@ -1067,13 +1512,31 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="classes/SideMenuRef.html" data-type="entity-link" >SideMenuRef</a>
                             </li>
                             <li class="link">
+                                <a href="classes/SimpleExpression.html" data-type="entity-link" >SimpleExpression</a>
+                            </li>
+                            <li class="link">
                                 <a href="classes/SimpleFilter.html" data-type="entity-link" >SimpleFilter</a>
                             </li>
                             <li class="link">
                                 <a href="classes/Stack.html" data-type="entity-link" >Stack</a>
                             </li>
                             <li class="link">
+                                <a href="classes/StateComparisonContext.html" data-type="entity-link" >StateComparisonContext</a>
+                            </li>
+                            <li class="link">
                                 <a href="classes/StringCollectionField.html" data-type="entity-link" >StringCollectionField</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/StringComparisonContext.html" data-type="entity-link" >StringComparisonContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/StringLikeComparisonContext.html" data-type="entity-link" >StringLikeComparisonContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/StringListContext.html" data-type="entity-link" >StringListContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/StringRangeContext.html" data-type="entity-link" >StringRangeContext</a>
                             </li>
                             <li class="link">
                                 <a href="classes/Subgrid.html" data-type="entity-link" >Subgrid</a>
@@ -1085,16 +1548,58 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="classes/Substring.html" data-type="entity-link" >Substring</a>
                             </li>
                             <li class="link">
+                                <a href="classes/SurnameBasicContext.html" data-type="entity-link" >SurnameBasicContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/SurnameComparisonContext.html" data-type="entity-link" >SurnameComparisonContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/SurnameListContext.html" data-type="entity-link" >SurnameListContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/SurnameNullContext.html" data-type="entity-link" >SurnameNullContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/SurnameRangeContext.html" data-type="entity-link" >SurnameRangeContext</a>
+                            </li>
+                            <li class="link">
                                 <a href="classes/TabLabelStream.html" data-type="entity-link" >TabLabelStream</a>
                             </li>
                             <li class="link">
                                 <a href="classes/TabView.html" data-type="entity-link" >TabView</a>
                             </li>
                             <li class="link">
+                                <a href="classes/TaskAndExpressionContext.html" data-type="entity-link" >TaskAndExpressionContext</a>
+                            </li>
+                            <li class="link">
                                 <a href="classes/TaskAssignee.html" data-type="entity-link" >TaskAssignee</a>
                             </li>
                             <li class="link">
-                                <a href="classes/TaskConst.html" data-type="entity-link" >TaskConst</a>
+                                <a href="classes/TaskAttributeContext.html" data-type="entity-link" >TaskAttributeContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/TaskAttributeOrderingContext.html" data-type="entity-link" >TaskAttributeOrderingContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/TaskComparisonsContext.html" data-type="entity-link" >TaskComparisonsContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/TaskConditionContext.html" data-type="entity-link" >TaskConditionContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/TaskConditionGroupBasicContext.html" data-type="entity-link" >TaskConditionGroupBasicContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/TaskConditionGroupContext.html" data-type="entity-link" >TaskConditionGroupContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/TaskConditionGroupParenthesisContext.html" data-type="entity-link" >TaskConditionGroupParenthesisContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/TaskConditionsAndPagingContext.html" data-type="entity-link" >TaskConditionsAndPagingContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/TaskConditionsContext.html" data-type="entity-link" >TaskConditionsContext</a>
                             </li>
                             <li class="link">
                                 <a href="classes/TaskHandlingService.html" data-type="entity-link" >TaskHandlingService</a>
@@ -1103,13 +1608,43 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="classes/TaskNetAttributeAutocompleteCategory.html" data-type="entity-link" >TaskNetAttributeAutocompleteCategory</a>
                             </li>
                             <li class="link">
+                                <a href="classes/TaskOrExpressionContext.html" data-type="entity-link" >TaskOrExpressionContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/TaskPlainQuery.html" data-type="entity-link" >TaskPlainQuery</a>
+                            </li>
+                            <li class="link">
                                 <a href="classes/TaskProcess.html" data-type="entity-link" >TaskProcess</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/TaskQueryContext.html" data-type="entity-link" >TaskQueryContext</a>
                             </li>
                             <li class="link">
                                 <a href="classes/TaskRefField.html" data-type="entity-link" >TaskRefField</a>
                             </li>
                             <li class="link">
-                                <a href="classes/TaskRole.html" data-type="entity-link" >TaskRole</a>
+                                <a href="classes/TaskSortingContext.html" data-type="entity-link" >TaskSortingContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/TasksStateComparisonContext.html" data-type="entity-link" >TasksStateComparisonContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/TasksStateContext.html" data-type="entity-link" >TasksStateContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/TasksUserIdBasicContext.html" data-type="entity-link" >TasksUserIdBasicContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/TasksUserIdComparisonContext.html" data-type="entity-link" >TasksUserIdComparisonContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/TasksUserIdContext.html" data-type="entity-link" >TasksUserIdContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/TasksUserIdListContext.html" data-type="entity-link" >TasksUserIdListContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/TasksUserIdNullContext.html" data-type="entity-link" >TasksUserIdNullContext</a>
                             </li>
                             <li class="link">
                                 <a href="classes/TaskTask.html" data-type="entity-link" >TaskTask</a>
@@ -1127,13 +1662,88 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="classes/TextField.html" data-type="entity-link" >TextField</a>
                             </li>
                             <li class="link">
+                                <a href="classes/TitleBasicContext.html" data-type="entity-link" >TitleBasicContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/TitleComparisonContext.html" data-type="entity-link" >TitleComparisonContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/TitleLikeContext.html" data-type="entity-link" >TitleLikeContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/TitleListContext.html" data-type="entity-link" >TitleListContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/TitleNullContext.html" data-type="entity-link" >TitleNullContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/TitleRangeContext.html" data-type="entity-link" >TitleRangeContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/TransitionIdBasicContext.html" data-type="entity-link" >TransitionIdBasicContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/TransitionIdComparisonContext.html" data-type="entity-link" >TransitionIdComparisonContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/TransitionIdListContext.html" data-type="entity-link" >TransitionIdListContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/TransitionIdNullContext.html" data-type="entity-link" >TransitionIdNullContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/TransitionIdRangeContext.html" data-type="entity-link" >TransitionIdRangeContext</a>
+                            </li>
+                            <li class="link">
                                 <a href="classes/User.html" data-type="entity-link" >User</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/UserAndExpressionContext.html" data-type="entity-link" >UserAndExpressionContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/UserAttributeContext.html" data-type="entity-link" >UserAttributeContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/UserAttributeOrderingContext.html" data-type="entity-link" >UserAttributeOrderingContext</a>
                             </li>
                             <li class="link">
                                 <a href="classes/UserAutocomplete.html" data-type="entity-link" >UserAutocomplete</a>
                             </li>
                             <li class="link">
+                                <a href="classes/UserComparisonsContext.html" data-type="entity-link" >UserComparisonsContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/UserConditionContext.html" data-type="entity-link" >UserConditionContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/UserConditionGroupBasicContext.html" data-type="entity-link" >UserConditionGroupBasicContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/UserConditionGroupContext.html" data-type="entity-link" >UserConditionGroupContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/UserConditionGroupParenthesisContext.html" data-type="entity-link" >UserConditionGroupParenthesisContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/UserConditionsAndPagingContext.html" data-type="entity-link" >UserConditionsAndPagingContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/UserConditionsContext.html" data-type="entity-link" >UserConditionsContext</a>
+                            </li>
+                            <li class="link">
                                 <a href="classes/UserField.html" data-type="entity-link" >UserField</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/UserIdBasicContext.html" data-type="entity-link" >UserIdBasicContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/UserIdComparisonContext.html" data-type="entity-link" >UserIdComparisonContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/UserIdListContext.html" data-type="entity-link" >UserIdListContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/UserIdNullContext.html" data-type="entity-link" >UserIdNullContext</a>
                             </li>
                             <li class="link">
                                 <a href="classes/UserListField.html" data-type="entity-link" >UserListField</a>
@@ -1142,7 +1752,37 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="classes/UserListValue.html" data-type="entity-link" >UserListValue</a>
                             </li>
                             <li class="link">
+                                <a href="classes/UserOrExpressionContext.html" data-type="entity-link" >UserOrExpressionContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/UserQueryContext.html" data-type="entity-link" >UserQueryContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/UserSortingContext.html" data-type="entity-link" >UserSortingContext</a>
+                            </li>
+                            <li class="link">
                                 <a href="classes/UserValue.html" data-type="entity-link" >UserValue</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/VersionBasicContext.html" data-type="entity-link" >VersionBasicContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/VersionComparisonContext.html" data-type="entity-link" >VersionComparisonContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/VersionListCmpContext.html" data-type="entity-link" >VersionListCmpContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/VersionListContext.html" data-type="entity-link" >VersionListContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/VersionNullContext.html" data-type="entity-link" >VersionNullContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/VersionRangeCmpContext.html" data-type="entity-link" >VersionRangeCmpContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/VersionRangeContext.html" data-type="entity-link" >VersionRangeContext</a>
                             </li>
                             <li class="link">
                                 <a href="classes/ViewClassInfo.html" data-type="entity-link" >ViewClassInfo</a>
@@ -1156,8 +1796,8 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                         </ul>
                     </li>
                         <li class="chapter">
-                            <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ? 'data-target="#injectables-links"' :
-                                'data-target="#xs-injectables-links"' }>
+                            <div class="simple menu-toggler" data-bs-toggle="collapse" ${ isNormalMode ? 'data-bs-target="#injectables-links"' :
+                                'data-bs-target="#xs-injectables-links"' }>
                                 <span class="icon ion-md-arrow-round-down"></span>
                                 <span>Injectables</span>
                                 <span class="icon ion-ios-arrow-down"></span>
@@ -1248,6 +1888,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                     <a href="injectables/DialogService.html" data-type="entity-link" >DialogService</a>
                                 </li>
                                 <li class="link">
+                                    <a href="injectables/DoubleDrawerNavigationService.html" data-type="entity-link" >DoubleDrawerNavigationService</a>
+                                </li>
+                                <li class="link">
                                     <a href="injectables/DynamicNavigationRouteProviderService.html" data-type="entity-link" >DynamicNavigationRouteProviderService</a>
                                 </li>
                                 <li class="link">
@@ -1255,6 +1898,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 </li>
                                 <li class="link">
                                     <a href="injectables/EventService.html" data-type="entity-link" >EventService</a>
+                                </li>
+                                <li class="link">
+                                    <a href="injectables/ExportService.html" data-type="entity-link" >ExportService</a>
                                 </li>
                                 <li class="link">
                                     <a href="injectables/FieldConverterService.html" data-type="entity-link" >FieldConverterService</a>
@@ -1308,6 +1954,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                     <a href="injectables/LogPublisherService.html" data-type="entity-link" >LogPublisherService</a>
                                 </li>
                                 <li class="link">
+                                    <a href="injectables/MockAuthenticationMethodService.html" data-type="entity-link" >MockAuthenticationMethodService</a>
+                                </li>
+                                <li class="link">
                                     <a href="injectables/MockAuthenticationService.html" data-type="entity-link" >MockAuthenticationService</a>
                                 </li>
                                 <li class="link">
@@ -1315,6 +1964,12 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 </li>
                                 <li class="link">
                                     <a href="injectables/MockPetrinetResourceService.html" data-type="entity-link" >MockPetrinetResourceService</a>
+                                </li>
+                                <li class="link">
+                                    <a href="injectables/MockProcessService.html" data-type="entity-link" >MockProcessService</a>
+                                </li>
+                                <li class="link">
+                                    <a href="injectables/MockTaskResourceService.html" data-type="entity-link" >MockTaskResourceService</a>
                                 </li>
                                 <li class="link">
                                     <a href="injectables/MockUriResourceService.html" data-type="entity-link" >MockUriResourceService</a>
@@ -1357,6 +2012,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 </li>
                                 <li class="link">
                                     <a href="injectables/PetriNetResourceService.html" data-type="entity-link" >PetriNetResourceService</a>
+                                </li>
+                                <li class="link">
+                                    <a href="injectables/PfqlVisitor.html" data-type="entity-link" >PfqlVisitor</a>
                                 </li>
                                 <li class="link">
                                     <a href="injectables/ProcessService.html" data-type="entity-link" >ProcessService</a>
@@ -1405,6 +2063,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 </li>
                                 <li class="link">
                                     <a href="injectables/SelectedCaseService.html" data-type="entity-link" >SelectedCaseService</a>
+                                </li>
+                                <li class="link">
+                                    <a href="injectables/SessionClearService.html" data-type="entity-link" >SessionClearService</a>
                                 </li>
                                 <li class="link">
                                     <a href="injectables/SessionIdleTimerService.html" data-type="entity-link" >SessionIdleTimerService</a>
@@ -1470,9 +2131,6 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                     <a href="injectables/UserComparatorService.html" data-type="entity-link" >UserComparatorService</a>
                                 </li>
                                 <li class="link">
-                                    <a href="injectables/UserFiltersService.html" data-type="entity-link" >UserFiltersService</a>
-                                </li>
-                                <li class="link">
                                     <a href="injectables/UserInviteService.html" data-type="entity-link" >UserInviteService</a>
                                 </li>
                                 <li class="link">
@@ -1502,8 +2160,8 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                             </ul>
                         </li>
                     <li class="chapter">
-                        <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ? 'data-target="#interceptors-links"' :
-                            'data-target="#xs-interceptors-links"' }>
+                        <div class="simple menu-toggler" data-bs-toggle="collapse" ${ isNormalMode ? 'data-bs-target="#interceptors-links"' :
+                            'data-bs-target="#xs-interceptors-links"' }>
                             <span class="icon ion-ios-swap"></span>
                             <span>Interceptors</span>
                             <span class="icon ion-ios-arrow-down"></span>
@@ -1521,8 +2179,8 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                         </ul>
                     </li>
                     <li class="chapter">
-                        <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ? 'data-target="#guards-links"' :
-                            'data-target="#xs-guards-links"' }>
+                        <div class="simple menu-toggler" data-bs-toggle="collapse" ${ isNormalMode ? 'data-bs-target="#guards-links"' :
+                            'data-bs-target="#xs-guards-links"' }>
                             <span class="icon ion-ios-lock"></span>
                             <span>Guards</span>
                             <span class="icon ion-ios-arrow-down"></span>
@@ -1543,8 +2201,8 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                         </ul>
                     </li>
                     <li class="chapter">
-                        <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ? 'data-target="#interfaces-links"' :
-                            'data-target="#xs-interfaces-links"' }>
+                        <div class="simple menu-toggler" data-bs-toggle="collapse" ${ isNormalMode ? 'data-bs-target="#interfaces-links"' :
+                            'data-bs-target="#xs-interfaces-links"' }>
                             <span class="icon ion-md-information-circle-outline"></span>
                             <span>Interfaces</span>
                             <span class="icon ion-ios-arrow-down"></span>
@@ -1633,12 +2291,6 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                             </li>
                             <li class="link">
                                 <a href="interfaces/CaseViewParams.html" data-type="entity-link" >CaseViewParams</a>
-                            </li>
-                            <li class="link">
-                                <a href="interfaces/CategoryGeneratorMetadata.html" data-type="entity-link" >CategoryGeneratorMetadata</a>
-                            </li>
-                            <li class="link">
-                                <a href="interfaces/CategoryMetadataConfiguration.html" data-type="entity-link" >CategoryMetadataConfiguration</a>
                             </li>
                             <li class="link">
                                 <a href="interfaces/CategorySerialisationPair.html" data-type="entity-link" >CategorySerialisationPair</a>
@@ -1794,12 +2446,6 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="interfaces/FileUploadDataModel.html" data-type="entity-link" >FileUploadDataModel</a>
                             </li>
                             <li class="link">
-                                <a href="interfaces/FilterMetadata.html" data-type="entity-link" >FilterMetadata</a>
-                            </li>
-                            <li class="link">
-                                <a href="interfaces/FilterMetadataAllowedNets.html" data-type="entity-link" >FilterMetadataAllowedNets</a>
-                            </li>
-                            <li class="link">
                                 <a href="interfaces/Filters.html" data-type="entity-link" >Filters</a>
                             </li>
                             <li class="link">
@@ -1918,9 +2564,6 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                             </li>
                             <li class="link">
                                 <a href="interfaces/LdapGroupResponseBody.html" data-type="entity-link" >LdapGroupResponseBody</a>
-                            </li>
-                            <li class="link">
-                                <a href="interfaces/LoadFilterInjectionData.html" data-type="entity-link" >LoadFilterInjectionData</a>
                             </li>
                             <li class="link">
                                 <a href="interfaces/Locales.html" data-type="entity-link" >Locales</a>
@@ -2106,6 +2749,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="interfaces/ProviderProgress.html" data-type="entity-link" >ProviderProgress</a>
                             </li>
                             <li class="link">
+                                <a href="interfaces/QueryItemInterface.html" data-type="entity-link" >QueryItemInterface</a>
+                            </li>
+                            <li class="link">
                                 <a href="interfaces/RequestedPagination.html" data-type="entity-link" >RequestedPagination</a>
                             </li>
                             <li class="link">
@@ -2128,12 +2774,6 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                             </li>
                             <li class="link">
                                 <a href="interfaces/RolesObject.html" data-type="entity-link" >RolesObject</a>
-                            </li>
-                            <li class="link">
-                                <a href="interfaces/SavedFilterMetadata.html" data-type="entity-link" >SavedFilterMetadata</a>
-                            </li>
-                            <li class="link">
-                                <a href="interfaces/SaveFilterInjectionData.html" data-type="entity-link" >SaveFilterInjectionData</a>
                             </li>
                             <li class="link">
                                 <a href="interfaces/SearchAutocompleteOption.html" data-type="entity-link" >SearchAutocompleteOption</a>
@@ -2232,13 +2872,16 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="interfaces/TaskViewConfiguration.html" data-type="entity-link" >TaskViewConfiguration</a>
                             </li>
                             <li class="link">
-                                <a href="interfaces/TaskViewInjectionData.html" data-type="entity-link" >TaskViewInjectionData</a>
+                                <a href="interfaces/TaskViewDialogInjectionData.html" data-type="entity-link" >TaskViewDialogInjectionData</a>
                             </li>
                             <li class="link">
                                 <a href="interfaces/TaskViewParams.html" data-type="entity-link" >TaskViewParams</a>
                             </li>
                             <li class="link">
                                 <a href="interfaces/Theme.html" data-type="entity-link" >Theme</a>
+                            </li>
+                            <li class="link">
+                                <a href="interfaces/ToolbarConfig.html" data-type="entity-link" >ToolbarConfig</a>
                             </li>
                             <li class="link">
                                 <a href="interfaces/Transaction.html" data-type="entity-link" >Transaction</a>
@@ -2324,8 +2967,8 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                         </ul>
                     </li>
                     <li class="chapter">
-                        <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ? 'data-target="#miscellaneous-links"'
-                            : 'data-target="#xs-miscellaneous-links"' }>
+                        <div class="simple menu-toggler" data-bs-toggle="collapse" ${ isNormalMode ? 'data-bs-target="#miscellaneous-links"'
+                            : 'data-bs-target="#xs-miscellaneous-links"' }>
                             <span class="icon ion-ios-cube"></span>
                             <span>Miscellaneous</span>
                             <span class="icon ion-ios-arrow-down"></span>
@@ -2353,7 +2996,7 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                     </li>
                     <li class="divider"></li>
                     <li class="copyright">
-                        Documentation generated using <a href="https://compodoc.app/" target="_blank">
+                        Documentation generated using <a href="https://compodoc.app/" target="_blank" rel="noopener noreferrer">
                             <img data-src="images/compodoc-vectorise.png" class="img-responsive" data-type="compodoc-logo">
                         </a>
                     </li>
