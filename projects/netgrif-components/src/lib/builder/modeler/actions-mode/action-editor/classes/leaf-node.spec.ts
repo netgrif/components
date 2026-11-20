@@ -4,12 +4,15 @@ import {ModelService} from '../../../services/model/model.service';
 import {ActionEditorService} from '../action-editor.service';
 import {ActionType} from './editable-action';
 import {LeafNode} from './leaf-node';
+import {TranslateService} from "@ngx-translate/core";
 
 describe('LeafNode', () => {
     let service: ActionEditorService;
 
     beforeEach(() => {
-        TestBed.configureTestingModule({providers: [ActionEditorService, ModelService, ArcFactory]});
+        TestBed.configureTestingModule({providers: [ActionEditorService, ModelService, ArcFactory,
+                {provide: TranslateService, useValue: { instant: (key: string) => `translated-${key}` }}
+            ]});
         service = TestBed.inject(ActionEditorService);
     });
 

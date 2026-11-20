@@ -1,39 +1,43 @@
-import {Injectable} from "@angular/core";
+import {Injectable, OnDestroy} from "@angular/core";
 import {HistoryService} from "../modeler/services/history/history.service";
 import {
     Case,
     extractFieldValueFromData,
     LoadingEmitter,
     LoggerService,
+    ProcessRefField,
     TaskEventOutcome,
     TaskResourceService
 } from "@netgrif/components-core";
 import {ExportService, PetriNet} from "@netgrif/petriflow";
 import {HistoryChange} from "../modeler/services/history/history-change";
-import {Observable, of, Subject} from "rxjs";
+import {Observable, of, Subject, Subscription} from 'rxjs';
+import {BuilderModeService} from "./builder-mode.service";
 
 @Injectable()
-export class BuilderIntegrationService {
+export class BuilderIntegrationService implements OnDestroy {
     protected _isIntegrated: boolean;
     protected _processCase: Case;
+    protected _dataField: ProcessRefField;
     protected _editTaskId: string;
     protected _isAssigned: boolean;
-    protected _onlyTaskView: boolean;
+    protected _allowedTransIds: Array<string> = ['deploy', 't10', 't11', 't4', 't6', 't9', 'view'];
 
     protected _reloadCase: Subject<boolean>;
     protected _reloadModes: Subject<boolean>;
     protected _loading: LoadingEmitter;
+    protected _historySub: Subscription;
 
     constructor(protected _historyService: HistoryService,
                 protected _taskResourceService: TaskResourceService,
                 protected _exportService: ExportService,
-                protected _log: LoggerService) {
-        this._onlyTaskView = true;
+                protected _log: LoggerService,
+                protected _builderModeService: BuilderModeService) {
         this._reloadCase = new Subject<boolean>();
         this._reloadModes = new Subject<boolean>();
         this._loading = new LoadingEmitter();
-        this._historyService.historyChange.subscribe(history => {
-            if (this._isIntegrated && this._editTaskId) {
+        this._historySub = this._historyService.historyChange.subscribe(history => {
+            if (this._isIntegrated && this._editTaskId && !_builderModeService.readOnly) {
                 if (!this._isAssigned) {
                     this._taskResourceService.assignTask(this._editTaskId).subscribe(result => {
                         if (result.success) {
@@ -46,6 +50,10 @@ export class BuilderIntegrationService {
                 }
             }
         });
+    }
+
+    ngOnDestroy(): any {
+        this._historySub?.unsubscribe();
     }
 
     get isIntegrated(): boolean {
@@ -64,20 +72,20 @@ export class BuilderIntegrationService {
         this._processCase = value;
     }
 
+    get dataField(): ProcessRefField {
+        return this._dataField;
+    }
+
+    set dataField(dataField: ProcessRefField) {
+        this._dataField = dataField;
+    }
+
     get editTaskId(): string {
         return this._editTaskId;
     }
 
     set editTaskId(value: string) {
         this._editTaskId = value;
-    }
-
-    get onlyTaskView(): boolean {
-        return this._onlyTaskView;
-    }
-
-    set onlyTaskView(value: boolean) {
-        this._onlyTaskView = value;
     }
 
     get reloadCase(): Observable<boolean> {
@@ -98,6 +106,14 @@ export class BuilderIntegrationService {
 
     get loading$(): Observable<boolean> {
         return this._loading.asObservable();
+    }
+
+    set allowedTransIds(value: Array<string>) {
+        this._allowedTransIds = value;
+    }
+
+    get allowedTransIds(): Array<string> {
+        return this._allowedTransIds;
     }
 
     public isLoading(): boolean {

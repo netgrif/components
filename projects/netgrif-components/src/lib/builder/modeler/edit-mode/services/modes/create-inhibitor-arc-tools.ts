@@ -14,9 +14,9 @@ export class CreateInhibitorArcTool extends CreatePTArc {
             CreateInhibitorArcTool.ID,
             new ControlPanelButton(
                 new ControlPanelIcon('inhibitor', true),
-                'Inhibitor Arc',
+                context.translateService.instant('builder.modeler.edit-mode.services.inhibitorArc'),
             ),
-            context
+            context,
         );
     }
 

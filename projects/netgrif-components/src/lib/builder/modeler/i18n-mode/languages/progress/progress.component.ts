@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {Locale} from '../../classes/locale';
 import {I18nControlService} from '../../i18n-control.service';
+import {BuilderModeService} from "../../../../services/builder-mode.service";
 
 @Component({
     selector: 'nc-builder-progress',
@@ -13,7 +14,7 @@ export class ProgressComponent {
     @Output() deleteLocale = new EventEmitter<Locale>();
     @Output() selectLocale = new EventEmitter<Locale>();
 
-    constructor(private i18nControlService: I18nControlService) {
+    constructor(private i18nControlService: I18nControlService, protected _builderModeService: BuilderModeService) {
     }
 
     removeLocale() {

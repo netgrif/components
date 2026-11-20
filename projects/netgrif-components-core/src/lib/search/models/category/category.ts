@@ -4,23 +4,22 @@ import {Query} from '../query/query';
 import {ElementaryPredicate} from '../predicate/elementary-predicate';
 import {SearchInputType} from './search-input-type';
 import {FormControl} from '@angular/forms';
-import {BehaviorSubject, forkJoin, Observable, of, ReplaySubject} from 'rxjs';
-import {debounceTime, defaultIfEmpty, map} from 'rxjs/operators';
+import {BehaviorSubject, Observable, of, ReplaySubject} from 'rxjs';
+import {debounceTime, map} from 'rxjs/operators';
 import {OperatorTemplatePart} from '../operator-template-part';
 import {IncrementingCounter} from '../../../utility/incrementing-counter';
 import {ConfigurationInput} from '../configuration-input';
-import {CategoryGeneratorMetadata, CategoryMetadataConfiguration} from '../persistance/generator-metadata';
 import {Categories} from './categories';
 import {OperatorService} from '../../operator-service/operator.service';
-import {Operators} from '../operator/operators';
-import {ofVoid} from '../../../utility/of-void';
 import {FilterTextSegment} from '../persistance/filter-text-segment';
 import {DATE_FORMAT_STRING, DATE_TIME_FORMAT_STRING} from '../../../moment/time-formats';
 import {Type} from '@angular/core';
+import {ResourceTypeQueryPrefix} from "./resource-type-query-prefix";
+import {SimpleExpression} from "../../../pfql/model/simple-expression";
 
 /**
  * The top level of abstraction in search query generation. Represents a set of indexed fields that can be searched.
- * Encapsulates the the state and logic of the query construction process.
+ * Encapsulates the state and logic of the query construction process.
  *
  * As opposed to {@link Operator}s Categories are not stateless and shouldn't be shared.
  * A single Category instance is capable of holding the state of one {@link EditablePredicate},
@@ -36,11 +35,6 @@ import {Type} from '@angular/core';
  * @typeparam T type of objects the category expects to generate queries from
  */
 export abstract class Category<T> {
-
-    /**
-     * The {@link CategoryMetadataConfiguration} key for this Category's {@link Operator}
-     */
-    protected static readonly OPERATOR_METADATA = 'operator';
 
     /**
      * Contains the `FormControl` object that is used to drive the operator selection.
@@ -84,19 +78,21 @@ export abstract class Category<T> {
      * The constructor fills the values of all protected fields and then calls the [initializeCategory()]{@link Category#initializeCategory}
      * method. If you want to override the category creation behavior override that method.
      *
-     * @param _elasticKeywords Elasticsearch keywords that should be queried by queries generated with this category
+     * @param _pfqlKeywords PFQL keywords that should be queried by queries generated with this category
      * @param _allowedOperators Operators that can be used to generated queries on the above keywords
      * @param translationPath path to the translation string
      * @param _inputType input field type that should be used to enter operator arguments for this category
      * @param _log used to record information about incorrect use of this class
      * @param _operatorService used to resolve serialized operators during deserialization
+     * @param _resourceTypePrefix resource type prefix in PFQL query
      */
-    protected constructor(protected readonly _elasticKeywords: Array<string>,
+    protected constructor(protected readonly _pfqlKeywords: Array<string>,
                           protected readonly _allowedOperators: Array<Operator<any>>,
                           public readonly translationPath: string,
-                          protected readonly _inputType: SearchInputType,
+                          protected _inputType: SearchInputType,
                           protected _log: LoggerService,
-                          protected _operatorService: OperatorService) {
+                          protected _operatorService: OperatorService,
+                          protected _resourceTypePrefix: ResourceTypeQueryPrefix) {
         this._OPERATOR_INPUT = new ConfigurationInput(
             SearchInputType.OPERATOR,
             'search.operator.name',
@@ -196,6 +192,18 @@ export abstract class Category<T> {
     }
 
     /**
+     * Sets the required input type for arguments for this category.
+     *
+     * This setter allows changing the input type dynamically, which can be useful when the argument input type
+     * depends on runtime conditions (e.g., in {@link CaseDataset} category where the input type depends on the selected data field type).
+     *
+     * @param inputType the new input type to be set for this category
+     */
+    public set inputType(inputType: SearchInputType) {
+        this._inputType = inputType;
+    }
+
+    /**
      * @returns the set of Operators that can be used with this category. Iteration order determines the display order.
      */
     public get allowedOperators(): Array<Operator<any>> {
@@ -221,6 +229,17 @@ export abstract class Category<T> {
     }
 
     /**
+     * Returns the current array of `FormControl` objects that contains as many controls as is the arity of the selected operator.
+     * Unlike the [operandsFormControls$]{@link Category#operandsFormControls$} observable, this getter returns the actual array
+     * instance directly without wrapping it in an observable.
+     *
+     * @returns an array of `FormControl` objects for the operands, or an empty array if no operator is selected
+     */
+    public get operandsFormControls(): Array<FormControl> {
+        return this._operandsFormControls;
+    }
+
+    /**
      * A new value is emitted whenever the selected operator changes. `undefined` is emitted if no operator is selected.
      *
      * @returns [operators template]{@link Operator#getOperatorNameTemplate} in processed form fit for GUI rendering
@@ -237,12 +256,12 @@ export abstract class Category<T> {
     }
 
     /**
-     * @returns the set of Elasticsearch keywords that should be queried by queries generated with this category.
+     * @returns the set of PFQL keywords that should be queried by queries generated with this category.
      * The method can be overridden if the keywords are not static and change based on some additional selection (eg. Data fields)
      */
-    protected get elasticKeywords(): Array<string> {
+    protected get pfqlKeywords(): Array<string> {
         const result = [];
-        result.push(...this._elasticKeywords);
+        result.push(...this._pfqlKeywords);
         return result;
     }
 
@@ -251,7 +270,7 @@ export abstract class Category<T> {
      */
     protected get selectedOperatorArity(): number {
         if (!this.isOperatorSelected()) {
-            throw new Error('An operator mus be selected before its arity can be resolved!');
+            throw new Error('An operator must be selected before its arity can be resolved!');
         }
         return this.selectedOperator.numberOfOperands;
     }
@@ -324,7 +343,8 @@ export abstract class Category<T> {
         if (!this.isOperatorSelected()) {
             throw new Error('Category cannot generate a Query if no Operator is selected');
         }
-        return this._operatorFormControl.value.createQuery(this.elasticKeywords, userInput as unknown as Array<string>);
+        let query: Query = this._operatorFormControl.value.createQuery(this.pfqlKeywords, userInput as unknown as Array<string>);
+        return query.ensurePrefixAndGet(this._resourceTypePrefix);
     }
 
     /**
@@ -381,42 +401,39 @@ export abstract class Category<T> {
     public abstract duplicate(): Category<T>;
 
     /**
-     * Provides the necessary information for the serialisation of this category's state.
+     * Loads the category state from a PFQL expression.
      *
-     * Not every state must be preservable. The default library implementation supports only the preservation of the final state when the
-     * Category is generating a predicate object.
+     * This method attempts to select an operator based on the expression's operator type and then sets the operands
+     * from the expression's operand values. If the operator cannot be selected, the method returns immediately.
      *
-     * @returns an object containing all the necessary information for the reconstruction of this category's state,
-     * barring information about allowed nets. Returns `undefined` if the category is not in a state that generates a predicate.
-     * See [providesPredicate()]{@link Category#providesPredicate}.
+     * @param expression the PFQL simple expression containing the operator and operand values
+     * @returns an Observable that emits void when the loading is complete
      */
-    public createMetadata(): CategoryGeneratorMetadata | undefined {
-        if (!this.providesPredicate) {
-            return undefined;
+    public loadFromPfqlExpression(expression: SimpleExpression): Observable<void> {
+        if (!this.selectOperatorFromPfqlExpression(expression)) {
+            return of(undefined);
         }
-        return {
-            category: this.serializeClass(),
-            configuration: this.createMetadataConfiguration(),
-            values: this.createMetadataValues()
-        };
+        this.setOperands(Array.isArray(expression.operandValue) ? expression.operandValue : [expression.operandValue]);
+        return of(undefined);
     }
 
     /**
-     * Restores the saved state contained in the provided metadata.
+     * Selects an operator from the category's allowed operators based on the PFQL expression's operator type.
      *
-     * @param metadata the metadata created by calling the [createMetadata()]{@link Category#createMetadata} method
+     * This method searches for an operator in the allowed operators array that matches the type specified in the
+     * PFQL expression. If a matching operator is found, it is selected. If no match is found, an error is logged.
      *
-     * @returns an Observable. When the Observable emits the category has finished restoring its state.
+     * @param expression the PFQL simple expression containing the operator type to select
+     * @returns `true` if a matching operator was found and selected, `false` otherwise
      */
-    public loadFromMetadata(metadata: CategoryGeneratorMetadata): Observable<void> {
-        const result$ = new ReplaySubject<void>(1);
-        this.loadConfigurationFromMetadata(metadata.configuration).subscribe(() => {
-            this.loadValuesFromMetadata(metadata.values).subscribe(() => {
-                result$.next();
-                result$.complete();
-            });
-        });
-        return result$.asObservable();
+    protected selectOperatorFromPfqlExpression(expression: SimpleExpression): boolean {
+        const operatorIdx: number = this.allowedOperators.findIndex(op => op.type === expression.operator.type);
+        if (operatorIdx === -1) {
+            this._log.error(`Operator '${expression.operator.type}' is unavailable for this category`);
+            return false;
+        }
+        this.selectOperator(operatorIdx);
+        return true;
     }
 
     /**
@@ -485,7 +502,9 @@ export abstract class Category<T> {
             }
         }
 
-        this._generatedPredicate$.next(this.generatePredicate(this._operandsFormControls.map(fc => this.transformCategoryValue(fc.value))));
+        this._generatedPredicate$.next(this.generatePredicate(this._operandsFormControls
+            .filter(fc => !!fc)
+            .map(fc => this.transformCategoryValue(fc.value))));
     }
 
     /**
@@ -496,90 +515,11 @@ export abstract class Category<T> {
     abstract serializeClass(): Categories | string;
 
     /**
-     * The default implementation serializes only the operator.
-     * If the category contains additional configuration, this method must be extended.
-     *
-     * @returns an object containing all the necessary information for the reconstruction of the configuration of this category instance
-     */
-    protected createMetadataConfiguration(): CategoryMetadataConfiguration {
-        return {
-            [Category.OPERATOR_METADATA]: this.selectedOperator.serialize()
-        };
-    }
-
-    /**
-     * The default implementation returns the value of all operand form control objects up to the current number of operands.
-     * To serialize value of each operand the [serializeOperandValue()]{@link Category#serializeOperandValue} method is used.
-     *
-     * If the values used by this category are not serializable, then either this method, or the `serializeOperandValue` method,
-     * must be overridden.
-     *
-     * @returns an array containing values input by the user in a serializable form
-     */
-    protected createMetadataValues(): Array<unknown> {
-        const result = [];
-        for (let i = 0; i < this.selectedOperatorArity; i++) {
-            result.push(this.serializeOperandValue(this._operandsFormControls[i]));
-        }
-        return result;
-    }
-
-    /**
      * @param valueFormControl FormControl object of one operand
      * @returns the value of the operand in a serialized form. The default implementation returns the FormControls `value` attribute.
      */
     protected serializeOperandValue(valueFormControl: FormControl): unknown {
         return valueFormControl.value;
-    }
-
-    /**
-     * Restored the saved configuration from the metadata created by the
-     * [createMetadataConfiguration()]{@link Category#createMetadataConfiguration} method.
-     *
-     * The default implementation restores only the saved operator.
-     *
-     * If the Category overrides the serialization method, it must override this method as well.
-     *
-     * @param configuration the serialized configuration
-     *
-     * @returns an Observable. When the Observable emits the category has finished loading its configuration.
-     */
-    protected loadConfigurationFromMetadata(configuration: CategoryMetadataConfiguration): Observable<void> {
-        const resolvedOperator = this._operatorService.getFromMetadata(configuration[Category.OPERATOR_METADATA] as Operators | string);
-        this.selectOperator(this.allowedOperators.findIndex(op => op === resolvedOperator));
-        return ofVoid();
-    }
-
-    /**
-     * The default implementation sets the provided values into this Category's operand form controls.
-     *
-     * An operator must be set before calling this method! Otherwise an error will be thrown.
-     *
-     * If the number of values doesn't match the arity of the selected operator an error will be thrown!
-     *
-     * If this Category overrides the [serializeOperandValue()]{@link Category#serializeOperandValue}, it must also
-     * override its deserialization counterpart - [deserializeOperandValue()]{@link #Category#deserializeOperandValue}!
-     *
-     * @param values the serialized values that should be loaded into this Category instance
-     *
-     * @returns an Observable. When the Observable emits the category has finished loading its values.
-     */
-    protected loadValuesFromMetadata(values: Array<unknown>): Observable<void> {
-        if (!this.isOperatorSelected()) {
-            throw new Error('An operator must be selected before Category values can be resolved from metadata!');
-        }
-        if (this.selectedOperatorArity !== values.length) {
-            throw new Error(`The arity of the selected operator (${this.selectedOperatorArity
-            }) doesn't match the number of the provided values (${values.length})!`);
-        }
-        const deserializedValuesObservables = values.map(v => this.deserializeOperandValue(v));
-        const result$ = new ReplaySubject<void>(1);
-        forkJoin(deserializedValuesObservables).pipe(defaultIfEmpty([])).subscribe(deserializedValues => {
-            this.setOperands(deserializedValues);
-            result$.next();
-            result$.complete();
-        });
-        return result$.asObservable();
     }
 
     /**

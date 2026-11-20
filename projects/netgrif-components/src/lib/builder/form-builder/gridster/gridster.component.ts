@@ -8,6 +8,7 @@ import {FieldListService} from '../field-list/field-list.service';
 import {GridsterDataField} from './classes/gridster-data-field';
 import {GridsterService} from './gridster.service';
 import {BuilderModeService, BuilderMode} from "../../services/builder-mode.service";
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
     selector: 'nc-builder-gridster-component',
@@ -18,13 +19,24 @@ import {BuilderModeService, BuilderMode} from "../../services/builder-mode.servi
 })
 export class GridsterComponent implements OnInit, OnDestroy {
 
+    /**
+     * Gridster items that have already been laid out (have non-zero size).
+     * The data field content is rendered only after that, because Angular Material
+     * measures the width of the `matPrefix` container exactly once (on first zone stable)
+     * to compute the floating label offset. Gridster items are `display: none` until
+     * their layout is calculated, so an earlier render would measure the prefix as 0px
+     * and the label would overlap the prefix icon (e.g. the datepicker toggle).
+     */
+    private readonly _initializedItems = new WeakSet<GridsterDataField>();
+
     constructor(private gridsterService: GridsterService,
                 private fieldListService: FieldListService,
                 private modelService: ModelService,
                 private router: Router,
                 private transitionService: SelectedTransitionService,
                 private historyService: HistoryService,
-                private _builderModeService: BuilderModeService) {
+                protected _builderModeService: BuilderModeService,
+                protected _translateService: TranslateService) {
     }
 
     ngOnInit() {
@@ -43,7 +55,7 @@ export class GridsterComponent implements OnInit, OnDestroy {
     ngOnDestroy() {
         if (this.gridsterService.historySave) {
             this.gridsterService.historySave = false;
-            this.historyService.save('DataRefs has been changed');
+            this.historyService.save(this._translateService.instant('builder.form-builder.gridster.dataRefsChanged'));
         }
     }
 
@@ -53,6 +65,14 @@ export class GridsterComponent implements OnInit, OnDestroy {
 
     get placedDataFields(): Array<GridsterDataField> {
         return this.gridsterService.placedDataFields;
+    }
+
+    onItemInit(field: GridsterDataField): void {
+        this._initializedItems.add(field);
+    }
+
+    isInitialized(field: GridsterDataField): boolean {
+        return this._initializedItems.has(field);
     }
 
     removeItem($event, field: GridsterDataField) {

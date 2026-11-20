@@ -69,6 +69,10 @@ export interface CaseSearchRequestBody {
     tags?: {
         [key: string]: string
     };
+
+    fullTextFields?: {
+        [fieldId: string]: number
+    };
 }
 
 /**

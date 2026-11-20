@@ -2,20 +2,27 @@ import {CaseAuthor} from './case-author';
 import {OperatorService} from '../../../operator-service/operator.service';
 import {OperatorResolverService} from '../../../operator-service/operator-resolver.service';
 import {Equals} from '../../operator/equals';
-import {Categories} from '../categories';
-import {Operators} from '../../operator/operators';
 import {configureCategory} from '../../../../utility/tests/utility/configure-category';
 import {createMockDependencies} from '../../../../utility/tests/search-category-mock-dependencies';
 import {mockUserAutocompleteValue} from '../../../../utility/tests/mocks/mock-user-autocomplete-value';
 import {TestBed} from '@angular/core/testing';
+import {SimpleExpression} from "../../../../pfql/model/simple-expression";
+import {Observable, of} from "rxjs";
+import {Page} from "../../../../resources/interface/page";
+import {UserResource} from "../../../../resources/interface/user-resource";
+import {createMockPage} from "../../../../utility/tests/utility/create-mock-page";
+import {UserResourceService} from "../../../../resources/engine-endpoint/user-resource.service";
 
 describe('CaseAuthor', () => {
     let category: CaseAuthor;
     let operatorService: OperatorService;
+    let userResourceService: MockUserResourceService;
 
     beforeEach(() => {
         operatorService = new OperatorService(new OperatorResolverService());
-        category = new CaseAuthor(operatorService, null, createMockDependencies(undefined, operatorService));
+        userResourceService = new MockUserResourceService();
+        category = new CaseAuthor(operatorService, null, createMockDependencies(undefined, operatorService,
+            userResourceService as unknown as UserResourceService));
     });
 
     afterEach(() => {
@@ -33,42 +40,57 @@ describe('CaseAuthor', () => {
         expect(category.isOperatorSelected()).toBeTrue();
     });
 
-    it('should not serialize incomplete instance', () => {
-        expect(category.createMetadata()).toBeUndefined();
-    });
-
-    it('should serialize complete instance', () => {
+    it('should load pfql expression', (done) => {
         configureCategory(category, operatorService, Equals, [mockUserAutocompleteValue('Test User', true, 'userId')]);
 
-        const mockedSerializedValue = mockUserAutocompleteValue('Test User', true, 'userId');
-        delete mockedSerializedValue.icon;
+        const loadedCategory = new CaseAuthor(operatorService, null, createMockDependencies(undefined,
+            operatorService, userResourceService as unknown as UserResourceService));
+        const expression = new SimpleExpression(new Equals(), mockUserAutocompleteValue('Test User', true, 'userId'), category);
+        loadedCategory.loadFromPfqlExpression(expression).subscribe(() => {
+            expect(loadedCategory.isOperatorSelected()).toBeTrue();
+            expect(loadedCategory.providesPredicate).toBeTrue();
 
-        const metadata = category.createMetadata();
-        expect(metadata).toBeTruthy();
-        expect(metadata.values).toEqual([mockedSerializedValue]);
-        expect(metadata.category).toBe(Categories.CASE_AUTHOR);
-        expect(metadata.configuration?.operator).toBe(Operators.EQUALS);
-    });
-
-    it('should deserialize stored instance', (done) => {
-        configureCategory(category, operatorService, Equals, [mockUserAutocompleteValue('Test User', true, 'userId')]);
-
-        const metadata = category.createMetadata();
-        expect(metadata).toBeTruthy();
-        const deserialized = new CaseAuthor(operatorService, null, createMockDependencies(undefined, operatorService));
-        deserialized.loadFromMetadata(metadata).subscribe(() => {
-            expect(deserialized.isOperatorSelected()).toBeTrue();
-            expect(deserialized.providesPredicate).toBeTrue();
-
-            expect((deserialized as any)._operandsFormControls[0].value).toEqual((category as any)._operandsFormControls[0].value);
-
-            const deserializedMetadata = deserialized.createMetadata();
-            expect(deserializedMetadata).toBeTruthy();
-            expect(deserializedMetadata.configuration).toEqual(metadata.configuration);
-            expect(deserializedMetadata.category).toEqual(metadata.category);
-            expect(deserializedMetadata.values).toEqual(metadata.values);
+            expect((loadedCategory as any)._operandsFormControls[0].value).toEqual((category as any)._operandsFormControls[0].value);
 
             done();
         });
     });
+
+    it('should generate pfql query', () => {
+        configureCategory(category, operatorService, Equals, [mockUserAutocompleteValue('Test User', true, 'userId')]);
+        const predicate = category.generatePredicate([['userId']]);
+        expect(predicate.query.value).toEqual(`cases: author eq 'userId'`);
+    });
 });
+
+
+class MockUserResourceService {
+
+    public search(): Observable<Page<UserResource>> {
+        return of(createMockPage([{
+            name: 'Test',
+            surname: 'User',
+            id: 'userId',
+            email: 'Test User',
+            fullName: `Test User`,
+            groups: [],
+            authorities: [],
+            nextGroups: [],
+            processRoles: []
+        }]));
+    }
+
+    public getUser(userId: string): Observable<UserResource> {
+        return of({
+            name: 'Test',
+            surname: 'User',
+            id: 'userId',
+            email: 'Test User',
+            fullName: `Test User`,
+            groups: [],
+            authorities: [],
+            nextGroups: [],
+            processRoles: []
+        });
+    }
+}

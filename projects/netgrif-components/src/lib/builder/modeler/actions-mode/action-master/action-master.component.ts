@@ -9,6 +9,7 @@ import {FunctionsTool} from '../tools/functions-tool';
 import {ProcessActionsTool} from '../tools/process-actions-tool';
 import {ActionMasterItemComponent} from './action-master-item/action-master-item.component';
 import {FunctionMasterItemComponent} from './function-master-item/function-master-item.component';
+import {BuilderModeService} from "../../../services/builder-mode.service";
 
 @Component({
   selector: 'nc-builder-action-master',
@@ -19,7 +20,8 @@ export class ActionMasterComponent extends PageMasterComponent implements OnInit
 
     constructor(private _parentInjector: Injector,
                 private _actionsModeService: ActionsModeService,
-                public masterService: ActionsMasterDetailService) {
+                public masterService: ActionsMasterDetailService,
+                protected _builderModeService: BuilderModeService) {
         super();
     }
 
@@ -34,7 +36,6 @@ export class ActionMasterComponent extends PageMasterComponent implements OnInit
             } else if (this._allData.length === 0) {
                 this.masterService.select(undefined);
             }
-
         });
     }
 

@@ -6,15 +6,17 @@ import {PlaceChange} from '../../../../history-mode/model/place/place-change';
 import {CanvasPlace} from '../../../domain/canvas-place';
 import {CanvasTool} from '../../../services/modes/canvas-tool';
 import {MenuItem} from '../menu-item';
+import {TranslateService} from "@ngx-translate/core";
 
 export class EditPlaceMenuItem extends MenuItem {
 
     constructor(
         place: CanvasPlace,
-        tool: CanvasTool
+        tool: CanvasTool,
+        translateService: TranslateService
     ) {
         super(
-            'Edit',
+            translateService.instant('builder.modeler.edit-mode.context-menu.edit'),
             'edit',
             () => {
                 tool.openDialog(DialogPlaceEditComponent, {
@@ -27,7 +29,7 @@ export class EditPlaceMenuItem extends MenuItem {
                 }, (editedPlace: PlaceChange) => {
                     tool.modelService.updatePlace(editedPlace);
                     if (editedPlace) {
-                        tool.historyService.save(`Place ${place.id} has been changed.`);
+                        tool.historyService.save(translateService.instant('builder.modeler.edit-mode.context-menu.place') + ` ${place.id} ` + translateService.instant('builder.modeler.edit-mode.context-menu.hasBeenChanged'));
                     }
                 });
             }

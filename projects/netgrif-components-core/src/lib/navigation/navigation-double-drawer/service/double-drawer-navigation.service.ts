@@ -2,7 +2,7 @@ import {EventEmitter, Injectable, OnDestroy} from '@angular/core';
 import {BehaviorSubject, Observable, of, Subscription} from 'rxjs';
 import {UriService} from "../../service/uri.service";
 import {LoadingEmitter} from "../../../utility/loading-emitter";
-import {filter, map, take} from "rxjs/operators";
+import {filter, map, take, switchMap} from "rxjs/operators";
 import {Case} from "../../../resources/interface/case";
 import {LoggerService} from "../../../logger/services/logger.service";
 import {DoubleDrawerUtils} from "../util/double-drawer-utils";
@@ -32,6 +32,9 @@ import {
 import { UriNodeResource } from '../../model/uri-resource';
 import {MenuItemClickEvent, MenuItemLoadedEvent} from '../../model/navigation-menu-events';
 import {GroupNavigationConstants} from "../../model/group-navigation-constants";
+import {SessionClearService} from '../../../authentication/session/services/session-clear.service';
+import {UserService} from "../../../user/services/user.service";
+import {AuthorityGuardService} from "../../../authorization/authority/authority-guard.service";
 
 /**
  * Service for managing navigation in double-drawer
@@ -80,16 +83,20 @@ export class DoubleDrawerNavigationService implements OnDestroy {
     protected hiddenCustomItemsInitialized: boolean;
     protected itemClicked: EventEmitter<MenuItemClickEvent>;
     protected itemLoaded: EventEmitter<MenuItemLoadedEvent>;
+    protected _sessionClearSubscription: Subscription;
 
     constructor(protected _uriService: UriService,
                 protected _log: LoggerService,
+                protected _userService: UserService,
                 protected _config: ConfigurationService,
                 protected _activatedRoute: ActivatedRoute,
                 protected _caseResourceService: CaseResourceService,
                 protected _accessService: AccessService,
                 protected _translateService: TranslateService,
                 protected _dynamicRoutingService: DynamicNavigationRouteProviderService,
-                protected _redirectService: RedirectService) {
+                protected _redirectService: RedirectService,
+                protected _authorityGuardService: AuthorityGuardService,
+                private _sessionClearService: SessionClearService) {
         this._leftItems$ = new BehaviorSubject([]);
         this._rightItems$ = new BehaviorSubject([]);
         this._moreItems$ = new BehaviorSubject([]);
@@ -105,13 +112,27 @@ export class DoubleDrawerNavigationService implements OnDestroy {
         this.itemClicked = new EventEmitter<MenuItemClickEvent>();
         this.itemLoaded = new EventEmitter<MenuItemLoadedEvent>();
 
-        this._currentNodeSubscription = this._uriService.activeNode$.subscribe(node => {
+        this._currentNodeSubscription = this._userService.user$.pipe(
+            filter(user => !this._userService.isUserEmpty(user)),
+            switchMap(() => this._uriService.activeNode$)
+        ).subscribe(node => {
             this.currentNode = node;
+        });
+
+        this._sessionClearSubscription = this._sessionClearService.sessionCleared.subscribe({
+            next: () => {
+                this._currentNavigationItem = null;
+                this._childCustomViews = {};
+                this.customItemsInitialized = false;
+                this.hiddenCustomItemsInitialized = false;
+                this._currentNode = null;
+            }
         });
     }
 
     public ngOnDestroy(): void {
         this._currentNodeSubscription?.unsubscribe();
+        this._sessionClearSubscription?.unsubscribe();
         this._leftLoading$.complete();
         this._rightLoading$.complete();
         this._nodeLoading$.complete();
@@ -140,17 +161,22 @@ export class DoubleDrawerNavigationService implements OnDestroy {
                 node.parent = this._uriService.root;
             } else {
                 this._nodeLoading$.on();
-                this._uriService.getNodeByPath(this._uriService.resolveParentPath(node)).subscribe(n => {
-                    node.parent = !n ? this._uriService.root : n;
-                    this._nodeLoading$.off();
-                }, error => {
-                    this._log.error(error);
-                    this._nodeLoading$.off();
-                });
+                this._uriService.getNodeByPath(this._uriService.resolveParentPath(node)).pipe(take(1)).subscribe({
+                    next: n => {
+                        node.parent = !n ? this._uriService.root : n;
+                        this._nodeLoading$.off();
+                    },
+                    error: error => {
+                        this._log.error(error);
+                        this._nodeLoading$.off();
+                    }});
             }
         }
         if (this._nodeLoading$.isActive) {
-            this._nodeLoading$.subscribe(() => {
+            this._nodeLoading$.pipe(
+                filter(isActive => !isActive),
+                take(1)
+            ).subscribe(() => {
                 this.loadNavigationItems(node);
             });
         } else {
@@ -265,19 +291,21 @@ export class DoubleDrawerNavigationService implements OnDestroy {
             this.itemClicked.emit({uriNode: this._uriService.activeNode, isHome: false});
         } else {
             const path = item.resource.immediateData.find(f => f.stringId === GroupNavigationConstants.ITEM_FIELD_ID_NODE_PATH)?.value;
-            if (DoubleDrawerUtils.hasItemChildren(item) && !this._leftLoading$.isActive && !this._rightLoading$.isActive) {
-                this._uriService.getNodeByPath(path).subscribe(node => {
-                    this._uriService.activeNode = node;
-                    this.itemClicked.emit({uriNode: this._uriService.activeNode, isHome: false});
-                    this._rightLoading$.pipe(
-                        filter(isRightLoading => isRightLoading === false),
-                        take(1)
-                    ).subscribe(()=> {
-                        this.openAvailableView();
-                    })
-                }, error => {
-                    this._log.error(error);
-                });
+            if (DoubleDrawerUtils.isFolder(item) && !this._leftLoading$.isActive && !this._rightLoading$.isActive) {
+                this._uriService.getNodeByPath(path).pipe(take(1)).subscribe({
+                    next: node => {
+                        this._uriService.activeNode = node;
+                        this.itemClicked.emit({uriNode: this._uriService.activeNode, isHome: false});
+                        this._rightLoading$.pipe(
+                            filter(isRightLoading => isRightLoading === false),
+                            take(1)
+                        ).subscribe(()=> {
+                            this.openAvailableView();
+                        })
+                    },
+                    error: error => {
+                        this._log.error(error);
+                    }});
             } else if (!path.includes(this.currentNode.uriPath)) {
                 this._uriService.activeNode = this._currentNode.parent;
                 this.itemClicked.emit({uriNode: this._uriService.activeNode, isHome: false});
@@ -302,14 +330,14 @@ export class DoubleDrawerNavigationService implements OnDestroy {
             return;
         }
 
-        if (DoubleDrawerUtils.hasItemView(this._currentNavigationItem)) {
+        if (DoubleDrawerUtils.isNotFolder(this._currentNavigationItem)) {
             // is routed by routerLink on item click
             return;
         }
 
-        let itemsWithView: Array<NavigationItem> = allItems.filter(item => DoubleDrawerUtils.hasItemView(item));
+        let itemsWithView: Array<NavigationItem> = allItems.filter(item => DoubleDrawerUtils.isNotFolder(item));
         if (itemsWithView.length > 0) {
-            this._redirectService.redirect(autoOpenItems[0].routing.path);
+            this._redirectService.redirect(itemsWithView[0].routing.path);
         }
     }
 
@@ -331,17 +359,19 @@ export class DoubleDrawerNavigationService implements OnDestroy {
     public initializeCustomViewsOfView(view: View, viewConfigPath: string): void {
         if (!view || this.customItemsInitialized || this.hiddenCustomItemsInitialized) return;
 
-        Object.entries(view.children).forEach(([key, childView]) => {
-            const childViewConfigPath: string = viewConfigPath + '/' + key;
-            this.resolveUriForChildViews(childViewConfigPath, childView);
-            this.resolveHiddenMenuItemFromChildViews(childViewConfigPath, childView);
+        this._userService.user$.pipe(filter(user => !this._userService.isUserEmpty(user)), take(1)).subscribe(user => {
+            Object.entries(view.children).forEach(([key, childView]) => {
+                const childViewConfigPath: string = viewConfigPath + '/' + key;
+                this.resolveUriForChildViews(childViewConfigPath, childView);
+                this.resolveHiddenMenuItemFromChildViews(childViewConfigPath, childView);
+            });
+
+            this.resolveCustomViewsInRightSide();
+            this.resolveCustomViewsInLeftSide();
+
+            this.customItemsInitialized = true;
+            this.hiddenCustomItemsInitialized = true;
         });
-
-        this.resolveCustomViewsInRightSide();
-        this.resolveCustomViewsInLeftSide();
-
-        this.customItemsInitialized = true;
-        this.hiddenCustomItemsInitialized = true;
     }
 
     public switchOrder(): void {
@@ -368,85 +398,91 @@ export class DoubleDrawerNavigationService implements OnDestroy {
             return;
         }
         this._leftLoading$.on();
-        this._uriService.getItemCaseByNodePath(this.currentNode.parent).subscribe(page => {
-            let childCases$;
-            let targetItem;
-            let orderedChildCaseIds;
+        this._uriService.getItemCaseByNodePath(this.currentNode.parent).pipe(take(1)).subscribe({
+            next: page => {
+                let childCases$;
+                let targetItem;
+                let orderedChildCaseIds;
 
-            if (page?.pagination?.totalElements === 0) {
-                childCases$ = of([]);
-            } else {
-                targetItem = page.content[0];
-                orderedChildCaseIds = DoubleDrawerUtils.extractChildCaseIds(targetItem);
-                childCases$ = this.getItemCasesByIdsInOnePage(orderedChildCaseIds).pipe(
-                    map(p => p.content),
-                );
-            }
+                if (page?.pagination?.totalElements === 0) {
+                    childCases$ = of([]);
+                } else {
+                    targetItem = page.content[0];
+                    orderedChildCaseIds = DoubleDrawerUtils.extractChildCaseIds(targetItem);
+                    childCases$ = this.getItemCasesByIdsInOnePage(orderedChildCaseIds).pipe(
+                        map(p => p.content),
+                    );
+                }
 
-            childCases$.subscribe(result => {
-                result = result.map(folder => this.resolveItemCaseToNavigationItem(folder)).filter(i => !!i);
-                this._leftItems$.next(result.sort((a, b) => orderedChildCaseIds.indexOf(a.resource.stringId) - orderedChildCaseIds.indexOf(b.resource.stringId)));
-                this.resolveCustomViewsInLeftSide();
-                this._leftLoading$.off();
-                this.itemLoaded.emit({menu: 'left', items: this.leftItems});
-            }, error => {
+                childCases$.pipe(take(1)).subscribe({
+                    next: result => {
+                        result = result.map(folder => this.resolveItemCaseToNavigationItem(folder)).filter(i => !!i);
+                        this._leftItems$.next(result.sort((a, b) => orderedChildCaseIds.indexOf(a.resource.stringId) - orderedChildCaseIds.indexOf(b.resource.stringId)));
+                        this.resolveCustomViewsInLeftSide();
+                        this._leftLoading$.off();
+                        this.itemLoaded.emit({menu: 'left', items: this.leftItems});
+                    },
+                    error: error => {
+                        this._log.error(error);
+                        this._leftItems$.next([])
+                        this.resolveCustomViewsInLeftSide();
+                        this._leftLoading$.off();
+                    }});
+            },
+            error: error => {
                 this._log.error(error);
                 this._leftItems$.next([])
                 this.resolveCustomViewsInLeftSide();
                 this._leftLoading$.off();
-            });
-        }, error => {
-            this._log.error(error);
-            this._leftItems$.next([])
-            this.resolveCustomViewsInLeftSide();
-            this._leftLoading$.off();
-        });
+            }});
     }
 
     protected loadRightSide() {
         this._rightLoading$.on();
         this._moreItems$.next([])
-        this._uriService.getItemCaseByNodePath(this.currentNode).subscribe(page => {
-            let childCases$;
-            let targetItem;
-            let orderedChildCaseIds;
+        this._uriService.getItemCaseByNodePath(this.currentNode).pipe(take(1)).subscribe({
+            next: page => {
+                let childCases$;
+                let targetItem;
+                let orderedChildCaseIds;
 
-            if (page?.pagination?.totalElements === 0) {
-                childCases$ = of([]);
-            } else {
-                targetItem = page.content[0];
-                orderedChildCaseIds = DoubleDrawerUtils.extractChildCaseIds(targetItem);
-                childCases$ = this.getItemCasesByIdsInOnePage(orderedChildCaseIds).pipe(
-                    map(p => p.content),
-                );
-            }
-
-            childCases$.subscribe(result => {
-                result = (result as Case[]).sort((a, b) => orderedChildCaseIds.indexOf(a.stringId) - orderedChildCaseIds.indexOf(b.stringId));
-                if (result.length > RIGHT_SIDE_INIT_PAGE_SIZE) {
-                    const rawRightItems: Case[] = result.splice(0, RIGHT_SIDE_INIT_PAGE_SIZE);
-                    this._rightItems$.next(rawRightItems.map(folder => this.resolveItemCaseToNavigationItem(folder)).filter(i => !!i));
-                    this._moreItems$.next(result.map(folder => this.resolveItemCaseToNavigationItem(folder)).filter(i => !!i));
+                if (page?.pagination?.totalElements === 0) {
+                    childCases$ = of([]);
                 } else {
-                    this._rightItems$.next(result.map(folder => this.resolveItemCaseToNavigationItem(folder)).filter(i => !!i));
+                    targetItem = page.content[0];
+                    orderedChildCaseIds = DoubleDrawerUtils.extractChildCaseIds(targetItem);
+                    childCases$ = this.getItemCasesByIdsInOnePage(orderedChildCaseIds).pipe(
+                        map(p => p.content),
+                    );
                 }
-                this.resolveCustomViewsInRightSide();
-                this._rightLoading$.off();
-                this.itemLoaded.emit({menu: 'right', items: this.rightItems});
-            }, error => {
+
+                childCases$.pipe(take(1)).subscribe(result => {
+                    result = (result as Case[]).sort((a, b) => orderedChildCaseIds.indexOf(a.stringId) - orderedChildCaseIds.indexOf(b.stringId));
+                    if (result.length > RIGHT_SIDE_INIT_PAGE_SIZE) {
+                        const rawRightItems: Case[] = result.splice(0, RIGHT_SIDE_INIT_PAGE_SIZE);
+                        this._rightItems$.next(rawRightItems.map(folder => this.resolveItemCaseToNavigationItem(folder)).filter(i => !!i));
+                        this._moreItems$.next(result.map(folder => this.resolveItemCaseToNavigationItem(folder)).filter(i => !!i));
+                    } else {
+                        this._rightItems$.next(result.map(folder => this.resolveItemCaseToNavigationItem(folder)).filter(i => !!i));
+                    }
+                    this.resolveCustomViewsInRightSide();
+                    this._rightLoading$.off();
+                    this.itemLoaded.emit({menu: 'right', items: this.rightItems});
+                }, error => {
+                    this._log.error(error);
+                    this._rightItems$.next([]);
+                    this._moreItems$.next([]);
+                    this.resolveCustomViewsInRightSide();
+                    this._rightLoading$.off();
+                });
+            },
+            error: error => {
                 this._log.error(error);
                 this._rightItems$.next([]);
                 this._moreItems$.next([]);
                 this.resolveCustomViewsInRightSide();
                 this._rightLoading$.off();
-            });
-        }, error => {
-            this._log.error(error);
-            this._rightItems$.next([]);
-            this._moreItems$.next([]);
-            this.resolveCustomViewsInRightSide();
-            this._rightLoading$.off();
-        });
+            }});
     }
 
     protected getItemCasesByIdsInOnePage(caseIds: string[]): Observable<Page<Case>> {
@@ -454,6 +490,16 @@ export class DoubleDrawerNavigationService implements OnDestroy {
     }
 
     protected getItemCasesByIds(caseIds: string[], pageNumber: number, pageSize: string | number): Observable<Page<Case>> {
+        if (!caseIds || caseIds.length === 0) {
+            return of({
+                content: [], pagination: {
+                    number: -1,
+                    size: 0,
+                    totalPages: 0,
+                    totalElements: 0
+                }
+            });
+        }
         const searchBody: CaseSearchRequestBody = {
             stringId: caseIds,
             process: MENU_IDENTIFIERS.map(id => ({identifier: id} as PetriNetSearchRequest)),
@@ -481,6 +527,9 @@ export class DoubleDrawerNavigationService implements OnDestroy {
             id: itemCase.stringId,
             resource: itemCase,
         };
+        if (!this._authorityGuardService.canAccessNavigationItem(item)) {
+            return;
+        }
         const resolvedRoles = DoubleDrawerUtils.resolveAccessRoles(itemCase, GroupNavigationConstants.ITEM_FIELD_ID_ALLOWED_ROLES);
         const resolvedBannedRoles = DoubleDrawerUtils.resolveAccessRoles(itemCase, GroupNavigationConstants.ITEM_FIELD_ID_BANNED_ROLES);
         if (!!resolvedRoles) item.access['role'] = resolvedRoles;

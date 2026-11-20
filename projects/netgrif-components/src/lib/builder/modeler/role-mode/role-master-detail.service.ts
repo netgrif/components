@@ -6,13 +6,15 @@ import {ModelerConfig} from '../modeler-config';
 import {HistoryService} from '../services/history/history.service';
 import {ModelService} from '../services/model/model.service';
 import {LocalStorageService} from "../../services/local-storage.service";
+import {TranslateService} from "@ngx-translate/core";
 
 @Injectable()
 export class RoleMasterDetailService extends AbstractMasterDetailService<Role> {
 
     constructor(protected _modelService: ModelService,
                 protected _historyService: HistoryService,
-                protected _localStorageService: LocalStorageService) {
+                protected _localStorageService: LocalStorageService,
+                protected _translateService: TranslateService) {
         super();
     }
 
@@ -23,20 +25,20 @@ export class RoleMasterDetailService extends AbstractMasterDetailService<Role> {
     public create(): Role {
         const role = this._modelService.newRole();
         this._create.next(role);
-        this._historyService.save(`Role ${role.id} has been created.`)
+        this._historyService.save(this._translateService.instant('builder.modeler.role-mode.role') + ` ${role.id} ` + this._translateService.instant('builder.modeler.role-mode.hasBeenCreated'))
         return role;
     }
 
     public delete(item: Role): void {
         this._modelService.removeRole(item);
         this._delete.next(item);
-        this._historyService.save(`Role ${item.id} has been deleted.`)
+        this._historyService.save(this._translateService.instant('builder.modeler.role-mode.role') + ` ${item.id} ` + this._translateService.instant('builder.modeler.role-mode.hasBeenDeleted'))
     }
 
     public duplicate(item: Role): Role {
         const role = this._modelService.copyRole(item);
         this._create.next(role);
-        this._historyService.save(`Role ${role.id} has been created.`)
+        this._historyService.save(this._translateService.instant('builder.modeler.role-mode.role') + ` ${role.id} ` + this._translateService.instant('builder.modeler.role-mode.hasBeenCreated'))
         return role;
     }
 

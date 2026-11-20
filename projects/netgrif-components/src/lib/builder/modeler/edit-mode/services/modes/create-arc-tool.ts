@@ -65,7 +65,7 @@ export abstract class CreateArcTool<T extends CanvasNodeElement<NodeElement, Pet
     createArc(type: ArcType, source: CanvasNodeElement<any, any>, destination: CanvasNodeElement<any, any>): CanvasArc {
         const modelArc = this.modelService.newArc(source.modelElement, destination.modelElement, type);
         const svgArc = this.editModeService.newSvgArc(modelArc);
-        this.historyService.save(`New ${this.modelService.toXmlArcType(modelArc.type)} arc ${modelArc.id} has been created`);
+        this.historyService.save(this._translateService.instant('builder.modeler.edit-mode.services.new') + ` ${this.modelService.toXmlArcType(modelArc.type)} ` + this._translateService.instant('builder.modeler.edit-mode.services.arc') + ` ${modelArc.id} ` + this._translateService.instant('builder.modeler.edit-mode.services.hasBeenCreated'));
         return svgArc;
     }
 

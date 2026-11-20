@@ -1,5 +1,5 @@
 import {Component, Inject} from '@angular/core';
-import {FormControl, ValidatorFn, Validators} from '@angular/forms';
+import {FormArray, FormControl, ValidatorFn, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 
 export interface DataSet {
@@ -19,17 +19,22 @@ export interface Data {
 export class DialogChangeDataComponent {
 
     public dataSet: Array<Data>;
-    public valueCtrl: FormControl;
+    public formArray: FormArray;
 
     constructor(
         @Inject(MAT_DIALOG_DATA) public data: DataSet,
     ) {
         this.dataSet = new Array<Data>();
-        data.dataSet.forEach((value, id) => this.dataSet.push({id, value}));
-        this.valueCtrl = new FormControl('', [
+        this.formArray = new FormArray([]);
+
+        data.dataSet.forEach((value, id) => {
+            this.dataSet.push({id, value});
+            const valueCtrl = new FormControl(value, [
             Validators.required,
             this.validValue()
         ]);
+            this.formArray.push(valueCtrl);
+        });
     }
 
     private validValue(): ValidatorFn {
@@ -40,5 +45,16 @@ export class DialogChangeDataComponent {
             }
             return ({validMultiplicity: true})
         };
+    }
+
+    public getControl(index: number): FormControl {
+        return this.formArray.at(index) as FormControl;
+    }
+
+    public onSave(): Array<Data> {
+        return this.dataSet.map((item, index) => ({
+            id: item.id,
+            value: this.formArray.at(index).value
+        }));
     }
 }

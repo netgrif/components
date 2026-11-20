@@ -3,6 +3,7 @@
     "dest": "../../dist/netgrif-components-core",
     "assets": [
         "./src/assets",
+        "./THIRD-PARTY.txt",
         "./src/schema/nae-schema.json"
     ],
     "lib": {

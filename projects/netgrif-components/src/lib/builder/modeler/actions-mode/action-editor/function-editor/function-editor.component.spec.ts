@@ -6,15 +6,21 @@ import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {ModelService} from '../../../services/model/model.service';
 import {ActionEditorService} from '../action-editor.service';
 import {FunctionEditorComponent} from './function-editor.component';
+import {TranslateService} from "@ngx-translate/core";
+import {HttpClientTestingModule} from "@angular/common/http/testing";
+import {TranslateLibModule} from "@netgrif/components-core";
 
 describe('FunctionEditorComponent', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             declarations: [FunctionEditorComponent],
-            imports: [MatMenuModule, MatSidenavModule, NoopAnimationsModule],
+            imports: [MatMenuModule, MatSidenavModule, NoopAnimationsModule,
+                TranslateLibModule,
+                HttpClientTestingModule],
             providers: [
                 {provide: ActionEditorService, useValue: {nextId: () => '1'}},
                 {provide: ModelService, useValue: {}},
+                {provide: TranslateService, useValue: { instant: (key: string) => `translated-${key}` }}
             ],
             schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA],
         });

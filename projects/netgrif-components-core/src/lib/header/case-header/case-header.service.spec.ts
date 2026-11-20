@@ -19,10 +19,7 @@ import {MockUserResourceService} from '../../utility/tests/mocks/mock-user-resou
 import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
 import {ViewService} from '../../routing/view-service/view.service';
 import {TestViewService} from '../../utility/tests/test-view-service';
-import {ErrorSnackBarComponent} from '../../snack-bar/components/error-snack-bar/error-snack-bar.component';
-import {SuccessSnackBarComponent} from '../../snack-bar/components/success-snack-bar/success-snack-bar.component';
-import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
-import {CaseMetaField} from './case-menta-enum';
+import {CaseMetaField} from './case-meta-enum';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatIconModule} from '@angular/material/icon';
 import {HeaderChangeType} from '../models/user-changes/header-change-type';
@@ -34,6 +31,7 @@ import {SnackBarModule} from '../../snack-bar/snack-bar.module';
 import {NAE_BASE_FILTER} from '../../search/models/base-filter-injection-token';
 import {AllowedNetsService} from '../../allowed-nets/services/allowed-nets.service';
 import {AllowedNetsServiceFactory} from '../../allowed-nets/services/factory/allowed-nets-service-factory';
+import {DeploymentState} from '../../resources/interface/petri-net-reference';
 
 describe('CaseHeaderService', () => {
     let service: CaseHeaderService;
@@ -87,7 +85,8 @@ describe('CaseHeaderService', () => {
             defaultCaseName: 'string',
             createdDate: [2020, 1, 1, 10, 0],
             author: {email: 'email', fullName: 'fullName'},
-            immediateData: [{stringId: 'string', title: 'string', type: 'string'}]
+            immediateData: [{stringId: 'string', title: 'string', type: 'string'}],
+            deploymentState: DeploymentState.DEPLOYED
         }]);
         expect(service.fieldsGroup.length).toEqual(2);
     });
@@ -105,7 +104,7 @@ describe('CaseHeaderService', () => {
             expect(res.changeType).toEqual(HeaderChangeType.SEARCH);
             expect((res.description as SearchChangeDescription).columnIdentifier).toEqual(0);
             expect((res.description as SearchChangeDescription).searchInput).toEqual('hladaj');
-            expect((res.description as SearchChangeDescription).fieldIdentifier).toEqual('visualId');
+            expect((res.description as SearchChangeDescription).fieldIdentifier).toEqual('title');
             expect((res.description as SearchChangeDescription).type).toEqual(HeaderColumnType.META);
             expect((res.description as SearchChangeDescription).fieldType).toEqual('text');
             done();

@@ -5,7 +5,7 @@ import {
     BooleanField,
     EnumerationField,
     FilterField,
-    FilterType,
+    FieldTypeResource,
     GroupNavigationConstants,
     I18nField,
     LanguageService,
@@ -149,11 +149,7 @@ describe('DefaultTabViewComponent', () => {
                                     GroupNavigationConstants.ITEM_FIELD_TASK_FILTER,
                                     '',
                                     '',
-                                    {
-                                        filterType: FilterType.TASK,
-                                        predicateMetadata: [],
-                                        searchCategories: []
-                                    },
+                                    FieldTypeResource.CASE_FILTER,
                                     [],
                                     {visible: true},
                                     '',
@@ -167,11 +163,7 @@ describe('DefaultTabViewComponent', () => {
                                     GroupNavigationConstants.ITEM_FIELD_CASE_FILTER,
                                     '',
                                     '',
-                                    {
-                                        filterType: FilterType.CASE,
-                                        predicateMetadata: [],
-                                        searchCategories: []
-                                    },
+                                    FieldTypeResource.CASE_FILTER,
                                     [],
                                     {visible: true},
                                     '',
@@ -205,6 +197,38 @@ describe('DefaultTabViewComponent', () => {
                                     GroupNavigationConstants.ITEM_FIELD_ID_CASE_ALLOW_EXPORT,
                                     '',true,{visible: true}
                                 ),
+                                new TextField(
+                                    GroupNavigationConstants.ITEM_FIELD_CASE_HEADERS_SORT_MODE_ACTIVE,
+                                    '',
+                                    '',
+                                    {visible: true}
+                                ),
+                                new EnumerationField(
+                                    GroupNavigationConstants.ITEM_FIELD_CASE_HEADERS_SORT_MODE_DIRECTION,
+                                    '',
+                                    '',
+                                    [],
+                                    {visible: true}
+                                ),
+                                new TextField(
+                                    GroupNavigationConstants.ITEM_FIELD_TASK_HEADERS_SORT_MODE_ACTIVE,
+                                    '',
+                                    '',
+                                    {visible: true}
+                                ),
+                                new EnumerationField(
+                                    GroupNavigationConstants.ITEM_FIELD_TASK_HEADERS_SORT_MODE_DIRECTION,
+                                    '',
+                                    '',
+                                    [],
+                                    {visible: true}
+                                ),
+                                new StringCollectionField(
+                                    GroupNavigationConstants.ITEM_FIELD_CASE_FULLTEXT_FIELDS,
+                                    '',
+                                    [],
+                                    {visible: true}
+                                )
                             ]
                         }
                     ]

@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, TemplateRef} from '@angular/core';
+import {Component, Input, TemplateRef} from '@angular/core';
 import {ApiProperties} from './api-properties';
 
 
@@ -7,7 +7,7 @@ import {ApiProperties} from './api-properties';
     templateUrl: './documentation.component.html',
     styleUrls: ['./documentation.component.scss']
 })
-export class DocumentationComponent implements OnInit {
+export class DocumentationComponent {
 
     @Input() liveExample: TemplateRef<object>;
     @Input() mainTitle: string;
@@ -19,8 +19,5 @@ export class DocumentationComponent implements OnInit {
     displayedColumns: string[] = ['name', 'description'];
 
     constructor() {
-    }
-
-    ngOnInit() {
     }
 }

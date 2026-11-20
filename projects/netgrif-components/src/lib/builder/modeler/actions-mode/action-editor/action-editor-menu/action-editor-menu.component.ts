@@ -1,10 +1,11 @@
 import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {ModelService} from '../../../services/model/model.service';
 import {ActionItemProviderService} from '../action-item-provider.service';
-import {actions, CommandAction, CommandActions} from '../classes/command-action';
+import {getActions, CommandAction, CommandActions} from '../classes/command-action';
 import {
   ActionEditorMenuDescriptionComponent,
 } from './action-editor-menu-description/action-editor-menu-description.component';
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
     selector: 'nc-builder-action-editor-menu',
@@ -22,12 +23,13 @@ export class ActionEditorMenuComponent implements OnInit {
 
     constructor(
         private actionItemProviderService: ActionItemProviderService,
-        private modelService: ModelService
+        private modelService: ModelService,
+        translateService: TranslateService
     ) {
+        this.menuItems = getActions(translateService);
     }
 
     ngOnInit(): void {
-        this.menuItems = actions;
         this.menuItems[this.menuItems.length - 1].actions = this.modelService.model.functions.map(fn => {
             return {
                 label: fn.name,

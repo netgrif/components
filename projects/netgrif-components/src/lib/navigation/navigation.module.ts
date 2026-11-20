@@ -10,7 +10,7 @@ import {
     MaterialModule,
     TranslateLibModule,
     UtilityModule,
-    NAE_GROUP_NAVIGATION_COMPONENT_RESOLVER_COMPONENT,
+    NAE_GROUP_NAVIGATION_COMPONENT_RESOLVER_COMPONENT, FrontActionRegistryService,
 } from '@netgrif/components-core';
 import {NavigationRailComponent} from './navigation-rail/navigation-rail.component';
 import {NavigationTreeComponent} from './navigation-tree/navigation-tree.component';
@@ -59,6 +59,7 @@ import {ToolbarComponentModule} from '../toolbar/toolbar.module';
 import { DefaultTabbedSingleTaskViewComponent } from './group-navigation-component-resolver/default-components/tabbed/default-tabbed-single-task-view/default-tabbed-single-task-view.component';
 import { DefaultSingleTaskViewComponent } from './group-navigation-component-resolver/default-components/simple-views/default-single-task-view/default-single-task-view.component';
 import { DefaultTicketViewComponent } from './group-navigation-component-resolver/default-components/tabbed/default-ticket-view/default-ticket-view.component';
+import {reloadMenu} from "./model/reload-menu";
 
 
 @NgModule({
@@ -135,4 +136,7 @@ import { DefaultTicketViewComponent } from './group-navigation-component-resolve
     ]
 })
 export class NavigationComponentModule {
+    constructor(frontActionRegistry: FrontActionRegistryService) {
+        frontActionRegistry.register('reloadMenu', reloadMenu);
+    }
 }

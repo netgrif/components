@@ -8,4 +8,7 @@ export interface CreateCaseRequestBody {
      */
     netId: string;
     color?: string;
+    params?: {
+        [k: string]: string
+    };
 }

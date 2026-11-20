@@ -18,7 +18,6 @@ import {
     NAE_DEFAULT_HEADERS,
     NAE_SEARCH_CATEGORIES,
     NAE_TAB_DATA,
-    SavedFilterMetadata,
     SearchMode,
     SearchService,
     SimpleFilter,
@@ -32,13 +31,16 @@ import {
     LoadingEmitter,
     SnackBarService,
     HeaderColumn,
-    ExportService
+    ExportService,
+    NAE_DYNAMIC_DEFAULT_SORT,
+    ProcessService
 } from '@netgrif/components-core';
 import {HeaderComponent} from '../../../../../header/header.component';
 import {
     InjectedTabbedCaseViewDataWithNavigationItemTaskData
 } from '../../model/injected-tabbed-case-view-data-with-navigation-item-task-data';
 import {
+    buildDynamicSortChangeDescriptionForCase$,
     filterCaseTabbedDataAllowedNetsServiceFactory,
     filterCaseTabbedDataFilterFactory
 } from '../../model/factory-methods';
@@ -65,6 +67,11 @@ import {TranslateService} from "@ngx-translate/core";
             provide: AllowedNetsService,
             useFactory: filterCaseTabbedDataAllowedNetsServiceFactory,
             deps: [AllowedNetsServiceFactory, BaseAllowedNetsService, NAE_TAB_DATA]
+        },
+        {
+            provide: NAE_DYNAMIC_DEFAULT_SORT,
+            useFactory: buildDynamicSortChangeDescriptionForCase$,
+            deps: [NAE_NAVIGATION_ITEM_TASK_DATA, ProcessService]
         },
         {
             provide: NAE_SEARCH_CATEGORIES, useExisting: NAE_DEFAULT_CASE_SEARCH_CATEGORIES
@@ -135,19 +142,6 @@ export class DefaultTabbedCaseViewComponent extends AbstractTabbedCaseViewCompon
     ngAfterViewInit(): void {
         super.initializeHeader(this.caseHeaderComponent);
         this.caseHeaderComponent.changeHeadersMode(this.defaultHeadersMode, false);
-    }
-
-    loadFilter(filterData: SavedFilterMetadata) {
-        this._injectedTabData.tabViewRef.openTab({
-            label: {
-                text: filterData.filter.title
-            },
-            canBeClosed: true,
-            tabContentComponent: DefaultTabbedCaseViewComponent,
-            injectedObject: {...this._injectedTabData, loadFilter: filterData.filter},
-            order: this._injectedTabData.tabViewOrder,
-            parentUniqueId: this._injectedTabData.tabUniqueId
-        }, this._autoswitchToTaskTab, this._openExistingTab);
     }
 
     protected openTab(openCase: Case) {

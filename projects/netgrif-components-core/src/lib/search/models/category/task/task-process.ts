@@ -7,7 +7,12 @@ import {BooleanOperator} from '../../boolean-operator';
 import {NoConfigurationAutocompleteCategory} from '../no-configuration-autocomplete-category';
 import {NotEquals} from '../../operator/not-equals';
 import {Categories} from '../categories';
-import {Subscription} from 'rxjs';
+import {Observable, of, Subject, Subscription} from 'rxjs';
+import {ResourceTypeQueryPrefix} from "../resource-type-query-prefix";
+import {SimpleExpression} from "../../../../pfql/model/simple-expression";
+import {filter, take, map} from "rxjs/operators";
+import {SearchAutocompleteOption} from "../search-autocomplete-option";
+import {SearchInputType} from "../search-input-type";
 
 export class TaskProcess extends NoConfigurationAutocompleteCategory<string> {
 
@@ -21,7 +26,11 @@ export class TaskProcess extends NoConfigurationAutocompleteCategory<string> {
             [operators.getOperator(Equals), operators.getOperator(NotEquals)],
             `${TaskProcess._i18n}.name`,
             logger,
-            operators);
+            operators,
+            ResourceTypeQueryPrefix.TASKS);
+        if (!!this._optionalDependencies.ignoreNetsOnAutocompleteCategories) {
+            this.inputType = SearchInputType.TEXT;
+        }
     }
 
     destroy() {
@@ -46,13 +55,42 @@ export class TaskProcess extends NoConfigurationAutocompleteCategory<string> {
         });
     }
 
+    public override loadFromPfqlExpression(expression: SimpleExpression): Observable<void> {
+        if (!this.selectOperatorFromPfqlExpression(expression)) {
+            return of(undefined);
+        }
+        if (this._optionalDependencies.ignoreNetsOnAutocompleteCategories) {
+            this.setOperands([expression.operandValue]);
+            return of(undefined);
+        }
+        return this._options$.pipe(
+            filter(options => options.length > 0),
+            take(1),
+            map(options => {
+                let selectedOption: SearchAutocompleteOption<string[]> | undefined;
+                for (const option of options) {
+                    if (option.value.some(netId => netId === expression.operandValue)) {
+                        selectedOption = option;
+                        break;
+                    }
+                }
+                if (!!selectedOption) {
+                    this.setOperands([selectedOption] as any);
+                }
+            })
+        );
+    }
+
     protected generateQuery(userInput: Array<Array<string>>): Query {
         if (this.selectedOperator.numberOfOperands !== 1) {
             throw new Error('Only unary operators are currently supported by the TaskProcess implementation');
         }
-        const operand = userInput[0];
-        const queries = operand.map(id => this.selectedOperator.createQuery(this.elasticKeywords, [id]));
-        return Query.combineQueries(queries, BooleanOperator.OR);
+        let operand = userInput[0];
+        if (!Array.isArray(operand)) {
+            operand = [operand];
+        }
+        const queries = operand.map(id => this.selectedOperator.createQuery(this.pfqlKeywords, [id]));
+        return Query.combineQueries(queries, BooleanOperator.OR).ensurePrefixAndGet(ResourceTypeQueryPrefix.TASKS);
     }
 
     get inputPlaceholder(): string {

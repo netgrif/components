@@ -1,16 +1,17 @@
 import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
-import {Component, EventEmitter, Input, OnDestroy, OnInit, Output, TemplateRef} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
+import {Component, EventEmitter, Inject, Input, OnDestroy, OnInit, Output, TemplateRef} from '@angular/core';
+import {ActivatedRoute, IsActiveMatchOptions, NavigationEnd, Router} from '@angular/router';
 import {TranslateService} from '@ngx-translate/core';
 import {ResizeEvent} from 'angular-resizable-element';
-import {Observable, Subscription} from 'rxjs';
-import {filter, take} from 'rxjs/operators';
+import {combineLatest, Observable, Subscription} from 'rxjs';
+import {filter, take, switchMap, startWith} from 'rxjs/operators';
 import {AccessService} from '../../authorization/permission/access.service';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {ImpersonationUserSelectService} from '../../impersonation/services/impersonation-user-select.service';
 import {ImpersonationService} from '../../impersonation/services/impersonation.service';
 import {LoggerService} from '../../logger/services/logger.service';
 import {CaseResourceService} from '../../resources/engine-endpoint/case-resource.service';
+import {Case} from '../../resources/interface/case';
 import {
     DynamicNavigationRouteProviderService,
 } from '../../routing/dynamic-navigation-route-provider/dynamic-navigation-route-provider.service';
@@ -37,6 +38,13 @@ import {UriNodeResource} from '../model/uri-resource';
 import {UriService} from '../service/uri.service';
 import {DoubleDrawerNavigationService} from "./service/double-drawer-navigation.service";
 import {DoubleDrawerUtils} from "./util/double-drawer-utils";
+import {ProcessService} from "../../process/process.service";
+import {CreateCaseEventOutcome} from "../../event/model/event-outcomes/case-outcomes/create-case-event-outcome";
+import {SnackBarService} from "../../snack-bar/services/snack-bar.service";
+import {MatDialog} from "@angular/material/dialog";
+import {NAE_TASK_VIEW_COMPONENT} from "../../side-menu/content-components/injection-tokens";
+import {ComponentType} from '@angular/cdk/portal';
+import {TaskViewDialogInjectionData} from "../../dialog/models/task-view-dialog-injection-data";
 
 @Component({
     selector: 'ncc-abstract-navigation-double-drawer',
@@ -67,6 +75,8 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
     @Output() resized = new EventEmitter<MenuResizeEvent>(true); // on menu resize
     @Output() itemLoaded = new EventEmitter<MenuItemLoadedEvent>(true); // on item loaded
 
+    public editModeEnabled: boolean = false;
+
     protected _breakpointSubscription: Subscription;
 
     protected _configLeftMenu: ConfigDoubleMenu = {
@@ -83,6 +93,28 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
     };
 
     protected configUrl: string;
+    protected itemClickedSub: Subscription;
+    protected itemLoadedSub: Subscription;
+    protected rightItemsSub: Subscription;
+    protected activeParentSub: Subscription;
+
+    /**
+     * Id of the left side item (parent folder), whose child view is currently rendered by the router.
+     * Undefined when none of the displayed child views matches the active route.
+     * */
+    protected _activeParentItemId: string;
+
+    /**
+     * Route matching rules used to resolve the active child view. They mirror the defaults of
+     * `routerLinkActive` (without `[routerLinkActiveOptions]="{exact: true}"`), so that the parent
+     * folder is highlighted for exactly the same routes as its child item.
+     * */
+    protected readonly activeMatchOptions: IsActiveMatchOptions = {
+        paths: 'subset',
+        queryParams: 'subset',
+        fragment: 'ignored',
+        matrixParams: 'ignored',
+    };
 
     protected constructor(protected _router: Router,
                           protected _activatedRoute: ActivatedRoute,
@@ -99,17 +131,21 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
                           protected _impersonation: ImpersonationService,
                           protected _dynamicRoutingService: DynamicNavigationRouteProviderService,
                           protected _redirectService: RedirectService,
-                          protected _navigationService: DoubleDrawerNavigationService) {
+                          protected _navigationService: DoubleDrawerNavigationService,
+                          protected _processService: ProcessService,
+                          protected _snackBarService: SnackBarService,
+                          protected _dialog: MatDialog,
+                          @Inject(NAE_TASK_VIEW_COMPONENT) protected _taskView: ComponentType<unknown>) {
         let configUrl: string = this._config.getServicesConfiguration()?.doubleDrawer?.url;
         if (configUrl !== undefined && !configUrl.startsWith('/')) {
             configUrl = '/' + configUrl;
         }
         this.configUrl = configUrl;
 
-        this._navigationService.itemClicked$.subscribe((itemClickEvent: MenuItemClickEvent) => {
+        this.itemClickedSub = this._navigationService.itemClicked$.subscribe((itemClickEvent: MenuItemClickEvent) => {
             this.itemClicked.emit(itemClickEvent);
         })
-        this._navigationService.itemLoaded$.subscribe((itemLoadedEvent: MenuItemLoadedEvent) => {
+        this.itemLoadedSub = this._navigationService.itemLoaded$.subscribe((itemLoadedEvent: MenuItemLoadedEvent) => {
             this.itemLoaded.emit(itemLoadedEvent);
         })
     }
@@ -123,8 +159,17 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
             }
         });
 
+        this.activeParentSub = combineLatest([
+            this._router.events.pipe(filter(event => event instanceof NavigationEnd), startWith(null)),
+            this.leftItems$,
+            this.rightItems$,
+            this.moreItems$,
+        ]).subscribe(() => {
+            this._activeParentItemId = this.resolveActiveParentItemId();
+        });
+
         if (this.canApplyAutoSelect()) {
-            this.rightItems$.pipe(
+            this.rightItemsSub = this.rightItems$.pipe(
                 filter(rightItems => rightItems.length > 0),
                 take(1)
             ).subscribe(()=> {
@@ -146,6 +191,10 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
         this.itemClicked.complete();
         this.resized.complete();
         this.itemLoaded.complete();
+        this.itemClickedSub.unsubscribe();
+        this.itemLoadedSub.unsubscribe();
+        this.rightItemsSub?.unsubscribe();
+        this.activeParentSub?.unsubscribe();
     }
 
     public get currentNode(): UriNodeResource {
@@ -226,7 +275,7 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
     }
 
     public logout(): void {
-        this._userService.logout().subscribe(response => {
+        this._userService.logout().pipe(take(1)).subscribe(response => {
             this._log.debug('User is logged out');
             this.loggedOut.emit(response);
             if (this._config.get().services && this._config.get().services.auth && this._config.getOnLogoutPath()) {
@@ -327,6 +376,105 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
 
     public isItemAndNodeEqual(item: NavigationItem, node: UriNodeResource): boolean {
         return DoubleDrawerUtils.isItemAndNodeEqual(item, node);
+    }
+
+    /**
+     * Resolves whether the given left side item is the parent folder of the view that is currently
+     * rendered by the router. Used to highlight the parent of the selected view the same way the
+     * selected view itself is highlighted by `routerLinkActive`.
+     *
+     * @param item an item of the left side menu
+     * @returns true if one of the currently displayed children of the item is the active route
+     * */
+    public isParentOfActiveView(item: NavigationItem): boolean {
+        return !!item && !!this._activeParentItemId && item.id === this._activeParentItemId;
+    }
+
+    /**
+     * Resolves whether the item's view is the one currently rendered by the router.
+     *
+     * @param item any navigation item holding a routing path
+     * */
+    public isItemRouteActive(item: NavigationItem): boolean {
+        const path = item?.routing?.path;
+        if (!path) {
+            return false;
+        }
+        // the url tree is built the same way `routerLink` builds it in the template,
+        // so both absolute and route relative paths are resolved identically
+        return this._router.isActive(
+            this._router.createUrlTree([path], {relativeTo: this._activatedRoute}),
+            this.activeMatchOptions,
+        );
+    }
+
+    /**
+     * The right side items (including the ones hidden behind the "load more" button) are the children of
+     * [currentNode]{@link AbstractNavigationDoubleDrawerComponent#currentNode}. Their parent folder on the
+     * left side is therefore the left item that corresponds to the current node.
+     *
+     * @returns the id of the left side item whose child view is active, or undefined if no child view is active
+     * */
+    protected resolveActiveParentItemId(): string | undefined {
+        const children = [...(this.rightItems ?? []), ...(this.moreItems ?? [])];
+        if (!children.some(child => this.isItemRouteActive(child))) {
+            return undefined;
+        }
+        return this.leftItems?.find(item => this.isItemAndNodeEqual(item, this.currentNode))?.id;
+    }
+
+    public setMenuEditMode(newVal: boolean): void {
+        this.editModeEnabled = newVal;
+    }
+
+    public editMenuItem(menuItemCase: Case) {
+        this._dialog.open(this._taskView, {
+            panelClass: "dialog-task-responsive",
+            data: {
+                autoCloseOnEvent: false,
+                searchBody: {
+                    transitionId: ["item_settings", "move_item", "duplicate_item", "children_order"],
+                    case: { id: menuItemCase.stringId }
+                }
+            } as TaskViewDialogInjectionData,
+        });
+    }
+
+    public createMenuItem(additionalParams?: {[k: string]: string}) {
+        const baseParams = { "dest_uri_path": this.currentNode.uriPath };
+        let mergedParams: {[k: string]: string} = !!additionalParams ? {...baseParams, ...additionalParams} : baseParams;
+        this._processService.getNet('menu_item').pipe(
+            switchMap(net => {
+                return this._caseResourceService.createCase({ netId: net.stringId, title: 'New menu item', params: mergedParams });
+            }),
+            take(1)
+        ).subscribe({
+            next: outcome => {
+                if (outcome.error) {
+                    this._log.error(`Could not create menu item case`, outcome.error);
+                    this._snackBarService.openErrorSnackBar(this._translateService.instant('dynamicNavigation.snackbar.failedItemCreation'))
+                    return;
+                }
+                const _case = (outcome.outcome as CreateCaseEventOutcome).aCase;
+                this._dialog.open(this._taskView, {
+                    panelClass: "dialog-task-responsive",
+                    data: {
+                        autoCloseOnEvent: true,
+                        searchBody: {
+                            transitionId: "initialize",
+                            case: { id: _case.stringId }
+                        }
+                    } as TaskViewDialogInjectionData,
+                });
+            },
+            error: error => {
+                this._log.error(`Could not create menu item case`, error);
+                this._snackBarService.openErrorSnackBar(this._translateService.instant('dynamicNavigation.snackbar.failedItemCreation'));
+            }});
+    }
+
+    public canEditMenu(): boolean {
+        return this._userService.hasRoleByIdentifier('admin', 'menu_item')
     }
 
     protected resolveLayout(isLargeScreen: boolean): void {

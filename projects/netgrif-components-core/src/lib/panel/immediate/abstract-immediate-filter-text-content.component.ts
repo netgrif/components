@@ -25,8 +25,8 @@ export abstract class AbstractImmediateFilterTextContentComponent implements OnD
     protected constructor(@Inject(NAE_FILTER_TEXT) protected _configuration: FilterTextConfiguration,
                           protected _textSearchService: SearchService,
                           protected _translateService: TranslateService) {
-        this._textSearchService.loadFromMetadata(this._configuration.metadata.filterMetadata);
-        this._searchServiceSub = this._textSearchService.loadingFromMetadata$.pipe(filter(loading => !loading), take(1)).subscribe(() => {
+        this._textSearchService.loadFromPfql(this._configuration.query);
+        this._searchServiceSub = this._textSearchService.loadingFromPfql$.pipe(filter(loading => !loading), take(1)).subscribe(() => {
             this.segments = this._textSearchService.createFilterTextSegments();
             this.tooltip = this.segments.map(segment => {
                 const translation = this._translateService.instant(segment.segment);

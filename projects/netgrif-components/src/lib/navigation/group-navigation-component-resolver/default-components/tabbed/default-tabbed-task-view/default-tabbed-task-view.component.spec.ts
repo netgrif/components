@@ -2,7 +2,7 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {DefaultTabbedTaskViewComponent} from './default-tabbed-task-view.component';
 import {NavigationComponentModule} from '../../../../navigation.module';
 import {
-    BooleanField,
+    BooleanField, EnumerationField,
     GroupNavigationConstants,
     HeaderMode,
     NAE_NAVIGATION_ITEM_TASK_DATA,
@@ -69,7 +69,20 @@ describe('DefaultTabbedTaskViewComponent', () => {
                                     '',
                                     '',
                                     {visible: true}
-                                )
+                                ),
+                                new TextField(
+                                    GroupNavigationConstants.ITEM_FIELD_TASK_HEADERS_SORT_MODE_ACTIVE,
+                                    '',
+                                    '',
+                                    {visible: true}
+                                ),
+                                new EnumerationField(
+                                    GroupNavigationConstants.ITEM_FIELD_TASK_HEADERS_SORT_MODE_DIRECTION,
+                                    '',
+                                    '',
+                                    [],
+                                    {visible: true}
+                                ),
                             ]
                         }
                     ]

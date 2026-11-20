@@ -25,12 +25,13 @@ import {
     LoadingEmitter,
     HeaderColumn,
     LoggerService,
-    SnackBarService
+    SnackBarService, NAE_DYNAMIC_DEFAULT_SORT, ProcessService
 } from '@netgrif/components-core';
 import {HeaderComponent} from '../../../../../header/header.component';
 import {ActivatedRoute} from "@angular/router";
 import {Subscription} from "rxjs";
 import {TranslateService} from "@ngx-translate/core";
+import {buildDynamicSortChangeDescriptionForCase$} from "../../model/factory-methods";
 
 
 function baseFilterFactory(extractionService: FilterExtractionService,
@@ -55,6 +56,11 @@ function allowedNetsFactory(factory: AllowedNetsServiceFactory,
         CaseViewService,
         SearchService,
         OverflowService,
+        {
+            provide: NAE_DYNAMIC_DEFAULT_SORT,
+            useFactory: buildDynamicSortChangeDescriptionForCase$,
+            deps: [NAE_NAVIGATION_ITEM_TASK_DATA, ProcessService]
+        },
         {
             provide: NAE_BASE_FILTER,
             useFactory: baseFilterFactory,

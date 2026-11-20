@@ -1,11 +1,20 @@
-import {ChangeDetectionStrategy, Component, Inject, Optional} from '@angular/core';
+import {Component, Inject, OnDestroy, Optional, Type} from '@angular/core';
 import {BuilderMode, BuilderModeService} from "./services/builder-mode.service";
 import {ModelService} from "./modeler/services/model/model.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {MatDialog} from "@angular/material/dialog";
 import {HttpClient} from "@angular/common/http";
 import {HistoryService} from "./modeler/services/history/history.service";
-import {CaseResourceService, LoadingEmitter, NAE_TAB_DATA, ImmediateData} from "@netgrif/components-core";
+import {
+    CaseRefField,
+    CaseResourceService,
+    DATA_FIELD_PORTAL_DATA,
+    DataFieldPortalData,
+    ImmediateData,
+    LoadingEmitter,
+    LoggerService,
+    NAE_TAB_DATA, ProcessRefField
+} from "@netgrif/components-core";
 import {InjectedTabbedBuilderViewData} from "./injected-builder-data";
 import {FieldListService} from './form-builder/field-list/field-list.service';
 import {GridsterService} from './form-builder/gridster/gridster.service';
@@ -55,6 +64,9 @@ import {I18nControlService} from './modeler/i18n-mode/i18n-control.service';
 import {BuilderIntegrationService} from "./services/builder-integration.service";
 import {TaskModeService} from "./modeler/task-mode/task-mode.service";
 import {LocalStorageService} from "./services/local-storage.service";
+import {PetriflowCanvasService} from '@netgrif/petriflow.svg';
+import {Subscription} from "rxjs";
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
     selector: 'nc-builder',
@@ -110,12 +122,17 @@ import {LocalStorageService} from "./services/local-storage.service";
         I18nControlService,
         BuilderIntegrationService,
         TaskModeService,
-        LocalStorageService
+        LocalStorageService,
+        // PetriflowCanvasService is `providedIn: 'root'` in @netgrif/petriflow.svg, which would make it a
+        // single instance shared by every open builder tab (wrong canvas/model rendered on tab switch).
+        // Re-provided here so each <nc-builder> instance gets its own canvas/panzoom state.
+        {provide: PetriflowCanvasService, useClass: PetriflowCanvasService as unknown as Type<PetriflowCanvasService>}
     ]
 })
-export class BuilderComponent {
+export class BuilderComponent implements OnDestroy {
     public typeMode = BuilderMode;
     public loading: LoadingEmitter;
+    protected _reloadSub: Subscription;
 
     constructor(private modelService: ModelService, private router: Router,
                 public dialog: MatDialog,
@@ -126,16 +143,40 @@ export class BuilderComponent {
                 public builderModeService: BuilderModeService,
                 protected _caseResourceService: CaseResourceService,
                 protected _builderIntegrationService: BuilderIntegrationService,
-                @Optional() @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabbedBuilderViewData) {
+                protected _logger: LoggerService,
+                @Optional() @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabbedBuilderViewData,
+                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<ProcessRefField>,
+                protected _translateService: TranslateService) {
         this.loading = new LoadingEmitter(true);
-        if (injectedTabData?.processCase) {
+        if (injectedTabData !== null && injectedTabData?.processCase) {
             this._builderIntegrationService.isIntegrated = true;
             this._builderIntegrationService.processCase = injectedTabData.processCase;
             this.resolveIntegratedMode();
-            this._builderIntegrationService.reloadCase.subscribe(() => {
-                this._caseResourceService.getOneCase(this._builderIntegrationService.processCase.stringId).subscribe(processCase => {
+            this._reloadSub = this._builderIntegrationService.reloadCase.subscribe(() => {
+                this._caseResourceService.getOneCase(this._builderIntegrationService.processCase.stringId).subscribe({
+                    next: processCase => {
+                        this._builderIntegrationService.processCase = processCase;
+                        this.resolveIntegratedMode();
+                        this._builderIntegrationService.reloadModes = true;
+                    },
+                    error: error => {
+                        this._logger.error('Process case reload failed', error.message);
+                    }
+                })
+            });
+        } else if (dataFieldPortalData !== null && dataFieldPortalData?.dataField?.value?.length > 0) {
+            this._builderIntegrationService.isIntegrated = true;
+            this._builderIntegrationService.dataField = dataFieldPortalData.dataField;
+            this._caseResourceService.getOneCase(dataFieldPortalData?.dataField?.value[0]).subscribe({next: processCase => {
+                this._builderIntegrationService.processCase = processCase;
+                this.resolveIntegratedMode();
+            }, error: () => {
+                this.loading.off();
+            }})
+            this._reloadSub = this._builderIntegrationService.reloadCase.subscribe(() => {
+                this._caseResourceService.getOneCase(this._builderIntegrationService.processCase?.stringId).subscribe(processCase => {
                     this._builderIntegrationService.processCase = processCase;
-                    this.resolveIntegratedMode()
+                    this.resolveIntegratedMode();
                     this._builderIntegrationService.reloadModes = true;
                 })
             });
@@ -144,20 +185,25 @@ export class BuilderComponent {
             this.resolveRouterModel();
             if (!this.modelService.model) {
                 this.modelService.model = this.modelService.newModel();
-                this.historyService.save(`New model has been created.`);
+                this.historyService.save(_translateService.instant('builder.newModelCreated'));
             }
         }
     }
 
-    public onlyTaskMode() {
-        return this._builderIntegrationService.isIntegrated && this._builderIntegrationService.onlyTaskView;
+    ngOnDestroy(): void {
+        this._reloadSub?.unsubscribe();
     }
 
     protected resolveIntegratedMode() {
-        if (this._builderIntegrationService.processCase.immediateData.find((data: ImmediateData) => data.stringId === 'state')?.value === 'draft') {
-            const taskId = this._builderIntegrationService.processCase.tasks.find(taskPair => taskPair.transition === 'edit')?.task;
+        const stateFieldValue: string = this._builderIntegrationService.processCase.immediateData.find((data: ImmediateData) => data.stringId === 'state')?.value;
+        const taskId = this._builderIntegrationService.processCase.tasks.find(taskPair => taskPair.transition === 'form')?.task;
+        if (stateFieldValue === 'draft') {
             this._builderIntegrationService.editTaskId = taskId;
-            this._builderIntegrationService.onlyTaskView = false;
+            const isDataFieldVisible: boolean = this._builderIntegrationService.dataField?.behavior?.visible;
+            this.builderModeService.readOnly$.next(isDataFieldVisible);
+            if (isDataFieldVisible) {
+                this._builderIntegrationService.allowedTransIds = ['view'];
+            }
             this._builderIntegrationService.getXml().subscribe(value => {
                 this.parseModel(value, BuilderMode.TASK_MODE);
                 this.loading.off();
@@ -165,10 +211,13 @@ export class BuilderComponent {
                 console.log(error);
                 this.loading.off();
             })
-        } else if (this._builderIntegrationService.processCase.immediateData.find((data: ImmediateData) => data.stringId === 'state')?.value === 'deployed') {
-            const taskId = this._builderIntegrationService.processCase.tasks.find(taskPair => taskPair.transition === 'view')?.task;
+        } else if (stateFieldValue === 'deployed' || stateFieldValue === 'archived') {
+            this.builderModeService.readOnly$.next(true);
+            const isDataFieldVisible: boolean = this._builderIntegrationService.dataField?.behavior?.visible;
+            if (isDataFieldVisible) {
+                this._builderIntegrationService.allowedTransIds = ['view'];
+            }
             this._builderIntegrationService.editTaskId = undefined;
-            this._builderIntegrationService.onlyTaskView = true;
             this._builderIntegrationService.getXml(taskId).subscribe(value => {
                 this.parseModel(value, BuilderMode.TASK_MODE);
                 this.loading.off();
@@ -177,9 +226,9 @@ export class BuilderComponent {
                 this.loading.off();
             })
         } else {
+            this.builderModeService.readOnly$.next(false);
             this.loading.off();
             this._builderIntegrationService.editTaskId = undefined;
-            this._builderIntegrationService.onlyTaskView = true;
         }
         this.builderModeService.mode = BuilderMode.TASK_MODE;
     }
@@ -190,11 +239,11 @@ export class BuilderComponent {
                 const model = this._importService.parseFromXml(data)?.model;
                 if (model) {
                     this.modelService.model = model;
-                    this.historyService.save(`Model ${this.modelService.model.id} has been imported.`);
+                    this.historyService.save(`Model ${this.modelService.model.id} ` + this._translateService.instant('builder.hasBeenImported'));
                 }
             } else if (!this.modelService.model) {
                 this.modelService.model = this.modelService.newModel();
-                this.historyService.save(`New Model has been created.`);
+                this.historyService.save(this._translateService.instant('builder.newModelCreated'));
             }
         } catch (e) {
             console.log(e);

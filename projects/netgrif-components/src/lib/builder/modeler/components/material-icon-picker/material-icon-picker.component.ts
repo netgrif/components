@@ -10,13 +10,15 @@ import {MatFormField, MatInput, MatLabel} from "@angular/material/input";
 import {MatIcon} from "@angular/material/icon";
 import {FlexModule} from "@ngbracket/ngx-layout";
 import {MatOption} from "@angular/material/core";
+import {TranslateModule} from "@ngx-translate/core";
+import {BuilderModeService} from "../../../services/builder-mode.service";
 
 @Component({
     selector: 'nc-builder-material-icon-picker',
     templateUrl: './material-icon-picker.component.html',
     standalone: true,
     styleUrls: ['./material-icon-picker.component.scss'],
-    imports: [FormsModule, ReactiveFormsModule, AsyncPipe, MaterialModule, NgForOf, MatAutocomplete, MatFormField, MatLabel, MatOption, MatIcon, MatAutocompleteTrigger, MatInput, FlexModule]
+    imports: [FormsModule, ReactiveFormsModule, AsyncPipe, MaterialModule, NgForOf, MatAutocomplete, MatFormField, MatLabel, MatOption, MatIcon, MatAutocompleteTrigger, MatInput, FlexModule, TranslateModule]
 })
 export class MaterialIconPickerComponent implements OnInit {
 
@@ -26,8 +28,13 @@ export class MaterialIconPickerComponent implements OnInit {
     protected _icon: string;
     @Output() iconChange: EventEmitter<string> = new EventEmitter<string>();
 
-    constructor() {
+    constructor(protected _builderModeService: BuilderModeService) {
         this.formControlRef = new FormControl(this._icon);
+        if (this._builderModeService.readOnly) {
+            this.formControlRef.disable();
+        } else {
+            this.formControlRef.enable();
+        }
     }
 
     @Input()

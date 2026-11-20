@@ -12,7 +12,7 @@
         {{ item.scope }}
     </span>
     </div>
-    <button mat-icon-button matTooltip="Delete function" (click)="onDelete($event, item)"
+    <button mat-icon-button matTooltip="{{ 'builder.modeler.actions-mode.action-master.deleteFunction' | translate }}" (click)="onDelete($event, item)"
             [ngClass]="{'function-list-icon-hidden': !showIcons}">
         <mat-icon>delete</mat-icon>
     </button>

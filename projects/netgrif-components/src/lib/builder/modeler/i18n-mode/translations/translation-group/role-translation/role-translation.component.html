@@ -2,12 +2,12 @@
 <!--    @defer (on viewport) {-->
         <div>
             <h3 class="margin-none">{{role.title.value}} [{{role.id}}]</h3>
-            <nc-builder-i18n-field [field]="role.title" [name]="'Title'" [translation]="translation"></nc-builder-i18n-field>
+            <nc-builder-i18n-field [field]="role.title" [name]="'builder.modeler.i18n-mode.title' | translate" [translation]="translation"></nc-builder-i18n-field>
             <div *ngIf="role.getEvents?.length > 0">
-                <h4>Events:</h4>
+                <h4>{{ 'builder.modeler.i18n-mode.events' | translate }}:</h4>
                 <div *ngFor="let event of role.getEvents()">
-                    <nc-builder-i18n-field [field]="event.title" [name]="'Title'" class="events" [translation]="translation"></nc-builder-i18n-field>
-                    <nc-builder-i18n-field [field]="event.message" [name]="'Message'" class="events" [translation]="translation"></nc-builder-i18n-field>
+                    <nc-builder-i18n-field [field]="event.title" [name]="'builder.modeler.i18n-mode.title' | translate" class="events" [translation]="translation"></nc-builder-i18n-field>
+                    <nc-builder-i18n-field [field]="event.message" [name]="'builder.modeler.i18n-mode.message' | translate" class="events" [translation]="translation"></nc-builder-i18n-field>
                 </div>
             </div>
             <mat-divider *ngIf="notLast(i)"></mat-divider>

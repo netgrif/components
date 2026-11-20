@@ -5,6 +5,31 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres
 to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [6.6.0](https://github.com/netgrif/components/releases/tag/v6.6.0) (2026-11-20)
+
+### Fixed
+
+- [NAE-2468] UI/UX fixes & improvements
+- [NAE-2473] Refresh roles on login
+- [NAE-2476] Options changed on pre assign event ignored in taskref
+- [NAE-2480] Date field set value doesn't work
+
+### Added
+
+- [NAE-2466] Advanced search for PFQL
+- [NAE-2489] View only builder
+- [NAE-2469] Fulltext search configuration
+- [NAE-2477] Builder translations
+- [NAE-2490] Task collapsing in ProcessRef field
+
+### Changed
+
+- [NAE-2454] View Configuration 2.0
+- [NAE-2472] Menu Item improvements
+- [NAE-2461] Create case filter only deployed
+- [NAE-2462] Builder component decomposition
+- [NAE-2484] Change data dialog FormControl
+
 ## [6.5.0](https://github.com/netgrif/components/releases/tag/v6.5.0) (2026-07-20)
 
 ### Fixed

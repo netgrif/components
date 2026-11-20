@@ -8,6 +8,7 @@ import {ControlPanelIcon} from '../control-panel-icon';
 import {Tool} from '../tools/tool';
 import {ImportToolButtonComponent} from './import-tool-button/import-tool-button.component';
 import {ConfigurationService} from '@netgrif/components-core';
+import {TranslateService} from "@ngx-translate/core";
 
 @Injectable()
 export class ImportTool extends Tool {
@@ -20,13 +21,14 @@ export class ImportTool extends Tool {
         private importService: ModelImportService,
         private http: HttpClient,
         private snackBar: MatSnackBar,
-        tutorialService: TutorialService
+        tutorialService: TutorialService,
+        private _translateService: TranslateService
     ) {
         super(
             'import',
             new ControlPanelButton(
                 new ControlPanelIcon('upload', false, true),
-                'Choose a file to open'
+                _translateService.instant('builder.modeler.control-panel.chooseFile')
             ),
             ImportToolButtonComponent,
             tutorialService.importTool
@@ -65,7 +67,7 @@ export class ImportTool extends Tool {
 
     handleFileContent(content: string, extension: string): void {
         if (!this.fileHandlers.has(extension)) {
-            this.snackBar.open('Unknown file type', 'X');
+            this.snackBar.open(this._translateService.instant('builder.modeler.control-panel.unknownFileType'), 'X');
             return;
         }
         const handle = this.fileHandlers.get(extension)

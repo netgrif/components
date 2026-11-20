@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {
     AllowedNetsService, AllowedNetsServiceFactory,
     NAE_BASE_FILTER,
@@ -35,15 +35,12 @@ const baseFilterFactory = () => {
         },
     ],
 })
-export class HeadersComponent implements OnInit {
+export class HeadersComponent {
 
     readonly TITLE = 'Headers';
     readonly DESCRIPTION = 'Ukážka použitia case headeru...';
 
     constructor() {
-    }
-
-    ngOnInit(): void {
     }
 
 }

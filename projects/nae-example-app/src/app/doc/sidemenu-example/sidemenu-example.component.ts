@@ -1,8 +1,9 @@
-import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
+import {Component, TemplateRef, ViewChild} from '@angular/core';
 import {
     Net,
     SideMenuService,
     SideMenuSize,
+    DeploymentState,
 } from '@netgrif/components-core';
 import {of} from 'rxjs';
 import {NewCaseComponent, UserAssignComponent, FilterSelectorComponent} from '@netgrif/components';
@@ -12,16 +13,13 @@ import {NewCaseComponent, UserAssignComponent, FilterSelectorComponent} from '@n
     templateUrl: './sidemenu-example.component.html',
     styleUrls: ['./sidemenu-example.component.scss']
 })
-export class SidemenuExampleComponent implements OnInit {
+export class SidemenuExampleComponent {
     readonly TITLE = 'SideMenu';
     readonly DESCRIPTION = 'Ukážka použitia SideMenu...';
 
     @ViewChild('templatePortal') templatePortal: TemplateRef<any>;
 
     constructor(private sideMenuService: SideMenuService) {
-    }
-
-    ngOnInit(): void {
     }
 
     public toggleSideMenu() {
@@ -40,7 +38,8 @@ export class SidemenuExampleComponent implements OnInit {
                 immediateData: [],
                 initials: 'EX',
                 title: 'Example Dummy Process',
-                version: '1.0.0'
+                version: '1.0.0',
+                deploymentState: DeploymentState.DEPLOYED
             }),
                 new Net({
                     stringId: '999',
@@ -52,7 +51,8 @@ export class SidemenuExampleComponent implements OnInit {
                     immediateData: [],
                     initials: 'EXX',
                     title: 'Other Example Dummy Process',
-                    version: '1.0.0'
+                    version: '1.0.0',
+                    deploymentState: DeploymentState.DEPLOYED
                 })])
         });
     }

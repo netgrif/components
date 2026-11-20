@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {LoggerService, User, UserService} from '@netgrif/components-core';
 
 @Component({
@@ -6,7 +6,7 @@ import {LoggerService, User, UserService} from '@netgrif/components-core';
     templateUrl: './authentication.component.html',
     styleUrls: ['./authentication.component.scss']
 })
-export class AuthenticationComponent implements OnInit {
+export class AuthenticationComponent {
 
     readonly TITLE = 'Authentication';
     readonly DESCRIPTION = 'Ukážka použitia AuthenticationService...';
@@ -21,9 +21,6 @@ export class AuthenticationComponent implements OnInit {
 
     constructor(private userService: UserService, private log: LoggerService) {
         this.userString = JSON.stringify(userService.user, undefined, 2);
-    }
-
-    ngOnInit(): void {
     }
 
     login() {

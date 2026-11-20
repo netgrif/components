@@ -1,10 +1,16 @@
 import {NO_ERRORS_SCHEMA} from '@angular/core';
 import {TestBed} from '@angular/core/testing';
 import {TriggerTreeComponent} from './trigger-tree.component';
+import {TranslateService} from "@ngx-translate/core";
+import {BuilderModeService} from "../../../services/builder-mode.service";
 
 describe('TriggerTreeComponent', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
+            providers: [
+                {provide: TranslateService, useValue: { instant: (key: string) => `translated-${key}` }},
+                BuilderModeService
+            ],
             declarations: [TriggerTreeComponent],
             schemas: [NO_ERRORS_SCHEMA],
         });

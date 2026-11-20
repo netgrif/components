@@ -2,12 +2,12 @@
  * Contains the identifiers of the queried elastic search indices.
  */
 export enum CaseSearch {
-    CREATION_DATE = 'creationDateSortable',
+    CREATION_DATE = 'creationDate',
     PROCESS_IDENTIFIER = 'processIdentifier',
     TASK_ID = 'taskIds',
     TITLE = 'title',
     VISUAL_ID = 'visualId',
     ENABLED_ROLES = 'enabledRoles',
     AUTHOR = 'author',
-    STRING_ID = 'stringId',
+    STRING_ID = 'id',
 }

@@ -1,7 +1,7 @@
 import {HttpParams} from '@angular/common/http';
 import {Inject, Injectable, OnDestroy, Optional} from '@angular/core';
-import {BehaviorSubject, Observable, of} from 'rxjs';
-import {map} from 'rxjs/operators';
+import {BehaviorSubject, Observable, of, Subscription} from 'rxjs';
+import {map, filter} from 'rxjs/operators';
 import {CaseSearchRequestBody, PetriNetSearchRequest} from '../../filter/models/case-search-request-body';
 import {SimpleFilter} from '../../filter/models/simple-filter';
 import {ActiveGroupService} from '../../groups/services/active-group.service';
@@ -15,6 +15,8 @@ import {NAE_URI_NODE_CASES_PAGE_SIZE} from '../model/size-menu-injection-token';
 import {UriNodeResource} from '../model/uri-resource';
 import {UriResourceService} from './uri-resource.service';
 import {GroupNavigationConstants} from "../model/group-navigation-constants";
+import {SessionClearService} from '../../authentication/session/services/session-clear.service';
+import {SessionService} from '../../authentication/session/services/session.service';
 
 /**
  * Service for managing URIs
@@ -29,11 +31,15 @@ export class UriService implements OnDestroy {
     private readonly _rootLoading$: LoadingEmitter;
     private readonly _parentLoading$: LoadingEmitter;
     private readonly _activeNode$: BehaviorSubject<UriNodeResource>;
+    protected _sessionClearSubscription: Subscription;
+    protected _sessionSubscription: Subscription;
 
     constructor(protected _logger: LoggerService,
                 protected _resourceService: UriResourceService,
                 protected _caseResourceService: CaseResourceService,
                 protected _activeGroupService: ActiveGroupService,
+                private _sessionClearService: SessionClearService,
+                private _sessionService: SessionService,
                 @Optional() @Inject(NAE_URI_NODE_CASES_PAGE_SIZE) protected pageSize: string | number) {
         if (!pageSize) {
             this.pageSize = 20;
@@ -44,13 +50,25 @@ export class UriService implements OnDestroy {
         this._rootLoading$ = new LoadingEmitter();
         this._parentLoading$ = new LoadingEmitter();
         this._activeNode$ = new BehaviorSubject<UriNodeResource>(undefined);
-        this.loadRoot();
+        this._sessionSubscription = this._sessionService.session$.pipe(
+            filter(token => token !== '' && this._sessionService.verified)
+        ).subscribe(() => {
+            this.loadRoot();
+        });
+        this._sessionClearSubscription = this._sessionClearService.sessionCleared.subscribe({
+            next: () => {
+                this._rootNode = null;
+                this._activeNode$.next(undefined)
+            }
+        });
     }
 
     public ngOnDestroy() {
         this._rootLoading$.complete();
         this._parentLoading$.complete();
         this._activeNode$.complete();
+        this._sessionClearSubscription.unsubscribe();
+        this._sessionSubscription.unsubscribe();
     }
 
     public get root(): UriNodeResource {

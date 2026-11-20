@@ -4,7 +4,7 @@ import {NavigationComponentModule} from '../../../../navigation.module';
 import {
     BooleanField,
     FilterField,
-    FilterType,
+    FieldTypeResource,
     GroupNavigationConstants,
     HeaderMode,
     NAE_NAVIGATION_ITEM_TASK_DATA,
@@ -15,7 +15,7 @@ import {
     TextField,
     I18nField,
     AuthenticationModule,
-    StringCollectionField,
+    StringCollectionField, EnumerationField,
 } from '@netgrif/components-core';
 import {of} from 'rxjs';
 import {DefaultTabbedTaskViewComponent} from '../default-tabbed-task-view/default-tabbed-task-view.component';
@@ -63,11 +63,7 @@ describe('DefaultTabbedCaseViewComponent', () => {
                                     `${GroupNavigationConstants.ITEM_FIELD_CASE_FILTER}`,
                                     '',
                                     '',
-                                    {
-                                        filterType: FilterType.CASE,
-                                        predicateMetadata: [],
-                                        searchCategories: []
-                                    },
+                                    FieldTypeResource.CASE_FILTER,
                                     [],
                                     {visible: true},
                                     '',
@@ -91,8 +87,27 @@ describe('DefaultTabbedCaseViewComponent', () => {
                                     [],
                                     {visible: true}
                                 ),
+                                new TextField(
+                                    GroupNavigationConstants.ITEM_FIELD_CASE_HEADERS_SORT_MODE_ACTIVE,
+                                    '',
+                                    '',
+                                    {visible: true}
+                                ),
+                                new EnumerationField(
+                                    GroupNavigationConstants.ITEM_FIELD_CASE_HEADERS_SORT_MODE_DIRECTION,
+                                    '',
+                                    '',
+                                    [],
+                                    {visible: true}
+                                ),
                                 new StringCollectionField(
                                     GroupNavigationConstants.ITEM_FIELD_TASK_ALLOWED_NETS,
+                                    '',
+                                    [],
+                                    {visible: true}
+                                ),
+                                new StringCollectionField(
+                                    GroupNavigationConstants.ITEM_FIELD_CASE_FULLTEXT_FIELDS,
                                     '',
                                     [],
                                     {visible: true}
@@ -136,8 +151,27 @@ describe('DefaultTabbedCaseViewComponent', () => {
                                     [],
                                     {visible: true}
                                 ),
+                                new TextField(
+                                    GroupNavigationConstants.ITEM_FIELD_CASE_HEADERS_SORT_MODE_ACTIVE,
+                                    '',
+                                    '',
+                                    {visible: true}
+                                ),
+                                new EnumerationField(
+                                    GroupNavigationConstants.ITEM_FIELD_CASE_HEADERS_SORT_MODE_DIRECTION,
+                                    '',
+                                    '',
+                                    [],
+                                    {visible: true}
+                                ),
                                 new StringCollectionField(
                                     GroupNavigationConstants.ITEM_FIELD_TASK_ALLOWED_NETS,
+                                    '',
+                                    [],
+                                    {visible: true}
+                                ),
+                                new StringCollectionField(
+                                    GroupNavigationConstants.ITEM_FIELD_CASE_FULLTEXT_FIELDS,
                                     '',
                                     [],
                                     {visible: true}

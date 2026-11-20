@@ -29,6 +29,7 @@ import {ModelerUtils} from '../../modeler-utils';
 import {ChangedRole} from '../../role-mode/role-detail/changed-role';
 import {ModelConfig} from './model-config';
 import {SequenceGenerator} from './sequence-generator';
+import {TranslateService} from "@ngx-translate/core";
 
 @Injectable()
 export class ModelService {
@@ -60,6 +61,7 @@ export class ModelService {
 
     constructor(
         private arcFactory: ArcFactory,
+        private _translateService: TranslateService
     ) {
         this._model = new BehaviorSubject<PetriNet>(undefined);
         this._placeChange = new Subject<PlaceChange>();
@@ -90,7 +92,7 @@ export class ModelService {
         const model = new PetriNet();
         model.id = ModelConfig.IDENTIFIER;
         model.version = ModelConfig.VERSION;
-        model.title = new I18nString(ModelConfig.TITLE);
+        model.title = new I18nString(this._translateService.instant('builder.modeler.services.newProcess'));
         model.initials = ModelConfig.INITIALS;
         model.icon = ModelConfig.ICON;
         return model;

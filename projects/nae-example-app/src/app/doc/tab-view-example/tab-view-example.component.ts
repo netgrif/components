@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {TabContent} from '@netgrif/components-core';
 import {ContentComponent} from './content/content.component';
 
@@ -7,7 +7,7 @@ import {ContentComponent} from './content/content.component';
     templateUrl: './tab-view-example.component.html',
     styleUrls: ['./tab-view-example.component.scss']
 })
-export class TabViewExampleComponent implements OnInit {
+export class TabViewExampleComponent {
     readonly TITLE = 'Tab View';
     readonly DESCRIPTION = 'Ukážka použitia Tab view...';
 
@@ -34,9 +34,6 @@ export class TabViewExampleComponent implements OnInit {
     ];
 
     constructor() {
-    }
-
-    ngOnInit(): void {
     }
 
 }

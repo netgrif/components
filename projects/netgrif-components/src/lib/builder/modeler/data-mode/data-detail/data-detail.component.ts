@@ -33,11 +33,9 @@ import {HistoryService} from '../../services/history/history.service';
 import {ModelService} from '../../services/model/model.service';
 import {DataMasterDetailService} from '../data-master-detail.service';
 import {BuilderModeService, BuilderMode} from "../../../services/builder-mode.service";
+import {TranslateService} from "@ngx-translate/core";
+import {DataModeService} from "../data-mode.service";
 
-export interface TypeArray {
-    viewValue: string;
-    value: string;
-}
 
 export interface HistoryDataSave {
     item: DataVariable,
@@ -56,30 +54,6 @@ export class DataDetailComponent implements OnDestroy {
     componentNameFormCtrl: FormControl;
     transitionOptions: Array<EnumerationFieldValue>;
     filteredOptions: Observable<Array<EnumerationFieldValue>>;
-    typeArray: Array<TypeArray> = [
-        {viewValue: 'Boolean', value: DataType.BOOLEAN},
-        {viewValue: 'Button', value: DataType.BUTTON},
-        {viewValue: 'Case Ref', value: DataType.CASE_REF},
-        {viewValue: 'Date', value: DataType.DATE},
-        {viewValue: 'Datetime', value: DataType.DATETIME},
-        {viewValue: 'Enumeration', value: DataType.ENUMERATION},
-        {viewValue: 'Enumeration Map', value: DataType.ENUMERATION_MAP},
-        {viewValue: 'File', value: DataType.FILE},
-        {viewValue: 'File List', value: DataType.FILE_LIST},
-        {viewValue: 'Filter (deprecated)', value: DataType.FILTER},
-        {viewValue: 'Case Filter', value: DataType.CASE_FILTER},
-        {viewValue: 'Task Filter', value: DataType.TASK_FILTER},
-        {viewValue: 'Process Filter', value: DataType.PROCESS_FILTER},
-        {viewValue: 'I18n', value: DataType.I18N},
-        {viewValue: 'Multichoice', value: DataType.MULTICHOICE},
-        {viewValue: 'Multichoice Map', value: DataType.MULTICHOICE_MAP},
-        {viewValue: 'Number', value: DataType.NUMBER},
-        {viewValue: 'User', value: DataType.USER},
-        {viewValue: 'User List', value: DataType.USER_LIST},
-        {viewValue: 'String Collection', value: 'stringCollection'},
-        {viewValue: 'Task Ref', value: DataType.TASK_REF},
-        {viewValue: 'Text', value: DataType.TEXT}
-    ];
     historyDataSave: HistoryDataSave;
 
     public constructor(
@@ -91,14 +65,21 @@ export class DataDetailComponent implements OnDestroy {
         private _actionMode: ActionsModeService,
         private _actionsMasterDetail: ActionsMasterDetailService,
         private _historyService: HistoryService,
-        private _builderModeService: BuilderModeService
+        protected _builderModeService: BuilderModeService,
+        private _translateService: TranslateService,
+        protected _dataModeService: DataModeService
     ) {
         this.formControlRef = new FormControl();
         this.componentNameFormCtrl = new FormControl();
+        if (this._builderModeService.readOnly) {
+            this.componentNameFormCtrl.disable();
+        } else {
+            this.componentNameFormCtrl.enable();
+        }
         this.transitionOptions = this.createTransOptions();
         this._masterService.getSelected$().subscribe(obj => {
             if (this.historyDataSave?.save) {
-                this._historyService.save(`DataVariable ${this.historyDataSave.item.id} has been changed.`);
+                this._historyService.save(`DataVariable ${this.historyDataSave.item.id} ` + this._translateService.instant('builder.modeler.data-mode.hasBeenChanged'));
             }
             if (obj) {
                 if (!obj.init) {
@@ -134,7 +115,7 @@ export class DataDetailComponent implements OnDestroy {
 
     ngOnDestroy() {
         if (this.historyDataSave?.save) {
-            this._historyService.save(`DataVariable ${this.historyDataSave.item.id} has been changed.`);
+            this._historyService.save(`DataVariable ${this.historyDataSave.item.id} ` + this._translateService.instant('builder.modeler.data-mode.hasBeenChanged'));
         }
     }
 
@@ -156,7 +137,7 @@ export class DataDetailComponent implements OnDestroy {
         });
         dialogRef.afterClosed().subscribe(result => {
             if (result !== undefined) {
-                this._historyService.save(`DataVariable ${this.item.id} ID has been changed to ${result} ${this.historyDataSave.save ? ', and has been changed' : ''}.`);
+                this._historyService.save(`DataVariable ${this.item.id} ` + this._translateService.instant('builder.modeler.data-mode.idHasBeenChangedTo') + ` ${result} ${this.historyDataSave.save ? ', ' + this._translateService.instant('builder.modeler.data-mode.andHasBeenChanged') : ''}.`);
                 this.historyDataSave.save = false;
                 this.item.id = result;
             }

@@ -11,8 +11,7 @@ import {BuilderModeService, BuilderMode} from "../../services/builder-mode.servi
 })
 export class InfoLabelComponent {
 
-    models: Array<PetriNet>;
-    transitions: Array<Transition>;
+    model: PetriNet;
     selectedTransition: Transition;
 
     constructor(
@@ -20,6 +19,7 @@ export class InfoLabelComponent {
         private builderModeService: BuilderModeService,
         private transitionService: SelectedTransitionService,
     ) {
+        this.model = this.modelService.model;
         const id = this.transitionService.id;
         if (id) {
             this.selectedTransition = this.modelService.model.getTransition(id);

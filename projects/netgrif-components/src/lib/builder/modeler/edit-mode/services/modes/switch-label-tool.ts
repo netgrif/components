@@ -8,9 +8,7 @@ export class SwitchLabelTool extends CanvasTool {
 
     public static readonly ID = 'SwitchLabelTool';
     public static readonly ICON_ON = 'label';
-    public static readonly TOOLTIP_ON = 'Show IDs';
     public static readonly ICON_OFF = 'label_off';
-    public static readonly TOOLTIP_OFF = 'Show labels';
     private turnedOn = true;
 
     constructor(context: CanvasToolContext) {
@@ -18,9 +16,9 @@ export class SwitchLabelTool extends CanvasTool {
             SwitchLabelTool.ID,
             new ControlPanelButton(
                 new ControlPanelIcon(SwitchLabelTool.ICON_ON, false, true),
-                SwitchLabelTool.TOOLTIP_ON,
+                context.translateService.instant('builder.modeler.edit-mode.services.showIds'),
             ),
-            context
+            context,
         );
     }
 
@@ -29,11 +27,11 @@ export class SwitchLabelTool extends CanvasTool {
         // TODO: NAB-326 abstract class for switches, make sure they turn to default state on canvas render
         if (this.turnedOn) {
             this.icon.name = SwitchLabelTool.ICON_OFF;
-            this.tooltip = SwitchLabelTool.TOOLTIP_OFF;
+            this.tooltip = this._translateService.instant('builder.modeler.edit-mode.services.showLabels');
             this.editModeService.labelText = (n: NodeElement) => n.id;
         } else {
             this.icon.name = SwitchLabelTool.ICON_ON;
-            this.tooltip = SwitchLabelTool.TOOLTIP_ON;
+            this.tooltip = this._translateService.instant('builder.modeler.edit-mode.services.showIds');
             this.editModeService.labelText = (n: NodeElement) => n.label.value;
         }
         this.editModeService.elements.places.forEach(p => {

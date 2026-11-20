@@ -3,6 +3,7 @@ import {Router} from '@angular/router';
 import {MortgageService} from '../modeler/mortgage.service';
 import {ModelService} from '../modeler/services/model/model.service';
 import {TutorialStep} from './tutorial-step';
+import {TranslateService} from "@ngx-translate/core";
 
 @Injectable()
 export class TutorialService {
@@ -30,12 +31,13 @@ export class TutorialService {
     constructor(
         private mortgageService: MortgageService,
         private router: Router,
-        private modelService: ModelService
+        private modelService: ModelService,
+        protected _translateService: TranslateService
     ) {
         this.welcome = TutorialStep.of(
             'welcome',
-            `Welcome to the Netgrif Application Builder v2.2.0`,
-            'Netgrif Application Builder (NAB) is the tool for building process driven applications using Petriflow language. NAB is composed of several modules that help you in different stages of application development.',
+            this._translateService.instant('builder.tutorial.welcome'),
+            this._translateService.instant('builder.tutorial.intro'),
             () => {
                 this.mortgageLoaded = false;
                 if (modelService.model.getTransitions().length === 0 && modelService.model.getPlaces().length === 0 && modelService.model.getArcs().length === 0 &&
@@ -51,8 +53,8 @@ export class TutorialService {
         );
         this.modeler = TutorialStep.of(
             'modeler',
-            'Process Modeler',
-            'In Process Modeler you can model business processes by defining tasks and their routing. As a modelling formalism for processes Petriflow language uses Petri nets that consist of state variables, tasks and their interconnections. It supports import of processes in BPMN 2.0 and its automatic translation into Petri nets.',
+            this._translateService.instant('builder.tutorial.processModelerTitle'),
+            this._translateService.instant('builder.tutorial.processModeler'),
             () => {
                 this.router.navigate(['/modeler/simulation']);
             },
@@ -63,8 +65,8 @@ export class TutorialService {
         );
         this.simulator = TutorialStep.of(
             'simulator',
-            'Process Simulation',
-            'In Process Simulation you can simulate modeled processes by executing sequences of tasks or task events.',
+            this._translateService.instant('builder.tutorial.processSimulationTitle'),
+            this._translateService.instant('builder.tutorial.processSimulation'),
             () => {
                 this.router.navigate(['/modeler/data']);
             },
@@ -75,8 +77,8 @@ export class TutorialService {
         );
         this.dataEditor = TutorialStep.of(
             'dataEditor',
-            'Data Editor',
-            'In Data Editor you can define data variables used in the processes. Petriflow supports all types of data variables you will need for your application, including text, numbers, date, datetime, enumerations and choices, files, images and many others. Validation and initial values of the data variables can be easily specified in Petriflow. Petriflow supports reference to a list of tasks as a data type.',
+            this._translateService.instant('builder.tutorial.dataEditorTitle'),
+            this._translateService.instant('builder.tutorial.dataEditor'),
             () => {
                 this.router.navigate(['/modeler/roles']);
             },
@@ -87,8 +89,8 @@ export class TutorialService {
         );
         this.roleEditor = TutorialStep.of(
             'roleEditor',
-            'Role Editor',
-            'In Role Editor you can define roles and specify which roles can perform tasks in the process.',
+            this._translateService.instant('builder.tutorial.roleEditorTitle'),
+            this._translateService.instant('builder.tutorial.roleEditor'),
             () => {
                 this.router.navigate(['/modeler/actions']);
             },
@@ -99,8 +101,8 @@ export class TutorialService {
         );
         this.actions = TutorialStep.of(
             'actions',
-            'Actions Editor',
-            'In Action Editor you can program reactions on events of process instances, its tasks and data fields. Actions use Groovy as a programming language. Types of events that you can catch includes construction of the process instance, assignment of a task to a user, cancellation of a task, finish  of a task, and change of a data field value. In actions that react on events, you can trigger events in different process instances and in this way for example create a new instance when you finish a task, to assign a new task to a user when you finish actual task, to recalculate a value of a data field whenever you change another data field, or hide/show data fields when you change another data field. In actions you can use search functions to find specific process instances or tasks based on values of process attributes, process instance attributes, task attributes and data variables. In actions you can also call external functions as well as to send and receive data from external systems via rest or soap web services.',
+            this._translateService.instant('builder.tutorial.actionsEditorTitle'),
+            this._translateService.instant('builder.tutorial.actionsEditor'),
             () => {
                 this.router.navigate(['/modeler/i18n']);
             },
@@ -111,8 +113,8 @@ export class TutorialService {
         );
         this.i18n = TutorialStep.of(
             'i18n',
-            'Internationalization',
-            'You can add translations for different languages.',
+            this._translateService.instant('builder.tutorial.internationalizationTitle'),
+            this._translateService.instant('builder.tutorial.internationalization'),
             () => {
                 this.router.navigate(['/modeler/history']);
             },
@@ -123,8 +125,8 @@ export class TutorialService {
         );
         this.history = TutorialStep.of(
             'history',
-            'History',
-            'You can review recent changes of the model as well as download or revert to previous version of the model.',
+            this._translateService.instant('builder.tutorial.historyTitle'),
+            this._translateService.instant('builder.tutorial.history'),
             () => {
             },
             () => {
@@ -134,8 +136,8 @@ export class TutorialService {
         );
         this.importTool = TutorialStep.of(
             'importTool',
-            'Model import',
-            'You can import existing model saved in XML file or transform BPMN file into Petriflow model.',
+            this._translateService.instant('builder.tutorial.modelImportTitle'),
+            this._translateService.instant('builder.tutorial.modelImport'),
             () => {
             },
             () => {
@@ -145,8 +147,8 @@ export class TutorialService {
         );
         this.exportTool = TutorialStep.of(
             'exportTool',
-            'Model export',
-            'You can export current model as XML file. In simulation mode this will export the simulated model in current state of simulation.',
+            this._translateService.instant('builder.tutorial.modelExportTitle'),
+            this._translateService.instant('builder.tutorial.modelExport'),
             () => {
             },
             () => {
@@ -155,8 +157,8 @@ export class TutorialService {
         );
         this.svgExportTool = TutorialStep.of(
             'svgExportTool',
-            'SVG export',
-            'You can export current model as SVG file. In simulation mode this will export the simulated model exactly as seen on canvas.',
+            this._translateService.instant('builder.tutorial.svgExportTitle'),
+            this._translateService.instant('builder.tutorial.svgExport'),
             () => {
             },
             () => {
@@ -165,8 +167,8 @@ export class TutorialService {
         );
         this.demo = TutorialStep.of(
             'demo',
-            'Netgrif eTask',
-            'You can deploy your Petriflow models in our eTask application after registration.',
+            this._translateService.instant('builder.tutorial.netgrifEtaskTitle'),
+            this._translateService.instant('builder.tutorial.netgrifEtask'),
             () => {
             },
             () => {
@@ -175,8 +177,8 @@ export class TutorialService {
         );
         this.youtube = TutorialStep.of(
             'youtube',
-            'Netgrif Academy',
-            'Educational videos and tutorials can be found on our Youtube channel.',
+            this._translateService.instant('builder.tutorial.netgrifAcademyTitle'),
+            this._translateService.instant('builder.tutorial.netgrifAcademy'),
             () => {
             },
             () => {
@@ -185,8 +187,8 @@ export class TutorialService {
         );
         this.github = TutorialStep.of(
             'github',
-            'Netgrif Github',
-            'Source codes of our community products are available on Github.',
+            this._translateService.instant('builder.tutorial.netgrifGithubTitle'),
+            this._translateService.instant('builder.tutorial.netgrifGithub'),
             () => {
             },
             () => {
@@ -195,8 +197,8 @@ export class TutorialService {
         );
         this.mortgage = TutorialStep.of(
             'mortgage',
-            'Mortgage demo process',
-            'To load a Mortgage demo process click here.',
+            this._translateService.instant('builder.tutorial.mortgageDemoTitle'),
+            this._translateService.instant('builder.tutorial.mortgageDemo'),
             () => {
             },
             () => {
@@ -205,8 +207,8 @@ export class TutorialService {
         );
         this.bug = TutorialStep.of(
             'bug',
-            'Bug report',
-            'You can use our github issue page to report any bug you encounter while using the Netgrif Application Builder.',
+            this._translateService.instant('builder.tutorial.bugReportTitle'),
+            this._translateService.instant('builder.tutorial.bugReport'),
             () => {
             },
             () => {

@@ -4,6 +4,7 @@ import {ControlPanelButton} from '../control-panel-button';
 import {ControlPanelIcon} from '../control-panel-icon';
 import {Tool} from '../tools/tool';
 import {ToolComponent} from "../tools/tool-component/tool.component";
+import {TranslateService} from "@ngx-translate/core";
 
 @Injectable()
 export class UndoTool extends Tool {
@@ -11,13 +12,14 @@ export class UndoTool extends Tool {
     public static readonly ID = 'undo';
 
     constructor(
-        private history: HistoryService
+        private history: HistoryService,
+        translateService: TranslateService
     ) {
         super(
             UndoTool.ID,
             new ControlPanelButton(
                 new ControlPanelIcon('undo', false, true),
-                'Undo'
+                translateService.instant('builder.modeler.control-panel.undo')
             ),
             ToolComponent
         );

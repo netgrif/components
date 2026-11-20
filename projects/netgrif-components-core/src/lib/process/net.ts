@@ -1,4 +1,4 @@
-import {PetriNetReference} from '../resources/interface/petri-net-reference';
+import {DeploymentState, PetriNetReference} from '../resources/interface/petri-net-reference';
 import {Author} from '../resources/interface/author';
 import {ImmediateData} from '../resources/interface/immediate-data';
 import Transition from './transition';
@@ -70,6 +70,10 @@ export class Net implements PetriNetReferenceWithPermissions {
     /**
      * @ignore
      */
+    private _deploymentState: DeploymentState;
+    /**
+     * @ignore
+     */
     constructor(net: PetriNetReference) {
         this._stringId = net.stringId;
         this._title = net.title;
@@ -84,6 +88,7 @@ export class Net implements PetriNetReferenceWithPermissions {
         this._transactions = [];
         this._roles = [];
         this._uriNodeId = net.uriNodeId;
+        this._deploymentState = net.deploymentState;
     }
 
     get stringId(): string {
@@ -196,5 +201,13 @@ export class Net implements PetriNetReferenceWithPermissions {
 
     set uriNodeId(uriNodeId: string) {
         this._uriNodeId = uriNodeId;
+    }
+
+    get deploymentState(): DeploymentState {
+        return this._deploymentState;
+    }
+
+    set deploymentState(deploymentState: DeploymentState) {
+        this._deploymentState = deploymentState;
     }
 }

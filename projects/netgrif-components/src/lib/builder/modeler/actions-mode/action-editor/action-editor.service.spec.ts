@@ -2,13 +2,16 @@ import {TestBed} from '@angular/core/testing';
 import {ArcFactory} from '../../edit-mode/domain/arc-builders/arc-factory.service';
 import {ModelService} from '../../services/model/model.service';
 import {ActionEditorService} from './action-editor.service';
+import {TranslateService} from "@ngx-translate/core";
 
 describe('ActionEditorService', () => {
     let service: ActionEditorService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            providers: [ActionEditorService, ModelService, ArcFactory],
+            providers: [ActionEditorService, ModelService, ArcFactory,
+                {provide: TranslateService, useValue: { instant: (key: string) => `translated-${key}` }}
+            ],
         });
         service = TestBed.inject(ActionEditorService);
     });

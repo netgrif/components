@@ -4,6 +4,7 @@ import {LanguageService} from '../translate/language.service';
 import {ToolbarConfig} from './toolbar-config';
 import {UserService} from '../user/services/user.service';
 import {Router} from '@angular/router';
+import {ThemePalette} from '@angular/material/core';
 import {User} from '../user/models/user';
 import {RedirectService} from '../routing/redirect-service/redirect.service';
 
@@ -60,6 +61,20 @@ export abstract class AbstractToolbarComponent {
 
     public isImpersonating(): boolean {
         return this.loggedUser.isImpersonating();
+    }
+
+    /**
+     * @returns the background color defined in `toolbarConfig.color`, or `null` if it is not defined
+     */
+    public get toolbarCustomColor(): string | null {
+        return this.toolbarConfig?.color?.trim() || null;
+    }
+
+    /**
+     * @returns `primary` theme palette as a fallback, only when `toolbarConfig.color` is not defined
+     */
+    public get toolbarThemeColor(): ThemePalette {
+        return this.toolbarCustomColor ? undefined : 'primary';
     }
 
     public getToolbarTitle(): string {

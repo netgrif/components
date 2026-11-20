@@ -8,21 +8,26 @@ export class DoubleDrawerUtils {
 
     constructor() {}
 
-    public static hasItemChildren(item: NavigationItem): boolean {
-        return item.resource?.immediateData.find(f => f.stringId === GroupNavigationConstants.ITEM_FIELD_ID_HAS_CHILDREN)?.value;
+    public static isFolder(item: NavigationItem): boolean {
+        return item.resource?.immediateData.find(f => f.stringId === GroupNavigationConstants.ITEM_FIELD_ID_IS_FOLDER)?.value;
     }
 
     public static hasItemAutoOpenView(item: NavigationItem): boolean {
         return item.resource?.immediateData.find(f => f.stringId === GroupNavigationConstants.ITEM_FIELD_ID_IS_AUTO_SELECT)?.value;
     }
 
-    public static hasItemView(item: NavigationItem): boolean {
-        return item?.resource?.immediateData
-            .find(f => f.stringId === GroupNavigationConstants.ITEM_FIELD_CASE_FILTER || f.stringId === GroupNavigationConstants.ITEM_FIELD_TASK_FILTER)?.value;
+    public static isNotFolder(item: NavigationItem): boolean | undefined {
+        const type: string = item?.resource?.immediateData
+            .find(f => f.stringId === GroupNavigationConstants.ITEM_FIELD_VIEW_CONFIGURATION_TYPE)?.value
+        return !type ? undefined : type !== 'folder';
     }
 
     public static isItemAndNodeEqual(item: NavigationItem, node: UriNodeResource): boolean {
-        return item.resource?.immediateData.find(f => f.stringId === GroupNavigationConstants.ITEM_FIELD_ID_NODE_PATH)?.value === node.uriPath;
+        if (!item || !node) {
+            return false;
+        }
+        const itemNodePath = item.resource?.immediateData?.find(f => f.stringId === GroupNavigationConstants.ITEM_FIELD_ID_NODE_PATH)?.value;
+        return !!itemNodePath && itemNodePath === node.uriPath;
     }
 
     public static extractChildCaseIds(item: Case): string[] {
@@ -33,8 +38,8 @@ export class DoubleDrawerUtils {
         return item.immediateData.find(f => f.stringId === GroupNavigationConstants.ITEM_FIELD_ID_NODE_PATH).value === '/';
     }
 
-    public static resolveAccessRoles(filter: Case, roleType: string): Array<RoleAccess> | undefined {
-        const allowedRoles = filter.immediateData.find(f => f.stringId === roleType)?.options;
+    public static resolveAccessRoles(item: Case, roleType: string): Array<RoleAccess> | undefined {
+        const allowedRoles = item.immediateData.find(f => f.stringId === roleType)?.options;
         if (!allowedRoles || Object.keys(allowedRoles).length === 0) return undefined;
         const roles = [];
         Object.keys(allowedRoles).forEach(combined => {
@@ -48,7 +53,7 @@ export class DoubleDrawerUtils {
     }
 
     public static isNodeCorrespondingToItem(node: UriNodeResource, item: NavigationItem): boolean {
-        return item.resource?.immediateData.find(f => f.stringId === GroupNavigationConstants.ITEM_FIELD_ID_NODE_PATH)?.value === node.uriPath
+        return DoubleDrawerUtils.isItemAndNodeEqual(item, node);
     }
 
     public static findTaskIdInCase(useCase: Case, transId: string): string {

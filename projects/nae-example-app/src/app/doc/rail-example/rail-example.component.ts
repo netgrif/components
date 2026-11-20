@@ -1,19 +1,16 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 
 @Component({
     selector: 'nae-app-rail-example',
     templateUrl: './rail-example.component.html',
     styleUrls: ['./rail-example.component.scss']
 })
-export class RailExampleComponent implements OnInit {
+export class RailExampleComponent {
 
     hover: boolean;
 
     constructor() {
         this.hover = false;
-    }
-
-    ngOnInit(): void {
     }
 
     onRailChange($event): void {

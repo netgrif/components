@@ -1,4 +1,5 @@
 import {ComponentType} from '@angular/cdk/overlay';
+import {Injector, NgZone} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {Router} from '@angular/router';
 import {PetriNet} from '@netgrif/petriflow';
@@ -21,6 +22,7 @@ import {MouseListener} from './listeners/mouse-listener';
 import {PlaceListener} from './listeners/place-listener';
 import {TransitionListener} from './listeners/transition-listener';
 import {ToolComponent} from "../../control-panel/tools/tool-component/tool.component";
+import { BuilderModeService } from "../../../services/builder-mode.service";
 
 export abstract class CanvasListenerTool extends Tool implements MouseListener, PlaceListener, TransitionListener, ArcListener, KeyListener {
 
@@ -30,8 +32,9 @@ export abstract class CanvasListenerTool extends Tool implements MouseListener, 
     private readonly _dialog: MatDialog;
     private readonly _router: Router;
     private readonly _transitionService: SelectedTransitionService;
-    private readonly _hotkeys: Array<Hotkey>;
+    protected _hotkeys: Array<Hotkey>;
     private _mouseDown: PointerEvent;
+    public readonly _builderModeService: BuilderModeService;
 
     protected constructor(
         id: string,
@@ -39,13 +42,20 @@ export abstract class CanvasListenerTool extends Tool implements MouseListener, 
         modelService: ModelService,
         dialog: MatDialog,
         router: Router,
-        transitionService: SelectedTransitionService
+        transitionService: SelectedTransitionService,
+        private readonly _ngZone?: NgZone,
+        builderModeService?: BuilderModeService
     ) {
         super(id, button, ToolComponent);
         this._modelService = modelService;
         this._dialog = dialog;
         this._router = router;
         this._transitionService = transitionService;
+        this._builderModeService = builderModeService;
+        this.initializeHotkeys();
+    }
+
+    protected initializeHotkeys() {
         this._hotkeys = new Array<Hotkey>();
         this.hotkeys.push(new Hotkey('+', false, false, false, this.zoom.bind(this, 1)));
         this.hotkeys.push(new Hotkey('-', false, false, false, this.zoom.bind(this, -1)));
@@ -54,6 +64,19 @@ export abstract class CanvasListenerTool extends Tool implements MouseListener, 
         this.hotkeys.push(new Hotkey('ArrowDown', false, false, false, this.move.bind(this, 0, -ModelerConfig.SIZE)));
         this.hotkeys.push(new Hotkey('ArrowLeft', false, false, false, this.move.bind(this, ModelerConfig.SIZE, 0)));
         this.hotkeys.push(new Hotkey('Home', false, false, false, this.move.bind(this, 0, 0, false)));
+    }
+
+    /**
+     * onpointermove fires at high frequency during panning/dragging. Registering it while running
+     * outside the Angular zone keeps every mousemove (and the requestAnimationFrame panzoom schedules
+     * internally to apply the transform) from triggering a full change-detection pass.
+     */
+    private runOutsideAngular(fn: () => void): void {
+        if (this._ngZone) {
+            this._ngZone.runOutsideAngular(fn);
+        } else {
+            fn();
+        }
     }
 
     abstract get canvasService(): PetriflowCanvasService;
@@ -116,7 +139,9 @@ export abstract class CanvasListenerTool extends Tool implements MouseListener, 
         place.svgPlace.canvasElement.container.onpointerup = (e: PointerEvent) => this.handleEvent(this.onPlaceUp, e, place);
         place.svgPlace.canvasElement.container.onpointerenter = (e: PointerEvent) => this.handleEvent(this.onPlaceEnter, e, place);
         place.svgPlace.canvasElement.container.onpointerleave = (e: PointerEvent) => this.handleEvent(this.onPlaceLeave, e, place);
-        place.svgPlace.canvasElement.container.onpointermove = (e: PointerEvent) => this.handleEvent(this.onPlaceMove, e, place);
+        this.runOutsideAngular(() => {
+            place.svgPlace.canvasElement.container.onpointermove = (e: PointerEvent) => this.handleEvent(this.onPlaceMove, e, place);
+        });
     }
 
     unbindPlaces(places: Array<CanvasPlace>): void {
@@ -140,7 +165,9 @@ export abstract class CanvasListenerTool extends Tool implements MouseListener, 
         transition.svgTransition.canvasElement.container.onpointerup = (e: PointerEvent) => this.handleEvent(this.onTransitionUp, e, transition);
         transition.svgTransition.canvasElement.container.onpointerenter = (e: PointerEvent) => this.handleEvent(this.onTransitionEnter, e, transition);
         transition.svgTransition.canvasElement.container.onpointerleave = (e: PointerEvent) => this.handleEvent(this.onTransitionLeave, e, transition);
-        transition.svgTransition.canvasElement.container.onpointermove = (e: PointerEvent) => this.handleEvent(this.onTransitionMove, e, transition);
+        this.runOutsideAngular(() => {
+            transition.svgTransition.canvasElement.container.onpointermove = (e: PointerEvent) => this.handleEvent(this.onTransitionMove, e, transition);
+        });
     }
 
     unbindTransitions(transitions: Array<CanvasTransition>): void {
@@ -164,7 +191,9 @@ export abstract class CanvasListenerTool extends Tool implements MouseListener, 
         arc.svgArc.element.container.onpointerup = (e: PointerEvent) => this.handleEvent(this.onArcUp, e, arc);
         arc.svgArc.element.container.onpointerenter = (e: PointerEvent) => this.handleEvent(this.onArcEnter, e, arc);
         arc.svgArc.element.container.onpointerleave = (e: PointerEvent) => this.handleEvent(this.onArcLeave, e, arc);
-        arc.svgArc.element.container.onpointermove = (e: PointerEvent) => this.handleEvent(this.onArcMove, e, arc);
+        this.runOutsideAngular(() => {
+            arc.svgArc.element.container.onpointermove = (e: PointerEvent) => this.handleEvent(this.onArcMove, e, arc);
+        });
     }
 
     unbindArcs(arcs: Array<CanvasArc>): void {
@@ -187,7 +216,9 @@ export abstract class CanvasListenerTool extends Tool implements MouseListener, 
         canvas.svg.onpointerup = (e: PointerEvent) => this.handleEvent(this.onMouseUp, e);
         canvas.svg.onpointerenter = (e: PointerEvent) => this.handleEvent(this.onMouseEnter, e);
         canvas.svg.onpointerleave = (e: PointerEvent) => this.handleEvent(this.onMouseLeave, e);
-        canvas.svg.onpointermove = (e: PointerEvent) => this.handleEvent(this.onMouseMove, e);
+        this.runOutsideAngular(() => {
+            canvas.svg.onpointermove = (e: PointerEvent) => this.handleEvent(this.onMouseMove, e);
+        });
         canvas.svg.oncontextmenu = (e: PointerEvent) => {
             e.preventDefault();
             e.stopPropagation();
@@ -342,7 +373,15 @@ export abstract class CanvasListenerTool extends Tool implements MouseListener, 
 
     openDialog(dialog: ComponentType<any>, config: any, afterClose?: (value: any) => void): void {
         this.beforeDialog();
-        this.dialog.open(dialog, config).afterClosed().subscribe(value => {
+        const finalConfig = this._builderModeService
+            ? {
+                ...config,
+                injector: Injector.create({
+                    providers: [{provide: BuilderModeService, useValue: this._builderModeService}]
+                })
+            }
+            : config;
+        this.dialog.open(dialog, finalConfig).afterClosed().subscribe(value => {
             if (afterClose) {
                 afterClose(value);
             }

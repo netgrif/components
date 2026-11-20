@@ -1,3 +1,9 @@
+:host {
+    display: block;
+    height: 100%;
+    min-height: 0;
+}
+
 .container {
     display: flex;
     width: 100%;
@@ -6,6 +12,7 @@
 
 .master, .detail {
     height: 100%;
+    min-height: 0;
     overflow: auto;
 }
 

@@ -3,6 +3,7 @@
     "dest": "../../dist/netgrif-components",
     "assets": [
         "./src/assets",
+        "./THIRD-PARTY.txt",
         "**/*theme.scss",
         "./nae-typography.scss",
         {

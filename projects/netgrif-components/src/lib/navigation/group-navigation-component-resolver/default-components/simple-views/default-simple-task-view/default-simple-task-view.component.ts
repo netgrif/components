@@ -22,10 +22,11 @@ import {
     FilterType,
     SearchMode, extractSearchTypeFromData, extractFieldValueFromData, SearchComponentConfiguration,
     GroupNavigationConstants, HeaderMode, DataGroup, NAE_DEFAULT_HEADERS, I18nFieldValue,
-    navigationItemTaskViewDefaultHeadersFactory
+    navigationItemTaskViewDefaultHeadersFactory, NAE_DYNAMIC_DEFAULT_SORT, ProcessService
 } from '@netgrif/components-core';
 import {HeaderComponent} from '../../../../../header/header.component';
 import {ActivatedRoute} from '@angular/router';
+import {buildDynamicSortChangeDescriptionForTask$} from "../../model/factory-methods";
 
 function baseFilterFactory(extractionService: FilterExtractionService,
                            activatedRoute?: ActivatedRoute,
@@ -50,6 +51,11 @@ function allowedNetsFactory(factory: AllowedNetsServiceFactory,
         SearchService,
         ViewIdService,
         ChangedFieldsService,
+        {
+            provide: NAE_DYNAMIC_DEFAULT_SORT,
+            useFactory: buildDynamicSortChangeDescriptionForTask$,
+            deps: [NAE_NAVIGATION_ITEM_TASK_DATA, ProcessService]
+        },
         {   provide: NAE_VIEW_ID_SEGMENT, useFactory: groupNavigationViewIdSegmentFactory, deps: [ActivatedRoute]},
         {
             provide: NAE_BASE_FILTER,

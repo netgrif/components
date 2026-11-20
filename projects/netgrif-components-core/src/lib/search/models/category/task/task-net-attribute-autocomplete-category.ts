@@ -6,6 +6,7 @@ import {Net} from '../../../../process/net';
 import {Category} from '../category';
 import {TaskProcess} from './task-process';
 import {OperatorService} from '../../../operator-service/operator.service';
+import {ResourceTypeQueryPrefix} from "../resource-type-query-prefix";
 
 /**
  * Utility class with the same use as its parent but witch Task search specific methods implemented.
@@ -13,13 +14,14 @@ import {OperatorService} from '../../../operator-service/operator.service';
 export abstract class TaskNetAttributeAutocompleteCategory extends NetAttributeAutocompleteCategory {
     protected _processCategory: TaskProcess;
 
-    protected constructor(elasticKeywords: Array<string>,
+    protected constructor(pfqlKeywords: Array<string>,
                           allowedOperators: Array<Operator<any>>,
                           translationPath: string,
                           log: LoggerService,
                           operatorService: OperatorService,
-                          optionalDependencies: OptionalDependencies) {
-        super(elasticKeywords, allowedOperators, translationPath, log, operatorService, optionalDependencies);
+                          optionalDependencies: OptionalDependencies,
+                          resourceTypePrefix: ResourceTypeQueryPrefix) {
+        super(pfqlKeywords, allowedOperators, translationPath, log, operatorService, optionalDependencies, resourceTypePrefix);
         this._processCategory = optionalDependencies.categoryFactory.get(TaskProcess) as TaskProcess;
         this._processCategory.selectDefaultOperator();
     }
@@ -29,7 +31,7 @@ export abstract class TaskNetAttributeAutocompleteCategory extends NetAttributeA
         this._processCategory.destroy();
     }
 
-    protected getProcessCategory(): Category<Array<string>> {
+    protected getProcessCategory(): Category<Array<string> | string> {
         return this._processCategory;
     }
 

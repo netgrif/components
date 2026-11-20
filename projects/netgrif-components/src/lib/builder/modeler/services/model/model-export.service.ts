@@ -7,6 +7,7 @@ import {DialogDeadNetComponent} from '../../../dialogs/dialog-dead-net/dialog-de
 import {ModelerConfig} from '../../modeler-config';
 import {ModelSourceService} from './model-source.service';
 import {ModelService} from './model.service';
+import {TranslateService} from "@ngx-translate/core";
 
 @Injectable()
 export class ModelExportService {
@@ -18,6 +19,7 @@ export class ModelExportService {
         private _modelSource: ModelSourceService,
         private _exportService: ExportService,
         private matDialog: MatDialog,
+        private _translateService: TranslateService
     ) {
     }
 
@@ -185,7 +187,7 @@ export class ModelExportService {
         if (xmlBlob != null) {
             this._downloadLink = document.createElement('a');
             this._downloadLink.download = fileName;
-            this._downloadLink.innerHTML = 'Download Model' + fileName;
+            this._downloadLink.innerHTML = this._translateService.instant('builder.modeler.services.downloadModel') + fileName;
             if (window.webkitURL !== undefined) {
                 this._downloadLink.href = window.webkitURL.createObjectURL(xmlBlob);
             } else {

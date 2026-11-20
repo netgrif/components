@@ -6,6 +6,8 @@ import {RedirectService} from '../../routing/redirect-service/redirect.service';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {Observable} from 'rxjs';
 import {View} from '../../../commons/schema';
+import {NavigationItem} from "../../navigation/model/navigation-configs";
+import {GroupNavigationConstants} from "../../navigation/model/group-navigation-constants";
 
 @Injectable({
     providedIn: AuthenticationModule
@@ -32,5 +34,13 @@ export class AuthorityGuardService implements CanActivate {
         if (typeof view.access !== 'string' && view.access.hasOwnProperty('authority')) {
             return this._userService.hasAuthority(view.access.authority);
         }
+    }
+
+    public canAccessNavigationItem(item: NavigationItem): boolean {
+        const allowedAuthorities: string[] = item?.resource?.immediateData?.find(f => f.stringId === GroupNavigationConstants.ITEM_FIELD_ID_ALLOWED_AUTHORITIES)?.value
+        if (!allowedAuthorities || allowedAuthorities.length === 0) {
+            return false;
+        }
+        return this._userService.hasAuthority(allowedAuthorities);
     }
 }

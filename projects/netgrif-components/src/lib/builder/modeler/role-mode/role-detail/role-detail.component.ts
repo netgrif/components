@@ -10,6 +10,7 @@ import {ModelService} from '../../services/model/model.service';
 import {RoleMasterDetailService} from '../role-master-detail.service';
 import {ChangedRole} from './changed-role';
 import {BuilderMode, BuilderModeService} from "../../../services/builder-mode.service";
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
     selector: 'nc-builder-role-detail',
@@ -29,23 +30,34 @@ export class RoleDetailComponent implements OnDestroy {
         private _actionMode: ActionsModeService,
         private _actionsMasterDetail: ActionsMasterDetailService,
         protected _historyService: HistoryService,
-        protected _builderModeService: BuilderModeService
+        protected _builderModeService: BuilderModeService,
+        protected _translateService: TranslateService
     ) {
+        this.roleIdForm = new FormControl('', [
+            Validators.required,
+            this.validUnique(),
+        ]);
         this._masterService.getSelected$().subscribe(item => {
             this.saveChange();
             if (item === undefined) {
                 return;
             }
             this.role = new ChangedRole(item.clone());
+            this.disableRoleIdFormControlOnReadOnly();
         });
-        this.roleIdForm = new FormControl('', [
-            Validators.required,
-            this.validUnique(),
-        ]);
+        this.disableRoleIdFormControlOnReadOnly();
     }
 
     ngOnDestroy(): void {
         this.saveChange();
+    }
+
+    private disableRoleIdFormControlOnReadOnly() {
+        if (this._builderModeService.readOnly) {
+            this.roleIdForm.disable();
+        } else {
+            this.roleIdForm.enable();
+        }
     }
 
     private saveChange(): void {
@@ -53,7 +65,7 @@ export class RoleDetailComponent implements OnDestroy {
             return;
         }
         this._modelService.updateRole(this.role);
-        this._historyService.save(`Role ${this.role.id} has been changed.`);
+        this._historyService.save(this._translateService.instant('builder.modeler.role-mode.role') + ` ${this.role.id} ` + this._translateService.instant('builder.modeler.role-mode.hasBeenChanged'));
         this.shouldSave = false;
     }
 

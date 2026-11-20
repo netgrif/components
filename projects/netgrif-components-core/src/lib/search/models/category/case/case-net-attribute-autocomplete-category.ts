@@ -6,6 +6,7 @@ import {CaseProcess} from './case-process';
 import {Net} from '../../../../process/net';
 import {Category} from '../category';
 import {OperatorService} from '../../../operator-service/operator.service';
+import {ResourceTypeQueryPrefix} from "../resource-type-query-prefix";
 
 /**
  * Utility class with the same use as its parent but witch Case search specific methods implemented.
@@ -19,8 +20,9 @@ export abstract class CaseNetAttributeAutocompleteCategory extends NetAttributeA
                           translationPath: string,
                           log: LoggerService,
                           operatorService: OperatorService,
-                          optionalDependencies: OptionalDependencies) {
-        super(elasticKeywords, allowedOperators, translationPath, log, operatorService, optionalDependencies);
+                          optionalDependencies: OptionalDependencies,
+                          resourceTypePrefix: ResourceTypeQueryPrefix) {
+        super(elasticKeywords, allowedOperators, translationPath, log, operatorService, optionalDependencies, resourceTypePrefix);
         this._processCategory = optionalDependencies.categoryFactory.get(CaseProcess) as CaseProcess;
         this._processCategory.selectDefaultOperator();
     }
@@ -30,7 +32,7 @@ export abstract class CaseNetAttributeAutocompleteCategory extends NetAttributeA
         this._processCategory.destroy();
     }
 
-    protected getProcessCategory(): Category<Array<string>> {
+    protected getProcessCategory(): Category<Array<string> | string> {
         return this._processCategory;
     }
 

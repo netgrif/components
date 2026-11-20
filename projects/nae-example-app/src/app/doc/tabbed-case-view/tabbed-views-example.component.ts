@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {NAE_TASK_FORCE_OPEN, NAE_VIEW_ID_SEGMENT, TabContent, ViewIdService} from '@netgrif/components-core';
 import {TabbedCaseViewComponent} from './tabbed-case-view/tabbed-case-view.component';
 import {TabbedTaskViewComponent} from './tabbed-task-view/tabbed-task-view.component';
@@ -17,7 +17,7 @@ import {
         ViewIdService
     ]
 })
-export class TabbedViewsExampleComponent implements OnInit {
+export class TabbedViewsExampleComponent {
     readonly TITLE = 'Tabbed Views';
     readonly DESCRIPTION = 'Ukážka integracie case-tab-task view';
 
@@ -60,9 +60,6 @@ export class TabbedViewsExampleComponent implements OnInit {
         setTimeout(() => {
             stream.next(999999);
         }, 2000);
-    }
-
-    ngOnInit(): void {
     }
 
 }

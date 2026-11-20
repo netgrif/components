@@ -32,25 +32,34 @@ export class SelectTool extends CanvasTool {
     private lastDragPoint: DOMPoint;
     private arcPointIndex: number;
     private lastClickTimestamp: number = 0;
+    private readonly additionalHotKeys: Array<Hotkey> = [
+        new Hotkey('c', true, false, false, this.copyElements.bind(this)),
+        new Hotkey('v', true, false, false, this.pasteElements.bind(this)),
+        new Hotkey('d', true, false, false, this.duplicateElements.bind(this)),
+        new Hotkey('a', true, false, false, this.selectAll.bind(this)),
+        new Hotkey('z', true, false, true, this.redo.bind(this)),
+        new Hotkey('z', true, false, false, this.undo.bind(this)),
+        new Hotkey('Delete', false, false, false, this.deleteSelected.bind(this))
+    ];
 
     constructor(context: CanvasToolContext) {
         super(
             SelectTool.ID,
             new ControlPanelButton(
                 new ControlPanelIcon('cursor-default-outline', true),
-                'Select tool',
+                context.translateService.instant('builder.modeler.edit-mode.services.selectTool'),
             ),
-            context
+            context,
         );
         this._selectedElements = new CanvasElementCollection();
         this._clipboardElements = new CanvasElementCollection();
-        this.hotkeys.push(new Hotkey('c', true, false, false, this.copyElements.bind(this)));
-        this.hotkeys.push(new Hotkey('v', true, false, false, this.pasteElements.bind(this)));
-        this.hotkeys.push(new Hotkey('d', true, false, false, this.duplicateElements.bind(this)));
-        this.hotkeys.push(new Hotkey('a', true, false, false, this.selectAll.bind(this)));
-        this.hotkeys.push(new Hotkey('z', true, false, true, this.redo.bind(this)));
-        this.hotkeys.push(new Hotkey('z', true, false, false, this.undo.bind(this)));
-        this.hotkeys.push(new Hotkey('Delete', false, false, false, this.deleteSelected.bind(this)));
+        this._builderModeService.readOnly$.subscribe((readOnly) => {
+            if (!readOnly) {
+                this.hotkeys.push(...this.additionalHotKeys);
+            } else if (this.hotkeys.includes(this.additionalHotKeys[0])) {
+                super.initializeHotkeys();
+            }
+        });
     }
 
     bind(): void {
@@ -135,7 +144,7 @@ export class SelectTool extends CanvasTool {
         });
         this.deselectAll();
         this.selectAll(copiedElements);
-        this.historyService.save(`Elements (${copiedElements.totalSize()}) has been duplicated`);
+        this.historyService.save(this._translateService.instant('builder.modeler.edit-mode.services.elements') + ` (${copiedElements.totalSize()}) ` + this._translateService.instant('builder.modeler.edit-mode.services.hasBeenDuplicated'));
     }
 
     selectAll(collection = this.editModeService.elements): void {
@@ -183,7 +192,7 @@ export class SelectTool extends CanvasTool {
             this.deleteArc(a);
         });
         this.deselectAll();
-        this.historyService.save(`Elements have been deleted`);
+        this.historyService.save(this._translateService.instant('builder.modeler.edit-mode.services.elementsDeleted'));
     }
 
     undo(): void {
@@ -218,7 +227,7 @@ export class SelectTool extends CanvasTool {
         super.onTransitionUp(event, transition);
         if (this.isDoubleClick(event) && this.isLeftButtonClick(event)) {
             this.transitionService.id = transition.id;
-            this.builderModeService.mode = BuilderMode.FORM_BUILDER;
+            this._builderModeService.mode = BuilderMode.FORM_BUILDER;
             return;
         }
         this.lastClickTimestamp = event.timeStamp;
@@ -280,7 +289,7 @@ export class SelectTool extends CanvasTool {
     }
 
     private onMove(event: PointerEvent): void {
-        if (!this.isLeftButton(event) || this.ctrlDown) {
+        if (!this.isLeftButton(event) || this.ctrlDown || this._builderModeService.readOnly) {
             return;
         }
         if (!!this.lasso) {
@@ -462,6 +471,9 @@ export class SelectTool extends CanvasTool {
     }
 
     moveSelected(): void {
+        if (this._builderModeService.readOnly) {
+            return;
+        }
         this.selectedElements.places.forEach(p => this.editModeService.movePlace(p));
         this.selectedElements.transitions.forEach(t => this.editModeService.moveTransition(t));
         this.selectedElements.arcs.forEach(a => {
@@ -469,7 +481,7 @@ export class SelectTool extends CanvasTool {
                 this.editModeService.moveArcBreakpoint(a, index);
             });
         });
-        this.historyService.save(`Elements have been moved`);
+        this.historyService.save(this._translateService.instant('builder.modeler.edit-mode.services.elementsMoved'));
     }
 
     isDraggingOnlyArc(): boolean {
@@ -496,7 +508,7 @@ export class SelectTool extends CanvasTool {
     private insertBreakpoint(arc: CanvasArc, point: DOMPoint, index: number): void {
         this.arcPointIndex = index;
         this.editModeService.createArcBreakpoint(arc, point, index);
-        this.historyService.save(`Breakpoint added to arc ${arc.id}`);
+        this.historyService.save(this._translateService.instant('builder.modeler.edit-mode.services.breakpointAdded') + ` ${arc.id}`);
     }
 
     private isBetween(first: DOMPoint, second: DOMPoint, mouse: DOMPoint): boolean {
@@ -514,13 +526,13 @@ export class SelectTool extends CanvasTool {
 
     placeContextMenu(place: CanvasPlace, event: PointerEvent): ContextMenu {
         const menu = this.replaceDeleteMenuItem(super.placeContextMenu(place, event));
-        menu.items.push(new SelectArcsMenuItem(this, place));
+        menu.items.push(new SelectArcsMenuItem(this, place, this._translateService));
         return menu;
     }
 
     transitionContextMenu(transition: CanvasTransition, event: PointerEvent): ContextMenu {
         const menu = this.replaceDeleteMenuItem(super.transitionContextMenu(transition, event));
-        menu.items.push(new SelectArcsMenuItem(this, transition));
+        menu.items.push(new SelectArcsMenuItem(this, transition, this._translateService));
         return menu;
     }
 
@@ -541,7 +553,7 @@ export class SelectTool extends CanvasTool {
     private replaceDeleteMenuItem(menuItem: ContextMenu): ContextMenu {
         const index = menuItem.items.findIndex(value => value instanceof DeleteMenuItem);
         if (index >= 0) {
-            menuItem.items[index] = new DeleteSelectedMenuItem(this);
+            menuItem.items[index] = new DeleteSelectedMenuItem(this, this._translateService);
         }
         return menuItem;
     }

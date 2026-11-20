@@ -38,7 +38,7 @@
 
     .active-tree-node {
         color: mat.get-color-from-palette($primary) !important;
-        background-color: rgba(mat.get-color-from-palette($primary), 0.25);
+        background-color: rgba(mat.get-color-from-palette($primary), 0.25) !important;
     }
 
     .tree-node {
@@ -61,6 +61,14 @@
         .mat-mdc-button-persistent-ripple {
             border-radius: 8px !important;
         }
+    }
+
+    .card-icon {
+        color: mat.get-color-from-palette($primary);
+    }
+
+    .card-main-text {
+        color: mat.get-color-from-palette($primary);
     }
 
     .quick-panel-menu {

@@ -33,6 +33,7 @@ export abstract class AbstractDashboardComponent {
     public static readonly DASHBOARD_MANAGEMENT_LOGOUT_TOOLBAR_DATAFIELD = 'logout_dashboard_toolbar';
     public static readonly DASHBOARD_MANAGEMENT_NAME_DATAFIELD = 'dashboard_name';
     public static readonly DASHBOARD_MANAGEMENT_LOGO_DATAFIELD = 'dashboard_logo';
+    public static readonly DASHBOARD_MANAGEMENT_COLOR_DATAFIELD = 'toolbar_color';
     public static readonly DASHBOARD_MANAGEMENT_ITEMS_ORDER_DATAFIELD = "items_order";
     public static readonly DASHBOARD_MANAGEMENT_PROFILE_URL_DATAFIELD = "profile_url";
     public static readonly DASHBOARD_MANAGEMENT_LOGIN_URL_DATAFIELD = "login_url";
@@ -105,7 +106,8 @@ export abstract class AbstractDashboardComponent {
                 toolbarName: this.getManagementName(this.dashboardCase),
                 toolbarLogo: this.getManagementLogo(this.dashboardCase),
                 profileUrl: this.getManagementProfileUrl(this.dashboardCase),
-                loginUrl: this.getManagementLoginUrl(this.dashboardCase)
+                loginUrl: this.getManagementLoginUrl(this.dashboardCase),
+                color: this.getManagementColor(this.dashboardCase),
             }
 
             const dashboardItemsOptions = this.dashboardCase.immediateData
@@ -201,7 +203,7 @@ export abstract class AbstractDashboardComponent {
 
     public getItemFontColor(itemCase: Case): string {
         const fontColor = this.getFieldValue(itemCase, AbstractDashboardComponent.DASHBOARD_ITEM_FONT_COLOR_DATAFIELD) as string;
-        return !!fontColor && fontColor !== '' ? fontColor : 'black';
+        return !!fontColor && fontColor !== '' ? fontColor : null;
     }
 
     public getItemFontWeight(itemCase: Case): string {
@@ -211,7 +213,7 @@ export abstract class AbstractDashboardComponent {
 
     public getItemIconColor(itemCase: Case): string {
         const iconColor = this.getFieldValue(itemCase, AbstractDashboardComponent.DASHBOARD_ITEM_ICON_COLOR_DATAFIELD);
-        return !!iconColor && iconColor !== '' ? iconColor : 'black';
+        return !!iconColor && iconColor !== '' ? iconColor : null;
     }
 
     // GET management fields
@@ -266,5 +268,9 @@ export abstract class AbstractDashboardComponent {
         } else {
             window.open(this.getItemURL(itemCase), "_blank");
         }
+    }
+
+    private getManagementColor(itemCase: Case): string {
+        return this.getFieldValue(itemCase, AbstractDashboardComponent.DASHBOARD_MANAGEMENT_COLOR_DATAFIELD) as string;
     }
 }

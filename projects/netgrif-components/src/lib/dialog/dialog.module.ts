@@ -10,10 +10,12 @@ import {
     NAE_ADMIN_IMPERSONATE_DIALOG_COMPONENT,
     NAE_NEW_CASE_DIALOG_COMPONENT,
     NAE_USER_IMPERSONATE_DIALOG_COMPONENT,
-    NAE_SAVE_FILTER_DIALOG_COMPONENT,
-    NAE_LOAD_FILTER_DIALOG_COMPONENT,
     FrontActionRegistryService,
-    NAE_TASK_VIEW_COMPONENT, UtilityModule, NAE_MULTI_USER_ASSIGN_DIALOG_COMPONENT, NAE_IMPORT_NET_DIALOG_COMPONENT
+    NAE_TASK_VIEW_COMPONENT,
+    UtilityModule,
+    NAE_MULTI_USER_ASSIGN_DIALOG_COMPONENT,
+    NAE_IMPORT_NET_DIALOG_COMPONENT,
+    NAE_SINGLE_TASK_VIEW_COMPONENT
 } from '@netgrif/components-core';
 import {A11yModule} from '@angular/cdk/a11y';
 import {
@@ -41,6 +43,7 @@ import {
     SideMenuMultiUserAssignComponentModule
 } from '../side-menu/content-components/multi-user-assign/side-menu-multi-user-assign-component.module';
 import { MultiUserAssignDialogComponent } from './multi-user-assign-dialog/multi-user-assign-dialog.component';
+import { SingleTaskViewDialogComponent } from './single-task-view-dialog/single-task-view-dialog.component';
 import { TaskViewDialogComponent } from './task-view-dialog/task-view-dialog.component';
 import {openTaskDialog} from "./model/dialog-actions";
 
@@ -53,6 +56,7 @@ import {openTaskDialog} from "./model/dialog-actions";
         UserImpersonateDialogComponent,
         FilterSelectorDialogComponent,
         MultiUserAssignDialogComponent,
+        SingleTaskViewDialogComponent,
         TaskViewDialogComponent
     ],
     exports: [
@@ -63,6 +67,7 @@ import {openTaskDialog} from "./model/dialog-actions";
         UserImpersonateDialogComponent,
         FilterSelectorDialogComponent,
         MultiUserAssignDialogComponent,
+        SingleTaskViewDialogComponent,
         TaskViewDialogComponent
     ],
     imports: [
@@ -77,7 +82,6 @@ import {openTaskDialog} from "./model/dialog-actions";
         FlexModule,
         FormsModule,
         SnackBarModule,
-        TranslateLibModule,
         SideMenuUserAssignComponentModule,
         SideMenuAdminImpersonateComponentModule,
         SideMenuFilterSelectorComponentModule,
@@ -86,7 +90,7 @@ import {openTaskDialog} from "./model/dialog-actions";
         HeaderComponentModule,
         PanelComponentModule,
         HotkeyModule.forRoot(),
-        UtilityModule
+        UtilityModule,
     ],
     providers: [
         {provide: NAE_USER_ASSIGN_DIALOG_COMPONENT, useValue: UserAssignDialogComponent},
@@ -95,6 +99,7 @@ import {openTaskDialog} from "./model/dialog-actions";
         {provide: NAE_ADMIN_IMPERSONATE_DIALOG_COMPONENT, useValue: AdminImpersonateDialogComponent},
         {provide: NAE_USER_IMPERSONATE_DIALOG_COMPONENT, useValue: UserImpersonateDialogComponent},
         {provide: NAE_NEW_CASE_DIALOG_COMPONENT, useValue: NewCaseDialogComponent},
+        {provide: NAE_SINGLE_TASK_VIEW_COMPONENT, useValue: SingleTaskViewDialogComponent},
         {provide: NAE_TASK_VIEW_COMPONENT, useValue: TaskViewDialogComponent}
     ]
 })

@@ -9,4 +9,5 @@ export interface ToolbarConfig {
     toolbarLogo?: string;
     profileUrl?: string;
     loginUrl?: string;
+    color?: string;
 }

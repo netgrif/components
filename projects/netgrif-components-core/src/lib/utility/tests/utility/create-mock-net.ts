@@ -2,6 +2,7 @@ import {Net} from '../../../process/net';
 import NetRole from '../../../process/netRole';
 import {ImmediateData} from '../../../resources/interface/immediate-data';
 import {Permissions} from '../../../process/permissions';
+import {DeploymentState} from '../../../resources/interface/petri-net-reference';
 
 /**
  * A mock transition representation used by the {@link createMockNet} function to populate the mock net with mock transition objects
@@ -37,7 +38,8 @@ export function createMockNet(stringId = 'stringId',
             email: '',
             fullName: ''
         },
-        immediateData
+        immediateData,
+        deploymentState: DeploymentState.DEPLOYED
     });
     net.roles = roles;
     net.transitions = transitions.map(t => ({

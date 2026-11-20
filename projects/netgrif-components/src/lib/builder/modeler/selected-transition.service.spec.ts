@@ -1,11 +1,14 @@
 import {TestBed} from '@angular/core/testing';
 import {SelectedTransitionService} from './selected-transition.service';
+import {TranslateService} from "@ngx-translate/core";
 
 describe('SelectedTransitionService', () => {
     let service: SelectedTransitionService;
 
     beforeEach(() => {
-        TestBed.configureTestingModule({providers: [SelectedTransitionService]});
+        TestBed.configureTestingModule({providers: [SelectedTransitionService,
+                {provide: TranslateService, useValue: { instant: (key: string) => `translated-${key}` }}
+            ]});
         service = TestBed.inject(SelectedTransitionService);
     });
 

@@ -12,12 +12,12 @@
                              id="{{action.event + '_' + action.phase + '_' + index}}"
                              class="panel-fix">
             <mat-expansion-panel-header class="header">
-                Action: {{action.id}}
+                {{ 'builder.modeler.actions-mode.action-editor.action-editor.action' | translate }}: {{action.id}}
             </mat-expansion-panel-header>
             <ng-template matExpansionPanelContent>
                 <div fxLayout="row">
                     <div fxFlex fxLayoutGap="3em" fxLayoutAlign="start center">
-                        <button type="button" mat-button (click)="openDrawer()">
+                        <button type="button" mat-button (click)="openDrawer()" *ngIf="!_builderModeService.readOnly">
                             <mat-icon *ngIf="drawer.opened; else closed">
                                 keyboard_arrow_left
                             </mat-icon>
@@ -29,7 +29,7 @@
                             <mat-icon>
                                 functions
                             </mat-icon>
-                            Functions
+                            {{ 'builder.modeler.actions-mode.action-editor.action-editor.functions' | translate }}
                         </button>
                     </div>
 
@@ -44,11 +44,12 @@
                         </mat-menu>
                         <button #matButton fxFlexAlign="end center" type="button" mat-button
                                 #referencesTrigger="matMenuTrigger"
-                                [matMenuTriggerFor]="referencesMenu">
+                                [matMenuTriggerFor]="referencesMenu"
+                                [hidden]="_builderModeService.readOnly">
                             <mat-icon>
                                 link
                             </mat-icon>
-                            References
+                            {{ 'builder.modeler.actions-mode.action-editor.action-editor.references' | translate }}
                             <mat-icon *ngIf="referencesTrigger.menuOpen; else closedMenu">
                                 keyboard_arrow_up
                             </mat-icon>
@@ -66,7 +67,7 @@
                 </div>
             </ng-template>
             <mat-action-row>
-                <button mat-icon-button (click)="openDialog(index)">
+                <button mat-icon-button (click)="openDialog(index)" *ngIf="!_builderModeService.readOnly">
                     <mat-icon>delete</mat-icon>
                 </button>
             </mat-action-row>

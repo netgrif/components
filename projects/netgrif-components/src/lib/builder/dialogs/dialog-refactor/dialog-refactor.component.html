@@ -1,22 +1,20 @@
-<h2 mat-dialog-title>Refactor Id</h2>
+<h2 mat-dialog-title>{{ 'builder.dialogs.refactor.title' | translate }}</h2>
 <mat-dialog-content fxLayout="column" fxLayoutAlign="start stretch" class="netgrif-input padding-top-4px">
     <mat-form-field appearance="outline">
-        <mat-label>Original Id</mat-label>
+        <mat-label>{{ 'builder.dialogs.refactor.originalId' | translate }}</mat-label>
         <input matInput disabled [(ngModel)]="data.originalId">
     </mat-form-field>
     <mat-form-field appearance="outline">
-        <mat-label>New Id</mat-label>
+        <mat-label>{{ 'builder.dialogs.refactor.newId' | translate }}</mat-label>
         <input autocomplete="off" matInput [formControl]="formControl">
-        <mat-error *ngIf="formControl.errors && formControl.errors.required">New Id is required!</mat-error>
-        <mat-error *ngIf="formControl.errors && formControl.errors.pattern">Id can contain only alphanumeric characters, dash or underscore!</mat-error>
-        <mat-error *ngIf="formControl.errors && formControl.errors.validUnique">Id must be unique! Selected Id already exists!</mat-error>
+        <mat-error *ngIf="formControl.errors && formControl.errors.required">{{ 'builder.dialogs.refactor.newIdRequired' | translate }}</mat-error>
+        <mat-error *ngIf="formControl.errors && formControl.errors.pattern">{{ 'builder.dialogs.refactor.idCharsOnly' | translate }}</mat-error>
+        <mat-error *ngIf="formControl.errors && formControl.errors.validUnique">{{ 'builder.dialogs.refactor.idUnique' | translate }}</mat-error>
     </mat-form-field>
     <br>
-    <span class="warning"> WARNING! In actions, field Id will be changed only in the declaration part,
-        Id used as string in the actions statement will not be changed.</span>
+    <span class="warning">{{ 'builder.dialogs.refactor.warning' | translate }}</span>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-    <button mat-button (click)="close()">Close</button>
-    <button mat-flat-button color="primary" (click)="refactor()">Refactor</button>
+    <button mat-button (click)="close()">{{ 'builder.dialogs.refactor.close' | translate }}</button>
+    <button mat-flat-button color="primary" (click)="refactor()">{{ 'builder.dialogs.refactor.refactor' | translate }}</button>
 </mat-dialog-actions>
-

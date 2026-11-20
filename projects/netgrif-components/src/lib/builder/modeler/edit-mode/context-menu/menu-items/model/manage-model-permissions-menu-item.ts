@@ -5,12 +5,13 @@ import {
 } from '../../../../../dialogs/dialog-manage-roles/dialog-manage-roles.component';
 import {CanvasTool} from '../../../services/modes/canvas-tool';
 import {MenuItem} from '../menu-item';
+import {TranslateService} from "@ngx-translate/core";
 
 export class ManageModelPermissionsMenuItem extends MenuItem {
 
-    constructor(tool: CanvasTool) {
+    constructor(tool: CanvasTool, translateService: TranslateService) {
         super(
-            'Manage process permissions',
+            translateService.instant('builder.modeler.edit-mode.context-menu.managePermissions'),
             'people',
             () => {
                 tool.openDialog(DialogManageRolesComponent, {
@@ -24,7 +25,8 @@ export class ManageModelPermissionsMenuItem extends MenuItem {
                         userLists: tool.model.getDataSet().filter(item => item.type === DataType.USER_LIST),
                         modelService: tool.modelService,
                         historyService: tool.editModeService.historyService,
-                        localStorageService: tool.context.localStorageService
+                        localStorageService: tool.context.localStorageService,
+                        builderModeService: tool.context.builderModeService
                     }
                 });
             }

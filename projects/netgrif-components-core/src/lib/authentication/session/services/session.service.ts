@@ -8,6 +8,7 @@ import {catchError, map, take, tap} from 'rxjs/operators';
 import {MessageResource} from '../../../resources/interface/message-resource';
 import {LoadingEmitter} from '../../../utility/loading-emitter';
 import {SessionIdleTimerService} from "./session-idle-timer.service";
+import {SessionClearService} from './session-clear.service';
 
 
 @Injectable({
@@ -28,7 +29,9 @@ export class SessionService implements OnDestroy {
     constructor(private _config: ConfigurationService,
                 private _log: LoggerService,
                 private _http: HttpClient,
-                private idleTimerService: SessionIdleTimerService) {
+                private idleTimerService: SessionIdleTimerService,
+                private _sessionClearService: SessionClearService
+                ) {
         this._storage = this.resolveStorage(this._config.get().providers.auth['sessionStore']);
         this._sessionHeader = this._config.get().providers.auth.sessionBearer ?
             this._config.get().providers.auth.sessionBearer : SessionService.SESSION_BEARER_HEADER_DEFAULT;
@@ -97,6 +100,7 @@ export class SessionService implements OnDestroy {
         this._verified = false;
         this.sessionToken = '';
         this._storage.removeItem(SessionService.SESSION_TOKEN_STORAGE_KEY);
+        this._sessionClearService.clearSession();
     }
 
     public verify(token?: string): Observable<boolean> {

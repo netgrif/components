@@ -18,7 +18,11 @@ import {
     TestConfigurationService,
     TranslateLibModule,
     UserPreferenceService,
-    UserResourceService
+    SearchService,
+    UserResourceService,
+    NAE_TASK_VIEW_COMPONENT,
+    NAE_BASE_FILTER,
+    TaskViewService, TestTaskBaseFilterProvider
 } from '@netgrif/components-core';
 import {FlexLayoutModule, FlexModule} from '@ngbracket/ngx-layout';
 import {QuickPanelComponentModule} from '../quick-panel/quick-panel.module';
@@ -27,6 +31,8 @@ import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {ResizableModule} from 'angular-resizable-element';
 import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+import {TaskViewDialogComponent} from "../../dialog/task-view-dialog/task-view-dialog.component";
+import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from "@angular/material/dialog";
 
 describe('NavigationDoubleDrawerComponent', () => {
     let component: NavigationDoubleDrawerComponent;
@@ -47,6 +53,7 @@ describe('NavigationDoubleDrawerComponent', () => {
                 TranslateLibModule,
                 HttpClientTestingModule,
                 ResizableModule,
+                MatDialogModule,
                 AuthenticationModule
             ],
             providers: [
@@ -54,7 +61,13 @@ describe('NavigationDoubleDrawerComponent', () => {
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
-                {provide: UserPreferenceService, useClass: MockUserPreferenceService}
+                {provide: UserPreferenceService, useClass: MockUserPreferenceService},
+                {provide: NAE_TASK_VIEW_COMPONENT, useClass: TaskViewDialogComponent},
+                {provide: MatDialogRef, useValue: {}},
+                {provide: MAT_DIALOG_DATA, useValue: {searchBody: {}}},
+                TaskViewService,
+                SearchService,
+                {provide: NAE_BASE_FILTER, useFactory: TestTaskBaseFilterProvider},
             ],
             schemas: [CUSTOM_ELEMENTS_SCHEMA]
         })

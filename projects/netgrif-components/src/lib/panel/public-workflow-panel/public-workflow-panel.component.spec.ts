@@ -17,7 +17,7 @@ import {
     TranslateLibModule,
     UserResourceService,
     WorkflowMetaField,
-    WorkflowViewService
+    WorkflowViewService, DeploymentState
 } from '@netgrif/components-core';
 import {CommonModule} from '@angular/common';
 import {FlexModule} from '@ngbracket/ngx-layout';
@@ -25,7 +25,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {DataFieldsComponentModule} from '../../data-fields/data-fields.module';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {PanelComponent} from '../panel.component';
-import {Component, NO_ERRORS_SCHEMA} from '@angular/core';
+import {Component} from '@angular/core';
 import {of} from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';
 
@@ -98,6 +98,7 @@ class PublicTestWrapperComponent {
         stringId: '',
         title: '',
         version: '',
-        uriNodeId: ''
+        uriNodeId: '',
+        deploymentState: DeploymentState.DEPLOYED
     };
 }

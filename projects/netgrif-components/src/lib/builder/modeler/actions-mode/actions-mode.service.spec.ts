@@ -6,6 +6,7 @@ import {ProcessActionsTool} from './tools/process-actions-tool';
 import {RoleActionsTool} from './tools/role-actions-tool';
 import {TransitionActionsTool} from './tools/transition-actions-tool';
 import {ActionsModeService} from './actions-mode.service';
+import {TranslateService} from "@ngx-translate/core";
 
 describe('ActionsModeService', () => {
     let service: ActionsModeService;
@@ -20,6 +21,7 @@ describe('ActionsModeService', () => {
                 {provide: RoleActionsTool, useValue: {}},
                 {provide: ProcessActionsTool, useValue: {}},
                 {provide: FunctionsTool, useValue: {}},
+                {provide: TranslateService, useValue: { instant: (key: string) => `translated-${key}` }}
             ],
         });
         service = TestBed.inject(ActionsModeService);

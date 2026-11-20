@@ -3,13 +3,22 @@ import {ArcFactory} from '../../modeler/edit-mode/domain/arc-builders/arc-factor
 import {ModelService} from '../../modeler/services/model/model.service';
 import {SelectedTransitionService} from '../../modeler/selected-transition.service';
 import {GridsterService} from './gridster.service';
+import {TranslateService} from "@ngx-translate/core";
+import {BuilderModeService} from "../../services/builder-mode.service";
 
 describe('GridsterService', () => {
     let service: GridsterService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            providers: [GridsterService, ModelService, ArcFactory, SelectedTransitionService],
+            providers: [
+                GridsterService,
+                ModelService,
+                ArcFactory,
+                SelectedTransitionService,
+                {provide: TranslateService, useValue: { instant: (key: string) => `translated-${key}` }},
+                BuilderModeService
+            ],
         });
         service = TestBed.inject(GridsterService);
     });

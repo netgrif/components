@@ -14,7 +14,6 @@ import {
     EnumerationField,
     Filter,
     FilterType,
-    MergeOperator,
     MultichoiceField,
     NAE_BASE_FILTER,
     NAE_CASE_REF_CREATE_CASE,
@@ -23,7 +22,6 @@ import {
     NAE_TAB_DATA,
     NAE_VIEW_ID_SEGMENT,
     OverflowService,
-    SavedFilterMetadata,
     SearchMode,
     SearchService,
     SimpleFilter,
@@ -140,9 +138,5 @@ export class DefaultCaseRefListViewComponent extends AbstractCaseViewComponent i
 
     createdCase(caze: Case) {
         this.handleCaseClick(caze);
-    }
-
-    loadFilter(filterData: SavedFilterMetadata) {
-        this.searchService.updateWithFullFilter(this.initFilter.merge(filterData.filter, MergeOperator.AND));
     }
 }

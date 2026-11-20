@@ -28,26 +28,27 @@ import {CanvasPlace} from '../../domain/canvas-place';
 import {CanvasTransition} from '../../domain/canvas-transition';
 import {EditModeService} from '../../edit-mode.service';
 import {Hotkey} from './domain/hotkey';
-import {BuilderModeService} from '../../../../services/builder-mode.service';
 import {CanvasToolContext} from './canvas-tool-context';
+import {TranslateService} from "@ngx-translate/core";
 
 export abstract class CanvasTool extends CanvasListenerTool {
 
     private readonly _editModeService: EditModeService;
     public actionMode: ActionsModeService;
     public actionsMasterDetail: ActionsMasterDetailService;
-    public builderModeService: BuilderModeService;
+    protected _translateService: TranslateService
 
     protected constructor(
         id: string,
         button: ControlPanelButton,
         protected _context: CanvasToolContext,
     ) {
-        super(id, button, _context.modelService, _context.dialog, _context.router, _context.transitionService);
+        super(id, button, _context.modelService, _context.dialog, _context.router, _context.transitionService,
+            _context.ngZone, _context.builderModeService);
         this._editModeService = _context.editModeService;
         this.actionMode = _context.actionMode;
         this.actionsMasterDetail = _context.actionsMasterDetail;
-        this.builderModeService = _context.builderModeService;
+        this._translateService = _context.translateService;
         this.hotkeys.push(new Hotkey('Escape', false, false, false, () => {
             this.closeContextMenu();
             this.reset();
@@ -118,7 +119,7 @@ export abstract class CanvasTool extends CanvasListenerTool {
     closeContextMenuOnClick(): void {
         if (this.isContextMenuOpen()) {
             this.closeContextMenu();
-            throw new ContextMenuInterruptionError();
+            throw new ContextMenuInterruptionError(this._translateService);
         }
     }
 
@@ -145,8 +146,8 @@ export abstract class CanvasTool extends CanvasListenerTool {
     placeContextMenu(place: CanvasPlace, event: PointerEvent): ContextMenu {
         return new ContextMenu(
             [
-                new EditPlaceMenuItem(place, this),
-                new DeletePlaceMenuItem(place, this)
+                new EditPlaceMenuItem(place, this, this._translateService),
+                ...(!this._builderModeService.readOnly ? [new DeletePlaceMenuItem(place, this, this._translateService)] : [])
             ],
             this.windowMousePosition(event)
         );
@@ -155,11 +156,11 @@ export abstract class CanvasTool extends CanvasListenerTool {
     transitionContextMenu(transition: CanvasTransition, event: PointerEvent): ContextMenu {
         return new ContextMenu(
             [
-                new EditTransitionMenuItem(transition, this),
-                new EditFormMenuItem(transition, this),
-                new EditTransitionPermissionsMenuItem(transition, this),
-                new EditTransitionActionsMenuItem(transition, this),
-                new DeleteTransitionMenuItem(transition, this)
+                new EditTransitionMenuItem(transition, this, this._translateService),
+                ...(this._builderModeService.readOnly && !transition.hasForm() ? [] : [new EditFormMenuItem(transition, this, this._translateService)]),
+                new EditTransitionPermissionsMenuItem(transition, this, this._translateService),
+                new EditTransitionActionsMenuItem(transition, this, this._translateService),
+                ...(!this._builderModeService.readOnly ? [new DeleteTransitionMenuItem(transition, this, this._translateService)] : [])
             ],
             this.windowMousePosition(event)
         )
@@ -171,11 +172,13 @@ export abstract class CanvasTool extends CanvasListenerTool {
         const breakPointIndex = arc.findNearbyBreakpoint(canvasPosition);
 
         const items = [];
-        items.push(new EditArcMenuItem(arc, this));
-        if (breakPointIndex !== undefined) {
-            items.push(new DeleteBreakpointMenuItem(arc, breakPointIndex, this));
+        items.push(new EditArcMenuItem(arc, this, this._translateService));
+        if (breakPointIndex !== undefined && !this._builderModeService.readOnly) {
+            items.push(new DeleteBreakpointMenuItem(arc, breakPointIndex, this, this._translateService));
         }
-        items.push(new DeleteArcMenuItem(arc, this));
+        if (!this._builderModeService.readOnly) {
+            items.push(new DeleteArcMenuItem(arc, this, this._translateService));
+        }
 
         return new ContextMenu(
             items,
@@ -185,8 +188,8 @@ export abstract class CanvasTool extends CanvasListenerTool {
 
     modelContextMenu(event: PointerEvent): ContextMenu {
         return new ContextMenu([
-            new EditModelMenuItem(this),
-            new ManageModelPermissionsMenuItem(this)
+            new EditModelMenuItem(this, this._translateService),
+            new ManageModelPermissionsMenuItem(this, this._translateService)
         ], this.windowMousePosition(event));
     }
 

@@ -4,6 +4,7 @@ import {Role} from '@netgrif/petriflow';
 import {DialogDeleteComponent} from '../../../dialogs/dialog-delete/dialog-delete.component';
 import {AbstractMasterDetailService} from '../../components/master-detail/abstract-master-detail.service';
 import {MASTER_ITEM, MASTER_SERVICE} from '../../components/master-detail/main-master-item/master-injection-tokens';
+import {BuilderModeService} from "../../../services/builder-mode.service";
 
 @Component({
   selector: 'nc-builder-role-master-item',
@@ -15,7 +16,8 @@ export class RoleMasterItemComponent {
 
     constructor(@Inject(MASTER_ITEM) public item: Role,
                 @Inject(MASTER_SERVICE) protected _service: AbstractMasterDetailService<any>,
-                protected _dialog: MatDialog) {
+                protected _dialog: MatDialog,
+                protected _builderModeService: BuilderModeService) {
     }
 
     onDelete(event: MouseEvent, item: Role): void {

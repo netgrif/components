@@ -1,23 +1,44 @@
-.app-mat-sidenav-content {
-  background: white;
+:host {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    overflow: hidden;
 }
 
-.app-mat-sidenav {
-  width: 280px;
-  box-shadow: 6px 0 6px rgba(0, 0, 0, .1);
-  z-index: 2;
+.form-builder-left-panel {
+    flex: 0 0 280px;
+    width: 280px;
+    height: 100%;
+    overflow-y: auto;
+    background: white;
+    box-shadow: 0 2px 4px #0d2d3c29, 0 4px 8px #546e7a29;
+    z-index: 1;
 }
 
-.app-mat-sidenav-right {
-  box-shadow: -6px 0 6px rgba(0, 0, 0, 0.1);
+.form-builder-right-panel {
+    flex: 0 0 auto;
+    max-width: 450px;
+    height: 100%;
+    overflow-y: auto;
+    background: white;
+    box-shadow: 0 2px 4px #0d2d3c29, 0 4px 8px #546e7a29;
+}
+
+.form-builder-right-panel-row {
+    height: 100%;
+}
+
+.form-builder-canvas {
+    flex: 1 1 auto;
+    width: 100%;
+    height: 100%;
+    background: lightgray;
+    padding: 12px;
 }
 
 .handle {
     width: 5px;
-    height: 100vh;
+    height: 100%;
     cursor: col-resize;
 }
 
-.integrated-top {
-    top: 49px !important;
-}

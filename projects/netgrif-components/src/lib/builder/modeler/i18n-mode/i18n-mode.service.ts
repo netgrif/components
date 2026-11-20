@@ -8,6 +8,7 @@ import {Tool} from '../control-panel/tools/tool';
 import {ToolGroup} from '../control-panel/tools/tool-group';
 import {LanguagesTool} from './languages/languages-tool';
 import {TranslationsTool} from './translations/translations-tool';
+import {TranslateService} from "@ngx-translate/core";
 
 @Injectable()
 export class I18nModeService extends ModeService<Tool> {
@@ -16,14 +17,15 @@ export class I18nModeService extends ModeService<Tool> {
         private tutorialService: TutorialService,
         private parentInjector: Injector,
         private _translationsTool: TranslationsTool,
-        private _languagesTool: LanguagesTool
+        private _languagesTool: LanguagesTool,
+        translateService: TranslateService
     ) {
         super();
         this.mode = new Mode(
             'i18n',
             new ControlPanelButton(
                 new ControlPanelIcon('translate'),
-                'Internationalization view'
+                translateService.instant('builder.modeler.i18n-mode.i18nView')
             ),
             './i18n',
             '/modeler/i18n',

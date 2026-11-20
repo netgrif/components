@@ -1,17 +1,17 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {
     Case,
     HeaderColumn,
     HeaderColumnType,
     PetriNetReference,
     WorkflowMetaField,
-    Author,
     AllowedNetsServiceFactory,
     SimpleFilter,
     CaseViewService,
     AllowedNetsService,
     SearchService,
     NAE_BASE_FILTER,
+    DeploymentState,
     WorkflowViewService
 } from '@netgrif/components-core';
 import {BehaviorSubject} from 'rxjs';
@@ -41,7 +41,7 @@ const baseFilterFactory = () => {
             deps: [AllowedNetsServiceFactory]},
     ]
 })
-export class PanelsComponent implements OnInit {
+export class PanelsComponent {
     readonly TITLE = 'Case panel';
     readonly DESCRIPTION = 'Ukážka použitia case panelu...';
     case_: Case;
@@ -84,7 +84,8 @@ export class PanelsComponent implements OnInit {
                 email: 'test@netgrif.com',
                 fullName: 'Test Testovič'
             },
-            immediateData: []
+            immediateData: [],
+            deploymentState: DeploymentState.DEPLOYED
         };
         this.featuredFields$ = new BehaviorSubject<Array<HeaderColumn>>([
             new HeaderColumn(HeaderColumnType.META, 'visualId', 'Visual ID', 'text'),
@@ -99,8 +100,5 @@ export class PanelsComponent implements OnInit {
             new HeaderColumn(HeaderColumnType.META, WorkflowMetaField.AUTHOR, 'Author', 'text'),
             new HeaderColumn(HeaderColumnType.META, WorkflowMetaField.CREATION_DATE, 'Upload date', 'date'),
         ]);
-    }
-
-    ngOnInit(): void {
     }
 }

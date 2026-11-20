@@ -15,7 +15,7 @@ export class SimulationModeComponent implements AfterViewInit, OnDestroy {
 
     constructor(
         public canvasService: PetriflowCanvasService,
-        private simulationService: SimulationModeService,
+        public simulationService: SimulationModeService,
         private modelService: ModelService
     ) {
     }

@@ -16,7 +16,7 @@ import {
     TestMockDependenciesModule,
     TextField,
     I18nField,
-    FilterType,
+    FieldTypeResource,
     AuthenticationModule,
     StringCollectionField,
 } from '@netgrif/components-core';
@@ -105,11 +105,7 @@ describe('SimpleCaseViewComponent', () => {
                                     GroupNavigationConstants.ITEM_FIELD_CASE_FILTER,
                                     '',
                                     '',
-                                    {
-                                        filterType: FilterType.CASE,
-                                        predicateMetadata: [],
-                                        searchCategories: []
-                                    },
+                                    FieldTypeResource.CASE_FILTER,
                                     [],
                                     {visible: true},
                                     '',
@@ -133,8 +129,27 @@ describe('SimpleCaseViewComponent', () => {
                                     true,
                                     {visible: true}
                                 ),
+                                new TextField(
+                                    GroupNavigationConstants.ITEM_FIELD_CASE_HEADERS_SORT_MODE_ACTIVE,
+                                    '',
+                                    '',
+                                    {visible: true}
+                                ),
+                                new EnumerationField(
+                                    GroupNavigationConstants.ITEM_FIELD_CASE_HEADERS_SORT_MODE_DIRECTION,
+                                    '',
+                                    '',
+                                    [],
+                                    {visible: true}
+                                ),
                                 new StringCollectionField(
                                     GroupNavigationConstants.ITEM_FIELD_CASE_ALLOWED_NETS,
+                                    '',
+                                    [],
+                                    {visible: true}
+                                ),
+                                new StringCollectionField(
+                                    GroupNavigationConstants.ITEM_FIELD_CASE_FULLTEXT_FIELDS,
                                     '',
                                     [],
                                     {visible: true}

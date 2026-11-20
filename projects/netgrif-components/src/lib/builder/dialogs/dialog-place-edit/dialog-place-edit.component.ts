@@ -4,6 +4,7 @@ import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {PlaceChange} from '../../modeler/history-mode/model/place/place-change';
 import {ModelService} from '../../modeler/services/model/model.service';
 import {SimulationModeService} from "../../modeler/simulation-mode/simulation-mode.service";
+import {BuilderModeService} from "../../services/builder-mode.service";
 
 export interface PlaceEditData {
     placeId: string;
@@ -25,7 +26,8 @@ export class DialogPlaceEditComponent {
     protected modelService: ModelService;
 
     constructor(
-        @Inject(MAT_DIALOG_DATA) public data: PlaceEditData
+        @Inject(MAT_DIALOG_DATA) public data: PlaceEditData,
+        protected _builderModeService: BuilderModeService
     ) {
         this.modelService = data.modelService;
         const modelPlace = this.modelService.model.getPlace(data.placeId);
@@ -38,6 +40,13 @@ export class DialogPlaceEditComponent {
             Validators.required,
             this.validMarking()
         ]);
+        if (this._builderModeService.readOnly) {
+            this.idCtrl.disable();
+            this.markingCtrl.disable();
+        } else {
+            this.idCtrl.enable();
+            this.markingCtrl.enable();
+        }
     }
 
     private validUnique(): ValidatorFn {

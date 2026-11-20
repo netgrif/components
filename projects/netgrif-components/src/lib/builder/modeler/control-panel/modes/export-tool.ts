@@ -5,19 +5,21 @@ import {ControlPanelButton} from '../control-panel-button';
 import {ControlPanelIcon} from '../control-panel-icon';
 import {Tool} from '../tools/tool';
 import {ToolComponent} from "../tools/tool-component/tool.component";
+import {TranslateService} from "@ngx-translate/core";
 
 @Injectable()
 export class ExportTool extends Tool {
 
     constructor(
         private exportService: ModelExportService,
-        tutorialService: TutorialService
+        tutorialService: TutorialService,
+        translateService: TranslateService
     ) {
         super(
             'export',
             new ControlPanelButton(
                 new ControlPanelIcon('download', false, true),
-                'Export as XML',
+                translateService.instant('builder.modeler.control-panel.exportXml'),
             ),
             ToolComponent,
             tutorialService.exportTool

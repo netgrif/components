@@ -12,3 +12,6 @@ export * from './dialog.module';
 // SERVICES
 export * from './services/dialog.service';
 export * from './injection-tokens';
+
+// MODELS
+export * from './models/task-view-dialog-injection-data';
