@@ -9,13 +9,64 @@
 
         <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
 	   <link rel="stylesheet" href="../styles/style.css">
-        <link rel="stylesheet" href="../styles/dark.css" media="(prefers-color-scheme: dark)">
+        <link rel="stylesheet" href="../styles/dark.css">
     </head>
     <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
 
-        <div class="navbar navbar-default navbar-fixed-top visible-xs">
-            <a href="../" class="navbar-brand">Netgrif Components library Documentation</a>
-            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">Netgrif Components library Documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
         </div>
 
         <div class="xs-menu menu" id="mobile-menu">
@@ -24,7 +75,7 @@
 
         <div class="container-fluid main">
            <div class="row main">
-               <div class="hidden-xs menu">
+               <div class="d-none d-md-block menu">
                    <compodoc-menu mode="normal"></compodoc-menu>
                </div>
                <!-- START CONTENT -->
@@ -34,8 +85,8 @@
 
 
 <ol class="breadcrumb">
-    <li>Modules</li>
-    <li >HeaderComponentModule</li>
+    <li class="breadcrumb-item">Modules</li>
+    <li class="breadcrumb-item" >HeaderComponentModule</li>
 </ol>
 
 <div class="text-center module-graph-container">
@@ -68,201 +119,177 @@
 </g>
 <g id="clust2" class="cluster">
 <title>cluster_HeaderComponentModule_declarations</title>
-<polygon fill="none" stroke="black" points="20,-143 20,-195 818,-195 818,-143 20,-143"/>
+<polygon fill="none" stroke="black" points="16,-143 16,-195 658,-195 658,-143 16,-143"/>
 </g>
-<g id="clust9" class="cluster">
-<title>cluster_HeaderComponentModule_exports</title>
-<polygon fill="none" stroke="black" points="16,-273 16,-325 830,-325 830,-273 16,-273"/>
-</g>
-<g id="clust4" class="cluster">
+<g id="clust3" class="cluster">
 <title>cluster_HeaderComponentModule_HeaderComponent_providers</title>
 <polygon fill="none" stroke="black" points="16,-78 16,-130 1006,-130 1006,-78 16,-78"/>
 </g>
-<!-- EditModeComponent -->
-<g id="node1" class="node">
-<title>EditModeComponent</title>
-<polygon fill="#ffffb3" stroke="black" points="809.83,-187 672.17,-187 672.17,-151 809.83,-151 809.83,-187"/>
-<text text-anchor="middle" x="741" y="-164.8" font-family="Times,serif" font-size="14.00">EditModeComponent</text>
-</g>
-<!-- HeaderComponentModule -->
-<g id="node6" class="node">
-<title>HeaderComponentModule</title>
-<polygon fill="#8dd3c7" stroke="black" points="518.79,-252 515.79,-256 494.79,-256 491.79,-252 353.21,-252 353.21,-216 518.79,-216 518.79,-252"/>
-<text text-anchor="middle" x="436" y="-229.8" font-family="Times,serif" font-size="14.00">HeaderComponentModule</text>
-</g>
-<!-- EditModeComponent&#45;&gt;HeaderComponentModule -->
-<g id="edge1" class="edge">
-<title>EditModeComponent&#45;&gt;HeaderComponentModule</title>
-<path fill="none" stroke="black" d="M676.96,-187.27C676.96,-205.56 676.96,-231 676.96,-231 676.96,-231 528.93,-231 528.93,-231"/>
-<polygon fill="black" stroke="black" points="528.93,-227.5 518.93,-231 528.93,-234.5 528.93,-227.5"/>
+<g id="clust8" class="cluster">
+<title>cluster_HeaderComponentModule_exports</title>
+<polygon fill="none" stroke="black" points="101,-273 101,-325 757,-325 757,-273 101,-273"/>
 </g>
 <!-- HeaderComponent -->
-<g id="node2" class="node">
+<g id="node1" class="node">
 <title>HeaderComponent</title>
-<polygon fill="#ffffb3" stroke="black" points="653.74,-187 532.26,-187 532.26,-151 653.74,-151 653.74,-187"/>
-<text text-anchor="middle" x="593" y="-164.8" font-family="Times,serif" font-size="14.00">HeaderComponent</text>
+<polygon fill="#ffffb3" stroke="black" points="649.74,-187 528.26,-187 528.26,-151 649.74,-151 649.74,-187"/>
+<text text-anchor="middle" x="589" y="-164.8" font-family="Times,serif" font-size="14.00">HeaderComponent</text>
+</g>
+<!-- HeaderComponentModule -->
+<g id="node5" class="node">
+<title>HeaderComponentModule</title>
+<polygon fill="#8dd3c7" stroke="black" points="469.79,-252 466.79,-256 445.79,-256 442.79,-252 304.21,-252 304.21,-216 469.79,-216 469.79,-252"/>
+<text text-anchor="middle" x="387" y="-229.8" font-family="Times,serif" font-size="14.00">HeaderComponentModule</text>
 </g>
 <!-- HeaderComponent&#45;&gt;HeaderComponentModule -->
-<g id="edge2" class="edge">
+<g id="edge1" class="edge">
 <title>HeaderComponent&#45;&gt;HeaderComponentModule</title>
-<path fill="none" stroke="black" d="M615.37,-187.01C615.37,-203.05 615.37,-224 615.37,-224 615.37,-224 528.86,-224 528.86,-224"/>
-<polygon fill="black" stroke="black" points="528.86,-220.5 518.86,-224 528.86,-227.5 528.86,-220.5"/>
+<path fill="none" stroke="black" d="M566.6,-187.02C566.6,-204.37 566.6,-228 566.6,-228 566.6,-228 479.7,-228 479.7,-228"/>
+<polygon fill="black" stroke="black" points="479.7,-224.5 469.7,-228 479.7,-231.5 479.7,-224.5"/>
 </g>
 <!-- LoadingModeComponent -->
-<g id="node3" class="node">
+<g id="node2" class="node">
 <title>LoadingModeComponent</title>
-<polygon fill="#ffffb3" stroke="black" points="514.15,-187 353.85,-187 353.85,-151 514.15,-151 514.15,-187"/>
-<text text-anchor="middle" x="434" y="-164.8" font-family="Times,serif" font-size="14.00">LoadingModeComponent</text>
+<polygon fill="#ffffb3" stroke="black" points="510.15,-187 349.85,-187 349.85,-151 510.15,-151 510.15,-187"/>
+<text text-anchor="middle" x="430" y="-164.8" font-family="Times,serif" font-size="14.00">LoadingModeComponent</text>
 </g>
 <!-- LoadingModeComponent&#45;&gt;HeaderComponentModule -->
-<g id="edge8" class="edge">
+<g id="edge7" class="edge">
 <title>LoadingModeComponent&#45;&gt;HeaderComponentModule</title>
-<path fill="none" stroke="black" d="M434,-187.11C434,-187.11 434,-205.99 434,-205.99"/>
-<polygon fill="black" stroke="black" points="430.5,-205.99 434,-215.99 437.5,-205.99 430.5,-205.99"/>
+<path fill="none" stroke="black" d="M409.66,-187.11C409.66,-187.11 409.66,-205.99 409.66,-205.99"/>
+<polygon fill="black" stroke="black" points="406.16,-205.99 409.66,-215.99 413.16,-205.99 406.16,-205.99"/>
 </g>
 <!-- SearchModeComponent -->
-<g id="node4" class="node">
+<g id="node3" class="node">
 <title>SearchModeComponent</title>
-<polygon fill="#ffffb3" stroke="black" points="336.08,-187 183.92,-187 183.92,-151 336.08,-151 336.08,-187"/>
-<text text-anchor="middle" x="260" y="-164.8" font-family="Times,serif" font-size="14.00">SearchModeComponent</text>
+<polygon fill="#ffffb3" stroke="black" points="332.08,-187 179.92,-187 179.92,-151 332.08,-151 332.08,-187"/>
+<text text-anchor="middle" x="256" y="-164.8" font-family="Times,serif" font-size="14.00">SearchModeComponent</text>
 </g>
 <!-- SearchModeComponent&#45;&gt;HeaderComponentModule -->
-<g id="edge9" class="edge">
+<g id="edge8" class="edge">
 <title>SearchModeComponent&#45;&gt;HeaderComponentModule</title>
-<path fill="none" stroke="black" d="M285.35,-187.01C285.35,-203.05 285.35,-224 285.35,-224 285.35,-224 343.18,-224 343.18,-224"/>
-<polygon fill="black" stroke="black" points="343.18,-227.5 353.18,-224 343.18,-220.5 343.18,-227.5"/>
+<path fill="none" stroke="black" d="M318.2,-187.11C318.2,-187.11 318.2,-205.99 318.2,-205.99"/>
+<polygon fill="black" stroke="black" points="314.7,-205.99 318.2,-215.99 321.7,-205.99 314.7,-205.99"/>
 </g>
 <!-- SortModeComponent -->
-<g id="node5" class="node">
+<g id="node4" class="node">
 <title>SortModeComponent</title>
-<polygon fill="#ffffb3" stroke="black" points="165.83,-187 28.17,-187 28.17,-151 165.83,-151 165.83,-187"/>
-<text text-anchor="middle" x="97" y="-164.8" font-family="Times,serif" font-size="14.00">SortModeComponent</text>
+<polygon fill="#ffffb3" stroke="black" points="161.83,-187 24.17,-187 24.17,-151 161.83,-151 161.83,-187"/>
+<text text-anchor="middle" x="93" y="-164.8" font-family="Times,serif" font-size="14.00">SortModeComponent</text>
 </g>
 <!-- SortModeComponent&#45;&gt;HeaderComponentModule -->
-<g id="edge10" class="edge">
+<g id="edge9" class="edge">
 <title>SortModeComponent&#45;&gt;HeaderComponentModule</title>
-<path fill="none" stroke="black" d="M119.05,-187.27C119.05,-205.56 119.05,-231 119.05,-231 119.05,-231 343.14,-231 343.14,-231"/>
-<polygon fill="black" stroke="black" points="343.14,-234.5 353.14,-231 343.14,-227.5 343.14,-234.5"/>
-</g>
-<!-- EditModeComponent  -->
-<g id="node12" class="node">
-<title>EditModeComponent </title>
-<polygon fill="#fb8072" stroke="black" points="822.33,-317 681.67,-317 681.67,-281 822.33,-281 822.33,-317"/>
-<text text-anchor="middle" x="752" y="-294.8" font-family="Times,serif" font-size="14.00">EditModeComponent </text>
-</g>
-<!-- HeaderComponentModule&#45;&gt;EditModeComponent  -->
-<g id="edge11" class="edge">
-<title>HeaderComponentModule&#45;&gt;EditModeComponent </title>
-<path fill="none" stroke="black" stroke-dasharray="5,2" d="M518.97,-238C610.69,-238 745.62,-238 745.62,-238 745.62,-238 745.62,-270.7 745.62,-270.7"/>
-<polygon fill="black" stroke="black" points="742.13,-270.7 745.62,-280.7 749.13,-270.7 742.13,-270.7"/>
+<path fill="none" stroke="black" d="M135.12,-187.02C135.12,-204.37 135.12,-228 135.12,-228 135.12,-228 294.18,-228 294.18,-228"/>
+<polygon fill="black" stroke="black" points="294.18,-231.5 304.18,-228 294.18,-224.5 294.18,-231.5"/>
 </g>
 <!-- HeaderComponent  -->
-<g id="node13" class="node">
+<g id="node11" class="node">
 <title>HeaderComponent </title>
-<polygon fill="#fb8072" stroke="black" points="663.74,-317 538.26,-317 538.26,-281 663.74,-281 663.74,-317"/>
-<text text-anchor="middle" x="601" y="-294.8" font-family="Times,serif" font-size="14.00">HeaderComponent </text>
+<polygon fill="#fb8072" stroke="black" points="748.74,-317 623.26,-317 623.26,-281 748.74,-281 748.74,-317"/>
+<text text-anchor="middle" x="686" y="-294.8" font-family="Times,serif" font-size="14.00">HeaderComponent </text>
 </g>
 <!-- HeaderComponentModule&#45;&gt;HeaderComponent  -->
-<g id="edge12" class="edge">
+<g id="edge10" class="edge">
 <title>HeaderComponentModule&#45;&gt;HeaderComponent </title>
-<path fill="none" stroke="black" stroke-dasharray="5,2" d="M518.76,-245C549.43,-245 576.88,-245 576.88,-245 576.88,-245 576.88,-270.72 576.88,-270.72"/>
-<polygon fill="black" stroke="black" points="573.38,-270.72 576.88,-280.72 580.38,-270.72 573.38,-270.72"/>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M469.77,-240C542.44,-240 636.62,-240 636.62,-240 636.62,-240 636.62,-270.98 636.62,-270.98"/>
+<polygon fill="black" stroke="black" points="633.13,-270.98 636.62,-280.98 640.13,-270.98 633.13,-270.98"/>
 </g>
 <!-- LoadingModeComponent  -->
-<g id="node14" class="node">
+<g id="node12" class="node">
 <title>LoadingModeComponent </title>
-<polygon fill="#fb8072" stroke="black" points="520.15,-317 355.85,-317 355.85,-281 520.15,-281 520.15,-317"/>
-<text text-anchor="middle" x="438" y="-294.8" font-family="Times,serif" font-size="14.00">LoadingModeComponent </text>
+<polygon fill="#fb8072" stroke="black" points="605.15,-317 440.85,-317 440.85,-281 605.15,-281 605.15,-317"/>
+<text text-anchor="middle" x="523" y="-294.8" font-family="Times,serif" font-size="14.00">LoadingModeComponent </text>
 </g>
 <!-- HeaderComponentModule&#45;&gt;LoadingModeComponent  -->
-<g id="edge13" class="edge">
+<g id="edge11" class="edge">
 <title>HeaderComponentModule&#45;&gt;LoadingModeComponent </title>
-<path fill="none" stroke="black" stroke-dasharray="5,2" d="M437.29,-252.11C437.29,-252.11 437.29,-270.99 437.29,-270.99"/>
-<polygon fill="black" stroke="black" points="433.79,-270.99 437.29,-280.99 440.79,-270.99 433.79,-270.99"/>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M455.29,-252.11C455.29,-252.11 455.29,-270.99 455.29,-270.99"/>
+<polygon fill="black" stroke="black" points="451.79,-270.99 455.29,-280.99 458.79,-270.99 451.79,-270.99"/>
 </g>
 <!-- SearchModeComponent  -->
-<g id="node15" class="node">
+<g id="node13" class="node">
 <title>SearchModeComponent </title>
-<polygon fill="#fb8072" stroke="black" points="337.58,-317 182.42,-317 182.42,-281 337.58,-281 337.58,-317"/>
-<text text-anchor="middle" x="260" y="-294.8" font-family="Times,serif" font-size="14.00">SearchModeComponent </text>
+<polygon fill="#fb8072" stroke="black" points="422.58,-317 267.42,-317 267.42,-281 422.58,-281 422.58,-317"/>
+<text text-anchor="middle" x="345" y="-294.8" font-family="Times,serif" font-size="14.00">SearchModeComponent </text>
 </g>
 <!-- HeaderComponentModule&#45;&gt;SearchModeComponent  -->
-<g id="edge14" class="edge">
+<g id="edge12" class="edge">
 <title>HeaderComponentModule&#45;&gt;SearchModeComponent </title>
-<path fill="none" stroke="black" stroke-dasharray="5,2" d="M353.23,-245C297.7,-245 234.65,-245 234.65,-245 234.65,-245 234.65,-270.72 234.65,-270.72"/>
-<polygon fill="black" stroke="black" points="231.15,-270.72 234.65,-280.72 238.15,-270.72 231.15,-270.72"/>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M363.57,-252.11C363.57,-252.11 363.57,-270.99 363.57,-270.99"/>
+<polygon fill="black" stroke="black" points="360.07,-270.99 363.57,-280.99 367.07,-270.99 360.07,-270.99"/>
 </g>
 <!-- SortModeComponent  -->
-<g id="node16" class="node">
+<g id="node14" class="node">
 <title>SortModeComponent </title>
-<polygon fill="#fb8072" stroke="black" points="164.33,-317 23.67,-317 23.67,-281 164.33,-281 164.33,-317"/>
-<text text-anchor="middle" x="94" y="-294.8" font-family="Times,serif" font-size="14.00">SortModeComponent </text>
+<polygon fill="#fb8072" stroke="black" points="249.33,-317 108.67,-317 108.67,-281 249.33,-281 249.33,-317"/>
+<text text-anchor="middle" x="179" y="-294.8" font-family="Times,serif" font-size="14.00">SortModeComponent </text>
 </g>
 <!-- HeaderComponentModule&#45;&gt;SortModeComponent  -->
-<g id="edge15" class="edge">
+<g id="edge13" class="edge">
 <title>HeaderComponentModule&#45;&gt;SortModeComponent </title>
-<path fill="none" stroke="black" stroke-dasharray="5,2" d="M353.33,-238C246.4,-238 73.7,-238 73.7,-238 73.7,-238 73.7,-270.7 73.7,-270.7"/>
-<polygon fill="black" stroke="black" points="70.2,-270.7 73.7,-280.7 77.2,-270.7 70.2,-270.7"/>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M304.12,-240C259.98,-240 214.69,-240 214.69,-240 214.69,-240 214.69,-270.98 214.69,-270.98"/>
+<polygon fill="black" stroke="black" points="211.19,-270.98 214.69,-280.98 218.19,-270.98 211.19,-270.98"/>
 </g>
 <!-- CaseHeaderService -->
-<g id="node7" class="node">
+<g id="node6" class="node">
 <title>CaseHeaderService</title>
 <ellipse fill="#fdb462" stroke="black" cx="911" cy="-104" rx="86.77" ry="18"/>
 <text text-anchor="middle" x="911" y="-99.8" font-family="Times,serif" font-size="14.00">CaseHeaderService</text>
 </g>
 <!-- CaseHeaderService&#45;&gt;HeaderComponent -->
-<g id="edge3" class="edge">
+<g id="edge2" class="edge">
 <title>CaseHeaderService&#45;&gt;HeaderComponent</title>
-<path fill="none" stroke="black" d="M911,-122.06C911,-126.49 911,-130 911,-130 911,-130 647.04,-130 647.04,-130 647.04,-130 647.04,-140.87 647.04,-140.87"/>
-<polygon fill="black" stroke="black" points="643.54,-140.87 647.04,-150.87 650.54,-140.87 643.54,-140.87"/>
+<path fill="none" stroke="black" d="M911,-122.11C911,-141.34 911,-169 911,-169 911,-169 659.94,-169 659.94,-169"/>
+<polygon fill="black" stroke="black" points="659.94,-165.5 649.94,-169 659.94,-172.5 659.94,-165.5"/>
 </g>
 <!-- TaskHeaderService -->
-<g id="node8" class="node">
+<g id="node7" class="node">
 <title>TaskHeaderService</title>
 <ellipse fill="#fdb462" stroke="black" cx="720" cy="-104" rx="86.77" ry="18"/>
 <text text-anchor="middle" x="720" y="-99.8" font-family="Times,serif" font-size="14.00">TaskHeaderService</text>
 </g>
 <!-- TaskHeaderService&#45;&gt;HeaderComponent -->
-<g id="edge4" class="edge">
+<g id="edge3" class="edge">
 <title>TaskHeaderService&#45;&gt;HeaderComponent</title>
-<path fill="none" stroke="black" d="M640.2,-111.2C640.2,-111.2 640.2,-140.96 640.2,-140.96"/>
-<polygon fill="black" stroke="black" points="636.7,-140.96 640.2,-150.96 643.7,-140.96 636.7,-140.96"/>
+<path fill="none" stroke="black" d="M641.62,-111.71C641.62,-111.71 641.62,-140.99 641.62,-140.99"/>
+<polygon fill="black" stroke="black" points="638.12,-140.99 641.62,-150.99 645.12,-140.99 638.12,-140.99"/>
 </g>
 <!-- WorkflowHeaderService -->
-<g id="node9" class="node">
+<g id="node8" class="node">
 <title>WorkflowHeaderService</title>
 <ellipse fill="#fdb462" stroke="black" cx="508" cy="-104" rx="107.6" ry="18"/>
 <text text-anchor="middle" x="508" y="-99.8" font-family="Times,serif" font-size="14.00">WorkflowHeaderService</text>
 </g>
 <!-- WorkflowHeaderService&#45;&gt;HeaderComponent -->
-<g id="edge5" class="edge">
+<g id="edge4" class="edge">
 <title>WorkflowHeaderService&#45;&gt;HeaderComponent</title>
-<path fill="none" stroke="black" d="M594.7,-114.73C594.7,-114.73 594.7,-140.87 594.7,-140.87"/>
-<polygon fill="black" stroke="black" points="591.2,-140.87 594.7,-150.87 598.2,-140.87 591.2,-140.87"/>
+<path fill="none" stroke="black" d="M593.7,-115.03C593.7,-115.03 593.7,-140.78 593.7,-140.78"/>
+<polygon fill="black" stroke="black" points="590.2,-140.78 593.7,-150.78 597.2,-140.78 590.2,-140.78"/>
 </g>
 <!-- HeaderSearchService -->
-<g id="node10" class="node">
+<g id="node9" class="node">
 <title>HeaderSearchService</title>
 <ellipse fill="#fdb462" stroke="black" cx="288" cy="-104" rx="94.28" ry="18"/>
 <text text-anchor="middle" x="288" y="-99.8" font-family="Times,serif" font-size="14.00">HeaderSearchService</text>
 </g>
 <!-- HeaderSearchService&#45;&gt;HeaderComponent -->
-<g id="edge6" class="edge">
+<g id="edge5" class="edge">
 <title>HeaderSearchService&#45;&gt;HeaderComponent</title>
-<path fill="none" stroke="black" d="M367.91,-113.72C367.91,-123.46 367.91,-137 367.91,-137 367.91,-137 573.84,-137 573.84,-137 573.84,-137 573.84,-140.76 573.84,-140.76"/>
-<polygon fill="black" stroke="black" points="570.34,-140.76 573.84,-150.76 577.34,-140.76 570.34,-140.76"/>
+<path fill="none" stroke="black" d="M365.91,-114.11C365.91,-122.13 365.91,-132 365.91,-132 365.91,-132 571.84,-132 571.84,-132 571.84,-132 571.84,-140.93 571.84,-140.93"/>
+<polygon fill="black" stroke="black" points="568.34,-140.93 571.84,-150.93 575.34,-140.93 568.34,-140.93"/>
 </g>
 <!-- CategoryFactory -->
-<g id="node11" class="node">
+<g id="node10" class="node">
 <title>CategoryFactory</title>
 <ellipse fill="#fdb462" stroke="black" cx="100" cy="-104" rx="75.86" ry="18"/>
 <text text-anchor="middle" x="100" y="-99.8" font-family="Times,serif" font-size="14.00">CategoryFactory</text>
 </g>
 <!-- CategoryFactory&#45;&gt;HeaderComponent -->
-<g id="edge7" class="edge">
+<g id="edge6" class="edge">
 <title>CategoryFactory&#45;&gt;HeaderComponent</title>
-<path fill="none" stroke="black" d="M170.8,-110.61C170.8,-121.97 170.8,-144 170.8,-144 170.8,-144 552.98,-144 552.98,-144 552.98,-144 552.98,-144.68 552.98,-144.68"/>
-<polygon fill="black" stroke="black" points="549.48,-140.83 552.98,-150.83 556.48,-140.83 549.48,-140.83"/>
+<path fill="none" stroke="black" d="M168.8,-111.69C168.8,-122.79 168.8,-142 168.8,-142 168.8,-142 549.98,-142 549.98,-142 549.98,-142 549.98,-142.88 549.98,-142.88"/>
+<polygon fill="black" stroke="black" points="546.48,-140.84 549.98,-150.84 553.48,-140.84 546.48,-140.84"/>
 </g>
 </g>
 </svg>
@@ -279,16 +306,22 @@
 <script src="../js/svg-pan-zoom.controls.js"></script>
 
 <ul class="nav nav-tabs" role="tablist">
-    <li  class="active" >
-        <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+    <li class="nav-item">
+        <a href="#info" 
+            class="nav-link"
+            class="nav-link active"
+            role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
     </li>
-    <li >
-        <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+    <li class="nav-item">
+        <a href="#source" 
+            class="nav-link"
+            
+            role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
     </li>
 </ul>
 
 <div class="tab-content">
-    <div class="tab-pane fade active in" id="c-info">
+    <div class="tab-pane fade active in" id="info">
 
         <p class="comment">
             <h3>File</h3>
@@ -304,12 +337,9 @@
         <div class="container-fluid module">
             <div class="row">
                 <div class="col-sm-3">
-                    <h3>Declarations<a href="https://angular.io/api/core/NgModule#declarations" target="_blank"
+                    <h3>Declarations<a href="https://angular.io/api/core/NgModule#declarations" target="_blank" rel="noopener noreferrer"
                             title="Official documentation about module declarations"><span class="icon ion-ios-information-circle-outline"></span></a></h3>
                     <ul class="list-group">
-                        <li class="list-group-item">
-                            <a href="../components/EditModeComponent.html">EditModeComponent</a>
-                        </li>
                         <li class="list-group-item">
                             <a href="../components/HeaderComponent.html">HeaderComponent</a>
                         </li>
@@ -325,12 +355,10 @@
                     </ul>
                 </div>
                 <div class="col-sm-3">
-                    <h3>Exports<a href="https://angular.io/api/core/NgModule#exports" target="_blank" title="Official documentation about module exports"><span
+                    <h3>Exports<a href="https://angular.io/api/core/NgModule#exports" target="_blank" rel="noopener noreferrer"
+                            title="Official documentation about module exports"><span
                                 class="icon ion-ios-information-circle-outline"></a></h3>
                     <ul class="list-group">
-                        <li class="list-group-item">
-                            <a href="../components/EditModeComponent.html">EditModeComponent</a>
-                        </li>
                         <li class="list-group-item">
                             <a href="../components/HeaderComponent.html">HeaderComponent</a>
                         </li>
@@ -352,11 +380,11 @@
     </div>
 
 
-    <div class="tab-pane fade  tab-source-code" id="c-source">
+    <div class="tab-pane fade  tab-source-code" id="source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {NgModule} from &#x27;@angular/core&#x27;;
 import {CommonModule} from &#x27;@angular/common&#x27;;
 import {HeaderComponent} from &#x27;./header.component&#x27;;
-import {FlexModule} from &#x27;@angular/flex-layout&#x27;;
+import {FlexModule} from &#x27;@ngbracket/ngx-layout&#x27;;
 import {MaterialModule, TranslateLibModule} from &#x27;@netgrif/components-core&#x27;;
 import {EditModeComponent} from &#x27;./header-modes/edit-mode/edit-mode.component&#x27;;
 import {SortModeComponent} from &#x27;./header-modes/sort-mode/sort-mode.component&#x27;;
@@ -405,14 +433,16 @@ export class HeaderComponentModule {
 
 
 
-                   
+
+
+
 
 
 
 
                    </div><div class="search-results">
     <div class="has-results">
-        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
         <ul class="search-results-list"></ul>
     </div>
     <div class="no-results">
@@ -424,6 +454,15 @@ export class HeaderComponentModule {
            </div>
        </div>
 
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'module';
@@ -431,10 +470,23 @@ export class HeaderComponentModule {
             var MAX_SEARCH_RESULTS = 15;
        </script>
 
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
        <script src="../js/libs/custom-elements.min.js"></script>
        <script src="../js/libs/lit-html.js"></script>
-       
-       <script type="module" src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/menu-wc.js" defer></script>
        <script nomodule src="../js/menu-wc_es5.js" defer></script>
 
        <script src="../js/libs/bootstrap-native.js"></script>

@@ -1,0 +1,1765 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Netgrif Components library Documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">Netgrif Components library Documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content injectable">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Injectables</li>
+  <li class="breadcrumb-item" >GridsterService</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" 
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" 
+                class="nav-link"
+                
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>projects/netgrif-components/src/lib/builder/form-builder/gridster/gridster.service.ts</code>
+        </p>
+
+
+
+
+
+            <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Static</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#EXISTING_FIELD" >EXISTING_FIELD</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#addDataRef" >addDataRef</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#addNewDataVariable" >addNewDataVariable</a>
+                            </li>
+                            <li>
+                                <a href="#emptyCellClick" >emptyCellClick</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnDestroy" >ngOnDestroy</a>
+                            </li>
+                            <li>
+                                <a href="#notifySelectedDataField" >notifySelectedDataField</a>
+                            </li>
+                            <li>
+                                <a href="#notifySelectedDataFieldChange" >notifySelectedDataFieldChange</a>
+                            </li>
+                            <li>
+                                <a href="#onNewFieldPlaced$" >onNewFieldPlaced$</a>
+                            </li>
+                            <li>
+                                <a href="#removeDataRef" >removeDataRef</a>
+                            </li>
+                            <li>
+                                <a href="#selectedDataFieldChangeStream$" >selectedDataFieldChangeStream$</a>
+                            </li>
+                            <li>
+                                <a href="#selectedDataFieldStream$" >selectedDataFieldStream$</a>
+                            </li>
+                            <li>
+                                <a href="#updateDataRef" >updateDataRef</a>
+                            </li>
+                            <li>
+                                <a href="#updateGridsterRows" >updateGridsterRows</a>
+                            </li>
+                            <li>
+                                <a href="#updatePlacedDataFields" >updatePlacedDataFields</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <h6><b>Accessors</b></h6>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <ul class="index-list">
+                                <li>
+                                    <a href="#options" >options</a>
+                                </li>
+                                <li>
+                                    <a href="#placedDataFields" >placedDataFields</a>
+                                </li>
+                                <li>
+                                    <a href="#selectedDataField" >selectedDataField</a>
+                                </li>
+                                <li>
+                                    <a href="#historySave" >historySave</a>
+                                </li>
+                                <li>
+                                    <a href="#transition" >transition</a>
+                                </li>
+                                <li>
+                                    <a href="#transitionId" >transitionId</a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+        </tbody>
+    </table>
+</section>
+
+            <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(modelService: <a href="../injectables/ModelService.html" target="_self">ModelService</a>, transitionService: <a href="../injectables/SelectedTransitionService.html" target="_self">SelectedTransitionService</a>, _builderModeService: <a href="../injectables/BuilderModeService.html" target="_self">BuilderModeService</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="48" class="link-to-prism">projects/netgrif-components/src/lib/builder/form-builder/gridster/gridster.service.ts:48</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>modelService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/ModelService.html" target="_self" >ModelService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>transitionService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/SelectedTransitionService.html" target="_self" >SelectedTransitionService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_builderModeService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/BuilderModeService.html" target="_self" >BuilderModeService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+            <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="addDataRef"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>addDataRef</b></span>
+                        <a href="#addDataRef"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>addDataRef(dataVariable: DataVariable, componentRows: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, componentCols: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, componentName: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, item: GridsterItem)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="228"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/builder/form-builder/gridster/gridster.service.ts:228</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>dataVariable</td>
+                                            <td>
+                                                        <code>DataVariable</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>componentRows</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>componentCols</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>componentName</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>item</td>
+                                            <td>
+                                                        <code>GridsterItem</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>DataRef</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="addNewDataVariable"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>addNewDataVariable</b></span>
+                        <a href="#addNewDataVariable"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>addNewDataVariable(type: <a href="../undefineds/Type.html" target="_self">DataType</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="212"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/builder/form-builder/gridster/gridster.service.ts:212</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>type</td>
+                                            <td>
+                                                            <code><a href="../miscellaneous/enumerations.html#Type" target="_self" >DataType</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>DataVariable</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="emptyCellClick"></a>
+                    <span class="name">
+                        <span ><b>emptyCellClick</b></span>
+                        <a href="#emptyCellClick"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>emptyCellClick(event: DragEvent, item: GridsterItem)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="158"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/builder/form-builder/gridster/gridster.service.ts:158</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>event</td>
+                                            <td>
+                                                        <code>DragEvent</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>item</td>
+                                            <td>
+                                                        <code>GridsterItem</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnDestroy"></a>
+                    <span class="name">
+                        <span ><b>ngOnDestroy</b></span>
+                        <a href="#ngOnDestroy"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnDestroy()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="123"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/builder/form-builder/gridster/gridster.service.ts:123</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="notifySelectedDataField"></a>
+                    <span class="name">
+                        <span ><b>notifySelectedDataField</b></span>
+                        <a href="#notifySelectedDataField"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>notifySelectedDataField(field: <a href="../classes/GridsterDataField.html" target="_self">GridsterDataField | undefined</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="139"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/builder/form-builder/gridster/gridster.service.ts:139</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>field</td>
+                                            <td>
+                                                            <code><a href="../classes/GridsterDataField.html" target="_self" >GridsterDataField | undefined</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="notifySelectedDataFieldChange"></a>
+                    <span class="name">
+                        <span ><b>notifySelectedDataFieldChange</b></span>
+                        <a href="#notifySelectedDataFieldChange"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>notifySelectedDataFieldChange()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="142"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/builder/form-builder/gridster/gridster.service.ts:142</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onNewFieldPlaced$"></a>
+                    <span class="name">
+                        <span ><b>onNewFieldPlaced$</b></span>
+                        <a href="#onNewFieldPlaced$"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onNewFieldPlaced$()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="144"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/builder/form-builder/gridster/gridster.service.ts:144</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Observable&lt;DataVariable&gt;</code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="removeDataRef"></a>
+                    <span class="name">
+                        <span ><b>removeDataRef</b></span>
+                        <a href="#removeDataRef"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>removeDataRef(item: <a href="../classes/GridsterDataField.html" target="_self">GridsterDataField</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="203"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/builder/form-builder/gridster/gridster.service.ts:203</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>item</td>
+                                            <td>
+                                                            <code><a href="../classes/GridsterDataField.html" target="_self" >GridsterDataField</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="selectedDataFieldChangeStream$"></a>
+                    <span class="name">
+                        <span ><b>selectedDataFieldChangeStream$</b></span>
+                        <a href="#selectedDataFieldChangeStream$"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>selectedDataFieldChangeStream$()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="141"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/builder/form-builder/gridster/gridster.service.ts:141</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Observable&lt;void&gt;</code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="selectedDataFieldStream$"></a>
+                    <span class="name">
+                        <span ><b>selectedDataFieldStream$</b></span>
+                        <a href="#selectedDataFieldStream$"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>selectedDataFieldStream$()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="138"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/builder/form-builder/gridster/gridster.service.ts:138</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../classes/GridsterDataField.html" target="_self" >Observable&lt;GridsterDataField&gt;</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="updateDataRef"></a>
+                    <span class="name">
+                        <span ><b>updateDataRef</b></span>
+                        <a href="#updateDataRef"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>updateDataRef(item: <a href="../classes/GridsterDataField.html" target="_self">GridsterDataField</a>, resized: GridsterItemComponentInterface)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="173"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/builder/form-builder/gridster/gridster.service.ts:173</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>item</td>
+                                            <td>
+                                                            <code><a href="../classes/GridsterDataField.html" target="_self" >GridsterDataField</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>resized</td>
+                                            <td>
+                                                        <code>GridsterItemComponentInterface</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="updateGridsterRows"></a>
+                    <span class="name">
+                        <span ><b>updateGridsterRows</b></span>
+                        <a href="#updateGridsterRows"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>updateGridsterRows()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="191"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/builder/form-builder/gridster/gridster.service.ts:191</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="updatePlacedDataFields"></a>
+                    <span class="name">
+                        <span ><b>updatePlacedDataFields</b></span>
+                        <a href="#updatePlacedDataFields"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>updatePlacedDataFields()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="182"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/builder/form-builder/gridster/gridster.service.ts:182</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+            <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="EXISTING_FIELD"></a>
+                    <span class="name">
+                            <span class="modifier">Static</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>EXISTING_FIELD</b></span>
+                        <a href="#EXISTING_FIELD"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;existingField&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="37" class="link-to-prism">projects/netgrif-components/src/lib/builder/form-builder/gridster/gridster.service.ts:37</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+            <section data-compodoc="block-accessors">
+    <h3 id="accessors">
+        Accessors
+    </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="options"></a>
+                        <span class="name"><b>options</b><a href="#options"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>options()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="127" class="link-to-prism">projects/netgrif-components/src/lib/builder/form-builder/gridster/gridster.service.ts:127</a></div>
+                                </td>
+                            </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="placedDataFields"></a>
+                        <span class="name"><b>placedDataFields</b><a href="#placedDataFields"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>placedDataFields()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="129" class="link-to-prism">projects/netgrif-components/src/lib/builder/form-builder/gridster/gridster.service.ts:129</a></div>
+                                </td>
+                            </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>set</b><code>placedDataFields(value: <a href="../classes/GridsterDataField.html" target="_self">Array&lt;GridsterDataField&gt;</a>)</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="130" class="link-to-prism">projects/netgrif-components/src/lib/builder/form-builder/gridster/gridster.service.ts:130</a></div>
+                                </td>
+                            </tr>
+                    <tr>
+                        <td class="col-md-4">
+
+                                <div class="io-description">
+                                        <b>Parameters :</b>
+                                        <table class="params">
+                                            <thead>
+                                                <tr>
+                                                    <td>Name</td>
+                                                        <td>Type</td>
+                                                    <td>Optional</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                    <tr>
+                                                            <td>value</td>
+                                                    
+                                                            <td>
+                                                                            <code><a href="../classes/GridsterDataField.html" target="_self" >Array&lt;GridsterDataField&gt;</a></code>
+                                                            </td>
+                                                    
+                                                        <td>
+                                                                No
+                                                        </td>
+                                                        
+                                                    </tr>
+                                            </tbody>
+                                        </table>
+                                </div>
+                                <div>
+                                </div>
+                                <div class="io-description">
+                                    <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                                </div>
+                        </td>
+                    </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="selectedDataField"></a>
+                        <span class="name"><b>selectedDataField</b><a href="#selectedDataField"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>selectedDataField()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="132" class="link-to-prism">projects/netgrif-components/src/lib/builder/form-builder/gridster/gridster.service.ts:132</a></div>
+                                </td>
+                            </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>set</b><code>selectedDataField(value: <a href="../classes/GridsterDataField.html" target="_self">GridsterDataField</a>)</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="133" class="link-to-prism">projects/netgrif-components/src/lib/builder/form-builder/gridster/gridster.service.ts:133</a></div>
+                                </td>
+                            </tr>
+                    <tr>
+                        <td class="col-md-4">
+
+                                <div class="io-description">
+                                        <b>Parameters :</b>
+                                        <table class="params">
+                                            <thead>
+                                                <tr>
+                                                    <td>Name</td>
+                                                        <td>Type</td>
+                                                    <td>Optional</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                    <tr>
+                                                            <td>value</td>
+                                                    
+                                                            <td>
+                                                                            <code><a href="../classes/GridsterDataField.html" target="_self" >GridsterDataField</a></code>
+                                                            </td>
+                                                    
+                                                        <td>
+                                                                No
+                                                        </td>
+                                                        
+                                                    </tr>
+                                            </tbody>
+                                        </table>
+                                </div>
+                                <div>
+                                </div>
+                                <div class="io-description">
+                                    <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                                </div>
+                        </td>
+                    </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="historySave"></a>
+                        <span class="name"><b>historySave</b><a href="#historySave"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>historySave()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="135" class="link-to-prism">projects/netgrif-components/src/lib/builder/form-builder/gridster/gridster.service.ts:135</a></div>
+                                </td>
+                            </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>set</b><code>historySave(value: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank">boolean</a>)</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="136" class="link-to-prism">projects/netgrif-components/src/lib/builder/form-builder/gridster/gridster.service.ts:136</a></div>
+                                </td>
+                            </tr>
+                    <tr>
+                        <td class="col-md-4">
+
+                                <div class="io-description">
+                                        <b>Parameters :</b>
+                                        <table class="params">
+                                            <thead>
+                                                <tr>
+                                                    <td>Name</td>
+                                                        <td>Type</td>
+                                                    <td>Optional</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                    <tr>
+                                                            <td>value</td>
+                                                    
+                                                            <td>
+                                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+                                                            </td>
+                                                    
+                                                        <td>
+                                                                No
+                                                        </td>
+                                                        
+                                                    </tr>
+                                            </tbody>
+                                        </table>
+                                </div>
+                                <div>
+                                </div>
+                                <div class="io-description">
+                                    <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                                </div>
+                        </td>
+                    </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="transition"></a>
+                        <span class="name"><b>transition</b><a href="#transition"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>transition()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="146" class="link-to-prism">projects/netgrif-components/src/lib/builder/form-builder/gridster/gridster.service.ts:146</a></div>
+                                </td>
+                            </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="transitionId"></a>
+                        <span class="name"><b>transitionId</b><a href="#transitionId"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>transitionId()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="154" class="link-to-prism">projects/netgrif-components/src/lib/builder/form-builder/gridster/gridster.service.ts:154</a></div>
+                                </td>
+                            </tr>
+
+            </tbody>
+        </table>
+</section>
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Injectable, OnDestroy} from &#x27;@angular/core&#x27;;
+import {
+  Appearance,
+  Component,
+  DataGroup,
+  DataRef,
+  DataRefBehavior,
+  DataType,
+  DataVariable,
+  Expression,
+  I18nWithDynamic,
+  Property,
+  Template,
+  Transition,
+  TransitionLayout,
+} from &#x27;@netgrif/petriflow&#x27;;
+import {
+  CompactType,
+  DisplayGrid,
+  GridsterConfig,
+  GridsterItem,
+  GridsterItemComponentInterface,
+  GridType,
+} from &#x27;angular-gridster2&#x27;;
+import {BehaviorSubject, Observable, ReplaySubject, Subject, Subscription} from &#x27;rxjs&#x27;;
+import {debounceTime} from &#x27;rxjs/operators&#x27;;
+import {ModelerConfig} from &#x27;../../modeler/modeler-config&#x27;;
+import {SelectedTransitionService} from &#x27;../../modeler/selected-transition.service&#x27;;
+import {ModelService} from &#x27;../../modeler/services/model/model.service&#x27;;
+import {DataFieldUtils} from &#x27;../data-field-utils&#x27;;
+import {FieldListService, PropertyDef} from &#x27;../field-list/field-list.service&#x27;;
+import {GridsterDataField} from &#x27;./classes/gridster-data-field&#x27;;
+import {BuilderModeService} from &quot;../../services/builder-mode.service&quot;;
+
+@Injectable()
+export class GridsterService implements OnDestroy {
+    public static readonly EXISTING_FIELD &#x3D; &#x27;existingField&#x27;;
+
+    private _options: GridsterConfig;
+    private _mapCounter: Map&lt;string, number&gt;;
+    private _placedDataFields: Array&lt;GridsterDataField&gt;;
+    private _selectedDataField: GridsterDataField;
+    private _selectedDataFieldStream: ReplaySubject&lt;GridsterDataField&gt;;
+    private _selectedDataFieldChangeStream: BehaviorSubject&lt;void&gt;;
+    private _onNewFieldPlaced: ReplaySubject&lt;DataVariable&gt;;
+    private _optionChanged: Subject&lt;void&gt;;
+    private _historySave: boolean;
+    private _readOnlySub: Subscription;
+
+    constructor(private modelService: ModelService, private transitionService: SelectedTransitionService, private _builderModeService: BuilderModeService) {
+        this._options &#x3D; {
+            gridType: GridType.VerticalFixed,
+            compactType: CompactType.None,
+            margin: 0,
+            useTransformPositioning: true,
+            mobileBreakpoint: 640,
+            minCols: ModelerConfig.LAYOUT_DEFAULT_COLS,
+            maxCols: ModelerConfig.LAYOUT_DEFAULT_COLS,
+            minRows: 1,
+            maxRows: 1000,
+            maxItemCols: ModelerConfig.LAYOUT_DEFAULT_COLS,
+            minItemCols: 1,
+            maxItemRows: 10,
+            minItemRows: 1,
+            maxItemArea: 2500,
+            minItemArea: 1,
+            defaultItemCols: 1,
+            defaultItemRows: 1,
+            fixedColWidth: 105,
+            fixedRowHeight: 110,
+            keepFixedHeightInMobile: false,
+            keepFixedWidthInMobile: false,
+            scrollSensitivity: 10,
+            scrollSpeed: 20,
+            enableEmptyCellClick: false,
+            enableEmptyCellContextMenu: false,
+            enableEmptyCellDrag: false,
+            enableOccupiedCellDrop: false,
+            emptyCellDragMaxCols: ModelerConfig.LAYOUT_DEFAULT_COLS,
+            emptyCellDragMaxRows: 50,
+            ignoreMarginInRow: false,
+            draggable: {
+                enabled: !_builderModeService.readOnly,
+            },
+            resizable: {
+                enabled: !_builderModeService.readOnly,
+            },
+            swap: false,
+            pushItems: true,
+            disablePushOnDrag: false,
+            disablePushOnResize: false,
+            pushDirections: {north: true, east: true, south: true, west: true},
+            pushResizeItems: false,
+            displayGrid: DisplayGrid.Always,
+            disableWindowResize: false,
+            disableWarnings: false,
+            scrollToNewItems: false,
+            emptyCellDropCallback: this.emptyCellClick.bind(this),
+            emptyCellDragCallback: this.emptyCellClick.bind(this),
+            itemResizeCallback: this.updateDataRef.bind(this),
+            itemChangeCallback: this.updateDataRef.bind(this),
+            enableEmptyCellDrop: true,
+            ignoreContent: true,
+            ignoreContentClass: &#x27;gridster-item-content&#x27;,
+            dragHandleClass: &#x27;drag-handler&#x27;
+        };
+        this._placedDataFields &#x3D; new Array&lt;GridsterDataField&gt;();
+        this._mapCounter &#x3D; new Map&lt;string, number&gt;();
+        this._selectedDataFieldChangeStream &#x3D; new BehaviorSubject&lt;void&gt;(undefined);
+        this._onNewFieldPlaced &#x3D; new ReplaySubject();
+        this._selectedDataFieldStream &#x3D; new ReplaySubject();
+        this._optionChanged &#x3D; new Subject&lt;void&gt;();
+        this._optionChanged.pipe(debounceTime(300)).subscribe(() &#x3D;&gt; {
+            this._options?.api?.optionsChanged();
+        });
+        this._readOnlySub &#x3D; this._builderModeService.readOnly$.subscribe((readOnly) &#x3D;&gt; {
+            this._options.draggable.enabled &#x3D; !readOnly;
+            this._options.resizable.enabled &#x3D; !readOnly;
+            this._options?.api?.optionsChanged()
+        });
+    }
+
+    ngOnDestroy(): void {
+        this._readOnlySub.unsubscribe();
+    }
+
+    get options(): GridsterConfig { return this._options; }
+
+    get placedDataFields(): Array&lt;GridsterDataField&gt; { return this._placedDataFields; }
+    set placedDataFields(value: Array&lt;GridsterDataField&gt;) { this._placedDataFields &#x3D; value; }
+
+    get selectedDataField(): GridsterDataField { return this._selectedDataField; }
+    set selectedDataField(value: GridsterDataField) { this._selectedDataField &#x3D; value; }
+
+    get historySave(): boolean { return this._historySave; }
+    set historySave(value: boolean) { this._historySave &#x3D; value; }
+
+    selectedDataFieldStream$(): Observable&lt;GridsterDataField&gt; { return this._selectedDataFieldStream.asObservable(); }
+    notifySelectedDataField(field: GridsterDataField | undefined): void { this._selectedDataFieldStream.next(field); }
+
+    selectedDataFieldChangeStream$(): Observable&lt;void&gt; { return this._selectedDataFieldChangeStream.asObservable(); }
+    notifySelectedDataFieldChange(): void { this._selectedDataFieldChangeStream.next(); }
+
+    onNewFieldPlaced$(): Observable&lt;DataVariable&gt; { return this._onNewFieldPlaced.asObservable(); }
+
+    get transition(): Transition {
+        const transition &#x3D; this.modelService.model.getTransition(this.transitionId);
+        if (!transition?.layout) {
+            transition.layout &#x3D; new TransitionLayout();
+        }
+        return transition;
+    }
+
+    get transitionId(): string {
+        return this.transitionService.id;
+    }
+
+    emptyCellClick(event: DragEvent, item: GridsterItem) {
+        if (!event?.dataTransfer?.getData(&#x27;type&#x27;) &amp;&amp; !event?.dataTransfer?.getData(GridsterService.EXISTING_FIELD)) {
+            return;
+        }
+        const isExistingField &#x3D; event.dataTransfer.getData(GridsterService.EXISTING_FIELD) &#x3D;&#x3D;&#x3D; &#x27;true&#x27;;
+        let dataVariable: DataVariable;
+        if (!isExistingField) {
+            dataVariable &#x3D; this.addNewDataVariable(event.dataTransfer.getData(&#x27;type&#x27;) as DataType);
+        } else {
+            const id &#x3D; event.dataTransfer.getData(&#x27;id&#x27;);
+            dataVariable &#x3D; this.modelService.model.getData(id);
+        }
+        this.addNewDataRef(dataVariable, event, item);
+    }
+
+    updateDataRef(item: GridsterDataField, resized: GridsterItemComponentInterface) {
+        item.x &#x3D; item.dataRef.layout.x &#x3D; resized.$item.x;
+        item.y &#x3D; item.dataRef.layout.y &#x3D; resized.$item.y;
+        item.rows &#x3D; item.dataRef.layout.rows &#x3D; resized.$item.rows;
+        item.cols &#x3D; item.dataRef.layout.cols &#x3D; resized.$item.cols;
+        this._historySave &#x3D; true;
+        this.updateGridsterRows();
+    }
+
+    updatePlacedDataFields() {
+        const refs &#x3D; this.transition.dataGroups[0]?.getDataRefs();
+        if (refs) {
+            this._placedDataFields &#x3D; refs.map(ref &#x3D;&gt; new GridsterDataField(ref, this.modelService.model.getData(ref.id)));
+        } else {
+            this._placedDataFields &#x3D; [];
+        }
+    }
+
+    updateGridsterRows() {
+        let min &#x3D; 1;
+        this._placedDataFields.forEach(ref &#x3D;&gt; {
+            const end &#x3D; ref.y + ref.rows;
+            if (end &gt; min) {
+                min &#x3D; end;
+            }
+        });
+        this._options.minRows &#x3D; min + 1;
+        this._optionChanged.next();
+    }
+
+    removeDataRef(item: GridsterDataField) {
+        const id &#x3D; item.dataRef.id;
+        (this.transition.dataGroups[0] as DataGroup).removeDataRef(id);
+        this._placedDataFields.splice(this._placedDataFields.findIndex(field &#x3D;&gt; field.dataVariable.id &#x3D;&#x3D;&#x3D; id), 1);
+        this._selectedDataField &#x3D; undefined;
+        this._selectedDataFieldStream.next(this._selectedDataField);
+        this._historySave &#x3D; true;
+    }
+
+    public addNewDataVariable(type: DataType): DataVariable {
+        const id &#x3D; this.createId(type);
+        const dataVariable &#x3D; new DataVariable(id, type);
+        if (DataFieldUtils.FIELDS_WITH_OPTIONS.includes(type)) {
+            dataVariable.optionsInit &#x3D; new Expression(&#x27;&#x27;, true);
+            if (DataFieldUtils.FIELDS_WITH_INITS.includes(type)) {
+                dataVariable.inits &#x3D; [];
+            }
+        } else {
+            dataVariable.init &#x3D; new I18nWithDynamic(&#x27;&#x27;, &#x27;&#x27;, false);
+        }
+        this.modelService.model.addData(dataVariable);
+        this._historySave &#x3D; true;
+        return dataVariable;
+    }
+
+    public addDataRef(dataVariable: DataVariable, componentRows: number, componentCols: number, componentName: string, item: GridsterItem): DataRef {
+        const dataRef &#x3D; new DataRef(dataVariable.id);
+        dataRef.layout.x &#x3D; item.x;
+        dataRef.layout.y &#x3D; item.y;
+        item.rows &#x3D; FieldListService.DEFAULT_FIELD_ROWS;
+        item.cols &#x3D; FieldListService.DEFAULT_FIELD_COLS;
+        if (componentRows) {
+            item.rows &#x3D; +componentRows;
+        }
+        if (componentCols) {
+            item.cols &#x3D; +componentCols;
+        }
+        if (item.cols &gt; this._options.maxCols) {
+            item.cols &#x3D; this._options.maxCols;
+        }
+        dataRef.layout.rows &#x3D; item.rows;
+        dataRef.layout.cols &#x3D; item.cols;
+        dataRef.layout.template &#x3D; Template.MATERIAL;
+        dataRef.layout.appearance &#x3D; Appearance.OUTLINE;
+        dataRef.logic.behavior &#x3D; DataRefBehavior.EDITABLE;
+
+        if (componentName) {
+            dataRef.component &#x3D; new Component(componentName);
+        }
+        const transition &#x3D; this.modelService.model.getTransition(this.transitionId);
+        transition.dataGroups[0].addDataRef(dataRef);
+        if (dataVariable.type &#x3D;&#x3D;&#x3D; DataType.TASK_REF &amp;&amp; dataVariable.init?.value &#x3D;&#x3D;&#x3D; this.transitionId) {
+            dataVariable.init.value &#x3D; undefined;
+        }
+        this._selectedDataField &#x3D; new GridsterDataField(dataRef, dataVariable);
+        this._selectedDataFieldStream.next(this._selectedDataField);
+        this._placedDataFields.push(this._selectedDataField);
+        this._onNewFieldPlaced.next(dataVariable);
+        this.updateGridsterRows();
+        this._historySave &#x3D; true;
+        return dataRef;
+    }
+
+    private addNewDataRef(data: DataVariable, event: DragEvent, item: GridsterItem): DataRef {
+        const newDataRef &#x3D;  this.addDataRef(
+            data,
+            +event.dataTransfer.getData(&#x27;rows&#x27;),
+            +event.dataTransfer.getData(&#x27;cols&#x27;),
+            event.dataTransfer.getData(&#x27;ref_component&#x27;),
+            item);
+        const properties: Array&lt;PropertyDef&gt; &#x3D; JSON.parse(event.dataTransfer.getData(&#x27;properties&#x27;));
+        if (!!properties) {
+            for (const property of properties) {
+                newDataRef.component.properties.push(new Property(property.name, property.defaultValue));
+            }
+        }
+        this._options.api?.optionsChanged();
+        return newDataRef;
+    }
+
+    private createId(type: string) {
+        // TODO: release/4.0.0 update with model service logic
+        let counter: number;
+        if (this._mapCounter.has(type)) {
+            counter &#x3D; this._mapCounter.get(type);
+            this._mapCounter.set(type, counter + 1);
+        } else {
+            counter &#x3D; 0;
+            this._mapCounter.set(type, counter + 1);
+        }
+        try {
+            if (this.modelService.model.getData(type + &#x27;_&#x27; + counter)) {
+                return this.createId(type);
+            } else {
+                return type + &#x27;_&#x27; + counter;
+            }
+        } catch (e) {
+            return type + &#x27;_&#x27; + counter;
+        }
+    }
+}
+</code></pre>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'injectable';
+            var COMPODOC_CURRENT_PAGE_URL = 'GridsterService.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

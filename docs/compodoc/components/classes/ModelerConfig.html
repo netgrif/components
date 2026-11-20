@@ -1,0 +1,647 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Netgrif Components library Documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">Netgrif Components library Documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content class">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Classes</li>
+  <li class="breadcrumb-item" >ModelerConfig</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" 
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" 
+                class="nav-link"
+                
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>projects/netgrif-components/src/lib/builder/modeler/modeler-config.ts</code>
+        </p>
+
+
+
+
+
+
+            <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Static</span>
+                                <a href="#ARC_BREAKPOINT_OFFSET" >ARC_BREAKPOINT_OFFSET</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Static</span>
+                                <a href="#HISTORY_SIZE" >HISTORY_SIZE</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Static</span>
+                                <a href="#LAYOUT_DEFAULT_COLS" >LAYOUT_DEFAULT_COLS</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Static</span>
+                                <a href="#LOCALSTORAGE" >LOCALSTORAGE</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Static</span>
+                                <a href="#MAX_HEIGHT" >MAX_HEIGHT</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Static</span>
+                                <a href="#MAX_WIDTH" >MAX_WIDTH</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Static</span>
+                                <a href="#SIZE" >SIZE</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Static</span>
+                                <a href="#VARIABLE_ARC_DATA_TYPES" >VARIABLE_ARC_DATA_TYPES</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Static</span>
+                                <a href="#ZOOM_SPEED" >ZOOM_SPEED</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+
+            <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ARC_BREAKPOINT_OFFSET"></a>
+                    <span class="name">
+                            <span class="modifier">Static</span>
+                        <span ><b>ARC_BREAKPOINT_OFFSET</b></span>
+                        <a href="#ARC_BREAKPOINT_OFFSET"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>10</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="10" class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/modeler-config.ts:10</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="HISTORY_SIZE"></a>
+                    <span class="name">
+                            <span class="modifier">Static</span>
+                        <span ><b>HISTORY_SIZE</b></span>
+                        <a href="#HISTORY_SIZE"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>100</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="11" class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/modeler-config.ts:11</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="LAYOUT_DEFAULT_COLS"></a>
+                    <span class="name">
+                            <span class="modifier">Static</span>
+                        <span ><b>LAYOUT_DEFAULT_COLS</b></span>
+                        <a href="#LAYOUT_DEFAULT_COLS"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>4</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="8" class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/modeler-config.ts:8</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="LOCALSTORAGE"></a>
+                    <span class="name">
+                            <span class="modifier">Static</span>
+                        <span ><b>LOCALSTORAGE</b></span>
+                        <a href="#LOCALSTORAGE"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank" >object</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{
+        DRAFT_MODEL: {
+            KEY: &#x27;old_model&#x27;,
+            TIMESTAMP: &#x27;old_model_timestamp&#x27;,
+            ID: &#x27;old_model_id&#x27;,
+            TITLE: &#x27;old_model_title&#x27;
+        },
+        PERMISSION_DIALOG: {
+            ROLE_SORT: &#x27;role_sort&#x27;,
+            ROLE_DIRECTION: &#x27;role_direction&#x27;,
+            USER_REF_SORT: &#x27;user_ref_sort&#x27;,
+            USER_REF_DIRECTION: &#x27;user_ref_direction&#x27;
+        },
+        MASTER_DETAIL: {
+            DATA_SORT: &#x27;master_data_sort&#x27;,
+            DATA_DIRECTION: &#x27;master_data_direction&#x27;,
+            ROLE_SORT: &#x27;master_role_sort&#x27;,
+            ROLE_DIRECTION: &#x27;master_role_direction&#x27;,
+            DATA_ACTION_SORT: &#x27;master_action_data_sort&#x27;,
+            DATA_ACTION_DIRECTION: &#x27;master_action_data_direction&#x27;,
+            ROLE_ACTION_SORT: &#x27;master_action_role_sort&#x27;,
+            ROLE_ACTION_DIRECTION: &#x27;master_action_role_direction&#x27;,
+            TRANS_ACTION_SORT: &#x27;master_action_trans_sort&#x27;,
+            TRANS_ACTION_DIRECTION: &#x27;master_action_trans_direction&#x27;,
+            HISTORY_SORT: &#x27;master_history_sort&#x27;,
+            HISTORY_DIRECTION: &#x27;master_history_direction&#x27;,
+        }
+    }</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="12" class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/modeler-config.ts:12</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="MAX_HEIGHT"></a>
+                    <span class="name">
+                            <span class="modifier">Static</span>
+                        <span ><b>MAX_HEIGHT</b></span>
+                        <a href="#MAX_HEIGHT"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>5000</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="6" class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/modeler-config.ts:6</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="MAX_WIDTH"></a>
+                    <span class="name">
+                            <span class="modifier">Static</span>
+                        <span ><b>MAX_WIDTH</b></span>
+                        <a href="#MAX_WIDTH"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>10000</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="5" class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/modeler-config.ts:5</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="SIZE"></a>
+                    <span class="name">
+                            <span class="modifier">Static</span>
+                        <span ><b>SIZE</b></span>
+                        <a href="#SIZE"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>32</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="4" class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/modeler-config.ts:4</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="VARIABLE_ARC_DATA_TYPES"></a>
+                    <span class="name">
+                            <span class="modifier">Static</span>
+                        <span ><b>VARIABLE_ARC_DATA_TYPES</b></span>
+                        <a href="#VARIABLE_ARC_DATA_TYPES"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[DataType.TEXT, DataType.ENUMERATION, DataType.ENUMERATION_MAP, DataType.NUMBER]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="9" class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/modeler-config.ts:9</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ZOOM_SPEED"></a>
+                    <span class="name">
+                            <span class="modifier">Static</span>
+                        <span ><b>ZOOM_SPEED</b></span>
+                        <a href="#ZOOM_SPEED"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>0.2</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="7" class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/modeler-config.ts:7</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+
+
+
+
+
+
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {DataType} from &#x27;@netgrif/petriflow&#x27;;
+
+export class ModelerConfig {
+    public static SIZE &#x3D; 32;
+    public static MAX_WIDTH &#x3D; 10000;
+    public static MAX_HEIGHT &#x3D; 5000;
+    public static ZOOM_SPEED &#x3D; 0.2;
+    public static LAYOUT_DEFAULT_COLS &#x3D; 4;
+    public static VARIABLE_ARC_DATA_TYPES &#x3D; [DataType.TEXT, DataType.ENUMERATION, DataType.ENUMERATION_MAP, DataType.NUMBER];
+    public static ARC_BREAKPOINT_OFFSET &#x3D; 10;
+    public static HISTORY_SIZE &#x3D; 100;
+    public static LOCALSTORAGE &#x3D; {
+        DRAFT_MODEL: {
+            KEY: &#x27;old_model&#x27;,
+            TIMESTAMP: &#x27;old_model_timestamp&#x27;,
+            ID: &#x27;old_model_id&#x27;,
+            TITLE: &#x27;old_model_title&#x27;
+        },
+        PERMISSION_DIALOG: {
+            ROLE_SORT: &#x27;role_sort&#x27;,
+            ROLE_DIRECTION: &#x27;role_direction&#x27;,
+            USER_REF_SORT: &#x27;user_ref_sort&#x27;,
+            USER_REF_DIRECTION: &#x27;user_ref_direction&#x27;
+        },
+        MASTER_DETAIL: {
+            DATA_SORT: &#x27;master_data_sort&#x27;,
+            DATA_DIRECTION: &#x27;master_data_direction&#x27;,
+            ROLE_SORT: &#x27;master_role_sort&#x27;,
+            ROLE_DIRECTION: &#x27;master_role_direction&#x27;,
+            DATA_ACTION_SORT: &#x27;master_action_data_sort&#x27;,
+            DATA_ACTION_DIRECTION: &#x27;master_action_data_direction&#x27;,
+            ROLE_ACTION_SORT: &#x27;master_action_role_sort&#x27;,
+            ROLE_ACTION_DIRECTION: &#x27;master_action_role_direction&#x27;,
+            TRANS_ACTION_SORT: &#x27;master_action_trans_sort&#x27;,
+            TRANS_ACTION_DIRECTION: &#x27;master_action_trans_direction&#x27;,
+            HISTORY_SORT: &#x27;master_history_sort&#x27;,
+            HISTORY_DIRECTION: &#x27;master_history_direction&#x27;,
+        }
+    }
+}
+</code></pre>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'class';
+            var COMPODOC_CURRENT_PAGE_URL = 'ModelerConfig.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

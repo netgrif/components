@@ -1,0 +1,1881 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Netgrif Components library Documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">Netgrif Components library Documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content interface">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Interfaces</li>
+  <li class="breadcrumb-item"
+  >
+  CommandAction</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" 
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" 
+                class="nav-link"
+                
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>projects/netgrif-components/src/lib/builder/modeler/actions-mode/action-editor/classes/command-action.ts</code>
+        </p>
+
+
+
+
+        <section data-compodoc="block-index">
+            <h3 id="index">Index</h3>
+            <table class="table table-sm table-bordered index-table">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <h6><b>Properties</b></h6>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <ul class="index-list">
+                                <li>
+                                            <span class="modifier">Optional</span>
+                                        <a href="#action" 
+>
+                                            action
+                                        </a>
+                                </li>
+                                <li>
+                                            <span class="modifier">Optional</span>
+                                        <a href="#description" 
+>
+                                            description
+                                        </a>
+                                </li>
+                                <li>
+                                            <span class="modifier">Optional</span>
+                                        <a href="#example" 
+>
+                                            example
+                                        </a>
+                                </li>
+                                <li>
+                                            <span class="modifier">Optional</span>
+                                        <a href="#header" 
+>
+                                            header
+                                        </a>
+                                </li>
+                                <li>
+                                            <span class="modifier">Optional</span>
+                                        <a href="#label" 
+>
+                                            label
+                                        </a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+
+
+            <section data-compodoc="block-properties">
+                <h3 id="inputs">Properties</h3>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="action"></a>
+                                        <span class="name "><b>action</b>
+                                            <a href="#action">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>action:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Optional</i>
+                                        </td>
+                                    </tr>
+
+
+
+
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="description"></a>
+                                        <span class="name "><b>description</b>
+                                            <a href="#description">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>description:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Optional</i>
+                                        </td>
+                                    </tr>
+
+
+
+
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="example"></a>
+                                        <span class="name "><b>example</b>
+                                            <a href="#example">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>example:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Optional</i>
+                                        </td>
+                                    </tr>
+
+
+
+
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="header"></a>
+                                        <span class="name "><b>header</b>
+                                            <a href="#header">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>header:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Optional</i>
+                                        </td>
+                                    </tr>
+
+
+
+
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="label"></a>
+                                        <span class="name "><b>label</b>
+                                            <a href="#label">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>label:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Optional</i>
+                                        </td>
+                                    </tr>
+
+
+
+
+                        </tbody>
+                    </table>
+            </section>
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {TranslateService} from &quot;@ngx-translate/core&quot;;
+
+export interface CommandAction {
+    label?: string;
+    action?: string;
+    header?: string;
+    description?: string;
+    example?: string;
+}
+
+export interface CommandActions {
+    label?: string;
+    badge?: string;
+    actions?: Array&lt;CommandAction&gt;;
+}
+
+export function getActions(translateService: TranslateService): Array&lt;CommandActions&gt; {
+    return [
+        {
+            label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.basicFunctions.label&#x27;),
+            badge: &#x27;code&#x27;,
+            actions: [
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.basicFunctions.ifElseStatement.label&#x27;),
+                    header: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.basicFunctions.ifElseStatement.label&#x27;),
+                    action: &#x27;if (&lt;condition&gt;) {\n\t\n}else {\n\t\n}&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.basicFunctions.ifElseStatement.description&#x27;),
+                    example: &#x27;if (a&lt;100) { \n&#x27; +
+                        &#x27;  println(&quot;The value is less than 100&quot;); \n&#x27; +
+                        &#x27;  } else { \n&#x27; +
+                        &#x27;  println(&quot;The value is greater than 100&quot;); \n&#x27; +
+                        &#x27;}&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.basicFunctions.nestedIfStatement.label&#x27;),
+                    header: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.basicFunctions.nestedIfStatement.label&#x27;),
+                    action: &#x27;if (&lt;condition&gt;) {\n\t\n} else if (&lt;condition&gt;) {\n\t\n} else {\n\t\n}&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.basicFunctions.nestedIfStatement.description&#x27;),
+                    example: &#x27;if (a&lt;100) { \n&#x27; +
+                        &#x27;  println(&quot;The value is less than 100&quot;); \n&#x27; +
+                        &#x27;} else if(a &lt; 50) { \n&#x27; +
+                        &#x27;  println(&quot;The value is less than 50&quot;); \n&#x27; +
+                        &#x27;} else { \n&#x27; +
+                        &#x27;  println(&quot;The value is greater than 50 and 100&quot;); \n&#x27; +
+                        &#x27;}&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.basicFunctions.switchStatement.label&#x27;),
+                    header: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.basicFunctions.switchStatement.label&#x27;),
+                    action: &#x27;switch(&lt;value&gt;) {\n\tcase 1:\n\t\t\n\t\tbreak;\n\tcase 2:\n\t\t\n\t\tbreak;\n\tdefault:\n\t\t\n\t\tbreak;\n}\n&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.basicFunctions.switchStatement.description&#x27;),
+                    example: &#x27;int a &#x3D; 2\n&#x27; +
+                        &#x27;switch(a) {\n&#x27; +
+                        &#x27;  case 1: \n&#x27; +
+                        &#x27;    println(&quot;The value of a is One&quot;); \n&#x27; +
+                        &#x27;    break; \n&#x27; +
+                        &#x27;  case 2: \n&#x27; +
+                        &#x27;    println(&quot;The value of a is Two&quot;); \n&#x27; +
+                        &#x27;    break; \n&#x27; +
+                        &#x27;  case 3: \n&#x27; +
+                        &#x27;    println(&quot;The value of a is Three&quot;); \n&#x27; +
+                        &#x27;    break; \n&#x27; +
+                        &#x27;  default: \n&#x27; +
+                        &#x27;    println(&quot;The value is unknown&quot;); \n&#x27; +
+                        &#x27;    break; \n&#x27; +
+                        &#x27;}&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.basicFunctions.whileStatement.label&#x27;),
+                    header: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.basicFunctions.whileStatement.label&#x27;),
+                    action: &#x27;while(&lt;condition&gt;){\n\n}&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.basicFunctions.whileStatement.description&#x27;),
+                    example: &#x27;int count &#x3D; 0;\n&#x27; +
+                        &#x27;while(count&lt;5) {\n&#x27; +
+                        &#x27;  println(count);\n&#x27; +
+                        &#x27;  count++;\n&#x27; +
+                        &#x27;}&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.basicFunctions.forInStatement.label&#x27;),
+                    header: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.basicFunctions.forInStatement.label&#x27;),
+                    action: &#x27;for(&lt;value&gt; in &lt;value&gt;){\n\t\n}&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.basicFunctions.forInStatement.description&#x27;),
+                    example: &#x27;int[] array &#x3D; [0,1,2,3]; \n&#x27; +
+                        &#x27;for(int i in array) { \n&#x27; +
+                        &#x27;  println(i); \n&#x27; +
+                        &#x27;} &#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.basicFunctions.groovyTutorial.label&#x27;),
+                    header: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.basicFunctions.groovyTutorial.header&#x27;),
+                    description: &#x27;&lt;a href&#x3D;&quot;https://www.tutorialspoint.com/groovy/index.htm&quot; target&#x3D;&quot;_blank&quot;&gt;&lt;/a&gt; &#x27; + translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.basicFunctions.groovyTutorial.description&#x27;)
+                }
+            ]
+        },
+        {
+            label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.dataFields.label&#x27;),
+            badge: &#x27;edit&#x27;,
+            actions: [
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.dataFields.changeValue.label&#x27;),
+                    header: &#x27;change &lt;Field f&gt; value &lt;Closure calculation&gt;&#x27;,
+                    action: &#x27;change &lt;datafield&gt; value { &lt;value&gt;; }&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.dataFields.changeValue.description&#x27;),
+                    example: &#x27;period: f.108001,\n&#x27; +
+                        &#x27;sum: f.308011;\n&#x27; +
+                        &#x27;change period value {\n&#x27; +
+                        &#x27;    def limit &#x3D; 20.0;\n&#x27; +
+                        &#x27;    if (period.value &#x3D;&#x3D; &quot;half-year&quot;)\n&#x27; +
+                        &#x27;        limit &#x3D; 40.0;\n&#x27; +
+                        &#x27;    if (period.value &#x3D;&#x3D; &quot;quarter-year&quot;)\n&#x27; +
+                        &#x27;        limit &#x3D; 80.0;\n&#x27; +
+                        &#x27;    if ((sum.value as Double) &lt; (limit as Double))\n&#x27; +
+                        &#x27;        return &quot;year&quot;;\n&#x27; +
+                        &#x27;    return unchanged;\n&#x27; +
+                        &#x27;}&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.dataFields.changeChoices.label&#x27;),
+                    header: &#x27;change &lt;Field f&gt; choices &lt;Closure calculation&gt;&#x27;,
+                    action: &#x27;change &lt;datafield&gt; choices { &lt;choices&gt;; }&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.dataFields.changeChoices.description&#x27;),
+                    example: &#x27;other: f.410001,\n&#x27; +
+                        &#x27;field: f.field;\n&#x27; +
+                        &#x27;change field choices {\n&#x27; +
+                        &#x27;    if (other.value &#x3D;&#x3D; &quot;Real estate&quot;)\n&#x27; +
+                        &#x27;        return field.choices + [&quot;construction site&quot;];\n&#x27; +
+                        &#x27;    return field.choices;\n&#x27; +
+                        &#x27;}&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.dataFields.changeOptions.label&#x27;),
+                    header: &#x27;change &lt;Field f&gt; options &lt;Closure calculation&gt;&#x27;,
+                    action: &#x27;change &lt;datafield&gt; options { &lt;options&gt;; }&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.dataFields.changeOptions.description&#x27;),
+                    example: &#x27;other: f.410001,\n&#x27; +
+                        &#x27;field: f.field;\n&#x27; +
+                        &#x27;change field options {\n&#x27; +
+                        &#x27;    if (other.value &#x3D;&#x3D; &quot;Real estate&quot;)\n&#x27; +
+                        &#x27;        return field.options + [&quot;cs&quot;:&quot;construction site&quot;];\n&#x27; +
+                        &#x27;    return field.choices;\n&#x27; +
+                        &#x27;}&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.dataFields.changeAllowedNets.label&#x27;),
+                    header: &#x27;change &lt;Field f&gt; allowedNets &lt;Closure nets&gt;&#x27;,
+                    action: &#x27;change &lt;datafield&gt; allowedNets { &lt;netIds&gt;; }&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.dataFields.changeAllowedNets.description&#x27;),
+                    example: &#x27;other: f.410001,\n&#x27; +
+                        &#x27;field: f.field;\n&#x27; +
+                        &#x27;change field options {\n&#x27; +
+                        &#x27;    if (other.value &#x3D;&#x3D; &quot;Real estate&quot;)\n&#x27; +
+                        &#x27;        return field.options + [&quot;cs&quot;:&quot;construction site&quot;];\n&#x27; +
+                        &#x27;    return field.choices;\n&#x27; +
+                        &#x27;}&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.dataFields.changeBehaviour.label&#x27;),
+                    header: &#x27;make &lt;Field f&gt;,&lt;Closure behaviour&gt; on &lt;Transition t&gt; when &lt;Closure&lt;Boolean&gt; condition&gt;&#x27;,
+                    action: &#x27;make &lt;datafield&gt;, &lt;behaviour&gt; on &lt;transition&gt; when { &lt;condition&gt; }&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.dataFields.changeBehaviour.description&#x27;),
+                    example: &#x27;garage_check: f.garage_check,\n&#x27; +
+                        &#x27;garage_cost: f.garage_cost,\n&#x27; +
+                        &#x27;garage: t.garage;\n&#x27; +
+                        &#x27;make garage_cost,visible on garage when {\n&#x27; +
+                        &#x27;\treturn garage_check.value &#x3D;&#x3D; true;\n&#x27; +
+                        &#x27;}&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.dataFields.changeMultipleBehaviour.label&#x27;),
+                    header: &#x27;make &lt;List&lt;Field&gt; f&gt;,&lt;Closure behaviour&gt; on &lt;List&lt;Transition&gt; t&gt; when &lt;Closure&lt;Boolean&gt; condition&gt;&#x27;,
+                    action: &#x27;make [&lt;datafield&gt;], &lt;behaviour&gt; on ([&lt;transition&gt;]) when { &lt;condition&gt; }&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.dataFields.changeMultipleBehaviour.description&#x27;),
+                    example:
+                        &#x27;condition: f.conditionId,\n&#x27; +
+                        &#x27;text: f.textId,\n&#x27; +
+                        &#x27;anotherText: f.anotherTextId,\n&#x27; +
+                        &#x27;transition: t.transitionId,\n&#x27; +
+                        &#x27;anotherTransition: t.anotherTransitionId;\n&#x27; +
+                        &#x27;make [text, anotherText], visible on ([transition, anotherTransition]) when { condition.value &#x3D;&#x3D; true }\n&#x27; +
+                        &#x27;---\n&#x27; +
+                        &#x27;taskRef: f.taskRef_0;\n&#x27; +
+                        &#x27;def tasks &#x3D; [taskService.findOne(taskRef_0.value[0])] as List\n&#x27; +
+                        &#x27;def field &#x3D; getFieldOfTask(tasks[0].stringId, &quot;referenced_text&quot;)\n&#x27; +
+                        &#x27;make [field], editable on tasks when { true }&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.dataFields.setDataByTransition.label&#x27;),
+                    header: &#x27;SetDataEventOutcome setData(Transition transition, Map dataSet)&#x27;,
+                    action: &#x27;setData(&lt;transition&gt;, &lt;dataSet&gt;);&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.dataFields.setDataByTransition.description&#x27;),
+                    example: &#x27;transition: t.edit_limit;\n&#x27; +
+                        &#x27;setData(transition, [\n&#x27; +
+                        &#x27;    &quot;new_limit&quot;: [\n&#x27; +
+                        &#x27;        &quot;value&quot;: &quot;10000&quot;,\n&#x27; +
+                        &#x27;        &quot;type&quot; : &quot;number&quot;\n&#x27; +
+                        &#x27;    ],\n&#x27; +
+                        &#x27;])&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.dataFields.setDataByTask.label&#x27;),
+                    header: &#x27;SetDataEventOutcome setData(Task task, Map dataSet)&#x27;,
+                    action: &#x27;setData(&lt;task&gt;, &lt;dataSet&gt;);&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.dataFields.setDataByTask.description&#x27;),
+                    example:
+                        &#x27;taskRef: f.taskRef;\n&#x27; +
+                        &#x27;def task &#x3D; findTask(taskRef.value.first())\n&#x27; +
+                        &#x27;setData(task, [\n&#x27; +
+                        &#x27;    &quot;new_limit&quot;: [\n&#x27; +
+                        &#x27;        &quot;value&quot;: &quot;10000&quot;,\n&#x27; +
+                        &#x27;        &quot;type&quot; : &quot;number&quot;\n&#x27; +
+                        &#x27;    ],\n&#x27; +
+                        &#x27;])&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.dataFields.setDataByTransitionId.label&#x27;),
+                    header: &#x27;setData(String transitionId, Case useCase, Map dataSet)&#x27;,
+                    action: &#x27;setData(&lt;transitionId&gt;, &lt;processInstanceId&gt;, &lt;dataSet&gt;);&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.dataFields.setDataByTransitionId.description&#x27;),
+                    example: &#x27;def usecase &#x3D; findCase({ it.title.eq(&quot;Limits&quot;) }).first()\n&#x27; +
+                        &#x27;setData(&quot;edit_limit&quot;, usecase, [\n&#x27; +
+                        &#x27;    &quot;new_limit&quot;: [\n&#x27; +
+                        &#x27;        &quot;value&quot;: &quot;10000&quot;,\n&#x27; +
+                        &#x27;        &quot;type&quot; : &quot;number&quot;\n&#x27; +
+                        &#x27;    ],\n&#x27; +
+                        &#x27;])&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.dataFields.setDataByTaskId.label&#x27;),
+                    header: &#x27;setData(String taskId, Map dataSet)&#x27;,
+                    action: &#x27;setData(&lt;taskId&gt;, &lt;dataSet&gt;);&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.dataFields.setDataByTaskId.description&#x27;),
+                    example: &#x27;def usecase &#x3D; findCase({ it.title.eq(&quot;Limits&quot;) }).first()\n&#x27; +
+                        &#x27;setData(&quot;edit_limit&quot;, usecase, [\n&#x27; +
+                        &#x27;    &quot;new_limit&quot;: [\n&#x27; +
+                        &#x27;        &quot;value&quot;: &quot;10000&quot;,\n&#x27; +
+                        &#x27;        &quot;type&quot; : &quot;number&quot;\n&#x27; +
+                        &#x27;    ],\n&#x27; +
+                        &#x27;])&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.dataFields.getDataByTransition.label&#x27;),
+                    header: &#x27;Map&lt;String, Field&gt; getData(Transition transition)\n&#x27;,
+                    action: &#x27;getData(&lt;transition&gt;);&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.dataFields.getDataByTransition.description&#x27;),
+                    example: &#x27;view_limit: t.view_limit;\n&#x27; +
+                        &#x27;actual_limit: f.actual_limit;\n&#x27; +
+                        &#x27;def data &#x3D; getData(view_limit)\n&#x27; +
+                        &#x27;change actual_limit value {\n&#x27; +
+                        &#x27;    data[&quot;remote_limit&quot;].value\n&#x27; +
+                        &#x27;}&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.dataFields.getDataByTransitionId.label&#x27;),
+                    header: &#x27;Map&lt;String, Field&gt; getData(String transitionId, Case useCase))&#x27;,
+                    action: &#x27;getData(&lt;transitionId&gt;, &lt;processInstanceId&gt;);&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.dataFields.getDataByTransitionId.description&#x27;),
+                    example: &#x27;view_limit: t.view_limit;\n&#x27; +
+                        &#x27;def usecase &#x3D; findCase({ it.title.eq(&quot;Limits&quot;) }).first()\n&#x27; +
+                        &#x27;def data &#x3D; getData(&quot;view_limit&quot;, usecase)\n&#x27; +
+                        &#x27;change actual_limit value {\n&#x27; +
+                        &#x27;    data[&quot;remote_limit&quot;].value\n&#x27; +
+                        &#x27;}&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.dataFields.getDataByTask.label&#x27;),
+                    header: &#x27;Map&lt;String, Field&gt; getData(Task task)&#x27;,
+                    action: &#x27;getData(&lt;task&gt;);&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.dataFields.getDataByTask.description&#x27;),
+                    example:
+                        &#x27;taskRef: f.taskRef;\n&#x27; +
+                        &#x27;def task &#x3D; findTask(taskRef.value.first());\n&#x27; +
+                        &#x27;def data &#x3D; getData(task)&#x27;,
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.dataFields.getDataByTaskId.label&#x27;),
+                    header: &#x27;Map&lt;String, Field&gt; getData(String taskId)&#x27;,
+                    action: &#x27;getData(&lt;taskId&gt;);&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.dataFields.getDataByTaskId.description&#x27;),
+                    example:
+                        &#x27;taskRef: f.taskRef;\n&#x27; +
+                        &#x27;def data &#x3D; getData(taskRef.value.first())&#x27;,
+                },
+            ]
+        },
+        {
+            label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.processInstances.label&#x27;),
+            badge: &#x27;business&#x27;,
+            actions: [
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.processInstances.createCaseByidentifier.label&#x27;),
+                    header: &#x27;Case createCase(String identifier, String title &#x3D; null, String color &#x3D; &quot;&quot;, User author &#x3D; userService.loggedOrSystem, Locale locale &#x3D; LocaleContextHolder.getLocale())&#x27;,
+                    action: &#x27;createCase(&lt;identifier&gt;, &lt;title&gt;, &lt;color&gt;, &lt;author&gt;, &lt;locale&gt;);&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.processInstances.createCaseByidentifier.description&#x27;),
+                    example: &#x27;createCase(&quot;create_case_net&quot;,&quot;Create Case Case&quot;,&quot;color-fg-amber-500&quot;, otherUser);\n&#x27; +
+                        &#x27;createCase(&quot;create_case_net&quot;,&quot;Create Case Case&quot;,&quot;color-fg-amber-500&quot;);\n&#x27; +
+                        &#x27;createCase(&quot;create_case_net&quot;,&quot;Create Case Case&quot;);\n&#x27; +
+                        &#x27;createCase(&quot;create_case_net&quot;);&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.processInstances.createCaseByReference.label&#x27;),
+                    header: &#x27;Case createCase(PetriNet net, String title &#x3D; net.defaultCaseName.getTranslation(locale), String color &#x3D; &quot;&quot;, IUser author &#x3D; userService.loggedOrSystem, Locale locale &#x3D; LocaleContextHolder.getLocale())&#x27;,
+                    action: &#x27;createCase(&lt;process&gt;, &lt;title&gt;, &lt;color&gt;, &lt;author&gt;, &lt;locale&gt;);&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.processInstances.createCaseByReference.description&#x27;),
+                    example:
+                        &#x27;def net &#x3D; useCase.petriNet;\n&#x27; +
+                        &#x27;createCase(net);&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.processInstances.changeCaseProperty.label&#x27;),
+                    header: &#x27;changeCaseProperty &lt;String property&gt; about &lt;Closure supplier&gt;&#x27;,
+                    action: &#x27;changeCaseProperty &lt;property&gt; about { &lt;value&gt;; }&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.processInstances.changeCaseProperty.description&#x27;),
+                    example: &#x27;trans: t.t5;\n&#x27; +
+                        &#x27;changeCaseProperty &quot;icon&quot; about { trans.icon }&#x27;
+                }
+            ]
+        },
+        {
+            label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.tasks.label&#x27;),
+            badge: &#x27;task&#x27;,
+            actions: [
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.tasks.getTaskId.label&#x27;),
+                    header: &#x27;String getTaskId(String transitionId, Case aCase &#x3D; useCase)&#x27;,
+                    action: &#x27;getTaskId(&lt;transitionId&gt;);&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.tasks.getTaskId.description&#x27;),
+                    example: &#x27;def taskId &#x3D; getTaskId(&quot;t1&quot;)&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.tasks.assignTaskByTransitionId.label&#x27;),
+                    header: &#x27;Task assignTask(String transitionId, Case aCase &#x3D; useCase, IUser user &#x3D; userService.loggedOrSystem)&#x27;,
+                    action: &#x27;assignTask(&lt;transitionId&gt;);&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.tasks.assignTaskByTransitionId.description&#x27;),
+                    example: &#x27;selectedUser: f.select_controler;\n&#x27; +
+                        &#x27;if (selectedUser.value) {\n&#x27; +
+                        &#x27;    def user &#x3D; userService.findById(selectedUser.value.id, false)\n&#x27; +
+                        &#x27;    assignTask(&quot;control&quot;, useCase, user);\n&#x27; +
+                        &#x27;}&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.tasks.assignTaskByTask.label&#x27;),
+                    header: &#x27;Task assignTask(Task task, IUser user &#x3D; userService.loggedOrSystem)&#x27;,
+                    action: &#x27;assignTask(&lt;task&gt;);&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.tasks.assignTaskByTask.description&#x27;),
+                    example: &#x27;selectedUser: f.select_controler;\n&#x27; +
+                        &#x27;if (selectedUser.value) {\n&#x27; +
+                        &#x27;    def usecase &#x3D; findCase({ it.title(&quot;Some case&quot;) }).first()\n&#x27; +
+                        &#x27;    def task &#x3D; findTask({ it.importId.eq(&quot;control&quot;) &amp; it.caseId.eq(usecase.stringId) })\n&#x27; +
+                        &#x27;    def user &#x3D; userService.findById(selectedUser.value.id, false)\n&#x27; +
+                        &#x27;    assignTask(task, user);\n&#x27; +
+                        &#x27;}&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.tasks.assignTaskByTasks.label&#x27;),
+                    header: &#x27;void assignTasks(List&lt;Task&gt; tasks, IUser assignee &#x3D; userService.loggedOrSystem)&#x27;,
+                    action: &#x27;assignTasks(&lt;tasks&gt;);&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.tasks.assignTaskByTasks.description&#x27;),
+                    example: &#x27;// find all my cases and assign all their control tasks to me\n&#x27; +
+                        &#x27;def cases &#x3D; findCases( { it.author.id.eq(loggedUser().id)) } )\n&#x27; +
+                        &#x27;def caseIds &#x3D; cases.collect { it.stringId }\n&#x27; +
+                        &#x27;def tasks &#x3D; findTasks({ it.importId.eq(&quot;control&quot;) &amp; it.caseId.in(cases) })\n&#x27; +
+                        &#x27;assignTasks(tasks)&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.tasks.cancelTaskByTransitionId.label&#x27;),
+                    header: &#x27;Task cancelTask(String transitionId, Case aCase &#x3D; useCase, IUser user &#x3D; userService.loggedOrSystem)&#x27;,
+                    action: &#x27;cancelTask(&lt;transitionId&gt;);&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.tasks.cancelTaskByTransitionId.description&#x27;),
+                    example: &#x27;def taskId &#x3D; &quot;work_task&quot;;\n&#x27; +
+                        &#x27;def aCase &#x3D; findCase({ it.author.id.eq(loggedUser().id) })\n&#x27; +
+                        &#x27;cancelTask(taskId, aCase);&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.tasks.cancelTaskByTask.label&#x27;),
+                    header: &#x27;Task cancelTask(Task task, IUser user &#x3D; userService.loggedOrSystem)&#x27;,
+                    action: &#x27;cancelTask(&lt;task&gt;);&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.tasks.cancelTaskByTask.description&#x27;),
+                    example: &#x27;// cancel the task &quot;work_task&quot;, currently assigned to me, in the current case\n&#x27; +
+                        &#x27;def task &#x3D; findTask( { it.transitionId.eq(&quot;work_task&quot;) } );\n&#x27; +
+                        &#x27;cancelTask(task);&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.tasks.cancelTasks.label&#x27;),
+                    header: &#x27;void cancelTasks(List&lt;Task&gt; tasks, IUser user &#x3D; userService.loggedOrSystem)&#x27;,
+                    action: &#x27;cancelTasks(&lt;tasks&gt;);&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.tasks.cancelTasks.description&#x27;),
+                    example: &#x27;// cancel the task &quot;work_task&quot;, currently assigned to me, in the current case\n&#x27; +
+                        &#x27;def tasks &#x3D; findTasks( { it.transitionId.eq(&quot;work_task&quot;) } );\n&#x27; +
+                        &#x27;cancelTasks(tasks);&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.tasks.finishTaskByTransitionId.label&#x27;),
+                    header: &#x27;void finishTask(String transitionId, Case aCase &#x3D; useCase, IUser user &#x3D; userService.loggedOrSystem)&#x27;,
+                    action: &#x27;finishTask(&lt;transitionId&gt;);&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.tasks.finishTaskByTransitionId.description&#x27;),
+                    example: &#x27;// finish the task &quot;work_task&quot;, currently assigned to me, in the current case\n&#x27; +
+                        &#x27;def taskId &#x3D; &quot;work_task&quot;;\n&#x27; +
+                        &#x27;def aCase &#x3D; findCase({ it.author.id.eq(loggedUser().id) })\n&#x27; +
+                        &#x27;finishTask(taskId, aCase);&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.tasks.finishTaskByTask.label&#x27;),
+                    header: &#x27;void finishTask(Task task, IUser user &#x3D; userService.loggedOrSystem)&#x27;,
+                    action: &#x27;finishTask(&lt;task&gt;);&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.tasks.finishTaskByTask.description&#x27;),
+                    example: &#x27;// finish the task &quot;work_task&quot;, currently assigned to me in current case\n&#x27; +
+                        &#x27;def task &#x3D; findTask( { it.transitionId.eq(&quot;work_task&quot;) &amp; it.caseId.eq(useCase.stringId) &amp; it.userId.eq(loggedUser().id) } );\n&#x27; +
+                        &#x27;finishTask(task);&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.tasks.finishTasksByList.label&#x27;),
+                    header: &#x27;void finishTasks(List&lt;Task&gt; tasks, IUser finisher &#x3D; userService.loggedOrSystem)&#x27;,
+                    action: &#x27;finishTasks(&lt;tasks&gt;);&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.tasks.finishTasksByList.description&#x27;),
+                    example: &#x27;// finish all the tasks &quot;work_task&quot;, currently assigned to me\n&#x27; +
+                        &#x27;def tasks &#x3D; findTasks( { it.transitionId.eq(&quot;work_task&quot;) &amp; it.userId.eq(loggedUser().id) } );\n&#x27; +
+                        &#x27;finishTasks(tasks);&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.tasks.executeTask.label&#x27;),
+                    header: &#x27;executeTask(String transitionId, Map dataSet)\n&#x27;,
+                    action: &#x27;executeTask(&lt;transitionId&gt;, &lt;dataSet&gt;)&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.tasks.executeTask.description&#x27;),
+                    example: &#x27;executeTask(transition, [\n&#x27; +
+                        &#x27;    &quot;new_limit&quot;: [\n&#x27; +
+                        &#x27;        &quot;value&quot;: &quot;10000&quot;,\n&#x27; +
+                        &#x27;        &quot;type&quot; : &quot;number&quot;\n&#x27; +
+                        &#x27;    ],\n&#x27; +
+                        &#x27;])&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.tasks.executeTransitions.label&#x27;),
+                    header: &#x27;execute &lt;String transitionId&gt; where &lt;Closure&lt;Predicate&gt;&gt; with &lt;Map&gt;\n&#x27;,
+                    action: &#x27;execute &lt;transitionId&gt; where &lt;closure&lt;predicate&gt;&gt; with &lt;map&gt;&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.tasks.executeTransitions.description&#x27;),
+                    example: &#x27;field: f.field;\n&#x27; +
+                        &#x27;execute &quot;synchronized&quot; where ([\n&#x27; +
+                        &#x27;\t&quot;title eq Case 1&quot;\n&#x27; +
+                        &#x27;] as List) with ([\n&#x27; +
+                        &#x27;  \t&quot;field&quot;: [\n&#x27; +
+                        &#x27;     \tvalue: 128.0,\n&#x27; +
+                        &#x27;        type: &quot;number&quot;\n&#x27; +
+                        &#x27;\t]\n&#x27; +
+                        &#x27;] as Map)&#x27;
+                }
+            ]
+        },
+        {
+            label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.search.label&#x27;),
+            badge: &#x27;search&#x27;,
+            actions: [
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.search.findCases.label&#x27;),
+                    header: &#x27;List&lt;Case&gt; findCases(Closure&lt;Predicate&gt; predicate)&#x27;,
+                    action: &#x27;findCases(&lt;casePredicate&gt;);&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.search.findCases.description&#x27;),
+                    example: &#x27;List&lt;Case&gt; cases &#x3D; findCases( { it.title.eq(&quot;Case 1&quot;) } );\n&#x27; +
+                        &#x27;...\n&#x27; +
+                        &#x27;List&lt;Case&gt; cases &#x3D; findCases( { it.dataSet.get(&quot;name&quot;).value.eq(&quot;John&quot;) } );\n&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.search.findCasesPageable.label&#x27;),
+                    header: &#x27;List&lt;Case&gt; findCases(Closure&lt;Predicate&gt; predicate, Pageable page)&#x27;,
+                    action: &#x27;findCases(&lt;casePredicate&gt;, &lt;page&gt;);&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.search.findCasesPageable.description&#x27;),
+                    example: &#x27;// returns the first page of 5 cases sorted by the title\n&#x27; +
+                        &#x27;List&lt;Case&gt; cases &#x3D; findCases( { it.dataSet.get(&quot;name&quot;).value.eq(&quot;John&quot;) }, new PageRequest(0, 10, Sort.by(&quot;title&quot;).ascending() ) );\n&#x27; +
+                        &#x27;...\n&#x27; +
+                        &#x27;// returns the second page of 5 cases sorted from the newest to oldest\n&#x27; +
+                        &#x27;List&lt;Case&gt; cases &#x3D; findCases( { it.dataSet.get(&quot;name&quot;).value.eq(&quot;John&quot;) }, new PageRequest(1, 5, Sort.by(&quot;creationDate&quot;).descending() ) );&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.search.findCase.label&#x27;),
+                    header: &#x27;Case findCase(Closure&lt;Predicate&gt; predicate)\n&#x27;,
+                    action: &#x27;findCase(&lt;casePredicate&gt;);&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.search.findCase.description&#x27;),
+                    example: &#x27;Case useCase &#x3D; findCase( { it.title.eq(&quot;Case 1&quot;) &amp; it.processIdentifier.eq(&quot;insurance&quot;) } );\n&#x27; +
+                        &#x27;...\n&#x27; +
+                        &#x27;Case useCase &#x3D; findCase( { it.dataSet.get(&quot;name&quot;).value.eq(&quot;John&quot;) &amp; it.processIdentifier.eq(&quot;insurance&quot;) } );&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.search.findTasks.label&#x27;),
+                    header: &#x27;List&lt;Task&gt; findTasks(Closure&lt;Predicate&gt; predicate)&#x27;,
+                    action: &#x27;findTasks(&lt;taskPredicate&gt;);&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.search.findTasks.description&#x27;) +
+                        &#x27;\n&#x27;,
+                    example: &#x27;def useCase &#x3D; findCase(...)\n&#x27; +
+                        &#x27;Task task &#x3D; findTask( { it.caseId.eq(useCase.stringId) &amp; it.transitionId.eq(&quot;&lt;transition&gt;&quot;) } );&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.search.findTasksWithPagination.label&#x27;),
+                    header: &#x27;List&lt;Task&gt; findTasks(Closure&lt;Predicate&gt; predicate, Pageable pageable)&#x27;,
+                    action: &#x27;findTasks(&lt;taskPredicate&gt;);&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.search.findTasksWithPagination.description&#x27;) +
+                        &#x27;\n&#x27;,
+                    example: &#x27;def useCase &#x3D; findCase(...)\n&#x27; +
+                        &#x27;Task task &#x3D; findTask( { it.caseId.eq(useCase.stringId) &amp; it.transitionId.eq(&quot;&lt;transition&gt;&quot;) }, Pageable.ofSize(100));&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.search.findTask.label&#x27;),
+                    header: &#x27;Task findTask(Closure&lt;Predicate&gt; predicate)&#x27;,
+                    action: &#x27;findTask(&lt;taskPredicate&gt;);&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.search.findTask.description&#x27;),
+                    example: &#x27;List&lt;Task&gt; tasks &#x3D; findTasks( { it.transitionId.eq(&quot;edit_limit&quot;) } )\n&#x27; +
+                        &#x27;...\n&#x27; +
+                        &#x27;def useCase &#x3D; findCase(...)\n&#x27; +
+                        &#x27;List&lt;Task&gt; tasks &#x3D; findTasks( { it.caseId.eq(useCase.stringId) } );&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.search.findTaskById.label&#x27;),
+                    header: &#x27;Task findTask(String mongoId)&#x27;,
+                    action: &#x27;findTask(&lt;value&gt;);&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.search.findTaskById.description&#x27;),
+                    example:
+                        &#x27;taskRef: f.taskRef;\n&#x27; +
+                        &#x27;def task &#x3D; findTask(taskRef.value.first())&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.search.findCaseElastic.label&#x27;),
+                    header: &#x27;Case findCaseElastic(String query)&#x27;,
+                    action: &#x27;findCaseElastic(&lt;value&gt;);&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.search.findCaseElastic.description&#x27;),
+                    example: &#x27;findCaseElastic(&quot;processIdentifier:mortgage&quot;)&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.search.findCasesElastic.label&#x27;),
+                    header: &#x27;List&lt;Case&gt; findCasesElastic(String query, Pageable pageable)&#x27;,
+                    action: &#x27;findCasesElastic(&lt;value&gt;, &lt;value&gt;);&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.search.findCasesElastic.description&#x27;),
+                    example: &#x27;findCasesElastic(&quot;processIdentifier:mortgage&quot;, PageRequest.of(0, 10))&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.search.countCasesElastic.label&#x27;),
+                    header: &#x27;long countCasesElastic(String query)&#x27;,
+                    action: &#x27;countCasesElastic(&lt;value&gt;);&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.search.countCasesElastic.description&#x27;),
+                    example: &#x27;countCasesElastic(&quot;processIdentifier:mortgage&quot;)&#x27;
+                }
+            ]
+        },
+        {
+            label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.async.label&#x27;),
+            badge: &#x27;sync_alt&#x27;,
+            actions: [
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.async.asyncRun.label&#x27;),
+                    action: &#x27;async.run{\n\tassignTask(&lt;transitionId&gt;)\n\tfinishTask(&lt;transitionId&gt;)\n}&#x27;,
+                    description: &#x27;&#x27;
+                }
+            ]
+        },
+        {
+            label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.roles.label&#x27;),
+            badge: &#x27;people&#x27;,
+            actions: [
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.roles.assignRole.label&#x27;),
+                    header: &#x27;IUser assignRole(String roleMongoId, IUser user &#x3D; userService.loggedUser)&#x27;,
+                    action: &#x27;assignRole(&lt;value&gt;);&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.roles.assignRole.description&#x27;),
+                    example: &#x27;transition: t.task;\n&#x27; +
+                        &#x27;assignRole(transition.defaultRoleId);&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.roles.assignRoleByImportIdAndIdentifier.label&#x27;),
+                    header: &#x27;IUser assignRole(String roleId, String netId, IUser user &#x3D; userService.loggedUser)&#x27;,
+                    action: &#x27;assignRole(&lt;value&gt;, &lt;value&gt;);&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.roles.assignRoleByImportIdAndIdentifier.description&#x27;),
+                    example: &#x27;assignRole(&quot;role_1&quot;, &quot;process_1&quot;);&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.roles.assignRoleByImportIdAndProcess.label&#x27;),
+                    header: &#x27;IUser assignRole(String roleId, PetriNet net, IUser user &#x3D; userService.loggedUser)&#x27;,
+                    action: &#x27;assignRole(&lt;value&gt;, &lt;value&gt;);&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.roles.assignRoleByImportIdAndProcess.description&#x27;),
+                    example: &#x27;assignRole(&quot;role_1&quot;, useCase.petriNet);&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.roles.assignRoleByImportIdIdentifierAndVersion.label&#x27;),
+                    header: &#x27;IUser assignRole(String roleId, String netId, Version version, IUser user &#x3D; userService.loggedUser)&#x27;,
+                    action: &#x27;assignRole(&lt;value&gt;, &lt;value&gt;);&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.roles.assignRoleByImportIdIdentifierAndVersion.description&#x27;),
+                    example: &#x27;assignRole(&quot;role_1&quot;, useCase.petriNet);&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.roles.removeRole.label&#x27;),
+                    header: &#x27;IUser removeRole(String roleMongoId, IUser user &#x3D; userService.loggedUser)&#x27;,
+                    action: &#x27;removeRole(&lt;value&gt;);&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.roles.removeRole.description&#x27;),
+                    example: &#x27;transition: t.task;\n&#x27; +
+                        &#x27;removeRole(transition.defaultRoleId);&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.roles.removeRoleByImportIdAndIdentifier.label&#x27;),
+                    header: &#x27;IUser removeRole(String roleId, String netId, IUser user &#x3D; userService.loggedUser)&#x27;,
+                    action: &#x27;removeRole(&lt;value&gt;, &lt;value&gt;);&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.roles.removeRoleByImportIdAndIdentifier.description&#x27;),
+                    example: &#x27;removeRole(&quot;role_1&quot;, &quot;process_1&quot;);&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.roles.removeRoleByImportIdAndProcess.label&#x27;),
+                    header: &#x27;IUser removeRole(String roleId, PetriNet net, IUser user &#x3D; userService.loggedUser)&#x27;,
+                    action: &#x27;removeRole(&lt;value&gt;, &lt;value&gt;);&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.roles.removeRoleByImportIdAndProcess.description&#x27;),
+                    example: &#x27;removeRole(&quot;role_1&quot;, useCase.petriNet);&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.roles.removeRoleByImportIdIdentifierAndVersion.label&#x27;),
+                    header: &#x27;IUser removeRole(String roleId, String netId, Version version, IUser user &#x3D; userService.loggedUser)&#x27;,
+                    action: &#x27;removeRole(&lt;value&gt;, &lt;value&gt;, &lt;value&gt;);&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.roles.removeRoleByImportIdIdentifierAndVersion.description&#x27;),
+                    example: &#x27;removeRole(&quot;role_1&quot;, useCase.petriNet, new Version(1,2,3));&#x27;
+                }
+            ]
+        },
+        {
+            label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.users.label&#x27;),
+            badge: &#x27;person&#x27;,
+            actions: [
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.users.loggedUser.label&#x27;),
+                    header: &#x27;IUser loggedUser()\n&#x27;,
+                    action: &#x27;loggedUser();\n&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.users.loggedUser.description&#x27;),
+                    example: &#x27;userField: t.user;\n&#x27; +
+                        &#x27;change userField value {\n&#x27; +
+                        &#x27;    return loggedUser()\n&#x27; +
+                        &#x27;}&#x27;
+                },
+                // find
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.users.findByEmail.label&#x27;),
+                    header: &#x27;IUser findUserByEmail(String email)&#x27;,
+                    action: &#x27;findUserByEmail(&lt;value&gt;)&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.users.findByEmail.description&#x27;),
+                    example: &#x27;findUserByEmail(&quot;user@email.com&quot;)&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.users.findById.label&#x27;),
+                    header: &#x27;IUser findUserById(String id)&#x27;,
+                    action: &#x27;findUserById(&lt;value&gt;)&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.users.findById.description&#x27;),
+                    example: &#x27;userField: f.user_field;\n&#x27; +
+                        &#x27;findUserById(userField.value.id)&#x27;
+                },
+                // by email
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.users.changeEmailByEmail.label&#x27;),
+                    header: &#x27;changeUserByEmail (String email) email (Closure&lt;String&gt; cl)&#x27;,
+                    action: &#x27;changeUserByEmail &lt;value&gt; email { &lt;value&gt; }&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.users.changeEmailByEmail.description&#x27;),
+                    example: &#x27;changeUserByEmail &quot;test@gmail.com&quot; email { &quot;test@email.com&quot; }&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.users.changeNameByEmail.label&#x27;),
+                    header: &#x27;changeUserByEmail (String email) name (Closure&lt;String&gt; cl)&#x27;,
+                    action: &#x27;changeUserByEmail &lt;value&gt; name { &lt;value&gt; }&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.users.changeNameByEmail.description&#x27;),
+                    example: &#x27;changeUserByEmail &quot;test@gmail.com&quot; name { &quot;Name&quot; }&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.users.changeSurnameByEmail.label&#x27;),
+                    header: &#x27;changeUserByEmail (String email) surname (Closure&lt;String&gt; cl)&#x27;,
+                    action: &#x27;changeUserByEmail &lt;value&gt; surname { &lt;value&gt; }&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.users.changeSurnameByEmail.description&#x27;),
+                    example: &#x27;changeUserByEmail &quot;test@gmail.com&quot; surname { &quot;Surname&quot; }&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.users.changeTelByEmail.label&#x27;),
+                    header: &#x27;changeUserByEmail (String email) tel (Closure&lt;String&gt; cl)&#x27;,
+                    action: &#x27;changeUserByEmail &lt;value&gt; tel { &lt;value&gt; }&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.users.changeTelByEmail.description&#x27;),
+                    example: &#x27;changeUserByEmail &quot;test@gmail.com&quot; tel { &quot;+0912345678&quot; }&#x27;
+                },
+                // by id
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.users.changeEmailById.label&#x27;),
+                    header: &#x27;changeUser (String id) email (Closure&lt;String&gt; cl)&#x27;,
+                    action: &#x27;changeUser &lt;value&gt; email { &lt;value&gt; }&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.users.changeEmailById.description&#x27;),
+                    example: &#x27;changeUser userField.value.id email { &quot;test@email.com&quot; }&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.users.changeNameById.label&#x27;),
+                    header: &#x27;changeUser (String id) name (Closure&lt;String&gt; cl)&#x27;,
+                    action: &#x27;changeUser &lt;value&gt; name { &lt;value&gt; }&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.users.changeNameById.description&#x27;),
+                    example: &#x27;changeUser userField.value.id name { &quot;Name&quot; }&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.users.changeSurnameById.label&#x27;),
+                    header: &#x27;changeUser (String id) surname (Closure&lt;String&gt; cl)&#x27;,
+                    action: &#x27;changeUser &lt;value&gt; surname { &lt;value&gt; }&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.users.changeSurnameById.description&#x27;),
+                    example: &#x27;changeUser userField.value.id surname { &quot;Surname&quot; }&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.users.changeTelById.label&#x27;),
+                    header: &#x27;changeUser (String id) tel (Closure&lt;String&gt; cl)&#x27;,
+                    action: &#x27;changeUser &lt;value&gt; tel { &lt;value&gt; }&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.users.changeTelById.description&#x27;),
+                    example: &#x27;changeUser userField.value.id tel { &quot;+0912345678&quot; }&#x27;
+                },
+                // by reference
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.users.changeEmailByRef.label&#x27;),
+                    header: &#x27;changeUser (IUser user) email (Closure&lt;String&gt; cl)&#x27;,
+                    action: &#x27;changeUser &lt;value&gt; email { &lt;value&gt; }&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.users.changeEmailByRef.description&#x27;),
+                    example: &#x27;changeUser findUserByEmail(&quot;test@gmail.com&quot;) email { &quot;&quot;test@email.com&quot; }&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.users.changeNameByRef.label&#x27;),
+                    header: &#x27;changeUser (IUser user) name (Closure&lt;String&gt; cl)&#x27;,
+                    action: &#x27;changeUser &lt;value&gt; name { &lt;value&gt; }&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.users.changeNameByRef.description&#x27;),
+                    example: &#x27;changeUser findUserByEmail(&quot;test@gmail.com&quot;) name { &quot;Name&quot; }&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.users.changeSurnameByRef.label&#x27;),
+                    header: &#x27;changeUser (IUser user) surname (Closure&lt;String&gt; cl)&#x27;,
+                    action: &#x27;changeUser &lt;value&gt; surname { &lt;value&gt; }&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.users.changeSurnameByRef.description&#x27;),
+                    example: &#x27;changeUser findUserByEmail(&quot;test@gmail.com&quot;) surname { &quot;Surname&quot; }&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.users.changeTelByRef.label&#x27;),
+                    header: &#x27;changeUser (IUser user) tel (Closure&lt;String&gt; cl)&#x27;,
+                    action: &#x27;changeUser &lt;value&gt; tel { &lt;value&gt; }&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.users.changeTelByRef.description&#x27;),
+                    example: &#x27;changeUser findUserByEmail(&quot;test@gmail.com&quot;) tel { &quot;+0912345678&quot; }&#x27;
+                },
+                // invite
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.users.inviteByEmail.label&#x27;),
+                    header: &#x27;MessageResource inviteUser(String email)&#x27;,
+                    action: &#x27;inviteUser(&lt;value&gt;)&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.users.inviteByEmail.description&#x27;),
+                    example: &#x27;inviteUser(&quot;user@email.com&quot;)&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.users.inviteByRequest.label&#x27;),
+                    header: &#x27;MessageResource inviteUser(NewUserRequest newUserRequest)&#x27;,
+                    action: &#x27;inviteUser(&lt;value&gt;)&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.users.inviteByRequest.description&#x27;),
+                    example: &#x27;def request &#x3D; new NewUserRequest()\n&#x27; +
+                        &#x27;request.email &#x3D; &quot;user@email.com&quot;\n&#x27; +
+                        &#x27;inviteUser(request)&#x27;
+                },
+                // delete
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.users.deleteUserByEmail.label&#x27;),
+                    header: &#x27;void deleteUser(String email)&#x27;,
+                    action: &#x27;deleteUser(&lt;value&gt;)&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.users.deleteUserByEmail.description&#x27;),
+                    example: &#x27;deleteUser(&quot;user@email.com&quot;)&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.users.deleteUserByRef.label&#x27;),
+                    header: &#x27;void deleteUser(IUser user)&#x27;,
+                    action: &#x27;deleteUser(&lt;value&gt;)&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.users.deleteUserByRef.description&#x27;),
+                    example: &#x27;def user &#x3D; findUserByEmail(String email)\n&#x27; +
+                        &#x27;deleteUser(user)&#x27;
+                },
+            ]
+        },
+        {
+            label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.frontendFunctions.label&#x27;),
+            badge: &#x27;laptop&#x27;,
+            actions: [
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.frontendFunctions.reloadTaskData.label&#x27;),
+                    header: &#x27;Frontend.reloadTask();&#x27;,
+                    action: &#x27;Frontend.reloadTask();&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.frontendFunctions.reloadTaskData.description&#x27;),
+                    example: &#x27;Frontend.reloadTask();&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.frontendFunctions.validateTaskData.label&#x27;),
+                    header: &#x27;Frontend.validate(String taskId);&#x27;,
+                    action: &#x27;Frontend.validate(&lt;value&gt;);&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.frontendFunctions.validateTaskData.description&#x27;),
+                    example:
+                        &#x27;def taskId &#x3D; useCase.tasks.find { it.transition &#x3D;&#x3D; &quot;t1&quot; }.task\n&#x27; +
+                        &#x27;Frontend.validate(taskId);&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.frontendFunctions.redirectToRoute.label&#x27;),
+                    header: &#x27;Frontend.redirect(String route);&#x27;,
+                    action: &#x27;Frontend.redirect(&lt;value&gt;);&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.frontendFunctions.redirectToRoute.description&#x27;),
+                    example: &#x27;Frontend.redirect(\&#x27;login\&#x27;);&#x27;
+                }
+            ]
+        },
+        {
+            label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.pdf.label&#x27;),
+            badge: &#x27;picture_as_pdf&#x27;,
+            actions: [
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.pdf.generatePdf1.label&#x27;),
+                    header: &#x27;generatePDF(String transitionId, String fileFieldId)&#x27;,
+                    action: &#x27;generatePDF(&lt;transitionId&gt;, &lt;datafieldId&gt;)&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.pdf.generatePdf1.description&#x27;),
+                    example: &#x27;file_0: f.file_0;\n&#x27; +
+                        &#x27;generatePDF(&quot;t1&quot;, file_0.importId)&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.pdf.generatePdf2.label&#x27;),
+                    header: &#x27;void generatePdf(String sourceTransitionId, String targetFileFieldId,\n&#x27; +
+                        &#x27;                     Case sourceCase &#x3D; useCase, Case targetCase &#x3D; useCase, String targetTransitionId &#x3D; null,\n&#x27; +
+                        &#x27;                     String template &#x3D; null, List&lt;String&gt; excludedFields &#x3D; [], Locale locale &#x3D; null,\n&#x27; +
+                        &#x27;                     ZoneId dateZoneId &#x3D; ZoneId.systemDefault(), Integer sideMargin &#x3D; 75, Integer titleMargin &#x3D; 0)&#x27;,
+                    action: &#x27;generatePdf(&lt;transitionId&gt;, &lt;datafieldId&gt;)&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.pdf.generatePdf2.description&#x27;),
+                    example: &#x27;generatePdf(&quot;t1&quot;, &quot;file_field&quot;)&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.pdf.generatePdf3.label&#x27;),
+                    header: &#x27;void generatePdf(Transition sourceTransition, FileField targetFileField, Case sourceCase &#x3D; useCase, Case targetCase &#x3D; useCase,\n&#x27; +
+                        &#x27;                     Transition targetTransition &#x3D; null, String template &#x3D; null, List&lt;String&gt; excludedFields &#x3D; [], Locale locale &#x3D; null,\n&#x27; +
+                        &#x27;                     ZoneId dateZoneId &#x3D; ZoneId.systemDefault(), Integer sideMargin &#x3D; 75, Integer titleMargin &#x3D; 0)&#x27;,
+                    action: &#x27;generatePdf(&lt;transition&gt;, &lt;datafield&gt;)&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.pdf.generatePdf3.description&#x27;),
+                    example: &#x27;task: t.t1,\n&#x27; +
+                        &#x27;file_field: f.file_field;\n&#x27; +
+                        &#x27;generatePdf(task, file_field)&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.pdf.generatePdf4.label&#x27;),
+                    header: &#x27;void generatePdf(String transitionId, FileField fileField, List&lt;String&gt; excludedFields &#x3D; [])&#x27;,
+                    action: &#x27;generatePDF(&lt;transitionId&gt;, &lt;datafield&gt;)&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.pdf.generatePdf4.description&#x27;),
+                    example: &#x27;file_field: f.file_field;\n&#x27; +
+                        &#x27;generatePDF(&quot;t1&quot;, file_field)&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.pdf.generatePdf5.label&#x27;),
+                    header: &#x27;void generatePdf(String transitionId, String fileFieldId, List&lt;String&gt; excludedFields, Case fromCase &#x3D; useCase, Case saveToCase &#x3D; useCase)&#x27;,
+                    action: &#x27;generatePDF(&lt;transitionId&gt;, &lt;datafieldId&gt;, [&lt;datafieldId&gt;])&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.pdf.generatePdf5.description&#x27;),
+                    example: &#x27;generatePDF(&quot;t1&quot;, &quot;file_field&quot;, [&quot;ignored_field_1&quot;, &quot;ignored_field_2&quot;])&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.pdf.generatePdfWithTemplate.label&#x27;),
+                    header: &#x27;void generatePdfWithTemplate(String transitionId, String fileFieldId, String template, Case fromCase &#x3D; useCase, Case saveToCase &#x3D; useCase)&#x27;,
+                    action: &#x27;generatePdfWithTemplate(&lt;transitionId&gt;, &lt;datafieldId&gt;, &lt;filePath&gt;)&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.pdf.generatePdfWithTemplate.description&#x27;),
+                    example: &#x27;generatePdfWithTemplate(&quot;t1&quot;, &quot;file_field&quot;, &quot;templates/mortgage.pdf&quot;)&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.pdf.generatePdfWithLocale.label&#x27;),
+                    header: &#x27;void generatePdfWithLocale(String transitionId, String fileFieldId, Locale locale, Case fromCase &#x3D; useCase, Case saveToCase &#x3D; useCase)&#x27;,
+                    action: &#x27;generatePdfWithLocale(&lt;transitionId&gt;, &lt;datafieldId&gt;, &lt;value&gt;)&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.pdf.generatePdfWithLocale.description&#x27;),
+                    example: &#x27;generatePdfWithLocale(&quot;t1&quot;, &quot;file_field&quot;, Locale.forLanguageTag(&quot;sk&quot;))&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.pdf.generatePdfWithZoneId.label&#x27;),
+                    header: &#x27;void generatePdfWithZoneId(String transitionId, String fileFieldId, ZoneId dateZoneId &#x3D; ZoneId.systemDefault(), Case fromCase &#x3D; useCase, Case saveToCase &#x3D; useCase)&#x27;,
+                    action: &#x27;generatePdfWithZoneId(&lt;transitionId&gt;, &lt;datafieldId&gt;, &lt;value&gt;)&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.pdf.generatePdfWithZoneId.description&#x27;),
+                    example: &#x27;generatePdfWithZoneId(&quot;t1&quot;, &quot;file_field&quot;, ZoneId.of(&quot;UTC&quot;))&#x27;
+                },
+            ]
+        },
+        {
+            label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.email.label&#x27;),
+            badge: &#x27;email&#x27;,
+            actions: [
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.email.sendEmailPlaintText.label&#x27;),
+                    header: &#x27;void sendEmail(List&lt;String&gt; recipients, String subject, String body)&#x27;,
+                    action: &#x27;sendEmail([&lt;value&gt;], &lt;value&gt;, &lt;value&gt;)&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.email.sendEmailPlaintText.description&#x27;),
+                    example: &#x27;sendEmail([&quot;first@mail.com&quot;, &quot;second@mail.com&quot;], &quot;subject&quot;, &quot;Dear Mr ...&quot;)&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.email.sendEmailWithAttachments.label&#x27;),
+                    header: &#x27;void sendEmail(List&lt;String&gt; to, String subject, String body, Map&lt;String, File&gt; attachments)&#x27;,
+                    action: &#x27;sendEmail([&lt;value&gt;], &lt;value&gt;, &lt;value&gt;, [&lt;value&gt;: &lt;value&gt;])&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.email.sendEmailWithAttachments.description&#x27;),
+                    example: &#x27;sendEmail([&quot;first@mail.com&quot;, &quot;second@mail.com&quot;], &quot;subject&quot;, &quot;Dear Mr ...&quot;, [&quot;attachment_1&quot;: file])&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.email.sendMail.label&#x27;),
+                    header: &#x27;void sendMail(MailDraft mailDraft)&#x27;,
+                    action: &#x27;sendMail(&lt;value&gt;)&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.email.sendMail.description&#x27;),
+                    example: &#x27;MailDraft draft &#x3D; MailDraft.builder(&quot;from@mail.com&quot;, [&quot;to@mail.com&quot;])\n&#x27; +
+                        &#x27;   .cc(Collections.singletonList(&quot;cc@mail.com&quot;))\n&#x27; +
+                        &#x27;   .bcc(Collections.singletonList(&quot;bcc@mail.com&quot;))\n&#x27; +
+                        &#x27;   .subject(&quot;Subject draft&quot;)\n&#x27; +
+                        &#x27;   .body(&quot;&lt;p&gt;This is body and this is value &lt;b&gt;${value}&lt;/b&gt;&lt;/p&gt;&quot;)\n&#x27; +
+                        &#x27;   .isHtml(true)\n&#x27; +
+                        &#x27;   .model([&quot;value&quot;: some_field.value])\n&#x27; +
+                        &#x27;   .attachments([&quot;file&quot;: some_file))\n&#x27; +
+                        &#x27;   .build()\n&#x27; +
+                        &#x27;sendEmail(draft)&#x27;
+                },
+            ]
+        },
+        {
+            label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.filters.label&#x27;),
+            badge: &#x27;filter_alt&#x27;,
+            actions: [
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.filters.findFilter.label&#x27;),
+                    header: &#x27;Case findFilter(String title)&#x27;,
+                    action: &#x27;findFilter(&lt;value&gt;)&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.filters.findFilter.description&#x27;),
+                    example: &#x27;findFilter(&quot;All Mortgage&quot;)&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.filters.findFilters.label&#x27;),
+                    header: &#x27;List&lt;Case&gt; findFilters(String userInput)&#x27;,
+                    action: &#x27;findFilters(&lt;value&gt;)&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.filters.findFilters.description&#x27;),
+                    example: &#x27;findFilters(&quot;mortgage&quot;)&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.filters.findAllFilters.label&#x27;),
+                    header: &#x27;List&lt;Case&gt; findAllFilters()&#x27;,
+                    action: &#x27;findAllFilters()&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.filters.findAllFilters.description&#x27;),
+                    example: &#x27;findAllFilters()&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.filters.exportFilters.label&#x27;),
+                    header: &#x27;FileFieldValue exportFilters(Collection&lt;String&gt; filtersToExport)&#x27;,
+                    action: &#x27;exportFilters(&lt;value&gt;)&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.filters.exportFilters.description&#x27;),
+                    example: &#x27;def filters &#x3D; findAllFilters().collect {it.stringId}\n&#x27; +
+                        &#x27;change file_field value { exportFilters(filters) }&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.filters.findDefaultFilters.label&#x27;),
+                    header: &#x27;List&lt;Case&gt; findDefaultFilters()&#x27;,
+                    action: &#x27;findDefaultFilters()&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.filters.findDefaultFilters.description&#x27;),
+                    example: &#x27;findDefaultFilters()&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.filters.createCaseFilter.label&#x27;),
+                    header: &#x27;Case createCaseFilter(def title, String query, List&lt;String&gt; allowedNets, String icon &#x3D; &quot;&quot;, String visibility &#x3D; DefaultFiltersRunner.FILTER_VISIBILITY_PRIVATE, def filterMetadata &#x3D; null)&#x27;,
+                    action: &#x27;createCaseFilter(&lt;value&gt;, &lt;value&gt;, &lt;value&gt;)&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.filters.createCaseFilter.description&#x27;),
+                    example: &#x27;createCaseFilter(&quot;All Mortgage&quot;, &quot;processIdentifier:mortgage&quot;, [&quot;mortgage&quot;])&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.filters.createTaskFilter.label&#x27;),
+                    header: &#x27;Case createTaskFilter(def title, String query, List&lt;String&gt; allowedNets, String icon &#x3D; &quot;&quot;, String visibility &#x3D; DefaultFiltersRunner.FILTER_VISIBILITY_PRIVATE, def filterMetadata &#x3D; null)&#x27;,
+                    action: &#x27;createTaskFilter(&lt;value&gt;, &lt;value&gt;, &lt;value&gt;)&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.filters.createTaskFilter.description&#x27;),
+                    example: &#x27;createTaskFilter(&quot;Approvals&quot;, &quot;transitionId:t1&quot;, [&quot;mortgage&quot;])&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.filters.createFilter.label&#x27;),
+                    header: &#x27;Case createFilter(def title, String query, String type, List&lt;String&gt; allowedNets, String icon, String visibility, def filterMetadata)&#x27;,
+                    action: &#x27;createFilter(&lt;value&gt;, &lt;value&gt;, &lt;value&gt;, [&lt;value&gt;], &lt;value&gt;, &lt;value&gt;, null)&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.filters.createFilter.description&#x27;),
+                    example: &#x27;createFilter(&quot;All Mortgage&quot;, &quot;processIdentifier:mortgage&quot;, &quot;Case&quot;, [&quot;mortgage&quot;], &quot;real_estate_agent&quot;, &quot;public&quot;, null)\n&#x27; +
+                        &#x27;createFilter(&quot;Approvals&quot;, &quot;transitionId:t1&quot;, &quot;Task&quot;, [&quot;mortgage&quot;], &quot;checklist&quot;, &quot;public&quot;, null)&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.filters.changeFilterQuery.label&#x27;),
+                    header: &#x27;changeFilter (Case filter) query (Closure cl)&#x27;,
+                    action: &#x27;changeFilter &lt;value&gt; query { &lt;value&gt; }&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.filters.changeFilterQuery.description&#x27;),
+                    example: &#x27;def filter &#x3D; findFilter(&quot;All Mortgage&quot;)\n&#x27; +
+                        &#x27;changeFilter filter query { &quot;processIdentifier:new_mortgage&quot; }&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.filters.changeFilterVisibility.label&#x27;),
+                    header: &#x27;changeFilter (Case filter) visibility (Closure cl)&#x27;,
+                    action: &#x27;changeFilter &lt;value&gt; visibility { &lt;value&gt; }&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.filters.changeFilterVisibility.description&#x27;),
+                    example: &#x27;def filter &#x3D; findFilter(&quot;All Mortgage&quot;)\n&#x27; +
+                        &#x27;changeFilter filter visibility { &quot;private&quot; }&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.filters.changeFilterAllowedNets.label&#x27;),
+                    header: &#x27;changeFilter (Case filter) allowedNets (Closure cl)&#x27;,
+                    action: &#x27;changeFilter &lt;value&gt; allowedNets { &lt;value&gt; }&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.filters.changeFilterAllowedNets.description&#x27;),
+                    example: &#x27;def filter &#x3D; findFilter(&quot;All Mortgage&quot;)\n&#x27; +
+                        &#x27;changeFilter filter allowedNets { [&quot;new_mortgage&quot;] }&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.filters.changeFilterMetadata.label&#x27;),
+                    header: &#x27;changeFilter (Case filter) filterMetadata (Closure cl)&#x27;,
+                    action: &#x27;changeFilter &lt;value&gt; filterMetadata { &lt;value&gt; }&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.filters.changeFilterMetadata.description&#x27;),
+                    example: &#x27;def filter &#x3D; findFilter(&quot;All Mortgage&quot;)\n&#x27; +
+                        &#x27;changeFilter filter filterMetadata { defaultFilterMetadata(&quot;Case&quot;) }&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.filters.changeFilterTitle.label&#x27;),
+                    header: &#x27;changeFilter (Case filter) title (Closure cl)&#x27;,
+                    action: &#x27;changeFilter &lt;value&gt; title { &lt;value&gt; }&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.filters.changeFilterTitle.description&#x27;),
+                    example: &#x27;def filter &#x3D; findFilter(&quot;All Mortgage&quot;)\n&#x27; +
+                        &#x27;changeFilter filter title { &quot;New Mortgage&quot; }&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.filters.changeFilterIcon.label&#x27;),
+                    header: &#x27;changeFilter (Case filter) icon (Closure cl)&#x27;,
+                    action: &#x27;changeFilter &lt;value&gt; icon { &lt;value&gt; }&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.filters.changeFilterIcon.description&#x27;),
+                    example: &#x27;def filter &#x3D; findFilter(&quot;All Mortgage&quot;)\n&#x27; +
+                        &#x27;changeFilter filter icon { &quot;euro&quot; }&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.filters.changeFilterUri.label&#x27;),
+                    header: &#x27;changeFilter (Case filter) uri (Closure cl)&#x27;,
+                    action: &#x27;changeFilter &lt;value&gt; uri { &lt;value&gt; }&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.filters.changeFilterUri.description&#x27;),
+                    example: &#x27;def filter &#x3D; findFilter(&quot;All Mortgage&quot;)\n&#x27; +
+                        &#x27;changeFilter filter uri { &quot;/netgrif/new_mortgage&quot; }&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.filters.deleteFilter.label&#x27;),
+                    header: &#x27;def deleteFilter(Case filter)&#x27;,
+                    action: &#x27;deleteFilter(&lt;value&gt;)&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.filters.deleteFilter.description&#x27;),
+                    example: &#x27;deleteFilter(findFilter(&quot;All Mortgage&quot;))&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.filters.createFilterInMenu1.label&#x27;),
+                    header: &#x27;Case createFilterInMenu(String uri, String itemIdentifier, def itemAndFilterName, String filterQuery,\n&#x27; +
+                        &#x27;                            String filterType, String filterVisibility, List&lt;String&gt; filterAllowedNets &#x3D; [],\n&#x27; +
+                        &#x27;                            String itemAndFilterIcon &#x3D; &quot;filter_none&quot;, Map&lt;String, String&gt; itemAllowedRoles &#x3D; [:],\n&#x27; +
+                        &#x27;                            Map&lt;String, String&gt; itemBannedRoles &#x3D; [:], List&lt;String&gt; itemCaseDefaultHeaders &#x3D; [],\n&#x27; +
+                        &#x27;                            List&lt;String&gt; itemTaskDefaultHeaders &#x3D; [], def filterMetadata &#x3D; null)&#x27;,
+                    action: &#x27;createFilterInMenu(&lt;value&gt;, &lt;value&gt;, &lt;value&gt;, &lt;value&gt;, &lt;value&gt;, &lt;value&gt;)&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.filters.createFilterInMenu1.description&#x27;),
+                    example: &#x27;createFilterInMenu(&quot;/netgrif/mortgage&quot;, &quot;mortgage&quot;, &quot;All Mortgage&quot;, &quot;processIdentifier:mortgage&quot;, &quot;Case&quot;, &quot;public&quot;)&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.filters.createFilterInMenu2.label&#x27;),
+                    header: &#x27;Case createFilterInMenu(MenuItemBody body, String filterQuery, String filterType, String filterVisibility,\n&#x27; +
+                        &#x27;                            List&lt;String&gt; filterAllowedNets &#x3D; [], def filterMetadata &#x3D; null)&#x27;,
+                    action: &#x27;createFilterInMenu(&lt;value&gt;, &lt;value&gt;, &lt;value&gt;, &lt;value&gt;)&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.filters.createFilterInMenu2.description&#x27;),
+                    example: &#x27;def body &#x3D; new MenuItemBody(new I18nString(&quot;All Mortgage&quot;), &quot;real_estate_agent&quot;)\n&#x27; +
+                        &#x27;createFilterInMenu(body, &quot;processIdentifier:mortgage&quot;, &quot;Case&quot;, &quot;public&quot;)&#x27;
+                },
+            ]
+        },
+        {
+            label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.menuItems.label&#x27;),
+            badge: &#x27;menu&#x27;,
+            actions: [
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.menuItems.createMenuItem1.label&#x27;),
+                    header: &#x27;Case createMenuItem(String uri, String identifier, def name, String icon &#x3D; &quot;filter_none&quot;, Case filter &#x3D; null,\n&#x27; +
+                        &#x27;                        Map&lt;String, String&gt; allowedRoles &#x3D; [:], Map&lt;String, String&gt; bannedRoles &#x3D; [:],\n&#x27; +
+                        &#x27;                        List&lt;String&gt; caseDefaultHeaders &#x3D; [], List&lt;String&gt; taskDefaultHeaders &#x3D; [])&#x27;,
+                    action: &#x27;createMenuItem(&lt;value&gt;, &lt;value&gt;, &lt;value&gt;)&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.menuItemscreateMenuItem1..description&#x27;),
+                    example: &#x27;createMenuItem(&quot;/netgrif/mortgage&quot;, &quot;all_mortgage&quot;, &quot;All Mortgage&quot;)&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.menuItems.changeMenuItemAllowedRoles.label&#x27;),
+                    header: &#x27;changeMenuItem (Case item) allowedRoles (Closure cl)&#x27;,
+                    action: &#x27;changeMenuItem &lt;value&gt; allowedRoles { &lt;value&gt; }&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.menuItems.changeMenuItemAllowedRoles.description&#x27;),
+                    example: &#x27;def menuItem &#x3D; findMenuItem(&quot;all_mortgage&quot;)\n&#x27; +
+                        &#x27;changeMenuItem menuItem allowedRoles { [&quot;approver&quot;: &quot;mortgage&quot;] }&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.menuItems.changeMenuItemBannedRoles.label&#x27;),
+                    header: &#x27;changeMenuItem (Case item) bannedRoles (Closure cl)&#x27;,
+                    action: &#x27;changeMenuItem &lt;value&gt; bannedRoles { &lt;value&gt; }&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.menuItems.changeMenuItemBannedRoles.description&#x27;),
+                    example: &#x27;def menuItem &#x3D; findMenuItem(&quot;all_mortgage&quot;)\n&#x27; +
+                        &#x27;changeMenuItem menuItem bannedRoles { [&quot;approver&quot;: &quot;mortgage&quot;] }&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.menuItems.changeMenuItemCaseDefaultHeaders.label&#x27;),
+                    header: &#x27;changeMenuItem (Case item) caseDefaultHeaders (Closure cl)&#x27;,
+                    action: &#x27;changeMenuItem &lt;value&gt; caseDefaultHeaders { &lt;value&gt; }&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.menuItems.changeMenuItemCaseDefaultHeaders.description&#x27;),
+                    example: &#x27;def menuItem &#x3D; findMenuItem(&quot;all_mortgage&quot;)\n&#x27; +
+                        &#x27;changeMenuItem menuItem caseDefaultHeaders { [&quot;meta-title&quot;,&quot;meta-visualId&quot;] }&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.menuItems.changeMenuItemTaskDefaultHeaders.label&#x27;),
+                    header: &#x27;changeMenuItem (Case item) taskDefaultHeaders (Closure cl)&#x27;,
+                    action: &#x27;changeMenuItem &lt;value&gt; taskDefaultHeaders { &lt;value&gt; }&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.menuItems.changeMenuItemTaskDefaultHeaders.description&#x27;),
+                    example: &#x27;def menuItem &#x3D; findMenuItem(&quot;all_mortgage&quot;)\n&#x27; +
+                        &#x27;changeMenuItem menuItem caseDefaultHeaders { [&quot;meta-title&quot;,&quot;meta-caseId&quot;] }&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.menuItems.changeMenuItemFilter.label&#x27;),
+                    header: &#x27;changeMenuItem (Case item) filter (Closure cl)&#x27;,
+                    action: &#x27;changeMenuItem &lt;value&gt; filter { &lt;value&gt; }&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.menuItems.changeMenuItemFilter.description&#x27;),
+                    example: &#x27;def menuItem &#x3D; findMenuItem(&quot;all_mortgage&quot;)\n&#x27; +
+                        &#x27;def filter &#x3D; findFilter(&quot;All Mortgage&quot;)\n&#x27; +
+                        &#x27;changeMenuItem menuItem filter { filter }&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.menuItems.changeMenuItemUri.label&#x27;),
+                    header: &#x27;changeMenuItem (Case item) uri (Closure cl)&#x27;,
+                    action: &#x27;changeMenuItem &lt;value&gt; uri { &lt;value&gt; }&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.menuItems.changeMenuItemUri.description&#x27;),
+                    example: &#x27;def menuItem &#x3D; findMenuItem(&quot;all_mortgage&quot;)\n&#x27; +
+                        &#x27;changeMenuItem menuItem uri { &quot;/netgrif/new_mortgage&quot; }&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.menuItems.changeMenuItemMenuIcon.label&#x27;),
+                    header: &#x27;changeMenuItem (Case item) menuIcon (Closure cl)&#x27;,
+                    action: &#x27;changeMenuItem &lt;value&gt; menuIcon { &lt;value&gt; }&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.menuItems.changeMenuItemMenuIcon.description&#x27;),
+                    example: &#x27;def menuItem &#x3D; findMenuItem(&quot;all_mortgage&quot;)\n&#x27; +
+                        &#x27;changeMenuItem menuItem menuIcon { &quot;euro&quot; }&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.menuItems.changeMenuItemTabIcon.label&#x27;),
+                    header: &#x27;changeMenuItem (Case item) tabIcon (Closure cl)&#x27;,
+                    action: &#x27;changeMenuItem &lt;value&gt; tabIcon { &lt;value&gt; }&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.menuItems.changeMenuItemTabIcon.description&#x27;),
+                    example: &#x27;def menuItem &#x3D; findMenuItem(&quot;all_mortgage&quot;)\n&#x27; +
+                        &#x27;changeMenuItem menuItem tabIcon { &quot;euro&quot; }&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.menuItems.changeMenuItemRequireTitleInCreation.label&#x27;),
+                    header: &#x27;changeMenuItem (Case item) requireTitleInCreation (Closure cl)&#x27;,
+                    action: &#x27;changeMenuItem &lt;value&gt; requireTitleInCreation { &lt;value&gt; }&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.menuItems.changeMenuItemRequireTitleInCreation.description&#x27;),
+                    example: &#x27;def menuItem &#x3D; findMenuItem(&quot;all_mortgage&quot;)\n&#x27; +
+                        &#x27;changeMenuItem menuItem requireTitleInCreation { true }&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.menuItems.changeMenuItemUseCustomView.label&#x27;),
+                    header: &#x27;changeMenuItem (Case item) useCustomView (Closure cl)&#x27;,
+                    action: &#x27;changeMenuItem &lt;value&gt; useCustomView { &lt;value&gt; }&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.menuItems.changeMenuItemUseCustomView.description&#x27;),
+                    example: &#x27;def menuItem &#x3D; findMenuItem(&quot;all_mortgage&quot;)\n&#x27; +
+                        &#x27;changeMenuItem menuItem useCustomView { true }&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.menuItems.changeMenuItemCustomViewSelector.label&#x27;),
+                    header: &#x27;changeMenuItem (Case item) customViewSelector (Closure cl)&#x27;,
+                    action: &#x27;changeMenuItem &lt;value&gt; customViewSelector { &lt;value&gt; }&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.menuItems.changeMenuItemCustomViewSelector.description&#x27;),
+                    example: &#x27;def menuItem &#x3D; findMenuItem(&quot;all_mortgage&quot;)\n&#x27; +
+                        &#x27;changeMenuItem menuItem useCustomView { &quot;mortgage-tabbed-views&quot; }&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.menuItems.deleteMenuItem.label&#x27;),
+                    header: &#x27;deleteMenuItem(Case item)&#x27;,
+                    action: &#x27;deleteMenuItem(&lt;value&gt;)&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.menuItems.deleteMenuItem.description&#x27;),
+                    example: &#x27;def menuItem &#x3D; findMenuItem(&quot;all_mortgage&quot;)\n&#x27; +
+                        &#x27;deleteMenuItem(menuItem)&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.menuItems.createMenuItem2.label&#x27;),
+                    header: &#x27;Case createMenuItem(MenuItemBody body)&#x27;,
+                    action: &#x27;createMenuItem(&lt;value&gt;)&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.menuItems.createMenuItem2.description&#x27;),
+                    example: &#x27;def body &#x3D; new MenuItemBody(&quot;netgrif/&quot;mortgage&quot;, &quot;all_mortgage, new I18nString(&quot;All Mortgage&quot;), &quot;home&quot;)\n&#x27; +
+                        &#x27;createMenuItem(body)&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.menuItems.moveMenuItem.label&#x27;),
+                    header: &#x27;void moveMenuItem(Case item, String destUri)&#x27;,
+                    action: &#x27;moveMenuItem(&lt;case&gt;, &lt;value&gt;)&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.menuItems.moveMenuItem.description&#x27;),
+                    example: &#x27;def menuItem &#x3D; findMenuItem(&quot;all_mortgage&quot;)\n&#x27; +
+                        &#x27;moveMenuItem(menuItem, &quot;/netgrif/new_mortgage&quot;)&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.menuItems.duplicateMenuItem.label&#x27;),
+                    header: &#x27;Case duplicateMenuItem(Case originItem, I18nString newTitle, String newIdentifier)&#x27;,
+                    action: &#x27;duplicateMenuItem(&lt;case&gt;, &lt;value&gt;, &lt;value&gt;)&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.menuItems.duplicateMenuItem.description&#x27;),
+                    example: &#x27;def menuItem &#x3D; findMenuItem(&quot;all_mortgage&quot;)\n&#x27; +
+                        &#x27;duplicateMenuItem(menuItem, &quot;New Mortgage&quot;, &quot;new_mortgage&quot;)&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.menuItems.findMenuItem1.label&#x27;),
+                    header: &#x27;Case findMenuItem(String menuItemIdentifier)&#x27;,
+                    action: &#x27;findMenuItem(&lt;value&gt;)&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.menuItems.findMenuItem1.description&#x27;),
+                    example: &#x27;findMenuItem(&quot;all_mortgage&quot;)&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.menuItems.findMenuItemByUriAndName.label&#x27;),
+                    header: &#x27;Case findMenuItem(String uri, String name)&#x27;,
+                    action: &#x27;findMenuItem(&lt;value&gt;, &lt;value&gt;)&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.menuItems.findMenuItemByUriAndName.description&#x27;),
+                    example: &#x27;findMenuItem(&quot;/netgrif/mortgage&quot;, &quot;All Mortgage&quot;)&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.menuItems.findMenuItemByUriAndIdentifier.label&#x27;),
+                    header: &#x27;Case findMenuItemByUriAndIdentifier(String uri, String identifier)&#x27;,
+                    action: &#x27;findMenuItemByUriAndIdentifier(&lt;value&gt;, &lt;value&gt;)&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.menuItems.findMenuItemByUriAndIdentifier.description&#x27;),
+                    example: &#x27;findMenuItemByUriAndIdentifier(&quot;/netgrif/mortgage&quot;, &quot;all_mortgage&quot;)&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.menuItems.existsMenuItem.label&#x27;),
+                    header: &#x27;boolean existsMenuItem(String menuItemIdentifier)&#x27;,
+                    action: &#x27;existsMenuItem(&lt;value&gt;)&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.menuItems.existsMenuItem.description&#x27;),
+                    example: &#x27;existsMenuItem(&quot;all_mortgage&quot;)&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.menuItems.getFilterFromMenuItem.label&#x27;),
+                    header: &#x27;Case getFilterFromMenuItem(Case item)&#x27;,
+                    action: &#x27;getFilterFromMenuItem(&lt;value&gt;)&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.menuItems.getFilterFromMenuItem.description&#x27;),
+                    example: &#x27;def item &#x3D; findMenuItem(&quot;all_mortgage&quot;)\n&#x27; +
+                        &#x27;getFilterFromMenuItem(item)&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.menuItems.createOrUpdateMenuItem1.label&#x27;),
+                    header: &#x27;Case createOrUpdateMenuItem(String uri, String identifier, def name, String icon &#x3D; &quot;filter_none&quot;, Case filter &#x3D; null,\n&#x27; +
+                        &#x27;                                Map&lt;String, String&gt; allowedRoles &#x3D; [:], Map&lt;String, String&gt; bannedRoles &#x3D; [:],\n&#x27; +
+                        &#x27;                                List&lt;String&gt; caseDefaultHeaders &#x3D; [], List&lt;String&gt; taskDefaultHeaders &#x3D; [])&#x27;,
+                    action: &#x27;createOrUpdateMenuItem(&lt;value&gt;, &lt;value&gt;, &lt;value&gt;)&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.menuItems.createOrUpdateMenuItem1.description&#x27;),
+                    example: &#x27;createOrUpdateMenuItem(&quot;netgrif/&quot;mortgage&quot;, &quot;all_mortgage, new I18nString(&quot;All Mortgage&quot;))&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.menuItems.createOrUpdateMenuItemAndFilter1.label&#x27;),
+                    header: &#x27;Case createOrUpdateMenuItemAndFilter(String uri, String itemIdentifier, def itemAndFilterName, String filterQuery,\n&#x27; +
+                        &#x27;                                         String filterType, String filterVisibility, List&lt;String&gt; filterAllowedNets &#x3D; [],\n&#x27; +
+                        &#x27;                                         String itemAndFilterIcon &#x3D; &quot;filter_none&quot;, Map&lt;String, String&gt; itemAllowedRoles &#x3D; [:],\n&#x27; +
+                        &#x27;                                         Map&lt;String, String&gt; itemBannedRoles &#x3D; [:], List&lt;String&gt; itemCaseDefaultHeaders &#x3D; [],\n&#x27; +
+                        &#x27;                                         List&lt;String&gt; itemTaskDefaultHeaders &#x3D; [], def filterMetadata &#x3D; null)&#x27;,
+                    action: &#x27;createOrUpdateMenuItemAndFilter(&lt;value&gt;, &lt;value&gt;, &lt;value&gt;, &lt;value&gt;, &lt;value&gt;, &lt;value&gt;)&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.menuItems.createOrUpdateMenuItemAndFilter1.description&#x27;),
+                    example: &#x27;createOrUpdateMenuItemAndFilter(&quot;netgrif/&quot;mortgage&quot;, &quot;all_mortgage, new I18nString(&quot;All Mortgage&quot;), &quot;processIdentifier:mortgage&quot;, &quot;Case&quot;, &quot;public&quot;)&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.menuItems.createOrUpdateMenuItem2.label&#x27;),
+                    header: &#x27;Case createOrUpdateMenuItem(MenuItemBody body)&#x27;,
+                    action: &#x27;createOrUpdateMenuItemAndFilter(&lt;value&gt;)&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.menuItems.createOrUpdateMenuItem2.description&#x27;),
+                    example: &#x27;MenuItemBody body &#x3D; new MenuItemBody(&quot;netgrif/&quot;mortgage&quot;, &quot;all_mortgage, new I18nString(&quot;All Mortgage&quot;), &quot;home&quot;)\n&#x27; +
+                        &#x27;createOrUpdateMenuItemAndFilter(body)&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.menuItems.createOrUpdateMenuItemAndFilter2.label&#x27;),
+                    header: &#x27;Case createOrUpdateMenuItemAndFilter(MenuItemBody body, String filterQuery, String filterType, String filterVisibility,\n&#x27; +
+                        &#x27;                                         List&lt;String&gt; filterAllowedNets &#x3D; [], def filterMetadata &#x3D; null)&#x27;,
+                    action: &#x27;createOrUpdateMenuItemAndFilter(&lt;value&gt;, &lt;value&gt;, &lt;value&gt;, &lt;value&gt;)&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.menuItems.createOrUpdateMenuItemAndFilter2.description&#x27;),
+                    example: &#x27;def body &#x3D; new MenuItemBody(new I18nString(&quot;Settings&quot;), &quot;settings&quot;)\n&#x27; +
+                        &#x27;createOrUpdateMenuItemAndFilter(body, &quot;processIdentifier:mortgage&quot;, &quot;Case&quot;, &quot;public&quot;)&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.menuItems.createOrIgnoreMenuItem.label&#x27;),
+                    header: &#x27;Case createOrIgnoreMenuItem(MenuItemBody body)&#x27;,
+                    action: &#x27;createOrUpdateMenuItemAndFilter(&lt;value&gt;)&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.menuItems.createOrIgnoreMenuItem.description&#x27;),
+                    example: &#x27;def body &#x3D; new MenuItemBody(new I18nString(&quot;Settings&quot;), &quot;settings&quot;)\n&#x27; +
+                        &#x27;createOrUpdateMenuItemAndFilter(body)&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.menuItems.createOrIgnoreMenuItemAndFilter.label&#x27;),
+                    header: &#x27;Case createOrIgnoreMenuItemAndFilter(MenuItemBody body, String filterQuery, String filterType, String filterVisibility,\n&#x27; +
+                        &#x27;                                         List&lt;String&gt; filterAllowedNets &#x3D; [], def filterMetadata &#x3D; null)&#x27;,
+                    action: &#x27;createOrUpdateMenuItemAndFilter(&lt;value&gt;, &lt;value&gt;, &lt;value&gt;, &lt;value&gt;)&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.menuItems.createOrIgnoreMenuItemAndFilter.description&#x27;),
+                    example: &#x27;def body &#x3D; new MenuItemBody(new I18nString(&quot;Settings&quot;), &quot;settings&quot;)\n&#x27; +
+                        &#x27;createOrIgnoreMenuItemAndFilter(body, &quot;processIdentifier:mortgage, &quot;Case&quot;, &quot;public&quot;)&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.menuItems.updateMenuItem.label&#x27;),
+                    header: &#x27;Case updateMenuItem(Case item, MenuItemBody body)&#x27;,
+                    action: &#x27;updateMenuItem(&lt;value&gt;, &lt;value&gt;)&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.menuItems.updateMenuItem.description&#x27;),
+                    example: &#x27;def body &#x3D; new MenuItemBody(new I18nString(&quot;Settings&quot;), &quot;settings&quot;)\n&#x27; +
+                        &#x27;updateMenuItem(useCase, body)&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.menuItems.defaultFilterMetadata.label&#x27;),
+                    header: &#x27;static Map defaultFilterMetadata(String type) &#x27;,
+                    action: &#x27;defaultFilterMetadata(&lt;value&gt;)&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.menuItems.defaultFilterMetadata.description&#x27;),
+                    example: &#x27;defaultFilterMetadata(&quot;Case&quot;)&#x27;
+                }
+            ]
+        },
+        {
+            label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.importExport.label&#x27;),
+            badge: &#x27;import_export&#x27;,
+            actions: [
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.importExport.exportCasesToFile.label&#x27;),
+                    header: &#x27;File exportCasesToFile(Closure&lt;Predicate&gt; predicate, String pathName, ExportDataConfig config &#x3D; null, int pageSize &#x3D; exportConfiguration.getMongoPageSize())&#x27;,
+                    action: &#x27;exportCasesToFile(&lt;casePredicate&gt;, &lt;value&gt;)&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.importExport.exportCasesToFile.description&#x27;),
+                    example: &#x27;exportCasesToFile({it.processIdentifier.eq(&quot;mortgage&quot;)}, &quot;exported_mortgage.csv&quot;)&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.importExport.exportCasesToStream.label&#x27;),
+                    header: &#x27;OutputStream exportCases(Closure&lt;Predicate&gt; predicate, File outFile, ExportDataConfig config &#x3D; null, int pageSize &#x3D; exportConfiguration.getMongoPageSize())&#x27;,
+                    action: &#x27;exportCases(&lt;casePredicate&gt;, &lt;value&gt;)&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.importExport.exportCasesToStream.description&#x27;),
+                    example: &#x27;exportCases({it.processIdentifier.eq(&quot;mortgage&quot;)}, new File(&quot;exported_mortgage.csv&quot;))&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.importExport.exportCasesToFileAsUser.label&#x27;),
+                    header: &#x27;File exportCasesToFile(List&lt;CaseSearchRequest&gt; requests, String pathName, ExportDataConfig config &#x3D; null,\n&#x27; +
+                        &#x27;                           LoggedUser user &#x3D; userService.loggedOrSystem.transformToLoggedUser(),\n&#x27; +
+                        &#x27;                           int pageSize &#x3D; exportConfiguration.getMongoPageSize(),\n&#x27; +
+                        &#x27;                           Locale locale &#x3D; LocaleContextHolder.getLocale(),\n&#x27; +
+                        &#x27;                           Boolean isIntersection &#x3D; false)&#x27;,
+                    action: &#x27;exportCasesToFile(&lt;value&gt;, &lt;value&gt;)&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.importExport.exportCasesToFileAsUser.description&#x27;),
+                    example: &#x27;def request &#x3D; CaseSearchRequest.builder().processIdentifier([&quot;mortgage&quot;]).build()\n&#x27; +
+                        &#x27;exportCasesToFile([request], &quot;exported_mortgage.csv&quot;)&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.importExport.exportCasesToStreamAsUser.label&#x27;),
+                    header: &#x27;OutputStream exportCases(List&lt;CaseSearchRequest&gt; requests, File outFile, ExportDataConfig config &#x3D; null,\n&#x27; +
+                        &#x27;                             LoggedUser user &#x3D; userService.loggedOrSystem.transformToLoggedUser(),\n&#x27; +
+                        &#x27;                             int pageSize &#x3D; exportConfiguration.getMongoPageSize(),\n&#x27; +
+                        &#x27;                             Locale locale &#x3D; LocaleContextHolder.getLocale(),\n&#x27; +
+                        &#x27;                             Boolean isIntersection &#x3D; false)&#x27;,
+                    action: &#x27;exportCasesToFile([&lt;value&gt;], &lt;value&gt;)&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.importExport.exportCasesToStreamAsUser.description&#x27;),
+                    example: &#x27;def request &#x3D; CaseSearchRequest.builder().processIdentifier([&quot;mortgage&quot;]).build()\n&#x27; +
+                        &#x27;exportCasesToFile([request], new File(&quot;exported_mortgage.csv&quot;))&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.importExport.exportTasksToFile.label&#x27;),
+                    header: &#x27;File exportTasksToFile(Closure&lt;Predicate&gt; predicate, String pathName, ExportDataConfig config &#x3D; null)&#x27;,
+                    action: &#x27;exportTasksToFile(&lt;taskPredicate&gt;, &lt;value&gt;)&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.importExport.exportTasksToFile.description&#x27;),
+                    example: &#x27;exportTasksToFile({it.caseId.eq(useCase.stringId)}, &quot;exported_tasks.csv&quot;)&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.importExport.exportTasksToStream.label&#x27;),
+                    header: &#x27;OutputStream exportTasks(Closure&lt;Predicate&gt; predicate, File outFile, ExportDataConfig config &#x3D; null, int pageSize &#x3D; exportConfiguration.getMongoPageSize())&#x27;,
+                    action: &#x27;exportTasks(&lt;taskPredicate&gt;, &lt;value&gt;)&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.importExport.exportTasksToStream.description&#x27;),
+                    example: &#x27;exportTasks({it.caseId.eq(useCase.stringId)}, new File(&quot;exported_tasks.csv&quot;))&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.importExport.exportTasksToFileAsUser.label&#x27;),
+                    header: &#x27;File exportTasksToFile(List&lt;ElasticTaskSearchRequest&gt; requests, String pathName, ExportDataConfig config &#x3D; null,\n&#x27; +
+                        &#x27;                           LoggedUser user &#x3D; userService.loggedOrSystem.transformToLoggedUser(),\n&#x27; +
+                        &#x27;                           int pageSize &#x3D; exportConfiguration.getMongoPageSize(),\n&#x27; +
+                        &#x27;                           Locale locale &#x3D; LocaleContextHolder.getLocale(),\n&#x27; +
+                        &#x27;                           Boolean isIntersection &#x3D; false)&#x27;,
+                    action: &#x27;exportTasksToFile([&lt;value&gt;], &lt;value&gt;)&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.importExport.exportTasksToFileAsUser.description&#x27;),
+                    example: &#x27;def request &#x3D; new TaskSearchRequest(useCase: [new TaskSearchCaseRequest(id: useCase.stringId)])\n&#x27; +
+                        &#x27;exportTasksToFile([request], &quot;exported_mortgage.csv&quot;)&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.importExport.exportTasksToStreamAsUser.label&#x27;),
+                    header: &#x27;OutputStream exportTasks(List&lt;ElasticTaskSearchRequest&gt; requests, File outFile, ExportDataConfig config &#x3D; null,\n&#x27; +
+                        &#x27;                             LoggedUser user &#x3D; userService.loggedOrSystem.transformToLoggedUser(),\n&#x27; +
+                        &#x27;                             int pageSize &#x3D; exportConfiguration.getMongoPageSize(),\n&#x27; +
+                        &#x27;                             Locale locale &#x3D; LocaleContextHolder.getLocale(),\n&#x27; +
+                        &#x27;                             Boolean isIntersection &#x3D; false)&#x27;,
+                    action: &#x27;exportTasks(&lt;value&gt;, &lt;value&gt;)&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.importExport.exportTasksToStreamAsUser.description&#x27;),
+                    example: &#x27;def request &#x3D; [new TaskSearchRequest(useCase: [new TaskSearchCaseRequest(id: useCase.stringId)])]\n&#x27; +
+                        &#x27;exportTasks(request, new File(&quot;exported_mortgage.csv&quot;))&#x27;
+                },
+            ]
+        },
+        {
+            label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.uri.label&#x27;),
+            badge: &#x27;link&#x27;,
+            actions: [
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.uri.getUriNode.label&#x27;),
+                    header: &#x27;UriNode getUri(String uri)&#x27;,
+                    action: &#x27;getUri(&lt;value&gt;)&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.uri.getUriNode.description&#x27;),
+                    example: &#x27;getUri(&quot;/netgrif/fin/mortgage&quot;)&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.uri.createUriNode.label&#x27;),
+                    header: &#x27;UriNode createUri(String uri, UriContentType type)&#x27;,
+                    action: &#x27;createUri(&lt;value&gt;, &lt;value&gt;)&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.uri.createUriNode.description&#x27;),
+                    example: &#x27;createUri(&quot;/netgrif/fin/mortgage&quot;, UriContentType.CASE)&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.uri.moveUriNode.label&#x27;),
+                    header: &#x27;moveUri(String uri, String dest)&#x27;,
+                    action: &#x27;moveUri(&lt;value&gt;, &lt;value&gt;)&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.uri.moveUriNode.description&#x27;),
+                    example: &#x27;moveUri(&quot;/netgrif/fin/mortgage&quot;, &quot;/mortgage&quot;)&#x27;
+                },
+                {
+                    label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.uri.makeUrl.label&#x27;),
+                    header: &#x27;String makeUrl(String publicViewUrl &#x3D; publicViewProperties.url, String identifier)&#x27;,
+                    action: &#x27;makeUrl(&lt;value&gt;)&#x27;,
+                    description: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.uri.makeUrl.description&#x27;),
+                    example: &#x27;makeUrl(&quot;mortgage&quot;)&#x27;
+                },
+            ]
+        },
+        {
+            label: translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.classes.command-action.customFunctions.label&#x27;),
+            badge: &#x27;functions&#x27;,
+            actions: []
+        },
+    ]
+}
+</code></pre>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'interface';
+            var COMPODOC_CURRENT_PAGE_URL = 'CommandAction.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

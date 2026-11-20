@@ -1,0 +1,784 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Netgrif Components library Documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">Netgrif Components library Documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content injectable">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Injectables</li>
+  <li class="breadcrumb-item" >GridsterFieldToEngineFieldService</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" 
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" 
+                class="nav-link"
+                
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>projects/netgrif-components/src/lib/builder/modeler/gridster-field-to-engine-field.service.ts</code>
+        </p>
+
+
+
+
+
+            <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#transformDataField" >transformDataField</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+            <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor()</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="46" class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/gridster-field-to-engine-field.service.ts:46</a></div>
+                            </td>
+                        </tr>
+
+            </tbody>
+        </table>
+</section>
+
+            <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="transformDataField"></a>
+                    <span class="name">
+                        <span ><b>transformDataField</b></span>
+                        <a href="#transformDataField"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>transformDataField(dataField: <a href="../classes/GridsterDataField.html" target="_self">GridsterDataField</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="51"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/gridster-field-to-engine-field.service.ts:51</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>dataField</td>
+                                            <td>
+                                                            <code><a href="../classes/GridsterDataField.html" target="_self" >GridsterDataField</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>DataField&lt;&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Injectable} from &#x27;@angular/core&#x27;;
+import {
+  BooleanField,
+  ButtonField,
+  Component,
+  DataField,
+  DateField,
+  DateTimeField,
+  DynamicEnumerationField,
+  EnumerationField,
+  EnumerationFieldValue,
+  FieldAlignment,
+  FieldTypeResource,
+  FileField,
+  FileListField,
+  FilterField,
+  I18nField,
+  Layout,
+  MaterialAppearance,
+  MultichoiceField,
+  NumberField,
+  Properties,
+  TaskRefField,
+  TemplateAppearance,
+  TextAreaField,
+  TextField,
+  UserField,
+} from &#x27;@netgrif/components-core&#x27;;
+import {I18nFieldValue} from &#x27;@netgrif/components-core&#x27;;
+import {Behavior} from &#x27;@netgrif/components-core&#x27;;
+import {Icon} from &#x27;@netgrif/components-core&#x27;;
+import {
+  Alignment,
+  Appearance,
+  Component as PetriflowComponent,
+  DataRefBehavior,
+  DataType,
+  Property,
+  Template,
+} from &#x27;@netgrif/petriflow&#x27;;
+import moment from &#x27;moment&#x27;;
+import {GridsterDataField} from &#x27;../form-builder/gridster/classes/gridster-data-field&#x27;;
+
+// noinspection JSMethodCanBeStatic
+@Injectable()
+export class GridsterFieldToEngineFieldService {
+
+    constructor() {
+    }
+
+    transformDataField(dataField: GridsterDataField): DataField&lt;unknown&gt; {
+        if (dataField.dataVariable.type as string &#x3D;&#x3D;&#x3D; &#x27;i18n&#x27;) {
+            return this.buildI18nField(dataField);
+        }
+        switch (dataField.dataVariable.type) {
+            case DataType.BOOLEAN:
+                return this.toBooleanField(dataField);
+            case DataType.NUMBER:
+                return this.toNumberField(dataField);
+            case DataType.ENUMERATION_MAP:
+            case DataType.ENUMERATION:
+                return this.toEnumerationField(dataField);
+            case DataType.MULTICHOICE_MAP:
+            case DataType.MULTICHOICE:
+                return this.toMultichoiceField(dataField);
+            case DataType.DATE:
+                return this.toDateField(dataField);
+            case DataType.DATETIME:
+                return this.toDateTimeField(dataField);
+            case DataType.USER:
+                return this.toUserField(dataField);
+            case DataType.BUTTON:
+                return this.toButtonField(dataField);
+            case DataType.FILE:
+                return this.toFileField(dataField);
+            case DataType.FILE_LIST:
+                return this.toFileListField(dataField);
+            case DataType.TASK_REF:
+                return this.toTaskRefField(dataField);
+            case DataType.CASE_FILTER:
+            case DataType.TASK_FILTER:
+            case DataType.PROCESS_FILTER:
+                return this.toFilterField(dataField);
+            case DataType.TEXT:
+            default:
+                return this.toTextField(dataField);
+        }
+    }
+
+    private toTextField(dataField: GridsterDataField): TextField {
+        if (this.getComponent(dataField)?.name &#x3D;&#x3D;&#x3D; &#x27;htmltextarea&#x27;) {
+            return new TextAreaField(
+                dataField.dataVariable.id,
+                dataField.dataVariable.title?.value,
+                dataField.dataVariable.init?.value,
+                this.buildBehavior(dataField),
+                dataField.dataVariable.placeholder?.value,
+                dataField.dataVariable.desc?.value,
+                this.buildLayout(dataField),
+                [],
+                this.buildComponent(dataField)
+            );
+        }
+        return new TextField(
+            dataField.dataVariable.id,
+            dataField.dataVariable.title?.value,
+            dataField.dataVariable.init?.value,
+            this.buildBehavior(dataField),
+            dataField.dataVariable.placeholder?.value,
+            dataField.dataVariable.desc?.value,
+            this.buildLayout(dataField),
+            [],
+            this.buildComponent(dataField)
+        );
+    }
+
+    private toBooleanField(dataField: GridsterDataField): BooleanField {
+        return new BooleanField(
+            dataField.dataVariable.id,
+            dataField.dataVariable.title?.value,
+            dataField.dataVariable.init?.value &#x3D;&#x3D;&#x3D; &#x27;true&#x27;,
+            this.buildBehavior(dataField),
+            dataField.dataVariable.placeholder?.value,
+            dataField.dataVariable.desc?.value,
+            this.buildLayout(dataField),
+            [],
+            this.buildComponent(dataField)
+        );
+    }
+
+    private toNumberField(dataField: GridsterDataField): NumberField {
+        return new NumberField(
+            dataField.dataVariable.id,
+            dataField.dataVariable.title?.value,
+            +dataField.dataVariable.init?.value as number,
+            this.buildBehavior(dataField),
+            [],
+            dataField.dataVariable.placeholder?.value,
+            dataField.dataVariable.desc?.value,
+            this.buildLayout(dataField),
+            undefined,
+            this.buildComponent(dataField)
+        );
+    }
+
+    private toEnumerationField(dataField: GridsterDataField): EnumerationField {
+        if (this.getComponent(dataField)?.name &#x3D;&#x3D;&#x3D; &#x27;autocomplete_dynamic&#x27;) {
+            return this.toDynamicEnumerationField(dataField);
+        }
+        return new EnumerationField(
+            dataField.dataVariable.id,
+            dataField.dataVariable.title?.value,
+            dataField.dataVariable.init?.value,
+            this.buildOptions(dataField),
+            this.buildBehavior(dataField),
+            dataField.dataVariable.placeholder?.value,
+            dataField.dataVariable.desc?.value,
+            this.buildLayout(dataField),
+            dataField.dataVariable.type &#x3D;&#x3D;&#x3D; DataType.ENUMERATION ? FieldTypeResource.ENUMERATION : FieldTypeResource.ENUMERATION_MAP,
+            [],
+            this.buildComponent(dataField)
+        );
+    }
+
+    private toDynamicEnumerationField(dataField: GridsterDataField): EnumerationField {
+        return new DynamicEnumerationField(
+            dataField.dataVariable.id,
+            dataField.dataVariable.title?.value,
+            dataField.dataVariable.init?.value,
+            this.buildOptions(dataField),
+            this.buildBehavior(dataField),
+            dataField.dataVariable.placeholder?.value,
+            dataField.dataVariable.desc?.value,
+            this.buildLayout(dataField),
+            dataField.dataVariable.type &#x3D;&#x3D;&#x3D; DataType.ENUMERATION ? FieldTypeResource.ENUMERATION : FieldTypeResource.ENUMERATION_MAP,
+            [],
+            this.buildComponent(dataField)
+        );
+    }
+
+    private toMultichoiceField(dataField: GridsterDataField): MultichoiceField {
+        return new MultichoiceField(
+            dataField.dataVariable.id,
+            dataField.dataVariable.title?.value,
+            dataField.dataVariable.inits?.map(i &#x3D;&gt; i.value),
+            this.buildOptions(dataField),
+            this.buildBehavior(dataField),
+            dataField.dataVariable.placeholder?.value,
+            dataField.dataVariable.desc?.value,
+            this.buildLayout(dataField),
+            dataField.dataVariable.type &#x3D;&#x3D;&#x3D; DataType.MULTICHOICE ? FieldTypeResource.MULTICHOICE : FieldTypeResource.MULTICHOICE_MAP,
+            [],
+            this.buildComponent(dataField)
+        );
+    }
+
+    private toDateField(dataField: GridsterDataField): DateField {
+        return new DateField(
+            dataField.dataVariable.id,
+            dataField.dataVariable.title?.value,
+            dataField.dataVariable.init.value &#x3D;&#x3D;&#x3D; &#x27;&#x27; ? undefined : moment(dataField.dataVariable.init.value),
+            this.buildBehavior(dataField),
+            dataField.dataVariable.placeholder?.value,
+            dataField.dataVariable.desc?.value,
+            this.buildLayout(dataField),
+            [],
+            this.buildComponent(dataField)
+        );
+    }
+
+    private toDateTimeField(dataField: GridsterDataField): DateTimeField {
+        return new DateTimeField(
+            dataField.dataVariable.id,
+            dataField.dataVariable.title?.value,
+            dataField.dataVariable.init.value &#x3D;&#x3D;&#x3D; &#x27;&#x27; ? undefined : moment(dataField.dataVariable.init.value),
+            this.buildBehavior(dataField),
+            dataField.dataVariable.placeholder?.value,
+            dataField.dataVariable.desc?.value,
+            this.buildLayout(dataField),
+            [],
+            this.buildComponent(dataField)
+        );
+    }
+
+    private toUserField(dataField: GridsterDataField): UserField {
+        return new UserField(
+            dataField.dataVariable.id,
+            dataField.dataVariable.title?.value,
+            this.buildBehavior(dataField),
+            undefined,
+            [],
+            dataField.dataVariable.placeholder?.value,
+            dataField.dataVariable.desc?.value,
+            this.buildLayout(dataField),
+            [],
+            this.buildComponent(dataField)
+        );
+    }
+
+    private toButtonField(dataField: GridsterDataField): ButtonField {
+        return new ButtonField(
+            dataField.dataVariable.id,
+            dataField.dataVariable.title?.value,
+            this.buildBehavior(dataField),
+            0,
+            dataField.dataVariable.placeholder?.value,
+            dataField.dataVariable.desc?.value,
+            this.buildLayout(dataField),
+            [],
+            this.buildComponent(dataField)
+        );
+    }
+
+    private toFileField(dataField: GridsterDataField): FileField {
+        return new FileField(
+            dataField.dataVariable.id,
+            dataField.dataVariable.title?.value,
+            this.buildBehavior(dataField),
+            undefined, // TODO: overit
+            dataField.dataVariable.placeholder?.value,
+            dataField.dataVariable.desc?.value,
+            this.buildLayout(dataField),
+            0,
+            undefined,
+            [],
+            this.buildComponent(dataField)
+        );
+    }
+
+    private toFileListField(dataField: GridsterDataField): FileListField {
+        return new FileListField(
+            dataField.dataVariable.id,
+            dataField.dataVariable.title?.value,
+            this.buildBehavior(dataField),
+            {},
+            dataField.dataVariable.placeholder?.value,
+            dataField.dataVariable.desc?.value,
+            this.buildLayout(dataField),
+            [],
+            0,
+            undefined,
+            this.buildComponent(dataField)
+        );
+    }
+
+    private toTaskRefField(dataField: GridsterDataField): TaskRefField {
+        return new TaskRefField(
+            dataField.dataVariable.id,
+            dataField.dataVariable.title?.value,
+            undefined,
+            this.buildBehavior(dataField),
+            dataField.dataVariable.placeholder?.value,
+            dataField.dataVariable.desc?.value,
+            this.buildLayout(dataField),
+            [],
+            this.buildComponent(dataField)
+        );
+    }
+
+    private toFilterField(dataField: GridsterDataField): TextField {
+        return new TextField(
+            dataField.dataVariable.id,
+            dataField.dataVariable.title?.value,
+            dataField.dataVariable.init?.value,
+            this.buildBehavior(dataField),
+            dataField.dataVariable.placeholder?.value,
+            dataField.dataVariable.desc?.value,
+            this.buildLayout(dataField),
+            [],
+            this.buildComponent(dataField)
+        );
+    }
+
+    private buildI18nField(dataField: GridsterDataField) {
+        return new I18nField(
+            dataField.dataVariable.id,
+            dataField.dataVariable.title?.value,
+            {
+                defaultValue: dataField.dataVariable.init.value,
+                translations: {}
+            } as I18nFieldValue,
+            {
+                required: dataField.dataRef.logic.required ? true : undefined,
+                optional: !dataField.dataRef.logic.required ? true : undefined,
+                editable: undefined,
+                visible: dataField.dataRef.logic.behavior &#x3D;&#x3D;&#x3D; DataRefBehavior.VISIBLE || dataField.dataRef.logic.behavior &#x3D;&#x3D;&#x3D; DataRefBehavior.EDITABLE ? true : undefined,
+                hidden: dataField.dataRef.logic.behavior &#x3D;&#x3D;&#x3D; DataRefBehavior.HIDDEN ? true : undefined,
+            } as Behavior,
+            dataField.dataVariable.placeholder?.value,
+            dataField.dataVariable.desc?.value,
+            this.buildLayout(dataField),
+            [],
+            this.buildComponent(dataField)
+        );
+    }
+
+    private buildComponent(dataField: GridsterDataField): Component {
+        const component &#x3D; this.getComponent(dataField);
+        return {
+            name: component?.name,
+            properties: this.createPropertiesObjectFromEntries(component),
+            optionIcons: this.createOptionsObject(component)
+        } as Component;
+    }
+
+    private createOptionsObject(component: PetriflowComponent): Array&lt;Icon&gt; {
+        if (!component || !component.icons) {
+            return undefined;
+        }
+        return component.icons.reduce((acc, obj) &#x3D;&gt; {
+            return [...acc, {key: obj.key, type: &#x27;material&#x27;, value: obj.icon}];
+        }, []);
+    }
+
+    private createPropertiesObjectFromEntries(component: PetriflowComponent): Properties {
+        component &#x3D; this.getComponentWithMissingProperties(component);
+        if (!component || component.properties?.length &#x3D;&#x3D;&#x3D; 0) {
+            return undefined;
+        }
+        return component.properties.reduce((acc, obj) &#x3D;&gt;
+            Object.assign(acc, {[obj.key]: obj.value}), {});
+    }
+
+    private buildOptions(dataField: GridsterDataField): Array&lt;EnumerationFieldValue&gt; {
+        if (!dataField.dataVariable.options) {
+            return [];
+        }
+        return dataField.dataVariable.options?.map(option &#x3D;&gt; {
+            return {key: option.key, value: option.value.value} as EnumerationFieldValue;
+        });
+    }
+
+    private buildBehavior(dataField: GridsterDataField): Behavior {
+        return {
+            required: dataField.dataRef.logic.required ? true : undefined,
+            optional: !dataField.dataRef.logic.required ? true : undefined,
+            editable: dataField.dataRef.logic.behavior &#x3D;&#x3D;&#x3D; DataRefBehavior.EDITABLE ? true : undefined,
+            visible: dataField.dataRef.logic.behavior &#x3D;&#x3D;&#x3D; DataRefBehavior.VISIBLE ? true : undefined,
+            hidden: dataField.dataRef.logic.behavior &#x3D;&#x3D;&#x3D; DataRefBehavior.HIDDEN ? true : undefined,
+        } as Behavior;
+    }
+
+    private buildLayout(dataField: GridsterDataField): Layout {
+        return {
+            template: this.buildLayoutTemplate(dataField),
+            appearance: this.buildLayoutAppearance(dataField),
+            alignment: this.buildLayoutAlignment(dataField),
+            offset: 0,
+            x: 0,
+            y: 0,
+            rows: 0,
+            cols: 0
+        } as Layout;
+    }
+
+    private buildLayoutTemplate(dataField: GridsterDataField): TemplateAppearance {
+        switch (dataField.dataRef.layout?.template) {
+            case Template.NETGRIF:
+                return TemplateAppearance.NETGRIF;
+            case Template.MATERIAL:
+            default:
+                return TemplateAppearance.MATERIAL;
+        }
+    }
+
+    private buildLayoutAppearance(dataField: GridsterDataField): MaterialAppearance {
+        switch (dataField.dataRef.layout?.appearance) {
+            case Appearance.LEGACY:
+                return MaterialAppearance.LEGACY;
+            case Appearance.FILL:
+                return MaterialAppearance.FILL;
+            case Appearance.STANDARD:
+                return MaterialAppearance.STANDARD;
+            case Appearance.OUTLINE:
+            default:
+                return MaterialAppearance.OUTLINE;
+        }
+    }
+
+    private buildLayoutAlignment(dataField: GridsterDataField): FieldAlignment {
+        switch (dataField.dataRef.layout?.alignment) {
+            case Alignment.BOTTOM:
+                return FieldAlignment.BOTTOM;
+            case Alignment.TOP:
+                return FieldAlignment.TOP;
+            case Alignment.CENTER:
+            default:
+                return FieldAlignment.CENTER;
+        }
+    }
+
+    private getComponentWithMissingProperties(component: PetriflowComponent): PetriflowComponent {
+        if (component &amp;&amp; component.properties.length &#x3D;&#x3D;&#x3D; 0) {
+            switch (component.name) {
+                case &#x27;currency&#x27;:
+                    component.properties.push(new Property(&#x27;fractionSize&#x27;, &#x27;2&#x27;));
+                    break;
+            }
+        }
+        return component;
+    }
+
+    private getComponent(dataField: GridsterDataField): PetriflowComponent {
+        return dataField.dataRef.component ? dataField.dataRef.component : dataField.dataVariable.component;
+    }
+}
+</code></pre>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'injectable';
+            var COMPODOC_CURRENT_PAGE_URL = 'GridsterFieldToEngineFieldService.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

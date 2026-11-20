@@ -1,0 +1,2675 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Netgrif Components library Documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">Netgrif Components library Documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  ActionEditorComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#styleData" class="nav-link"
+                role="tab" id="styleData-tab" data-bs-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>projects/netgrif-components/src/lib/builder/modeler/actions-mode/action-editor/action-editor/action-editor.component.ts</code>
+</p>
+
+
+
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                <code>OnInit</code>
+    </p>
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>nc-builder-action-editor</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./action-editor.component.scss</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./action-editor.component.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#behaviourItemsConfiguration" >behaviourItemsConfiguration</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#casePredicateItemsConfiguration" >casePredicateItemsConfiguration</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#conditionItemsConfiguration" >conditionItemsConfiguration</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#DATA_EVENT_TYPES" >DATA_EVENT_TYPES</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#dataFieldItemsConfiguration" >dataFieldItemsConfiguration</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#dataSetItemsConfiguration" >dataSetItemsConfiguration</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#editor" >editor</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#editorConfigurations" >editorConfigurations</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#editorOptions" >editorOptions</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#formControl" >formControl</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#PHASE_TYPES" >PHASE_TYPES</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#processInstanceIdItemsConfiguration" >processInstanceIdItemsConfiguration</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#propertyItemsConfiguration" >propertyItemsConfiguration</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#redoEnabled" >redoEnabled</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#referencesOpened" >referencesOpened</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#taskPredicateItemsConfiguration" >taskPredicateItemsConfiguration</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#TRANSITION_EVENT_TYPES" >TRANSITION_EVENT_TYPES</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#transitionItemsConfiguration" >transitionItemsConfiguration</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                <a href="#trigger" >trigger</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#typeItemsConfiguration" >typeItemsConfiguration</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#undoEnabled" >undoEnabled</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#valueItemsConfiguration" >valueItemsConfiguration</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#actionDataEventsChanged" >actionDataEventsChanged</a>
+                            </li>
+                            <li>
+                                <a href="#actionTransitionEventsChanged" >actionTransitionEventsChanged</a>
+                            </li>
+                            <li>
+                                <a href="#closeDrawer" >closeDrawer</a>
+                            </li>
+                            <li>
+                                <a href="#closeReference" >closeReference</a>
+                            </li>
+                            <li>
+                                <a href="#deleteAction" >deleteAction</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                            <li>
+                                <a href="#onInit" >onInit</a>
+                            </li>
+                            <li>
+                                <a href="#onResizeEvent" >onResizeEvent</a>
+                            </li>
+                            <li>
+                                <a href="#openDialog" >openDialog</a>
+                            </li>
+                            <li>
+                                <a href="#openDrawer" >openDrawer</a>
+                            </li>
+                            <li>
+                                <a href="#openReference" >openReference</a>
+                            </li>
+                            <li>
+                                <a href="#redo" >redo</a>
+                            </li>
+                            <li>
+                                <a href="#setHeightOnClose" >setHeightOnClose</a>
+                            </li>
+                            <li>
+                                <a href="#undo" >undo</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Inputs</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#action" >action</a>
+                            </li>
+                            <li>
+                                <a href="#index" >index</a>
+                            </li>
+                            <li>
+                                <a href="#leafNode" >leafNode</a>
+                            </li>
+                            <li>
+                                <a href="#name" >name</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Outputs</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#actionChanged" >actionChanged</a>
+                            </li>
+                            <li>
+                                <a href="#drawerOpened" >drawerOpened</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(actionEditorService: <a href="../injectables/ActionEditorService.html" target="_self">ActionEditorService</a>, modelService: <a href="../injectables/ModelService.html" target="_self">ModelService</a>, deleteDialog: MatDialog, _translateService: TranslateService, _builderModeService: <a href="../injectables/BuilderModeService.html" target="_self">BuilderModeService</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="61" class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/actions-mode/action-editor/action-editor/action-editor.component.ts:61</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>actionEditorService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/ActionEditorService.html" target="_self" >ActionEditorService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>modelService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/ModelService.html" target="_self" >ModelService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>deleteDialog</td>
+                                                  
+                                                        <td>
+                                                                    <code>MatDialog</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_translateService</td>
+                                                  
+                                                        <td>
+                                                                    <code>TranslateService</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_builderModeService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/BuilderModeService.html" target="_self" >BuilderModeService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+    <section data-compodoc="block-inputs">
+    <h3 id="inputs">Inputs</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="action"></a>
+                        <b>action</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../classes/EditableAction.html" target="_self" >EditableAction</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="34" class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/actions-mode/action-editor/action-editor/action-editor.component.ts:34</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="index"></a>
+                        <b>index</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="35" class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/actions-mode/action-editor/action-editor/action-editor.component.ts:35</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="leafNode"></a>
+                        <b>leafNode</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../classes/LeafNode.html" target="_self" >LeafNode</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="25" class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/actions-mode/action-editor/action-editor/action-editor.component.ts:25</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="name"></a>
+                        <b>name</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="31" class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/actions-mode/action-editor/action-editor/action-editor.component.ts:31</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+</section>
+    <section data-compodoc="block-outputs">
+    <h3 id="outputs">Outputs</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="actionChanged"></a>
+                        <b>actionChanged</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/ActionChangedEvent.html" target="_self" >EventEmitter&lt;ActionChangedEvent&gt;</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="26" class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/actions-mode/action-editor/action-editor/action-editor.component.ts:26</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="drawerOpened"></a>
+                        <b>drawerOpened</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>EventEmitter&lt;boolean&gt;</code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="27" class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/actions-mode/action-editor/action-editor/action-editor.component.ts:27</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+</section>
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="actionDataEventsChanged"></a>
+                    <span class="name">
+                        <span ><b>actionDataEventsChanged</b></span>
+                        <a href="#actionDataEventsChanged"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>actionDataEventsChanged(index: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="350"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/actions-mode/action-editor/action-editor/action-editor.component.ts:350</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>index</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="actionTransitionEventsChanged"></a>
+                    <span class="name">
+                        <span ><b>actionTransitionEventsChanged</b></span>
+                        <a href="#actionTransitionEventsChanged"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>actionTransitionEventsChanged(index: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="341"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/actions-mode/action-editor/action-editor/action-editor.component.ts:341</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>index</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="closeDrawer"></a>
+                    <span class="name">
+                        <span ><b>closeDrawer</b></span>
+                        <a href="#closeDrawer"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>closeDrawer()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="387"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/actions-mode/action-editor/action-editor/action-editor.component.ts:387</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="closeReference"></a>
+                    <span class="name">
+                        <span ><b>closeReference</b></span>
+                        <a href="#closeReference"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>closeReference()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="405"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/actions-mode/action-editor/action-editor/action-editor.component.ts:405</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="deleteAction"></a>
+                    <span class="name">
+                        <span ><b>deleteAction</b></span>
+                        <a href="#deleteAction"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>deleteAction(index: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="333"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/actions-mode/action-editor/action-editor/action-editor.component.ts:333</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>index</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="138"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/actions-mode/action-editor/action-editor/action-editor.component.ts:138</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onInit"></a>
+                    <span class="name">
+                        <span ><b>onInit</b></span>
+                        <a href="#onInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onInit(editorObject)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="84"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/actions-mode/action-editor/action-editor/action-editor.component.ts:84</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>editorObject</td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onResizeEvent"></a>
+                    <span class="name">
+                        <span ><b>onResizeEvent</b></span>
+                        <a href="#onResizeEvent"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onResizeEvent(event: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>, name: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="364"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/actions-mode/action-editor/action-editor/action-editor.component.ts:364</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>event</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>name</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="openDialog"></a>
+                    <span class="name">
+                        <span ><b>openDialog</b></span>
+                        <a href="#openDialog"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>openDialog(index: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="377"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/actions-mode/action-editor/action-editor/action-editor.component.ts:377</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>index</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="openDrawer"></a>
+                    <span class="name">
+                        <span ><b>openDrawer</b></span>
+                        <a href="#openDrawer"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>openDrawer()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="409"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/actions-mode/action-editor/action-editor/action-editor.component.ts:409</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="openReference"></a>
+                    <span class="name">
+                        <span ><b>openReference</b></span>
+                        <a href="#openReference"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>openReference()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="400"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/actions-mode/action-editor/action-editor/action-editor.component.ts:400</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="redo"></a>
+                    <span class="name">
+                        <span ><b>redo</b></span>
+                        <a href="#redo"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>redo()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="396"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/actions-mode/action-editor/action-editor/action-editor.component.ts:396</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="setHeightOnClose"></a>
+                    <span class="name">
+                        <span ><b>setHeightOnClose</b></span>
+                        <a href="#setHeightOnClose"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>setHeightOnClose(index: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, action: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="359"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/actions-mode/action-editor/action-editor/action-editor.component.ts:359</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>index</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>action</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="undo"></a>
+                    <span class="name">
+                        <span ><b>undo</b></span>
+                        <a href="#undo"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>undo()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="392"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/actions-mode/action-editor/action-editor/action-editor.component.ts:392</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="behaviourItemsConfiguration"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>behaviourItemsConfiguration</b></span>
+                        <a href="#behaviourItemsConfiguration"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../classes/MenuItemConfiguration.html" target="_self" >MenuItemConfiguration</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="45" class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/actions-mode/action-editor/action-editor/action-editor.component.ts:45</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="casePredicateItemsConfiguration"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>casePredicateItemsConfiguration</b></span>
+                        <a href="#casePredicateItemsConfiguration"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../classes/MenuItemConfiguration.html" target="_self" >MenuItemConfiguration</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="52" class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/actions-mode/action-editor/action-editor/action-editor.component.ts:52</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="conditionItemsConfiguration"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>conditionItemsConfiguration</b></span>
+                        <a href="#conditionItemsConfiguration"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../classes/MenuItemConfiguration.html" target="_self" >MenuItemConfiguration</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="46" class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/actions-mode/action-editor/action-editor/action-editor.component.ts:46</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="DATA_EVENT_TYPES"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>DATA_EVENT_TYPES</b></span>
+                        <a href="#DATA_EVENT_TYPES"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[&#x27;set&#x27;, &#x27;get&#x27;]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="58" class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/actions-mode/action-editor/action-editor/action-editor.component.ts:58</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="dataFieldItemsConfiguration"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>dataFieldItemsConfiguration</b></span>
+                        <a href="#dataFieldItemsConfiguration"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../classes/MenuItemConfiguration.html" target="_self" >MenuItemConfiguration</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="44" class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/actions-mode/action-editor/action-editor/action-editor.component.ts:44</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="dataSetItemsConfiguration"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>dataSetItemsConfiguration</b></span>
+                        <a href="#dataSetItemsConfiguration"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../classes/MenuItemConfiguration.html" target="_self" >MenuItemConfiguration</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="50" class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/actions-mode/action-editor/action-editor/action-editor.component.ts:50</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="editor"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>editor</b></span>
+                        <a href="#editor"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="40" class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/actions-mode/action-editor/action-editor/action-editor.component.ts:40</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="editorConfigurations"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>editorConfigurations</b></span>
+                        <a href="#editorConfigurations"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>Array&lt;MenuItemConfiguration&gt;</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="55" class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/actions-mode/action-editor/action-editor/action-editor.component.ts:55</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="editorOptions"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>editorOptions</b></span>
+                        <a href="#editorOptions"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank" >object</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="61" class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/actions-mode/action-editor/action-editor/action-editor.component.ts:61</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="formControl"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>formControl</b></span>
+                        <a href="#formControl"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/Form.html" target="_self" >FormControl</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="41" class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/actions-mode/action-editor/action-editor/action-editor.component.ts:41</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="PHASE_TYPES"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>PHASE_TYPES</b></span>
+                        <a href="#PHASE_TYPES"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[&#x27;pre&#x27;, &#x27;post&#x27;]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="59" class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/actions-mode/action-editor/action-editor/action-editor.component.ts:59</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="processInstanceIdItemsConfiguration"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>processInstanceIdItemsConfiguration</b></span>
+                        <a href="#processInstanceIdItemsConfiguration"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../classes/MenuItemConfiguration.html" target="_self" >MenuItemConfiguration</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="51" class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/actions-mode/action-editor/action-editor/action-editor.component.ts:51</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="propertyItemsConfiguration"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>propertyItemsConfiguration</b></span>
+                        <a href="#propertyItemsConfiguration"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../classes/MenuItemConfiguration.html" target="_self" >MenuItemConfiguration</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="47" class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/actions-mode/action-editor/action-editor/action-editor.component.ts:47</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="redoEnabled"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>redoEnabled</b></span>
+                        <a href="#redoEnabled"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="38" class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/actions-mode/action-editor/action-editor/action-editor.component.ts:38</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="referencesOpened"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>referencesOpened</b></span>
+                        <a href="#referencesOpened"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>true</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="42" class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/actions-mode/action-editor/action-editor/action-editor.component.ts:42</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="taskPredicateItemsConfiguration"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>taskPredicateItemsConfiguration</b></span>
+                        <a href="#taskPredicateItemsConfiguration"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../classes/MenuItemConfiguration.html" target="_self" >MenuItemConfiguration</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="53" class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/actions-mode/action-editor/action-editor/action-editor.component.ts:53</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="TRANSITION_EVENT_TYPES"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>TRANSITION_EVENT_TYPES</b></span>
+                        <a href="#TRANSITION_EVENT_TYPES"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[&#x27;assign&#x27;, &#x27;finish&#x27;, &#x27;cancel&#x27;, &#x27;delegate&#x27;]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="57" class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/actions-mode/action-editor/action-editor/action-editor.component.ts:57</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="transitionItemsConfiguration"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>transitionItemsConfiguration</b></span>
+                        <a href="#transitionItemsConfiguration"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../classes/MenuItemConfiguration.html" target="_self" >MenuItemConfiguration</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="43" class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/actions-mode/action-editor/action-editor/action-editor.component.ts:43</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="trigger"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                        <span ><b>trigger</b></span>
+                        <a href="#trigger"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>MatMenuTrigger</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <b>Decorators : </b>
+                        <br />
+                        <code>
+                            @ViewChild(&#x27;referencesTrigger&#x27;)<br />
+                        </code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="30" class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/actions-mode/action-editor/action-editor/action-editor.component.ts:30</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="typeItemsConfiguration"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>typeItemsConfiguration</b></span>
+                        <a href="#typeItemsConfiguration"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../classes/MenuItemConfiguration.html" target="_self" >MenuItemConfiguration</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="49" class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/actions-mode/action-editor/action-editor/action-editor.component.ts:49</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="undoEnabled"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>undoEnabled</b></span>
+                        <a href="#undoEnabled"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="37" class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/actions-mode/action-editor/action-editor/action-editor.component.ts:37</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="valueItemsConfiguration"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>valueItemsConfiguration</b></span>
+                        <a href="#valueItemsConfiguration"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../classes/MenuItemConfiguration.html" target="_self" >MenuItemConfiguration</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="48" class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/actions-mode/action-editor/action-editor/action-editor.component.ts:48</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from &#x27;@angular/core&#x27;;
+import {FormControl} from &#x27;@angular/forms&#x27;;
+import {MatButton} from &#x27;@angular/material/button&#x27;;
+import {MatDialog} from &#x27;@angular/material/dialog&#x27;;
+import {MatMenuTrigger} from &#x27;@angular/material/menu&#x27;;
+import {MatSidenav} from &#x27;@angular/material/sidenav&#x27;;
+import {DialogDeleteComponent} from &#x27;../../../../dialogs/dialog-delete/dialog-delete.component&#x27;;
+import {ModelService} from &#x27;../../../services/model/model.service&#x27;;
+import {MenuItem} from &#x27;../action-editor-menu/action-editor-menu-item/menu-item&#x27;;
+import {MenuItemConfiguration} from &#x27;../action-editor-menu/action-editor-menu-item/menu-item-configuration&#x27;;
+import {ActionEditorService} from &#x27;../action-editor.service&#x27;;
+import {ChangeType, EditableAction} from &#x27;../classes/editable-action&#x27;;
+import {LeafNode} from &#x27;../classes/leaf-node&#x27;;
+import {ActionChangedEvent} from &quot;../action-editor-list/action-changed-event&quot;;
+import {TranslateService} from &quot;@ngx-translate/core&quot;;
+import {BuilderModeService} from &quot;../../../../services/builder-mode.service&quot;;
+
+@Component({
+    selector: &#x27;nc-builder-action-editor&#x27;,
+    templateUrl: &#x27;./action-editor.component.html&#x27;,
+    styleUrls: [&#x27;./action-editor.component.scss&#x27;]
+})
+export class ActionEditorComponent implements OnInit {
+
+    @Input() public leafNode: LeafNode;
+    @Output() public actionChanged: EventEmitter&lt;ActionChangedEvent&gt;;
+    @Output() public drawerOpened: EventEmitter&lt;boolean&gt;;
+    @ViewChild(&#x27;drawer&#x27;) private drawer: MatSidenav;
+    @ViewChild(&#x27;matButton&#x27;) private button: MatButton;
+    @ViewChild(&#x27;referencesTrigger&#x27;) trigger: MatMenuTrigger;
+    @Input() name: string;
+    // covalent code editor component source: https://github.com/Teradata/covalent/blob/develop/src/platform/code-editor/code-editor.component.ts
+
+    @Input() public action: EditableAction;
+    @Input() public index: number;
+
+    public undoEnabled &#x3D; false;
+    public redoEnabled &#x3D; false;
+
+    public editor: any;
+    public formControl: FormControl;
+    public referencesOpened &#x3D; true;
+    public transitionItemsConfiguration: MenuItemConfiguration;
+    public dataFieldItemsConfiguration: MenuItemConfiguration;
+    public behaviourItemsConfiguration: MenuItemConfiguration;
+    public conditionItemsConfiguration: MenuItemConfiguration;
+    public propertyItemsConfiguration: MenuItemConfiguration;
+    public valueItemsConfiguration: MenuItemConfiguration;
+    public typeItemsConfiguration: MenuItemConfiguration;
+    public dataSetItemsConfiguration: MenuItemConfiguration;
+    public processInstanceIdItemsConfiguration: MenuItemConfiguration;
+    public casePredicateItemsConfiguration: MenuItemConfiguration;
+    public taskPredicateItemsConfiguration: MenuItemConfiguration;
+
+    public editorConfigurations: Array&lt;MenuItemConfiguration&gt;;
+
+    public TRANSITION_EVENT_TYPES &#x3D; [&#x27;assign&#x27;, &#x27;finish&#x27;, &#x27;cancel&#x27;, &#x27;delegate&#x27;];
+    public DATA_EVENT_TYPES &#x3D; [&#x27;set&#x27;, &#x27;get&#x27;];
+    public PHASE_TYPES &#x3D; [&#x27;pre&#x27;, &#x27;post&#x27;];
+
+    public editorOptions: object;
+
+    constructor(
+        private actionEditorService: ActionEditorService,
+        private modelService: ModelService,
+        private deleteDialog: MatDialog,
+        private _translateService: TranslateService,
+        protected _builderModeService: BuilderModeService
+    ) {
+        this.formControl &#x3D; new FormControl(undefined, {updateOn: &#x27;blur&#x27;});
+        this.actionChanged &#x3D; new EventEmitter&lt;ActionChangedEvent&gt;();
+        this.drawerOpened &#x3D; new EventEmitter&lt;boolean&gt;();
+        // options: https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.ieditoroptions.html
+        this.editorOptions &#x3D; {
+            language: &#x27;petriflow&#x27;,
+            scrollBeyondLastLine: false,
+            automaticLayout: true,
+            wordWrap: &#x27;off&#x27;,
+            colorDecorators: true,
+            readOnly: this._builderModeService.readOnly
+        };
+    }
+
+    onInit(editorObject) {
+        this.editor &#x3D; editorObject;
+        this.editor.onDidChangeModelContent(e &#x3D;&gt; {
+            this.saveAction(this.editor.getModel().getLinesContent().join(&#x27;\n&#x27;));
+        });
+        this.transitionItemsConfiguration.editor &#x3D; editorObject;
+        this.dataFieldItemsConfiguration.editor &#x3D; editorObject;
+        this.behaviourItemsConfiguration.editor &#x3D; editorObject;
+        this.conditionItemsConfiguration.editor &#x3D; editorObject;
+        this.propertyItemsConfiguration.editor &#x3D; editorObject;
+        this.valueItemsConfiguration.editor &#x3D; editorObject;
+        this.dataSetItemsConfiguration.editor &#x3D; editorObject;
+        this.typeItemsConfiguration.editor &#x3D; editorObject;
+        this.processInstanceIdItemsConfiguration.editor &#x3D; editorObject;
+        this.casePredicateItemsConfiguration.editor &#x3D; editorObject;
+        this.taskPredicateItemsConfiguration.editor &#x3D; editorObject;
+        this.initialiseEditorVersioning(editorObject);
+    }
+
+    private initialiseEditorVersioning(editorObject) {
+        let initialVersion &#x3D; editorObject.getModel().getAlternativeVersionId();
+        let currentVersion &#x3D; initialVersion;
+        let lastVersion &#x3D; initialVersion;
+        this.editor.onDidChangeModelContent(e &#x3D;&gt; {
+            const versionId &#x3D; editorObject.getModel().getAlternativeVersionId();
+            if (!e.isUndoing &amp;&amp; !e.isRedoing &amp;&amp; this.editor.getValue() &#x3D;&#x3D;&#x3D; &#x27;&#x27; &amp;&amp;
+                e.changes[0].text &#x3D;&#x3D;&#x3D; &#x27;&#x27; &amp;&amp; e.changes[0].rangeLength &#x3D;&#x3D;&#x3D; 0) {
+                this.undoEnabled &#x3D; false;
+                currentVersion &#x3D; versionId;
+                initialVersion &#x3D; 3;
+                return;
+            }
+            if (versionId &lt; currentVersion) {
+                this.redoEnabled &#x3D; true;
+                if (versionId &#x3D;&#x3D;&#x3D; initialVersion) {
+                    this.undoEnabled &#x3D; false;
+                }
+            } else {
+                if (versionId &lt;&#x3D; lastVersion) {
+                    if (versionId &#x3D;&#x3D;&#x3D; lastVersion) {
+                        this.redoEnabled &#x3D; false;
+                    }
+                } else {
+                    this.redoEnabled &#x3D; false;
+                    if (currentVersion &gt; lastVersion) {
+                        lastVersion &#x3D; currentVersion;
+                    }
+                }
+                this.undoEnabled &#x3D; true;
+            }
+            currentVersion &#x3D; versionId;
+        });
+    }
+
+    ngOnInit(): void {
+        this.formControl.setValue(this.action.definition);
+        this.formControl.valueChanges.subscribe(value &#x3D;&gt; {
+            this.saveAction(value);
+        });
+        this.transitionItemsConfiguration &#x3D; new MenuItemConfiguration(
+            this._translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.action-editor.transitions&#x27;),
+            &#x27;transition&#x27;,
+            [&#x27;&lt;transition&gt;&#x27;, &#x27;&lt;transitionId&gt;&#x27;, &#x27;&lt;task&gt;&#x27;],
+            this.editor,
+            this,
+            this.modelService.model.getTransitions().map(t &#x3D;&gt; new MenuItem(t.id, &#x60;${t.label?.value} [${t.id}]&#x60;))
+        );
+        this.dataFieldItemsConfiguration &#x3D; new MenuItemConfiguration(
+            this._translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.action-editor.dataFields&#x27;),
+            &#x27;datafield&#x27;,
+            // TODO: NAB-326 choicefield, optionfield &#x3D; different menu items
+            [&#x27;&lt;datafield&gt;&#x27;, &#x27;&lt;datafieldId&gt;&#x27;],
+            this.editor,
+            this,
+            this.modelService.model.getDataSet().map(f &#x3D;&gt; new MenuItem(f.id, &#x60;${f.title?.value} [${f.id}]&#x60;))
+        );
+        this.behaviourItemsConfiguration &#x3D; new MenuItemConfiguration(
+            this._translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.action-editor.behaviours&#x27;),
+            &#x27;behaviour&#x27;,
+            [&#x27;&lt;behaviour&gt;&#x27;],
+            this.editor,
+            this,
+            [
+                new MenuItem(&#x27;visible&#x27;, this._translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.action-editor.visible&#x27;)),
+                new MenuItem(&#x27;hidden&#x27;, this._translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.action-editor.hidden&#x27;)),
+                new MenuItem(&#x27;editable&#x27;, this._translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.action-editor.editable&#x27;)),
+                new MenuItem(&#x27;required&#x27;, this._translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.action-editor.required&#x27;)),
+                new MenuItem(&#x27;optional&#x27;, this._translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.action-editor.optional&#x27;))
+            ]
+        );
+        this.conditionItemsConfiguration &#x3D; new MenuItemConfiguration(
+            this._translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.action-editor.conditions&#x27;),
+            &#x27;condition&#x27;,
+            [&#x27;&lt;condition&gt;&#x27;],
+            this.editor,
+            this,
+            [
+                new MenuItem(&#x27;true&#x27;, this._translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.action-editor.true&#x27;)),
+                new MenuItem(&#x27;false&#x27;, this._translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.action-editor.false&#x27;)),
+                new MenuItem(&#x27;&lt;datafield&gt;.value &#x3D;&#x3D; &lt;datafield&gt;.value&#x27;, &#x27;&amp;lt;datafield&amp;gt;.value &lt;b&gt;&#x3D;&#x3D;&lt;/b&gt; &amp;lt;datafield&amp;gt;.value&#x27;),
+                new MenuItem(&#x27;&lt;datafield&gt;.value !&#x3D; &lt;datafield&gt;.value&#x27;, &#x27;&amp;lt;datafield&amp;gt;.value &lt;b&gt;!&#x3D;&lt;/b&gt; &amp;lt;datafield&amp;gt;.value&#x27;),
+                new MenuItem(&#x27;&lt;datafield&gt;.value &gt; &lt;datafield&gt;.value&#x27;, &#x27;&amp;lt;datafield&amp;gt;.value &lt;b&gt;&amp;gt;&lt;/b&gt; &amp;lt;datafield&amp;gt;.value&#x27;),
+                new MenuItem(&#x27;&lt;datafield&gt;.value &gt;&#x3D; &lt;datafield&gt;.value&#x27;, &#x27;&amp;lt;datafield&amp;gt;.value &lt;b&gt;&amp;gt;&#x3D;&lt;/b&gt; &amp;lt;datafield&amp;gt;.value&#x27;),
+                new MenuItem(&#x27;&lt;datafield&gt;.value &lt; &lt;datafield&gt;.value&#x27;, &#x27;&amp;lt;datafield&amp;gt;.value &lt;b&gt;&amp;lt;&lt;/b&gt; &amp;lt;datafield&amp;gt;.value&#x27;),
+                new MenuItem(&#x27;&lt;datafield&gt;.value &lt;&#x3D; &lt;datafield&gt;.value&#x27;, &#x27;&amp;lt;datafield&amp;gt;.value &lt;b&gt;&amp;lt;&#x3D;&lt;/b&gt; &amp;lt;datafield&amp;gt;.value&#x27;),
+                new MenuItem(&#x27;&lt;datafield&gt;.value &#x3D;&#x3D; &lt;value&gt;&#x27;, &#x27;&amp;lt;datafield&amp;gt;.value &lt;b&gt;&#x3D;&#x3D;&lt;/b&gt; &amp;lt;value&amp;gt;&#x27;),
+                new MenuItem(&#x27;&lt;datafield&gt;.value !&#x3D; &lt;value&gt;&#x27;, &#x27;&amp;lt;datafield&amp;gt;.value &lt;b&gt;!&#x3D;&lt;/b&gt; &amp;lt;value&amp;gt;&#x27;),
+                new MenuItem(&#x27;&lt;datafield&gt;.value &gt; &lt;value&gt;&#x27;, &#x27;&amp;lt;datafield&amp;gt;.value &lt;b&gt;&amp;gt;&lt;/b&gt; &amp;lt;value&amp;gt;&#x27;),
+                new MenuItem(&#x27;&lt;datafield&gt;.value &gt;&#x3D; &lt;value&gt;&#x27;, &#x27;&amp;lt;datafield&amp;gt;.value &lt;b&gt;&amp;gt;&#x3D;&lt;/b&gt; &amp;lt;value&amp;gt;&#x27;),
+                new MenuItem(&#x27;&lt;datafield&gt;.value &lt; &lt;value&gt;&#x27;, &#x27;&amp;lt;datafield&amp;gt;.value &lt;b&gt;&amp;lt;&lt;/b&gt; &amp;lt;value&amp;gt;&#x27;),
+                new MenuItem(&#x27;&lt;datafield&gt;.value &lt;&#x3D; &lt;value&gt;&#x27;, &#x27;&amp;lt;datafield&amp;gt;.value &lt;b&gt;&amp;lt;&#x3D;&lt;/b&gt; &amp;lt;value&amp;gt;&#x27;),
+            ]
+        );
+        this.propertyItemsConfiguration &#x3D; new MenuItemConfiguration(
+            this._translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.action-editor.properties&#x27;),
+            &#x27;property&#x27;,
+            [&#x27;&lt;property&gt;&#x27;],
+            this.editor,
+            this,
+            [
+                new MenuItem(&#x27;&quot;title&quot;&#x27;, this._translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.action-editor.title&#x27;)),
+                new MenuItem(&#x27;&quot;color&quot;&#x27;, this._translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.action-editor.color&#x27;)),
+                new MenuItem(&#x27;&quot;icon&quot;&#x27;, this._translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.action-editor.icon&#x27;)),
+            ]
+        );
+        this.valueItemsConfiguration &#x3D; new MenuItemConfiguration(
+            this._translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.action-editor.values&#x27;),
+            &#x27;value&#x27;,
+            [&#x27;&lt;value&gt;&#x27;, &#x27;&lt;choices&gt;&#x27;, &#x27;&lt;options&gt;&#x27;],
+            this.editor,
+            this,
+            [
+                new MenuItem(&#x27;&lt;datafield&gt;.value&#x27;, &#x27;&amp;lt;datafield&amp;gt;.value&#x27;),
+                new MenuItem(&#x27;&lt;datafield&gt;.choices&#x27;, &#x27;&amp;lt;datafield&amp;gt;.choices&#x27;),
+                new MenuItem(&#x27;&lt;datafield&gt;.options&#x27;, &#x27;&amp;lt;datafield&amp;gt;.options&#x27;),
+                new MenuItem(&#x27;true&#x27;, this._translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.action-editor.true&#x27;)),
+                new MenuItem(&#x27;false&#x27;, this._translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.action-editor.false&#x27;)),
+                new MenuItem(&#x27; &#x27;, this._translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.action-editor.emptyValue&#x27;)),
+                new MenuItem(&#x27;&#x27;, this._translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.action-editor.newVariableOrValue&#x27;)),
+                new MenuItem(&#x27;[a,b,c]&#x27;, this._translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.action-editor.listOfObjects&#x27;)),
+                new MenuItem(&#x27;[a:a,b:b]&#x27;, this._translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.action-editor.mapOfObjects&#x27;)),
+                new MenuItem(&#x27;[&quot;a&quot;,&quot;b&quot;,&quot;c&quot;]&#x27;, this._translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.action-editor.listOfStrings&#x27;)),
+                new MenuItem(&#x27;[&quot;a&quot;:&quot;a&quot;,&quot;b&quot;:&quot;b&quot;]&#x27;, this._translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.action-editor.mapOfStrings&#x27;))
+            ]
+        );
+        this.typeItemsConfiguration &#x3D; new MenuItemConfiguration(
+            this._translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.action-editor.types&#x27;),
+            &#x27;types&#x27;,
+            [&#x27;&lt;type&gt;&#x27;],
+            this.editor,
+            this,
+            [
+                new MenuItem(&#x27;&quot;text&quot;&#x27;, this._translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.action-editor.text&#x27;)),
+                new MenuItem(&#x27;&quot;number&quot;&#x27;, this._translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.action-editor.number&#x27;)),
+                new MenuItem(&#x27;&quot;date&quot;&#x27;, this._translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.action-editor.date&#x27;)),
+                new MenuItem(&#x27;&quot;boolean&quot;&#x27;, this._translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.action-editor.boolean&#x27;)),
+                new MenuItem(&#x27;&quot;file&quot;&#x27;, this._translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.action-editor.file&#x27;)),
+                new MenuItem(&#x27;&quot;fileList&quot;&#x27;, this._translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.action-editor.fileList&#x27;)),
+                new MenuItem(&#x27;&quot;enumeration&quot;&#x27;, this._translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.action-editor.enumeration&#x27;)),
+                new MenuItem(&#x27;&quot;enumeration_map&quot;&#x27;, this._translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.action-editor.enumerationMap&#x27;)),
+                new MenuItem(&#x27;&quot;multichoice&quot;&#x27;, this._translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.action-editor.multichoice&#x27;)),
+                new MenuItem(&#x27;&quot;multichoice_map&quot;&#x27;, this._translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.action-editor.multichoiceMap&#x27;)),
+                new MenuItem(&#x27;&quot;userList&quot;&#x27;, this._translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.action-editor.userList&#x27;)),
+                new MenuItem(&#x27;&quot;tabular&quot;&#x27;, this._translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.action-editor.tabular&#x27;)),
+                new MenuItem(&#x27;&quot;caseRef&quot;&#x27;, this._translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.action-editor.caseRef&#x27;)),
+                new MenuItem(&#x27;&quot;dateTime&quot;&#x27;, this._translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.action-editor.dateTime&#x27;)),
+                new MenuItem(&#x27;&quot;button&quot;&#x27;, this._translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.action-editor.button&#x27;)),
+                new MenuItem(&#x27;&quot;taskRef&quot;&#x27;, this._translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.action-editor.taskRef&#x27;)),
+                new MenuItem(&#x27;&quot;filter&quot;&#x27;, this._translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.action-editor.filter&#x27;)),
+                new MenuItem(&#x27;&quot;i18n&quot;&#x27;, this._translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.action-editor.i18n&#x27;)),
+                new MenuItem(&#x27;&quot;processRef&quot;&#x27;, this._translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.action-editor.processRef&#x27;)),
+                new MenuItem(&#x27;&quot;stringCollection&quot;&#x27;, this._translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.action-editor.stringCollection&#x27;))
+            ]
+        );
+        this.dataSetItemsConfiguration &#x3D; new MenuItemConfiguration(
+            this._translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.action-editor.dataSet&#x27;),
+            &#x27;dataSet&#x27;,
+            [&#x27;&lt;dataSet&gt;&#x27;],
+            this.editor,
+            this,
+            [
+                new MenuItem(&#x27;[&lt;datafieldId&gt;: [&quot;value&quot;: &lt;value&gt;,&quot;type&quot;: &lt;type&gt;]]&#x27;, this._translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.action-editor.oneDataInSet&#x27;)),
+                new MenuItem(&#x27;[&lt;datafieldId&gt;: [&quot;value&quot;: &lt;value&gt;,&quot;type&quot;: &lt;type&gt;],\n \t\t\t   &lt;datafieldId&gt;: [&quot;value&quot;: &lt;value&gt;,&quot;type&quot;: &lt;type&gt;]]&#x27;, this._translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.action-editor.twoDataInSet&#x27;)),
+            ]
+        );
+        this.processInstanceIdItemsConfiguration &#x3D; new MenuItemConfiguration(
+            this._translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.action-editor.processInstanceId&#x27;),
+            &#x27;processInstanceId&#x27;,
+            [&#x27;&lt;processInstanceId&gt;&#x27;],
+            this.editor,
+            this,
+            [
+                new MenuItem(&#x27; //Process instance ID can be found in your NAE app&#x27;, this._translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.action-editor.processInstanceId&#x27;)),
+            ]
+        );
+        this.casePredicateItemsConfiguration &#x3D; new MenuItemConfiguration(
+            this._translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.action-editor.casePredicates&#x27;),
+            &#x27;casePredicate&#x27;,
+            [&#x27;&lt;casePredicate&gt;&#x27;],
+            this.editor,
+            this,
+            [
+                new MenuItem(&#x27;&lt;casePredicate&gt;.and&lt;casePredicate&gt;&#x27;, &#x27;&lt;b&gt;Predicate&lt;/b&gt; and &lt;b&gt;Predicate&lt;/b&gt;&#x27;),
+                new MenuItem(&#x27;&lt;casePredicate&gt;.or&lt;casePredicate&gt;&#x27;, &#x27;&lt;b&gt;Predicate&lt;/b&gt; or &lt;b&gt;Predicate&lt;/b&gt;&#x27;),
+                new MenuItem(&#x27;{it.id.eq(&lt;value&gt;)}&#x27;, this._translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.action-editor.caseIdEqualsValue&#x27;)),
+                new MenuItem(&#x27;{it.visualId.eq(&lt;value&gt;)}&#x27;, this._translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.action-editor.caseVisualIdEqualsValue&#x27;)),
+                new MenuItem(&#x27;{it.processIdentifier.eq(&lt;processInstanceId&gt;)}&#x27;, this._translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.action-editor.processIdentifierEqualsValue&#x27;)),
+                new MenuItem(&#x27;{it.title.eq(&lt;value&gt;)}&#x27;, this._translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.action-editor.titleEqualsValue&#x27;)),
+                new MenuItem(&#x27;{it.author.email.eq(&lt;value&gt;)}&#x27;, this._translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.action-editor.authorsEmailEqualsValue&#x27;)),
+                new MenuItem(&#x27;{it.author.id.eq(&lt;value&gt;)}&#x27;, this._translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.action-editor.authorsIdEqualsValue&#x27;)),
+                new MenuItem(&#x27;{it.author.fullName.eq(&lt;value&gt;)}&#x27;, this._translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.action-editor.authorsFullNameEqualsValue&#x27;)),
+            ]
+        );
+        this.taskPredicateItemsConfiguration &#x3D; new MenuItemConfiguration(
+            this._translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.action-editor.taskPredicates&#x27;),
+            &#x27;taskPredicate&#x27;,
+            [&#x27;&lt;taskPredicate&gt;&#x27;],
+            this.editor,
+            this,
+            [
+                new MenuItem(&#x27;&lt;taskPredicate&gt;.and&lt;taskPredicate&gt;&#x27;, &#x27;&lt;b&gt;Predicate&lt;/b&gt; and &lt;b&gt;Predicate&lt;/b&gt;&#x27;),
+                new MenuItem(&#x27;&lt;taskPredicate&gt;.or&lt;taskPredicate&gt;&#x27;, &#x27;&lt;b&gt;Predicate&lt;/b&gt; or &lt;b&gt;Predicate&lt;/b&gt;&#x27;),
+                new MenuItem(&#x27;{it.id.eq(&lt;value&gt;)}&#x27;, this._translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.action-editor.taskIdEqualsValue&#x27;)),
+                new MenuItem(&#x27;{it.transitionId.eq(&lt;value&gt;)}&#x27;, this._translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.action-editor.transitionIdEqualsValue&#x27;)),
+                new MenuItem(&#x27;{it.caseId.eq(&lt;value&gt;)}&#x27;, this._translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.action-editor.caseIdEqualsValue2&#x27;)),
+                new MenuItem(&#x27;{it.caseTitle.eq(&lt;value&gt;)}&#x27;, this._translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.action-editor.caseTitleEqualsValue&#x27;)),
+            ]
+        );
+        this.editorConfigurations &#x3D; [
+            this.transitionItemsConfiguration,
+            this.dataFieldItemsConfiguration,
+            this.behaviourItemsConfiguration,
+            this.typeItemsConfiguration,
+            this.conditionItemsConfiguration,
+            this.propertyItemsConfiguration,
+            this.valueItemsConfiguration,
+            this.dataSetItemsConfiguration,
+            this.processInstanceIdItemsConfiguration,
+            this.casePredicateItemsConfiguration,
+            this.taskPredicateItemsConfiguration
+        ];
+    }
+
+    private saveAction(value: string) {
+        this.action.definition &#x3D; value;
+        this.action.changeType &#x3D; ChangeType.EDITED;
+        this.actionEditorService.saveActionChange(this.action);
+    }
+
+    deleteAction(index: number): void {
+        const action &#x3D; this.leafNode.removeAction(index);
+        action.changeType &#x3D; ChangeType.REMOVED;
+        this.actionChanged.emit({
+            action
+        });
+    }
+
+    actionTransitionEventsChanged(index: number): void {
+        const action &#x3D; this.leafNode.removeAction(index);
+        action.changeType &#x3D; ChangeType.MOVED;
+        this.actionChanged.emit({
+            triggerPath: [action.event, action.phase],
+            action
+        });
+    }
+
+    actionDataEventsChanged(index: number): void {
+        const action &#x3D; this.leafNode.removeAction(index);
+        action.changeType &#x3D; ChangeType.MOVED;
+        this.actionChanged.emit({
+            triggerPath: [action.event],
+            action
+        });
+    }
+
+    setHeightOnClose(index: number, action: any): void {
+        const element &#x3D; document.getElementById(action.event + &#x27;_&#x27; + action.phase + &#x27;_&#x27; + index) as HTMLElement;
+        element.style.height &#x3D; &#x27;auto&#x27;;
+    }
+
+    onResizeEvent(event: any, name: string): void {
+        const newHeight &#x3D; event.rectangle.height &lt; 370 ? 370 : event.rectangle.height;
+        const element &#x3D; document.getElementById(name);
+        const headerSize &#x3D; (element.childNodes[0] as HTMLElement).offsetHeight;
+        const bottomSize &#x3D; (element.childNodes[1].childNodes[1] as HTMLElement).offsetHeight;
+        const div &#x3D; document.getElementById(name + &#x27;_div&#x27;);
+        const editorObject &#x3D; document.getElementById(name + &#x27;_editor&#x27;);
+        element.style.height &#x3D; newHeight + &#x27;px&#x27;;
+        const innerSize &#x3D; newHeight - headerSize - bottomSize - 45;
+        div.style.height &#x3D; innerSize + &#x27;px&#x27;;
+        editorObject.style.height &#x3D; innerSize + &#x27;px&#x27;;
+    }
+
+    openDialog(index: number): void {
+        const dialogRef &#x3D; this.deleteDialog.open(DialogDeleteComponent);
+
+        dialogRef.afterClosed().subscribe(result &#x3D;&gt; {
+            if (result &#x3D;&#x3D;&#x3D; true) {
+                this.deleteAction(index);
+            }
+        });
+    }
+
+    closeDrawer() {
+        this.drawer.close();
+        this.drawerOpened.emit(this.drawer.opened);
+    }
+
+    undo(): void {
+        this.editor.trigger(&#x27;undo&#x27;, &#x27;undo&#x27;, undefined);
+    }
+
+    redo(): void {
+        this.editor.trigger(&#x27;redo&#x27;, &#x27;redo&#x27;, undefined);
+    }
+
+    openReference() {
+        this.trigger.openMenu();
+        this.trigger.updatePosition();
+    }
+
+    closeReference() {
+        this.referencesOpened &#x3D; false;
+    }
+
+    openDrawer() {
+        this.drawer.toggle();
+        this.drawerOpened.emit(this.drawer.opened);
+    }
+
+    // monarch playground: https://microsoft.github.io/monaco-editor/monarch.html
+    // monaco playground: https://microsoft.github.io/monaco-editor/playground.html#extending-language-services-custom-languages
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;div class&#x3D;&quot;description&quot; id&#x3D;&quot;description&quot;&gt;
+    &lt;nc-builder-action-editor-menu-description id&#x3D;&quot;description-content&quot;
+                                        #descriptionComponent&gt;&lt;/nc-builder-action-editor-menu-description&gt;
+&lt;/div&gt;
+&lt;mat-sidenav-container autosize&gt;
+    &lt;mat-sidenav mode&#x3D;&quot;side&quot; #drawer&gt;
+        &lt;nc-builder-action-editor-menu [descriptionComponent]&#x3D;&quot;descriptionComponent&quot;
+                                [editor]&#x3D;&quot;editor&quot;&gt;&lt;/nc-builder-action-editor-menu&gt;
+    &lt;/mat-sidenav&gt;
+    &lt;mat-sidenav-content&gt;
+        &lt;mat-expansion-panel (closed)&#x3D;&quot;setHeightOnClose(index, action); closeDrawer()&quot;
+                             id&#x3D;&quot;{{action.event + &#x27;_&#x27; + action.phase + &#x27;_&#x27; + index}}&quot;
+                             class&#x3D;&quot;panel-fix&quot;&gt;
+            &lt;mat-expansion-panel-header class&#x3D;&quot;header&quot;&gt;
+                {{ &#x27;builder.modeler.actions-mode.action-editor.action-editor.action&#x27; | translate }}: {{action.id}}
+            &lt;/mat-expansion-panel-header&gt;
+            &lt;ng-template matExpansionPanelContent&gt;
+                &lt;div fxLayout&#x3D;&quot;row&quot;&gt;
+                    &lt;div fxFlex fxLayoutGap&#x3D;&quot;3em&quot; fxLayoutAlign&#x3D;&quot;start center&quot;&gt;
+                        &lt;button type&#x3D;&quot;button&quot; mat-button (click)&#x3D;&quot;openDrawer()&quot; *ngIf&#x3D;&quot;!_builderModeService.readOnly&quot;&gt;
+                            &lt;mat-icon *ngIf&#x3D;&quot;drawer.opened; else closed&quot;&gt;
+                                keyboard_arrow_left
+                            &lt;/mat-icon&gt;
+                            &lt;ng-template #closed&gt;
+                                &lt;mat-icon&gt;
+                                    keyboard_arrow_right
+                                &lt;/mat-icon&gt;
+                            &lt;/ng-template&gt;
+                            &lt;mat-icon&gt;
+                                functions
+                            &lt;/mat-icon&gt;
+                            {{ &#x27;builder.modeler.actions-mode.action-editor.action-editor.functions&#x27; | translate }}
+                        &lt;/button&gt;
+                    &lt;/div&gt;
+
+                    &lt;div fxFlex&#x3D;&quot;50&quot; fxLayoutGap&#x3D;&quot;3em&quot; fxLayoutAlign&#x3D;&quot;end center&quot;&gt;
+                        &lt;mat-menu #referencesMenu&#x3D;&quot;matMenu&quot;&gt;
+                            &lt;ng-container *ngFor&#x3D;&quot;let configuration of editorConfigurations&quot;&gt;
+                                &lt;nc-builder-action-editor-menu-item [parentTrigger]&#x3D;&quot;referencesTrigger&quot; [trigger]&#x3D;&quot;referenceItemTrigger&quot; #referenceItem&#x3D;&quot;menuInOtherComponent&quot; [configuration]&#x3D;&quot;configuration&quot; [hidden]&#x3D;&quot;!referencesOpened&quot;&gt;&lt;/nc-builder-action-editor-menu-item&gt;
+                                &lt;button mat-menu-item #referenceItemTrigger&#x3D;&quot;matMenuTrigger&quot; [matMenuTriggerFor]&#x3D;&quot;referenceItem.menu&quot;&gt;
+                                    {{configuration.title}}
+                                &lt;/button&gt;
+                            &lt;/ng-container&gt;
+                        &lt;/mat-menu&gt;
+                        &lt;button #matButton fxFlexAlign&#x3D;&quot;end center&quot; type&#x3D;&quot;button&quot; mat-button
+                                #referencesTrigger&#x3D;&quot;matMenuTrigger&quot;
+                                [matMenuTriggerFor]&#x3D;&quot;referencesMenu&quot;
+                                [hidden]&#x3D;&quot;_builderModeService.readOnly&quot;&gt;
+                            &lt;mat-icon&gt;
+                                link
+                            &lt;/mat-icon&gt;
+                            {{ &#x27;builder.modeler.actions-mode.action-editor.action-editor.references&#x27; | translate }}
+                            &lt;mat-icon *ngIf&#x3D;&quot;referencesTrigger.menuOpen; else closedMenu&quot;&gt;
+                                keyboard_arrow_up
+                            &lt;/mat-icon&gt;
+                            &lt;ng-template #closedMenu&gt;
+                                &lt;mat-icon&gt;
+                                    keyboard_arrow_down
+                                &lt;/mat-icon&gt;
+                            &lt;/ng-template&gt;
+                        &lt;/button&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+                &lt;div fxLayout&#x3D;&quot;column&quot; fxLayoutAlign&#x3D;&quot;start stretch&quot; id&#x3D;&quot;{{name + &#x27;_div&#x27;}}&quot;&gt;
+                    &lt;ngx-monaco-editor class&#x3D;&quot;full-size-editor&quot; id&#x3D;&quot;{{name + &#x27;_editor&#x27;}}&quot; [options]&#x3D;&quot;editorOptions&quot;
+                                       [formControl]&#x3D;&quot;formControl&quot; (onInit)&#x3D;&quot;onInit($event)&quot;&gt;&lt;/ngx-monaco-editor&gt;
+                &lt;/div&gt;
+            &lt;/ng-template&gt;
+            &lt;mat-action-row&gt;
+                &lt;button mat-icon-button (click)&#x3D;&quot;openDialog(index)&quot; *ngIf&#x3D;&quot;!_builderModeService.readOnly&quot;&gt;
+                    &lt;mat-icon&gt;delete&lt;/mat-icon&gt;
+                &lt;/button&gt;
+            &lt;/mat-action-row&gt;
+        &lt;/mat-expansion-panel&gt;
+    &lt;/mat-sidenav-content&gt;
+&lt;/mat-sidenav-container&gt;
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="styleData">
+                <p class="comment">
+                    <code>./action-editor.component.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">.not-resizable {
+    resize: none;
+}
+
+.editor-area-height-constraints {
+    height: 600px;
+}
+
+.full-size-editor {
+    .editor-container {
+        height: calc(100vh - 100px);
+    }
+    height: 420px;
+    border: 1px solid #0000001f;
+    border-radius: 4px;
+}
+
+#description {
+    position: fixed;
+    z-index: 999;
+    max-height: 100vh;
+    min-width: 112px;
+    left: 43px;
+    top: 90px;
+    max-width: calc(35% - 15px);
+    min-height: 64px;
+}
+
+#description-content {
+    position: relative;
+}
+
+
+.mat-action-row {
+    padding: 0 16px 4px 16px;
+    border: none;
+}
+
+.header {
+    height: 48px !important;
+}
+
+.panel-fix {
+    margin: 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+}
+.full-menu-width{
+    height: 5px;
+    width: 100%;
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><div class="description" id="description">    <nc-builder-action-editor-menu-description id="description-content"                                        #descriptionComponent></nc-builder-action-editor-menu-description></div><mat-sidenav-container autosize>    <mat-sidenav mode="side" #drawer>        <nc-builder-action-editor-menu [descriptionComponent]="descriptionComponent"                                [editor]="editor"></nc-builder-action-editor-menu>    </mat-sidenav>    <mat-sidenav-content>        <mat-expansion-panel (closed)="setHeightOnClose(index, action); closeDrawer()"                             id="{{action.event + \'_\' + action.phase + \'_\' + index}}"                             class="panel-fix">            <mat-expansion-panel-header class="header">                {{ \'builder.modeler.actions-mode.action-editor.action-editor.action\' | translate }}: {{action.id}}            </mat-expansion-panel-header>            <ng-template matExpansionPanelContent>                <div fxLayout="row">                    <div fxFlex fxLayoutGap="3em" fxLayoutAlign="start center">                        <button type="button" mat-button (click)="openDrawer()" *ngIf="!_builderModeService.readOnly">                            <mat-icon *ngIf="drawer.opened; else closed">                                keyboard_arrow_left                            </mat-icon>                            <ng-template #closed>                                <mat-icon>                                    keyboard_arrow_right                                </mat-icon>                            </ng-template>                            <mat-icon>                                functions                            </mat-icon>                            {{ \'builder.modeler.actions-mode.action-editor.action-editor.functions\' | translate }}                        </button>                    </div>                    <div fxFlex="50" fxLayoutGap="3em" fxLayoutAlign="end center">                        <mat-menu #referencesMenu="matMenu">                            <ng-container *ngFor="let configuration of editorConfigurations">                                <nc-builder-action-editor-menu-item [parentTrigger]="referencesTrigger" [trigger]="referenceItemTrigger" #referenceItem="menuInOtherComponent" [configuration]="configuration" [hidden]="!referencesOpened"></nc-builder-action-editor-menu-item>                                <button mat-menu-item #referenceItemTrigger="matMenuTrigger" [matMenuTriggerFor]="referenceItem.menu">                                    {{configuration.title}}                                </button>                            </ng-container>                        </mat-menu>                        <button #matButton fxFlexAlign="end center" type="button" mat-button                                #referencesTrigger="matMenuTrigger"                                [matMenuTriggerFor]="referencesMenu"                                [hidden]="_builderModeService.readOnly">                            <mat-icon>                                link                            </mat-icon>                            {{ \'builder.modeler.actions-mode.action-editor.action-editor.references\' | translate }}                            <mat-icon *ngIf="referencesTrigger.menuOpen; else closedMenu">                                keyboard_arrow_up                            </mat-icon>                            <ng-template #closedMenu>                                <mat-icon>                                    keyboard_arrow_down                                </mat-icon>                            </ng-template>                        </button>                    </div>                </div>                <div fxLayout="column" fxLayoutAlign="start stretch" id="{{name + \'_div\'}}">                    <ngx-monaco-editor class="full-size-editor" id="{{name + \'_editor\'}}" [options]="editorOptions"                                       [formControl]="formControl" (onInit)="onInit($event)"></ngx-monaco-editor>                </div>            </ng-template>            <mat-action-row>                <button mat-icon-button (click)="openDialog(index)" *ngIf="!_builderModeService.readOnly">                    <mat-icon>delete</mat-icon>                </button>            </mat-action-row>        </mat-expansion-panel>    </mat-sidenav-content></mat-sidenav-container></div>'
+    var COMPONENTS = [{'name': 'AbstractMasterComponent', 'selector': 'nc-builder-abstract-master-component'},{'name': 'ActionDetailComponent', 'selector': 'nc-builder-action-detail'},{'name': 'ActionEditorComponent', 'selector': 'nc-builder-action-editor'},{'name': 'ActionEditorListComponent', 'selector': 'nc-builder-action-editor-list'},{'name': 'ActionEditorMenuComponent', 'selector': 'nc-builder-action-editor-menu'},{'name': 'ActionEditorMenuDescriptionComponent', 'selector': 'nc-builder-action-editor-menu-description'},{'name': 'ActionEditorMenuItemComponent', 'selector': 'nc-builder-action-editor-menu-item'},{'name': 'ActionMasterComponent', 'selector': 'nc-builder-action-master'},{'name': 'ActionMasterItemComponent', 'selector': 'nc-builder-action-master-item'},{'name': 'ActionsModeComponent', 'selector': 'nc-builder-actions-mode'},{'name': 'AddChildNodeComponent', 'selector': 'nc-add-child-node'},{'name': 'AdminImpersonateComponent', 'selector': 'nc-admin-impersonate'},{'name': 'AdminImpersonateDialogComponent', 'selector': 'nc-admin-impersonate-dialog'},{'name': 'AdminImpersonateItemComponent', 'selector': 'nc-admin-impersonate-item'},{'name': 'AdminImpersonateListComponent', 'selector': 'nc-admin-impersonate-list'},{'name': 'AdvancedSearchComponent', 'selector': 'nc-advanced-search'},{'name': 'AuthenticationOverlayComponent', 'selector': 'nc-authentication-overlay'},{'name': 'BarchartCardComponent', 'selector': 'nc-barchart-card'},{'name': 'BooleanDefaultFieldComponent', 'selector': 'nc-boolean-default-field'},{'name': 'BooleanFieldComponent', 'selector': 'nc-boolean-field'},{'name': 'BreadcrumbsComponent', 'selector': 'nc-breadcrumbs'},{'name': 'BuilderComponent', 'selector': 'nc-builder'},{'name': 'ButtonDefaultFieldComponent', 'selector': 'nc-button-default-field'},{'name': 'ButtonFieldComponent', 'selector': 'nc-button-field'},{'name': 'CaseListComponent', 'selector': 'nc-case-list'},{'name': 'CaseListPaginatorComponent', 'selector': 'nc-case-list-paginator'},{'name': 'CasePanelComponent', 'selector': 'nc-case-panel'},{'name': 'CaseRefDefaultComponent', 'selector': 'nc-case-ref-default'},{'name': 'CaseSearchComponent', 'selector': 'nc-case-search'},{'name': 'ChangePasswordFormComponent', 'selector': 'nc-change-password-form'},{'name': 'ContextMenuComponent', 'selector': 'nc-builder-context-menu'},{'name': 'ControlPanelComponent', 'selector': 'nc-builder-control-panel'},{'name': 'CountCardComponent', 'selector': 'nc-count-card'},{'name': 'CreateCaseButtonComponent', 'selector': 'nc-create-case-button'},{'name': 'DashboardBarChartTextFieldComponent', 'selector': 'nc-dashboard-bar-chart-text-field'},{'name': 'DashboardComponent', 'selector': 'nc-dashboard'},{'name': 'DashboardContentComponent', 'selector': 'nc-dashboard-content'},{'name': 'DashboardIframeTextFieldComponent', 'selector': 'nc-dashboard-iframe-text-field'},{'name': 'DashboardLineChartTextFieldComponent', 'selector': 'nc-dashboard-line-chart-text-field'},{'name': 'DashboardPieChartTextFieldComponent', 'selector': 'nc-dashboard-pie-chart-text-field'},{'name': 'DashboardPortalTextFieldComponent', 'selector': 'nc-dashboard-portal-text-field'},{'name': 'DataDetailComponent', 'selector': 'nc-builder-data-detail'},{'name': 'DataFieldTemplateComponent', 'selector': 'nc-data-field-template'},{'name': 'DataMasterItemComponent', 'selector': 'nc-builder-data-master-item'},{'name': 'DataModeComponent', 'selector': 'nc-builder-data-mode'},{'name': 'DataTranslationComponent', 'selector': 'nc-builder-data-translation'},{'name': 'DateDefaultFieldComponent', 'selector': 'nc-date-default-field'},{'name': 'DateFieldComponent', 'selector': 'nc-date-field'},{'name': 'DateTimeDefaultFieldComponent', 'selector': 'nc-date-time-default-field'},{'name': 'DateTimeFieldComponent', 'selector': 'nc-date-time-field'},{'name': 'DefaultCaseRefListViewComponent', 'selector': 'nc-default-case-view'},{'name': 'DefaultNoFilterProvidedComponent', 'selector': 'nc-default-no-filter-provided'},{'name': 'DefaultPublicResolverComponent', 'selector': 'nc-default-public-resolver'},{'name': 'DefaultPublicSingleTaskViewComponent', 'selector': 'nc-default-public-single-task-view'},{'name': 'DefaultPublicTaskViewComponent', 'selector': 'nc-default-public-task-view'},{'name': 'DefaultPublicWorkflowViewComponent', 'selector': 'nc-default-public-workflow-view'},{'name': 'DefaultSimpleCaseViewComponent', 'selector': 'nc-default-simple-case-view'},{'name': 'DefaultSimpleTaskViewComponent', 'selector': 'nc-default-simple-task-view'},{'name': 'DefaultSingleTaskViewComponent', 'selector': 'nc-default-single-task-view'},{'name': 'DefaultTabbedCaseViewComponent', 'selector': 'nc-default-tabbed-case-view'},{'name': 'DefaultTabbedSingleTaskViewComponent', 'selector': 'nc-default-tabbed-single-task-view'},{'name': 'DefaultTabbedTaskViewComponent', 'selector': 'nc-default-tabbed-task-view'},{'name': 'DefaultTabViewComponent', 'selector': 'nc-default-tab-view'},{'name': 'DefaultTaskViewComponent', 'selector': 'nc-default-task-view'},{'name': 'DefaultTicketViewComponent', 'selector': 'nc-default-ticket-view'},{'name': 'DialogArcEditComponent', 'selector': 'nc-builder-dialog-arc-edit'},{'name': 'DialogChangeDataComponent', 'selector': 'nc-builder-dialog-change-data'},{'name': 'DialogDeadNetComponent', 'selector': 'nc-builder-dialog-dead-net'},{'name': 'DialogDeleteComponent', 'selector': 'nc-builder-dialog-delete'},{'name': 'DialogDeleteModelComponent', 'selector': 'nc-builder-dialog-delete-model'},{'name': 'DialogErrorsComponent', 'selector': 'nc-builder-dialog-errors'},{'name': 'DialogLocalStorageModelComponent', 'selector': 'nc-builder-dialog-local-storage-model'},{'name': 'DialogManageRolesComponent', 'selector': 'nc-builder-dialog-manage-roles'},{'name': 'DialogMarkingChangeComponent', 'selector': 'nc-builder-dialog-marking-change'},{'name': 'DialogModelEditComponent', 'selector': 'nc-builder-dialog-model-edit'},{'name': 'DialogPlaceEditComponent', 'selector': 'nc-builder-dialog-place-edit'},{'name': 'DialogPlaceRefDeleteComponent', 'selector': 'nc-builder-dialog-place-ref-delete'},{'name': 'DialogRefactorComponent', 'selector': 'nc-builder-dialog-refactor'},{'name': 'DialogTransitionEditComponent', 'selector': 'nc-builder-dialog-transition-edit'},{'name': 'EasymdeWrapperComponent', 'selector': 'nc-easymde-wrapper'},{'name': 'EditModeComponent', 'selector': 'nc-builder-edit-mode'},{'name': 'EditModeComponent', 'selector': 'nc-edit-mode'},{'name': 'EditPanelComponent', 'selector': 'nc-builder-edit-panel'},{'name': 'EmailSubmissionFormComponent', 'selector': 'nc-email-submission-form'},{'name': 'EnumerationAutocompleteDynamicFieldComponent', 'selector': 'nc-enumeration-autocomplete-dynamic-field'},{'name': 'EnumerationAutocompleteSelectFieldComponent', 'selector': 'nc-enumeration-autocomplete-select-field'},{'name': 'EnumerationCaserefFieldComponent', 'selector': 'nc-enumeration-caseref-field'},{'name': 'EnumerationFieldComponent', 'selector': 'nc-enumeration-field'},{'name': 'EnumerationIconFieldComponent', 'selector': 'nc-enumeration-icon-field'},{'name': 'EnumerationListFieldComponent', 'selector': 'nc-enumeration-list-field'},{'name': 'EnumerationSelectFieldComponent', 'selector': 'nc-enumeration-select-field'},{'name': 'EnumerationStepperFieldComponent', 'selector': 'nc-enumeration-stepper-field'},{'name': 'FieldComponentResolverComponent', 'selector': 'nc-field-component-resolver'},{'name': 'FieldListComponent', 'selector': 'nc-builder-field-list'},{'name': 'FileDefaultFieldComponent', 'selector': 'nc-file-default-field'},{'name': 'FileFieldComponent', 'selector': 'nc-file-field'},{'name': 'FileListDefaultFieldComponent', 'selector': 'nc-file-list-default-field'},{'name': 'FileListFieldComponent', 'selector': 'nc-file-list-field'},{'name': 'FileToolComponent', 'selector': 'nc-builder-file-tool'},{'name': 'FilterDefaultFieldComponent', 'selector': 'nc-filter-default-field'},{'name': 'FilterFieldComponent', 'selector': 'nc-filter-field'},{'name': 'FilterFieldContentComponent', 'selector': 'nc-filter-field-content'},{'name': 'FilterFieldTabbedCaseViewComponent', 'selector': 'nc-filter-field-tabbed-case-view'},{'name': 'FilterFieldTabbedTaskViewComponent', 'selector': 'nc-filter-field-tabbed-task-view'},{'name': 'FilterFieldTabViewComponent', 'selector': 'nc-filter-field-tab-view'},{'name': 'FilterFieldTabViewContentComponent', 'selector': 'nc-filter-field-tab-view-content'},{'name': 'FilterSelectorComponent', 'selector': 'nc-filter-selector'},{'name': 'FilterSelectorDialogComponent', 'selector': 'nc-filter-selector-dialog'},{'name': 'FilterStringQueryFieldComponent', 'selector': 'nc-filter-string-query-field'},{'name': 'FlagComponent', 'selector': 'nc-builder-flag'},{'name': 'ForgottenPasswordFormComponent', 'selector': 'nc-forgotten-password-form'},{'name': 'FormBuilderComponent', 'selector': 'nc-builder-form-builder'},{'name': 'FulltextSearchComponent', 'selector': 'nc-fulltext-search'},{'name': 'FunctionEditorComponent', 'selector': 'nc-builder-function-editor'},{'name': 'FunctionMasterItemComponent', 'selector': 'nc-builder-function-master-item'},{'name': 'GridsterComponent', 'selector': 'nc-builder-gridster-component'},{'name': 'GridsterDataFieldComponent', 'selector': 'nc-builder-gridster-datafield'},{'name': 'GroupNavigationComponentResolverComponent', 'selector': 'nc-group-navigation-component-resolver'},{'name': 'HeaderComponent', 'selector': 'nc-header'},{'name': 'HistoryDetailComponent', 'selector': 'nc-builder-history-detail'},{'name': 'HistoryMasterItemComponent', 'selector': 'nc-builder-history-master-item'},{'name': 'HistoryModeComponent', 'selector': 'nc-builder-history-mode'},{'name': 'HtmlTextareaFieldComponent', 'selector': 'nc-html-textarea-field'},{'name': 'I18nDividerFieldComponent', 'selector': 'nc-i18n-divider-field'},{'name': 'I18nFieldComponent', 'selector': 'nc-i18n-field'},{'name': 'I18nFieldComponent', 'selector': 'nc-builder-i18n-field'},{'name': 'I18nModeComponent', 'selector': 'nc-builder-i18n-mode'},{'name': 'I18nTextFieldComponent', 'selector': 'nc-i18n-text-field'},{'name': 'IframeCardComponent', 'selector': 'nc-iframe-card'},{'name': 'ImmediateFilterTextComponent', 'selector': 'nc-immediate-filter-text'},{'name': 'ImmediateFilterTextContentComponent', 'selector': 'nc-immediate-filter-text-content'},{'name': 'ImpersonateQuickPanelComponent', 'selector': 'nc-impersonate-quick-panel'},{'name': 'ImportNetComponent', 'selector': 'nc-import-net'},{'name': 'ImportNetDialogComponent', 'selector': 'nc-import-net-dialog'},{'name': 'ImportSuccessfulComponent', 'selector': 'nc-builder-import-successful'},{'name': 'ImportToolButtonComponent', 'selector': 'nc-builder-import-tool-button'},{'name': 'InfoLabelComponent', 'selector': 'nc-builder-info-label'},{'name': 'InternalLinkComponent', 'selector': 'nc-internal-link'},{'name': 'LanguagesComponent', 'selector': 'nc-builder-languages'},{'name': 'LanguageSelectorComponent', 'selector': 'nc-language-selector'},{'name': 'LdapGroupRoleAssignmentComponent', 'selector': 'nc-ldap-group-role-assignment'},{'name': 'LegalNoticeComponent', 'selector': 'nc-legal-notice'},{'name': 'LinearGaugeCardComponent', 'selector': 'nc-linear-gauge-card'},{'name': 'LineChartCardComponent', 'selector': 'nc-line-chart-card'},{'name': 'LoadingModeComponent', 'selector': 'nc-loading-mode'},{'name': 'LoginFormComponent', 'selector': 'nc-login-form'},{'name': 'LogoutShortcutComponent', 'selector': 'nc-logout-shortcut'},{'name': 'MainMasterComponent', 'selector': 'nc-builder-main-master'},{'name': 'MainMasterItemComponent', 'selector': 'nc-builder-main-master-item'},{'name': 'MasterDetailComponent', 'selector': 'nc-builder-master-detail'},{'name': 'MaterialIconPickerComponent', 'selector': 'nc-builder-material-icon-picker'},{'name': 'ModeComponent', 'selector': 'nc-builder-control-panel-mode'},{'name': 'ModelerComponent', 'selector': 'nc-builder-modeler'},{'name': 'ModelTranslationComponent', 'selector': 'nc-builder-model-translation'},{'name': 'MultichoiceAutocompleteFieldComponent', 'selector': 'nc-multichoice-autocomplete-field'},{'name': 'MultichoiceCaserefFieldComponent', 'selector': 'nc-multichoice-caseref-field'},{'name': 'MultichoiceFieldComponent', 'selector': 'nc-multichoice-field'},{'name': 'MultichoiceListFieldComponent', 'selector': 'nc-multichoice-list-field'},{'name': 'MultichoiceSelectFieldComponent', 'selector': 'nc-multichoice-select-field'},{'name': 'MultiUserAssignComponent', 'selector': 'nc-multi-user-assign'},{'name': 'MultiUserAssignDialogComponent', 'selector': 'nc-multi-user-assign-dialog'},{'name': 'MultiUserAssignItemComponent', 'selector': 'nc-multi-user-assign-item'},{'name': 'MultiUserAssignListComponent', 'selector': 'nc-multi-user-assign-list'},{'name': 'NavigationDoubleDrawerComponent', 'selector': 'nc-navigation-double-drawer'},{'name': 'NavigationDrawerComponent', 'selector': 'nc-navigation-drawer'},{'name': 'NavigationRailComponent', 'selector': 'nc-navigation-rail'},{'name': 'NavigationTreeComponent', 'selector': 'nc-navigation-tree'},{'name': 'NewCaseComponent', 'selector': 'nc-new-case'},{'name': 'NewCaseDialogComponent', 'selector': 'nc-new-case-dialog'},{'name': 'NumberCurrencyFieldComponent', 'selector': 'nc-number-currency-field'},{'name': 'NumberDecimalFieldComponent', 'selector': 'nc-number-decimal-field'},{'name': 'NumberDefaultFieldComponent', 'selector': 'nc-number-default-field'},{'name': 'NumberFieldComponent', 'selector': 'nc-number-field'},{'name': 'OptionSelectorComponent', 'selector': 'nc-option-selector'},{'name': 'PageMasterComponent', 'selector': 'nc-builder-abstract-page-master-component'},{'name': 'PanelComponent', 'selector': 'nc-app-panel'},{'name': 'PanelItemComponent', 'selector': 'nc-panel-item'},{'name': 'PasswordTextFieldComponent', 'selector': 'nc-password-text-field'},{'name': 'PieChartCardComponent', 'selector': 'nc-pie-chart-card'},{'name': 'PopupSessionIdleComponent', 'selector': 'nc-popup-session-idle'},{'name': 'PortalCardComponent', 'selector': 'nc-portal-card'},{'name': 'PreviewDialogComponent', 'selector': 'nc-preview-dialog'},{'name': 'ProcessRefDefaultComponent', 'selector': 'nc-process-ref-default'},{'name': 'ProfileComponent', 'selector': 'nc-user-profile'},{'name': 'ProgressComponent', 'selector': 'nc-builder-progress'},{'name': 'PublicWorkflowPanelComponent', 'selector': 'nc-public-workflow-panel'},{'name': 'QuickPanelComponent', 'selector': 'nc-quick-panel'},{'name': 'RedirectComponent', 'selector': 'nc-redirect'},{'name': 'RegistrationFormComponent', 'selector': 'nc-registration-form'},{'name': 'RemoveNodeComponent', 'selector': 'nc-remove-node'},{'name': 'RequiredLabelComponent', 'selector': 'nc-required-label'},{'name': 'RichTextareaFieldComponent', 'selector': 'nc-rich-textarea-field'},{'name': 'RoleAssignmentComponent', 'selector': 'nc-role-assignment'},{'name': 'RoleDetailComponent', 'selector': 'nc-builder-role-detail'},{'name': 'RoleMasterItemComponent', 'selector': 'nc-builder-role-master-item'},{'name': 'RoleModeComponent', 'selector': 'nc-builder-role-mode'},{'name': 'RoleTranslationComponent', 'selector': 'nc-builder-role-translation'},{'name': 'SearchClauseComponent', 'selector': 'nc-search-clause'},{'name': 'SearchComponent', 'selector': 'nc-search'},{'name': 'SearchConfigurationInputComponent', 'selector': 'nc-search-configuration-input'},{'name': 'SearchModeComponent', 'selector': 'nc-search-mode'},{'name': 'SearchOperandInputComponent', 'selector': 'nc-search-operand-input'},{'name': 'SearchPredicateComponent', 'selector': 'nc-search-predicate'},{'name': 'SessionIdleComponent', 'selector': 'nc-session-idle'},{'name': 'SideMenuContainerComponent', 'selector': 'nc-side-menu-container'},{'name': 'SignaturePadFieldComponent', 'selector': 'nc-signature-pad-field'},{'name': 'SimpleTextFieldComponent', 'selector': 'nc-simple-text-field'},{'name': 'SimulationModeComponent', 'selector': 'nc-builder-simulation-mode'},{'name': 'SingleTaskComponent', 'selector': 'nc-single-task'},{'name': 'SingleTaskViewDialogComponent', 'selector': 'nc-single-task-view-dialog'},{'name': 'SortModeComponent', 'selector': 'nc-sort-mode'},{'name': 'StringCollectionDefaultFieldComponent', 'selector': 'nc-string-collection-default-field'},{'name': 'TabViewComponent', 'selector': 'nc-tab-view'},{'name': 'TaskContentComponent', 'selector': 'nc-task-content'},{'name': 'TaskListComponent', 'selector': 'nc-task-list'},{'name': 'TaskListPaginationComponent', 'selector': 'nc-task-list-pagination'},{'name': 'TaskModeComponent', 'selector': 'nc-builder-task-mode'},{'name': 'TaskPanelComponent', 'selector': 'nc-task-panel'},{'name': 'TaskRefDashboardFieldComponent', 'selector': 'nc-task-ref-dashboard-field'},{'name': 'TaskRefDashboardTileComponent', 'selector': 'nc-task-ref-dashboard-tile'},{'name': 'TaskRefFieldComponent', 'selector': 'nc-task-ref-field'},{'name': 'TaskRefInitFieldComponent', 'selector': 'nc-builder-task-ref-init-field'},{'name': 'TaskRefListFieldComponent', 'selector': 'nc-task-ref-list-field'},{'name': 'TaskSearchComponent', 'selector': 'nc-task-search'},{'name': 'TaskTranslationComponent', 'selector': 'nc-builder-task-translation'},{'name': 'TaskViewDialogComponent', 'selector': 'nc-task-view-dialog'},{'name': 'TextareaFieldComponent', 'selector': 'nc-textarea-field'},{'name': 'TextFieldComponent', 'selector': 'nc-text-field'},{'name': 'ToolbarComponent', 'selector': 'nc-toolbar'},{'name': 'ToolComponent', 'selector': 'nc-builder-tool'},{'name': 'TranslationsComponent', 'selector': 'nc-builder-translations'},{'name': 'TreeComponent', 'selector': 'nc-tree-component'},{'name': 'TreeTaskContentComponent', 'selector': 'nc-tree-task-content'},{'name': 'TriggerTreeComponent', 'selector': 'nc-builder-trigger-tree'},{'name': 'UserAssignComponent', 'selector': 'nc-user-assign'},{'name': 'UserAssignDialogComponent', 'selector': 'nc-user-assign-dialog'},{'name': 'UserAssignItemComponent', 'selector': 'nc-user-assign-item'},{'name': 'UserAssignListComponent', 'selector': 'nc-user-assign-list'},{'name': 'UserCardComponent', 'selector': 'nc-user-card'},{'name': 'UserDefaultFieldComponent', 'selector': 'nc-user-default-field'},{'name': 'UserFieldComponent', 'selector': 'nc-user-field'},{'name': 'UserImpersonateComponent', 'selector': 'nc-user-impersonate'},{'name': 'UserImpersonateDialogComponent', 'selector': 'nc-user-impersonate-dialog'},{'name': 'UserInviteComponent', 'selector': 'nc-user-invite'},{'name': 'UserListDefaultFieldComponent', 'selector': 'nc-user-list-default-field'},{'name': 'UserListFieldComponent', 'selector': 'nc-user-list-field'},{'name': 'WorkflowPanelComponent', 'selector': 'nc-workflow-panel'},{'name': 'WorkflowViewComponent', 'selector': 'nc-workflow-view'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'ActionEditorComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'ActionEditorComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

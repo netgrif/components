@@ -9,13 +9,64 @@
 
         <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
 	   <link rel="stylesheet" href="../styles/style.css">
-        <link rel="stylesheet" href="../styles/dark.css" media="(prefers-color-scheme: dark)">
+        <link rel="stylesheet" href="../styles/dark.css">
     </head>
     <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
 
-        <div class="navbar navbar-default navbar-fixed-top visible-xs">
-            <a href="../" class="navbar-brand">Netgrif Components library Documentation</a>
-            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">Netgrif Components library Documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
         </div>
 
         <div class="xs-menu menu" id="mobile-menu">
@@ -24,7 +75,7 @@
 
         <div class="container-fluid main">
            <div class="row main">
-               <div class="hidden-xs menu">
+               <div class="d-none d-md-block menu">
                    <compodoc-menu mode="normal"></compodoc-menu>
                </div>
                <!-- START CONTENT -->
@@ -35,32 +86,37 @@
 
 
 <ol class="breadcrumb">
-  <li>Components</li>
-  <li
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
   >
   NavigationDoubleDrawerComponent</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
-        <li class="active">
-            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
         </li>
-        <li >
-            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
         </li>
-        <li >
-            <a href="#templateData" role="tab" id="templateData-tab" data-toggle="tab" data-link="template">Template</a>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
         </li>
-        <li >
-            <a href="#styleData" role="tab" id="styleData-tab" data-toggle="tab" data-link="style">Styles</a>
+        <li class="nav-item">
+            <a href="#styleData" class="nav-link"
+                role="tab" id="styleData-tab" data-bs-toggle="tab" data-link="style">Styles</a>
         </li>
-        <li >
-            <a href="#tree" role="tab" id="tree-tab" data-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
         </li>
 </ul>
 
 <div class="tab-content">
-    <div class="tab-pane fade active in" id="c-info"><p class="comment">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
     <h3>File</h3>
 </p>
 <p class="comment">
@@ -73,15 +129,16 @@
         <h3>Extends</h3>
     </p>
     <p class="comment">
-                <code><a href="../components/NavigationDoubleDrawerComponent.html" target="_self" >AbstractNavigationDoubleDrawerComponent</a></code>
+                    <code><a href="../components/NavigationDoubleDrawerComponent.html" target="_self" >AbstractNavigationDoubleDrawerComponent</a></code>
     </p>
 
 
 
-<section>
+<section data-compodoc="block-metadata">
     <h3>Metadata</h3>
-    <table class="table table-sm table-hover">
+    <table class="table table-sm table-hover metadata">
         <tbody>
+
 
 
 
@@ -97,6 +154,8 @@
                 <td class="col-md-3">selector</td>
                 <td class="col-md-9"><code>nc-navigation-double-drawer</code></td>
             </tr>
+
+
 
             <tr>
                 <td class="col-md-3">styleUrls</td>
@@ -121,7 +180,7 @@
     </table>
 </section>
 
-    <section>
+    <section data-compodoc="block-index">
     <h3 id="index">Index</h3>
     <table class="table table-sm table-bordered index-table">
         <tbody>
@@ -165,18 +224,18 @@
     </table>
 </section>
 
-    <section>
+    <section data-compodoc="block-constructor">
     <h3 id="constructor">Constructor</h3>
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(_router: <a href="https://angular.io/api/router/Router" target="_blank">Router</a>, _activatedRoute: <a href="https://angular.io/api/router/ActivatedRoute" target="_blank">ActivatedRoute</a>, _breakpoint: BreakpointObserver, _languageService: LanguageService, _translateService: TranslateService, _userService: UserService, _accessService: AccessService, _log: LoggerService, _config: ConfigurationService, _uriService: UriService, _caseResourceService: CaseResourceService, _impersonationUserSelect: ImpersonationUserSelectService, _impersonation: ImpersonationService, _dynamicRouteProviderService: DynamicNavigationRouteProviderService)</code>
+<code>constructor(_router: Router, _activatedRoute: ActivatedRoute, _breakpoint: BreakpointObserver, _languageService: LanguageService, _translateService: TranslateService, _userService: UserService, _accessService: AccessService, _log: LoggerService, _config: ConfigurationService, _uriService: UriService, _caseResourceService: CaseResourceService, _impersonationUserSelect: ImpersonationUserSelectService, _impersonation: ImpersonationService, _dynamicRouteProviderService: DynamicNavigationRouteProviderService, _redirectService: RedirectService, _navigationService: DoubleDrawerNavigationService, _processService: ProcessService, _snackBarService: SnackBarService, _dialog: MatDialog, _taskView: <a href="../undefineds/Type.html" target="_self">ComponentType&lt;&gt;</a>)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="56" class="link-to-prism">projects/netgrif-components/src/lib/navigation/navigation-double-drawer/navigation-double-drawer.component.ts:56</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="63" class="link-to-prism">projects/netgrif-components/src/lib/navigation/navigation-double-drawer/navigation-double-drawer.component.ts:63</a></div>
                             </td>
                         </tr>
 
@@ -197,7 +256,7 @@
                                                         <td>_router</td>
                                                   
                                                         <td>
-                                                                        <code><a href="https://angular.io/api/router/Router" target="_blank" >Router</a></code>
+                                                                    <code>Router</code>
                                                         </td>
                                                   
                                                     <td>
@@ -209,7 +268,7 @@
                                                         <td>_activatedRoute</td>
                                                   
                                                         <td>
-                                                                        <code><a href="https://angular.io/api/router/ActivatedRoute" target="_blank" >ActivatedRoute</a></code>
+                                                                    <code>ActivatedRoute</code>
                                                         </td>
                                                   
                                                     <td>
@@ -361,6 +420,78 @@
                                                     </td>
                                                     
                                                 </tr>
+                                                <tr>
+                                                        <td>_redirectService</td>
+                                                  
+                                                        <td>
+                                                                    <code>RedirectService</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_navigationService</td>
+                                                  
+                                                        <td>
+                                                                    <code>DoubleDrawerNavigationService</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_processService</td>
+                                                  
+                                                        <td>
+                                                                    <code>ProcessService</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_snackBarService</td>
+                                                  
+                                                        <td>
+                                                                    <code>SnackBarService</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_dialog</td>
+                                                  
+                                                        <td>
+                                                                    <code>MatDialog</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_taskView</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../miscellaneous/enumerations.html#Type" target="_self" >ComponentType&lt;&gt;</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
                                         </tbody>
                                     </table>
                             </div>
@@ -374,7 +505,7 @@
 
 
 
-    <section>
+    <section data-compodoc="block-methods">
     
     <h3 id="methods">
         Methods
@@ -385,7 +516,7 @@
                 <td class="col-md-4">
                     <a name="toggleSection"></a>
                     <span class="name">
-                        <span class="modifier">Public</span>
+                            <span class="modifier">Public</span>
                         <span ><b>toggleSection</b></span>
                         <a href="#toggleSection"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -393,64 +524,63 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>toggleSection(section: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="76"
-                            class="link-to-prism">projects/netgrif-components/src/lib/navigation/navigation-double-drawer/navigation-double-drawer.component.ts:76</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="91"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/navigation/navigation-double-drawer/navigation-double-drawer.component.ts:91</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>section</td>
-                                    <td>
-                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
-                                    </td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>section</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
     </table>
 </section>
-    <section>
+    <section data-compodoc="block-properties">
     
     <h3 id="inputs">
         Properties
@@ -483,7 +613,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="53" class="link-to-prism">projects/netgrif-components/src/lib/navigation/navigation-double-drawer/navigation-double-drawer.component.ts:53</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="60" class="link-to-prism">projects/netgrif-components/src/lib/navigation/navigation-double-drawer/navigation-double-drawer.component.ts:60</a></div>
                         </td>
                     </tr>
 
@@ -495,8 +625,8 @@
 </div>
 
 
-    <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Component} from &#x27;@angular/core&#x27;;
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Component, Inject} from &#x27;@angular/core&#x27;;
 import {ActivatedRoute, Router} from &#x27;@angular/router&#x27;;
 import {BreakpointObserver} from &#x27;@angular/cdk/layout&#x27;;
 import {
@@ -505,15 +635,22 @@ import {
     UriService,
     LoggerService,
     UserService,
+    ProcessService,
+    SnackBarService,
     AbstractNavigationDoubleDrawerComponent,
     DynamicNavigationRouteProviderService,
     AccessService,
     ImpersonationUserSelectService,
     ImpersonationService,
-    CaseResourceService
+    CaseResourceService,
+    RedirectService,
+    DoubleDrawerNavigationService,
+    NAE_TASK_VIEW_COMPONENT
 } from &#x27;@netgrif/components-core&#x27;;
 import {animate, state, style, transition, trigger} from &quot;@angular/animations&quot;;
 import {TranslateService} from &quot;@ngx-translate/core&quot;;
+import {MatDialog} from &quot;@angular/material/dialog&quot;;
+import {ComponentType} from &quot;@angular/cdk/portal&quot;;
 
 @Component({
     selector: &#x27;nc-navigation-double-drawer&#x27;,
@@ -566,9 +703,17 @@ export class NavigationDoubleDrawerComponent extends AbstractNavigationDoubleDra
                 _caseResourceService: CaseResourceService,
                 _impersonationUserSelect: ImpersonationUserSelectService,
                 _impersonation: ImpersonationService,
-                _dynamicRouteProviderService: DynamicNavigationRouteProviderService) {
+                _dynamicRouteProviderService: DynamicNavigationRouteProviderService,
+                _redirectService: RedirectService,
+                _navigationService: DoubleDrawerNavigationService,
+                _processService: ProcessService,
+                _snackBarService: SnackBarService,
+                _dialog: MatDialog,
+                @Inject(NAE_TASK_VIEW_COMPONENT) _taskView: ComponentType&lt;unknown&gt;) {
         super(_router, _activatedRoute, _breakpoint, _languageService, _translateService, _userService, _accessService,
-            _log, _config, _uriService, _caseResourceService, _impersonationUserSelect, _impersonation, _dynamicRouteProviderService)
+            _log, _config, _uriService, _caseResourceService, _impersonationUserSelect, _impersonation,
+            _dynamicRouteProviderService, _redirectService, _navigationService, _processService, _snackBarService, _dialog,
+            _taskView);
     }
 
     public toggleSection(section: string): void {
@@ -579,8 +724,8 @@ export class NavigationDoubleDrawerComponent extends AbstractNavigationDoubleDra
 </code></pre>
     </div>
 
-    <div class="tab-pane fade " id="c-templateData">
-        <pre class="line-numbers"><code class="language-html">&lt;div class&#x3D;&quot;drawer-control rail-color height-60&quot; [ngClass]&#x3D;&quot;{&#x27;index-menu&#x27;: !configLeftMenu.opened}&quot;
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;div class&#x3D;&quot;drawer-control rail-color height-48&quot; [ngClass]&#x3D;&quot;{&#x27;index-menu&#x27;: !configLeftMenu.opened}&quot;
      fxLayoutAlign&#x3D;&quot;center center&quot; fxHide.lt-md&gt;
     &lt;button mat-icon-button (click)&#x3D;&quot;toggleMenu()&quot; class&#x3D;&quot;menu-button mat-typography menu-font-color&quot;&gt;
         &lt;mat-icon&gt;menu&lt;/mat-icon&gt;
@@ -618,13 +763,15 @@ export class NavigationDoubleDrawerComponent extends AbstractNavigationDoubleDra
             &lt;mat-menu #userRailMenu&#x3D;&quot;matMenu&quot;&gt;
                 &lt;div mat-menu-item role&#x3D;&quot;menuitem&quot; class&#x3D;&quot;large-menu-item&quot; fxLayout&#x3D;&quot;row&quot; fxFlexAlign&#x3D;&quot;center center&quot;
                      [routerLink]&#x3D;&quot;profileRouterLink&quot; routerLinkActive&#x3D;&quot;active-tree-node&quot;&gt;
-                    &lt;mat-icon class&#x3D;&quot;margin-auto&quot; fxFlex&gt;face&lt;/mat-icon&gt;
-                    &lt;div class&#x3D;&quot;large-menu-item&quot; fxLayout&#x3D;&quot;column&quot; fxFlexAlign&#x3D;&quot;start center&quot; fxFlex&gt;
-                        &lt;span *ngIf&#x3D;&quot;!user.isImpersonating()&quot; class&#x3D;&quot;large-menu-item-text&quot;
-                              fxFlex&#x3D;&quot;50&quot;&gt;{{ user.fullName }}&lt;/span&gt;
-                        &lt;span *ngIf&#x3D;&quot;user.isImpersonating()&quot; class&#x3D;&quot;large-menu-item-text&quot;
-                              fxFlex&#x3D;&quot;50&quot;&gt;{{ user.fullName }} ({{ user.getSelfOrImpersonated().fullName }})&lt;/span&gt;
-                        &lt;span class&#x3D;&quot;large-menu-item-text&quot; style&#x3D;&quot;font-size: 12px;&quot; fxFlex&#x3D;&quot;50&quot;&gt;{{ user.email }}&lt;/span&gt;
+                    &lt;mat-icon class&#x3D;&quot;user-menu-icon&quot;&gt;face&lt;/mat-icon&gt;
+                    &lt;div class&#x3D;&quot;large-menu-item user-menu-text&quot; fxLayout&#x3D;&quot;column&quot; fxFlexAlign&#x3D;&quot;start center&quot; fxFlex&gt;
+                        &lt;span *ngIf&#x3D;&quot;!user.isImpersonating()&quot; class&#x3D;&quot;large-menu-item-text text-ellipsis&quot;
+                              fxFlex&#x3D;&quot;50&quot; [matTooltip]&#x3D;&quot;user.fullName&quot;&gt;{{ user.fullName }}&lt;/span&gt;
+                        &lt;span *ngIf&#x3D;&quot;user.isImpersonating()&quot; class&#x3D;&quot;large-menu-item-text text-ellipsis&quot;
+                              fxFlex&#x3D;&quot;50&quot;
+                              [matTooltip]&#x3D;&quot;user.fullName + &#x27; (&#x27; + user.getSelfOrImpersonated().fullName + &#x27;)&#x27;&quot;&gt;{{ user.fullName }} ({{ user.getSelfOrImpersonated().fullName }})&lt;/span&gt;
+                        &lt;span class&#x3D;&quot;large-menu-item-text text-ellipsis&quot; style&#x3D;&quot;font-size: 12px;&quot; fxFlex&#x3D;&quot;50&quot;
+                              [matTooltip]&#x3D;&quot;user.email&quot;&gt;{{ user.email }}&lt;/span&gt;
                     &lt;/div&gt;
                 &lt;/div&gt;
                 &lt;button *ngIf&#x3D;&quot;includeImpersonation &amp;&amp; !user.isImpersonating()&quot; mat-menu-item (click)&#x3D;&quot;impersonate()&quot;&gt;
@@ -648,18 +795,26 @@ export class NavigationDoubleDrawerComponent extends AbstractNavigationDoubleDra
                 &lt;mat-icon&gt;account_circle&lt;/mat-icon&gt;
             &lt;/button&gt;
 
-            &lt;div *ngIf&#x3D;&quot;includeLanguage&quot; fxLayout&#x3D;&quot;row&quot; class&#x3D;&quot;icon-container&quot;&gt;
-                &lt;button mat-icon-button class&#x3D;&quot;menu-button mat-typography menu-font-color&quot;&gt;
-                    &lt;nc-language-selector fxLayout&#x3D;&quot;row&quot;&gt;&lt;/nc-language-selector&gt;
-                &lt;/button&gt;
+            &lt;div *ngIf&#x3D;&quot;includeLanguage&quot; [ngClass]&#x3D;&quot;{&#x27;margin-bottom-x2 menu-button&#x27;: !(hiddenCustomItems?.length &gt; 0)}&quot; fxLayout&#x3D;&quot;row&quot; class&#x3D;&quot;icon-container padding-2px&quot;&gt;
+                &lt;nc-language-selector fxLayout&#x3D;&quot;row&quot; &gt;&lt;/nc-language-selector&gt;
             &lt;/div&gt;
 
             &lt;mat-menu #railMenu&#x3D;&quot;matMenu&quot;&gt;
-                &lt;button *ngFor&#x3D;&#x27;let item of hiddenCustomItems; trackBy: itemsTrackBy&#x27; mat-menu-item
+                &lt;button *ngFor&#x3D;&#x27;let item of hiddenCustomItems$ | async; trackBy: itemsTrackBy&#x27; mat-menu-item
                         [routerLink]&#x3D;&#x27;item.routing.path&#x27; routerLinkActive&#x3D;&quot;active-tree-node&quot;&gt;
                     &lt;mat-icon&gt;{{ item.navigation.icon }}&lt;/mat-icon&gt;
                     &lt;span&gt;{{ item.navigation.title }}&lt;/span&gt;
                 &lt;/button&gt;
+                &lt;div *ngIf&#x3D;&quot;canEditMenu()&quot;&gt;
+                    &lt;button mat-menu-item *ngIf&#x3D;&quot;!editModeEnabled&quot; (click)&#x3D;&quot;setMenuEditMode(true)&quot;&gt;
+                        &lt;mat-icon color&#x3D;&quot;primary&quot;&gt;edit&lt;/mat-icon&gt;
+                        {{ &#x27;dynamicNavigation.editModeOn&#x27; | translate }}
+                    &lt;/button&gt;
+                    &lt;button mat-menu-item *ngIf&#x3D;&quot;editModeEnabled&quot; (click)&#x3D;&quot;setMenuEditMode(false)&quot;&gt;
+                        &lt;mat-icon color&#x3D;&quot;primary&quot;&gt;edit&lt;/mat-icon&gt;
+                        {{ &#x27;dynamicNavigation.editModeOff&#x27; | translate }}
+                    &lt;/button&gt;
+                &lt;/div&gt;
             &lt;/mat-menu&gt;
             &lt;!--            &lt;div fxLayout&#x3D;&quot;row&quot; class&#x3D;&quot;margin-bottom-x2 icon-container&quot; matTooltip&#x3D;&quot;Otvoriť menu&quot;--&gt;
             &lt;!--                 matTooltipPosition&#x3D;&quot;right&quot;--&gt;
@@ -668,15 +823,13 @@ export class NavigationDoubleDrawerComponent extends AbstractNavigationDoubleDra
             &lt;!--                    &lt;mat-icon class&#x3D;&quot;icon-large sidemenu-icon&quot;&gt;more_vert&lt;/mat-icon&gt;--&gt;
             &lt;!--                &lt;/button&gt;--&gt;
             &lt;!--            &lt;/div&gt;--&gt;
-            &lt;button mat-icon-button *ngIf&#x3D;&quot;hiddenCustomItems &amp;&amp; hiddenCustomItems.length &gt; 0&quot;
+            &lt;button mat-icon-button *ngIf&#x3D;&quot;(hiddenCustomItems &amp;&amp; hiddenCustomItems.length &gt; 0) || canEditMenu()&quot;
                     [matMenuTriggerFor]&#x3D;&quot;railMenu&quot;
-                    class&#x3D;&quot;menu-button mat-typography menu-font-color&quot;
+                    class&#x3D;&quot;menu-button mat-typography menu-font-color margin-bottom-x2&quot;
                     [matTooltip]&#x3D;&quot;&#x27;toolbar.menu.open&#x27; | translate&quot;
                     matTooltipPosition&#x3D;&quot;right&quot;&gt;
                 &lt;mat-icon&gt;more_vert&lt;/mat-icon&gt;
             &lt;/button&gt;
-
-            &lt;div class&#x3D;&quot;margin-top-x2&quot;&gt;&lt;/div&gt;
         &lt;/div&gt;
     &lt;/mat-sidenav&gt;
 
@@ -686,10 +839,8 @@ export class NavigationDoubleDrawerComponent extends AbstractNavigationDoubleDra
                          [disableClose]&#x3D;&quot;configRightMenu.disableClose&quot;
                          class&#x3D;&quot;drawer-content&quot;
                          mwlResizable
-                         [style.width.px]&#x3D;&quot;configRightMenu.width&quot;
-                         [resizeCursorPrecision]&#x3D;&quot;20&quot;
-                         [resizeEdges]&#x3D;&quot;{right: true}&quot;
-                         (resizing)&#x3D;&quot;onResizeEvent($event)&quot;&gt;
+                         (resizing)&#x3D;&quot;onResizeEvent($event)&quot;
+                         [style.width.px]&#x3D;&quot;configRightMenu.width&quot;&gt;
 
                 &lt;div *ngTemplateOutlet&#x3D;&quot;portalRightMenu || defaultRightSide&quot;&gt;&lt;/div&gt;
 
@@ -704,7 +855,7 @@ export class NavigationDoubleDrawerComponent extends AbstractNavigationDoubleDra
 
 &lt;ng-template #defaultLeftSide&gt;
 
-    &lt;div class&#x3D;&quot;height-60 border-bottom&quot; fxLayoutAlign&#x3D;&quot;center center&quot; fxHide.lt-md&gt;
+    &lt;div class&#x3D;&quot;height-48 border-bottom&quot; fxLayoutAlign&#x3D;&quot;center center&quot; fxHide.lt-md&gt;
         &lt;button mat-icon-button (click)&#x3D;&quot;toggleRightMenu()&quot; class&#x3D;&quot;menu-button mat-typography menu-font-color&quot;&gt;
             &lt;mat-icon&gt;menu&lt;/mat-icon&gt;
         &lt;/button&gt;
@@ -728,10 +879,11 @@ export class NavigationDoubleDrawerComponent extends AbstractNavigationDoubleDra
 
     &lt;div class&#x3D;&quot;margin-top-x2&quot;&gt;&lt;/div&gt;
 
-    &lt;button *ngFor&#x3D;&#x27;let folder of leftItems; trackBy: itemsTrackBy&#x27; mat-icon-button (click)&#x3D;&quot;onItemClick(folder)&quot;
-            class&#x3D;&quot;menu-button mat-typography menu-font-color&quot; [matTooltip]&#x3D;&quot;folder.navigation.title&quot;
+    &lt;button *ngFor&#x3D;&#x27;let folder of leftItems$ | async; trackBy: itemsTrackBy&#x27; mat-icon-button (click)&#x3D;&quot;onItemClick(folder)&quot;
+            class&#x3D;&quot;menu-button mat-typography&quot; [matTooltip]&#x3D;&quot;folder.navigation.title&quot;
             [matTooltipPosition]&#x3D;&quot;&#x27;right&#x27;&quot;
-            [ngClass]&#x3D;&quot;isItemAndNodeEqual(folder, currentNode) ? &#x27;rail-selected-color&#x27; : &#x27;menu-font-color&#x27;&quot;
+            [ngClass]&#x3D;&quot;isParentOfActiveView(folder) ? &#x27;active-tree-node&#x27;
+                       : (isItemAndNodeEqual(folder, currentNode) ? &#x27;rail-selected-color&#x27; : &#x27;menu-font-color&#x27;)&quot;
             [routerLink]&#x3D;&#x27;folder.routing.path&#x27;
             routerLinkActive&#x3D;&quot;active&quot;&gt;
         &lt;mat-icon&gt;{{ folder.navigation.icon }}&lt;/mat-icon&gt;
@@ -747,25 +899,36 @@ export class NavigationDoubleDrawerComponent extends AbstractNavigationDoubleDra
         &lt;img *ngIf&#x3D;&quot;image !&#x3D;&#x3D; undefined&quot; [alt]&#x3D;&quot;imageAlt&quot; [src]&#x3D;&quot;image&quot; class&#x3D;&quot;logoimg&quot;
              [routerLink]&#x3D;&quot;imageRouterLink !&#x3D;&#x3D; undefined ? imageRouterLink : []&quot;&gt;
     &lt;/div&gt;
-    &lt;div *ngIf&#x3D;&quot;(rightLoading$ | async) &#x3D;&#x3D;&#x3D; false&quot;&gt;
-        &lt;div fxLayout&#x3D;&quot;column&quot; fxLayoutAlign&#x3D;&quot;end end&quot; class&#x3D;&quot;order-icon-wrapper&quot;&gt;
-            &lt;button mat-icon-button fxLayout&#x3D;&quot;column&quot; fxLayoutAlign&#x3D;&quot;center center&quot;
-                    class&#x3D;&quot;mat-button mat-typography menu-font-color order-icon&quot; (click)&#x3D;&quot;switchOrder()&quot;
-                    [matTooltip]&#x3D;&quot;isAscending() ? (&#x27;dynamicNavigation.ascending&#x27; | translate) : (&#x27;dynamicNavigation.descending&#x27; | translate)&quot;&gt;
-                &lt;mat-icon&gt;{{ isAscending() ? &quot;expand_more&quot; : &quot;expand_less&quot; }}&lt;/mat-icon&gt;
+    &lt;div *ngIf&#x3D;&quot;(rightLoading$ | async) &#x3D;&#x3D;&#x3D; false&quot; class&#x3D;&quot;margin-top-default&quot;&gt;
+&lt;!--        &lt;div fxLayout&#x3D;&quot;column&quot; fxLayoutAlign&#x3D;&quot;end end&quot; class&#x3D;&quot;order-icon-wrapper&quot;&gt;--&gt;
+&lt;!--            &lt;button mat-icon-button fxLayout&#x3D;&quot;column&quot; fxLayoutAlign&#x3D;&quot;center center&quot;--&gt;
+&lt;!--                    class&#x3D;&quot;mat-button mat-typography menu-font-color order-icon&quot; (click)&#x3D;&quot;switchOrder()&quot;--&gt;
+&lt;!--                    [matTooltip]&#x3D;&quot;isAscending() ? (&#x27;dynamicNavigation.ascending&#x27; | translate) : (&#x27;dynamicNavigation.descending&#x27; | translate)&quot;&gt;--&gt;
+&lt;!--                &lt;mat-icon&gt;{{ isAscending() ? &quot;expand_more&quot; : &quot;expand_less&quot; }}&lt;/mat-icon&gt;--&gt;
+&lt;!--            &lt;/button&gt;--&gt;
+&lt;!--        &lt;/div&gt;--&gt;
+        &lt;div *ngFor&#x3D;&#x27;let item of rightItems$ | async; trackBy: itemsTrackBy&#x27; fxLayoutAlign&#x3D;&quot;start center&quot;
+             [ngClass]&#x3D;&quot;{&#x27;menu-tree-node&#x27;: !editModeEnabled}&quot;&gt;
+            &lt;div (click)&#x3D;&quot;onItemClick(item)&quot;
+                 class&#x3D;&quot;tree-node width-menu mat-typography mat-body-2&quot; fxLayoutAlign&#x3D;&quot;start center&quot;  [routerLink]&#x3D;&#x27;item.routing.path&#x27;
+                 routerLinkActive&#x3D;&quot;active-tree-node&quot;&gt;
+                &lt;mat-icon class&#x3D;&quot;tree-node-icon&quot;&gt;{{ item.navigation.icon }}&lt;/mat-icon&gt;
+                &lt;span class&#x3D;&quot;tree-node-title&quot; [matTooltip]&#x3D;&quot;item.navigation.title&quot; matTooltipShowDelay&#x3D;&quot;500&quot;&gt;{{ item.navigation.title }}&lt;/span&gt;
+                &lt;span class&#x3D;&quot;menu-item-focus-overlay&quot;&gt;&lt;/span&gt;
+            &lt;/div&gt;
+            &lt;button mat-icon-button *ngIf&#x3D;&quot;editModeEnabled&quot; class&#x3D;&quot;cursor-pointer&quot; [matTooltip]&#x3D;&quot;&#x27;dynamicNavigation.editMenuItem&#x27; | translate&quot; matTooltipPosition&#x3D;&quot;right&quot; (click)&#x3D;&quot;editMenuItem(item.resource)&quot; fxLayoutAlign&#x3D;&quot;end&quot;&gt;
+                &lt;mat-icon&gt;edit&lt;/mat-icon&gt;
             &lt;/button&gt;
-        &lt;/div&gt;
-        &lt;div *ngFor&#x3D;&#x27;let item of rightItems; trackBy: itemsTrackBy&#x27; (click)&#x3D;&quot;onItemClick(item)&quot;
-             class&#x3D;&quot;tree-node mat-typography mat-body-2&quot; fxLayoutAlign&#x3D;&quot;start center&quot; [routerLink]&#x3D;&#x27;item.routing.path&#x27;
-             routerLinkActive&#x3D;&quot;active-tree-node&quot;&gt;
-            &lt;mat-icon class&#x3D;&quot;tree-node-icon&quot;&gt;{{ item.navigation.icon }}&lt;/mat-icon&gt;
-            &lt;span&gt;{{ item.navigation.title }}&lt;/span&gt;
-            &lt;span class&#x3D;&quot;menu-item-focus-overlay&quot;&gt;&lt;/span&gt;
         &lt;/div&gt;
         &lt;div *ngIf&#x3D;&quot;moreItems.length &gt; 0&quot;&gt;
             &lt;button mat-button color&#x3D;&quot;primary&quot;
                     (click)&#x3D;&quot;loadMoreItems()&quot;&gt;{{ &#x27;dynamicNavigation.loadMoreItems&#x27; | translate }}
             &lt;/button&gt;
+        &lt;/div&gt;
+        &lt;div *ngIf&#x3D;&quot;editModeEnabled&quot; class&#x3D;&quot;tree-node mat-typography mat-body-2&quot; fxLayoutAlign&#x3D;&quot;start center&quot; (click)&#x3D;&quot;createMenuItem()&quot;&gt;
+            &lt;mat-icon class&#x3D;&quot;tree-node-icon&quot;&gt;add&lt;/mat-icon&gt;
+            &lt;span&gt;{{ &#x27;dynamicNavigation.createMenuItemBtn&#x27; | translate }}&lt;/span&gt;
+            &lt;span class&#x3D;&quot;menu-item-focus-overlay&quot;&gt;&lt;/span&gt;
         &lt;/div&gt;
     &lt;/div&gt;
     &lt;div *ngIf&#x3D;&quot;(rightLoading$ | async)&quot; fxLayout&#x3D;&quot;column&quot; fxLayoutAlign&#x3D;&quot;center center&quot; class&#x3D;&quot;margin-top-default&quot;&gt;
@@ -775,7 +938,7 @@ export class NavigationDoubleDrawerComponent extends AbstractNavigationDoubleDra
 </code></pre>
     </div>
 
-    <div class="tab-pane fade " id="c-styleData">
+    <div class="tab-pane fade " id="styleData">
                 <p class="comment">
                     <code>./navigation-double-drawer.component.scss</code>
                 </p>
@@ -791,6 +954,7 @@ export class NavigationDoubleDrawerComponent extends AbstractNavigationDoubleDra
 
 .drawer-container {
     height: 100%;
+
 }
 
 .menu-button {
@@ -798,14 +962,15 @@ export class NavigationDoubleDrawerComponent extends AbstractNavigationDoubleDra
     border-radius: 8px;
 }
 
+
 .drawer-content {
     width: 300px;
     min-width: 300px;
     box-shadow: 0px 2px 4px rgba(13, 45, 60, 0.16), 0px 4px 8px rgba(84, 110, 122, 0.16);
 }
 
-.height-60 {
-    height: 60px;
+.height-48 {
+    height: 48px;
 }
 
 .drawer-control {
@@ -823,14 +988,15 @@ export class NavigationDoubleDrawerComponent extends AbstractNavigationDoubleDra
 
 .border-bottom {
     border-bottom: 1px solid #E2E8F0;
+    box-sizing: content-box !important;
 }
 
 .logo {
-    height: 60px;
+    height: 48px;
 }
 
 .logo-closed {
-    width: 60px !important;
+    width: 48px !important;
 }
 
 .logoimg {
@@ -899,6 +1065,15 @@ export class NavigationDoubleDrawerComponent extends AbstractNavigationDoubleDra
         width: 24px;
         font-size: 24px;
         margin-right: 4px;
+        flex-shrink: 0; // prevents icon from shrinking when title is long
+    }
+
+    .tree-node-title {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        min-width: 0;   // required for ellipsis to work inside flex container
+        flex: 1;        // take remaining space, but not more than available
     }
 
     .tree-node-label {
@@ -1005,8 +1180,27 @@ export class NavigationDoubleDrawerComponent extends AbstractNavigationDoubleDra
     line-height: 64px;
 }
 
+.user-menu-icon {
+    flex: 0 0 auto;
+    margin: auto 16px auto 0;
+}
+
+.user-menu-text {
+    flex: 1 1 0;
+    min-width: 0;
+    overflow: hidden;
+}
+
 .large-menu-item-text {
     line-height: 32px;
+}
+
+.text-ellipsis {
+    display: block;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .cursor-pointer {
@@ -1022,6 +1216,7 @@ export class NavigationDoubleDrawerComponent extends AbstractNavigationDoubleDra
 .content-color {
     background-color: #F8FAFC;
 }
+
 
 .expansion-indicator {
     color: rgba(0, 0, 0, 0.5);
@@ -1055,10 +1250,23 @@ export class NavigationDoubleDrawerComponent extends AbstractNavigationDoubleDra
     -ms-user-select: none;
     user-select: none;
 }
+
+.padding-2px {
+    padding: 2px;
+}
+
+.width-menu {
+    width: 100%;
+
+}
+
+.menu-tree-node {
+    margin: 5px 0;
+}
 </code></pre>
     </div>
 
-    <div class="tab-pane fade " id="c-tree">
+    <div class="tab-pane fade " id="tree">
         <div id="tree-container"></div>
         <div class="tree-legend">
             <div class="title">
@@ -1083,8 +1291,8 @@ export class NavigationDoubleDrawerComponent extends AbstractNavigationDoubleDra
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><div class="drawer-control rail-color height-60" [ngClass]="{\'index-menu\': !configLeftMenu.opened}"     fxLayoutAlign="center center" fxHide.lt-md>    <button mat-icon-button (click)="toggleMenu()" class="menu-button mat-typography menu-font-color">        <mat-icon>menu</mat-icon>    </button></div><mat-toolbar fxHide.gt-sm class="toolbar">    <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between stretch">        <div fxFlex fxLayoutAlign="start center">            <button mat-icon-button (click)="toggleMenu()">                <mat-icon>menu</mat-icon>            </button>        </div>        <div fxLayoutAlign="center center" fxFlex>            <img #logo [alt]="imageAlt" [src]="image" class="logoimg-tool"                 [routerLink]="imageRouterLink !== undefined ? imageRouterLink : []">        </div>        <div fxFlex></div>    </mat-toolbar-row></mat-toolbar><mat-spinner *ngIf="!logo"></mat-spinner><mat-sidenav-container class="rail-container deny-select">    <mat-sidenav mode="side" [(opened)]="configLeftMenu.opened" position="start"                 [disableClose]="configLeftMenu.disableClose"                 class="rail-content">        <div fxLayout="column" class="rail-color" fxFlex>            <div *ngTemplateOutlet="portalLeftMenu || defaultLeftSide"></div>            <div class="margin-top-x2"></div>            <div fxFlex></div>            <mat-menu #userRailMenu="matMenu">                <div mat-menu-item role="menuitem" class="large-menu-item" fxLayout="row" fxFlexAlign="center center"                     [routerLink]="profileRouterLink" routerLinkActive="active-tree-node">                    <mat-icon class="margin-auto" fxFlex>face</mat-icon>                    <div class="large-menu-item" fxLayout="column" fxFlexAlign="start center" fxFlex>                        <span *ngIf="!user.isImpersonating()" class="large-menu-item-text"                              fxFlex="50">{{ user.fullName }}</span>                        <span *ngIf="user.isImpersonating()" class="large-menu-item-text"                              fxFlex="50">{{ user.fullName }} ({{ user.getSelfOrImpersonated().fullName }})</span>                        <span class="large-menu-item-text" style="font-size: 12px;" fxFlex="50">{{ user.email }}</span>                    </div>                </div>                <button *ngIf="includeImpersonation && !user.isImpersonating()" mat-menu-item (click)="impersonate()">                    <mat-icon>supervisor_account</mat-icon>                    <span>{{ \'side-menu.impersonation.submit\' | translate }}</span>                </button>                <button *ngIf="includeImpersonation && user.isImpersonating()" mat-menu-item                        (click)="stopImpersonating()">                    <mat-icon>clear</mat-icon>                    <span>{{ \'side-menu.impersonation.cease\' | translate }}</span>                </button>                <button mat-menu-item (click)="logout()">                    <mat-icon>exit_to_app</mat-icon>                    <span>{{ \'toolbar.menu.logout\' | translate }}</span>                </button>            </mat-menu>            <button *ngIf="includeUser" mat-icon-button [matMenuTriggerFor]="userRailMenu"                    class="menu-button mat-typography menu-font-color"                    [matTooltip]="user.fullName"                    [matTooltipPosition]="\'right\'">                <mat-icon>account_circle</mat-icon>            </button>            <div *ngIf="includeLanguage" fxLayout="row" class="icon-container">                <button mat-icon-button class="menu-button mat-typography menu-font-color">                    <nc-language-selector fxLayout="row"></nc-language-selector>                </button>            </div>            <mat-menu #railMenu="matMenu">                <button *ngFor=\'let item of hiddenCustomItems; trackBy: itemsTrackBy\' mat-menu-item                        [routerLink]=\'item.routing.path\' routerLinkActive="active-tree-node">                    <mat-icon>{{ item.navigation.icon }}</mat-icon>                    <span>{{ item.navigation.title }}</span>                </button>            </mat-menu>            <!--            <div fxLayout="row" class="margin-bottom-x2 icon-container" matTooltip="Otvoriť menu"-->            <!--                 matTooltipPosition="right"-->            <!--                 fxLayoutAlign="center center">-->            <!--                <button mat-icon-button [matMenuTriggerFor]="railMenu">-->            <!--                    <mat-icon class="icon-large sidemenu-icon">more_vert</mat-icon>-->            <!--                </button>-->            <!--            </div>-->            <button mat-icon-button *ngIf="hiddenCustomItems && hiddenCustomItems.length > 0"                    [matMenuTriggerFor]="railMenu"                    class="menu-button mat-typography menu-font-color"                    [matTooltip]="\'toolbar.menu.open\' | translate"                    matTooltipPosition="right">                <mat-icon>more_vert</mat-icon>            </button>            <div class="margin-top-x2"></div>        </div>    </mat-sidenav>    <mat-sidenav-content class="first-content index-menu">        <mat-sidenav-container class="drawer-container" (backdropClick)="toggleLeftMenu()">            <mat-sidenav [mode]="configRightMenu.mode" [(opened)]="configRightMenu.opened" position="start"                         [disableClose]="configRightMenu.disableClose"                         class="drawer-content"                         mwlResizable                         [style.width.px]="configRightMenu.width"                         [resizeCursorPrecision]="20"                         [resizeEdges]="{right: true}"                         (resizing)="onResizeEvent($event)">                <div *ngTemplateOutlet="portalRightMenu || defaultRightSide"></div>            </mat-sidenav>            <mat-sidenav-content class="content-color">                <ng-content></ng-content>            </mat-sidenav-content>        </mat-sidenav-container>    </mat-sidenav-content></mat-sidenav-container><ng-template #defaultLeftSide>    <div class="height-60 border-bottom" fxLayoutAlign="center center" fxHide.lt-md>        <button mat-icon-button (click)="toggleRightMenu()" class="menu-button mat-typography menu-font-color">            <mat-icon>menu</mat-icon>        </button>    </div>    <button mat-icon-button (click)="onHomeClick()"            class="menu-button mat-typography menu-font-color margin-top-default"            [matTooltip]="\'toolbar.menu.home\' | translate"            matTooltipPosition="right">        <mat-icon>home</mat-icon>    </button>    <button *ngIf=\'!isOnZeroLevel() && (canGoBackLoading$ | async) === false\' mat-icon-button (click)="onBackClick()"            class="menu-button mat-typography menu-font-color" [matTooltip]="\'toolbar.menu.back\' | translate"            matTooltipPosition="right">        <mat-icon>arrow_back</mat-icon>    </button>    <div *ngIf="(canGoBackLoading$ | async)" fxLayout="column" fxLayoutAlign="center center" class="margin-top-default">        <mat-spinner color="primary" diameter="30" mode="indeterminate"></mat-spinner>    </div>    <div class="margin-top-x2"></div>    <button *ngFor=\'let folder of leftItems; trackBy: itemsTrackBy\' mat-icon-button (click)="onItemClick(folder)"            class="menu-button mat-typography menu-font-color" [matTooltip]="folder.navigation.title"            [matTooltipPosition]="\'right\'"            [ngClass]="isItemAndNodeEqual(folder, currentNode) ? \'rail-selected-color\' : \'menu-font-color\'"            [routerLink]=\'folder.routing.path\'            routerLinkActive="active">        <mat-icon>{{ folder.navigation.icon }}</mat-icon>    </button>    <div *ngIf="(leftLoading$ | async)" fxLayout="column" fxLayoutAlign="center center" class="margin-top-default">        <mat-spinner color="primary" diameter="30" mode="indeterminate"></mat-spinner>    </div></ng-template><ng-template #defaultRightSide>    <div class="logo border-bottom" fxLayoutAlign="center center" fxHide.lt-md>        <img *ngIf="image !== undefined" [alt]="imageAlt" [src]="image" class="logoimg"             [routerLink]="imageRouterLink !== undefined ? imageRouterLink : []">    </div>    <div *ngIf="(rightLoading$ | async) === false">        <div fxLayout="column" fxLayoutAlign="end end" class="order-icon-wrapper">            <button mat-icon-button fxLayout="column" fxLayoutAlign="center center"                    class="mat-button mat-typography menu-font-color order-icon" (click)="switchOrder()"                    [matTooltip]="isAscending() ? (\'dynamicNavigation.ascending\' | translate) : (\'dynamicNavigation.descending\' | translate)">                <mat-icon>{{ isAscending() ? "expand_more" : "expand_less" }}</mat-icon>            </button>        </div>        <div *ngFor=\'let item of rightItems; trackBy: itemsTrackBy\' (click)="onItemClick(item)"             class="tree-node mat-typography mat-body-2" fxLayoutAlign="start center" [routerLink]=\'item.routing.path\'             routerLinkActive="active-tree-node">            <mat-icon class="tree-node-icon">{{ item.navigation.icon }}</mat-icon>            <span>{{ item.navigation.title }}</span>            <span class="menu-item-focus-overlay"></span>        </div>        <div *ngIf="moreItems.length > 0">            <button mat-button color="primary"                    (click)="loadMoreItems()">{{ \'dynamicNavigation.loadMoreItems\' | translate }}            </button>        </div>    </div>    <div *ngIf="(rightLoading$ | async)" fxLayout="column" fxLayoutAlign="center center" class="margin-top-default">        <mat-spinner color="primary" diameter="40" mode="indeterminate"></mat-spinner>    </div></ng-template></div>'
-    var COMPONENTS = [{'name': 'AddChildNodeComponent', 'selector': 'nc-add-child-node'},{'name': 'AdminImpersonateComponent', 'selector': 'nc-admin-impersonate'},{'name': 'AdminImpersonateDialogComponent', 'selector': 'nc-admin-impersonate-dialog'},{'name': 'AdminImpersonateItemComponent', 'selector': 'nc-admin-impersonate-item'},{'name': 'AdminImpersonateListComponent', 'selector': 'nc-admin-impersonate-list'},{'name': 'AdvancedSearchComponent', 'selector': 'nc-advanced-search'},{'name': 'AuthenticationOverlayComponent', 'selector': 'nc-authentication-overlay'},{'name': 'BarchartCardComponent', 'selector': 'nc-barchart-card'},{'name': 'BooleanDefaultFieldComponent', 'selector': 'nc-boolean-default-field'},{'name': 'BooleanFieldComponent', 'selector': 'nc-boolean-field'},{'name': 'BreadcrumbsComponent', 'selector': 'nc-breadcrumbs'},{'name': 'ButtonDefaultFieldComponent', 'selector': 'nc-button-default-field'},{'name': 'ButtonFieldComponent', 'selector': 'nc-button-field'},{'name': 'CaseListComponent', 'selector': 'nc-case-list'},{'name': 'CaseListPaginatorComponent', 'selector': 'nc-case-list-paginator'},{'name': 'CasePanelComponent', 'selector': 'nc-case-panel'},{'name': 'CaseRefDefaultComponent', 'selector': 'nc-case-ref-default'},{'name': 'CaseSearchComponent', 'selector': 'nc-case-search'},{'name': 'ChangePasswordFormComponent', 'selector': 'nc-change-password-form'},{'name': 'CountCardComponent', 'selector': 'nc-count-card'},{'name': 'CreateCaseButtonComponent', 'selector': 'nc-create-case-button'},{'name': 'DashboardBarChartTextFieldComponent', 'selector': 'nc-dashboard-bar-chart-text-field'},{'name': 'DashboardContentComponent', 'selector': 'nc-dashboard-content'},{'name': 'DashboardIframeTextFieldComponent', 'selector': 'nc-dashboard-iframe-text-field'},{'name': 'DashboardLineChartTextFieldComponent', 'selector': 'nc-dashboard-line-chart-text-field'},{'name': 'DashboardPieChartTextFieldComponent', 'selector': 'nc-dashboard-pie-chart-text-field'},{'name': 'DashboardPortalTextFieldComponent', 'selector': 'nc-dashboard-portal-text-field'},{'name': 'DataFieldTemplateComponent', 'selector': 'nc-data-field-template'},{'name': 'DateDefaultFieldComponent', 'selector': 'nc-date-default-field'},{'name': 'DateFieldComponent', 'selector': 'nc-date-field'},{'name': 'DateTimeDefaultFieldComponent', 'selector': 'nc-date-time-default-field'},{'name': 'DateTimeFieldComponent', 'selector': 'nc-date-time-field'},{'name': 'DefaultCaseRefListViewComponent', 'selector': 'nc-default-case-view'},{'name': 'DefaultNoFilterProvidedComponent', 'selector': 'nc-default-no-filter-provided'},{'name': 'DefaultSimpleTaskViewComponent', 'selector': 'nc-default-simple-task-view'},{'name': 'DefaultTabbedCaseViewComponent', 'selector': 'nc-default-tabbed-case-view'},{'name': 'DefaultTabbedTaskViewComponent', 'selector': 'nc-default-tabbed-task-view'},{'name': 'DefaultTabViewComponent', 'selector': 'nc-default-tab-view'},{'name': 'DefaultTaskViewComponent', 'selector': 'nc-default-task-view'},{'name': 'EasymdeWrapperComponent', 'selector': 'nc-easymde-wrapper'},{'name': 'EditModeComponent', 'selector': 'nc-edit-mode'},{'name': 'EmailSubmissionFormComponent', 'selector': 'nc-email-submission-form'},{'name': 'EnumerationAutocompleteDynamicFieldComponent', 'selector': 'nc-enumeration-autocomplete-dynamic-field'},{'name': 'EnumerationAutocompleteSelectFieldComponent', 'selector': 'nc-enumeration-autocomplete-select-field'},{'name': 'EnumerationCaserefFieldComponent', 'selector': 'nc-enumeration-caseref-field'},{'name': 'EnumerationFieldComponent', 'selector': 'nc-enumeration-field'},{'name': 'EnumerationIconFieldComponent', 'selector': 'nc-enumeration-icon-field'},{'name': 'EnumerationListFieldComponent', 'selector': 'nc-enumeration-list-field'},{'name': 'EnumerationSelectFieldComponent', 'selector': 'nc-enumeration-select-field'},{'name': 'EnumerationStepperFieldComponent', 'selector': 'nc-enumeration-stepper-field'},{'name': 'FieldComponentResolverComponent', 'selector': 'nc-field-component-resolver'},{'name': 'FileDefaultFieldComponent', 'selector': 'nc-file-default-field'},{'name': 'FileFieldComponent', 'selector': 'nc-file-field'},{'name': 'FileListDefaultFieldComponent', 'selector': 'nc-file-list-default-field'},{'name': 'FileListFieldComponent', 'selector': 'nc-file-list-field'},{'name': 'FilterDefaultFieldComponent', 'selector': 'nc-filter-default-field'},{'name': 'FilterFieldComponent', 'selector': 'nc-filter-field'},{'name': 'FilterFieldContentComponent', 'selector': 'nc-filter-field-content'},{'name': 'FilterFieldTabbedCaseViewComponent', 'selector': 'nc-filter-field-tabbed-case-view'},{'name': 'FilterFieldTabbedTaskViewComponent', 'selector': 'nc-filter-field-tabbed-task-view'},{'name': 'FilterFieldTabViewComponent', 'selector': 'nc-filter-field-tab-view'},{'name': 'FilterFieldTabViewContentComponent', 'selector': 'nc-filter-field-tab-view-content'},{'name': 'FilterSelectorComponent', 'selector': 'nc-filter-selector'},{'name': 'FilterSelectorDialogComponent', 'selector': 'nc-filter-selector-dialog'},{'name': 'ForgottenPasswordFormComponent', 'selector': 'nc-forgotten-password-form'},{'name': 'FulltextSearchComponent', 'selector': 'nc-fulltext-search'},{'name': 'GroupNavigationComponentResolverComponent', 'selector': 'nc-group-navigation-component-resolver'},{'name': 'HeaderComponent', 'selector': 'nc-header'},{'name': 'HtmlTextareaFieldComponent', 'selector': 'nc-html-textarea-field'},{'name': 'I18nDividerFieldComponent', 'selector': 'nc-i18n-divider-field'},{'name': 'I18nFieldComponent', 'selector': 'nc-i18n-field'},{'name': 'I18nTextFieldComponent', 'selector': 'nc-i18n-text-field'},{'name': 'IframeCardComponent', 'selector': 'nc-iframe-card'},{'name': 'ImmediateFilterTextComponent', 'selector': 'nc-immediate-filter-text'},{'name': 'ImmediateFilterTextContentComponent', 'selector': 'nc-immediate-filter-text-content'},{'name': 'ImpersonateQuickPanelComponent', 'selector': 'nc-impersonate-quick-panel'},{'name': 'ImportNetComponent', 'selector': 'nc-import-net'},{'name': 'ImportNetDialogComponent', 'selector': 'nc-import-net-dialog'},{'name': 'InternalLinkComponent', 'selector': 'nc-internal-link'},{'name': 'LanguageSelectorComponent', 'selector': 'nc-language-selector'},{'name': 'LdapGroupRoleAssignmentComponent', 'selector': 'nc-ldap-group-role-assignment'},{'name': 'LegalNoticeComponent', 'selector': 'nc-legal-notice'},{'name': 'LinearGaugeCardComponent', 'selector': 'nc-linear-gauge-card'},{'name': 'LineChartCardComponent', 'selector': 'nc-line-chart-card'},{'name': 'LoadFilterComponent', 'selector': 'nc-load-filter'},{'name': 'LoadFilterDialogComponent', 'selector': 'nc-load-filter-dialog'},{'name': 'LoadingModeComponent', 'selector': 'nc-loading-mode'},{'name': 'LoginFormComponent', 'selector': 'nc-login-form'},{'name': 'LogoutShortcutComponent', 'selector': 'nc-logout-shortcut'},{'name': 'MultichoiceAutocompleteFieldComponent', 'selector': 'nc-multichoice-autocomplete-field'},{'name': 'MultichoiceCaserefFieldComponent', 'selector': 'nc-multichoice-caseref-field'},{'name': 'MultichoiceFieldComponent', 'selector': 'nc-multichoice-field'},{'name': 'MultichoiceListFieldComponent', 'selector': 'nc-multichoice-list-field'},{'name': 'MultichoiceSelectFieldComponent', 'selector': 'nc-multichoice-select-field'},{'name': 'MultiUserAssignComponent', 'selector': 'nc-multi-user-assign'},{'name': 'MultiUserAssignDialogComponent', 'selector': 'nc-multi-user-assign-dialog'},{'name': 'MultiUserAssignItemComponent', 'selector': 'nc-multi-user-assign-item'},{'name': 'MultiUserAssignListComponent', 'selector': 'nc-multi-user-assign-list'},{'name': 'NavigationDoubleDrawerComponent', 'selector': 'nc-navigation-double-drawer'},{'name': 'NavigationDrawerComponent', 'selector': 'nc-navigation-drawer'},{'name': 'NavigationRailComponent', 'selector': 'nc-navigation-rail'},{'name': 'NavigationTreeComponent', 'selector': 'nc-navigation-tree'},{'name': 'NewCaseComponent', 'selector': 'nc-new-case'},{'name': 'NewCaseDialogComponent', 'selector': 'nc-new-case-dialog'},{'name': 'NumberCurrencyFieldComponent', 'selector': 'nc-number-currency-field'},{'name': 'NumberDecimalFieldComponent', 'selector': 'nc-number-decimal-field'},{'name': 'NumberDefaultFieldComponent', 'selector': 'nc-number-default-field'},{'name': 'NumberFieldComponent', 'selector': 'nc-number-field'},{'name': 'OptionSelectorComponent', 'selector': 'nc-option-selector'},{'name': 'PanelComponent', 'selector': 'nc-app-panel'},{'name': 'PanelItemComponent', 'selector': 'nc-panel-item'},{'name': 'PasswordTextFieldComponent', 'selector': 'nc-password-text-field'},{'name': 'PieChartCardComponent', 'selector': 'nc-pie-chart-card'},{'name': 'PopupSessionIdleComponent', 'selector': 'nc-popup-session-idle'},{'name': 'PortalCardComponent', 'selector': 'nc-portal-card'},{'name': 'PreviewDialogComponent', 'selector': 'nc-preview-dialog'},{'name': 'ProfileComponent', 'selector': 'nc-user-profile'},{'name': 'PublicWorkflowPanelComponent', 'selector': 'nc-public-workflow-panel'},{'name': 'QuickPanelComponent', 'selector': 'nc-quick-panel'},{'name': 'RedirectComponent', 'selector': 'nc-redirect'},{'name': 'RegistrationFormComponent', 'selector': 'nc-registration-form'},{'name': 'RemoveNodeComponent', 'selector': 'nc-remove-node'},{'name': 'RequiredLabelComponent', 'selector': 'nc-required-label'},{'name': 'RichTextareaFieldComponent', 'selector': 'nc-rich-textarea-field'},{'name': 'RoleAssignmentComponent', 'selector': 'nc-role-assignment'},{'name': 'SaveFilterComponent', 'selector': 'nc-save-filter'},{'name': 'SaveFilterDialogComponent', 'selector': 'nc-save-filter-dialog'},{'name': 'SearchClauseComponent', 'selector': 'nc-search-clause'},{'name': 'SearchComponent', 'selector': 'nc-search'},{'name': 'SearchConfigurationInputComponent', 'selector': 'nc-search-configuration-input'},{'name': 'SearchModeComponent', 'selector': 'nc-search-mode'},{'name': 'SearchOperandInputComponent', 'selector': 'nc-search-operand-input'},{'name': 'SearchPredicateComponent', 'selector': 'nc-search-predicate'},{'name': 'SessionIdleComponent', 'selector': 'nc-session-idle'},{'name': 'SideMenuContainerComponent', 'selector': 'nc-side-menu-container'},{'name': 'SignaturePadFieldComponent', 'selector': 'nc-signature-pad-field'},{'name': 'SimpleTextFieldComponent', 'selector': 'nc-simple-text-field'},{'name': 'SingleTaskComponent', 'selector': 'nc-single-task'},{'name': 'SortModeComponent', 'selector': 'nc-sort-mode'},{'name': 'StringCollectionDefaultFieldComponent', 'selector': 'nc-string-collection-default-field'},{'name': 'TabViewComponent', 'selector': 'nc-tab-view'},{'name': 'TaskContentComponent', 'selector': 'nc-task-content'},{'name': 'TaskListComponent', 'selector': 'nc-task-list'},{'name': 'TaskListPaginationComponent', 'selector': 'nc-task-list-pagination'},{'name': 'TaskPanelComponent', 'selector': 'nc-task-panel'},{'name': 'TaskRefDashboardFieldComponent', 'selector': 'nc-task-ref-dashboard-field'},{'name': 'TaskRefDashboardTileComponent', 'selector': 'nc-task-ref-dashboard-tile'},{'name': 'TaskRefFieldComponent', 'selector': 'nc-task-ref-field'},{'name': 'TaskRefListFieldComponent', 'selector': 'nc-task-ref-list-field'},{'name': 'TaskSearchComponent', 'selector': 'nc-task-search'},{'name': 'TaskViewDialogComponent', 'selector': 'nc-task-view-dialog'},{'name': 'TextareaFieldComponent', 'selector': 'nc-textarea-field'},{'name': 'TextFieldComponent', 'selector': 'nc-text-field'},{'name': 'ToolbarComponent', 'selector': 'nc-toolbar'},{'name': 'TreeComponent', 'selector': 'nc-tree-component'},{'name': 'TreeTaskContentComponent', 'selector': 'nc-tree-task-content'},{'name': 'UserAssignComponent', 'selector': 'nc-user-assign'},{'name': 'UserAssignDialogComponent', 'selector': 'nc-user-assign-dialog'},{'name': 'UserAssignItemComponent', 'selector': 'nc-user-assign-item'},{'name': 'UserAssignListComponent', 'selector': 'nc-user-assign-list'},{'name': 'UserCardComponent', 'selector': 'nc-user-card'},{'name': 'UserDefaultFieldComponent', 'selector': 'nc-user-default-field'},{'name': 'UserFieldComponent', 'selector': 'nc-user-field'},{'name': 'UserImpersonateComponent', 'selector': 'nc-user-impersonate'},{'name': 'UserImpersonateDialogComponent', 'selector': 'nc-user-impersonate-dialog'},{'name': 'UserInviteComponent', 'selector': 'nc-user-invite'},{'name': 'UserListDefaultFieldComponent', 'selector': 'nc-user-list-default-field'},{'name': 'UserListFieldComponent', 'selector': 'nc-user-list-field'},{'name': 'WorkflowPanelComponent', 'selector': 'nc-workflow-panel'},{'name': 'WorkflowViewComponent', 'selector': 'nc-workflow-view'}];
+        var COMPONENT_TEMPLATE = '<div><div class="drawer-control rail-color height-48" [ngClass]="{\'index-menu\': !configLeftMenu.opened}"     fxLayoutAlign="center center" fxHide.lt-md>    <button mat-icon-button (click)="toggleMenu()" class="menu-button mat-typography menu-font-color">        <mat-icon>menu</mat-icon>    </button></div><mat-toolbar fxHide.gt-sm class="toolbar">    <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between stretch">        <div fxFlex fxLayoutAlign="start center">            <button mat-icon-button (click)="toggleMenu()">                <mat-icon>menu</mat-icon>            </button>        </div>        <div fxLayoutAlign="center center" fxFlex>            <img #logo [alt]="imageAlt" [src]="image" class="logoimg-tool"                 [routerLink]="imageRouterLink !== undefined ? imageRouterLink : []">        </div>        <div fxFlex></div>    </mat-toolbar-row></mat-toolbar><mat-spinner *ngIf="!logo"></mat-spinner><mat-sidenav-container class="rail-container deny-select">    <mat-sidenav mode="side" [(opened)]="configLeftMenu.opened" position="start"                 [disableClose]="configLeftMenu.disableClose"                 class="rail-content">        <div fxLayout="column" class="rail-color" fxFlex>            <div *ngTemplateOutlet="portalLeftMenu || defaultLeftSide"></div>            <div class="margin-top-x2"></div>            <div fxFlex></div>            <mat-menu #userRailMenu="matMenu">                <div mat-menu-item role="menuitem" class="large-menu-item" fxLayout="row" fxFlexAlign="center center"                     [routerLink]="profileRouterLink" routerLinkActive="active-tree-node">                    <mat-icon class="user-menu-icon">face</mat-icon>                    <div class="large-menu-item user-menu-text" fxLayout="column" fxFlexAlign="start center" fxFlex>                        <span *ngIf="!user.isImpersonating()" class="large-menu-item-text text-ellipsis"                              fxFlex="50" [matTooltip]="user.fullName">{{ user.fullName }}</span>                        <span *ngIf="user.isImpersonating()" class="large-menu-item-text text-ellipsis"                              fxFlex="50"                              [matTooltip]="user.fullName + \' (\' + user.getSelfOrImpersonated().fullName + \')\'">{{ user.fullName }} ({{ user.getSelfOrImpersonated().fullName }})</span>                        <span class="large-menu-item-text text-ellipsis" style="font-size: 12px;" fxFlex="50"                              [matTooltip]="user.email">{{ user.email }}</span>                    </div>                </div>                <button *ngIf="includeImpersonation && !user.isImpersonating()" mat-menu-item (click)="impersonate()">                    <mat-icon>supervisor_account</mat-icon>                    <span>{{ \'side-menu.impersonation.submit\' | translate }}</span>                </button>                <button *ngIf="includeImpersonation && user.isImpersonating()" mat-menu-item                        (click)="stopImpersonating()">                    <mat-icon>clear</mat-icon>                    <span>{{ \'side-menu.impersonation.cease\' | translate }}</span>                </button>                <button mat-menu-item (click)="logout()">                    <mat-icon>exit_to_app</mat-icon>                    <span>{{ \'toolbar.menu.logout\' | translate }}</span>                </button>            </mat-menu>            <button *ngIf="includeUser" mat-icon-button [matMenuTriggerFor]="userRailMenu"                    class="menu-button mat-typography menu-font-color"                    [matTooltip]="user.fullName"                    [matTooltipPosition]="\'right\'">                <mat-icon>account_circle</mat-icon>            </button>            <div *ngIf="includeLanguage" [ngClass]="{\'margin-bottom-x2 menu-button\': !(hiddenCustomItems?.length > 0)}" fxLayout="row" class="icon-container padding-2px">                <nc-language-selector fxLayout="row" ></nc-language-selector>            </div>            <mat-menu #railMenu="matMenu">                <button *ngFor=\'let item of hiddenCustomItems$ | async; trackBy: itemsTrackBy\' mat-menu-item                        [routerLink]=\'item.routing.path\' routerLinkActive="active-tree-node">                    <mat-icon>{{ item.navigation.icon }}</mat-icon>                    <span>{{ item.navigation.title }}</span>                </button>                <div *ngIf="canEditMenu()">                    <button mat-menu-item *ngIf="!editModeEnabled" (click)="setMenuEditMode(true)">                        <mat-icon color="primary">edit</mat-icon>                        {{ \'dynamicNavigation.editModeOn\' | translate }}                    </button>                    <button mat-menu-item *ngIf="editModeEnabled" (click)="setMenuEditMode(false)">                        <mat-icon color="primary">edit</mat-icon>                        {{ \'dynamicNavigation.editModeOff\' | translate }}                    </button>                </div>            </mat-menu>            <!--            <div fxLayout="row" class="margin-bottom-x2 icon-container" matTooltip="Otvoriť menu"-->            <!--                 matTooltipPosition="right"-->            <!--                 fxLayoutAlign="center center">-->            <!--                <button mat-icon-button [matMenuTriggerFor]="railMenu">-->            <!--                    <mat-icon class="icon-large sidemenu-icon">more_vert</mat-icon>-->            <!--                </button>-->            <!--            </div>-->            <button mat-icon-button *ngIf="(hiddenCustomItems && hiddenCustomItems.length > 0) || canEditMenu()"                    [matMenuTriggerFor]="railMenu"                    class="menu-button mat-typography menu-font-color margin-bottom-x2"                    [matTooltip]="\'toolbar.menu.open\' | translate"                    matTooltipPosition="right">                <mat-icon>more_vert</mat-icon>            </button>        </div>    </mat-sidenav>    <mat-sidenav-content class="first-content index-menu">        <mat-sidenav-container class="drawer-container" (backdropClick)="toggleLeftMenu()">            <mat-sidenav [mode]="configRightMenu.mode" [(opened)]="configRightMenu.opened" position="start"                         [disableClose]="configRightMenu.disableClose"                         class="drawer-content"                         mwlResizable                         (resizing)="onResizeEvent($event)"                         [style.width.px]="configRightMenu.width">                <div *ngTemplateOutlet="portalRightMenu || defaultRightSide"></div>            </mat-sidenav>            <mat-sidenav-content class="content-color">                <ng-content></ng-content>            </mat-sidenav-content>        </mat-sidenav-container>    </mat-sidenav-content></mat-sidenav-container><ng-template #defaultLeftSide>    <div class="height-48 border-bottom" fxLayoutAlign="center center" fxHide.lt-md>        <button mat-icon-button (click)="toggleRightMenu()" class="menu-button mat-typography menu-font-color">            <mat-icon>menu</mat-icon>        </button>    </div>    <button mat-icon-button (click)="onHomeClick()"            class="menu-button mat-typography menu-font-color margin-top-default"            [matTooltip]="\'toolbar.menu.home\' | translate"            matTooltipPosition="right">        <mat-icon>home</mat-icon>    </button>    <button *ngIf=\'!isOnZeroLevel() && (canGoBackLoading$ | async) === false\' mat-icon-button (click)="onBackClick()"            class="menu-button mat-typography menu-font-color" [matTooltip]="\'toolbar.menu.back\' | translate"            matTooltipPosition="right">        <mat-icon>arrow_back</mat-icon>    </button>    <div *ngIf="(canGoBackLoading$ | async)" fxLayout="column" fxLayoutAlign="center center" class="margin-top-default">        <mat-spinner color="primary" diameter="30" mode="indeterminate"></mat-spinner>    </div>    <div class="margin-top-x2"></div>    <button *ngFor=\'let folder of leftItems$ | async; trackBy: itemsTrackBy\' mat-icon-button (click)="onItemClick(folder)"            class="menu-button mat-typography" [matTooltip]="folder.navigation.title"            [matTooltipPosition]="\'right\'"            [ngClass]="isParentOfActiveView(folder) ? \'active-tree-node\'                       : (isItemAndNodeEqual(folder, currentNode) ? \'rail-selected-color\' : \'menu-font-color\')"            [routerLink]=\'folder.routing.path\'            routerLinkActive="active">        <mat-icon>{{ folder.navigation.icon }}</mat-icon>    </button>    <div *ngIf="(leftLoading$ | async)" fxLayout="column" fxLayoutAlign="center center" class="margin-top-default">        <mat-spinner color="primary" diameter="30" mode="indeterminate"></mat-spinner>    </div></ng-template><ng-template #defaultRightSide>    <div class="logo border-bottom" fxLayoutAlign="center center" fxHide.lt-md>        <img *ngIf="image !== undefined" [alt]="imageAlt" [src]="image" class="logoimg"             [routerLink]="imageRouterLink !== undefined ? imageRouterLink : []">    </div>    <div *ngIf="(rightLoading$ | async) === false" class="margin-top-default"><!--        <div fxLayout="column" fxLayoutAlign="end end" class="order-icon-wrapper">--><!--            <button mat-icon-button fxLayout="column" fxLayoutAlign="center center"--><!--                    class="mat-button mat-typography menu-font-color order-icon" (click)="switchOrder()"--><!--                    [matTooltip]="isAscending() ? (\'dynamicNavigation.ascending\' | translate) : (\'dynamicNavigation.descending\' | translate)">--><!--                <mat-icon>{{ isAscending() ? "expand_more" : "expand_less" }}</mat-icon>--><!--            </button>--><!--        </div>-->        <div *ngFor=\'let item of rightItems$ | async; trackBy: itemsTrackBy\' fxLayoutAlign="start center"             [ngClass]="{\'menu-tree-node\': !editModeEnabled}">            <div (click)="onItemClick(item)"                 class="tree-node width-menu mat-typography mat-body-2" fxLayoutAlign="start center"  [routerLink]=\'item.routing.path\'                 routerLinkActive="active-tree-node">                <mat-icon class="tree-node-icon">{{ item.navigation.icon }}</mat-icon>                <span class="tree-node-title" [matTooltip]="item.navigation.title" matTooltipShowDelay="500">{{ item.navigation.title }}</span>                <span class="menu-item-focus-overlay"></span>            </div>            <button mat-icon-button *ngIf="editModeEnabled" class="cursor-pointer" [matTooltip]="\'dynamicNavigation.editMenuItem\' | translate" matTooltipPosition="right" (click)="editMenuItem(item.resource)" fxLayoutAlign="end">                <mat-icon>edit</mat-icon>            </button>        </div>        <div *ngIf="moreItems.length > 0">            <button mat-button color="primary"                    (click)="loadMoreItems()">{{ \'dynamicNavigation.loadMoreItems\' | translate }}            </button>        </div>        <div *ngIf="editModeEnabled" class="tree-node mat-typography mat-body-2" fxLayoutAlign="start center" (click)="createMenuItem()">            <mat-icon class="tree-node-icon">add</mat-icon>            <span>{{ \'dynamicNavigation.createMenuItemBtn\' | translate }}</span>            <span class="menu-item-focus-overlay"></span>        </div>    </div>    <div *ngIf="(rightLoading$ | async)" fxLayout="column" fxLayoutAlign="center center" class="margin-top-default">        <mat-spinner color="primary" diameter="40" mode="indeterminate"></mat-spinner>    </div></ng-template></div>'
+    var COMPONENTS = [{'name': 'AbstractMasterComponent', 'selector': 'nc-builder-abstract-master-component'},{'name': 'ActionDetailComponent', 'selector': 'nc-builder-action-detail'},{'name': 'ActionEditorComponent', 'selector': 'nc-builder-action-editor'},{'name': 'ActionEditorListComponent', 'selector': 'nc-builder-action-editor-list'},{'name': 'ActionEditorMenuComponent', 'selector': 'nc-builder-action-editor-menu'},{'name': 'ActionEditorMenuDescriptionComponent', 'selector': 'nc-builder-action-editor-menu-description'},{'name': 'ActionEditorMenuItemComponent', 'selector': 'nc-builder-action-editor-menu-item'},{'name': 'ActionMasterComponent', 'selector': 'nc-builder-action-master'},{'name': 'ActionMasterItemComponent', 'selector': 'nc-builder-action-master-item'},{'name': 'ActionsModeComponent', 'selector': 'nc-builder-actions-mode'},{'name': 'AddChildNodeComponent', 'selector': 'nc-add-child-node'},{'name': 'AdminImpersonateComponent', 'selector': 'nc-admin-impersonate'},{'name': 'AdminImpersonateDialogComponent', 'selector': 'nc-admin-impersonate-dialog'},{'name': 'AdminImpersonateItemComponent', 'selector': 'nc-admin-impersonate-item'},{'name': 'AdminImpersonateListComponent', 'selector': 'nc-admin-impersonate-list'},{'name': 'AdvancedSearchComponent', 'selector': 'nc-advanced-search'},{'name': 'AuthenticationOverlayComponent', 'selector': 'nc-authentication-overlay'},{'name': 'BarchartCardComponent', 'selector': 'nc-barchart-card'},{'name': 'BooleanDefaultFieldComponent', 'selector': 'nc-boolean-default-field'},{'name': 'BooleanFieldComponent', 'selector': 'nc-boolean-field'},{'name': 'BreadcrumbsComponent', 'selector': 'nc-breadcrumbs'},{'name': 'BuilderComponent', 'selector': 'nc-builder'},{'name': 'ButtonDefaultFieldComponent', 'selector': 'nc-button-default-field'},{'name': 'ButtonFieldComponent', 'selector': 'nc-button-field'},{'name': 'CaseListComponent', 'selector': 'nc-case-list'},{'name': 'CaseListPaginatorComponent', 'selector': 'nc-case-list-paginator'},{'name': 'CasePanelComponent', 'selector': 'nc-case-panel'},{'name': 'CaseRefDefaultComponent', 'selector': 'nc-case-ref-default'},{'name': 'CaseSearchComponent', 'selector': 'nc-case-search'},{'name': 'ChangePasswordFormComponent', 'selector': 'nc-change-password-form'},{'name': 'ContextMenuComponent', 'selector': 'nc-builder-context-menu'},{'name': 'ControlPanelComponent', 'selector': 'nc-builder-control-panel'},{'name': 'CountCardComponent', 'selector': 'nc-count-card'},{'name': 'CreateCaseButtonComponent', 'selector': 'nc-create-case-button'},{'name': 'DashboardBarChartTextFieldComponent', 'selector': 'nc-dashboard-bar-chart-text-field'},{'name': 'DashboardComponent', 'selector': 'nc-dashboard'},{'name': 'DashboardContentComponent', 'selector': 'nc-dashboard-content'},{'name': 'DashboardIframeTextFieldComponent', 'selector': 'nc-dashboard-iframe-text-field'},{'name': 'DashboardLineChartTextFieldComponent', 'selector': 'nc-dashboard-line-chart-text-field'},{'name': 'DashboardPieChartTextFieldComponent', 'selector': 'nc-dashboard-pie-chart-text-field'},{'name': 'DashboardPortalTextFieldComponent', 'selector': 'nc-dashboard-portal-text-field'},{'name': 'DataDetailComponent', 'selector': 'nc-builder-data-detail'},{'name': 'DataFieldTemplateComponent', 'selector': 'nc-data-field-template'},{'name': 'DataMasterItemComponent', 'selector': 'nc-builder-data-master-item'},{'name': 'DataModeComponent', 'selector': 'nc-builder-data-mode'},{'name': 'DataTranslationComponent', 'selector': 'nc-builder-data-translation'},{'name': 'DateDefaultFieldComponent', 'selector': 'nc-date-default-field'},{'name': 'DateFieldComponent', 'selector': 'nc-date-field'},{'name': 'DateTimeDefaultFieldComponent', 'selector': 'nc-date-time-default-field'},{'name': 'DateTimeFieldComponent', 'selector': 'nc-date-time-field'},{'name': 'DefaultCaseRefListViewComponent', 'selector': 'nc-default-case-view'},{'name': 'DefaultNoFilterProvidedComponent', 'selector': 'nc-default-no-filter-provided'},{'name': 'DefaultPublicResolverComponent', 'selector': 'nc-default-public-resolver'},{'name': 'DefaultPublicSingleTaskViewComponent', 'selector': 'nc-default-public-single-task-view'},{'name': 'DefaultPublicTaskViewComponent', 'selector': 'nc-default-public-task-view'},{'name': 'DefaultPublicWorkflowViewComponent', 'selector': 'nc-default-public-workflow-view'},{'name': 'DefaultSimpleCaseViewComponent', 'selector': 'nc-default-simple-case-view'},{'name': 'DefaultSimpleTaskViewComponent', 'selector': 'nc-default-simple-task-view'},{'name': 'DefaultSingleTaskViewComponent', 'selector': 'nc-default-single-task-view'},{'name': 'DefaultTabbedCaseViewComponent', 'selector': 'nc-default-tabbed-case-view'},{'name': 'DefaultTabbedSingleTaskViewComponent', 'selector': 'nc-default-tabbed-single-task-view'},{'name': 'DefaultTabbedTaskViewComponent', 'selector': 'nc-default-tabbed-task-view'},{'name': 'DefaultTabViewComponent', 'selector': 'nc-default-tab-view'},{'name': 'DefaultTaskViewComponent', 'selector': 'nc-default-task-view'},{'name': 'DefaultTicketViewComponent', 'selector': 'nc-default-ticket-view'},{'name': 'DialogArcEditComponent', 'selector': 'nc-builder-dialog-arc-edit'},{'name': 'DialogChangeDataComponent', 'selector': 'nc-builder-dialog-change-data'},{'name': 'DialogDeadNetComponent', 'selector': 'nc-builder-dialog-dead-net'},{'name': 'DialogDeleteComponent', 'selector': 'nc-builder-dialog-delete'},{'name': 'DialogDeleteModelComponent', 'selector': 'nc-builder-dialog-delete-model'},{'name': 'DialogErrorsComponent', 'selector': 'nc-builder-dialog-errors'},{'name': 'DialogLocalStorageModelComponent', 'selector': 'nc-builder-dialog-local-storage-model'},{'name': 'DialogManageRolesComponent', 'selector': 'nc-builder-dialog-manage-roles'},{'name': 'DialogMarkingChangeComponent', 'selector': 'nc-builder-dialog-marking-change'},{'name': 'DialogModelEditComponent', 'selector': 'nc-builder-dialog-model-edit'},{'name': 'DialogPlaceEditComponent', 'selector': 'nc-builder-dialog-place-edit'},{'name': 'DialogPlaceRefDeleteComponent', 'selector': 'nc-builder-dialog-place-ref-delete'},{'name': 'DialogRefactorComponent', 'selector': 'nc-builder-dialog-refactor'},{'name': 'DialogTransitionEditComponent', 'selector': 'nc-builder-dialog-transition-edit'},{'name': 'EasymdeWrapperComponent', 'selector': 'nc-easymde-wrapper'},{'name': 'EditModeComponent', 'selector': 'nc-builder-edit-mode'},{'name': 'EditModeComponent', 'selector': 'nc-edit-mode'},{'name': 'EditPanelComponent', 'selector': 'nc-builder-edit-panel'},{'name': 'EmailSubmissionFormComponent', 'selector': 'nc-email-submission-form'},{'name': 'EnumerationAutocompleteDynamicFieldComponent', 'selector': 'nc-enumeration-autocomplete-dynamic-field'},{'name': 'EnumerationAutocompleteSelectFieldComponent', 'selector': 'nc-enumeration-autocomplete-select-field'},{'name': 'EnumerationCaserefFieldComponent', 'selector': 'nc-enumeration-caseref-field'},{'name': 'EnumerationFieldComponent', 'selector': 'nc-enumeration-field'},{'name': 'EnumerationIconFieldComponent', 'selector': 'nc-enumeration-icon-field'},{'name': 'EnumerationListFieldComponent', 'selector': 'nc-enumeration-list-field'},{'name': 'EnumerationSelectFieldComponent', 'selector': 'nc-enumeration-select-field'},{'name': 'EnumerationStepperFieldComponent', 'selector': 'nc-enumeration-stepper-field'},{'name': 'FieldComponentResolverComponent', 'selector': 'nc-field-component-resolver'},{'name': 'FieldListComponent', 'selector': 'nc-builder-field-list'},{'name': 'FileDefaultFieldComponent', 'selector': 'nc-file-default-field'},{'name': 'FileFieldComponent', 'selector': 'nc-file-field'},{'name': 'FileListDefaultFieldComponent', 'selector': 'nc-file-list-default-field'},{'name': 'FileListFieldComponent', 'selector': 'nc-file-list-field'},{'name': 'FileToolComponent', 'selector': 'nc-builder-file-tool'},{'name': 'FilterDefaultFieldComponent', 'selector': 'nc-filter-default-field'},{'name': 'FilterFieldComponent', 'selector': 'nc-filter-field'},{'name': 'FilterFieldContentComponent', 'selector': 'nc-filter-field-content'},{'name': 'FilterFieldTabbedCaseViewComponent', 'selector': 'nc-filter-field-tabbed-case-view'},{'name': 'FilterFieldTabbedTaskViewComponent', 'selector': 'nc-filter-field-tabbed-task-view'},{'name': 'FilterFieldTabViewComponent', 'selector': 'nc-filter-field-tab-view'},{'name': 'FilterFieldTabViewContentComponent', 'selector': 'nc-filter-field-tab-view-content'},{'name': 'FilterSelectorComponent', 'selector': 'nc-filter-selector'},{'name': 'FilterSelectorDialogComponent', 'selector': 'nc-filter-selector-dialog'},{'name': 'FilterStringQueryFieldComponent', 'selector': 'nc-filter-string-query-field'},{'name': 'FlagComponent', 'selector': 'nc-builder-flag'},{'name': 'ForgottenPasswordFormComponent', 'selector': 'nc-forgotten-password-form'},{'name': 'FormBuilderComponent', 'selector': 'nc-builder-form-builder'},{'name': 'FulltextSearchComponent', 'selector': 'nc-fulltext-search'},{'name': 'FunctionEditorComponent', 'selector': 'nc-builder-function-editor'},{'name': 'FunctionMasterItemComponent', 'selector': 'nc-builder-function-master-item'},{'name': 'GridsterComponent', 'selector': 'nc-builder-gridster-component'},{'name': 'GridsterDataFieldComponent', 'selector': 'nc-builder-gridster-datafield'},{'name': 'GroupNavigationComponentResolverComponent', 'selector': 'nc-group-navigation-component-resolver'},{'name': 'HeaderComponent', 'selector': 'nc-header'},{'name': 'HistoryDetailComponent', 'selector': 'nc-builder-history-detail'},{'name': 'HistoryMasterItemComponent', 'selector': 'nc-builder-history-master-item'},{'name': 'HistoryModeComponent', 'selector': 'nc-builder-history-mode'},{'name': 'HtmlTextareaFieldComponent', 'selector': 'nc-html-textarea-field'},{'name': 'I18nDividerFieldComponent', 'selector': 'nc-i18n-divider-field'},{'name': 'I18nFieldComponent', 'selector': 'nc-i18n-field'},{'name': 'I18nFieldComponent', 'selector': 'nc-builder-i18n-field'},{'name': 'I18nModeComponent', 'selector': 'nc-builder-i18n-mode'},{'name': 'I18nTextFieldComponent', 'selector': 'nc-i18n-text-field'},{'name': 'IframeCardComponent', 'selector': 'nc-iframe-card'},{'name': 'ImmediateFilterTextComponent', 'selector': 'nc-immediate-filter-text'},{'name': 'ImmediateFilterTextContentComponent', 'selector': 'nc-immediate-filter-text-content'},{'name': 'ImpersonateQuickPanelComponent', 'selector': 'nc-impersonate-quick-panel'},{'name': 'ImportNetComponent', 'selector': 'nc-import-net'},{'name': 'ImportNetDialogComponent', 'selector': 'nc-import-net-dialog'},{'name': 'ImportSuccessfulComponent', 'selector': 'nc-builder-import-successful'},{'name': 'ImportToolButtonComponent', 'selector': 'nc-builder-import-tool-button'},{'name': 'InfoLabelComponent', 'selector': 'nc-builder-info-label'},{'name': 'InternalLinkComponent', 'selector': 'nc-internal-link'},{'name': 'LanguagesComponent', 'selector': 'nc-builder-languages'},{'name': 'LanguageSelectorComponent', 'selector': 'nc-language-selector'},{'name': 'LdapGroupRoleAssignmentComponent', 'selector': 'nc-ldap-group-role-assignment'},{'name': 'LegalNoticeComponent', 'selector': 'nc-legal-notice'},{'name': 'LinearGaugeCardComponent', 'selector': 'nc-linear-gauge-card'},{'name': 'LineChartCardComponent', 'selector': 'nc-line-chart-card'},{'name': 'LoadingModeComponent', 'selector': 'nc-loading-mode'},{'name': 'LoginFormComponent', 'selector': 'nc-login-form'},{'name': 'LogoutShortcutComponent', 'selector': 'nc-logout-shortcut'},{'name': 'MainMasterComponent', 'selector': 'nc-builder-main-master'},{'name': 'MainMasterItemComponent', 'selector': 'nc-builder-main-master-item'},{'name': 'MasterDetailComponent', 'selector': 'nc-builder-master-detail'},{'name': 'MaterialIconPickerComponent', 'selector': 'nc-builder-material-icon-picker'},{'name': 'ModeComponent', 'selector': 'nc-builder-control-panel-mode'},{'name': 'ModelerComponent', 'selector': 'nc-builder-modeler'},{'name': 'ModelTranslationComponent', 'selector': 'nc-builder-model-translation'},{'name': 'MultichoiceAutocompleteFieldComponent', 'selector': 'nc-multichoice-autocomplete-field'},{'name': 'MultichoiceCaserefFieldComponent', 'selector': 'nc-multichoice-caseref-field'},{'name': 'MultichoiceFieldComponent', 'selector': 'nc-multichoice-field'},{'name': 'MultichoiceListFieldComponent', 'selector': 'nc-multichoice-list-field'},{'name': 'MultichoiceSelectFieldComponent', 'selector': 'nc-multichoice-select-field'},{'name': 'MultiUserAssignComponent', 'selector': 'nc-multi-user-assign'},{'name': 'MultiUserAssignDialogComponent', 'selector': 'nc-multi-user-assign-dialog'},{'name': 'MultiUserAssignItemComponent', 'selector': 'nc-multi-user-assign-item'},{'name': 'MultiUserAssignListComponent', 'selector': 'nc-multi-user-assign-list'},{'name': 'NavigationDoubleDrawerComponent', 'selector': 'nc-navigation-double-drawer'},{'name': 'NavigationDrawerComponent', 'selector': 'nc-navigation-drawer'},{'name': 'NavigationRailComponent', 'selector': 'nc-navigation-rail'},{'name': 'NavigationTreeComponent', 'selector': 'nc-navigation-tree'},{'name': 'NewCaseComponent', 'selector': 'nc-new-case'},{'name': 'NewCaseDialogComponent', 'selector': 'nc-new-case-dialog'},{'name': 'NumberCurrencyFieldComponent', 'selector': 'nc-number-currency-field'},{'name': 'NumberDecimalFieldComponent', 'selector': 'nc-number-decimal-field'},{'name': 'NumberDefaultFieldComponent', 'selector': 'nc-number-default-field'},{'name': 'NumberFieldComponent', 'selector': 'nc-number-field'},{'name': 'OptionSelectorComponent', 'selector': 'nc-option-selector'},{'name': 'PageMasterComponent', 'selector': 'nc-builder-abstract-page-master-component'},{'name': 'PanelComponent', 'selector': 'nc-app-panel'},{'name': 'PanelItemComponent', 'selector': 'nc-panel-item'},{'name': 'PasswordTextFieldComponent', 'selector': 'nc-password-text-field'},{'name': 'PieChartCardComponent', 'selector': 'nc-pie-chart-card'},{'name': 'PopupSessionIdleComponent', 'selector': 'nc-popup-session-idle'},{'name': 'PortalCardComponent', 'selector': 'nc-portal-card'},{'name': 'PreviewDialogComponent', 'selector': 'nc-preview-dialog'},{'name': 'ProcessRefDefaultComponent', 'selector': 'nc-process-ref-default'},{'name': 'ProfileComponent', 'selector': 'nc-user-profile'},{'name': 'ProgressComponent', 'selector': 'nc-builder-progress'},{'name': 'PublicWorkflowPanelComponent', 'selector': 'nc-public-workflow-panel'},{'name': 'QuickPanelComponent', 'selector': 'nc-quick-panel'},{'name': 'RedirectComponent', 'selector': 'nc-redirect'},{'name': 'RegistrationFormComponent', 'selector': 'nc-registration-form'},{'name': 'RemoveNodeComponent', 'selector': 'nc-remove-node'},{'name': 'RequiredLabelComponent', 'selector': 'nc-required-label'},{'name': 'RichTextareaFieldComponent', 'selector': 'nc-rich-textarea-field'},{'name': 'RoleAssignmentComponent', 'selector': 'nc-role-assignment'},{'name': 'RoleDetailComponent', 'selector': 'nc-builder-role-detail'},{'name': 'RoleMasterItemComponent', 'selector': 'nc-builder-role-master-item'},{'name': 'RoleModeComponent', 'selector': 'nc-builder-role-mode'},{'name': 'RoleTranslationComponent', 'selector': 'nc-builder-role-translation'},{'name': 'SearchClauseComponent', 'selector': 'nc-search-clause'},{'name': 'SearchComponent', 'selector': 'nc-search'},{'name': 'SearchConfigurationInputComponent', 'selector': 'nc-search-configuration-input'},{'name': 'SearchModeComponent', 'selector': 'nc-search-mode'},{'name': 'SearchOperandInputComponent', 'selector': 'nc-search-operand-input'},{'name': 'SearchPredicateComponent', 'selector': 'nc-search-predicate'},{'name': 'SessionIdleComponent', 'selector': 'nc-session-idle'},{'name': 'SideMenuContainerComponent', 'selector': 'nc-side-menu-container'},{'name': 'SignaturePadFieldComponent', 'selector': 'nc-signature-pad-field'},{'name': 'SimpleTextFieldComponent', 'selector': 'nc-simple-text-field'},{'name': 'SimulationModeComponent', 'selector': 'nc-builder-simulation-mode'},{'name': 'SingleTaskComponent', 'selector': 'nc-single-task'},{'name': 'SingleTaskViewDialogComponent', 'selector': 'nc-single-task-view-dialog'},{'name': 'SortModeComponent', 'selector': 'nc-sort-mode'},{'name': 'StringCollectionDefaultFieldComponent', 'selector': 'nc-string-collection-default-field'},{'name': 'TabViewComponent', 'selector': 'nc-tab-view'},{'name': 'TaskContentComponent', 'selector': 'nc-task-content'},{'name': 'TaskListComponent', 'selector': 'nc-task-list'},{'name': 'TaskListPaginationComponent', 'selector': 'nc-task-list-pagination'},{'name': 'TaskModeComponent', 'selector': 'nc-builder-task-mode'},{'name': 'TaskPanelComponent', 'selector': 'nc-task-panel'},{'name': 'TaskRefDashboardFieldComponent', 'selector': 'nc-task-ref-dashboard-field'},{'name': 'TaskRefDashboardTileComponent', 'selector': 'nc-task-ref-dashboard-tile'},{'name': 'TaskRefFieldComponent', 'selector': 'nc-task-ref-field'},{'name': 'TaskRefInitFieldComponent', 'selector': 'nc-builder-task-ref-init-field'},{'name': 'TaskRefListFieldComponent', 'selector': 'nc-task-ref-list-field'},{'name': 'TaskSearchComponent', 'selector': 'nc-task-search'},{'name': 'TaskTranslationComponent', 'selector': 'nc-builder-task-translation'},{'name': 'TaskViewDialogComponent', 'selector': 'nc-task-view-dialog'},{'name': 'TextareaFieldComponent', 'selector': 'nc-textarea-field'},{'name': 'TextFieldComponent', 'selector': 'nc-text-field'},{'name': 'ToolbarComponent', 'selector': 'nc-toolbar'},{'name': 'ToolComponent', 'selector': 'nc-builder-tool'},{'name': 'TranslationsComponent', 'selector': 'nc-builder-translations'},{'name': 'TreeComponent', 'selector': 'nc-tree-component'},{'name': 'TreeTaskContentComponent', 'selector': 'nc-tree-task-content'},{'name': 'TriggerTreeComponent', 'selector': 'nc-builder-trigger-tree'},{'name': 'UserAssignComponent', 'selector': 'nc-user-assign'},{'name': 'UserAssignDialogComponent', 'selector': 'nc-user-assign-dialog'},{'name': 'UserAssignItemComponent', 'selector': 'nc-user-assign-item'},{'name': 'UserAssignListComponent', 'selector': 'nc-user-assign-list'},{'name': 'UserCardComponent', 'selector': 'nc-user-card'},{'name': 'UserDefaultFieldComponent', 'selector': 'nc-user-default-field'},{'name': 'UserFieldComponent', 'selector': 'nc-user-field'},{'name': 'UserImpersonateComponent', 'selector': 'nc-user-impersonate'},{'name': 'UserImpersonateDialogComponent', 'selector': 'nc-user-impersonate-dialog'},{'name': 'UserInviteComponent', 'selector': 'nc-user-invite'},{'name': 'UserListDefaultFieldComponent', 'selector': 'nc-user-list-default-field'},{'name': 'UserListFieldComponent', 'selector': 'nc-user-list-field'},{'name': 'WorkflowPanelComponent', 'selector': 'nc-workflow-panel'},{'name': 'WorkflowViewComponent', 'selector': 'nc-workflow-view'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'NavigationDoubleDrawerComponent'};
 </script>
@@ -1099,14 +1307,16 @@ export class NavigationDoubleDrawerComponent extends AbstractNavigationDoubleDra
 
 
 
-                   
+
+
+
 
 
 
 
                    </div><div class="search-results">
     <div class="has-results">
-        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
         <ul class="search-results-list"></ul>
     </div>
     <div class="no-results">
@@ -1118,6 +1328,15 @@ export class NavigationDoubleDrawerComponent extends AbstractNavigationDoubleDra
            </div>
        </div>
 
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
@@ -1125,10 +1344,23 @@ export class NavigationDoubleDrawerComponent extends AbstractNavigationDoubleDra
             var MAX_SEARCH_RESULTS = 15;
        </script>
 
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
        <script src="../js/libs/custom-elements.min.js"></script>
        <script src="../js/libs/lit-html.js"></script>
-       
-       <script type="module" src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/menu-wc.js" defer></script>
        <script nomodule src="../js/menu-wc_es5.js" defer></script>
 
        <script src="../js/libs/bootstrap-native.js"></script>

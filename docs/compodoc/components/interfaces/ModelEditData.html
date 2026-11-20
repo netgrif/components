@@ -1,0 +1,463 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Netgrif Components library Documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">Netgrif Components library Documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content interface">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Interfaces</li>
+  <li class="breadcrumb-item"
+  >
+  ModelEditData</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" 
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" 
+                class="nav-link"
+                
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>projects/netgrif-components/src/lib/builder/dialogs/dialog-model-edit/dialog-model-edit.component.ts</code>
+        </p>
+
+
+
+
+        <section data-compodoc="block-index">
+            <h3 id="index">Index</h3>
+            <table class="table table-sm table-bordered index-table">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <h6><b>Properties</b></h6>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <ul class="index-list">
+                                <li>
+                                        <a href="#context" 
+>
+                                            context
+                                        </a>
+                                </li>
+                                <li>
+                                        <a href="#model" 
+>
+                                            model
+                                        </a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+
+
+            <section data-compodoc="block-properties">
+                <h3 id="inputs">Properties</h3>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="context"></a>
+                                        <span class="name "><b>context</b>
+                                            <a href="#context">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>context:         <code><a href="../classes/CanvasToolContext.html" target="_self" >CanvasToolContext</a></code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>        <code><a href="../classes/CanvasToolContext.html" target="_self" >CanvasToolContext</a></code>
+
+                                        </td>
+                                    </tr>
+
+
+
+
+
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="model"></a>
+                                        <span class="name "><b>model</b>
+                                            <a href="#model">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>model:         <code><a href="../classes/ModelChange.html" target="_self" >ModelChange</a></code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>        <code><a href="../classes/ModelChange.html" target="_self" >ModelChange</a></code>
+
+                                        </td>
+                                    </tr>
+
+
+
+
+
+                        </tbody>
+                    </table>
+            </section>
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Component, Inject} from &#x27;@angular/core&#x27;;
+import {FormControl, ValidatorFn, Validators} from &#x27;@angular/forms&#x27;;
+import {MAT_DIALOG_DATA, MatDialog} from &#x27;@angular/material/dialog&#x27;;
+import {DataType} from &#x27;@netgrif/petriflow&#x27;;
+import {ActionsModeService} from &#x27;../../modeler/actions-mode/actions-mode.service&#x27;;
+import {ProcessActionsTool} from &#x27;../../modeler/actions-mode/tools/process-actions-tool&#x27;;
+import {ModelChange} from &#x27;../../modeler/history-mode/model/model/model-change&#x27;;
+import {ModelService} from &#x27;../../modeler/services/model/model.service&#x27;;
+import {DialogManageRolesComponent, RoleRefType} from &#x27;../dialog-manage-roles/dialog-manage-roles.component&#x27;;
+import {BuilderModeService, BuilderMode} from &quot;../../services/builder-mode.service&quot;;
+import {HistoryService} from &quot;../../modeler/services/history/history.service&quot;;
+import {CanvasToolContext} from &quot;../../modeler/edit-mode/services/modes/canvas-tool-context&quot;;
+import {LocalStorageService} from &#x27;../../services/local-storage.service&#x27;;
+
+export interface ModelEditData {
+    model: ModelChange;
+    context: CanvasToolContext
+}
+
+@Component({
+    selector: &#x27;nc-builder-dialog-model-edit&#x27;,
+    templateUrl: &#x27;./dialog-model-edit.component.html&#x27;,
+    styleUrls: [&#x27;./dialog-model-edit.component.scss&#x27;]
+})
+export class DialogModelEditComponent {
+
+    public model: ModelChange;
+    public idCtrl: FormControl;
+    public versionCtrl: FormControl;
+    public titleCtrl: FormControl;
+    public initialsCtrl: FormControl;
+    protected counterTags &#x3D; 0;
+
+    public modelService: ModelService;
+    private _actionMode: ActionsModeService;
+    private _processTool: ProcessActionsTool;
+    protected _builderModeService: BuilderModeService;
+    private historyService: HistoryService;
+    private _localStorageService: LocalStorageService;
+
+    constructor(
+        @Inject(MAT_DIALOG_DATA) public data: ModelEditData,
+        private dialog: MatDialog,
+    ) {
+        this.model &#x3D; data.model;
+        this.modelService &#x3D; data.context.modelService;
+        this._actionMode &#x3D; data.context.actionMode;
+        this._processTool &#x3D; data.context.processTool;
+        this._builderModeService &#x3D; data.context.builderModeService;
+        this.historyService &#x3D; data.context.editModeService.historyService;
+        this._localStorageService &#x3D; data.context.localStorageService;
+
+        this.idCtrl &#x3D; new FormControl(&#x27;&#x27;, [Validators.required]);
+        this.versionCtrl &#x3D; new FormControl(&#x27;&#x27;, [
+            // Validators.required,
+            this.validVersion()
+        ]);
+        this.titleCtrl &#x3D; new FormControl(&#x27;&#x27;, [Validators.required]);
+        this.initialsCtrl &#x3D; new FormControl(&#x27;&#x27;, [Validators.required]);
+
+        if (this._builderModeService.readOnly) {
+            this.idCtrl.disable();
+            this.versionCtrl.disable();
+            this.titleCtrl.disable();
+            this.initialsCtrl.disable();
+        } else {
+            this.idCtrl.enable();
+            this.versionCtrl.enable();
+            this.titleCtrl.enable();
+            this.initialsCtrl.enable();
+        }
+    }
+
+    openPermissions() {
+        this.dialog.open(DialogManageRolesComponent, {
+            width: &#x27;60%&#x27;,
+            panelClass: &quot;dialog-width-60&quot;,
+            data: {
+                type: RoleRefType.PROCESS,
+                roles: this.modelService.model.getRoles(),
+                processRolesRefs: this.modelService.model.getRoleRefs(),
+                processUserRefs: this.modelService.model.getUserRefs(),
+                userLists: this.modelService.model.getDataSet().filter(item &#x3D;&gt; item.type &#x3D;&#x3D;&#x3D; DataType.USER_LIST),
+                modelService: this.modelService,
+                historyService: this.historyService,
+                localStorageService: this._localStorageService,
+                builderModeService: this._builderModeService
+            }
+        });
+    }
+
+    openActions() {
+        this._actionMode.activate(this._processTool);
+        this._builderModeService.mode &#x3D; BuilderMode.ACTION_MODE;
+    }
+
+    private validVersion(): ValidatorFn {
+        return (fc: FormControl): { [key: string]: any } | null &#x3D;&gt; {
+            const version &#x3D; fc.value as string;
+            if (!version || version.length &#x3D;&#x3D;&#x3D; 0) {
+                return null;
+            }
+            if (version.match(/^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)$/)) {
+                return null;
+            }
+            return ({format: true})
+        };
+    }
+
+    getTags() {
+        return Array.from(this.model.model.tags, ([key, value]) &#x3D;&gt; ({ key, value }));
+    }
+
+    addTag() {
+        this.model.model.tags.set(this.createKeyId() , &#x27;value&#x27;);
+    }
+
+    deleteTag(key: string) {
+        this.model.model.tags.delete(key);
+    }
+
+    setKey($event, key: string) {
+        const value &#x3D; this.model.model.tags.get(key);
+        this.model.model.tags.delete(key);
+        this.model.model.tags.set($event.target.value, value);
+    }
+
+    setValue($event, key: string) {
+        this.model.model.tags.set(key, $event.target.value);
+    }
+
+    trackByFn(index: any, item: any) {
+        return index + item.key;
+    }
+
+    createKeyId(): string {
+        this.counterTags++;
+        if (this.model.model.tags.has(&#x27;key&#x27; + this.counterTags)) {
+            return this.createKeyId();
+        } else {
+            return &#x27;key&#x27; + String(this.counterTags);
+        }
+    }
+}
+</code></pre>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'interface';
+            var COMPODOC_CURRENT_PAGE_URL = 'ModelEditData.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

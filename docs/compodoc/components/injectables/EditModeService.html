@@ -1,0 +1,3715 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Netgrif Components library Documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">Netgrif Components library Documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content injectable">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Injectables</li>
+  <li class="breadcrumb-item" >EditModeService</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" 
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" 
+                class="nav-link"
+                
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>projects/netgrif-components/src/lib/builder/modeler/edit-mode/edit-mode.service.ts</code>
+        </p>
+
+
+
+            <p class="comment">
+                <h3>Extends</h3>
+            </p>
+            <p class="comment">
+                            <code><a href="../injectables/CanvasModeService.html" target="_self" >CanvasModeService</a></code>
+            </p>
+
+
+            <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#contextMenuItems" >contextMenuItems</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#gridChanged$" >gridChanged$</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#panzoomConfiguration" >panzoomConfiguration</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#switchTools" >switchTools</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#_elements" >_elements</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#_labelText" >_labelText</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#_multiplicityText" >_multiplicityText</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#_tabSubscription" >_tabSubscription</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#activate" >activate</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#copyArc" >copyArc</a>
+                            </li>
+                            <li>
+                                <a href="#copyPlace" >copyPlace</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#copyTransition" >copyTransition</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#createArc" >createArc</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#createArcBreakpoint" >createArcBreakpoint</a>
+                            </li>
+                            <li>
+                                <a href="#createNewRegularPlaceTransitionArc" >createNewRegularPlaceTransitionArc</a>
+                            </li>
+                            <li>
+                                <a href="#createNewRegularTransitionPlaceArc" >createNewRegularTransitionPlaceArc</a>
+                            </li>
+                            <li>
+                                <a href="#createPlace" >createPlace</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#createRectangle" >createRectangle</a>
+                            </li>
+                            <li>
+                                <a href="#createTemporaryArc" >createTemporaryArc</a>
+                            </li>
+                            <li>
+                                <a href="#createTransition" >createTransition</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#initializeTools" >initializeTools</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#moveArcBreakpoint" >moveArcBreakpoint</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#movePlace" >movePlace</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#moveRectangle" >moveRectangle</a>
+                            </li>
+                            <li>
+                                <a href="#moveTemporaryArc" >moveTemporaryArc</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#moveTransition" >moveTransition</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#newSvgArc" >newSvgArc</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#newSvgPlace" >newSvgPlace</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#newSvgTransition" >newSvgTransition</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnDestroy" >ngOnDestroy</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#removeArc" >removeArc</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#removeBreakpoint" >removeBreakpoint</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#removePlace" >removePlace</a>
+                            </li>
+                            <li>
+                                <a href="#removeTemporaryArc" >removeTemporaryArc</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#removeTransition" >removeTransition</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#renderModel" >renderModel</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#updatePlace" >updatePlace</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#updateTransition" >updateTransition</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#reset" >reset</a>
+                            </li>
+                            <li>
+                                <a href="#isActive" >isActive</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <h6><b>Accessors</b></h6>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <ul class="index-list">
+                                <li>
+                                    <a href="#historyService" >historyService</a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+        </tbody>
+    </table>
+</section>
+
+            <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(_arcFactory: <a href="../injectables/ArcFactory.html" target="_self">ArcFactory</a>, modelService: <a href="../injectables/ModelService.html" target="_self">ModelService</a>, _canvasService: PetriflowCanvasService, dialog: MatDialog, router: Router, transitionService: <a href="../injectables/SelectedTransitionService.html" target="_self">SelectedTransitionService</a>, _builderModeService: <a href="../injectables/BuilderModeService.html" target="_self">BuilderModeService</a>, _tutorialService: <a href="../injectables/TutorialService.html" target="_self">TutorialService</a>, _parentInjector: Injector, _historyService: <a href="../injectables/HistoryService.html" target="_self">HistoryService</a>, _actionMode: <a href="../injectables/ActionsModeService.html" target="_self">ActionsModeService</a>, _actionsMasterDetail: <a href="../injectables/ActionsMasterDetailService.html" target="_self">ActionsMasterDetailService</a>, _processActionsTool: <a href="../injectables/ProcessActionsTool.html" target="_self">ProcessActionsTool</a>, _builderIntegrationService: <a href="../injectables/BuilderIntegrationService.html" target="_self">BuilderIntegrationService</a>, _localStorageService: <a href="../injectables/LocalStorageService.html" target="_self">LocalStorageService</a>, _ngZone: NgZone, _translateService: TranslateService, _tabData?: InjectedTabData)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="73" class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/edit-mode/edit-mode.service.ts:73</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>_arcFactory</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/ArcFactory.html" target="_self" >ArcFactory</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>modelService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/ModelService.html" target="_self" >ModelService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_canvasService</td>
+                                                  
+                                                        <td>
+                                                                    <code>PetriflowCanvasService</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>dialog</td>
+                                                  
+                                                        <td>
+                                                                    <code>MatDialog</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>router</td>
+                                                  
+                                                        <td>
+                                                                    <code>Router</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>transitionService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/SelectedTransitionService.html" target="_self" >SelectedTransitionService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_builderModeService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/BuilderModeService.html" target="_self" >BuilderModeService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_tutorialService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/TutorialService.html" target="_self" >TutorialService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_parentInjector</td>
+                                                  
+                                                        <td>
+                                                                    <code>Injector</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_historyService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/HistoryService.html" target="_self" >HistoryService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_actionMode</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/ActionsModeService.html" target="_self" >ActionsModeService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_actionsMasterDetail</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/ActionsMasterDetailService.html" target="_self" >ActionsMasterDetailService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_processActionsTool</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/ProcessActionsTool.html" target="_self" >ProcessActionsTool</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_builderIntegrationService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/BuilderIntegrationService.html" target="_self" >BuilderIntegrationService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_localStorageService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/LocalStorageService.html" target="_self" >LocalStorageService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_ngZone</td>
+                                                  
+                                                        <td>
+                                                                    <code>NgZone</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_translateService</td>
+                                                  
+                                                        <td>
+                                                                    <code>TranslateService</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_tabData</td>
+                                                  
+                                                        <td>
+                                                                    <code>InjectedTabData</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            Yes
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+            <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="activate"></a>
+                    <span class="name">
+                        <span ><b>activate</b></span>
+                        <a href="#activate"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>activate(tool?: <a href="../classes/CanvasTool.html" target="_self">CanvasTool</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Inherited from         <code><a href="../classes/ModeService.html" target="_self" >ModeService</a></code>
+</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in         <code><a href="../classes/ModeService.html#source" target="_self" >ModeService:172</a></code>
+</div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>tool</td>
+                                            <td>
+                                                            <code><a href="../classes/CanvasTool.html" target="_self" >CanvasTool</a></code>
+                                            </td>
+
+                                            <td>
+                                                    Yes
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="copyArc"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>copyArc</b></span>
+                        <a href="#copyArc"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>copyArc(copy: <a href="../classes/CanvasArc.html" target="_self">CanvasArc</a>, sourceId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, destinationId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="296"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/edit-mode/edit-mode.service.ts:296</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>copy</td>
+                                            <td>
+                                                            <code><a href="../classes/CanvasArc.html" target="_self" >CanvasArc</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>sourceId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>destinationId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../classes/CanvasArc.html" target="_self" >CanvasArc</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="copyPlace"></a>
+                    <span class="name">
+                        <span ><b>copyPlace</b></span>
+                        <a href="#copyPlace"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>copyPlace(copy: <a href="../classes/CanvasPlace.html" target="_self">CanvasPlace</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="196"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/edit-mode/edit-mode.service.ts:196</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>copy</td>
+                                            <td>
+                                                            <code><a href="../classes/CanvasPlace.html" target="_self" >CanvasPlace</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../classes/CanvasPlace.html" target="_self" >CanvasPlace</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="copyTransition"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>copyTransition</b></span>
+                        <a href="#copyTransition"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>copyTransition(copy: <a href="../classes/CanvasTransition.html" target="_self">CanvasTransition</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="247"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/edit-mode/edit-mode.service.ts:247</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>copy</td>
+                                            <td>
+                                                            <code><a href="../classes/CanvasTransition.html" target="_self" >CanvasTransition</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../classes/CanvasTransition.html" target="_self" >CanvasTransition</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createArc"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>createArc</b></span>
+                        <a href="#createArc"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>createArc(source: NodeElement, destination: NodeElement, type: <a href="../undefineds/Type.html" target="_self">ArcType</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="291"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/edit-mode/edit-mode.service.ts:291</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>source</td>
+                                            <td>
+                                                        <code>NodeElement</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>destination</td>
+                                            <td>
+                                                        <code>NodeElement</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>type</td>
+                                            <td>
+                                                            <code><a href="../miscellaneous/enumerations.html#Type" target="_self" >ArcType</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../classes/CanvasArc.html" target="_self" >CanvasArc</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createArcBreakpoint"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>createArcBreakpoint</b></span>
+                        <a href="#createArcBreakpoint"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>createArcBreakpoint(arc: <a href="../classes/CanvasArc.html" target="_self">CanvasArc</a>, point: DOMPoint, index: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="307"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/edit-mode/edit-mode.service.ts:307</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>arc</td>
+                                            <td>
+                                                            <code><a href="../classes/CanvasArc.html" target="_self" >CanvasArc</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>point</td>
+                                            <td>
+                                                        <code>DOMPoint</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>index</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createNewRegularPlaceTransitionArc"></a>
+                    <span class="name">
+                        <span ><b>createNewRegularPlaceTransitionArc</b></span>
+                        <a href="#createNewRegularPlaceTransitionArc"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>createNewRegularPlaceTransitionArc(source: <a href="../classes/CanvasPlace.html" target="_self">CanvasPlace</a>, destination: <a href="../classes/CanvasTransition.html" target="_self">CanvasTransition</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="346"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/edit-mode/edit-mode.service.ts:346</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>source</td>
+                                            <td>
+                                                            <code><a href="../classes/CanvasPlace.html" target="_self" >CanvasPlace</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>destination</td>
+                                            <td>
+                                                            <code><a href="../classes/CanvasTransition.html" target="_self" >CanvasTransition</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../classes/CanvasArc.html" target="_self" >CanvasArc</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createNewRegularTransitionPlaceArc"></a>
+                    <span class="name">
+                        <span ><b>createNewRegularTransitionPlaceArc</b></span>
+                        <a href="#createNewRegularTransitionPlaceArc"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>createNewRegularTransitionPlaceArc(source: <a href="../classes/CanvasTransition.html" target="_self">CanvasTransition</a>, destination: <a href="../classes/CanvasPlace.html" target="_self">CanvasPlace</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="351"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/edit-mode/edit-mode.service.ts:351</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>source</td>
+                                            <td>
+                                                            <code><a href="../classes/CanvasTransition.html" target="_self" >CanvasTransition</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>destination</td>
+                                            <td>
+                                                            <code><a href="../classes/CanvasPlace.html" target="_self" >CanvasPlace</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../classes/CanvasArc.html" target="_self" >CanvasArc</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createPlace"></a>
+                    <span class="name">
+                        <span ><b>createPlace</b></span>
+                        <a href="#createPlace"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>createPlace(position: DOMPoint)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="191"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/edit-mode/edit-mode.service.ts:191</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>position</td>
+                                            <td>
+                                                        <code>DOMPoint</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../classes/CanvasPlace.html" target="_self" >CanvasPlace</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createRectangle"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>createRectangle</b></span>
+                        <a href="#createRectangle"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>createRectangle(position: DOMPoint)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="396"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/edit-mode/edit-mode.service.ts:396</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>position</td>
+                                            <td>
+                                                        <code>DOMPoint</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>SVGRectElement</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createTemporaryArc"></a>
+                    <span class="name">
+                        <span ><b>createTemporaryArc</b></span>
+                        <a href="#createTemporaryArc"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>createTemporaryArc(position: DOMPoint, markerId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="367"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/edit-mode/edit-mode.service.ts:367</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>position</td>
+                                            <td>
+                                                        <code>DOMPoint</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>markerId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>SVGElement</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createTransition"></a>
+                    <span class="name">
+                        <span ><b>createTransition</b></span>
+                        <a href="#createTransition"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>createTransition(position: DOMPoint)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="242"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/edit-mode/edit-mode.service.ts:242</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>position</td>
+                                            <td>
+                                                        <code>DOMPoint</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../classes/CanvasTransition.html" target="_self" >CanvasTransition</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="initializeTools"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>initializeTools</b></span>
+                        <a href="#initializeTools"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>initializeTools(context: <a href="../classes/CanvasToolContext.html" target="_self">CanvasToolContext</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="130"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/edit-mode/edit-mode.service.ts:130</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>context</td>
+                                            <td>
+                                                            <code><a href="../classes/CanvasToolContext.html" target="_self" >CanvasToolContext</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="moveArcBreakpoint"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>moveArcBreakpoint</b></span>
+                        <a href="#moveArcBreakpoint"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>moveArcBreakpoint(arc: <a href="../classes/CanvasArc.html" target="_self">CanvasArc</a>, index: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="312"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/edit-mode/edit-mode.service.ts:312</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>arc</td>
+                                            <td>
+                                                            <code><a href="../classes/CanvasArc.html" target="_self" >CanvasArc</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>index</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="movePlace"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>movePlace</b></span>
+                        <a href="#movePlace"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>movePlace(place: <a href="../classes/CanvasPlace.html" target="_self">CanvasPlace</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="226"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/edit-mode/edit-mode.service.ts:226</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>place</td>
+                                            <td>
+                                                            <code><a href="../classes/CanvasPlace.html" target="_self" >CanvasPlace</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="moveRectangle"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>moveRectangle</b></span>
+                        <a href="#moveRectangle"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>moveRectangle(lasso: SVGRectElement, selectionStart: DOMPoint, event: DOMPoint)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="404"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/edit-mode/edit-mode.service.ts:404</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>lasso</td>
+                                            <td>
+                                                        <code>SVGRectElement</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>selectionStart</td>
+                                            <td>
+                                                        <code>DOMPoint</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>event</td>
+                                            <td>
+                                                        <code>DOMPoint</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="moveTemporaryArc"></a>
+                    <span class="name">
+                        <span ><b>moveTemporaryArc</b></span>
+                        <a href="#moveTemporaryArc"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>moveTemporaryArc(arcLine: SVGElement, position: DOMPoint, source: PetriflowNode<any>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="382"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/edit-mode/edit-mode.service.ts:382</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>arcLine</td>
+                                            <td>
+                                                        <code>SVGElement</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>position</td>
+                                            <td>
+                                                        <code>DOMPoint</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>source</td>
+                                            <td>
+                                                        <code>PetriflowNode&lt;any&gt;</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="moveTransition"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>moveTransition</b></span>
+                        <a href="#moveTransition"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>moveTransition(transition: <a href="../classes/CanvasTransition.html" target="_self">CanvasTransition</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="275"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/edit-mode/edit-mode.service.ts:275</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>transition</td>
+                                            <td>
+                                                            <code><a href="../classes/CanvasTransition.html" target="_self" >CanvasTransition</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="newSvgArc"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>newSvgArc</b></span>
+                        <a href="#newSvgArc"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>newSvgArc(modelArc: Arc<any | any>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Inherited from         <code><a href="../injectables/CanvasModeService.html" target="_self" >CanvasModeService</a></code>
+</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in         <code><a href="../injectables/CanvasModeService.html#source" target="_self" >CanvasModeService:301</a></code>
+</div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>modelArc</td>
+                                            <td>
+                                                        <code>Arc&lt;any | any&gt;</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../classes/CanvasArc.html" target="_self" >CanvasArc</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="newSvgPlace"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>newSvgPlace</b></span>
+                        <a href="#newSvgPlace"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>newSvgPlace(modelPlace: Place)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Inherited from         <code><a href="../injectables/CanvasModeService.html" target="_self" >CanvasModeService</a></code>
+</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in         <code><a href="../injectables/CanvasModeService.html#source" target="_self" >CanvasModeService:201</a></code>
+</div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>modelPlace</td>
+                                            <td>
+                                                        <code>Place</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../classes/CanvasPlace.html" target="_self" >CanvasPlace</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="newSvgTransition"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>newSvgTransition</b></span>
+                        <a href="#newSvgTransition"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>newSvgTransition(modelTransition: Transition)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Inherited from         <code><a href="../injectables/CanvasModeService.html" target="_self" >CanvasModeService</a></code>
+</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in         <code><a href="../injectables/CanvasModeService.html#source" target="_self" >CanvasModeService:252</a></code>
+</div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>modelTransition</td>
+                                            <td>
+                                                        <code>Transition</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../classes/CanvasTransition.html" target="_self" >CanvasTransition</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnDestroy"></a>
+                    <span class="name">
+                        <span ><b>ngOnDestroy</b></span>
+                        <a href="#ngOnDestroy"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnDestroy()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Inherited from         <code><a href="../injectables/CanvasModeService.html" target="_self" >CanvasModeService</a></code>
+</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in         <code><a href="../injectables/CanvasModeService.html#source" target="_self" >CanvasModeService:121</a></code>
+</div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="removeArc"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>removeArc</b></span>
+                        <a href="#removeArc"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>removeArc(arc: <a href="../classes/CanvasArc.html" target="_self">CanvasArc</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="356"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/edit-mode/edit-mode.service.ts:356</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>arc</td>
+                                            <td>
+                                                            <code><a href="../classes/CanvasArc.html" target="_self" >CanvasArc</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="removeBreakpoint"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>removeBreakpoint</b></span>
+                        <a href="#removeBreakpoint"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>removeBreakpoint(arc: <a href="../classes/CanvasArc.html" target="_self">CanvasArc</a>, index: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="320"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/edit-mode/edit-mode.service.ts:320</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>arc</td>
+                                            <td>
+                                                            <code><a href="../classes/CanvasArc.html" target="_self" >CanvasArc</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>index</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="removePlace"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>removePlace</b></span>
+                        <a href="#removePlace"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>removePlace(place: <a href="../classes/CanvasPlace.html" target="_self">CanvasPlace</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="231"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/edit-mode/edit-mode.service.ts:231</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>place</td>
+                                            <td>
+                                                            <code><a href="../classes/CanvasPlace.html" target="_self" >CanvasPlace</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="removeTemporaryArc"></a>
+                    <span class="name">
+                        <span ><b>removeTemporaryArc</b></span>
+                        <a href="#removeTemporaryArc"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>removeTemporaryArc(line: SVGElement)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="378"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/edit-mode/edit-mode.service.ts:378</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>line</td>
+                                            <td>
+                                                        <code>SVGElement</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="removeTransition"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>removeTransition</b></span>
+                        <a href="#removeTransition"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>removeTransition(transition: <a href="../classes/CanvasTransition.html" target="_self">CanvasTransition</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="280"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/edit-mode/edit-mode.service.ts:280</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>transition</td>
+                                            <td>
+                                                            <code><a href="../classes/CanvasTransition.html" target="_self" >CanvasTransition</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="renderModel"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>renderModel</b></span>
+                        <a href="#renderModel"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>renderModel()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Inherited from         <code><a href="../injectables/CanvasModeService.html" target="_self" >CanvasModeService</a></code>
+</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in         <code><a href="../injectables/CanvasModeService.html#source" target="_self" >CanvasModeService:184</a></code>
+</div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="updatePlace"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>updatePlace</b></span>
+                        <a href="#updatePlace"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>updatePlace(newPlace: <a href="../classes/PlaceChange.html" target="_self">PlaceChange</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="207"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/edit-mode/edit-mode.service.ts:207</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>newPlace</td>
+                                            <td>
+                                                            <code><a href="../classes/PlaceChange.html" target="_self" >PlaceChange</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="updateTransition"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>updateTransition</b></span>
+                        <a href="#updateTransition"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>updateTransition(newTransition: <a href="../classes/ChangedTransition.html" target="_self">ChangedTransition</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="258"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/edit-mode/edit-mode.service.ts:258</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>newTransition</td>
+                                            <td>
+                                                            <code><a href="../classes/ChangedTransition.html" target="_self" >ChangedTransition</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="reset"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>reset</b></span>
+                        <a href="#reset"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>reset()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Inherited from         <code><a href="../injectables/CanvasModeService.html" target="_self" >CanvasModeService</a></code>
+</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in         <code><a href="../injectables/CanvasModeService.html#source" target="_self" >CanvasModeService:76</a></code>
+</div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isActive"></a>
+                    <span class="name">
+                        <span ><b>isActive</b></span>
+                        <a href="#isActive"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>isActive(tool: T)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Inherited from         <code><a href="../classes/ModeService.html" target="_self" >ModeService</a></code>
+</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in         <code><a href="../classes/ModeService.html#source" target="_self" >ModeService:13</a></code>
+</div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>tool</td>
+                                            <td>
+                                                        <code>T</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+            <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="contextMenuItems"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>contextMenuItems</b></span>
+                        <a href="#contextMenuItems"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../classes/ContextMenu.html" target="_self" >BehaviorSubject&lt;ContextMenu&gt;</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="55" class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/edit-mode/edit-mode.service.ts:55</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="gridChanged$"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>gridChanged$</b></span>
+                        <a href="#gridChanged$"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new Subject&lt;void&gt;()</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="56" class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/edit-mode/edit-mode.service.ts:56</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="panzoomConfiguration"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>panzoomConfiguration</b></span>
+                        <a href="#panzoomConfiguration"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>PanzoomOptions</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{
+        canvas: true,
+        contain: &#x27;outside&#x27;,
+        cursor: &#x27;auto&#x27;,
+        maxScale: 10,
+        minScale: 0.5,
+        step: 0.2,
+        noBind: true
+    }</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="59" class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/edit-mode/edit-mode.service.ts:59</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="switchTools"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>switchTools</b></span>
+                        <a href="#switchTools"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>ToolGroup&lt;CanvasTool&gt;</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="58" class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/edit-mode/edit-mode.service.ts:58</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="_elements"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>_elements</b></span>
+                        <a href="#_elements"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../classes/CanvasElementCollection.html" target="_self" >CanvasElementCollection</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Inherited from         <code><a href="../injectables/CanvasModeService.html" target="_self" >CanvasModeService</a></code>
+</div>
+                            </td>
+                        </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in         <code><a href="../injectables/CanvasModeService.html#source" target="_self" >CanvasModeService:23</a></code>
+</div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="_labelText"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>_labelText</b></span>
+                        <a href="#_labelText"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/function" target="_blank" >function</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Inherited from         <code><a href="../injectables/CanvasModeService.html" target="_self" >CanvasModeService</a></code>
+</div>
+                            </td>
+                        </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in         <code><a href="../injectables/CanvasModeService.html#source" target="_self" >CanvasModeService:24</a></code>
+</div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="_multiplicityText"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>_multiplicityText</b></span>
+                        <a href="#_multiplicityText"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/function" target="_blank" >function</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Inherited from         <code><a href="../injectables/CanvasModeService.html" target="_self" >CanvasModeService</a></code>
+</div>
+                            </td>
+                        </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in         <code><a href="../injectables/CanvasModeService.html#source" target="_self" >CanvasModeService:25</a></code>
+</div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="_tabSubscription"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>_tabSubscription</b></span>
+                        <a href="#_tabSubscription"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>Subscription</code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Inherited from         <code><a href="../injectables/CanvasModeService.html" target="_self" >CanvasModeService</a></code>
+</div>
+                            </td>
+                        </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in         <code><a href="../injectables/CanvasModeService.html#source" target="_self" >CanvasModeService:26</a></code>
+</div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+            <section data-compodoc="block-accessors">
+    <h3 id="accessors">
+        Accessors
+    </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="historyService"></a>
+                        <span class="name"><b>historyService</b><a href="#historyService"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>historyService()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="415" class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/edit-mode/edit-mode.service.ts:415</a></div>
+                                </td>
+                            </tr>
+
+            </tbody>
+        </table>
+</section>
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Injectable, Injector, NgZone, Optional, Inject, OnDestroy} from &#x27;@angular/core&#x27;;
+import {MatDialog} from &#x27;@angular/material/dialog&#x27;;
+import {Router} from &#x27;@angular/router&#x27;;
+import {CanvasConfiguration} from &#x27;@netgrif/petri.svg&#x27;;
+import {Arc, ArcType, NodeElement, Place, Transition} from &#x27;@netgrif/petriflow&#x27;;
+import {PetriflowCanvasService, PetriflowNode} from &#x27;@netgrif/petriflow.svg&#x27;;
+import {InjectedTabData, NAE_TAB_DATA} from &#x27;@netgrif/components-core&#x27;;
+import {PanzoomOptions} from &#x27;@panzoom/panzoom&#x27;;
+import {BehaviorSubject, Subject, Subscription} from &#x27;rxjs&#x27;;
+import {ChangedArc} from &#x27;../../dialogs/dialog-arc-edit/changed-arc&#x27;;
+import {ChangedTransition} from &#x27;../../dialogs/dialog-transition-edit/changed-transition&#x27;;
+import {TutorialService} from &#x27;../../tutorial/tutorial-service&#x27;;
+import {ActionsMasterDetailService} from &#x27;../actions-mode/actions-master-detail.service&#x27;;
+import {ActionsModeService} from &#x27;../actions-mode/actions-mode.service&#x27;;
+import {ControlPanelButton} from &#x27;../control-panel/control-panel-button&#x27;;
+import {ControlPanelIcon} from &#x27;../control-panel/control-panel-icon&#x27;;
+import {Mode} from &#x27;../control-panel/modes/mode&#x27;;
+import {ToolGroup} from &#x27;../control-panel/tools/tool-group&#x27;;
+import {PlaceChange} from &#x27;../history-mode/model/place/place-change&#x27;;
+import {ModelerConfig} from &#x27;../modeler-config&#x27;;
+import {SelectedTransitionService} from &#x27;../selected-transition.service&#x27;;
+import {CanvasModeService} from &#x27;../services/canvas/canvas-mode-service&#x27;;
+import {HistoryService} from &#x27;../services/history/history.service&#x27;;
+import {ModelService} from &#x27;../services/model/model.service&#x27;;
+import {ContextMenu} from &#x27;./context-menu/context-menu&#x27;;
+import {ArcFactory} from &#x27;./domain/arc-builders/arc-factory.service&#x27;;
+import {CanvasArc} from &#x27;./domain/canvas-arc&#x27;;
+import {CanvasPlace} from &#x27;./domain/canvas-place&#x27;;
+import {CanvasTransition} from &#x27;./domain/canvas-transition&#x27;;
+import {AddTokenTool} from &#x27;./services/modes/add-token-tool&#x27;;
+import {CanvasTool} from &#x27;./services/modes/canvas-tool&#x27;;
+import {ClearModelTool} from &#x27;./services/modes/clear-model-tool&#x27;;
+import {CreateInhibitorArcTool} from &#x27;./services/modes/create-inhibitor-arc-tools&#x27;;
+import {CreatePlaceTool} from &#x27;./services/modes/create-place-tool&#x27;;
+import {CreateReadArcTool} from &#x27;./services/modes/create-read-arc-tool&#x27;;
+import {CreateRegularArcTool} from &#x27;./services/modes/create-regular-arc-tool&#x27;;
+import {CreateResetArcTool} from &#x27;./services/modes/create-reset-arc-tool&#x27;;
+import {CreateTransitionTool} from &#x27;./services/modes/create-transition-tool&#x27;;
+import {GridTool} from &#x27;./services/modes/grid-tool&#x27;;
+import {QuickDrawTool} from &#x27;./services/modes/quick-draw-tool&#x27;;
+import {RemoveTokenTool} from &#x27;./services/modes/remove-token-tool&#x27;;
+import {ResetPositionAndZoomTool} from &#x27;./services/modes/reset-position-and-zoom-tool&#x27;;
+import {SelectTool} from &#x27;./services/modes/select-tool&#x27;;
+import {SwitchLabelTool} from &#x27;./services/modes/switch-label-tool&#x27;;
+import {BuilderModeService} from &#x27;../../services/builder-mode.service&#x27;;
+import {CanvasToolContext} from &#x27;./services/modes/canvas-tool-context&#x27;;
+import {ProcessActionsTool} from &quot;../actions-mode/tools/process-actions-tool&quot;;
+import {BuilderIntegrationService} from &quot;../../services/builder-integration.service&quot;;
+import {LocalStorageService} from &#x27;../../services/local-storage.service&#x27;;
+import {TranslateService} from &quot;@ngx-translate/core&quot;;
+
+@Injectable()
+export class EditModeService extends CanvasModeService&lt;CanvasTool&gt; implements OnDestroy {
+
+    public contextMenuItems: BehaviorSubject&lt;ContextMenu&gt;;
+    public gridChanged$ &#x3D; new Subject&lt;void&gt;();
+    // TODO: NAB-326 refactor
+    public switchTools: ToolGroup&lt;CanvasTool&gt;;
+    public panzoomConfiguration: PanzoomOptions &#x3D; {
+        canvas: true,
+        contain: &#x27;outside&#x27;,
+        cursor: &#x27;auto&#x27;,
+        maxScale: 10,
+        minScale: 0.5,
+        step: 0.2,
+        noBind: true
+    };
+
+    private _modelSubscription: Subscription;
+    private _placeSubscription: Subscription;
+    private _transitionSubscription: Subscription;
+    private _arcSubscription: Subscription;
+    private _readOnlySubscription: Subscription;
+
+    constructor(
+        _arcFactory: ArcFactory,
+        modelService: ModelService,
+        _canvasService: PetriflowCanvasService,
+        dialog: MatDialog,
+        router: Router,
+        transitionService: SelectedTransitionService,
+        protected _builderModeService: BuilderModeService,
+        private _tutorialService: TutorialService,
+        private _parentInjector: Injector,
+        private _historyService: HistoryService,
+        protected _actionMode: ActionsModeService,
+        protected _actionsMasterDetail: ActionsMasterDetailService,
+        protected _processActionsTool: ProcessActionsTool,
+        protected _builderIntegrationService: BuilderIntegrationService,
+        protected _localStorageService: LocalStorageService,
+        private _ngZone: NgZone,
+        protected _translateService: TranslateService,
+        @Optional() @Inject(NAE_TAB_DATA) _tabData?: InjectedTabData,
+    ) {
+        super(_arcFactory, modelService, _canvasService, _tabData);
+        this.mode &#x3D; new Mode(
+            &#x27;modeler&#x27;,
+            new ControlPanelButton(
+                new ControlPanelIcon(&#x27;mode_edit_outline&#x27;),
+                _translateService.instant(&#x27;builder.modeler.edit-mode.services.editView&#x27;)
+            ),
+            &#x27;./&#x27;,
+            &#x27;/modeler&#x27;,
+            this._tutorialService.modeler,
+            this._parentInjector
+        );
+        const context &#x3D; new CanvasToolContext(modelService, dialog, this, router, transitionService, _actionMode,
+            _actionsMasterDetail, _builderModeService, _processActionsTool, _builderIntegrationService, this._ngZone,
+            _localStorageService, _translateService);
+        this.initializeTools(context);
+        this._modelSubscription &#x3D; this.modelService.model$().subscribe(_ &#x3D;&gt; this.renderModel());
+        this._placeSubscription &#x3D; this.modelService.placeChange.subscribe(value &#x3D;&gt; this.updatePlace(value));
+        this._transitionSubscription &#x3D; this.modelService.transitionChange.subscribe(value &#x3D;&gt; this.updateTransition(value));
+        this._arcSubscription &#x3D; this.modelService.arcChange.subscribe(arc &#x3D;&gt; this.updateArc(arc));
+        this.canvasService.gridConfiguration.size &#x3D; ModelerConfig.SIZE;
+        CanvasConfiguration.SIZE &#x3D; ModelerConfig.SIZE;
+        this.contextMenuItems &#x3D; new BehaviorSubject&lt;ContextMenu&gt;(undefined);
+        this.switchTools.tools.forEach(t &#x3D;&gt; t.bind());
+    }
+
+    ngOnDestroy(): void {
+        super.ngOnDestroy();
+        this._modelSubscription?.unsubscribe();
+        this._placeSubscription?.unsubscribe();
+        this._transitionSubscription?.unsubscribe();
+        this._arcSubscription?.unsubscribe();
+        this._readOnlySubscription?.unsubscribe();
+    }
+
+    protected initializeTools(context: CanvasToolContext) {
+        this._readOnlySubscription &#x3D; this._builderModeService.readOnly$.subscribe(readOnly &#x3D;&gt; {
+            if (readOnly) {
+                this.switchTools &#x3D; new ToolGroup&lt;CanvasTool&gt;(
+                    new ResetPositionAndZoomTool(context),
+                    new GridTool(context),
+                    new SwitchLabelTool(context)
+                );
+                this.tools &#x3D; [
+                    new ToolGroup&lt;CanvasTool&gt;(
+                        new SelectTool(context),
+                    ),
+                    this.switchTools
+                ];
+            } else {
+                this.switchTools &#x3D; new ToolGroup&lt;CanvasTool&gt;(
+                    new ClearModelTool(context),
+                    new ResetPositionAndZoomTool(context),
+                    new GridTool(context),
+                    new SwitchLabelTool(context)
+                );
+                this.tools &#x3D; [
+                    new ToolGroup&lt;CanvasTool&gt;(
+                        new SelectTool(context),
+                        new QuickDrawTool(context),
+                        new CreateTransitionTool(context),
+                        new CreatePlaceTool(context),
+                        new AddTokenTool(context),
+                        new RemoveTokenTool(context)
+                    ),
+                    new ToolGroup&lt;CanvasTool&gt;(
+                        new CreateRegularArcTool(context),
+                        new CreateResetArcTool(context),
+                        new CreateInhibitorArcTool(context),
+                        new CreateReadArcTool(context)
+                    ),
+                    this.switchTools
+                ];
+            }
+        });
+    }
+
+    activate(tool?: CanvasTool) {
+        if (tool &#x3D;&#x3D;&#x3D; undefined) {
+            tool &#x3D; this.defaultTool;
+        }
+        if (this.switchTools.tools.includes(tool)) {
+            return;
+        }
+        this.activeTool?.unbind();
+        super.activate(tool);
+        this.activeTool.bind();
+    }
+
+    public renderModel(): void {
+        super.renderModel();
+        this.activate();
+    }
+
+    // PLACE
+
+    createPlace(position: DOMPoint): CanvasPlace {
+        const modelPlace &#x3D; this.modelService.newPlace(position.x, position.y);
+        return this.newSvgPlace(modelPlace);
+    }
+
+    copyPlace(copy: CanvasPlace): CanvasPlace {
+        const modelPlace &#x3D; this.modelService.copyPlace(copy.modelPlace);
+        return this.newSvgPlace(modelPlace);
+    }
+
+    public newSvgPlace(modelPlace: Place): CanvasPlace {
+        const canvasPlace &#x3D; super.newSvgPlace(modelPlace);
+        this.activeTool.bindPlace(canvasPlace);
+        return canvasPlace;
+    }
+
+    public updatePlace(newPlace: PlaceChange): void {
+        const canvasPlace &#x3D; this.elements.getPlace(newPlace.originalPlace?.id);
+        if (!canvasPlace) {
+            return;
+        }
+        this.elements.arcs.forEach(arc &#x3D;&gt; arc.svgArc.setMultiplicity(this.multiplicityText(arc)));
+        // TODO: NAB-351 check condition
+        if (!newPlace.place &amp;&amp; newPlace.originalPlace.id) {
+            this.removeSvgPlace(canvasPlace);
+            return;
+        }
+        const place &#x3D; canvasPlace.svgPlace;
+        place.changeId(newPlace.place.id);
+        place.canvasElement.updateMarking(newPlace.place.marking);
+        place.canvasElement.setLabelText(this.labelText(newPlace.place));
+        this.elements.removePlace(newPlace.originalPlace?.id);
+        this.elements.addPlace(canvasPlace);
+    }
+
+    public movePlace(place: CanvasPlace): void {
+        this.modelService.movePlace(place.modelPlace, place.svgPlace.getPosition());
+        place.svgPlace.move(new DOMPoint(place.modelPlace.x, place.modelPlace.y));
+    }
+
+    public removePlace(place: CanvasPlace): void {
+        this.modelService.removePlace(place.modelPlace);
+    }
+
+    private removeSvgPlace(place: CanvasPlace) {
+        this.canvas.removePlace(place.svgPlace.canvasElement);
+        this.elements.removePlace(place.modelPlace.id);
+    }
+
+// TRANSITION
+
+    createTransition(position: DOMPoint): CanvasTransition {
+        const modelTransition &#x3D; this.modelService.newTransition(position.x, position.y);
+        return this.newSvgTransition(modelTransition);
+    }
+
+    public copyTransition(copy: CanvasTransition): CanvasTransition {
+        const modelTransition &#x3D; this.modelService.copyTransition(copy.modelTransition);
+        return this.newSvgTransition(modelTransition);
+    }
+
+    public newSvgTransition(modelTransition: Transition): CanvasTransition {
+        const canvasTransition &#x3D; super.newSvgTransition(modelTransition);
+        this.activeTool.bindTransition(canvasTransition);
+        return canvasTransition;
+    }
+
+    public updateTransition(newTransition: ChangedTransition): void {
+        const canvasTransition &#x3D; this.elements.getTransition(newTransition.id);
+        if (!canvasTransition) {
+            return;
+        }
+        if (!newTransition.transition &amp;&amp; newTransition.id) {
+            this.removeSvgTransition(canvasTransition);
+            return;
+        }
+        const transition &#x3D; canvasTransition.svgTransition;
+        transition.changeId(newTransition.transition.id);
+        transition.setIcon(newTransition.transition.icon);
+        transition.canvasElement.setLabelText(this.labelText(newTransition.transition));
+        this.elements.removeTransition(newTransition.id);
+        this.elements.addTransition(canvasTransition);
+    }
+
+    public moveTransition(transition: CanvasTransition): void {
+        this.modelService.moveTransition(transition.modelTransition, transition.svgTransition.getPosition());
+        transition.svgTransition.move(new DOMPoint(transition.modelTransition.x, transition.modelTransition.y));
+    }
+
+    public removeTransition(transition: CanvasTransition): void {
+        this.modelService.removeTransition(transition.modelTransition);
+    }
+
+    private removeSvgTransition(transition: CanvasTransition) {
+        this.canvas.removeTransition(transition.svgTransition.canvasElement);
+        this.elements.removeTransition(transition.modelTransition.id);
+    }
+
+// ARC
+
+    public createArc(source: NodeElement, destination: NodeElement, type: ArcType): CanvasArc {
+        const modelArc &#x3D; this.modelService.newArc(source, destination, type);
+        return this.newSvgArc(modelArc);
+    }
+
+    public copyArc(copy: CanvasArc, sourceId: string, destinationId: string): CanvasArc {
+        const modelArc &#x3D; this.modelService.copyArc(copy.modelArc, sourceId, destinationId);
+        return this.newSvgArc(modelArc);
+    }
+
+    public newSvgArc(modelArc: Arc&lt;any, any&gt;): CanvasArc {
+        const canvasArc &#x3D; super.newSvgArc(modelArc);
+        this.activeTool.bindArc(canvasArc);
+        return canvasArc;
+    }
+
+    public createArcBreakpoint(arc: CanvasArc, point: DOMPoint, index: number): void {
+        arc.svgArc.getBreakPointList().splice(index, 0, point);
+        this.modelService.newArcBreakpoint(arc.modelArc, point, index);
+    }
+
+    public moveArcBreakpoint(arc: CanvasArc, index: number): void {
+        const breakPoint &#x3D; arc.svgArc.getBreakPointList()[index];
+        this.modelService.moveArcBreakpoint(arc.modelArc, index, breakPoint);
+        breakPoint.x &#x3D; arc.modelArc.breakpoints[index].x;
+        breakPoint.y &#x3D; arc.modelArc.breakpoints[index].y;
+        arc.svgArc.element.updateLine();
+    }
+
+    public removeBreakpoint(arc: CanvasArc, index: number): void {
+        this.modelService.removeArcBreakpoint(arc.modelArc, index);
+        arc.removeBreakpoint(index);
+        this.historyService.save(this._translateService.instant(&#x27;builder.modeler.edit-mode.services.arcLabel&#x27;) + &#x60; ${arc.id} &#x60; + this._translateService.instant(&#x27;builder.modeler.edit-mode.services.breakpointDeleted&#x27;));
+    }
+
+    private updateArc(changedArc: ChangedArc): void {
+        const arc &#x3D; this.elements.getArc(changedArc.id);
+        if (!arc) {
+            return;
+        }
+        if (!changedArc.arc &amp;&amp; changedArc.id) {
+            this.removeSvgArc(arc);
+            return;
+        }
+        if (changedArc.arcType !&#x3D;&#x3D; arc.modelArc.type) {
+            arc.modelArc &#x3D; this.model.getArc(changedArc.id);
+            const oldSvgArc &#x3D; arc.svgArc;
+            arc.svgArc &#x3D; this.arcFactory.buildSvgArc(changedArc.arcType, changedArc.id, oldSvgArc.element.start, oldSvgArc.element.end);
+            this.canvas.removeArc(oldSvgArc.element);
+            this.canvas.addArc(arc.svgArc.element);
+            this.activeTool.bindArc(arc);
+        }
+        arc.svgArc.setMultiplicity(this.multiplicityText(arc));
+    }
+
+    createNewRegularPlaceTransitionArc(source: CanvasPlace, destination: CanvasTransition): CanvasArc {
+        const modelArc &#x3D; this.modelService.newArc(source.modelElement, destination.modelElement, ArcType.REGULAR_PT);
+        return this.newSvgArc(modelArc);
+    }
+
+    createNewRegularTransitionPlaceArc(source: CanvasTransition, destination: CanvasPlace): CanvasArc {
+        const modelArc &#x3D; this.modelService.newArc(source.modelElement, destination.modelElement, ArcType.REGULAR_TP);
+        return this.newSvgArc(modelArc);
+    }
+
+    public removeArc(arc: CanvasArc): void {
+        this.modelService.removeArc(arc.modelArc);
+    }
+
+    private removeSvgArc(arc: CanvasArc) {
+        this.canvas.removeArc(arc.svgArc.element);
+        this.elements.removeArc(arc.modelArc.id);
+    }
+
+// TEMP ARC
+
+    createTemporaryArc(position: DOMPoint, markerId: string): SVGElement {
+        const arcLine &#x3D; document.createElementNS(CanvasConfiguration.SVG_NAMESPACE, &#x27;polyline&#x27;) as SVGPolylineElement;
+        arcLine.setAttributeNS(null, &#x27;fill&#x27;, &#x27;none&#x27;);
+        arcLine.setAttributeNS(null, &#x27;stroke&#x27;, &#x27;black&#x27;);
+        arcLine.setAttributeNS(null, &#x27;stroke-width&#x27;, &#x27;2&#x27;);
+        arcLine.setAttributeNS(null, &#x27;marker-end&#x27;, &#x60;url(#${markerId})&#x60;);
+        arcLine.setAttributeNS(null, &#x27;points&#x27;, &#x60;${position.x},${position.y} ${position.x},${position.y}&#x60;);
+        this.canvas.container.appendChild(arcLine);
+        return arcLine;
+    }
+
+    removeTemporaryArc(line: SVGElement): void {
+        this.canvas.container.removeChild(line);
+    }
+
+    moveTemporaryArc(arcLine: SVGElement, position: DOMPoint, source: PetriflowNode&lt;any&gt;): void {
+        const intersect &#x3D; source.canvasElement.getEdgeIntersection(position, 0);
+        const xLineLength &#x3D; position.x - intersect.x;
+        const yLineLength &#x3D; position.y - intersect.y;
+        const arcLength &#x3D; Math.sqrt(xLineLength * xLineLength + yLineLength * yLineLength);
+        const arcLengthOffset &#x3D; arcLength - CanvasConfiguration.ARROW_HEAD_SIZE;
+        const arcRatio &#x3D; arcLengthOffset / arcLength;
+        const finalX &#x3D; intersect.x + xLineLength * arcRatio;
+        const finalY &#x3D; intersect.y + yLineLength * arcRatio;
+        arcLine.setAttributeNS(null, &#x27;points&#x27;, &#x60;${intersect.x},${intersect.y} ${isNaN(finalX) ? intersect.x : finalX},${isNaN(finalY) ? intersect.y : finalY}&#x60;);
+    }
+
+    // OTHER
+
+    public createRectangle(position: DOMPoint): SVGRectElement {
+        const rectangle &#x3D; document.createElementNS(CanvasConfiguration.SVG_NAMESPACE, &#x27;rect&#x27;) as SVGRectElement;
+        rectangle.setAttributeNS(null, &#x27;class&#x27;, &#x27;lasso-selection&#x27;);
+        rectangle.setAttributeNS(null, &#x27;x&#x27;, &#x60;${position.x}&#x60;);
+        rectangle.setAttributeNS(null, &#x27;y&#x27;, &#x60;${position.y}&#x60;);
+        return rectangle;
+    }
+
+    public moveRectangle(lasso: SVGRectElement, selectionStart: DOMPoint, event: DOMPoint): void {
+        const width &#x3D; event.x - selectionStart.x;
+        const height &#x3D; event.y - selectionStart.y;
+        const newX &#x3D; width &gt; 0 ? selectionStart.x : selectionStart.x + width;
+        const newY &#x3D; height &gt; 0 ? selectionStart.y : selectionStart.y + height;
+        lasso.setAttributeNS(null, &#x27;width&#x27;, &#x60;${Math.abs(width)}&#x60;);
+        lasso.setAttributeNS(null, &#x27;height&#x27;, &#x60;${Math.abs(height)}&#x60;);
+        lasso.setAttributeNS(null, &#x27;x&#x27;, &#x60;${newX}&#x60;);
+        lasso.setAttributeNS(null, &#x27;y&#x27;, &#x60;${newY}&#x60;);
+    }
+
+    get historyService(): HistoryService {
+        return this._historyService;
+    }
+}
+</code></pre>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'injectable';
+            var COMPODOC_CURRENT_PAGE_URL = 'EditModeService.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

@@ -1,0 +1,970 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Netgrif Components library Documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">Netgrif Components library Documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content interface">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Interfaces</li>
+  <li class="breadcrumb-item"
+  >
+  ManagePermissionData</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" 
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" 
+                class="nav-link"
+                
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>projects/netgrif-components/src/lib/builder/dialogs/dialog-manage-roles/dialog-manage-roles.component.ts</code>
+        </p>
+
+
+
+
+        <section data-compodoc="block-index">
+            <h3 id="index">Index</h3>
+            <table class="table table-sm table-bordered index-table">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <h6><b>Properties</b></h6>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <ul class="index-list">
+                                <li>
+                                        <a href="#builderModeService" 
+>
+                                            builderModeService
+                                        </a>
+                                </li>
+                                <li>
+                                        <a href="#historyService" 
+>
+                                            historyService
+                                        </a>
+                                </li>
+                                <li>
+                                        <a href="#localStorageService" 
+>
+                                            localStorageService
+                                        </a>
+                                </li>
+                                <li>
+                                        <a href="#modelService" 
+>
+                                            modelService
+                                        </a>
+                                </li>
+                                <li>
+                                            <span class="modifier">Optional</span>
+                                        <a href="#processRolesRefs" 
+>
+                                            processRolesRefs
+                                        </a>
+                                </li>
+                                <li>
+                                            <span class="modifier">Optional</span>
+                                        <a href="#processUserRefs" 
+>
+                                            processUserRefs
+                                        </a>
+                                </li>
+                                <li>
+                                        <a href="#roles" 
+>
+                                            roles
+                                        </a>
+                                </li>
+                                <li>
+                                            <span class="modifier">Optional</span>
+                                        <a href="#rolesRefs" 
+>
+                                            rolesRefs
+                                        </a>
+                                </li>
+                                <li>
+                                        <a href="#type" 
+>
+                                            type
+                                        </a>
+                                </li>
+                                <li>
+                                        <a href="#userLists" 
+>
+                                            userLists
+                                        </a>
+                                </li>
+                                <li>
+                                            <span class="modifier">Optional</span>
+                                        <a href="#userRefs" 
+>
+                                            userRefs
+                                        </a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+
+
+            <section data-compodoc="block-properties">
+                <h3 id="inputs">Properties</h3>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="builderModeService"></a>
+                                        <span class="name "><b>builderModeService</b>
+                                            <a href="#builderModeService">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>builderModeService:         <code><a href="../injectables/BuilderModeService.html" target="_self" >BuilderModeService</a></code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>        <code><a href="../injectables/BuilderModeService.html" target="_self" >BuilderModeService</a></code>
+
+                                        </td>
+                                    </tr>
+
+
+
+
+
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="historyService"></a>
+                                        <span class="name "><b>historyService</b>
+                                            <a href="#historyService">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>historyService:         <code><a href="../injectables/HistoryService.html" target="_self" >HistoryService</a></code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>        <code><a href="../injectables/HistoryService.html" target="_self" >HistoryService</a></code>
+
+                                        </td>
+                                    </tr>
+
+
+
+
+
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="localStorageService"></a>
+                                        <span class="name "><b>localStorageService</b>
+                                            <a href="#localStorageService">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>localStorageService:         <code><a href="../injectables/LocalStorageService.html" target="_self" >LocalStorageService</a></code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>        <code><a href="../injectables/LocalStorageService.html" target="_self" >LocalStorageService</a></code>
+
+                                        </td>
+                                    </tr>
+
+
+
+
+
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="modelService"></a>
+                                        <span class="name "><b>modelService</b>
+                                            <a href="#modelService">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>modelService:         <code><a href="../injectables/ModelService.html" target="_self" >ModelService</a></code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>        <code><a href="../injectables/ModelService.html" target="_self" >ModelService</a></code>
+
+                                        </td>
+                                    </tr>
+
+
+
+
+
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="processRolesRefs"></a>
+                                        <span class="name "><b>processRolesRefs</b>
+                                            <a href="#processRolesRefs">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>processRolesRefs:     <code>Array&lt;ProcessPermissionRef&gt;</code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>    <code>Array&lt;ProcessPermissionRef&gt;</code>
+
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Optional</i>
+                                        </td>
+                                    </tr>
+
+
+
+
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="processUserRefs"></a>
+                                        <span class="name "><b>processUserRefs</b>
+                                            <a href="#processUserRefs">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>processUserRefs:     <code>Array&lt;ProcessPermissionRef&gt;</code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>    <code>Array&lt;ProcessPermissionRef&gt;</code>
+
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Optional</i>
+                                        </td>
+                                    </tr>
+
+
+
+
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="roles"></a>
+                                        <span class="name "><b>roles</b>
+                                            <a href="#roles">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>roles:     <code>Array&lt;Role&gt;</code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>    <code>Array&lt;Role&gt;</code>
+
+                                        </td>
+                                    </tr>
+
+
+
+
+
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="rolesRefs"></a>
+                                        <span class="name "><b>rolesRefs</b>
+                                            <a href="#rolesRefs">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>rolesRefs:     <code>Array&lt;TransitionPermissionRef&gt;</code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>    <code>Array&lt;TransitionPermissionRef&gt;</code>
+
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Optional</i>
+                                        </td>
+                                    </tr>
+
+
+
+
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="type"></a>
+                                        <span class="name "><b>type</b>
+                                            <a href="#type">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>type:         <code><a href="../miscellaneous/enumerations.html#RoleRefType" target="_self" >RoleRefType</a></code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>        <code><a href="../miscellaneous/enumerations.html#RoleRefType" target="_self" >RoleRefType</a></code>
+
+                                        </td>
+                                    </tr>
+
+
+
+
+
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="userLists"></a>
+                                        <span class="name "><b>userLists</b>
+                                            <a href="#userLists">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>userLists:     <code>Array&lt;DataVariable&gt;</code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>    <code>Array&lt;DataVariable&gt;</code>
+
+                                        </td>
+                                    </tr>
+
+
+
+
+
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="userRefs"></a>
+                                        <span class="name "><b>userRefs</b>
+                                            <a href="#userRefs">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>userRefs:     <code>Array&lt;TransitionPermissionRef&gt;</code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>    <code>Array&lt;TransitionPermissionRef&gt;</code>
+
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Optional</i>
+                                        </td>
+                                    </tr>
+
+
+
+
+                        </tbody>
+                    </table>
+            </section>
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Component, Inject, OnDestroy, OnInit, ViewChild} from &#x27;@angular/core&#x27;;
+import {MAT_CHECKBOX_DEFAULT_OPTIONS, MatCheckboxDefaultOptions} from &#x27;@angular/material/checkbox&#x27;;
+import {MAT_DIALOG_DATA} from &#x27;@angular/material/dialog&#x27;;
+import {MatPaginator} from &#x27;@angular/material/paginator&#x27;;
+import {MatSort, MatSortable, Sort} from &#x27;@angular/material/sort&#x27;;
+import {MatTableDataSource} from &#x27;@angular/material/table&#x27;;
+import {DataVariable, ProcessPermissionRef, Role, TransitionPermissionRef} from &#x27;@netgrif/petriflow&#x27;;
+import {ModelerConfig} from &#x27;../../modeler/modeler-config&#x27;;
+import {HistoryService} from &#x27;../../modeler/services/history/history.service&#x27;;
+import {ModelService} from &#x27;../../modeler/services/model/model.service&#x27;;
+import {LocalStorageService} from &quot;../../services/local-storage.service&quot;;
+import {TranslateService} from &quot;@ngx-translate/core&quot;;
+import {BuilderModeService} from &quot;../../services/builder-mode.service&quot;;
+
+export enum RoleRefType {
+    TRANSITION &#x3D; &#x27;transition&#x27;,
+    PROCESS &#x3D; &#x27;process&#x27;
+}
+
+export interface ManagePermissionData {
+    type: RoleRefType;
+    roles: Array&lt;Role&gt;;
+    userLists: Array&lt;DataVariable&gt;;
+    rolesRefs?: Array&lt;TransitionPermissionRef&gt;;
+    processRolesRefs?: Array&lt;ProcessPermissionRef&gt;;
+    userRefs?: Array&lt;TransitionPermissionRef&gt;;
+    processUserRefs?: Array&lt;ProcessPermissionRef&gt;;
+    modelService: ModelService;
+    historyService: HistoryService;
+    localStorageService: LocalStorageService;
+    builderModeService: BuilderModeService;
+}
+
+@Component({
+    selector: &#x27;nc-builder-dialog-manage-roles&#x27;,
+    templateUrl: &#x27;./dialog-manage-roles.component.html&#x27;,
+    styleUrls: [&#x27;./dialog-manage-roles.component.scss&#x27;],
+    providers: [
+        {provide: MAT_CHECKBOX_DEFAULT_OPTIONS, useValue: {clickAction: &#x27;noop&#x27;} as MatCheckboxDefaultOptions}
+    ]
+})
+export class DialogManageRolesComponent implements OnInit, OnDestroy {
+    pageSizes &#x3D; [5, 10, 20];
+    defaultPageSize &#x3D; 10;
+    displayedColumns: Array&lt;string&gt;;
+    usersDisplayedColumns: Array&lt;string&gt;;
+    dataSource: MatTableDataSource&lt;TransitionPermissionRef | ProcessPermissionRef&gt;;
+    usersDataSource: MatTableDataSource&lt;TransitionPermissionRef | ProcessPermissionRef&gt;;
+    @ViewChild(&#x27;matPaginator&#x27;, {static: true}) paginator: MatPaginator;
+    @ViewChild(&#x27;matUserPaginator&#x27;, {static: true}) userPaginator: MatPaginator;
+    @ViewChild(&#x27;firstTableSort&#x27;, {static: true}) sort: MatSort;
+    @ViewChild(&#x27;secondTableSort&#x27;, {static: true}) userSort: MatSort;
+    private historyChange: boolean;
+
+    private modelService: ModelService;
+    private historyService: HistoryService;
+    private _localStorageService: LocalStorageService;
+    protected _builderModeService: BuilderModeService;
+
+    constructor(
+        @Inject(MAT_DIALOG_DATA) public data: ManagePermissionData,
+        protected _translateService: TranslateService
+    ) {
+        this.modelService &#x3D; data.modelService;
+        this.historyService &#x3D; data.historyService;
+        this._localStorageService &#x3D; data.localStorageService;
+        this._builderModeService &#x3D; data.builderModeService;
+        if (this.data.type &#x3D;&#x3D;&#x3D; RoleRefType.TRANSITION) {
+            const arrayRoleRefs &#x3D; [...this.data.rolesRefs];
+            this.addDefaultRoleRefs(arrayRoleRefs);
+            const arrayUserRefs &#x3D; [...this.data.userRefs];
+            this.displayedColumns &#x3D; [&#x27;id&#x27;, &#x27;perform&#x27;, &#x27;delegate&#x27;, &#x27;cancel&#x27;, &#x27;assign&#x27;, &#x27;view&#x27;];
+            this.usersDisplayedColumns &#x3D; [&#x27;id&#x27;, &#x27;perform&#x27;, &#x27;delegate&#x27;, &#x27;cancel&#x27;, &#x27;assign&#x27;, &#x27;view&#x27;];
+            this.data.roles.forEach(item &#x3D;&gt; {
+                if (this.data.rolesRefs.find(itm &#x3D;&gt; itm.id &#x3D;&#x3D;&#x3D; item.id) &#x3D;&#x3D;&#x3D; undefined) {
+                    (arrayRoleRefs as Array&lt;TransitionPermissionRef&gt;).push(new  TransitionPermissionRef(item.id));
+                }
+            });
+            this.data.userLists.forEach(item &#x3D;&gt; {
+                if (this.data.userRefs.find(itm &#x3D;&gt; itm.id &#x3D;&#x3D;&#x3D; item.id) &#x3D;&#x3D;&#x3D; undefined) {
+                    (arrayUserRefs as Array&lt;TransitionPermissionRef&gt;).push(new  TransitionPermissionRef(item.id));
+                }
+            });
+            this.dataSource &#x3D; new MatTableDataSource&lt;TransitionPermissionRef | ProcessPermissionRef&gt;(arrayRoleRefs);
+            this.usersDataSource &#x3D; new MatTableDataSource&lt;TransitionPermissionRef | ProcessPermissionRef&gt;(arrayUserRefs);
+        } else {
+            const arrayRoleRefs &#x3D; [...this.data.processRolesRefs];
+            this.addDefaultProcessRoleRefs(arrayRoleRefs);
+            const arrayUserRefs &#x3D; [...this.data.processUserRefs];
+            this.displayedColumns &#x3D; [&#x27;id&#x27;, &#x27;create&#x27;, &#x27;delete&#x27;, &#x27;view&#x27;];
+            this.usersDisplayedColumns &#x3D; [&#x27;id&#x27;, &#x27;create&#x27;, &#x27;delete&#x27;, &#x27;view&#x27;];
+            this.data.roles.forEach(item &#x3D;&gt; {
+                if (this.data.processRolesRefs.find(itm &#x3D;&gt; itm.id &#x3D;&#x3D;&#x3D; item.id) &#x3D;&#x3D;&#x3D; undefined) {
+                    (arrayRoleRefs as Array&lt;ProcessPermissionRef&gt;).push(new ProcessPermissionRef(item.id));
+                }
+            });
+            this.data.userLists.forEach(item &#x3D;&gt; {
+                if (this.data.processUserRefs.find(itm &#x3D;&gt; itm.id &#x3D;&#x3D;&#x3D; item.id) &#x3D;&#x3D;&#x3D; undefined) {
+                    (arrayUserRefs as Array&lt;ProcessPermissionRef&gt;).push(new ProcessPermissionRef(item.id));
+                }
+            });
+            this.dataSource &#x3D; new MatTableDataSource&lt;TransitionPermissionRef | ProcessPermissionRef&gt;(arrayRoleRefs);
+            this.usersDataSource &#x3D; new MatTableDataSource&lt;TransitionPermissionRef | ProcessPermissionRef&gt;(arrayUserRefs);
+        }
+        this.dataSource.sortData &#x3D; (data: (TransitionPermissionRef | ProcessPermissionRef)[], sort: MatSort): (TransitionPermissionRef | ProcessPermissionRef)[] &#x3D;&gt; {
+            return this.sortRefs(sort, data) as (TransitionPermissionRef | ProcessPermissionRef)[];
+        };
+        this.usersDataSource.sortData &#x3D; (data: (TransitionPermissionRef | ProcessPermissionRef)[], sort: MatSort): (TransitionPermissionRef | ProcessPermissionRef)[] &#x3D;&gt; {
+            return this.sortRefs(sort, data) as (TransitionPermissionRef | ProcessPermissionRef)[];
+        }
+    }
+
+    private sortRefs(sort: MatSort, data: ((TransitionPermissionRef | ProcessPermissionRef)[])) {
+        if (sort.active &#x3D;&#x3D;&#x3D; undefined) {
+            return data;
+        }
+        const order &#x3D; sort.direction &#x3D;&#x3D;&#x3D; &#x27;desc&#x27; ? -1 : (sort.direction &#x3D;&#x3D;&#x3D; &#x27;asc&#x27; ? 1 : 0);
+        return data.sort((a: TransitionPermissionRef | ProcessPermissionRef, b: TransitionPermissionRef | ProcessPermissionRef) &#x3D;&gt; {
+            const refA &#x3D; this.refStringValue(a, sort.active);
+            const refB &#x3D; this.refStringValue(b, sort.active);
+            if (refA &#x3D;&#x3D;&#x3D; refB || order &#x3D;&#x3D;&#x3D; 0) {
+                return a.id.localeCompare(b.id);
+            }
+            return refA.localeCompare(refB) * order;
+        });
+    }
+
+    refStringValue(item: TransitionPermissionRef | ProcessPermissionRef, property: string): string {
+        const value: boolean | undefined &#x3D; item.logic[property];
+        return value &#x3D;&#x3D;&#x3D; undefined ? &#x27;&#x27; : &#x60;${value.toString()}&#x60;;
+    }
+
+    ngOnInit() {
+        this.dataSource.paginator &#x3D; this.paginator;
+        this.usersDataSource.paginator &#x3D; this.userPaginator;
+        this.dataSource.sort &#x3D; this.sort;
+        this.usersDataSource.sort &#x3D; this.userSort;
+        this.sort.sort(({
+            id: this._localStorageService.getItem(ModelerConfig.LOCALSTORAGE.PERMISSION_DIALOG.ROLE_SORT),
+            start: this._localStorageService.getItem(ModelerConfig.LOCALSTORAGE.PERMISSION_DIALOG.ROLE_DIRECTION)
+        }) as MatSortable);
+        this.userSort.sort(({
+            id: this._localStorageService.getItem(ModelerConfig.LOCALSTORAGE.PERMISSION_DIALOG.USER_REF_SORT),
+            start: this._localStorageService.getItem(ModelerConfig.LOCALSTORAGE.PERMISSION_DIALOG.USER_REF_DIRECTION)
+        }) as MatSortable);
+    }
+
+    setValue(id: string, change: string) {
+        if (this.data.type &#x3D;&#x3D;&#x3D; RoleRefType.TRANSITION) {
+            this.setRoleRef(this.data.rolesRefs.find(item &#x3D;&gt; item.id &#x3D;&#x3D;&#x3D; id), id, change);
+        } else {
+            this.setProcessRoleRef(this.data.processRolesRefs.find(item &#x3D;&gt; item.id &#x3D;&#x3D;&#x3D; id), id, change);
+        }
+        this.historyChange &#x3D; true;
+    }
+
+    setUserValue(id: string, change: string) {
+        if (this.data.type &#x3D;&#x3D;&#x3D; RoleRefType.TRANSITION) {
+            this.setUserRef(this.data.userRefs.find(item &#x3D;&gt; item.id &#x3D;&#x3D;&#x3D; id), id, change);
+        } else {
+            this.setProcessUserRef(this.data.processUserRefs.find(item &#x3D;&gt; item.id &#x3D;&#x3D;&#x3D; id), id, change);
+        }
+        this.historyChange &#x3D; true;
+    }
+
+    private setRoleRef(roleRef: TransitionPermissionRef, id: string, change: string) {
+        if (roleRef &#x3D;&#x3D;&#x3D; undefined) {
+            this.data.rolesRefs.push(new TransitionPermissionRef(id));
+            this.data.rolesRefs.find(item &#x3D;&gt; item.id &#x3D;&#x3D;&#x3D; id).logic[change] &#x3D; true;
+            (this.dataSource.data.find(item &#x3D;&gt; item.id &#x3D;&#x3D;&#x3D; id) as TransitionPermissionRef).logic[change] &#x3D; true;
+        } else {
+            const newValue &#x3D; this.resolveNewValue(roleRef, change);
+            this.data.rolesRefs.find(item &#x3D;&gt; item.id &#x3D;&#x3D;&#x3D; id).logic[change] &#x3D; newValue;
+            (this.dataSource.data.find(item &#x3D;&gt; item.id &#x3D;&#x3D;&#x3D; id) as TransitionPermissionRef).logic[change] &#x3D; newValue;
+        }
+    }
+
+    private setProcessRoleRef(processRoleRef: ProcessPermissionRef, id: string, change: string) {
+        if (processRoleRef &#x3D;&#x3D;&#x3D; undefined) {
+            const roleRef &#x3D; new ProcessPermissionRef(id);
+            this.data.processRolesRefs.push(roleRef);
+            this.modelService.model.addRoleRef(roleRef);
+            this.data.processRolesRefs.find(item &#x3D;&gt; item.id &#x3D;&#x3D;&#x3D; id).logic[change] &#x3D; true;
+            (this.dataSource.data.find(item &#x3D;&gt; item.id &#x3D;&#x3D;&#x3D; id) as ProcessPermissionRef).logic[change] &#x3D; true;
+        } else {
+            const newValue &#x3D; this.resolveNewValue(processRoleRef, change);
+            this.data.processRolesRefs.find(item &#x3D;&gt; item.id &#x3D;&#x3D;&#x3D; id).logic[change] &#x3D; newValue;
+            (this.dataSource.data.find(item &#x3D;&gt; item.id &#x3D;&#x3D;&#x3D; id) as ProcessPermissionRef).logic[change] &#x3D; newValue;
+        }
+    }
+
+    private setUserRef(userRef: TransitionPermissionRef, id: string, change: string) {
+        if (userRef &#x3D;&#x3D;&#x3D; undefined) {
+            this.data.userRefs.push(new TransitionPermissionRef(id));
+            this.data.userRefs.find(item &#x3D;&gt; item.id &#x3D;&#x3D;&#x3D; id).logic[change] &#x3D; true;
+            (this.usersDataSource.data.find(item &#x3D;&gt; item.id &#x3D;&#x3D;&#x3D; id) as TransitionPermissionRef).logic[change] &#x3D; true;
+        } else {
+            const newValue &#x3D; this.resolveNewValue(userRef, change);
+            this.data.userRefs.find(item &#x3D;&gt; item.id &#x3D;&#x3D;&#x3D; id).logic[change] &#x3D; newValue;
+            (this.usersDataSource.data.find(item &#x3D;&gt; item.id &#x3D;&#x3D;&#x3D; id) as TransitionPermissionRef).logic[change] &#x3D; newValue;
+        }
+    }
+
+    private setProcessUserRef(processUserRef: ProcessPermissionRef, id: string, change: string) {
+        if (processUserRef &#x3D;&#x3D;&#x3D; undefined) {
+            const ref &#x3D; new ProcessPermissionRef(id);
+            this.data.processUserRefs.push(ref);
+            this.modelService.model.addUserRef(ref);
+            this.data.processUserRefs.find(item &#x3D;&gt; item.id &#x3D;&#x3D;&#x3D; id).logic[change] &#x3D; true;
+            (this.usersDataSource.data.find(item &#x3D;&gt; item.id &#x3D;&#x3D;&#x3D; id) as ProcessPermissionRef).logic[change] &#x3D; true;
+        } else {
+            const newValue &#x3D; this.resolveNewValue(processUserRef, change);
+            this.data.processUserRefs.find(item &#x3D;&gt; item.id &#x3D;&#x3D;&#x3D; id).logic[change] &#x3D; newValue;
+            (this.usersDataSource.data.find(item &#x3D;&gt; item.id &#x3D;&#x3D;&#x3D; id) as ProcessPermissionRef).logic[change] &#x3D; newValue;
+        }
+    }
+
+    protected resolveNewValue(roleRef: ProcessPermissionRef | TransitionPermissionRef, change: string) {
+        let newValue;
+        if (roleRef.logic[change] &#x3D;&#x3D;&#x3D; undefined) {
+            newValue &#x3D; true;
+        } else if (roleRef.logic[change] &#x3D;&#x3D;&#x3D; true) {
+            newValue &#x3D; false;
+        }
+        return newValue;
+    }
+
+    stringValue(logic: boolean): string {
+        if (logic &#x3D;&#x3D;&#x3D; undefined) {
+            return &#x27; &#x27;;
+        }
+        return &#x60;${logic}&#x60;;
+    }
+
+    getChecked(logic: boolean): boolean {
+        return logic &#x3D;&#x3D;&#x3D; true;
+    }
+
+    getIndeterminate(logic: boolean): boolean {
+        return logic &#x3D;&#x3D;&#x3D; false;
+    }
+
+    private addDefaultRoleRefs(arrayRoleRefs: Array&lt;TransitionPermissionRef&gt;) {
+        if (!arrayRoleRefs.find(roleRef &#x3D;&gt; roleRef.id &#x3D;&#x3D;&#x3D; Role.DEFAULT)) {
+            arrayRoleRefs.push(new TransitionPermissionRef(Role.DEFAULT));
+        }
+        if (!arrayRoleRefs.find(roleRef &#x3D;&gt; roleRef.id &#x3D;&#x3D;&#x3D; Role.ANONYMOUS)) {
+            arrayRoleRefs.push(new TransitionPermissionRef(Role.ANONYMOUS));
+        }
+    }
+
+    private addDefaultProcessRoleRefs(arrayRoleRefs: Array&lt;ProcessPermissionRef&gt;) {
+        if (!arrayRoleRefs.find(roleRef &#x3D;&gt; roleRef.id &#x3D;&#x3D;&#x3D; Role.DEFAULT)) {
+            arrayRoleRefs.push(new ProcessPermissionRef(Role.DEFAULT));
+        }
+        if (!arrayRoleRefs.find(roleRef &#x3D;&gt; roleRef.id &#x3D;&#x3D;&#x3D; Role.ANONYMOUS)) {
+            arrayRoleRefs.push(new ProcessPermissionRef(Role.ANONYMOUS));
+        }
+    }
+
+    sortRoleRefs(sort: Sort): void {
+        this._localStorageService.setItem(ModelerConfig.LOCALSTORAGE.PERMISSION_DIALOG.ROLE_SORT, sort.active);
+        this._localStorageService.setItem(ModelerConfig.LOCALSTORAGE.PERMISSION_DIALOG.ROLE_DIRECTION, sort.direction);
+    }
+
+    sortUserRefs(sort: Sort): void {
+        this._localStorageService.setItem(ModelerConfig.LOCALSTORAGE.PERMISSION_DIALOG.USER_REF_SORT, sort.active);
+        this._localStorageService.setItem(ModelerConfig.LOCALSTORAGE.PERMISSION_DIALOG.USER_REF_DIRECTION, sort.direction);
+    }
+
+    ngOnDestroy(): void {
+        if (this.historyChange) {
+            this.historyService.save(this._translateService.instant(&#x27;builder.dialogs.manage-roles.changed&#x27;));
+        }
+    }
+}
+</code></pre>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'interface';
+            var COMPODOC_CURRENT_PAGE_URL = 'ManagePermissionData.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

@@ -9,13 +9,64 @@
 
         <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
 	   <link rel="stylesheet" href="../styles/style.css">
-        <link rel="stylesheet" href="../styles/dark.css" media="(prefers-color-scheme: dark)">
+        <link rel="stylesheet" href="../styles/dark.css">
     </head>
     <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
 
-        <div class="navbar navbar-default navbar-fixed-top visible-xs">
-            <a href="../" class="navbar-brand">Netgrif Components library Documentation</a>
-            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">Netgrif Components library Documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
         </div>
 
         <div class="xs-menu menu" id="mobile-menu">
@@ -24,7 +75,7 @@
 
         <div class="container-fluid main">
            <div class="row main">
-               <div class="hidden-xs menu">
+               <div class="d-none d-md-block menu">
                    <compodoc-menu mode="normal"></compodoc-menu>
                </div>
                <!-- START CONTENT -->
@@ -35,36 +86,41 @@
 
 
 <ol class="breadcrumb">
-  <li>Components</li>
-  <li
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
   >
   DefaultTabbedCaseViewComponent</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
-        <li class="active">
-            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
         </li>
-        <li >
-            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
         </li>
-        <li >
-            <a href="#templateData" role="tab" id="templateData-tab" data-toggle="tab" data-link="template">Template</a>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
         </li>
-        <li >
-            <a href="#styleData" role="tab" id="styleData-tab" data-toggle="tab" data-link="style">Styles</a>
+        <li class="nav-item">
+            <a href="#styleData" class="nav-link"
+                role="tab" id="styleData-tab" data-bs-toggle="tab" data-link="style">Styles</a>
         </li>
-        <li >
-            <a href="#tree" role="tab" id="tree-tab" data-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
         </li>
 </ul>
 
 <div class="tab-content">
-    <div class="tab-pane fade active in" id="c-info"><p class="comment">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
     <h3>File</h3>
 </p>
 <p class="comment">
-    <code>projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/default-tabbed-case-view/default-tabbed-case-view.component.ts</code>
+    <code>projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/tabbed/default-tabbed-case-view/default-tabbed-case-view.component.ts</code>
 </p>
 
 
@@ -73,21 +129,23 @@
         <h3>Extends</h3>
     </p>
     <p class="comment">
-            <code>AbstractTabbedCaseViewComponent</code>
+                <code>AbstractTabbedCaseViewComponent</code>
     </p>
 
     <p class="comment">
         <h3>Implements</h3>
     </p>
     <p class="comment">
-                    <code><a href="https://angular.io/api/core/AfterViewInit" target="_blank" >AfterViewInit</a></code>
+                <code>AfterViewInit</code>
+                <code>OnDestroy</code>
     </p>
 
 
-<section>
+<section data-compodoc="block-metadata">
     <h3>Metadata</h3>
-    <table class="table table-sm table-hover">
+    <table class="table table-sm table-hover metadata">
         <tbody>
+
 
 
 
@@ -106,14 +164,17 @@
                             <code>ViewIdService</code>
                             <code>OverflowService</code>
                                 <code><a href="../miscellaneous/functions.html#filterCaseTabbedDataFilterFactory" target="_self" >{
-    provide: NAE_BASE_FILTER, useFactory: filterCaseTabbedDataFilterFactory, deps: [FilterExtractionService, NAE_TAB_DATA]
+    provide: NAE_BASE_FILTER, useFactory: filterCaseTabbedDataFilterFactory, deps: [FilterExtractionService, NAE_TAB_DATA, ActivatedRoute]
 }</a></code>
                                 <code><a href="../miscellaneous/functions.html#filterCaseTabbedDataAllowedNetsServiceFactory" target="_self" >{
     provide: AllowedNetsService, useFactory: filterCaseTabbedDataAllowedNetsServiceFactory, deps: [AllowedNetsServiceFactory, BaseAllowedNetsService, NAE_TAB_DATA]
 }</a></code>
-                                <code><a href="../miscellaneous/functions.html#filterCaseTabbedDataSearchCategoriesFactory" target="_self" >{
-    provide: NAE_SEARCH_CATEGORIES, useFactory: filterCaseTabbedDataSearchCategoriesFactory, deps: [CategoryResolverService, NAE_TAB_DATA, NAE_DEFAULT_CASE_SEARCH_CATEGORIES, NAE_DEFAULT_TASK_SEARCH_CATEGORIES]
+                                <code><a href="../miscellaneous/functions.html#buildDynamicSortChangeDescriptionForCase$" target="_self" >{
+    provide: NAE_DYNAMIC_DEFAULT_SORT, useFactory: buildDynamicSortChangeDescriptionForCase$, deps: [NAE_NAVIGATION_ITEM_TASK_DATA, ProcessService]
 }</a></code>
+                            <code>{
+    provide: NAE_SEARCH_CATEGORIES, useExisting: NAE_DEFAULT_CASE_SEARCH_CATEGORIES
+}</code>
                             <code>{
     provide: NAE_DEFAULT_HEADERS, useFactory: navigationItemCaseViewDefaultHeadersFactory, deps: [NAE_NAVIGATION_ITEM_TASK_DATA]
 }</code>
@@ -125,6 +186,8 @@
                 <td class="col-md-3">selector</td>
                 <td class="col-md-9"><code>nc-default-tabbed-case-view</code></td>
             </tr>
+
+
 
             <tr>
                 <td class="col-md-3">styleUrls</td>
@@ -149,7 +212,7 @@
     </table>
 </section>
 
-    <section>
+    <section data-compodoc="block-index">
     <h3 id="index">Index</h3>
     <table class="table table-sm table-bordered index-table">
         <tbody>
@@ -162,14 +225,24 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
+                                <a href="#allowExport" >allowExport</a>
+                            </li>
+                            <li>
                                 <a href="#allowTableMode" >allowTableMode</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Public</span>
                                 <a href="#caseHeaderComponent" >caseHeaderComponent</a>
                             </li>
                             <li>
                                 <a href="#defaultHeadersMode" >defaultHeadersMode</a>
+                            </li>
+                            <li>
+                                <a href="#emptyContentIcon" >emptyContentIcon</a>
+                            </li>
+                            <li>
+                                <a href="#emptyContentText" >emptyContentText</a>
                             </li>
                             <li>
                                 <a href="#enableSearch" >enableSearch</a>
@@ -182,6 +255,9 @@
                             </li>
                             <li>
                                 <a href="#initialSearchMode" >initialSearchMode</a>
+                            </li>
+                            <li>
+                                <a href="#loading$" >loading$</a>
                             </li>
                             <li>
                                 <a href="#showCreateCaseButton" >showCreateCaseButton</a>
@@ -205,13 +281,19 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
+                                <a href="#export" >export</a>
+                            </li>
+                            <li>
+                                <a href="#isLoading" >isLoading</a>
+                            </li>
+                            <li>
                                 <a href="#isMenuOptionEnabled" >isMenuOptionEnabled</a>
                             </li>
                             <li>
-                                <a href="#loadFilter" >loadFilter</a>
+                                <a href="#ngAfterViewInit" >ngAfterViewInit</a>
                             </li>
                             <li>
-                                <a href="#ngAfterViewInit" >ngAfterViewInit</a>
+                                <a href="#ngOnDestroy" >ngOnDestroy</a>
                             </li>
                             <li>
                                     <span class="modifier">Protected</span>
@@ -241,18 +323,18 @@
     </table>
 </section>
 
-    <section>
+    <section data-compodoc="block-constructor">
     <h3 id="constructor">Constructor</h3>
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(caseViewService: CaseViewService, loggerService: LoggerService, viewIdService: ViewIdService, overflowService: OverflowService, _injectedTabData: <a href="../interfaces/InjectedTabbedCaseViewDataWithNavigationItemTaskData.html" target="_self">InjectedTabbedCaseViewDataWithNavigationItemTaskData</a>)</code>
+<code>constructor(caseViewService: CaseViewService, _exportService: ExportService, _searchService: SearchService, _snackbar: SnackBarService, _translate: TranslateService, loggerService: LoggerService, viewIdService: ViewIdService, overflowService: OverflowService, _injectedTabData: <a href="../interfaces/InjectedTabbedCaseViewDataWithNavigationItemTaskData.html" target="_self">InjectedTabbedCaseViewDataWithNavigationItemTaskData</a>)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="86" class="link-to-prism">projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/default-tabbed-case-view/default-tabbed-case-view.component.ts:86</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="104" class="link-to-prism">projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/tabbed/default-tabbed-case-view/default-tabbed-case-view.component.ts:104</a></div>
                             </td>
                         </tr>
 
@@ -274,6 +356,54 @@
                                                   
                                                         <td>
                                                                     <code>CaseViewService</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_exportService</td>
+                                                  
+                                                        <td>
+                                                                    <code>ExportService</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_searchService</td>
+                                                  
+                                                        <td>
+                                                                    <code>SearchService</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_snackbar</td>
+                                                  
+                                                        <td>
+                                                                    <code>SnackBarService</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_translate</td>
+                                                  
+                                                        <td>
+                                                                    <code>TranslateService</code>
                                                         </td>
                                                   
                                                     <td>
@@ -342,11 +472,85 @@
 
 
 
-    <section>
+    <section data-compodoc="block-methods">
     
     <h3 id="methods">
         Methods
     </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="export"></a>
+                    <span class="name">
+                        <span ><b>export</b></span>
+                        <a href="#export"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>export()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="221"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/tabbed/default-tabbed-case-view/default-tabbed-case-view.component.ts:221</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isLoading"></a>
+                    <span class="name">
+                        <span ><b>isLoading</b></span>
+                        <a href="#isLoading"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>isLoading()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="217"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/tabbed/default-tabbed-case-view/default-tabbed-case-view.component.ts:217</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
     <table class="table table-sm table-bordered">
         <tbody>
             <tr>
@@ -365,120 +569,51 @@
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="182"
-                            class="link-to-prism">projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/default-tabbed-case-view/default-tabbed-case-view.component.ts:182</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="200"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/tabbed/default-tabbed-case-view/default-tabbed-case-view.component.ts:200</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>option</td>
-                                    <td>
-                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
-                                    </td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>option</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
-
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="loadFilter"></a>
-                    <span class="name">
-                        <span ><b>loadFilter</b></span>
-                        <a href="#loadFilter"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-<code>loadFilter(filterData: SavedFilterMetadata)</code>
-                </td>
-            </tr>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="116"
-                            class="link-to-prism">projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/default-tabbed-case-view/default-tabbed-case-view.component.ts:116</a></div>
-                </td>
-            </tr>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
 
-
-            <tr>
-                <td class="col-md-4">
-
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>filterData</td>
-                                    <td>
-                                            <code>SavedFilterMetadata</code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
-
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -501,21 +636,58 @@
             </tr>
 
 
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="142"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/tabbed/default-tabbed-case-view/default-tabbed-case-view.component.ts:142</a></div>
+                        </td>
+                    </tr>
+
+
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="111"
-                            class="link-to-prism">projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/default-tabbed-case-view/default-tabbed-case-view.component.ts:111</a></div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnDestroy"></a>
+                    <span class="name">
+                        <span ><b>ngOnDestroy</b></span>
+                        <a href="#ngOnDestroy"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnDestroy()</code>
                 </td>
             </tr>
 
 
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="235"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/tabbed/default-tabbed-case-view/default-tabbed-case-view.component.ts:235</a></div>
+                        </td>
+                    </tr>
+
+
             <tr>
                 <td class="col-md-4">
 
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
-                    </div>
+                        </div>
                 </td>
             </tr>
         </tbody>
@@ -526,7 +698,7 @@
                 <td class="col-md-4">
                     <a name="openTab"></a>
                     <span class="name">
-                        <span class="modifier">Protected</span>
+                            <span class="modifier">Protected</span>
                         <span ><b>openTab</b></span>
                         <a href="#openTab"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -534,58 +706,57 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>openTab(openCase: Case)</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="129"
-                            class="link-to-prism">projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/default-tabbed-case-view/default-tabbed-case-view.component.ts:129</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="147"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/tabbed/default-tabbed-case-view/default-tabbed-case-view.component.ts:147</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>openCase</td>
-                                    <td>
-                                            <code>Case</code>
-                                    </td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>openCase</td>
+                                            <td>
+                                                        <code>Case</code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -596,7 +767,7 @@
                 <td class="col-md-4">
                     <a name="resolveAllowedNets"></a>
                     <span class="name">
-                        <span class="modifier">Protected</span>
+                            <span class="modifier">Protected</span>
                         <span ><b>resolveAllowedNets</b></span>
                         <a href="#resolveAllowedNets"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -604,58 +775,57 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>resolveAllowedNets(openCase: Case)</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="170"
-                            class="link-to-prism">projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/default-tabbed-case-view/default-tabbed-case-view.component.ts:170</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="188"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/tabbed/default-tabbed-case-view/default-tabbed-case-view.component.ts:188</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>openCase</td>
-                                    <td>
-                                            <code>Case</code>
-                                    </td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>openCase</td>
+                                            <td>
+                                                        <code>Case</code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>    <code>string[]</code>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>string[]</code>
 
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -666,7 +836,7 @@
                 <td class="col-md-4">
                     <a name="resolveFilter"></a>
                     <span class="name">
-                        <span class="modifier">Protected</span>
+                            <span class="modifier">Protected</span>
                         <span ><b>resolveFilter</b></span>
                         <a href="#resolveFilter"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -674,58 +844,57 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>resolveFilter(openCase: Case)</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="153"
-                            class="link-to-prism">projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/default-tabbed-case-view/default-tabbed-case-view.component.ts:153</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="171"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/tabbed/default-tabbed-case-view/default-tabbed-case-view.component.ts:171</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>openCase</td>
-                                    <td>
-                                            <code>Case</code>
-                                    </td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>openCase</td>
+                                            <td>
+                                                        <code>Case</code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>    <code>Filter</code>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Filter</code>
 
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -736,7 +905,7 @@
                 <td class="col-md-4">
                     <a name="resolveHeaderMode"></a>
                     <span class="name">
-                        <span class="modifier">Protected</span>
+                            <span class="modifier">Protected</span>
                         <span ><b>resolveHeaderMode</b></span>
                         <a href="#resolveHeaderMode"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -744,68 +913,93 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>resolveHeaderMode(mode: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="186"
-                            class="link-to-prism">projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/default-tabbed-case-view/default-tabbed-case-view.component.ts:186</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="204"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/tabbed/default-tabbed-case-view/default-tabbed-case-view.component.ts:204</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>mode</td>
-                                    <td>
-                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
-                                    </td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>mode</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>    <code>HeaderMode</code>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../classes/Mode.html" target="_self" >HeaderMode</a></code>
 
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
     </table>
 </section>
-    <section>
+    <section data-compodoc="block-properties">
     
     <h3 id="inputs">
         Properties
     </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="allowExport"></a>
+                    <span class="name">
+                        <span ><b>allowExport</b></span>
+                        <a href="#allowExport"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="101" class="link-to-prism">projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/tabbed/default-tabbed-case-view/default-tabbed-case-view.component.ts:101</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
     <table class="table table-sm table-bordered">
         <tbody>
             <tr>
@@ -825,7 +1019,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="85" class="link-to-prism">projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/default-tabbed-case-view/default-tabbed-case-view.component.ts:85</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="97" class="link-to-prism">projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/tabbed/default-tabbed-case-view/default-tabbed-case-view.component.ts:97</a></div>
                         </td>
                     </tr>
 
@@ -838,6 +1032,7 @@
                 <td class="col-md-4">
                     <a name="caseHeaderComponent"></a>
                     <span class="name">
+                            <span class="modifier"></span>
                             <span class="modifier">Public</span>
                         <span ><b>caseHeaderComponent</b></span>
                         <a href="#caseHeaderComponent"><span class="icon ion-ios-link"></span></a>
@@ -861,7 +1056,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="76" class="link-to-prism">projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/default-tabbed-case-view/default-tabbed-case-view.component.ts:76</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="88" class="link-to-prism">projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/tabbed/default-tabbed-case-view/default-tabbed-case-view.component.ts:88</a></div>
                         </td>
                     </tr>
 
@@ -881,13 +1076,65 @@
             </tr>
                 <tr>
                     <td class="col-md-4">
-                        <i>Type : </i>    <code>HeaderMode</code>
+                        <i>Type : </i>        <code><a href="../classes/Mode.html" target="_self" >HeaderMode</a></code>
 
                     </td>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="86" class="link-to-prism">projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/default-tabbed-case-view/default-tabbed-case-view.component.ts:86</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="98" class="link-to-prism">projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/tabbed/default-tabbed-case-view/default-tabbed-case-view.component.ts:98</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="emptyContentIcon"></a>
+                    <span class="name">
+                        <span ><b>emptyContentIcon</b></span>
+                        <a href="#emptyContentIcon"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="100" class="link-to-prism">projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/tabbed/default-tabbed-case-view/default-tabbed-case-view.component.ts:100</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="emptyContentText"></a>
+                    <span class="name">
+                        <span ><b>emptyContentText</b></span>
+                        <a href="#emptyContentText"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>I18nFieldValue</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="99" class="link-to-prism">projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/tabbed/default-tabbed-case-view/default-tabbed-case-view.component.ts:99</a></div>
                         </td>
                     </tr>
 
@@ -913,7 +1160,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="80" class="link-to-prism">projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/default-tabbed-case-view/default-tabbed-case-view.component.ts:80</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="92" class="link-to-prism">projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/tabbed/default-tabbed-case-view/default-tabbed-case-view.component.ts:92</a></div>
                         </td>
                     </tr>
 
@@ -939,7 +1186,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="83" class="link-to-prism">projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/default-tabbed-case-view/default-tabbed-case-view.component.ts:83</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="95" class="link-to-prism">projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/tabbed/default-tabbed-case-view/default-tabbed-case-view.component.ts:95</a></div>
                         </td>
                     </tr>
 
@@ -965,7 +1212,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="84" class="link-to-prism">projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/default-tabbed-case-view/default-tabbed-case-view.component.ts:84</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="96" class="link-to-prism">projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/tabbed/default-tabbed-case-view/default-tabbed-case-view.component.ts:96</a></div>
                         </td>
                     </tr>
 
@@ -985,13 +1232,39 @@
             </tr>
                 <tr>
                     <td class="col-md-4">
-                        <i>Type : </i>    <code>SearchMode</code>
+                        <i>Type : </i>        <code><a href="../classes/Mode.html" target="_self" >SearchMode</a></code>
 
                     </td>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="78" class="link-to-prism">projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/default-tabbed-case-view/default-tabbed-case-view.component.ts:78</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="90" class="link-to-prism">projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/tabbed/default-tabbed-case-view/default-tabbed-case-view.component.ts:90</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loading$"></a>
+                    <span class="name">
+                        <span ><b>loading$</b></span>
+                        <a href="#loading$"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>LoadingEmitter</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="102" class="link-to-prism">projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/tabbed/default-tabbed-case-view/default-tabbed-case-view.component.ts:102</a></div>
                         </td>
                     </tr>
 
@@ -1017,7 +1290,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="81" class="link-to-prism">projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/default-tabbed-case-view/default-tabbed-case-view.component.ts:81</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="93" class="link-to-prism">projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/tabbed/default-tabbed-case-view/default-tabbed-case-view.component.ts:93</a></div>
                         </td>
                     </tr>
 
@@ -1043,7 +1316,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="82" class="link-to-prism">projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/default-tabbed-case-view/default-tabbed-case-view.component.ts:82</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="94" class="link-to-prism">projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/tabbed/default-tabbed-case-view/default-tabbed-case-view.component.ts:94</a></div>
                         </td>
                     </tr>
 
@@ -1069,7 +1342,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="79" class="link-to-prism">projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/default-tabbed-case-view/default-tabbed-case-view.component.ts:79</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="91" class="link-to-prism">projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/tabbed/default-tabbed-case-view/default-tabbed-case-view.component.ts:91</a></div>
                         </td>
                     </tr>
 
@@ -1081,8 +1354,8 @@
 </div>
 
 
-    <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {AfterViewInit, Component, Inject, ViewChild} from &#x27;@angular/core&#x27;;
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {AfterViewInit, Component, Inject, OnDestroy, ViewChild} from &#x27;@angular/core&#x27;;
 import {
     AbstractTabbedCaseViewComponent,
     AllowedNetsService,
@@ -1091,7 +1364,6 @@ import {
     Case,
     CaseViewService,
     CategoryFactory,
-    CategoryResolverService,
     Filter,
     FilterExtractionService,
     FilterType,
@@ -1101,10 +1373,8 @@ import {
     NAE_BASE_FILTER,
     NAE_DEFAULT_CASE_SEARCH_CATEGORIES,
     NAE_DEFAULT_HEADERS,
-    NAE_DEFAULT_TASK_SEARCH_CATEGORIES,
     NAE_SEARCH_CATEGORIES,
     NAE_TAB_DATA,
-    SavedFilterMetadata,
     SearchMode,
     SearchService,
     SimpleFilter,
@@ -1112,16 +1382,28 @@ import {
     navigationItemCaseViewDefaultHeadersFactory,
     NAE_NAVIGATION_ITEM_TASK_DATA,
     OverflowService,
+    I18nFieldValue,
+    extractFieldValueFromData,
+    GroupNavigationConstants,
+    LoadingEmitter,
+    SnackBarService,
+    HeaderColumn,
+    ExportService,
+    NAE_DYNAMIC_DEFAULT_SORT,
+    ProcessService
 } from &#x27;@netgrif/components-core&#x27;;
-import {HeaderComponent} from &#x27;../../../../header/header.component&#x27;;
+import {HeaderComponent} from &#x27;../../../../../header/header.component&#x27;;
 import {
     InjectedTabbedCaseViewDataWithNavigationItemTaskData
-} from &#x27;../model/injected-tabbed-case-view-data-with-navigation-item-task-data&#x27;;
+} from &#x27;../../model/injected-tabbed-case-view-data-with-navigation-item-task-data&#x27;;
 import {
+    buildDynamicSortChangeDescriptionForCase$,
     filterCaseTabbedDataAllowedNetsServiceFactory,
-    filterCaseTabbedDataFilterFactory,
-    filterCaseTabbedDataSearchCategoriesFactory
-} from &#x27;../model/factory-methods&#x27;;
+    filterCaseTabbedDataFilterFactory
+} from &#x27;../../model/factory-methods&#x27;;
+import {ActivatedRoute} from &#x27;@angular/router&#x27;;
+import {Subscription} from &quot;rxjs&quot;;
+import {TranslateService} from &quot;@ngx-translate/core&quot;;
 
 @Component({
     selector: &#x27;nc-default-tabbed-case-view&#x27;,
@@ -1136,7 +1418,7 @@ import {
         {
             provide: NAE_BASE_FILTER,
             useFactory: filterCaseTabbedDataFilterFactory,
-            deps: [FilterExtractionService, NAE_TAB_DATA]
+            deps: [FilterExtractionService, NAE_TAB_DATA, ActivatedRoute]
         },
         {
             provide: AllowedNetsService,
@@ -1144,9 +1426,12 @@ import {
             deps: [AllowedNetsServiceFactory, BaseAllowedNetsService, NAE_TAB_DATA]
         },
         {
-            provide: NAE_SEARCH_CATEGORIES,
-            useFactory: filterCaseTabbedDataSearchCategoriesFactory,
-            deps: [CategoryResolverService, NAE_TAB_DATA, NAE_DEFAULT_CASE_SEARCH_CATEGORIES, NAE_DEFAULT_TASK_SEARCH_CATEGORIES]
+            provide: NAE_DYNAMIC_DEFAULT_SORT,
+            useFactory: buildDynamicSortChangeDescriptionForCase$,
+            deps: [NAE_NAVIGATION_ITEM_TASK_DATA, ProcessService]
+        },
+        {
+            provide: NAE_SEARCH_CATEGORIES, useExisting: NAE_DEFAULT_CASE_SEARCH_CATEGORIES
         },
         {
             provide: NAE_DEFAULT_HEADERS,
@@ -1155,7 +1440,7 @@ import {
         }
     ]
 })
-export class DefaultTabbedCaseViewComponent extends AbstractTabbedCaseViewComponent implements AfterViewInit {
+export class DefaultTabbedCaseViewComponent extends AbstractTabbedCaseViewComponent implements AfterViewInit, OnDestroy {
 
     @ViewChild(&#x27;header&#x27;) public caseHeaderComponent: HeaderComponent;
 
@@ -1168,8 +1453,18 @@ export class DefaultTabbedCaseViewComponent extends AbstractTabbedCaseViewCompon
     headersMode: string[];
     allowTableMode: boolean;
     defaultHeadersMode: HeaderMode;
+    emptyContentText: I18nFieldValue;
+    emptyContentIcon: string;
+    allowExport: boolean;
+    loading$: LoadingEmitter;
+    private _currentHeaders: Array&lt;HeaderColumn&gt; &#x3D; [];
+    private _headersSub: Subscription;
 
     constructor(caseViewService: CaseViewService,
+                protected _exportService: ExportService,
+                protected _searchService: SearchService,
+                protected _snackbar: SnackBarService,
+                protected _translate: TranslateService,
                 loggerService: LoggerService,
                 viewIdService: ViewIdService,
                 overflowService: OverflowService,
@@ -1185,29 +1480,25 @@ export class DefaultTabbedCaseViewComponent extends AbstractTabbedCaseViewCompon
         this.headersMode &#x3D; _injectedTabData.caseViewHeadersMode ? _injectedTabData.caseViewHeadersMode : [];
         this.allowTableMode &#x3D; this._injectedTabData.caseViewAllowTableMode;
         this.defaultHeadersMode &#x3D; this.resolveHeaderMode(_injectedTabData.caseViewDefaultHeadersMode);
+        this.allowExport &#x3D; this._injectedTabData.caseViewAllowExport;
+        this.loading$ &#x3D; new LoadingEmitter();
+        this._headersSub &#x3D; this.selectedHeaders$.subscribe(headers &#x3D;&gt; {
+            this._currentHeaders &#x3D; headers;
+        });
 
         if (!this.allowTableMode) {
             const viewId &#x3D; viewIdService.viewId;
             localStorage.setItem(viewId + &#x27;-overflowMode&#x27;, &#x27;false&#x27;);
+        }
+        if (!!_injectedTabData.navigationItemTaskData) {
+            this.emptyContentText &#x3D; extractFieldValueFromData&lt;I18nFieldValue&gt;(_injectedTabData.navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_ID_CASE_EMPTY_CONTENT_TEXT);
+            this.emptyContentIcon &#x3D; extractFieldValueFromData&lt;string&gt;(_injectedTabData.navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_ID_CASE_EMPTY_CONTENT_ICON);
         }
     }
 
     ngAfterViewInit(): void {
         super.initializeHeader(this.caseHeaderComponent);
         this.caseHeaderComponent.changeHeadersMode(this.defaultHeadersMode, false);
-    }
-
-    loadFilter(filterData: SavedFilterMetadata) {
-        this._injectedTabData.tabViewRef.openTab({
-            label: {
-                text: filterData.filter.title
-            },
-            canBeClosed: true,
-            tabContentComponent: DefaultTabbedCaseViewComponent,
-            injectedObject: {...this._injectedTabData, filterCase: filterData.filterCase},
-            order: this._injectedTabData.tabViewOrder,
-            parentUniqueId: this._injectedTabData.tabUniqueId
-        }, this._autoswitchToTaskTab, this._openExistingTab);
     }
 
     protected openTab(openCase: Case) {
@@ -1235,12 +1526,12 @@ export class DefaultTabbedCaseViewComponent extends AbstractTabbedCaseViewCompon
     }
 
     protected resolveFilter(openCase: Case): Filter {
-        const additionalFilter &#x3D; this._injectedTabData.taskViewAdditionalFilter;
+        const additionalFilter &#x3D; this._injectedTabData.taskViewFilter;
         const mergeFilters &#x3D; this._injectedTabData.taskViewMergeWithBaseFilter;
         const baseFilter &#x3D; new SimpleFilter(&#x27;&#x27;, FilterType.TASK, {case: {id: &#x60;${openCase.stringId}&#x60;}});
 
         let filter;
-        if (additionalFilter &#x3D;&#x3D;&#x3D; undefined) {
+        if (additionalFilter &#x3D;&#x3D;&#x3D; undefined || additionalFilter.type &#x3D;&#x3D;&#x3D; undefined) {
             filter &#x3D; baseFilter;
         } else if (mergeFilters) {
             filter &#x3D; additionalFilter.merge(baseFilter, MergeOperator.AND);
@@ -1252,13 +1543,13 @@ export class DefaultTabbedCaseViewComponent extends AbstractTabbedCaseViewCompon
     }
 
     protected resolveAllowedNets(openCase: Case): string[] {
-        const additionalFilter &#x3D; this._injectedTabData.taskViewAdditionalFilter;
+        const additionalFilter &#x3D; this._injectedTabData.taskViewFilter;
         if (additionalFilter &#x3D;&#x3D; undefined) {
             return [openCase.processIdentifier];
         }
 
         const mergeFilters &#x3D; this._injectedTabData.taskViewMergeWithBaseFilter;
-        const additionalAllowedNets &#x3D; this._injectedTabData.taskViewAdditionalAllowedNets ? this._injectedTabData.taskViewAdditionalAllowedNets : [];
+        const additionalAllowedNets &#x3D; this._injectedTabData.taskViewAllowedNets ? this._injectedTabData.taskViewAllowedNets : [];
 
         return mergeFilters ? [openCase.processIdentifier, ...additionalAllowedNets] : additionalAllowedNets
     }
@@ -1279,11 +1570,35 @@ export class DefaultTabbedCaseViewComponent extends AbstractTabbedCaseViewCompon
                 return undefined;
         }
     }
+
+    isLoading(): boolean {
+        return this.loading$.isActive;
+    }
+
+    export(): void {
+        if (this.loading$.isActive) {
+            return;
+        }
+        this.loading$.on();
+        this._exportService.downloadExcelFromCurrentSelection(this._searchService.activeFilter, this._currentHeaders).subscribe(() &#x3D;&gt; {
+            this.loading$.off();
+        },error &#x3D;&gt; {
+            this._loggerService.error(&#x27;File download failed&#x27;, error);
+            this._snackbar.openErrorSnackBar(this._translate.instant(&#x27;export.errorExportDownload&#x27;));
+            this.loading$.off();
+        });
+    }
+
+    ngOnDestroy(): void {
+        super.ngOnDestroy();
+        this._headersSub?.unsubscribe();
+        this.loading$.complete()
+    }
 }
 </code></pre>
     </div>
 
-    <div class="tab-pane fade " id="c-templateData">
+    <div class="tab-pane fade " id="templateData">
         <pre class="line-numbers"><code class="language-html">&lt;div class&#x3D;&quot;case-view-container&quot; fxLayout&#x3D;&quot;column&quot; fxLayoutAlign&#x3D;&quot;start stretch&quot;&gt;
     &lt;nc-breadcrumbs&gt;&lt;/nc-breadcrumbs&gt;
 
@@ -1291,7 +1606,14 @@ export class DefaultTabbedCaseViewComponent extends AbstractTabbedCaseViewCompon
         &lt;div fxLayout&#x3D;&quot;row&quot; class&#x3D;&quot;max-height&quot; fxLayoutAlign&#x3D;&quot;space-between&quot;&gt;
             &lt;div fxLayoutAlign&#x3D;&quot;start center&quot; fxFlex&gt;
                 &lt;nc-search class&#x3D;&quot;search-width search-fix&quot; *ngIf&#x3D;&quot;(enableSearch)&quot; [showSearchToggleButton]&#x3D;&quot;showToggleButton&quot;
-                           [initialSearchMode]&#x3D;&quot;initialSearchMode&quot; (filterLoaded)&#x3D;&quot;loadFilter($event)&quot;&gt;&lt;/nc-search&gt;
+                           [initialSearchMode]&#x3D;&quot;initialSearchMode&quot;&gt;&lt;/nc-search&gt;
+            &lt;/div&gt;
+            &lt;div fxLayoutAlign&#x3D;&quot;end center&quot; *ngIf&#x3D;&quot;allowExport&quot;&gt;
+                &lt;button mat-mini-fab color&#x3D;&quot;primary&quot; class&#x3D;&quot;export-mat-mini-fab&quot; (click)&#x3D;&quot;export()&quot;
+                        [disabled]&#x3D;&quot;isLoading()&quot;&gt;
+                    &lt;mat-icon class&#x3D;&quot;net-upload&quot; *ngIf&#x3D;&quot;(isLoading()) &#x3D;&#x3D;&#x3D; false&quot; aria-hidden&#x3D;&quot;false&quot; &gt;save_alt&lt;/mat-icon&gt;
+                    &lt;mat-icon class&#x3D;&quot;net-upload&quot; *ngIf&#x3D;&quot;isLoading()&quot; aria-hidden&#x3D;&quot;false&quot;&gt;schedule&lt;/mat-icon&gt;
+                &lt;/button&gt;
             &lt;/div&gt;
             &lt;div fxLayoutAlign&#x3D;&quot;end center&quot; *ngIf&#x3D;&quot;showCreateCaseButton&quot;&gt;
                 &lt;nc-create-case-button [newCaseCreationConfig]&#x3D;&quot;newCaseCreationConfig&quot; (caseCreatedEvent)&#x3D;&quot;handleCaseClick($event)&quot;&gt;&lt;/nc-create-case-button&gt;
@@ -1302,19 +1624,20 @@ export class DefaultTabbedCaseViewComponent extends AbstractTabbedCaseViewCompon
     &lt;div class&#x3D;&quot;full-height transform-div custom-scrollbar&quot;
          [ngClass]&#x3D;&quot;{&#x27;overflow-div&#x27;: getOverflowStatus()}&quot; fxLayout&#x3D;&quot;column&quot; fxLayoutAlign&#x3D;&quot;start stretch&quot;&gt;
         &lt;div class&#x3D;&quot;full-height transform-div max-width-fix&quot; fxLayout&#x3D;&quot;column&quot; fxLayoutAlign&#x3D;&quot;start stretch&quot;&gt;
-            &lt;nc-header #header [type]&#x3D;&quot;headerType&quot; [maxHeaderColumns]&#x3D;&quot;9&quot; [responsiveHeaders]&#x3D;&quot;false&quot; [ngStyle]&#x3D;&quot;{&#x27;width&#x27;: getWidth()}&quot; [hideHeaderMenu]&#x3D;&quot;!headersChangeable&quot; [showEditButton]&#x3D;&quot;isMenuOptionEnabled(&#x27;edit&#x27;)&quot;
+            &lt;nc-header #header [type]&#x3D;&quot;headerType&quot; [responsiveHeaders]&#x3D;&quot;true&quot; [ngStyle]&#x3D;&quot;{&#x27;width&#x27;: getWidth()}&quot; [hideHeaderMenu]&#x3D;&quot;!headersChangeable&quot; [showEditButton]&#x3D;&quot;isMenuOptionEnabled(&#x27;edit&#x27;)&quot;
                        [showSortButton]&#x3D;&quot;isMenuOptionEnabled(&#x27;sort&#x27;)&quot; [showSearchButton]&#x3D;&quot;isMenuOptionEnabled(&#x27;search&#x27;)&quot;
                        [showTableSection]&#x3D;&quot;allowTableMode&quot; class&#x3D;&quot;case-header-padding&quot;&gt;&lt;/nc-header&gt;
 
             &lt;nc-case-list [selectedHeaders$]&#x3D;&quot;selectedHeaders$&quot; [textEllipsis]&#x3D;&quot;true&quot; [showDeleteMenu]&#x3D;&quot;showDeleteMenu&quot; [width]&#x3D;&quot;getWidth()&quot;
-                          (caseClick)&#x3D;&quot;handleCaseClick($event)&quot; [responsiveBody]&#x3D;&quot;true&quot; fxFlex&gt;&lt;/nc-case-list&gt;
+                          (caseClick)&#x3D;&quot;handleCaseClick($event)&quot; [responsiveBody]&#x3D;&quot;true&quot; [emptyContentText]&#x3D;&quot;emptyContentText&quot;
+                          [emptyContentIcon]&#x3D;&quot;emptyContentIcon&quot; fxFlex&gt;&lt;/nc-case-list&gt;
         &lt;/div&gt;
     &lt;/div&gt;
 &lt;/div&gt;
 </code></pre>
     </div>
 
-    <div class="tab-pane fade " id="c-styleData">
+    <div class="tab-pane fade " id="styleData">
                 <p class="comment">
                     <code>./default-tabbed-case-view.component.scss</code>
                 </p>
@@ -1322,6 +1645,20 @@ export class DefaultTabbedCaseViewComponent extends AbstractTabbedCaseViewCompon
     margin: 16px 24px;
     height: calc(100% - 32px);
     overflow: auto
+}
+
+.button-icon {
+    padding-right: 4px;
+    padding-bottom: 2px;
+}
+
+.export-mat-mini-fab {
+    border-radius: 6px;
+    box-shadow: none;
+    height: 44px !important;
+    min-width: 44px;
+    margin-right: 8px;
+    margin-top: 2px;
 }
 
 .case-view-search-container {
@@ -1388,7 +1725,7 @@ export class DefaultTabbedCaseViewComponent extends AbstractTabbedCaseViewCompon
 </code></pre>
     </div>
 
-    <div class="tab-pane fade " id="c-tree">
+    <div class="tab-pane fade " id="tree">
         <div id="tree-container"></div>
         <div class="tree-legend">
             <div class="title">
@@ -1413,8 +1750,8 @@ export class DefaultTabbedCaseViewComponent extends AbstractTabbedCaseViewCompon
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><div class="case-view-container" fxLayout="column" fxLayoutAlign="start stretch">    <nc-breadcrumbs></nc-breadcrumbs>    <div class="case-view-search-container">        <div fxLayout="row" class="max-height" fxLayoutAlign="space-between">            <div fxLayoutAlign="start center" fxFlex>                <nc-search class="search-width search-fix" *ngIf="(enableSearch)" [showSearchToggleButton]="showToggleButton"                           [initialSearchMode]="initialSearchMode" (filterLoaded)="loadFilter($event)"></nc-search>            </div>            <div fxLayoutAlign="end center" *ngIf="showCreateCaseButton">                <nc-create-case-button [newCaseCreationConfig]="newCaseCreationConfig" (caseCreatedEvent)="handleCaseClick($event)"></nc-create-case-button>            </div>        </div>    </div>    <div class="full-height transform-div custom-scrollbar"         [ngClass]="{\'overflow-div\': getOverflowStatus()}" fxLayout="column" fxLayoutAlign="start stretch">        <div class="full-height transform-div max-width-fix" fxLayout="column" fxLayoutAlign="start stretch">            <nc-header #header [type]="headerType" [maxHeaderColumns]="9" [responsiveHeaders]="false" [ngStyle]="{\'width\': getWidth()}" [hideHeaderMenu]="!headersChangeable" [showEditButton]="isMenuOptionEnabled(\'edit\')"                       [showSortButton]="isMenuOptionEnabled(\'sort\')" [showSearchButton]="isMenuOptionEnabled(\'search\')"                       [showTableSection]="allowTableMode" class="case-header-padding"></nc-header>            <nc-case-list [selectedHeaders$]="selectedHeaders$" [textEllipsis]="true" [showDeleteMenu]="showDeleteMenu" [width]="getWidth()"                          (caseClick)="handleCaseClick($event)" [responsiveBody]="true" fxFlex></nc-case-list>        </div>    </div></div></div>'
-    var COMPONENTS = [{'name': 'AddChildNodeComponent', 'selector': 'nc-add-child-node'},{'name': 'AdminImpersonateComponent', 'selector': 'nc-admin-impersonate'},{'name': 'AdminImpersonateDialogComponent', 'selector': 'nc-admin-impersonate-dialog'},{'name': 'AdminImpersonateItemComponent', 'selector': 'nc-admin-impersonate-item'},{'name': 'AdminImpersonateListComponent', 'selector': 'nc-admin-impersonate-list'},{'name': 'AdvancedSearchComponent', 'selector': 'nc-advanced-search'},{'name': 'AuthenticationOverlayComponent', 'selector': 'nc-authentication-overlay'},{'name': 'BarchartCardComponent', 'selector': 'nc-barchart-card'},{'name': 'BooleanDefaultFieldComponent', 'selector': 'nc-boolean-default-field'},{'name': 'BooleanFieldComponent', 'selector': 'nc-boolean-field'},{'name': 'BreadcrumbsComponent', 'selector': 'nc-breadcrumbs'},{'name': 'ButtonDefaultFieldComponent', 'selector': 'nc-button-default-field'},{'name': 'ButtonFieldComponent', 'selector': 'nc-button-field'},{'name': 'CaseListComponent', 'selector': 'nc-case-list'},{'name': 'CaseListPaginatorComponent', 'selector': 'nc-case-list-paginator'},{'name': 'CasePanelComponent', 'selector': 'nc-case-panel'},{'name': 'CaseRefDefaultComponent', 'selector': 'nc-case-ref-default'},{'name': 'CaseSearchComponent', 'selector': 'nc-case-search'},{'name': 'ChangePasswordFormComponent', 'selector': 'nc-change-password-form'},{'name': 'CountCardComponent', 'selector': 'nc-count-card'},{'name': 'CreateCaseButtonComponent', 'selector': 'nc-create-case-button'},{'name': 'DashboardBarChartTextFieldComponent', 'selector': 'nc-dashboard-bar-chart-text-field'},{'name': 'DashboardContentComponent', 'selector': 'nc-dashboard-content'},{'name': 'DashboardIframeTextFieldComponent', 'selector': 'nc-dashboard-iframe-text-field'},{'name': 'DashboardLineChartTextFieldComponent', 'selector': 'nc-dashboard-line-chart-text-field'},{'name': 'DashboardPieChartTextFieldComponent', 'selector': 'nc-dashboard-pie-chart-text-field'},{'name': 'DashboardPortalTextFieldComponent', 'selector': 'nc-dashboard-portal-text-field'},{'name': 'DataFieldTemplateComponent', 'selector': 'nc-data-field-template'},{'name': 'DateDefaultFieldComponent', 'selector': 'nc-date-default-field'},{'name': 'DateFieldComponent', 'selector': 'nc-date-field'},{'name': 'DateTimeDefaultFieldComponent', 'selector': 'nc-date-time-default-field'},{'name': 'DateTimeFieldComponent', 'selector': 'nc-date-time-field'},{'name': 'DefaultCaseRefListViewComponent', 'selector': 'nc-default-case-view'},{'name': 'DefaultNoFilterProvidedComponent', 'selector': 'nc-default-no-filter-provided'},{'name': 'DefaultSimpleTaskViewComponent', 'selector': 'nc-default-simple-task-view'},{'name': 'DefaultTabbedCaseViewComponent', 'selector': 'nc-default-tabbed-case-view'},{'name': 'DefaultTabbedTaskViewComponent', 'selector': 'nc-default-tabbed-task-view'},{'name': 'DefaultTabViewComponent', 'selector': 'nc-default-tab-view'},{'name': 'DefaultTaskViewComponent', 'selector': 'nc-default-task-view'},{'name': 'EasymdeWrapperComponent', 'selector': 'nc-easymde-wrapper'},{'name': 'EditModeComponent', 'selector': 'nc-edit-mode'},{'name': 'EmailSubmissionFormComponent', 'selector': 'nc-email-submission-form'},{'name': 'EnumerationAutocompleteDynamicFieldComponent', 'selector': 'nc-enumeration-autocomplete-dynamic-field'},{'name': 'EnumerationAutocompleteSelectFieldComponent', 'selector': 'nc-enumeration-autocomplete-select-field'},{'name': 'EnumerationCaserefFieldComponent', 'selector': 'nc-enumeration-caseref-field'},{'name': 'EnumerationFieldComponent', 'selector': 'nc-enumeration-field'},{'name': 'EnumerationIconFieldComponent', 'selector': 'nc-enumeration-icon-field'},{'name': 'EnumerationListFieldComponent', 'selector': 'nc-enumeration-list-field'},{'name': 'EnumerationSelectFieldComponent', 'selector': 'nc-enumeration-select-field'},{'name': 'EnumerationStepperFieldComponent', 'selector': 'nc-enumeration-stepper-field'},{'name': 'FieldComponentResolverComponent', 'selector': 'nc-field-component-resolver'},{'name': 'FileDefaultFieldComponent', 'selector': 'nc-file-default-field'},{'name': 'FileFieldComponent', 'selector': 'nc-file-field'},{'name': 'FileListDefaultFieldComponent', 'selector': 'nc-file-list-default-field'},{'name': 'FileListFieldComponent', 'selector': 'nc-file-list-field'},{'name': 'FilterDefaultFieldComponent', 'selector': 'nc-filter-default-field'},{'name': 'FilterFieldComponent', 'selector': 'nc-filter-field'},{'name': 'FilterFieldContentComponent', 'selector': 'nc-filter-field-content'},{'name': 'FilterFieldTabbedCaseViewComponent', 'selector': 'nc-filter-field-tabbed-case-view'},{'name': 'FilterFieldTabbedTaskViewComponent', 'selector': 'nc-filter-field-tabbed-task-view'},{'name': 'FilterFieldTabViewComponent', 'selector': 'nc-filter-field-tab-view'},{'name': 'FilterFieldTabViewContentComponent', 'selector': 'nc-filter-field-tab-view-content'},{'name': 'FilterSelectorComponent', 'selector': 'nc-filter-selector'},{'name': 'FilterSelectorDialogComponent', 'selector': 'nc-filter-selector-dialog'},{'name': 'ForgottenPasswordFormComponent', 'selector': 'nc-forgotten-password-form'},{'name': 'FulltextSearchComponent', 'selector': 'nc-fulltext-search'},{'name': 'GroupNavigationComponentResolverComponent', 'selector': 'nc-group-navigation-component-resolver'},{'name': 'HeaderComponent', 'selector': 'nc-header'},{'name': 'HtmlTextareaFieldComponent', 'selector': 'nc-html-textarea-field'},{'name': 'I18nDividerFieldComponent', 'selector': 'nc-i18n-divider-field'},{'name': 'I18nFieldComponent', 'selector': 'nc-i18n-field'},{'name': 'I18nTextFieldComponent', 'selector': 'nc-i18n-text-field'},{'name': 'IframeCardComponent', 'selector': 'nc-iframe-card'},{'name': 'ImmediateFilterTextComponent', 'selector': 'nc-immediate-filter-text'},{'name': 'ImmediateFilterTextContentComponent', 'selector': 'nc-immediate-filter-text-content'},{'name': 'ImpersonateQuickPanelComponent', 'selector': 'nc-impersonate-quick-panel'},{'name': 'ImportNetComponent', 'selector': 'nc-import-net'},{'name': 'ImportNetDialogComponent', 'selector': 'nc-import-net-dialog'},{'name': 'InternalLinkComponent', 'selector': 'nc-internal-link'},{'name': 'LanguageSelectorComponent', 'selector': 'nc-language-selector'},{'name': 'LdapGroupRoleAssignmentComponent', 'selector': 'nc-ldap-group-role-assignment'},{'name': 'LegalNoticeComponent', 'selector': 'nc-legal-notice'},{'name': 'LinearGaugeCardComponent', 'selector': 'nc-linear-gauge-card'},{'name': 'LineChartCardComponent', 'selector': 'nc-line-chart-card'},{'name': 'LoadFilterComponent', 'selector': 'nc-load-filter'},{'name': 'LoadFilterDialogComponent', 'selector': 'nc-load-filter-dialog'},{'name': 'LoadingModeComponent', 'selector': 'nc-loading-mode'},{'name': 'LoginFormComponent', 'selector': 'nc-login-form'},{'name': 'LogoutShortcutComponent', 'selector': 'nc-logout-shortcut'},{'name': 'MultichoiceAutocompleteFieldComponent', 'selector': 'nc-multichoice-autocomplete-field'},{'name': 'MultichoiceCaserefFieldComponent', 'selector': 'nc-multichoice-caseref-field'},{'name': 'MultichoiceFieldComponent', 'selector': 'nc-multichoice-field'},{'name': 'MultichoiceListFieldComponent', 'selector': 'nc-multichoice-list-field'},{'name': 'MultichoiceSelectFieldComponent', 'selector': 'nc-multichoice-select-field'},{'name': 'MultiUserAssignComponent', 'selector': 'nc-multi-user-assign'},{'name': 'MultiUserAssignDialogComponent', 'selector': 'nc-multi-user-assign-dialog'},{'name': 'MultiUserAssignItemComponent', 'selector': 'nc-multi-user-assign-item'},{'name': 'MultiUserAssignListComponent', 'selector': 'nc-multi-user-assign-list'},{'name': 'NavigationDoubleDrawerComponent', 'selector': 'nc-navigation-double-drawer'},{'name': 'NavigationDrawerComponent', 'selector': 'nc-navigation-drawer'},{'name': 'NavigationRailComponent', 'selector': 'nc-navigation-rail'},{'name': 'NavigationTreeComponent', 'selector': 'nc-navigation-tree'},{'name': 'NewCaseComponent', 'selector': 'nc-new-case'},{'name': 'NewCaseDialogComponent', 'selector': 'nc-new-case-dialog'},{'name': 'NumberCurrencyFieldComponent', 'selector': 'nc-number-currency-field'},{'name': 'NumberDecimalFieldComponent', 'selector': 'nc-number-decimal-field'},{'name': 'NumberDefaultFieldComponent', 'selector': 'nc-number-default-field'},{'name': 'NumberFieldComponent', 'selector': 'nc-number-field'},{'name': 'OptionSelectorComponent', 'selector': 'nc-option-selector'},{'name': 'PanelComponent', 'selector': 'nc-app-panel'},{'name': 'PanelItemComponent', 'selector': 'nc-panel-item'},{'name': 'PasswordTextFieldComponent', 'selector': 'nc-password-text-field'},{'name': 'PieChartCardComponent', 'selector': 'nc-pie-chart-card'},{'name': 'PopupSessionIdleComponent', 'selector': 'nc-popup-session-idle'},{'name': 'PortalCardComponent', 'selector': 'nc-portal-card'},{'name': 'PreviewDialogComponent', 'selector': 'nc-preview-dialog'},{'name': 'ProfileComponent', 'selector': 'nc-user-profile'},{'name': 'PublicWorkflowPanelComponent', 'selector': 'nc-public-workflow-panel'},{'name': 'QuickPanelComponent', 'selector': 'nc-quick-panel'},{'name': 'RedirectComponent', 'selector': 'nc-redirect'},{'name': 'RegistrationFormComponent', 'selector': 'nc-registration-form'},{'name': 'RemoveNodeComponent', 'selector': 'nc-remove-node'},{'name': 'RequiredLabelComponent', 'selector': 'nc-required-label'},{'name': 'RichTextareaFieldComponent', 'selector': 'nc-rich-textarea-field'},{'name': 'RoleAssignmentComponent', 'selector': 'nc-role-assignment'},{'name': 'SaveFilterComponent', 'selector': 'nc-save-filter'},{'name': 'SaveFilterDialogComponent', 'selector': 'nc-save-filter-dialog'},{'name': 'SearchClauseComponent', 'selector': 'nc-search-clause'},{'name': 'SearchComponent', 'selector': 'nc-search'},{'name': 'SearchConfigurationInputComponent', 'selector': 'nc-search-configuration-input'},{'name': 'SearchModeComponent', 'selector': 'nc-search-mode'},{'name': 'SearchOperandInputComponent', 'selector': 'nc-search-operand-input'},{'name': 'SearchPredicateComponent', 'selector': 'nc-search-predicate'},{'name': 'SessionIdleComponent', 'selector': 'nc-session-idle'},{'name': 'SideMenuContainerComponent', 'selector': 'nc-side-menu-container'},{'name': 'SignaturePadFieldComponent', 'selector': 'nc-signature-pad-field'},{'name': 'SimpleTextFieldComponent', 'selector': 'nc-simple-text-field'},{'name': 'SingleTaskComponent', 'selector': 'nc-single-task'},{'name': 'SortModeComponent', 'selector': 'nc-sort-mode'},{'name': 'StringCollectionDefaultFieldComponent', 'selector': 'nc-string-collection-default-field'},{'name': 'TabViewComponent', 'selector': 'nc-tab-view'},{'name': 'TaskContentComponent', 'selector': 'nc-task-content'},{'name': 'TaskListComponent', 'selector': 'nc-task-list'},{'name': 'TaskListPaginationComponent', 'selector': 'nc-task-list-pagination'},{'name': 'TaskPanelComponent', 'selector': 'nc-task-panel'},{'name': 'TaskRefDashboardFieldComponent', 'selector': 'nc-task-ref-dashboard-field'},{'name': 'TaskRefDashboardTileComponent', 'selector': 'nc-task-ref-dashboard-tile'},{'name': 'TaskRefFieldComponent', 'selector': 'nc-task-ref-field'},{'name': 'TaskRefListFieldComponent', 'selector': 'nc-task-ref-list-field'},{'name': 'TaskSearchComponent', 'selector': 'nc-task-search'},{'name': 'TaskViewDialogComponent', 'selector': 'nc-task-view-dialog'},{'name': 'TextareaFieldComponent', 'selector': 'nc-textarea-field'},{'name': 'TextFieldComponent', 'selector': 'nc-text-field'},{'name': 'ToolbarComponent', 'selector': 'nc-toolbar'},{'name': 'TreeComponent', 'selector': 'nc-tree-component'},{'name': 'TreeTaskContentComponent', 'selector': 'nc-tree-task-content'},{'name': 'UserAssignComponent', 'selector': 'nc-user-assign'},{'name': 'UserAssignDialogComponent', 'selector': 'nc-user-assign-dialog'},{'name': 'UserAssignItemComponent', 'selector': 'nc-user-assign-item'},{'name': 'UserAssignListComponent', 'selector': 'nc-user-assign-list'},{'name': 'UserCardComponent', 'selector': 'nc-user-card'},{'name': 'UserDefaultFieldComponent', 'selector': 'nc-user-default-field'},{'name': 'UserFieldComponent', 'selector': 'nc-user-field'},{'name': 'UserImpersonateComponent', 'selector': 'nc-user-impersonate'},{'name': 'UserImpersonateDialogComponent', 'selector': 'nc-user-impersonate-dialog'},{'name': 'UserInviteComponent', 'selector': 'nc-user-invite'},{'name': 'UserListDefaultFieldComponent', 'selector': 'nc-user-list-default-field'},{'name': 'UserListFieldComponent', 'selector': 'nc-user-list-field'},{'name': 'WorkflowPanelComponent', 'selector': 'nc-workflow-panel'},{'name': 'WorkflowViewComponent', 'selector': 'nc-workflow-view'}];
+        var COMPONENT_TEMPLATE = '<div><div class="case-view-container" fxLayout="column" fxLayoutAlign="start stretch">    <nc-breadcrumbs></nc-breadcrumbs>    <div class="case-view-search-container">        <div fxLayout="row" class="max-height" fxLayoutAlign="space-between">            <div fxLayoutAlign="start center" fxFlex>                <nc-search class="search-width search-fix" *ngIf="(enableSearch)" [showSearchToggleButton]="showToggleButton"                           [initialSearchMode]="initialSearchMode"></nc-search>            </div>            <div fxLayoutAlign="end center" *ngIf="allowExport">                <button mat-mini-fab color="primary" class="export-mat-mini-fab" (click)="export()"                        [disabled]="isLoading()">                    <mat-icon class="net-upload" *ngIf="(isLoading()) === false" aria-hidden="false" >save_alt</mat-icon>                    <mat-icon class="net-upload" *ngIf="isLoading()" aria-hidden="false">schedule</mat-icon>                </button>            </div>            <div fxLayoutAlign="end center" *ngIf="showCreateCaseButton">                <nc-create-case-button [newCaseCreationConfig]="newCaseCreationConfig" (caseCreatedEvent)="handleCaseClick($event)"></nc-create-case-button>            </div>        </div>    </div>    <div class="full-height transform-div custom-scrollbar"         [ngClass]="{\'overflow-div\': getOverflowStatus()}" fxLayout="column" fxLayoutAlign="start stretch">        <div class="full-height transform-div max-width-fix" fxLayout="column" fxLayoutAlign="start stretch">            <nc-header #header [type]="headerType" [responsiveHeaders]="true" [ngStyle]="{\'width\': getWidth()}" [hideHeaderMenu]="!headersChangeable" [showEditButton]="isMenuOptionEnabled(\'edit\')"                       [showSortButton]="isMenuOptionEnabled(\'sort\')" [showSearchButton]="isMenuOptionEnabled(\'search\')"                       [showTableSection]="allowTableMode" class="case-header-padding"></nc-header>            <nc-case-list [selectedHeaders$]="selectedHeaders$" [textEllipsis]="true" [showDeleteMenu]="showDeleteMenu" [width]="getWidth()"                          (caseClick)="handleCaseClick($event)" [responsiveBody]="true" [emptyContentText]="emptyContentText"                          [emptyContentIcon]="emptyContentIcon" fxFlex></nc-case-list>        </div>    </div></div></div>'
+    var COMPONENTS = [{'name': 'AbstractMasterComponent', 'selector': 'nc-builder-abstract-master-component'},{'name': 'ActionDetailComponent', 'selector': 'nc-builder-action-detail'},{'name': 'ActionEditorComponent', 'selector': 'nc-builder-action-editor'},{'name': 'ActionEditorListComponent', 'selector': 'nc-builder-action-editor-list'},{'name': 'ActionEditorMenuComponent', 'selector': 'nc-builder-action-editor-menu'},{'name': 'ActionEditorMenuDescriptionComponent', 'selector': 'nc-builder-action-editor-menu-description'},{'name': 'ActionEditorMenuItemComponent', 'selector': 'nc-builder-action-editor-menu-item'},{'name': 'ActionMasterComponent', 'selector': 'nc-builder-action-master'},{'name': 'ActionMasterItemComponent', 'selector': 'nc-builder-action-master-item'},{'name': 'ActionsModeComponent', 'selector': 'nc-builder-actions-mode'},{'name': 'AddChildNodeComponent', 'selector': 'nc-add-child-node'},{'name': 'AdminImpersonateComponent', 'selector': 'nc-admin-impersonate'},{'name': 'AdminImpersonateDialogComponent', 'selector': 'nc-admin-impersonate-dialog'},{'name': 'AdminImpersonateItemComponent', 'selector': 'nc-admin-impersonate-item'},{'name': 'AdminImpersonateListComponent', 'selector': 'nc-admin-impersonate-list'},{'name': 'AdvancedSearchComponent', 'selector': 'nc-advanced-search'},{'name': 'AuthenticationOverlayComponent', 'selector': 'nc-authentication-overlay'},{'name': 'BarchartCardComponent', 'selector': 'nc-barchart-card'},{'name': 'BooleanDefaultFieldComponent', 'selector': 'nc-boolean-default-field'},{'name': 'BooleanFieldComponent', 'selector': 'nc-boolean-field'},{'name': 'BreadcrumbsComponent', 'selector': 'nc-breadcrumbs'},{'name': 'BuilderComponent', 'selector': 'nc-builder'},{'name': 'ButtonDefaultFieldComponent', 'selector': 'nc-button-default-field'},{'name': 'ButtonFieldComponent', 'selector': 'nc-button-field'},{'name': 'CaseListComponent', 'selector': 'nc-case-list'},{'name': 'CaseListPaginatorComponent', 'selector': 'nc-case-list-paginator'},{'name': 'CasePanelComponent', 'selector': 'nc-case-panel'},{'name': 'CaseRefDefaultComponent', 'selector': 'nc-case-ref-default'},{'name': 'CaseSearchComponent', 'selector': 'nc-case-search'},{'name': 'ChangePasswordFormComponent', 'selector': 'nc-change-password-form'},{'name': 'ContextMenuComponent', 'selector': 'nc-builder-context-menu'},{'name': 'ControlPanelComponent', 'selector': 'nc-builder-control-panel'},{'name': 'CountCardComponent', 'selector': 'nc-count-card'},{'name': 'CreateCaseButtonComponent', 'selector': 'nc-create-case-button'},{'name': 'DashboardBarChartTextFieldComponent', 'selector': 'nc-dashboard-bar-chart-text-field'},{'name': 'DashboardComponent', 'selector': 'nc-dashboard'},{'name': 'DashboardContentComponent', 'selector': 'nc-dashboard-content'},{'name': 'DashboardIframeTextFieldComponent', 'selector': 'nc-dashboard-iframe-text-field'},{'name': 'DashboardLineChartTextFieldComponent', 'selector': 'nc-dashboard-line-chart-text-field'},{'name': 'DashboardPieChartTextFieldComponent', 'selector': 'nc-dashboard-pie-chart-text-field'},{'name': 'DashboardPortalTextFieldComponent', 'selector': 'nc-dashboard-portal-text-field'},{'name': 'DataDetailComponent', 'selector': 'nc-builder-data-detail'},{'name': 'DataFieldTemplateComponent', 'selector': 'nc-data-field-template'},{'name': 'DataMasterItemComponent', 'selector': 'nc-builder-data-master-item'},{'name': 'DataModeComponent', 'selector': 'nc-builder-data-mode'},{'name': 'DataTranslationComponent', 'selector': 'nc-builder-data-translation'},{'name': 'DateDefaultFieldComponent', 'selector': 'nc-date-default-field'},{'name': 'DateFieldComponent', 'selector': 'nc-date-field'},{'name': 'DateTimeDefaultFieldComponent', 'selector': 'nc-date-time-default-field'},{'name': 'DateTimeFieldComponent', 'selector': 'nc-date-time-field'},{'name': 'DefaultCaseRefListViewComponent', 'selector': 'nc-default-case-view'},{'name': 'DefaultNoFilterProvidedComponent', 'selector': 'nc-default-no-filter-provided'},{'name': 'DefaultPublicResolverComponent', 'selector': 'nc-default-public-resolver'},{'name': 'DefaultPublicSingleTaskViewComponent', 'selector': 'nc-default-public-single-task-view'},{'name': 'DefaultPublicTaskViewComponent', 'selector': 'nc-default-public-task-view'},{'name': 'DefaultPublicWorkflowViewComponent', 'selector': 'nc-default-public-workflow-view'},{'name': 'DefaultSimpleCaseViewComponent', 'selector': 'nc-default-simple-case-view'},{'name': 'DefaultSimpleTaskViewComponent', 'selector': 'nc-default-simple-task-view'},{'name': 'DefaultSingleTaskViewComponent', 'selector': 'nc-default-single-task-view'},{'name': 'DefaultTabbedCaseViewComponent', 'selector': 'nc-default-tabbed-case-view'},{'name': 'DefaultTabbedSingleTaskViewComponent', 'selector': 'nc-default-tabbed-single-task-view'},{'name': 'DefaultTabbedTaskViewComponent', 'selector': 'nc-default-tabbed-task-view'},{'name': 'DefaultTabViewComponent', 'selector': 'nc-default-tab-view'},{'name': 'DefaultTaskViewComponent', 'selector': 'nc-default-task-view'},{'name': 'DefaultTicketViewComponent', 'selector': 'nc-default-ticket-view'},{'name': 'DialogArcEditComponent', 'selector': 'nc-builder-dialog-arc-edit'},{'name': 'DialogChangeDataComponent', 'selector': 'nc-builder-dialog-change-data'},{'name': 'DialogDeadNetComponent', 'selector': 'nc-builder-dialog-dead-net'},{'name': 'DialogDeleteComponent', 'selector': 'nc-builder-dialog-delete'},{'name': 'DialogDeleteModelComponent', 'selector': 'nc-builder-dialog-delete-model'},{'name': 'DialogErrorsComponent', 'selector': 'nc-builder-dialog-errors'},{'name': 'DialogLocalStorageModelComponent', 'selector': 'nc-builder-dialog-local-storage-model'},{'name': 'DialogManageRolesComponent', 'selector': 'nc-builder-dialog-manage-roles'},{'name': 'DialogMarkingChangeComponent', 'selector': 'nc-builder-dialog-marking-change'},{'name': 'DialogModelEditComponent', 'selector': 'nc-builder-dialog-model-edit'},{'name': 'DialogPlaceEditComponent', 'selector': 'nc-builder-dialog-place-edit'},{'name': 'DialogPlaceRefDeleteComponent', 'selector': 'nc-builder-dialog-place-ref-delete'},{'name': 'DialogRefactorComponent', 'selector': 'nc-builder-dialog-refactor'},{'name': 'DialogTransitionEditComponent', 'selector': 'nc-builder-dialog-transition-edit'},{'name': 'EasymdeWrapperComponent', 'selector': 'nc-easymde-wrapper'},{'name': 'EditModeComponent', 'selector': 'nc-builder-edit-mode'},{'name': 'EditModeComponent', 'selector': 'nc-edit-mode'},{'name': 'EditPanelComponent', 'selector': 'nc-builder-edit-panel'},{'name': 'EmailSubmissionFormComponent', 'selector': 'nc-email-submission-form'},{'name': 'EnumerationAutocompleteDynamicFieldComponent', 'selector': 'nc-enumeration-autocomplete-dynamic-field'},{'name': 'EnumerationAutocompleteSelectFieldComponent', 'selector': 'nc-enumeration-autocomplete-select-field'},{'name': 'EnumerationCaserefFieldComponent', 'selector': 'nc-enumeration-caseref-field'},{'name': 'EnumerationFieldComponent', 'selector': 'nc-enumeration-field'},{'name': 'EnumerationIconFieldComponent', 'selector': 'nc-enumeration-icon-field'},{'name': 'EnumerationListFieldComponent', 'selector': 'nc-enumeration-list-field'},{'name': 'EnumerationSelectFieldComponent', 'selector': 'nc-enumeration-select-field'},{'name': 'EnumerationStepperFieldComponent', 'selector': 'nc-enumeration-stepper-field'},{'name': 'FieldComponentResolverComponent', 'selector': 'nc-field-component-resolver'},{'name': 'FieldListComponent', 'selector': 'nc-builder-field-list'},{'name': 'FileDefaultFieldComponent', 'selector': 'nc-file-default-field'},{'name': 'FileFieldComponent', 'selector': 'nc-file-field'},{'name': 'FileListDefaultFieldComponent', 'selector': 'nc-file-list-default-field'},{'name': 'FileListFieldComponent', 'selector': 'nc-file-list-field'},{'name': 'FileToolComponent', 'selector': 'nc-builder-file-tool'},{'name': 'FilterDefaultFieldComponent', 'selector': 'nc-filter-default-field'},{'name': 'FilterFieldComponent', 'selector': 'nc-filter-field'},{'name': 'FilterFieldContentComponent', 'selector': 'nc-filter-field-content'},{'name': 'FilterFieldTabbedCaseViewComponent', 'selector': 'nc-filter-field-tabbed-case-view'},{'name': 'FilterFieldTabbedTaskViewComponent', 'selector': 'nc-filter-field-tabbed-task-view'},{'name': 'FilterFieldTabViewComponent', 'selector': 'nc-filter-field-tab-view'},{'name': 'FilterFieldTabViewContentComponent', 'selector': 'nc-filter-field-tab-view-content'},{'name': 'FilterSelectorComponent', 'selector': 'nc-filter-selector'},{'name': 'FilterSelectorDialogComponent', 'selector': 'nc-filter-selector-dialog'},{'name': 'FilterStringQueryFieldComponent', 'selector': 'nc-filter-string-query-field'},{'name': 'FlagComponent', 'selector': 'nc-builder-flag'},{'name': 'ForgottenPasswordFormComponent', 'selector': 'nc-forgotten-password-form'},{'name': 'FormBuilderComponent', 'selector': 'nc-builder-form-builder'},{'name': 'FulltextSearchComponent', 'selector': 'nc-fulltext-search'},{'name': 'FunctionEditorComponent', 'selector': 'nc-builder-function-editor'},{'name': 'FunctionMasterItemComponent', 'selector': 'nc-builder-function-master-item'},{'name': 'GridsterComponent', 'selector': 'nc-builder-gridster-component'},{'name': 'GridsterDataFieldComponent', 'selector': 'nc-builder-gridster-datafield'},{'name': 'GroupNavigationComponentResolverComponent', 'selector': 'nc-group-navigation-component-resolver'},{'name': 'HeaderComponent', 'selector': 'nc-header'},{'name': 'HistoryDetailComponent', 'selector': 'nc-builder-history-detail'},{'name': 'HistoryMasterItemComponent', 'selector': 'nc-builder-history-master-item'},{'name': 'HistoryModeComponent', 'selector': 'nc-builder-history-mode'},{'name': 'HtmlTextareaFieldComponent', 'selector': 'nc-html-textarea-field'},{'name': 'I18nDividerFieldComponent', 'selector': 'nc-i18n-divider-field'},{'name': 'I18nFieldComponent', 'selector': 'nc-i18n-field'},{'name': 'I18nFieldComponent', 'selector': 'nc-builder-i18n-field'},{'name': 'I18nModeComponent', 'selector': 'nc-builder-i18n-mode'},{'name': 'I18nTextFieldComponent', 'selector': 'nc-i18n-text-field'},{'name': 'IframeCardComponent', 'selector': 'nc-iframe-card'},{'name': 'ImmediateFilterTextComponent', 'selector': 'nc-immediate-filter-text'},{'name': 'ImmediateFilterTextContentComponent', 'selector': 'nc-immediate-filter-text-content'},{'name': 'ImpersonateQuickPanelComponent', 'selector': 'nc-impersonate-quick-panel'},{'name': 'ImportNetComponent', 'selector': 'nc-import-net'},{'name': 'ImportNetDialogComponent', 'selector': 'nc-import-net-dialog'},{'name': 'ImportSuccessfulComponent', 'selector': 'nc-builder-import-successful'},{'name': 'ImportToolButtonComponent', 'selector': 'nc-builder-import-tool-button'},{'name': 'InfoLabelComponent', 'selector': 'nc-builder-info-label'},{'name': 'InternalLinkComponent', 'selector': 'nc-internal-link'},{'name': 'LanguagesComponent', 'selector': 'nc-builder-languages'},{'name': 'LanguageSelectorComponent', 'selector': 'nc-language-selector'},{'name': 'LdapGroupRoleAssignmentComponent', 'selector': 'nc-ldap-group-role-assignment'},{'name': 'LegalNoticeComponent', 'selector': 'nc-legal-notice'},{'name': 'LinearGaugeCardComponent', 'selector': 'nc-linear-gauge-card'},{'name': 'LineChartCardComponent', 'selector': 'nc-line-chart-card'},{'name': 'LoadingModeComponent', 'selector': 'nc-loading-mode'},{'name': 'LoginFormComponent', 'selector': 'nc-login-form'},{'name': 'LogoutShortcutComponent', 'selector': 'nc-logout-shortcut'},{'name': 'MainMasterComponent', 'selector': 'nc-builder-main-master'},{'name': 'MainMasterItemComponent', 'selector': 'nc-builder-main-master-item'},{'name': 'MasterDetailComponent', 'selector': 'nc-builder-master-detail'},{'name': 'MaterialIconPickerComponent', 'selector': 'nc-builder-material-icon-picker'},{'name': 'ModeComponent', 'selector': 'nc-builder-control-panel-mode'},{'name': 'ModelerComponent', 'selector': 'nc-builder-modeler'},{'name': 'ModelTranslationComponent', 'selector': 'nc-builder-model-translation'},{'name': 'MultichoiceAutocompleteFieldComponent', 'selector': 'nc-multichoice-autocomplete-field'},{'name': 'MultichoiceCaserefFieldComponent', 'selector': 'nc-multichoice-caseref-field'},{'name': 'MultichoiceFieldComponent', 'selector': 'nc-multichoice-field'},{'name': 'MultichoiceListFieldComponent', 'selector': 'nc-multichoice-list-field'},{'name': 'MultichoiceSelectFieldComponent', 'selector': 'nc-multichoice-select-field'},{'name': 'MultiUserAssignComponent', 'selector': 'nc-multi-user-assign'},{'name': 'MultiUserAssignDialogComponent', 'selector': 'nc-multi-user-assign-dialog'},{'name': 'MultiUserAssignItemComponent', 'selector': 'nc-multi-user-assign-item'},{'name': 'MultiUserAssignListComponent', 'selector': 'nc-multi-user-assign-list'},{'name': 'NavigationDoubleDrawerComponent', 'selector': 'nc-navigation-double-drawer'},{'name': 'NavigationDrawerComponent', 'selector': 'nc-navigation-drawer'},{'name': 'NavigationRailComponent', 'selector': 'nc-navigation-rail'},{'name': 'NavigationTreeComponent', 'selector': 'nc-navigation-tree'},{'name': 'NewCaseComponent', 'selector': 'nc-new-case'},{'name': 'NewCaseDialogComponent', 'selector': 'nc-new-case-dialog'},{'name': 'NumberCurrencyFieldComponent', 'selector': 'nc-number-currency-field'},{'name': 'NumberDecimalFieldComponent', 'selector': 'nc-number-decimal-field'},{'name': 'NumberDefaultFieldComponent', 'selector': 'nc-number-default-field'},{'name': 'NumberFieldComponent', 'selector': 'nc-number-field'},{'name': 'OptionSelectorComponent', 'selector': 'nc-option-selector'},{'name': 'PageMasterComponent', 'selector': 'nc-builder-abstract-page-master-component'},{'name': 'PanelComponent', 'selector': 'nc-app-panel'},{'name': 'PanelItemComponent', 'selector': 'nc-panel-item'},{'name': 'PasswordTextFieldComponent', 'selector': 'nc-password-text-field'},{'name': 'PieChartCardComponent', 'selector': 'nc-pie-chart-card'},{'name': 'PopupSessionIdleComponent', 'selector': 'nc-popup-session-idle'},{'name': 'PortalCardComponent', 'selector': 'nc-portal-card'},{'name': 'PreviewDialogComponent', 'selector': 'nc-preview-dialog'},{'name': 'ProcessRefDefaultComponent', 'selector': 'nc-process-ref-default'},{'name': 'ProfileComponent', 'selector': 'nc-user-profile'},{'name': 'ProgressComponent', 'selector': 'nc-builder-progress'},{'name': 'PublicWorkflowPanelComponent', 'selector': 'nc-public-workflow-panel'},{'name': 'QuickPanelComponent', 'selector': 'nc-quick-panel'},{'name': 'RedirectComponent', 'selector': 'nc-redirect'},{'name': 'RegistrationFormComponent', 'selector': 'nc-registration-form'},{'name': 'RemoveNodeComponent', 'selector': 'nc-remove-node'},{'name': 'RequiredLabelComponent', 'selector': 'nc-required-label'},{'name': 'RichTextareaFieldComponent', 'selector': 'nc-rich-textarea-field'},{'name': 'RoleAssignmentComponent', 'selector': 'nc-role-assignment'},{'name': 'RoleDetailComponent', 'selector': 'nc-builder-role-detail'},{'name': 'RoleMasterItemComponent', 'selector': 'nc-builder-role-master-item'},{'name': 'RoleModeComponent', 'selector': 'nc-builder-role-mode'},{'name': 'RoleTranslationComponent', 'selector': 'nc-builder-role-translation'},{'name': 'SearchClauseComponent', 'selector': 'nc-search-clause'},{'name': 'SearchComponent', 'selector': 'nc-search'},{'name': 'SearchConfigurationInputComponent', 'selector': 'nc-search-configuration-input'},{'name': 'SearchModeComponent', 'selector': 'nc-search-mode'},{'name': 'SearchOperandInputComponent', 'selector': 'nc-search-operand-input'},{'name': 'SearchPredicateComponent', 'selector': 'nc-search-predicate'},{'name': 'SessionIdleComponent', 'selector': 'nc-session-idle'},{'name': 'SideMenuContainerComponent', 'selector': 'nc-side-menu-container'},{'name': 'SignaturePadFieldComponent', 'selector': 'nc-signature-pad-field'},{'name': 'SimpleTextFieldComponent', 'selector': 'nc-simple-text-field'},{'name': 'SimulationModeComponent', 'selector': 'nc-builder-simulation-mode'},{'name': 'SingleTaskComponent', 'selector': 'nc-single-task'},{'name': 'SingleTaskViewDialogComponent', 'selector': 'nc-single-task-view-dialog'},{'name': 'SortModeComponent', 'selector': 'nc-sort-mode'},{'name': 'StringCollectionDefaultFieldComponent', 'selector': 'nc-string-collection-default-field'},{'name': 'TabViewComponent', 'selector': 'nc-tab-view'},{'name': 'TaskContentComponent', 'selector': 'nc-task-content'},{'name': 'TaskListComponent', 'selector': 'nc-task-list'},{'name': 'TaskListPaginationComponent', 'selector': 'nc-task-list-pagination'},{'name': 'TaskModeComponent', 'selector': 'nc-builder-task-mode'},{'name': 'TaskPanelComponent', 'selector': 'nc-task-panel'},{'name': 'TaskRefDashboardFieldComponent', 'selector': 'nc-task-ref-dashboard-field'},{'name': 'TaskRefDashboardTileComponent', 'selector': 'nc-task-ref-dashboard-tile'},{'name': 'TaskRefFieldComponent', 'selector': 'nc-task-ref-field'},{'name': 'TaskRefInitFieldComponent', 'selector': 'nc-builder-task-ref-init-field'},{'name': 'TaskRefListFieldComponent', 'selector': 'nc-task-ref-list-field'},{'name': 'TaskSearchComponent', 'selector': 'nc-task-search'},{'name': 'TaskTranslationComponent', 'selector': 'nc-builder-task-translation'},{'name': 'TaskViewDialogComponent', 'selector': 'nc-task-view-dialog'},{'name': 'TextareaFieldComponent', 'selector': 'nc-textarea-field'},{'name': 'TextFieldComponent', 'selector': 'nc-text-field'},{'name': 'ToolbarComponent', 'selector': 'nc-toolbar'},{'name': 'ToolComponent', 'selector': 'nc-builder-tool'},{'name': 'TranslationsComponent', 'selector': 'nc-builder-translations'},{'name': 'TreeComponent', 'selector': 'nc-tree-component'},{'name': 'TreeTaskContentComponent', 'selector': 'nc-tree-task-content'},{'name': 'TriggerTreeComponent', 'selector': 'nc-builder-trigger-tree'},{'name': 'UserAssignComponent', 'selector': 'nc-user-assign'},{'name': 'UserAssignDialogComponent', 'selector': 'nc-user-assign-dialog'},{'name': 'UserAssignItemComponent', 'selector': 'nc-user-assign-item'},{'name': 'UserAssignListComponent', 'selector': 'nc-user-assign-list'},{'name': 'UserCardComponent', 'selector': 'nc-user-card'},{'name': 'UserDefaultFieldComponent', 'selector': 'nc-user-default-field'},{'name': 'UserFieldComponent', 'selector': 'nc-user-field'},{'name': 'UserImpersonateComponent', 'selector': 'nc-user-impersonate'},{'name': 'UserImpersonateDialogComponent', 'selector': 'nc-user-impersonate-dialog'},{'name': 'UserInviteComponent', 'selector': 'nc-user-invite'},{'name': 'UserListDefaultFieldComponent', 'selector': 'nc-user-list-default-field'},{'name': 'UserListFieldComponent', 'selector': 'nc-user-list-field'},{'name': 'WorkflowPanelComponent', 'selector': 'nc-workflow-panel'},{'name': 'WorkflowViewComponent', 'selector': 'nc-workflow-view'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'DefaultTabbedCaseViewComponent'};
 </script>
@@ -1429,14 +1766,16 @@ export class DefaultTabbedCaseViewComponent extends AbstractTabbedCaseViewCompon
 
 
 
-                   
+
+
+
 
 
 
 
                    </div><div class="search-results">
     <div class="has-results">
-        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
         <ul class="search-results-list"></ul>
     </div>
     <div class="no-results">
@@ -1448,6 +1787,15 @@ export class DefaultTabbedCaseViewComponent extends AbstractTabbedCaseViewCompon
            </div>
        </div>
 
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
@@ -1455,10 +1803,23 @@ export class DefaultTabbedCaseViewComponent extends AbstractTabbedCaseViewCompon
             var MAX_SEARCH_RESULTS = 15;
        </script>
 
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
        <script src="../js/libs/custom-elements.min.js"></script>
        <script src="../js/libs/lit-html.js"></script>
-       
-       <script type="module" src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/menu-wc.js" defer></script>
        <script nomodule src="../js/menu-wc_es5.js" defer></script>
 
        <script src="../js/libs/bootstrap-native.js"></script>

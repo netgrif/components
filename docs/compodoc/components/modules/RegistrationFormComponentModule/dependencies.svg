@@ -24,13 +24,13 @@
 <title>cluster_RegistrationFormComponentModule</title>
 <polygon fill="none" stroke="black" stroke-dasharray="1,5" points="66,-70 66,-268 430,-268 430,-70 66,-70"/>
 </g>
-<g id="clust5" class="cluster">
-<title>cluster_RegistrationFormComponentModule_exports</title>
-<polygon fill="none" stroke="black" points="148,-208 148,-260 348,-260 348,-208 148,-208"/>
-</g>
 <g id="clust2" class="cluster">
 <title>cluster_RegistrationFormComponentModule_declarations</title>
 <polygon fill="none" stroke="black" points="226,-78 226,-130 422,-130 422,-78 226,-78"/>
+</g>
+<g id="clust5" class="cluster">
+<title>cluster_RegistrationFormComponentModule_exports</title>
+<polygon fill="none" stroke="black" points="148,-208 148,-260 348,-260 348,-208 148,-208"/>
 </g>
 <g id="clust4" class="cluster">
 <title>cluster_RegistrationFormComponentModule_imports</title>

@@ -9,13 +9,64 @@
 
         <link rel="icon" type="image/x-icon" href="./images/favicon.ico">
 	   <link rel="stylesheet" href="./styles/style.css">
-        <link rel="stylesheet" href="./styles/dark.css" media="(prefers-color-scheme: dark)">
+        <link rel="stylesheet" href="./styles/dark.css">
     </head>
     <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
 
-        <div class="navbar navbar-default navbar-fixed-top visible-xs">
-            <a href="./" class="navbar-brand">Netgrif Components library Documentation</a>
-            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="./" class="navbar-brand">Netgrif Components library Documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
         </div>
 
         <div class="xs-menu menu" id="mobile-menu">
@@ -24,7 +75,7 @@
 
         <div class="container-fluid main">
            <div class="row main">
-               <div class="hidden-xs menu">
+               <div class="d-none d-md-block menu">
                    <compodoc-menu mode="normal"></compodoc-menu>
                </div>
                <!-- START CONTENT -->
@@ -44,11 +95,13 @@
 
 
 
-                   
+
+
+
 
 
 <ol class="breadcrumb">
-    <li>Documentation coverage</li>
+    <li class="breadcrumb-item">Documentation coverage</li>
 </ol>
 
 <div>
@@ -302,7 +355,3319 @@
             <td>SessionIdleComponent</td>
             <td align="right" data-sort="0">
                 <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/6)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./components/BuilderComponent.html">projects/netgrif-components/src/lib/builder/builder.component.ts</a>
+            </td>
+            <td>component</td>
+            <td>BuilderComponent</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/11)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/ChangedArc.html">projects/netgrif-components/src/lib/builder/dialogs/dialog-arc-edit/changed-arc.ts</a>
+            </td>
+            <td>class</td>
+            <td>ChangedArc</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/6)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./components/DialogArcEditComponent.html">projects/netgrif-components/src/lib/builder/dialogs/dialog-arc-edit/dialog-arc-edit.component.ts</a>
+            </td>
+            <td>component</td>
+            <td>DialogArcEditComponent</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/17)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./interfaces/ArcEditData.html">projects/netgrif-components/src/lib/builder/dialogs/dialog-arc-edit/dialog-arc-edit.component.ts</a>
+            </td>
+            <td>interface</td>
+            <td>ArcEditData</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/3)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./interfaces/Reference.html">projects/netgrif-components/src/lib/builder/dialogs/dialog-arc-edit/dialog-arc-edit.component.ts</a>
+            </td>
+            <td>interface</td>
+            <td>Reference</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/3)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./interfaces/ReferenceGroup.html">projects/netgrif-components/src/lib/builder/dialogs/dialog-arc-edit/dialog-arc-edit.component.ts</a>
+            </td>
+            <td>interface</td>
+            <td>ReferenceGroup</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/3)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./components/DialogChangeDataComponent.html">projects/netgrif-components/src/lib/builder/dialogs/dialog-change-data/dialog-change-data.component.ts</a>
+            </td>
+            <td>component</td>
+            <td>DialogChangeDataComponent</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
                 <span class="coverage-count">(0/7)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./interfaces/Data.html">projects/netgrif-components/src/lib/builder/dialogs/dialog-change-data/dialog-change-data.component.ts</a>
+            </td>
+            <td>interface</td>
+            <td>Data</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/3)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./interfaces/DataSet.html">projects/netgrif-components/src/lib/builder/dialogs/dialog-change-data/dialog-change-data.component.ts</a>
+            </td>
+            <td>interface</td>
+            <td>DataSet</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/2)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./components/DialogDeadNetComponent.html">projects/netgrif-components/src/lib/builder/dialogs/dialog-dead-net/dialog-dead-net.component.ts</a>
+            </td>
+            <td>component</td>
+            <td>DialogDeadNetComponent</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/1)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./components/DialogDeleteModelComponent.html">projects/netgrif-components/src/lib/builder/dialogs/dialog-delete-model/dialog-delete-model.component.ts</a>
+            </td>
+            <td>component</td>
+            <td>DialogDeleteModelComponent</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/2)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./components/DialogDeleteComponent.html">projects/netgrif-components/src/lib/builder/dialogs/dialog-delete/dialog-delete.component.ts</a>
+            </td>
+            <td>component</td>
+            <td>DialogDeleteComponent</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/1)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./components/DialogErrorsComponent.html">projects/netgrif-components/src/lib/builder/dialogs/dialog-errors/dialog-errors.component.ts</a>
+            </td>
+            <td>component</td>
+            <td>DialogErrorsComponent</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/3)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./interfaces/DialogErrorsData.html">projects/netgrif-components/src/lib/builder/dialogs/dialog-errors/dialog-errors.component.ts</a>
+            </td>
+            <td>interface</td>
+            <td>DialogErrorsData</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/4)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./components/DialogLocalStorageModelComponent.html">projects/netgrif-components/src/lib/builder/dialogs/dialog-local-storage-model/dialog-local-storage-model.component.ts</a>
+            </td>
+            <td>component</td>
+            <td>DialogLocalStorageModelComponent</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/3)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./interfaces/DialogData.html">projects/netgrif-components/src/lib/builder/dialogs/dialog-local-storage-model/dialog-local-storage-model.component.ts</a>
+            </td>
+            <td>interface</td>
+            <td>DialogData</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/4)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./components/DialogManageRolesComponent.html">projects/netgrif-components/src/lib/builder/dialogs/dialog-manage-roles/dialog-manage-roles.component.ts</a>
+            </td>
+            <td>component</td>
+            <td>DialogManageRolesComponent</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/25)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./interfaces/ManagePermissionData.html">projects/netgrif-components/src/lib/builder/dialogs/dialog-manage-roles/dialog-manage-roles.component.ts</a>
+            </td>
+            <td>interface</td>
+            <td>ManagePermissionData</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/12)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./components/DialogMarkingChangeComponent.html">projects/netgrif-components/src/lib/builder/dialogs/dialog-marking-change/dialog-marking-change.component.ts</a>
+            </td>
+            <td>component</td>
+            <td>DialogMarkingChangeComponent</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/7)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./components/DialogModelEditComponent.html">projects/netgrif-components/src/lib/builder/dialogs/dialog-model-edit/dialog-model-edit.component.ts</a>
+            </td>
+            <td>component</td>
+            <td>DialogModelEditComponent</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/20)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./interfaces/ModelEditData.html">projects/netgrif-components/src/lib/builder/dialogs/dialog-model-edit/dialog-model-edit.component.ts</a>
+            </td>
+            <td>interface</td>
+            <td>ModelEditData</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/3)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./components/DialogPlaceEditComponent.html">projects/netgrif-components/src/lib/builder/dialogs/dialog-place-edit/dialog-place-edit.component.ts</a>
+            </td>
+            <td>component</td>
+            <td>DialogPlaceEditComponent</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/7)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./interfaces/PlaceEditData.html">projects/netgrif-components/src/lib/builder/dialogs/dialog-place-edit/dialog-place-edit.component.ts</a>
+            </td>
+            <td>interface</td>
+            <td>PlaceEditData</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/4)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./components/DialogPlaceRefDeleteComponent.html">projects/netgrif-components/src/lib/builder/dialogs/dialog-place-ref-delete/dialog-place-ref-delete.component.ts</a>
+            </td>
+            <td>component</td>
+            <td>DialogPlaceRefDeleteComponent</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/5)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./interfaces/PlaceRefDeleteData.html">projects/netgrif-components/src/lib/builder/dialogs/dialog-place-ref-delete/dialog-place-ref-delete.component.ts</a>
+            </td>
+            <td>interface</td>
+            <td>PlaceRefDeleteData</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/3)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./components/DialogRefactorComponent.html">projects/netgrif-components/src/lib/builder/dialogs/dialog-refactor/dialog-refactor.component.ts</a>
+            </td>
+            <td>component</td>
+            <td>DialogRefactorComponent</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/12)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./interfaces/DialogRefactorData.html">projects/netgrif-components/src/lib/builder/dialogs/dialog-refactor/dialog-refactor.component.ts</a>
+            </td>
+            <td>interface</td>
+            <td>DialogRefactorData</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/3)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/ChangedTransition.html">projects/netgrif-components/src/lib/builder/dialogs/dialog-transition-edit/changed-transition.ts</a>
+            </td>
+            <td>class</td>
+            <td>ChangedTransition</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/5)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./components/DialogTransitionEditComponent.html">projects/netgrif-components/src/lib/builder/dialogs/dialog-transition-edit/dialog-transition-edit.component.ts</a>
+            </td>
+            <td>component</td>
+            <td>DialogTransitionEditComponent</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/21)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./interfaces/TransitionEditData.html">projects/netgrif-components/src/lib/builder/dialogs/dialog-transition-edit/dialog-transition-edit.component.ts</a>
+            </td>
+            <td>interface</td>
+            <td>TransitionEditData</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/3)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./components/TriggerTreeComponent.html">projects/netgrif-components/src/lib/builder/dialogs/dialog-transition-edit/trigger-tree/trigger-tree.component.ts</a>
+            </td>
+            <td>component</td>
+            <td>TriggerTreeComponent</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/17)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./interfaces/TriggerNode.html">projects/netgrif-components/src/lib/builder/dialogs/dialog-transition-edit/trigger-tree/trigger-tree.component.ts</a>
+            </td>
+            <td>interface</td>
+            <td>TriggerNode</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/7)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./miscellaneous/variables.html#DIALOG_COMPONENTS">projects/netgrif-components/src/lib/builder/dialogs/dialogs.module.ts</a>
+            </td>
+            <td>variable</td>
+            <td>DIALOG_COMPONENTS</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/1)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/DataFieldUtils.html">projects/netgrif-components/src/lib/builder/form-builder/data-field-utils.ts</a>
+            </td>
+            <td>class</td>
+            <td>DataFieldUtils</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/3)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./components/EditPanelComponent.html">projects/netgrif-components/src/lib/builder/form-builder/edit-panel/edit-panel.component.ts</a>
+            </td>
+            <td>component</td>
+            <td>EditPanelComponent</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/77)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./components/FieldListComponent.html">projects/netgrif-components/src/lib/builder/form-builder/field-list/field-list.component.ts</a>
+            </td>
+            <td>component</td>
+            <td>FieldListComponent</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/20)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./interfaces/Data.html">projects/netgrif-components/src/lib/builder/form-builder/field-list/field-list.component.ts</a>
+            </td>
+            <td>interface</td>
+            <td>Data</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/5)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./injectables/FieldListService.html">projects/netgrif-components/src/lib/builder/form-builder/field-list/field-list.service.ts</a>
+            </td>
+            <td>injectable</td>
+            <td>FieldListService</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/8)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./interfaces/ComponentDef.html">projects/netgrif-components/src/lib/builder/form-builder/field-list/field-list.service.ts</a>
+            </td>
+            <td>interface</td>
+            <td>ComponentDef</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/7)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./interfaces/DataRefDef.html">projects/netgrif-components/src/lib/builder/form-builder/field-list/field-list.service.ts</a>
+            </td>
+            <td>interface</td>
+            <td>DataRefDef</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/5)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./interfaces/PropertyDef.html">projects/netgrif-components/src/lib/builder/form-builder/field-list/field-list.service.ts</a>
+            </td>
+            <td>interface</td>
+            <td>PropertyDef</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/3)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./components/FormBuilderComponent.html">projects/netgrif-components/src/lib/builder/form-builder/form-builder.component.ts</a>
+            </td>
+            <td>component</td>
+            <td>FormBuilderComponent</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/8)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/GridsterDataField.html">projects/netgrif-components/src/lib/builder/form-builder/gridster/classes/gridster-data-field.ts</a>
+            </td>
+            <td>class</td>
+            <td>GridsterDataField</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/7)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./components/GridsterDataFieldComponent.html">projects/netgrif-components/src/lib/builder/form-builder/gridster/gridster-datafield/gridster-data-field.component.ts</a>
+            </td>
+            <td>component</td>
+            <td>GridsterDataFieldComponent</td>
+            <td align="right" data-sort="8">
+                <span class="coverage-percent">8 %</span>
+                <span class="coverage-count">(1/12)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./components/GridsterComponent.html">projects/netgrif-components/src/lib/builder/form-builder/gridster/gridster.component.ts</a>
+            </td>
+            <td>component</td>
+            <td>GridsterComponent</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/11)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./injectables/GridsterService.html">projects/netgrif-components/src/lib/builder/form-builder/gridster/gridster.service.ts</a>
+            </td>
+            <td>injectable</td>
+            <td>GridsterService</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/16)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./components/InfoLabelComponent.html">projects/netgrif-components/src/lib/builder/form-builder/info-label/info-label.component.ts</a>
+            </td>
+            <td>component</td>
+            <td>InfoLabelComponent</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/5)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./interfaces/InjectedTabbedBuilderViewData.html">projects/netgrif-components/src/lib/builder/injected-builder-data.ts</a>
+            </td>
+            <td>interface</td>
+            <td>InjectedTabbedBuilderViewData</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/2)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/AbstractRegistry.html">projects/netgrif-components/src/lib/builder/modeler/abstract-registry.ts</a>
+            </td>
+            <td>class</td>
+            <td>AbstractRegistry</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/5)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./components/ActionDetailComponent.html">projects/netgrif-components/src/lib/builder/modeler/actions-mode/action-detail/action-detail.component.ts</a>
+            </td>
+            <td>component</td>
+            <td>ActionDetailComponent</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/20)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./interfaces/ActionChangedEvent.html">projects/netgrif-components/src/lib/builder/modeler/actions-mode/action-editor/action-editor-list/action-changed-event.ts</a>
+            </td>
+            <td>interface</td>
+            <td>ActionChangedEvent</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/3)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./components/ActionEditorListComponent.html">projects/netgrif-components/src/lib/builder/modeler/actions-mode/action-editor/action-editor-list/action-editor-list.component.ts</a>
+            </td>
+            <td>component</td>
+            <td>ActionEditorListComponent</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/7)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./components/ActionEditorMenuDescriptionComponent.html">projects/netgrif-components/src/lib/builder/modeler/actions-mode/action-editor/action-editor-menu/action-editor-menu-description/action-editor-menu-description.component.ts</a>
+            </td>
+            <td>component</td>
+            <td>ActionEditorMenuDescriptionComponent</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/8)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./components/ActionEditorMenuItemComponent.html">projects/netgrif-components/src/lib/builder/modeler/actions-mode/action-editor/action-editor-menu/action-editor-menu-item/action-editor-menu-item.component.ts</a>
+            </td>
+            <td>component</td>
+            <td>ActionEditorMenuItemComponent</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/8)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/MenuItemConfiguration.html">projects/netgrif-components/src/lib/builder/modeler/actions-mode/action-editor/action-editor-menu/action-editor-menu-item/menu-item-configuration.ts</a>
+            </td>
+            <td>class</td>
+            <td>MenuItemConfiguration</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/2)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/MenuItem.html">projects/netgrif-components/src/lib/builder/modeler/actions-mode/action-editor/action-editor-menu/action-editor-menu-item/menu-item.ts</a>
+            </td>
+            <td>class</td>
+            <td>MenuItem</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/2)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./pipes/SafeHtmlPipe.html">projects/netgrif-components/src/lib/builder/modeler/actions-mode/action-editor/action-editor-menu/action-editor-menu-item/safe-html.pipe.ts</a>
+            </td>
+            <td>pipe</td>
+            <td>SafeHtmlPipe</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/1)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./components/ActionEditorMenuComponent.html">projects/netgrif-components/src/lib/builder/modeler/actions-mode/action-editor/action-editor-menu/action-editor-menu.component.ts</a>
+            </td>
+            <td>component</td>
+            <td>ActionEditorMenuComponent</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/11)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./injectables/ActionEditorTreeService.html">projects/netgrif-components/src/lib/builder/modeler/actions-mode/action-editor/action-editor-tree.service.ts</a>
+            </td>
+            <td>injectable</td>
+            <td>ActionEditorTreeService</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/6)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./miscellaneous/functions.html#onMonacoLoad">projects/netgrif-components/src/lib/builder/modeler/actions-mode/action-editor/action-editor.module.ts</a>
+            </td>
+            <td>function</td>
+            <td>onMonacoLoad</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/1)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./miscellaneous/variables.html#monaco">projects/netgrif-components/src/lib/builder/modeler/actions-mode/action-editor/action-editor.module.ts</a>
+            </td>
+            <td>variable</td>
+            <td>monaco</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/1)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./miscellaneous/variables.html#monacoConfig">projects/netgrif-components/src/lib/builder/modeler/actions-mode/action-editor/action-editor.module.ts</a>
+            </td>
+            <td>variable</td>
+            <td>monacoConfig</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/1)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./miscellaneous/variables.html#translateService">projects/netgrif-components/src/lib/builder/modeler/actions-mode/action-editor/action-editor.module.ts</a>
+            </td>
+            <td>variable</td>
+            <td>translateService</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/1)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./injectables/ActionEditorService.html">projects/netgrif-components/src/lib/builder/modeler/actions-mode/action-editor/action-editor.service.ts</a>
+            </td>
+            <td>injectable</td>
+            <td>ActionEditorService</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/11)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./components/ActionEditorComponent.html">projects/netgrif-components/src/lib/builder/modeler/actions-mode/action-editor/action-editor/action-editor.component.ts</a>
+            </td>
+            <td>component</td>
+            <td>ActionEditorComponent</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/44)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./injectables/ActionItemProviderService.html">projects/netgrif-components/src/lib/builder/modeler/actions-mode/action-editor/action-item-provider.service.ts</a>
+            </td>
+            <td>injectable</td>
+            <td>ActionItemProviderService</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/11)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/ActionGroup.html">projects/netgrif-components/src/lib/builder/modeler/actions-mode/action-editor/classes/action-group.ts</a>
+            </td>
+            <td>class</td>
+            <td>ActionGroup</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/5)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./interfaces/CommandAction.html">projects/netgrif-components/src/lib/builder/modeler/actions-mode/action-editor/classes/command-action.ts</a>
+            </td>
+            <td>interface</td>
+            <td>CommandAction</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/6)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./interfaces/CommandActions.html">projects/netgrif-components/src/lib/builder/modeler/actions-mode/action-editor/classes/command-action.ts</a>
+            </td>
+            <td>interface</td>
+            <td>CommandActions</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/4)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./miscellaneous/functions.html#getActions">projects/netgrif-components/src/lib/builder/modeler/actions-mode/action-editor/classes/command-action.ts</a>
+            </td>
+            <td>function</td>
+            <td>getActions</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/1)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/EditableAction.html">projects/netgrif-components/src/lib/builder/modeler/actions-mode/action-editor/classes/editable-action.ts</a>
+            </td>
+            <td>class</td>
+            <td>EditableAction</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/13)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/LeafNode.html">projects/netgrif-components/src/lib/builder/modeler/actions-mode/action-editor/classes/leaf-node.ts</a>
+            </td>
+            <td>class</td>
+            <td>LeafNode</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/10)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./interfaces/TreeNode.html">projects/netgrif-components/src/lib/builder/modeler/actions-mode/action-editor/classes/leaf-node.ts</a>
+            </td>
+            <td>interface</td>
+            <td>TreeNode</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/11)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/MasterItem.html">projects/netgrif-components/src/lib/builder/modeler/actions-mode/action-editor/classes/master-item.ts</a>
+            </td>
+            <td>class</td>
+            <td>MasterItem</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/6)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./miscellaneous/functions.html#actionCompletionProvider">projects/netgrif-components/src/lib/builder/modeler/actions-mode/action-editor/definitions/completion-provider.ts</a>
+            </td>
+            <td>function</td>
+            <td>actionCompletionProvider</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/1)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./miscellaneous/functions.html#declarationCompleteProvider">projects/netgrif-components/src/lib/builder/modeler/actions-mode/action-editor/definitions/declaration-provider.ts</a>
+            </td>
+            <td>function</td>
+            <td>declarationCompleteProvider</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/1)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./miscellaneous/functions.html#functionCompletionProposals">projects/netgrif-components/src/lib/builder/modeler/actions-mode/action-editor/definitions/function-provider.ts</a>
+            </td>
+            <td>function</td>
+            <td>functionCompletionProposals</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/1)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./miscellaneous/functions.html#getTokens">projects/netgrif-components/src/lib/builder/modeler/actions-mode/action-editor/definitions/tokens.ts</a>
+            </td>
+            <td>function</td>
+            <td>getTokens</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/1)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./miscellaneous/functions.html#tokenProvider">projects/netgrif-components/src/lib/builder/modeler/actions-mode/action-editor/definitions/tokens.ts</a>
+            </td>
+            <td>function</td>
+            <td>tokenProvider</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/1)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./miscellaneous/variables.html#bracketTokens">projects/netgrif-components/src/lib/builder/modeler/actions-mode/action-editor/definitions/tokens.ts</a>
+            </td>
+            <td>variable</td>
+            <td>bracketTokens</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/1)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./components/FunctionEditorComponent.html">projects/netgrif-components/src/lib/builder/modeler/actions-mode/action-editor/function-editor/function-editor.component.ts</a>
+            </td>
+            <td>component</td>
+            <td>FunctionEditorComponent</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/24)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./components/ActionMasterItemComponent.html">projects/netgrif-components/src/lib/builder/modeler/actions-mode/action-master/action-master-item/action-master-item.component.ts</a>
+            </td>
+            <td>component</td>
+            <td>ActionMasterItemComponent</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/5)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./components/ActionMasterComponent.html">projects/netgrif-components/src/lib/builder/modeler/actions-mode/action-master/action-master.component.ts</a>
+            </td>
+            <td>component</td>
+            <td>ActionMasterComponent</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/25)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./components/FunctionMasterItemComponent.html">projects/netgrif-components/src/lib/builder/modeler/actions-mode/action-master/function-master-item/function-master-item.component.ts</a>
+            </td>
+            <td>component</td>
+            <td>FunctionMasterItemComponent</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/6)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./injectables/ActionsMasterDetailService.html">projects/netgrif-components/src/lib/builder/modeler/actions-mode/actions-master-detail.service.ts</a>
+            </td>
+            <td>injectable</td>
+            <td>ActionsMasterDetailService</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/18)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./components/ActionsModeComponent.html">projects/netgrif-components/src/lib/builder/modeler/actions-mode/actions-mode.component.ts</a>
+            </td>
+            <td>component</td>
+            <td>ActionsModeComponent</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/2)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./interfaces/Scope.html">projects/netgrif-components/src/lib/builder/modeler/actions-mode/actions-mode.component.ts</a>
+            </td>
+            <td>interface</td>
+            <td>Scope</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/3)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./injectables/ActionsModeService.html">projects/netgrif-components/src/lib/builder/modeler/actions-mode/actions-mode.service.ts</a>
+            </td>
+            <td>injectable</td>
+            <td>ActionsModeService</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/4)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./injectables/DataActionsTool.html">projects/netgrif-components/src/lib/builder/modeler/actions-mode/tools/data-actions-tool.ts</a>
+            </td>
+            <td>injectable</td>
+            <td>DataActionsTool</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/4)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./injectables/FunctionsTool.html">projects/netgrif-components/src/lib/builder/modeler/actions-mode/tools/functions-tool.ts</a>
+            </td>
+            <td>injectable</td>
+            <td>FunctionsTool</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/4)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./injectables/ProcessActionsTool.html">projects/netgrif-components/src/lib/builder/modeler/actions-mode/tools/process-actions-tool.ts</a>
+            </td>
+            <td>injectable</td>
+            <td>ProcessActionsTool</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/4)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./injectables/RoleActionsTool.html">projects/netgrif-components/src/lib/builder/modeler/actions-mode/tools/role-actions-tool.ts</a>
+            </td>
+            <td>injectable</td>
+            <td>RoleActionsTool</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/4)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./injectables/TransitionActionsTool.html">projects/netgrif-components/src/lib/builder/modeler/actions-mode/tools/transition-actions-tool.ts</a>
+            </td>
+            <td>injectable</td>
+            <td>TransitionActionsTool</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/4)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/AbstractDetailComponent.html">projects/netgrif-components/src/lib/builder/modeler/components/master-detail/abstract-detail.component.ts</a>
+            </td>
+            <td>class</td>
+            <td>AbstractDetailComponent</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/1)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./injectables/AbstractMasterDetailService.html">projects/netgrif-components/src/lib/builder/modeler/components/master-detail/abstract-master-detail.service.ts</a>
+            </td>
+            <td>injectable</td>
+            <td>AbstractMasterDetailService</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/18)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./components/AbstractMasterComponent.html">projects/netgrif-components/src/lib/builder/modeler/components/master-detail/abstract-master.component.ts</a>
+            </td>
+            <td>component</td>
+            <td>AbstractMasterComponent</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/9)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./components/MainMasterItemComponent.html">projects/netgrif-components/src/lib/builder/modeler/components/master-detail/main-master-item/main-master-item.component.ts</a>
+            </td>
+            <td>component</td>
+            <td>MainMasterItemComponent</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/7)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./miscellaneous/variables.html#MASTER_ITEM">projects/netgrif-components/src/lib/builder/modeler/components/master-detail/main-master-item/master-injection-tokens.ts</a>
+            </td>
+            <td>variable</td>
+            <td>MASTER_ITEM</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/1)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./miscellaneous/variables.html#MASTER_SERVICE">projects/netgrif-components/src/lib/builder/modeler/components/master-detail/main-master-item/master-injection-tokens.ts</a>
+            </td>
+            <td>variable</td>
+            <td>MASTER_SERVICE</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/1)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./injectables/BuilderPaginatorIntl.html">projects/netgrif-components/src/lib/builder/modeler/components/master-detail/main-master/builder-paginator-inpl.ts</a>
+            </td>
+            <td>injectable</td>
+            <td>BuilderPaginatorIntl</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/10)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./components/MainMasterComponent.html">projects/netgrif-components/src/lib/builder/modeler/components/master-detail/main-master/main-master.component.ts</a>
+            </td>
+            <td>component</td>
+            <td>MainMasterComponent</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/22)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./components/MasterDetailComponent.html">projects/netgrif-components/src/lib/builder/modeler/components/master-detail/master-detail.component.ts</a>
+            </td>
+            <td>component</td>
+            <td>MasterDetailComponent</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/17)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./components/PageMasterComponent.html">projects/netgrif-components/src/lib/builder/modeler/components/master-detail/page-master.component.ts</a>
+            </td>
+            <td>component</td>
+            <td>PageMasterComponent</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/22)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/MaterialIconList.html">projects/netgrif-components/src/lib/builder/modeler/components/material-icon-picker/material-icon-list.ts</a>
+            </td>
+            <td>class</td>
+            <td>MaterialIconList</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/2)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./components/MaterialIconPickerComponent.html">projects/netgrif-components/src/lib/builder/modeler/components/material-icon-picker/material-icon-picker.component.ts</a>
+            </td>
+            <td>component</td>
+            <td>MaterialIconPickerComponent</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/9)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/ControlPanelButton.html">projects/netgrif-components/src/lib/builder/modeler/control-panel/control-panel-button.ts</a>
+            </td>
+            <td>class</td>
+            <td>ControlPanelButton</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/2)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/ControlPanelIcon.html">projects/netgrif-components/src/lib/builder/modeler/control-panel/control-panel-icon.ts</a>
+            </td>
+            <td>class</td>
+            <td>ControlPanelIcon</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/2)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./miscellaneous/variables.html#NAB_CONTROL_PANEL_MODE">projects/netgrif-components/src/lib/builder/modeler/control-panel/control-panel-tool-injection-token.ts</a>
+            </td>
+            <td>variable</td>
+            <td>NAB_CONTROL_PANEL_MODE</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/1)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./miscellaneous/variables.html#NAB_CONTROL_PANEL_TOOL">projects/netgrif-components/src/lib/builder/modeler/control-panel/control-panel-tool-injection-token.ts</a>
+            </td>
+            <td>variable</td>
+            <td>NAB_CONTROL_PANEL_TOOL</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/1)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./components/ControlPanelComponent.html">projects/netgrif-components/src/lib/builder/modeler/control-panel/control-panel.component.ts</a>
+            </td>
+            <td>component</td>
+            <td>ControlPanelComponent</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/5)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./injectables/ControlPanelService.html">projects/netgrif-components/src/lib/builder/modeler/control-panel/control-panel.service.ts</a>
+            </td>
+            <td>injectable</td>
+            <td>ControlPanelService</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/7)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./components/ImportSuccessfulComponent.html">projects/netgrif-components/src/lib/builder/modeler/control-panel/import-successful/import-successful.component.ts</a>
+            </td>
+            <td>component</td>
+            <td>ImportSuccessfulComponent</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/2)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./injectables/ExportTool.html">projects/netgrif-components/src/lib/builder/modeler/control-panel/modes/export-tool.ts</a>
+            </td>
+            <td>injectable</td>
+            <td>ExportTool</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/3)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./components/ImportToolButtonComponent.html">projects/netgrif-components/src/lib/builder/modeler/control-panel/modes/import-tool-button/import-tool-button.component.ts</a>
+            </td>
+            <td>component</td>
+            <td>ImportToolButtonComponent</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/6)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./injectables/ImportTool.html">projects/netgrif-components/src/lib/builder/modeler/control-panel/modes/import-tool.ts</a>
+            </td>
+            <td>injectable</td>
+            <td>ImportTool</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/5)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./components/ModeComponent.html">projects/netgrif-components/src/lib/builder/modeler/control-panel/modes/mode-component/mode.component.ts</a>
+            </td>
+            <td>component</td>
+            <td>ModeComponent</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/6)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/ModeService.html">projects/netgrif-components/src/lib/builder/modeler/control-panel/modes/mode-component/mode.service.ts</a>
+            </td>
+            <td>class</td>
+            <td>ModeService</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/3)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/ModeRegistry.html">projects/netgrif-components/src/lib/builder/modeler/control-panel/modes/mode-registry.ts</a>
+            </td>
+            <td>class</td>
+            <td>ModeRegistry</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/5)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/Mode.html">projects/netgrif-components/src/lib/builder/modeler/control-panel/modes/mode.ts</a>
+            </td>
+            <td>class</td>
+            <td>Mode</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/5)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./injectables/RedoTool.html">projects/netgrif-components/src/lib/builder/modeler/control-panel/modes/redo-tool.ts</a>
+            </td>
+            <td>injectable</td>
+            <td>RedoTool</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/4)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./injectables/SvgExportTool.html">projects/netgrif-components/src/lib/builder/modeler/control-panel/modes/svg-export-tool.ts</a>
+            </td>
+            <td>injectable</td>
+            <td>SvgExportTool</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/3)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./injectables/UndoTool.html">projects/netgrif-components/src/lib/builder/modeler/control-panel/modes/undo-tool.ts</a>
+            </td>
+            <td>injectable</td>
+            <td>UndoTool</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/4)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./components/FileToolComponent.html">projects/netgrif-components/src/lib/builder/modeler/control-panel/tools/file-tool-component/file-tool.component.ts</a>
+            </td>
+            <td>component</td>
+            <td>FileToolComponent</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/3)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./injectables/GlobalToolRegistry.html">projects/netgrif-components/src/lib/builder/modeler/control-panel/tools/global-tool-registry.ts</a>
+            </td>
+            <td>injectable</td>
+            <td>GlobalToolRegistry</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/5)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./components/ToolComponent.html">projects/netgrif-components/src/lib/builder/modeler/control-panel/tools/tool-component/tool.component.ts</a>
+            </td>
+            <td>component</td>
+            <td>ToolComponent</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/8)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/ToolGroup.html">projects/netgrif-components/src/lib/builder/modeler/control-panel/tools/tool-group.ts</a>
+            </td>
+            <td>class</td>
+            <td>ToolGroup</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/2)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/ToolRegistry.html">projects/netgrif-components/src/lib/builder/modeler/control-panel/tools/tool-registry.ts</a>
+            </td>
+            <td>class</td>
+            <td>ToolRegistry</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/6)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/Tool.html">projects/netgrif-components/src/lib/builder/modeler/control-panel/tools/tool.ts</a>
+            </td>
+            <td>class</td>
+            <td>Tool</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/3)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./components/DataDetailComponent.html">projects/netgrif-components/src/lib/builder/modeler/data-mode/data-detail/data-detail.component.ts</a>
+            </td>
+            <td>component</td>
+            <td>DataDetailComponent</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/45)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./interfaces/HistoryDataSave.html">projects/netgrif-components/src/lib/builder/modeler/data-mode/data-detail/data-detail.component.ts</a>
+            </td>
+            <td>interface</td>
+            <td>HistoryDataSave</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/3)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./injectables/DataMasterDetailService.html">projects/netgrif-components/src/lib/builder/modeler/data-mode/data-master-detail.service.ts</a>
+            </td>
+            <td>injectable</td>
+            <td>DataMasterDetailService</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/18)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./components/DataMasterItemComponent.html">projects/netgrif-components/src/lib/builder/modeler/data-mode/data-master-item/data-master-item.component.ts</a>
+            </td>
+            <td>component</td>
+            <td>DataMasterItemComponent</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/7)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./components/DataModeComponent.html">projects/netgrif-components/src/lib/builder/modeler/data-mode/data-mode.component.ts</a>
+            </td>
+            <td>component</td>
+            <td>DataModeComponent</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/2)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./interfaces/TypeArray.html">projects/netgrif-components/src/lib/builder/modeler/data-mode/data-mode.component.ts</a>
+            </td>
+            <td>interface</td>
+            <td>TypeArray</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/3)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./injectables/DataModeService.html">projects/netgrif-components/src/lib/builder/modeler/data-mode/data-mode.service.ts</a>
+            </td>
+            <td>injectable</td>
+            <td>DataModeService</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/7)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./interfaces/TypeArray.html">projects/netgrif-components/src/lib/builder/modeler/data-mode/data-mode.service.ts</a>
+            </td>
+            <td>interface</td>
+            <td>TypeArray</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/3)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./components/TaskRefInitFieldComponent.html">projects/netgrif-components/src/lib/builder/modeler/data-mode/task-ref-init-field/task-ref-init-field.component.ts</a>
+            </td>
+            <td>component</td>
+            <td>TaskRefInitFieldComponent</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/10)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./components/ContextMenuComponent.html">projects/netgrif-components/src/lib/builder/modeler/edit-mode/context-menu/context-menu.component.ts</a>
+            </td>
+            <td>component</td>
+            <td>ContextMenuComponent</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/3)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/ContextMenu.html">projects/netgrif-components/src/lib/builder/modeler/edit-mode/context-menu/context-menu.ts</a>
+            </td>
+            <td>class</td>
+            <td>ContextMenu</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/2)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/DeleteArcMenuItem.html">projects/netgrif-components/src/lib/builder/modeler/edit-mode/context-menu/menu-items/arc/delete-arc-menu-item.ts</a>
+            </td>
+            <td>class</td>
+            <td>DeleteArcMenuItem</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/2)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/DeleteBreakpointMenuItem.html">projects/netgrif-components/src/lib/builder/modeler/edit-mode/context-menu/menu-items/arc/delete-breakpoint-menu-item.ts</a>
+            </td>
+            <td>class</td>
+            <td>DeleteBreakpointMenuItem</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/2)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/EditArcMenuItem.html">projects/netgrif-components/src/lib/builder/modeler/edit-mode/context-menu/menu-items/arc/edit-arc-menu-item.ts</a>
+            </td>
+            <td>class</td>
+            <td>EditArcMenuItem</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/2)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/DeleteMenuItem.html">projects/netgrif-components/src/lib/builder/modeler/edit-mode/context-menu/menu-items/delete-menu-item.ts</a>
+            </td>
+            <td>class</td>
+            <td>DeleteMenuItem</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/2)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/DeleteSelectedMenuItem.html">projects/netgrif-components/src/lib/builder/modeler/edit-mode/context-menu/menu-items/delete-selected-menu-item.ts</a>
+            </td>
+            <td>class</td>
+            <td>DeleteSelectedMenuItem</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/2)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/MenuItem.html">projects/netgrif-components/src/lib/builder/modeler/edit-mode/context-menu/menu-items/menu-item.ts</a>
+            </td>
+            <td>class</td>
+            <td>MenuItem</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/2)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/EditModelMenuItem.html">projects/netgrif-components/src/lib/builder/modeler/edit-mode/context-menu/menu-items/model/edit-model-menu-item.ts</a>
+            </td>
+            <td>class</td>
+            <td>EditModelMenuItem</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/2)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/ManageModelPermissionsMenuItem.html">projects/netgrif-components/src/lib/builder/modeler/edit-mode/context-menu/menu-items/model/manage-model-permissions-menu-item.ts</a>
+            </td>
+            <td>class</td>
+            <td>ManageModelPermissionsMenuItem</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/2)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/DeletePlaceMenuItem.html">projects/netgrif-components/src/lib/builder/modeler/edit-mode/context-menu/menu-items/place/delete-place-menu-item.ts</a>
+            </td>
+            <td>class</td>
+            <td>DeletePlaceMenuItem</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/2)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/EditPlaceMenuItem.html">projects/netgrif-components/src/lib/builder/modeler/edit-mode/context-menu/menu-items/place/edit-place-menu-item.ts</a>
+            </td>
+            <td>class</td>
+            <td>EditPlaceMenuItem</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/2)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/SelectArcsMenuItem.html">projects/netgrif-components/src/lib/builder/modeler/edit-mode/context-menu/menu-items/select-arcs-menu-item.ts</a>
+            </td>
+            <td>class</td>
+            <td>SelectArcsMenuItem</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/2)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/DeleteTransitionMenuItem.html">projects/netgrif-components/src/lib/builder/modeler/edit-mode/context-menu/menu-items/transition/delete-transition-menu-item.ts</a>
+            </td>
+            <td>class</td>
+            <td>DeleteTransitionMenuItem</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/2)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/EditFormMenuItem.html">projects/netgrif-components/src/lib/builder/modeler/edit-mode/context-menu/menu-items/transition/edit-form-menu-item.ts</a>
+            </td>
+            <td>class</td>
+            <td>EditFormMenuItem</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/2)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/EditTransitionActionsMenuItem.html">projects/netgrif-components/src/lib/builder/modeler/edit-mode/context-menu/menu-items/transition/edit-transition-actions-menu-item.ts</a>
+            </td>
+            <td>class</td>
+            <td>EditTransitionActionsMenuItem</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/2)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/EditTransitionMenuItem.html">projects/netgrif-components/src/lib/builder/modeler/edit-mode/context-menu/menu-items/transition/edit-transition-menu-item.ts</a>
+            </td>
+            <td>class</td>
+            <td>EditTransitionMenuItem</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/2)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/EditTransitionPermissionsMenuItem.html">projects/netgrif-components/src/lib/builder/modeler/edit-mode/context-menu/menu-items/transition/edit-transition-permissions-menu-item.ts</a>
+            </td>
+            <td>class</td>
+            <td>EditTransitionPermissionsMenuItem</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/2)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/ArcBuilder.html">projects/netgrif-components/src/lib/builder/modeler/edit-mode/domain/arc-builders/arc-builder.ts</a>
+            </td>
+            <td>class</td>
+            <td>ArcBuilder</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/3)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./injectables/ArcFactory.html">projects/netgrif-components/src/lib/builder/modeler/edit-mode/domain/arc-builders/arc-factory.service.ts</a>
+            </td>
+            <td>injectable</td>
+            <td>ArcFactory</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/7)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/InhibitorArcBuilder.html">projects/netgrif-components/src/lib/builder/modeler/edit-mode/domain/arc-builders/inhibitor-arc-builder.ts</a>
+            </td>
+            <td>class</td>
+            <td>InhibitorArcBuilder</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/3)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/ReadArcBuilder.html">projects/netgrif-components/src/lib/builder/modeler/edit-mode/domain/arc-builders/read-arc-builder.ts</a>
+            </td>
+            <td>class</td>
+            <td>ReadArcBuilder</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/3)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/RegularPTArcBuilder.html">projects/netgrif-components/src/lib/builder/modeler/edit-mode/domain/arc-builders/regular-p-t-arc-builder.ts</a>
+            </td>
+            <td>class</td>
+            <td>RegularPTArcBuilder</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/3)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/RegularTPArcBuilder.html">projects/netgrif-components/src/lib/builder/modeler/edit-mode/domain/arc-builders/regular-tparc-builder.ts</a>
+            </td>
+            <td>class</td>
+            <td>RegularTPArcBuilder</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/3)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/ResetArcBuilder.html">projects/netgrif-components/src/lib/builder/modeler/edit-mode/domain/arc-builders/reset-arc-builder.ts</a>
+            </td>
+            <td>class</td>
+            <td>ResetArcBuilder</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/3)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/CanvasArc.html">projects/netgrif-components/src/lib/builder/modeler/edit-mode/domain/canvas-arc.ts</a>
+            </td>
+            <td>class</td>
+            <td>CanvasArc</td>
+            <td align="right" data-sort="20">
+                <span class="coverage-percent">20 %</span>
+                <span class="coverage-count">(1/5)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/CanvasElementCollection.html">projects/netgrif-components/src/lib/builder/modeler/edit-mode/domain/canvas-element-collection.ts</a>
+            </td>
+            <td>class</td>
+            <td>CanvasElementCollection</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/22)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/CanvasNodeElement.html">projects/netgrif-components/src/lib/builder/modeler/edit-mode/domain/canvas-node-element.ts</a>
+            </td>
+            <td>class</td>
+            <td>CanvasNodeElement</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/4)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/CanvasObject.html">projects/netgrif-components/src/lib/builder/modeler/edit-mode/domain/canvas-object.ts</a>
+            </td>
+            <td>class</td>
+            <td>CanvasObject</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/4)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/CanvasPlace.html">projects/netgrif-components/src/lib/builder/modeler/edit-mode/domain/canvas-place.ts</a>
+            </td>
+            <td>class</td>
+            <td>CanvasPlace</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/5)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/CanvasTransition.html">projects/netgrif-components/src/lib/builder/modeler/edit-mode/domain/canvas-transition.ts</a>
+            </td>
+            <td>class</td>
+            <td>CanvasTransition</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/5)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/Identifiable.html">projects/netgrif-components/src/lib/builder/modeler/edit-mode/domain/identifiable.ts</a>
+            </td>
+            <td>class</td>
+            <td>Identifiable</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/2)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./interfaces/ReferenceDialogData.html">projects/netgrif-components/src/lib/builder/modeler/edit-mode/domain/reference-dialog-data.ts</a>
+            </td>
+            <td>interface</td>
+            <td>ReferenceDialogData</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/3)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./components/EditModeComponent.html">projects/netgrif-components/src/lib/builder/modeler/edit-mode/edit-mode.component.ts</a>
+            </td>
+            <td>component</td>
+            <td>EditModeComponent</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/10)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./injectables/EditModeService.html">projects/netgrif-components/src/lib/builder/modeler/edit-mode/edit-mode.service.ts</a>
+            </td>
+            <td>injectable</td>
+            <td>EditModeService</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/42)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/AddTokenTool.html">projects/netgrif-components/src/lib/builder/modeler/edit-mode/services/modes/add-token-tool.ts</a>
+            </td>
+            <td>class</td>
+            <td>AddTokenTool</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/84)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/CanvasToolContext.html">projects/netgrif-components/src/lib/builder/modeler/edit-mode/services/modes/canvas-tool-context.ts</a>
+            </td>
+            <td>class</td>
+            <td>CanvasToolContext</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/15)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/CanvasTool.html">projects/netgrif-components/src/lib/builder/modeler/edit-mode/services/modes/canvas-tool.ts</a>
+            </td>
+            <td>class</td>
+            <td>CanvasTool</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/82)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/ClearModelTool.html">projects/netgrif-components/src/lib/builder/modeler/edit-mode/services/modes/clear-model-tool.ts</a>
+            </td>
+            <td>class</td>
+            <td>ClearModelTool</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/83)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/CreateArcTool.html">projects/netgrif-components/src/lib/builder/modeler/edit-mode/services/modes/create-arc-tool.ts</a>
+            </td>
+            <td>class</td>
+            <td>CreateArcTool</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/85)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/CreateInhibitorArcTool.html">projects/netgrif-components/src/lib/builder/modeler/edit-mode/services/modes/create-inhibitor-arc-tools.ts</a>
+            </td>
+            <td>class</td>
+            <td>CreateInhibitorArcTool</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/88)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/CreatePlaceTool.html">projects/netgrif-components/src/lib/builder/modeler/edit-mode/services/modes/create-place-tool.ts</a>
+            </td>
+            <td>class</td>
+            <td>CreatePlaceTool</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/83)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/CreatePTArc.html">projects/netgrif-components/src/lib/builder/modeler/edit-mode/services/modes/create-ptarc.ts</a>
+            </td>
+            <td>class</td>
+            <td>CreatePTArc</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/86)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/CreateReadArcTool.html">projects/netgrif-components/src/lib/builder/modeler/edit-mode/services/modes/create-read-arc-tool.ts</a>
+            </td>
+            <td>class</td>
+            <td>CreateReadArcTool</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/88)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/CreateRegularArcTool.html">projects/netgrif-components/src/lib/builder/modeler/edit-mode/services/modes/create-regular-arc-tool.ts</a>
+            </td>
+            <td>class</td>
+            <td>CreateRegularArcTool</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/87)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/CreateResetArcTool.html">projects/netgrif-components/src/lib/builder/modeler/edit-mode/services/modes/create-reset-arc-tool.ts</a>
+            </td>
+            <td>class</td>
+            <td>CreateResetArcTool</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/88)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/CreateTransitionTool.html">projects/netgrif-components/src/lib/builder/modeler/edit-mode/services/modes/create-transition-tool.ts</a>
+            </td>
+            <td>class</td>
+            <td>CreateTransitionTool</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/83)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/Hotkey.html">projects/netgrif-components/src/lib/builder/modeler/edit-mode/services/modes/domain/hotkey.ts</a>
+            </td>
+            <td>class</td>
+            <td>Hotkey</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/4)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/GridTool.html">projects/netgrif-components/src/lib/builder/modeler/edit-mode/services/modes/grid-tool.ts</a>
+            </td>
+            <td>class</td>
+            <td>GridTool</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/85)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/QuickDrawTool.html">projects/netgrif-components/src/lib/builder/modeler/edit-mode/services/modes/quick-draw-tool.ts</a>
+            </td>
+            <td>class</td>
+            <td>QuickDrawTool</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/85)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/RemoveTokenTool.html">projects/netgrif-components/src/lib/builder/modeler/edit-mode/services/modes/remove-token-tool.ts</a>
+            </td>
+            <td>class</td>
+            <td>RemoveTokenTool</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/84)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/ResetPositionAndZoomTool.html">projects/netgrif-components/src/lib/builder/modeler/edit-mode/services/modes/reset-position-and-zoom-tool.ts</a>
+            </td>
+            <td>class</td>
+            <td>ResetPositionAndZoomTool</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/83)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/SelectTool.html">projects/netgrif-components/src/lib/builder/modeler/edit-mode/services/modes/select-tool.ts</a>
+            </td>
+            <td>class</td>
+            <td>SelectTool</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/98)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/SwitchLabelTool.html">projects/netgrif-components/src/lib/builder/modeler/edit-mode/services/modes/switch-label-tool.ts</a>
+            </td>
+            <td>class</td>
+            <td>SwitchLabelTool</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/85)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./injectables/GridsterFieldToEngineFieldService.html">projects/netgrif-components/src/lib/builder/modeler/gridster-field-to-engine-field.service.ts</a>
+            </td>
+            <td>injectable</td>
+            <td>GridsterFieldToEngineFieldService</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/3)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./components/HistoryDetailComponent.html">projects/netgrif-components/src/lib/builder/modeler/history-mode/history-detail/history-detail.component.ts</a>
+            </td>
+            <td>component</td>
+            <td>HistoryDetailComponent</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/14)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./injectables/HistoryMasterDetailService.html">projects/netgrif-components/src/lib/builder/modeler/history-mode/history-master-detail.service.ts</a>
+            </td>
+            <td>injectable</td>
+            <td>HistoryMasterDetailService</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/18)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./components/HistoryMasterItemComponent.html">projects/netgrif-components/src/lib/builder/modeler/history-mode/history-master-item/history-master-item.component.ts</a>
+            </td>
+            <td>component</td>
+            <td>HistoryMasterItemComponent</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/5)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./components/HistoryModeComponent.html">projects/netgrif-components/src/lib/builder/modeler/history-mode/history-mode.component.ts</a>
+            </td>
+            <td>component</td>
+            <td>HistoryModeComponent</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/2)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./injectables/HistoryModeService.html">projects/netgrif-components/src/lib/builder/modeler/history-mode/history-mode.service.ts</a>
+            </td>
+            <td>injectable</td>
+            <td>HistoryModeService</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/4)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/ElementChange.html">projects/netgrif-components/src/lib/builder/modeler/history-mode/model/element-change.ts</a>
+            </td>
+            <td>class</td>
+            <td>ElementChange</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/2)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/ModelChange.html">projects/netgrif-components/src/lib/builder/modeler/history-mode/model/model/model-change.ts</a>
+            </td>
+            <td>class</td>
+            <td>ModelChange</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/2)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/ModelImported.html">projects/netgrif-components/src/lib/builder/modeler/history-mode/model/model/model-imported.ts</a>
+            </td>
+            <td>class</td>
+            <td>ModelImported</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/2)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/PlaceChange.html">projects/netgrif-components/src/lib/builder/modeler/history-mode/model/place/place-change.ts</a>
+            </td>
+            <td>class</td>
+            <td>PlaceChange</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/2)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/PlaceCreated.html">projects/netgrif-components/src/lib/builder/modeler/history-mode/model/place/place-created.ts</a>
+            </td>
+            <td>class</td>
+            <td>PlaceCreated</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/2)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/PlaceDeleted.html">projects/netgrif-components/src/lib/builder/modeler/history-mode/model/place/place-deleted.ts</a>
+            </td>
+            <td>class</td>
+            <td>PlaceDeleted</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/2)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/PlaceMoved.html">projects/netgrif-components/src/lib/builder/modeler/history-mode/model/place/place-moved.ts</a>
+            </td>
+            <td>class</td>
+            <td>PlaceMoved</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/2)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/I18nTool.html">projects/netgrif-components/src/lib/builder/modeler/i18n-mode/classes/i18n-tool.ts</a>
+            </td>
+            <td>class</td>
+            <td>I18nTool</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/3)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/Locale.html">projects/netgrif-components/src/lib/builder/modeler/i18n-mode/classes/locale.ts</a>
+            </td>
+            <td>class</td>
+            <td>Locale</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/2)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/Locales.html">projects/netgrif-components/src/lib/builder/modeler/i18n-mode/classes/locales.ts</a>
+            </td>
+            <td>class</td>
+            <td>Locales</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/3)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./injectables/I18nControlService.html">projects/netgrif-components/src/lib/builder/modeler/i18n-mode/i18n-control.service.ts</a>
+            </td>
+            <td>injectable</td>
+            <td>I18nControlService</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/7)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./components/I18nModeComponent.html">projects/netgrif-components/src/lib/builder/modeler/i18n-mode/i18n-mode.component.ts</a>
+            </td>
+            <td>component</td>
+            <td>I18nModeComponent</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/4)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./injectables/I18nModeService.html">projects/netgrif-components/src/lib/builder/modeler/i18n-mode/i18n-mode.service.ts</a>
+            </td>
+            <td>injectable</td>
+            <td>I18nModeService</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/4)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./components/FlagComponent.html">projects/netgrif-components/src/lib/builder/modeler/i18n-mode/languages/flag/flag.component.ts</a>
+            </td>
+            <td>component</td>
+            <td>FlagComponent</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/4)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./injectables/LanguageSelectService.html">projects/netgrif-components/src/lib/builder/modeler/i18n-mode/languages/language-select.service.ts</a>
+            </td>
+            <td>injectable</td>
+            <td>LanguageSelectService</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/2)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./injectables/LanguagesTool.html">projects/netgrif-components/src/lib/builder/modeler/i18n-mode/languages/languages-tool.ts</a>
+            </td>
+            <td>injectable</td>
+            <td>LanguagesTool</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/3)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./components/LanguagesComponent.html">projects/netgrif-components/src/lib/builder/modeler/i18n-mode/languages/languages.component.ts</a>
+            </td>
+            <td>component</td>
+            <td>LanguagesComponent</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/16)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./components/ProgressComponent.html">projects/netgrif-components/src/lib/builder/modeler/i18n-mode/languages/progress/progress.component.ts</a>
+            </td>
+            <td>component</td>
+            <td>ProgressComponent</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/7)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./components/I18nFieldComponent.html">projects/netgrif-components/src/lib/builder/modeler/i18n-mode/translations/i18n-field/i18n-field.component.ts</a>
+            </td>
+            <td>component</td>
+            <td>I18nFieldComponent</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/8)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/I18nStringKeyTemplate.html">projects/netgrif-components/src/lib/builder/modeler/i18n-mode/translations/i18n-string-key-template.ts</a>
+            </td>
+            <td>class</td>
+            <td>I18nStringKeyTemplate</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/5)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./components/DataTranslationComponent.html">projects/netgrif-components/src/lib/builder/modeler/i18n-mode/translations/translation-group/data-translation/data-translation.component.ts</a>
+            </td>
+            <td>component</td>
+            <td>DataTranslationComponent</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/5)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./components/ModelTranslationComponent.html">projects/netgrif-components/src/lib/builder/modeler/i18n-mode/translations/translation-group/model-translation/model-translation.component.ts</a>
+            </td>
+            <td>component</td>
+            <td>ModelTranslationComponent</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/3)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./components/RoleTranslationComponent.html">projects/netgrif-components/src/lib/builder/modeler/i18n-mode/translations/translation-group/role-translation/role-translation.component.ts</a>
+            </td>
+            <td>component</td>
+            <td>RoleTranslationComponent</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/4)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./components/TaskTranslationComponent.html">projects/netgrif-components/src/lib/builder/modeler/i18n-mode/translations/translation-group/task-translation/task-translation.component.ts</a>
+            </td>
+            <td>component</td>
+            <td>TaskTranslationComponent</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/4)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/TranslationGroupConfiguration.html">projects/netgrif-components/src/lib/builder/modeler/i18n-mode/translations/translation-group/translation-group-configuration.ts</a>
+            </td>
+            <td>class</td>
+            <td>TranslationGroupConfiguration</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/2)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./injectables/TranslationsTool.html">projects/netgrif-components/src/lib/builder/modeler/i18n-mode/translations/translations-tool.ts</a>
+            </td>
+            <td>injectable</td>
+            <td>TranslationsTool</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/3)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./components/TranslationsComponent.html">projects/netgrif-components/src/lib/builder/modeler/i18n-mode/translations/translations.component.ts</a>
+            </td>
+            <td>component</td>
+            <td>TranslationsComponent</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/12)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./injectables/ModelImportService.html">projects/netgrif-components/src/lib/builder/modeler/model-import-service.ts</a>
+            </td>
+            <td>injectable</td>
+            <td>ModelImportService</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/3)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/ModelerConfig.html">projects/netgrif-components/src/lib/builder/modeler/modeler-config.ts</a>
+            </td>
+            <td>class</td>
+            <td>ModelerConfig</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/10)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/ModelerUtils.html">projects/netgrif-components/src/lib/builder/modeler/modeler-utils.ts</a>
+            </td>
+            <td>class</td>
+            <td>ModelerUtils</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/3)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./components/ModelerComponent.html">projects/netgrif-components/src/lib/builder/modeler/modeler.component.ts</a>
+            </td>
+            <td>component</td>
+            <td>ModelerComponent</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/8)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./injectables/MortgageService.html">projects/netgrif-components/src/lib/builder/modeler/mortgage.service.ts</a>
+            </td>
+            <td>injectable</td>
+            <td>MortgageService</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/3)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/ChangedRole.html">projects/netgrif-components/src/lib/builder/modeler/role-mode/role-detail/changed-role.ts</a>
+            </td>
+            <td>class</td>
+            <td>ChangedRole</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/5)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./components/RoleDetailComponent.html">projects/netgrif-components/src/lib/builder/modeler/role-mode/role-detail/role-detail.component.ts</a>
+            </td>
+            <td>component</td>
+            <td>RoleDetailComponent</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/11)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./injectables/RoleMasterDetailService.html">projects/netgrif-components/src/lib/builder/modeler/role-mode/role-master-detail.service.ts</a>
+            </td>
+            <td>injectable</td>
+            <td>RoleMasterDetailService</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/18)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./components/RoleMasterItemComponent.html">projects/netgrif-components/src/lib/builder/modeler/role-mode/role-master-item/role-master-item.component.ts</a>
+            </td>
+            <td>component</td>
+            <td>RoleMasterItemComponent</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/7)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./components/RoleModeComponent.html">projects/netgrif-components/src/lib/builder/modeler/role-mode/role-mode.component.ts</a>
+            </td>
+            <td>component</td>
+            <td>RoleModeComponent</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/2)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./injectables/RoleModeService.html">projects/netgrif-components/src/lib/builder/modeler/role-mode/role-mode.service.ts</a>
+            </td>
+            <td>injectable</td>
+            <td>RoleModeService</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/5)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./injectables/SelectedTransitionService.html">projects/netgrif-components/src/lib/builder/modeler/selected-transition.service.ts</a>
+            </td>
+            <td>injectable</td>
+            <td>SelectedTransitionService</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/1)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/CanvasListenerTool.html">projects/netgrif-components/src/lib/builder/modeler/services/canvas/canvas-listener-tool.ts</a>
+            </td>
+            <td>class</td>
+            <td>CanvasListenerTool</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/65)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./injectables/CanvasModeService.html">projects/netgrif-components/src/lib/builder/modeler/services/canvas/canvas-mode-service.ts</a>
+            </td>
+            <td>injectable</td>
+            <td>CanvasModeService</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/14)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./interfaces/ArcListener.html">projects/netgrif-components/src/lib/builder/modeler/services/canvas/listeners/arc-listener.ts</a>
+            </td>
+            <td>interface</td>
+            <td>ArcListener</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/6)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/ContextMenuInterruptionError.html">projects/netgrif-components/src/lib/builder/modeler/services/canvas/listeners/context-menu-interruption-error.ts</a>
+            </td>
+            <td>class</td>
+            <td>ContextMenuInterruptionError</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/2)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./interfaces/KeyListener.html">projects/netgrif-components/src/lib/builder/modeler/services/canvas/listeners/key-listener.ts</a>
+            </td>
+            <td>interface</td>
+            <td>KeyListener</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/5)</span>
+            </td>
+        </tr>
+        <tr class="very-good">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./interfaces/MouseListener.html">projects/netgrif-components/src/lib/builder/modeler/services/canvas/listeners/mouse-listener.ts</a>
+            </td>
+            <td>interface</td>
+            <td>MouseListener</td>
+            <td align="right" data-sort="87">
+                <span class="coverage-percent">87 %</span>
+                <span class="coverage-count">(7/8)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./interfaces/PlaceListener.html">projects/netgrif-components/src/lib/builder/modeler/services/canvas/listeners/place-listener.ts</a>
+            </td>
+            <td>interface</td>
+            <td>PlaceListener</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/6)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./interfaces/TransitionListener.html">projects/netgrif-components/src/lib/builder/modeler/services/canvas/listeners/transition-listener.ts</a>
+            </td>
+            <td>interface</td>
+            <td>TransitionListener</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/6)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./interfaces/ChangeMessageResolver.html">projects/netgrif-components/src/lib/builder/modeler/services/history/change-message-resolver.ts</a>
+            </td>
+            <td>interface</td>
+            <td>ChangeMessageResolver</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/2)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/HistoryChange.html">projects/netgrif-components/src/lib/builder/modeler/services/history/history-change.ts</a>
+            </td>
+            <td>class</td>
+            <td>HistoryChange</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/3)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./injectables/HistoryService.html">projects/netgrif-components/src/lib/builder/modeler/services/history/history.service.ts</a>
+            </td>
+            <td>injectable</td>
+            <td>HistoryService</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/7)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/History.html">projects/netgrif-components/src/lib/builder/modeler/services/history/history.ts</a>
+            </td>
+            <td>class</td>
+            <td>History</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/7)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/ModelConfig.html">projects/netgrif-components/src/lib/builder/modeler/services/model/model-config.ts</a>
+            </td>
+            <td>class</td>
+            <td>ModelConfig</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/6)</span>
+            </td>
+        </tr>
+        <tr class="medium">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./injectables/ModelExportService.html">projects/netgrif-components/src/lib/builder/modeler/services/model/model-export.service.ts</a>
+            </td>
+            <td>injectable</td>
+            <td>ModelExportService</td>
+            <td align="right" data-sort="33">
+                <span class="coverage-percent">33 %</span>
+                <span class="coverage-count">(2/6)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./injectables/ModelSourceService.html">projects/netgrif-components/src/lib/builder/modeler/services/model/model-source.service.ts</a>
+            </td>
+            <td>injectable</td>
+            <td>ModelSourceService</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/3)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./interfaces/ModelSource.html">projects/netgrif-components/src/lib/builder/modeler/services/model/model-source.ts</a>
+            </td>
+            <td>interface</td>
+            <td>ModelSource</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/1)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./injectables/ModelService.html">projects/netgrif-components/src/lib/builder/modeler/services/model/model.service.ts</a>
+            </td>
+            <td>injectable</td>
+            <td>ModelService</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/45)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/SequenceGenerator.html">projects/netgrif-components/src/lib/builder/modeler/services/model/sequence-generator.ts</a>
+            </td>
+            <td>class</td>
+            <td>SequenceGenerator</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/4)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./injectables/ModelerTabsService.html">projects/netgrif-components/src/lib/builder/modeler/services/modeler-tabs.service.ts</a>
+            </td>
+            <td>injectable</td>
+            <td>ModelerTabsService</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/3)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./components/SimulationModeComponent.html">projects/netgrif-components/src/lib/builder/modeler/simulation-mode/simulation-mode.component.ts</a>
+            </td>
+            <td>component</td>
+            <td>SimulationModeComponent</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/10)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./injectables/SimulationModeService.html">projects/netgrif-components/src/lib/builder/modeler/simulation-mode/simulation-mode.service.ts</a>
+            </td>
+            <td>injectable</td>
+            <td>SimulationModeService</td>
+            <td align="right" data-sort="5">
+                <span class="coverage-percent">5 %</span>
+                <span class="coverage-count">(1/17)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/SimulationMode.html">projects/netgrif-components/src/lib/builder/modeler/simulation-mode/simulation-mode.ts</a>
+            </td>
+            <td>class</td>
+            <td>SimulationMode</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/5)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/ChangeDataTool.html">projects/netgrif-components/src/lib/builder/modeler/simulation-mode/tool/change-data-tool.ts</a>
+            </td>
+            <td>class</td>
+            <td>ChangeDataTool</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/67)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/EventSimulationTool.html">projects/netgrif-components/src/lib/builder/modeler/simulation-mode/tool/event-simulation.tool.ts</a>
+            </td>
+            <td>class</td>
+            <td>EventSimulationTool</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/69)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/GridTool.html">projects/netgrif-components/src/lib/builder/modeler/simulation-mode/tool/grid-tool.ts</a>
+            </td>
+            <td>class</td>
+            <td>GridTool</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/70)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/ResetPositionAndZoomTool.html">projects/netgrif-components/src/lib/builder/modeler/simulation-mode/tool/reset-position-and-zoom-tool.ts</a>
+            </td>
+            <td>class</td>
+            <td>ResetPositionAndZoomTool</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/68)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/ResetSimulationTool.html">projects/netgrif-components/src/lib/builder/modeler/simulation-mode/tool/reset-simulation.tool.ts</a>
+            </td>
+            <td>class</td>
+            <td>ResetSimulationTool</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/67)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/SimulationTool.html">projects/netgrif-components/src/lib/builder/modeler/simulation-mode/tool/simulation-tool.ts</a>
+            </td>
+            <td>class</td>
+            <td>SimulationTool</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/67)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/SwitchLabelTool.html">projects/netgrif-components/src/lib/builder/modeler/simulation-mode/tool/switch-label-tool.ts</a>
+            </td>
+            <td>class</td>
+            <td>SwitchLabelTool</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/70)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/TaskSimulationTool.html">projects/netgrif-components/src/lib/builder/modeler/simulation-mode/tool/task-simulation.tool.ts</a>
+            </td>
+            <td>class</td>
+            <td>TaskSimulationTool</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/67)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./components/TaskModeComponent.html">projects/netgrif-components/src/lib/builder/modeler/task-mode/task-mode.component.ts</a>
+            </td>
+            <td>component</td>
+            <td>TaskModeComponent</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/5)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./miscellaneous/variables.html#baseFilterFactory">projects/netgrif-components/src/lib/builder/modeler/task-mode/task-mode.component.ts</a>
+            </td>
+            <td>variable</td>
+            <td>baseFilterFactory</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/1)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./miscellaneous/variables.html#localAllowedNetsFactory">projects/netgrif-components/src/lib/builder/modeler/task-mode/task-mode.component.ts</a>
+            </td>
+            <td>variable</td>
+            <td>localAllowedNetsFactory</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/1)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./injectables/TaskModeService.html">projects/netgrif-components/src/lib/builder/modeler/task-mode/task-mode.service.ts</a>
+            </td>
+            <td>injectable</td>
+            <td>TaskModeService</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/5)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./miscellaneous/variables.html#readOnlyBuilder">projects/netgrif-components/src/lib/builder/read-only-builder.ts</a>
+            </td>
+            <td>variable</td>
+            <td>readOnlyBuilder</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/1)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./injectables/BuilderIntegrationService.html">projects/netgrif-components/src/lib/builder/services/builder-integration.service.ts</a>
+            </td>
+            <td>injectable</td>
+            <td>BuilderIntegrationService</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/17)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./injectables/BuilderModeService.html">projects/netgrif-components/src/lib/builder/services/builder-mode.service.ts</a>
+            </td>
+            <td>injectable</td>
+            <td>BuilderModeService</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/2)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./injectables/LocalStorageService.html">projects/netgrif-components/src/lib/builder/services/local-storage.service.ts</a>
+            </td>
+            <td>injectable</td>
+            <td>LocalStorageService</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/5)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./injectables/TutorialService.html">projects/netgrif-components/src/lib/builder/tutorial/tutorial-service.ts</a>
+            </td>
+            <td>injectable</td>
+            <td>TutorialService</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/21)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/TutorialStep.html">projects/netgrif-components/src/lib/builder/tutorial/tutorial-step.ts</a>
+            </td>
+            <td>class</td>
+            <td>TutorialStep</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/8)</span>
             </td>
         </tr>
         <tr class="low">
@@ -314,7 +3679,7 @@
             <td>BarchartCardComponent</td>
             <td align="right" data-sort="0">
                 <span class="coverage-percent">0 %</span>
-                <span class="coverage-count">(0/7)</span>
+                <span class="coverage-count">(0/6)</span>
             </td>
         </tr>
         <tr class="low">
@@ -350,7 +3715,7 @@
             <td>LinearGaugeCardComponent</td>
             <td align="right" data-sort="0">
                 <span class="coverage-percent">0 %</span>
-                <span class="coverage-count">(0/7)</span>
+                <span class="coverage-count">(0/6)</span>
             </td>
         </tr>
         <tr class="low">
@@ -362,7 +3727,7 @@
             <td>LineChartCardComponent</td>
             <td align="right" data-sort="0">
                 <span class="coverage-percent">0 %</span>
-                <span class="coverage-count">(0/8)</span>
+                <span class="coverage-count">(0/7)</span>
             </td>
         </tr>
         <tr class="low">
@@ -374,7 +3739,7 @@
             <td>PieChartCardComponent</td>
             <td align="right" data-sort="0">
                 <span class="coverage-percent">0 %</span>
-                <span class="coverage-count">(0/9)</span>
+                <span class="coverage-count">(0/8)</span>
             </td>
         </tr>
         <tr class="low">
@@ -386,7 +3751,7 @@
             <td>PortalCardComponent</td>
             <td align="right" data-sort="0">
                 <span class="coverage-percent">0 %</span>
-                <span class="coverage-count">(0/10)</span>
+                <span class="coverage-count">(0/8)</span>
             </td>
         </tr>
         <tr class="low">
@@ -752,6 +4117,18 @@
         <tr class="low">
             <td>
                 <!-- miscellaneous -->
+                <a href="./components/FilterStringQueryFieldComponent.html">projects/netgrif-components/src/lib/data-fields/filter-field/filter-string-query-field/filter-string-query-field.component.ts</a>
+            </td>
+            <td>component</td>
+            <td>FilterStringQueryFieldComponent</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/2)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
                 <a href="./components/FilterFieldTabViewContentComponent.html">projects/netgrif-components/src/lib/data-fields/filter-field/tab-view-filter-field/filter-field-tab-view-content.component.ts</a>
             </td>
             <td>component</td>
@@ -908,13 +4285,25 @@
         <tr class="low">
             <td>
                 <!-- miscellaneous -->
+                <a href="./components/ProcessRefDefaultComponent.html">projects/netgrif-components/src/lib/data-fields/process-ref/process-ref-default/process-ref-default.component.ts</a>
+            </td>
+            <td>component</td>
+            <td>ProcessRefDefaultComponent</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/8)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
                 <a href="./components/RequiredLabelComponent.html">projects/netgrif-components/src/lib/data-fields/required-label/required-label.component.ts</a>
             </td>
             <td>component</td>
             <td>RequiredLabelComponent</td>
             <td align="right" data-sort="0">
                 <span class="coverage-percent">0 %</span>
-                <span class="coverage-count">(0/4)</span>
+                <span class="coverage-count">(0/3)</span>
             </td>
         </tr>
         <tr class="low">
@@ -938,7 +4327,7 @@
             <td>TaskRefDashboardFieldComponent</td>
             <td align="right" data-sort="0">
                 <span class="coverage-percent">0 %</span>
-                <span class="coverage-count">(0/8)</span>
+                <span class="coverage-count">(0/7)</span>
             </td>
         </tr>
         <tr class="low">
@@ -950,7 +4339,7 @@
             <td>TaskRefDashboardTileComponent</td>
             <td align="right" data-sort="0">
                 <span class="coverage-percent">0 %</span>
-                <span class="coverage-count">(0/7)</span>
+                <span class="coverage-count">(0/6)</span>
             </td>
         </tr>
         <tr class="low">
@@ -962,7 +4351,7 @@
             <td>TaskRefFieldComponent</td>
             <td align="right" data-sort="0">
                 <span class="coverage-percent">0 %</span>
-                <span class="coverage-count">(0/4)</span>
+                <span class="coverage-count">(0/3)</span>
             </td>
         </tr>
         <tr class="low">
@@ -1070,7 +4459,7 @@
             <td>EasymdeWrapperComponent</td>
             <td align="right" data-sort="0">
                 <span class="coverage-percent">0 %</span>
-                <span class="coverage-count">(0/15)</span>
+                <span class="coverage-count">(0/13)</span>
             </td>
         </tr>
         <tr class="low">
@@ -1244,30 +4633,6 @@
         <tr class="low">
             <td>
                 <!-- miscellaneous -->
-                <a href="./components/LoadFilterDialogComponent.html">projects/netgrif-components/src/lib/dialog/load-filter-dialog/load-filter-dialog.component.ts</a>
-            </td>
-            <td>component</td>
-            <td>LoadFilterDialogComponent</td>
-            <td align="right" data-sort="0">
-                <span class="coverage-percent">0 %</span>
-                <span class="coverage-count">(0/6)</span>
-            </td>
-        </tr>
-        <tr class="low">
-            <td>
-                <!-- miscellaneous -->
-                <a href="./miscellaneous/functions.html#loadBaseFilterFactory">projects/netgrif-components/src/lib/dialog/load-filter-dialog/load-filter-dialog.component.ts</a>
-            </td>
-            <td>function</td>
-            <td>loadBaseFilterFactory</td>
-            <td align="right" data-sort="0">
-                <span class="coverage-percent">0 %</span>
-                <span class="coverage-count">(0/1)</span>
-            </td>
-        </tr>
-        <tr class="low">
-            <td>
-                <!-- miscellaneous -->
                 <a href="./miscellaneous/variables.html#openTaskDialog">projects/netgrif-components/src/lib/dialog/model/dialog-actions.ts</a>
             </td>
             <td>variable</td>
@@ -1316,22 +4681,22 @@
         <tr class="low">
             <td>
                 <!-- miscellaneous -->
-                <a href="./components/SaveFilterDialogComponent.html">projects/netgrif-components/src/lib/dialog/save-filter-dialog/save-filter-dialog.component.ts</a>
+                <a href="./components/SingleTaskViewDialogComponent.html">projects/netgrif-components/src/lib/dialog/single-task-view-dialog/single-task-view-dialog.component.ts</a>
             </td>
             <td>component</td>
-            <td>SaveFilterDialogComponent</td>
+            <td>SingleTaskViewDialogComponent</td>
             <td align="right" data-sort="0">
                 <span class="coverage-percent">0 %</span>
-                <span class="coverage-count">(0/4)</span>
+                <span class="coverage-count">(0/6)</span>
             </td>
         </tr>
         <tr class="low">
             <td>
                 <!-- miscellaneous -->
-                <a href="./miscellaneous/functions.html#saveBaseFilterFactory">projects/netgrif-components/src/lib/dialog/save-filter-dialog/save-filter-dialog.component.ts</a>
+                <a href="./miscellaneous/functions.html#singleTaskViewFilterFactory">projects/netgrif-components/src/lib/dialog/single-task-view-dialog/single-task-view-dialog.component.ts</a>
             </td>
             <td>function</td>
-            <td>saveBaseFilterFactory</td>
+            <td>singleTaskViewFilterFactory</td>
             <td align="right" data-sort="0">
                 <span class="coverage-percent">0 %</span>
                 <span class="coverage-count">(0/1)</span>
@@ -1598,7 +4963,7 @@
             <td>HeaderComponent</td>
             <td align="right" data-sort="0">
                 <span class="coverage-percent">0 %</span>
-                <span class="coverage-count">(0/6)</span>
+                <span class="coverage-count">(0/2)</span>
             </td>
         </tr>
         <tr class="low">
@@ -1628,25 +4993,13 @@
         <tr class="low">
             <td>
                 <!-- miscellaneous -->
-                <a href="./components/DefaultCaseRefListViewComponent.html">projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/default-case-ref-list-view/default-case-ref-list-view.component.ts</a>
+                <a href="./components/DashboardComponent.html">projects/netgrif-components/src/lib/navigation/dashboard/dashboard.component.ts</a>
             </td>
             <td>component</td>
-            <td>DefaultCaseRefListViewComponent</td>
+            <td>DashboardComponent</td>
             <td align="right" data-sort="0">
                 <span class="coverage-percent">0 %</span>
-                <span class="coverage-count">(0/12)</span>
-            </td>
-        </tr>
-        <tr class="low">
-            <td>
-                <!-- miscellaneous -->
-                <a href="./miscellaneous/variables.html#localAllowedNetsFactory">projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/default-case-ref-list-view/default-case-ref-list-view.component.ts</a>
-            </td>
-            <td>variable</td>
-            <td>localAllowedNetsFactory</td>
-            <td align="right" data-sort="0">
-                <span class="coverage-percent">0 %</span>
-                <span class="coverage-count">(0/1)</span>
+                <span class="coverage-count">(0/2)</span>
             </td>
         </tr>
         <tr class="low">
@@ -1664,82 +5017,46 @@
         <tr class="low">
             <td>
                 <!-- miscellaneous -->
-                <a href="./components/DefaultSimpleTaskViewComponent.html">projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/default-simple-task-view/default-simple-task-view.component.ts</a>
-            </td>
-            <td>component</td>
-            <td>DefaultSimpleTaskViewComponent</td>
-            <td align="right" data-sort="0">
-                <span class="coverage-percent">0 %</span>
-                <span class="coverage-count">(0/4)</span>
-            </td>
-        </tr>
-        <tr class="low">
-            <td>
-                <!-- miscellaneous -->
-                <a href="./components/DefaultTabViewComponent.html">projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/default-tab-view/default-tab-view.component.ts</a>
-            </td>
-            <td>component</td>
-            <td>DefaultTabViewComponent</td>
-            <td align="right" data-sort="0">
-                <span class="coverage-percent">0 %</span>
-                <span class="coverage-count">(0/5)</span>
-            </td>
-        </tr>
-        <tr class="low">
-            <td>
-                <!-- miscellaneous -->
-                <a href="./components/DefaultTabbedCaseViewComponent.html">projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/default-tabbed-case-view/default-tabbed-case-view.component.ts</a>
-            </td>
-            <td>component</td>
-            <td>DefaultTabbedCaseViewComponent</td>
-            <td align="right" data-sort="0">
-                <span class="coverage-percent">0 %</span>
-                <span class="coverage-count">(0/19)</span>
-            </td>
-        </tr>
-        <tr class="low">
-            <td>
-                <!-- miscellaneous -->
-                <a href="./components/DefaultTabbedTaskViewComponent.html">projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/default-tabbed-task-view/default-tabbed-task-view.component.ts</a>
-            </td>
-            <td>component</td>
-            <td>DefaultTabbedTaskViewComponent</td>
-            <td align="right" data-sort="0">
-                <span class="coverage-percent">0 %</span>
-                <span class="coverage-count">(0/13)</span>
-            </td>
-        </tr>
-        <tr class="low">
-            <td>
-                <!-- miscellaneous -->
-                <a href="./miscellaneous/functions.html#baseFilterFactory">projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/default-tabbed-task-view/default-tabbed-task-view.component.ts</a>
+                <a href="./miscellaneous/functions.html#buildDynamicSortChangeDescription$">projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/model/factory-methods.ts</a>
             </td>
             <td>function</td>
-            <td>baseFilterFactory</td>
+            <td>buildDynamicSortChangeDescription$</td>
             <td align="right" data-sort="0">
                 <span class="coverage-percent">0 %</span>
                 <span class="coverage-count">(0/1)</span>
             </td>
         </tr>
-        <tr class="low">
+        <tr class="very-good">
             <td>
                 <!-- miscellaneous -->
-                <a href="./components/DefaultTaskViewComponent.html">projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/default-task-view/default-task-view.component.ts</a>
+                <a href="./miscellaneous/functions.html#buildDynamicSortChangeDescriptionForCase$">projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/model/factory-methods.ts</a>
             </td>
-            <td>component</td>
-            <td>DefaultTaskViewComponent</td>
-            <td align="right" data-sort="0">
-                <span class="coverage-percent">0 %</span>
-                <span class="coverage-count">(0/5)</span>
+            <td>function</td>
+            <td>buildDynamicSortChangeDescriptionForCase$</td>
+            <td align="right" data-sort="100">
+                <span class="coverage-percent">100 %</span>
+                <span class="coverage-count">(1/1)</span>
+            </td>
+        </tr>
+        <tr class="very-good">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./miscellaneous/functions.html#buildDynamicSortChangeDescriptionForTask$">projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/model/factory-methods.ts</a>
+            </td>
+            <td>function</td>
+            <td>buildDynamicSortChangeDescriptionForTask$</td>
+            <td align="right" data-sort="100">
+                <span class="coverage-percent">100 %</span>
+                <span class="coverage-count">(1/1)</span>
             </td>
         </tr>
         <tr class="low">
             <td>
                 <!-- miscellaneous -->
-                <a href="./miscellaneous/variables.html#localAllowedNetsFactory">projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/default-task-view/default-task-view.component.ts</a>
+                <a href="./miscellaneous/functions.html#determineMetaFieldType">projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/model/factory-methods.ts</a>
             </td>
-            <td>variable</td>
-            <td>localAllowedNetsFactory</td>
+            <td>function</td>
+            <td>determineMetaFieldType</td>
             <td align="right" data-sort="0">
                 <span class="coverage-percent">0 %</span>
                 <span class="coverage-count">(0/1)</span>
@@ -1769,18 +5086,6 @@
                 <span class="coverage-count">(1/1)</span>
             </td>
         </tr>
-        <tr class="very-good">
-            <td>
-                <!-- miscellaneous -->
-                <a href="./miscellaneous/functions.html#filterCaseTabbedDataSearchCategoriesFactory">projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/model/factory-methods.ts</a>
-            </td>
-            <td>function</td>
-            <td>filterCaseTabbedDataSearchCategoriesFactory</td>
-            <td align="right" data-sort="100">
-                <span class="coverage-percent">100 %</span>
-                <span class="coverage-count">(1/1)</span>
-            </td>
-        </tr>
         <tr class="low">
             <td>
                 <!-- miscellaneous -->
@@ -1790,7 +5095,7 @@
             <td>InjectedTabbedCaseViewDataWithNavigationItemTaskData</td>
             <td align="right" data-sort="5">
                 <span class="coverage-percent">5 %</span>
-                <span class="coverage-count">(1/18)</span>
+                <span class="coverage-count">(1/19)</span>
             </td>
         </tr>
         <tr class="low">
@@ -1805,6 +5110,366 @@
                 <span class="coverage-count">(1/8)</span>
             </td>
         </tr>
+        <tr class="medium">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./interfaces/InjectedTabbedTicketViewDataWithNavigationItemTaskData.html">projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/model/injected-tabbed-ticket-view-data-with-navigation-item-task-data.ts</a>
+            </td>
+            <td>interface</td>
+            <td>InjectedTabbedTicketViewDataWithNavigationItemTaskData</td>
+            <td align="right" data-sort="33">
+                <span class="coverage-percent">33 %</span>
+                <span class="coverage-count">(1/3)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./components/DefaultPublicResolverComponent.html">projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/public/default-public-resolver/default-public-resolver.component.ts</a>
+            </td>
+            <td>component</td>
+            <td>DefaultPublicResolverComponent</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/5)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./components/DefaultPublicSingleTaskViewComponent.html">projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/public/default-public-single-task-view/default-public-single-task-view.component.ts</a>
+            </td>
+            <td>component</td>
+            <td>DefaultPublicSingleTaskViewComponent</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/4)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./miscellaneous/variables.html#localAllowedNetsServiceFactory">projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/public/default-public-single-task-view/default-public-single-task-view.component.ts</a>
+            </td>
+            <td>variable</td>
+            <td>localAllowedNetsServiceFactory</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/1)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./components/DefaultPublicTaskViewComponent.html">projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/public/default-public-task-view/default-public-task-view.component.ts</a>
+            </td>
+            <td>component</td>
+            <td>DefaultPublicTaskViewComponent</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/4)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./miscellaneous/variables.html#localAllowedNetsServiceFactory">projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/public/default-public-task-view/default-public-task-view.component.ts</a>
+            </td>
+            <td>variable</td>
+            <td>localAllowedNetsServiceFactory</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/1)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./components/DefaultPublicWorkflowViewComponent.html">projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/public/default-public-workflow-view/default-public-workflow-view.component.ts</a>
+            </td>
+            <td>component</td>
+            <td>DefaultPublicWorkflowViewComponent</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/3)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./components/DefaultCaseRefListViewComponent.html">projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/refs/default-case-ref-list-view/default-case-ref-list-view.component.ts</a>
+            </td>
+            <td>component</td>
+            <td>DefaultCaseRefListViewComponent</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/11)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./miscellaneous/variables.html#localAllowedNetsFactory">projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/refs/default-case-ref-list-view/default-case-ref-list-view.component.ts</a>
+            </td>
+            <td>variable</td>
+            <td>localAllowedNetsFactory</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/1)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./components/DefaultTaskViewComponent.html">projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/refs/default-task-view/default-task-view.component.ts</a>
+            </td>
+            <td>component</td>
+            <td>DefaultTaskViewComponent</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/5)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./miscellaneous/variables.html#localAllowedNetsFactory">projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/refs/default-task-view/default-task-view.component.ts</a>
+            </td>
+            <td>variable</td>
+            <td>localAllowedNetsFactory</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/1)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./components/DefaultSimpleCaseViewComponent.html">projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/simple-views/default-simple-case-view/default-simple-case-view.component.ts</a>
+            </td>
+            <td>component</td>
+            <td>DefaultSimpleCaseViewComponent</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/23)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./miscellaneous/functions.html#allowedNetsFactory">projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/simple-views/default-simple-case-view/default-simple-case-view.component.ts</a>
+            </td>
+            <td>function</td>
+            <td>allowedNetsFactory</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/1)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./miscellaneous/functions.html#baseFilterFactory">projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/simple-views/default-simple-case-view/default-simple-case-view.component.ts</a>
+            </td>
+            <td>function</td>
+            <td>baseFilterFactory</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/1)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./components/DefaultSimpleTaskViewComponent.html">projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/simple-views/default-simple-task-view/default-simple-task-view.component.ts</a>
+            </td>
+            <td>component</td>
+            <td>DefaultSimpleTaskViewComponent</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/15)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./miscellaneous/functions.html#allowedNetsFactory">projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/simple-views/default-simple-task-view/default-simple-task-view.component.ts</a>
+            </td>
+            <td>function</td>
+            <td>allowedNetsFactory</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/1)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./miscellaneous/functions.html#baseFilterFactory">projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/simple-views/default-simple-task-view/default-simple-task-view.component.ts</a>
+            </td>
+            <td>function</td>
+            <td>baseFilterFactory</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/1)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./components/DefaultSingleTaskViewComponent.html">projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/simple-views/default-single-task-view/default-single-task-view.component.ts</a>
+            </td>
+            <td>component</td>
+            <td>DefaultSingleTaskViewComponent</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/9)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./miscellaneous/functions.html#allowedNetsFactory">projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/simple-views/default-single-task-view/default-single-task-view.component.ts</a>
+            </td>
+            <td>function</td>
+            <td>allowedNetsFactory</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/1)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./miscellaneous/functions.html#baseFilterFactory">projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/simple-views/default-single-task-view/default-single-task-view.component.ts</a>
+            </td>
+            <td>function</td>
+            <td>baseFilterFactory</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/1)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./components/DefaultTabViewComponent.html">projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/tabbed/default-tab-view/default-tab-view.component.ts</a>
+            </td>
+            <td>component</td>
+            <td>DefaultTabViewComponent</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/9)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./components/DefaultTabbedCaseViewComponent.html">projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/tabbed/default-tabbed-case-view/default-tabbed-case-view.component.ts</a>
+            </td>
+            <td>component</td>
+            <td>DefaultTabbedCaseViewComponent</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/25)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./components/DefaultTabbedSingleTaskViewComponent.html">projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/tabbed/default-tabbed-single-task-view/default-tabbed-single-task-view.component.ts</a>
+            </td>
+            <td>component</td>
+            <td>DefaultTabbedSingleTaskViewComponent</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/12)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./miscellaneous/functions.html#baseFilterFactory">projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/tabbed/default-tabbed-single-task-view/default-tabbed-single-task-view.component.ts</a>
+            </td>
+            <td>function</td>
+            <td>baseFilterFactory</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/1)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./miscellaneous/variables.html#localAllowedNetsFactory">projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/tabbed/default-tabbed-single-task-view/default-tabbed-single-task-view.component.ts</a>
+            </td>
+            <td>variable</td>
+            <td>localAllowedNetsFactory</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/1)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./components/DefaultTabbedTaskViewComponent.html">projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/tabbed/default-tabbed-task-view/default-tabbed-task-view.component.ts</a>
+            </td>
+            <td>component</td>
+            <td>DefaultTabbedTaskViewComponent</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/15)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./miscellaneous/functions.html#baseFilterFactory">projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/tabbed/default-tabbed-task-view/default-tabbed-task-view.component.ts</a>
+            </td>
+            <td>function</td>
+            <td>baseFilterFactory</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/1)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./components/DefaultTicketViewComponent.html">projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/tabbed/default-ticket-view/default-ticket-view.component.ts</a>
+            </td>
+            <td>component</td>
+            <td>DefaultTicketViewComponent</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/16)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./interfaces/DataGroupCaseIdPair.html">projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/tabbed/default-ticket-view/default-ticket-view.component.ts</a>
+            </td>
+            <td>interface</td>
+            <td>DataGroupCaseIdPair</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/3)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./interfaces/TicketItem.html">projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/tabbed/default-ticket-view/default-ticket-view.component.ts</a>
+            </td>
+            <td>interface</td>
+            <td>TicketItem</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/6)</span>
+            </td>
+        </tr>
         <tr class="low">
             <td>
                 <!-- miscellaneous -->
@@ -1814,7 +5479,7 @@
             <td>DefaultGroupNavigationComponentResolverService</td>
             <td align="right" data-sort="0">
                 <span class="coverage-percent">0 %</span>
-                <span class="coverage-count">(0/7)</span>
+                <span class="coverage-count">(0/8)</span>
             </td>
         </tr>
         <tr class="low">
@@ -1827,6 +5492,18 @@
             <td align="right" data-sort="0">
                 <span class="coverage-percent">0 %</span>
                 <span class="coverage-count">(0/2)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./miscellaneous/variables.html#reloadMenu">projects/netgrif-components/src/lib/navigation/model/reload-menu.ts</a>
+            </td>
+            <td>variable</td>
+            <td>reloadMenu</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/1)</span>
             </td>
         </tr>
         <tr class="low">
@@ -1983,18 +5660,6 @@
             <td align="right" data-sort="0">
                 <span class="coverage-percent">0 %</span>
                 <span class="coverage-count">(0/2)</span>
-            </td>
-        </tr>
-        <tr class="low">
-            <td>
-                <!-- miscellaneous -->
-                <a href="./miscellaneous/functions.html#filterTextAllowedNetsFactory">projects/netgrif-components/src/lib/panel/immediate/immediate-filter-text-content/immediate-filter-text-content.component.ts</a>
-            </td>
-            <td>function</td>
-            <td>filterTextAllowedNetsFactory</td>
-            <td align="right" data-sort="0">
-                <span class="coverage-percent">0 %</span>
-                <span class="coverage-count">(0/1)</span>
             </td>
         </tr>
         <tr class="low">
@@ -2186,7 +5851,7 @@
             <td>SearchOperandInputComponent</td>
             <td align="right" data-sort="0">
                 <span class="coverage-percent">0 %</span>
-                <span class="coverage-count">(0/5)</span>
+                <span class="coverage-count">(0/3)</span>
             </td>
         </tr>
         <tr class="low">
@@ -2324,42 +5989,6 @@
         <tr class="low">
             <td>
                 <!-- miscellaneous -->
-                <a href="./components/LoadFilterComponent.html">projects/netgrif-components/src/lib/side-menu/content-components/load-filter/load-filter.component.ts</a>
-            </td>
-            <td>component</td>
-            <td>LoadFilterComponent</td>
-            <td align="right" data-sort="0">
-                <span class="coverage-percent">0 %</span>
-                <span class="coverage-count">(0/4)</span>
-            </td>
-        </tr>
-        <tr class="low">
-            <td>
-                <!-- miscellaneous -->
-                <a href="./miscellaneous/functions.html#baseFilterFactory">projects/netgrif-components/src/lib/side-menu/content-components/load-filter/load-filter.component.ts</a>
-            </td>
-            <td>function</td>
-            <td>baseFilterFactory</td>
-            <td align="right" data-sort="0">
-                <span class="coverage-percent">0 %</span>
-                <span class="coverage-count">(0/1)</span>
-            </td>
-        </tr>
-        <tr class="low">
-            <td>
-                <!-- miscellaneous -->
-                <a href="./miscellaneous/functions.html#localAllowedNetsFactory">projects/netgrif-components/src/lib/side-menu/content-components/load-filter/load-filter.component.ts</a>
-            </td>
-            <td>function</td>
-            <td>localAllowedNetsFactory</td>
-            <td align="right" data-sort="0">
-                <span class="coverage-percent">0 %</span>
-                <span class="coverage-count">(0/1)</span>
-            </td>
-        </tr>
-        <tr class="low">
-            <td>
-                <!-- miscellaneous -->
                 <a href="./components/MultiUserAssignItemComponent.html">projects/netgrif-components/src/lib/side-menu/content-components/multi-user-assign/multi-user-assign-list/multi-user-assign-item/multi-user-assign-item.component.ts</a>
             </td>
             <td>component</td>
@@ -2415,42 +6044,6 @@
             <td align="right" data-sort="0">
                 <span class="coverage-percent">0 %</span>
                 <span class="coverage-count">(0/2)</span>
-            </td>
-        </tr>
-        <tr class="low">
-            <td>
-                <!-- miscellaneous -->
-                <a href="./components/SaveFilterComponent.html">projects/netgrif-components/src/lib/side-menu/content-components/save-filter/save-filter.component.ts</a>
-            </td>
-            <td>component</td>
-            <td>SaveFilterComponent</td>
-            <td align="right" data-sort="0">
-                <span class="coverage-percent">0 %</span>
-                <span class="coverage-count">(0/2)</span>
-            </td>
-        </tr>
-        <tr class="low">
-            <td>
-                <!-- miscellaneous -->
-                <a href="./miscellaneous/functions.html#baseFilterFactory">projects/netgrif-components/src/lib/side-menu/content-components/save-filter/save-filter.component.ts</a>
-            </td>
-            <td>function</td>
-            <td>baseFilterFactory</td>
-            <td align="right" data-sort="0">
-                <span class="coverage-percent">0 %</span>
-                <span class="coverage-count">(0/1)</span>
-            </td>
-        </tr>
-        <tr class="low">
-            <td>
-                <!-- miscellaneous -->
-                <a href="./miscellaneous/functions.html#localAllowedNetsFactory">projects/netgrif-components/src/lib/side-menu/content-components/save-filter/save-filter.component.ts</a>
-            </td>
-            <td>function</td>
-            <td>localAllowedNetsFactory</td>
-            <td align="right" data-sort="0">
-                <span class="coverage-percent">0 %</span>
-                <span class="coverage-count">(0/1)</span>
             </td>
         </tr>
         <tr class="medium">
@@ -2642,7 +6235,7 @@
             <td>CreateCaseButtonComponent</td>
             <td align="right" data-sort="0">
                 <span class="coverage-percent">0 %</span>
-                <span class="coverage-count">(0/14)</span>
+                <span class="coverage-count">(0/11)</span>
             </td>
         </tr>
         <tr class="low">
@@ -2716,7 +6309,7 @@
 
                    </div><div class="search-results">
     <div class="has-results">
-        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
         <ul class="search-results-list"></ul>
     </div>
     <div class="no-results">
@@ -2728,6 +6321,15 @@
            </div>
        </div>
 
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 0;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'coverage';
@@ -2735,10 +6337,23 @@
             var MAX_SEARCH_RESULTS = 15;
        </script>
 
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
        <script src="./js/libs/custom-elements.min.js"></script>
        <script src="./js/libs/lit-html.js"></script>
-       
-       <script type="module" src="./js/menu-wc.js" defer></script>
+
+       <script src="./js/menu-wc.js" defer></script>
        <script nomodule src="./js/menu-wc_es5.js" defer></script>
 
        <script src="./js/libs/bootstrap-native.js"></script>

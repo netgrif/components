@@ -1,0 +1,4050 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Netgrif Components library Documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">Netgrif Components library Documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content injectable">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Injectables</li>
+  <li class="breadcrumb-item" >ModelService</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" 
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" 
+                class="nav-link"
+                
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>projects/netgrif-components/src/lib/builder/modeler/services/model/model.service.ts</code>
+        </p>
+
+
+
+
+
+            <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#alignModel" >alignModel</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#alignPosition" >alignPosition</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#alignPositionCoordinate" >alignPositionCoordinate</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#alignPositionX" >alignPositionX</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#alignPositionY" >alignPositionY</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#copyArc" >copyArc</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#copyPlace" >copyPlace</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#copyRole" >copyRole</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#copyTransition" >copyTransition</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#getReferenceValue" >getReferenceValue</a>
+                            </li>
+                            <li>
+                                <a href="#model$" >model$</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#moveArcBreakpoint" >moveArcBreakpoint</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#movePlace" >movePlace</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#moveTransition" >moveTransition</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#newArc" >newArc</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#newArcBreakpoint" >newArcBreakpoint</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#newModel" >newModel</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#newPlace" >newPlace</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#newRole" >newRole</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#newTransition" >newTransition</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#nextActionId" >nextActionId</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#nextArcId" >nextArcId</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#nextDataId" >nextDataId</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#nextPlaceId" >nextPlaceId</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#nextRoleId" >nextRoleId</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#nextTransitionId" >nextTransitionId</a>
+                            </li>
+                            <li>
+                                <a href="#numberOfActions" >numberOfActions</a>
+                            </li>
+                            <li>
+                                <a href="#numberOfPermissions" >numberOfPermissions</a>
+                            </li>
+                            <li>
+                                <a href="#numberOfTransitionActions" >numberOfTransitionActions</a>
+                            </li>
+                            <li>
+                                <a href="#numberOfTransitionPermissions" >numberOfTransitionPermissions</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#removeArc" >removeArc</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#removeArcBreakpoint" >removeArcBreakpoint</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#removeDataVariable" >removeDataVariable</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#removePlace" >removePlace</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#removeRole" >removeRole</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#removeTransition" >removeTransition</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#toArcType" >toArcType</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#toXmlArcType" >toXmlArcType</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#updateArc" >updateArc</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#updateModel" >updateModel</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#updatePlace" >updatePlace</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#updateRole" >updateRole</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#updateTransition" >updateTransition</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <h6><b>Accessors</b></h6>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <ul class="index-list">
+                                <li>
+                                    <a href="#model" >model</a>
+                                </li>
+                                <li>
+                                    <a href="#placeChange" >placeChange</a>
+                                </li>
+                                <li>
+                                    <a href="#transitionChange" >transitionChange</a>
+                                </li>
+                                <li>
+                                    <a href="#arcChange" >arcChange</a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+        </tbody>
+    </table>
+</section>
+
+            <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(arcFactory: <a href="../injectables/ArcFactory.html" target="_self">ArcFactory</a>, _translateService: TranslateService)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="60" class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/services/model/model.service.ts:60</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>arcFactory</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/ArcFactory.html" target="_self" >ArcFactory</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_translateService</td>
+                                                  
+                                                        <td>
+                                                                    <code>TranslateService</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+            <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="alignModel"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>alignModel</b></span>
+                        <a href="#alignModel"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>alignModel(model)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="486"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/services/model/model.service.ts:486</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                            <td>Optional</td>
+                                                <td>Default value</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>model</td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+                                            <td>
+                                                    <code>this.model</code>
+                                            </td>
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="alignPosition"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>alignPosition</b></span>
+                        <a href="#alignPosition"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>alignPosition(position: DOMPoint)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="499"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/services/model/model.service.ts:499</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>position</td>
+                                            <td>
+                                                        <code>DOMPoint</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>DOMPoint</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="alignPositionCoordinate"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>alignPositionCoordinate</b></span>
+                        <a href="#alignPositionCoordinate"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>alignPositionCoordinate(originalPosition: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, maxCoordinate: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="514"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/services/model/model.service.ts:514</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>originalPosition</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>maxCoordinate</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="alignPositionX"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>alignPositionX</b></span>
+                        <a href="#alignPositionX"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>alignPositionX(x: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="506"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/services/model/model.service.ts:506</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>x</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="alignPositionY"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>alignPositionY</b></span>
+                        <a href="#alignPositionY"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>alignPositionY(y: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="510"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/services/model/model.service.ts:510</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>y</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="copyArc"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>copyArc</b></span>
+                        <a href="#copyArc"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>copyArc(copy: Arc<NodeElement | NodeElement>, sourceId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, destinationId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="248"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/services/model/model.service.ts:248</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>copy</td>
+                                            <td>
+                                                        <code>Arc&lt;NodeElement | NodeElement&gt;</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>sourceId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>destinationId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Arc&lt;NodeElement, NodeElement&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="copyPlace"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>copyPlace</b></span>
+                        <a href="#copyPlace"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>copyPlace(copy: Place)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="129"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/services/model/model.service.ts:129</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>copy</td>
+                                            <td>
+                                                        <code>Place</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Place</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="copyRole"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>copyRole</b></span>
+                        <a href="#copyRole"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>copyRole(copy: Role)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="356"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/services/model/model.service.ts:356</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>copy</td>
+                                            <td>
+                                                        <code>Role</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Role</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="copyTransition"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>copyTransition</b></span>
+                        <a href="#copyTransition"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>copyTransition(copy: Transition)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="190"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/services/model/model.service.ts:190</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>copy</td>
+                                            <td>
+                                                        <code>Transition</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Transition</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getReferenceValue"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>getReferenceValue</b></span>
+                        <a href="#getReferenceValue"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getReferenceValue(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, model: PetriNet)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="525"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/services/model/model.service.ts:525</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Default value</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>id</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+                                            <td>
+                                            </td>
+
+                                        </tr>
+                                        <tr>
+                                                <td>model</td>
+                                            <td>
+                                                        <code>PetriNet</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+                                            <td>
+                                                    <code>this.model</code>
+                                            </td>
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="model$"></a>
+                    <span class="name">
+                        <span ><b>model$</b></span>
+                        <a href="#model$"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>model$()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="87"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/services/model/model.service.ts:87</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Observable&lt;PetriNet&gt;</code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="moveArcBreakpoint"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>moveArcBreakpoint</b></span>
+                        <a href="#moveArcBreakpoint"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>moveArcBreakpoint(arc: Arc<NodeElement | NodeElement>, index: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, position: DOMPoint)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="289"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/services/model/model.service.ts:289</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>arc</td>
+                                            <td>
+                                                        <code>Arc&lt;NodeElement | NodeElement&gt;</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>index</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>position</td>
+                                            <td>
+                                                        <code>DOMPoint</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="movePlace"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>movePlace</b></span>
+                        <a href="#movePlace"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>movePlace(place: Place, position: DOMPoint)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="156"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/services/model/model.service.ts:156</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>place</td>
+                                            <td>
+                                                        <code>Place</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>position</td>
+                                            <td>
+                                                        <code>DOMPoint</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="moveTransition"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>moveTransition</b></span>
+                        <a href="#moveTransition"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>moveTransition(transition: Transition, position: DOMPoint)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="224"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/services/model/model.service.ts:224</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>transition</td>
+                                            <td>
+                                                        <code>Transition</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>position</td>
+                                            <td>
+                                                        <code>DOMPoint</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="newArc"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>newArc</b></span>
+                        <a href="#newArc"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>newArc(source: NodeElement, destination: NodeElement, type: <a href="../undefineds/Type.html" target="_self">ArcType</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="242"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/services/model/model.service.ts:242</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>source</td>
+                                            <td>
+                                                        <code>NodeElement</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>destination</td>
+                                            <td>
+                                                        <code>NodeElement</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>type</td>
+                                            <td>
+                                                            <code><a href="../miscellaneous/enumerations.html#Type" target="_self" >ArcType</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Arc&lt;NodeElement, NodeElement&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="newArcBreakpoint"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>newArcBreakpoint</b></span>
+                        <a href="#newArcBreakpoint"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>newArcBreakpoint(arc: Arc<NodeElement | NodeElement>, position: DOMPoint, index: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="279"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/services/model/model.service.ts:279</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>arc</td>
+                                            <td>
+                                                        <code>Arc&lt;NodeElement | NodeElement&gt;</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>position</td>
+                                            <td>
+                                                        <code>DOMPoint</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>index</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="newModel"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>newModel</b></span>
+                        <a href="#newModel"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>newModel()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="91"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/services/model/model.service.ts:91</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>PetriNet</code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="newPlace"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>newPlace</b></span>
+                        <a href="#newPlace"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>newPlace(x: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, y: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="115"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/services/model/model.service.ts:115</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>x</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>y</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Place</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="newRole"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>newRole</b></span>
+                        <a href="#newRole"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>newRole()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="349"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/services/model/model.service.ts:349</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Role</code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="newTransition"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>newTransition</b></span>
+                        <a href="#newTransition"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>newTransition(x: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, y: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="180"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/services/model/model.service.ts:180</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>x</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>y</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Transition</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="nextActionId"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>nextActionId</b></span>
+                        <a href="#nextActionId"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>nextActionId()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="447"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/services/model/model.service.ts:447</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="nextArcId"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>nextArcId</b></span>
+                        <a href="#nextArcId"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>nextArcId()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="423"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/services/model/model.service.ts:423</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="nextDataId"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>nextDataId</b></span>
+                        <a href="#nextDataId"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>nextDataId()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="431"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/services/model/model.service.ts:431</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="nextPlaceId"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>nextPlaceId</b></span>
+                        <a href="#nextPlaceId"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>nextPlaceId()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="407"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/services/model/model.service.ts:407</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="nextRoleId"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>nextRoleId</b></span>
+                        <a href="#nextRoleId"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>nextRoleId()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="439"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/services/model/model.service.ts:439</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="nextTransitionId"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>nextTransitionId</b></span>
+                        <a href="#nextTransitionId"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>nextTransitionId()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="415"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/services/model/model.service.ts:415</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="numberOfActions"></a>
+                    <span class="name">
+                        <span ><b>numberOfActions</b></span>
+                        <a href="#numberOfActions"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>numberOfActions()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="556"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/services/model/model.service.ts:556</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="numberOfPermissions"></a>
+                    <span class="name">
+                        <span ><b>numberOfPermissions</b></span>
+                        <a href="#numberOfPermissions"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>numberOfPermissions()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="562"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/services/model/model.service.ts:562</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="numberOfTransitionActions"></a>
+                    <span class="name">
+                        <span ><b>numberOfTransitionActions</b></span>
+                        <a href="#numberOfTransitionActions"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>numberOfTransitionActions(transition: Transition)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="574"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/services/model/model.service.ts:574</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>transition</td>
+                                            <td>
+                                                        <code>Transition</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="numberOfTransitionPermissions"></a>
+                    <span class="name">
+                        <span ><b>numberOfTransitionPermissions</b></span>
+                        <a href="#numberOfTransitionPermissions"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>numberOfTransitionPermissions(transition: Transition)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="586"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/services/model/model.service.ts:586</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>transition</td>
+                                            <td>
+                                                        <code>Transition</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="removeArc"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>removeArc</b></span>
+                        <a href="#removeArc"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>removeArc(arc: Arc<NodeElement | NodeElement>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="310"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/services/model/model.service.ts:310</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>arc</td>
+                                            <td>
+                                                        <code>Arc&lt;NodeElement | NodeElement&gt;</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="removeArcBreakpoint"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>removeArcBreakpoint</b></span>
+                        <a href="#removeArcBreakpoint"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>removeArcBreakpoint(arc: Arc<NodeElement | NodeElement>, index: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="298"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/services/model/model.service.ts:298</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>arc</td>
+                                            <td>
+                                                        <code>Arc&lt;NodeElement | NodeElement&gt;</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>index</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="removeDataVariable"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>removeDataVariable</b></span>
+                        <a href="#removeDataVariable"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>removeDataVariable(data: DataVariable)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="326"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/services/model/model.service.ts:326</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>data</td>
+                                            <td>
+                                                        <code>DataVariable</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="removePlace"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>removePlace</b></span>
+                        <a href="#removePlace"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>removePlace(place: Place)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="163"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/services/model/model.service.ts:163</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>place</td>
+                                            <td>
+                                                        <code>Place</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="removeRole"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>removeRole</b></span>
+                        <a href="#removeRole"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>removeRole(role: Role)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="393"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/services/model/model.service.ts:393</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>role</td>
+                                            <td>
+                                                        <code>Role</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="removeTransition"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>removeTransition</b></span>
+                        <a href="#removeTransition"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>removeTransition(transition: Transition)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="231"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/services/model/model.service.ts:231</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>transition</td>
+                                            <td>
+                                                        <code>Transition</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="toArcType"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>toArcType</b></span>
+                        <a href="#toArcType"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>toArcType(xmlArcType: <a href="../undefineds/Type.html" target="_self">XmlArcType</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="320"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/services/model/model.service.ts:320</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>xmlArcType</td>
+                                            <td>
+                                                            <code><a href="../miscellaneous/enumerations.html#Type" target="_self" >XmlArcType</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../miscellaneous/enumerations.html#Type" target="_self" >ArcType</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="toXmlArcType"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>toXmlArcType</b></span>
+                        <a href="#toXmlArcType"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>toXmlArcType(arcType: <a href="../undefineds/Type.html" target="_self">ArcType</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="316"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/services/model/model.service.ts:316</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>arcType</td>
+                                            <td>
+                                                            <code><a href="../miscellaneous/enumerations.html#Type" target="_self" >ArcType</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../miscellaneous/enumerations.html#Type" target="_self" >XmlArcType</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="updateArc"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>updateArc</b></span>
+                        <a href="#updateArc"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>updateArc(newArc: <a href="../classes/ChangedArc.html" target="_self">ChangedArc</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="261"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/services/model/model.service.ts:261</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>newArc</td>
+                                            <td>
+                                                            <code><a href="../classes/ChangedArc.html" target="_self" >ChangedArc</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Arc&lt;NodeElement, NodeElement&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="updateModel"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>updateModel</b></span>
+                        <a href="#updateModel"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>updateModel(changedModel: <a href="../classes/ModelChange.html" target="_self">ModelChange</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="101"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/services/model/model.service.ts:101</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>changedModel</td>
+                                            <td>
+                                                            <code><a href="../classes/ModelChange.html" target="_self" >ModelChange</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="updatePlace"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>updatePlace</b></span>
+                        <a href="#updatePlace"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>updatePlace(newPlace: <a href="../classes/PlaceChange.html" target="_self">PlaceChange</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="138"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/services/model/model.service.ts:138</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>newPlace</td>
+                                            <td>
+                                                            <code><a href="../classes/PlaceChange.html" target="_self" >PlaceChange</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="updateRole"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>updateRole</b></span>
+                        <a href="#updateRole"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>updateRole(newRole: <a href="../classes/ChangedRole.html" target="_self">ChangedRole</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="365"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/services/model/model.service.ts:365</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>newRole</td>
+                                            <td>
+                                                            <code><a href="../classes/ChangedRole.html" target="_self" >ChangedRole</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Role</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="updateTransition"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>updateTransition</b></span>
+                        <a href="#updateTransition"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>updateTransition(newTransition: <a href="../classes/ChangedTransition.html" target="_self">ChangedTransition</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="205"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/services/model/model.service.ts:205</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>newTransition</td>
+                                            <td>
+                                                            <code><a href="../classes/ChangedTransition.html" target="_self" >ChangedTransition</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+            <section data-compodoc="block-accessors">
+    <h3 id="accessors">
+        Accessors
+    </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="model"></a>
+                        <span class="name"><b>model</b><a href="#model"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>model()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="83" class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/services/model/model.service.ts:83</a></div>
+                                </td>
+                            </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>set</b><code>model(newModel: PetriNet)</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="72" class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/services/model/model.service.ts:72</a></div>
+                                </td>
+                            </tr>
+                    <tr>
+                        <td class="col-md-4">
+
+                                <div class="io-description">
+                                        <b>Parameters :</b>
+                                        <table class="params">
+                                            <thead>
+                                                <tr>
+                                                    <td>Name</td>
+                                                        <td>Type</td>
+                                                    <td>Optional</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                    <tr>
+                                                            <td>newModel</td>
+                                                    
+                                                            <td>
+                                                                        <code>PetriNet</code>
+                                                            </td>
+                                                    
+                                                        <td>
+                                                                No
+                                                        </td>
+                                                        
+                                                    </tr>
+                                            </tbody>
+                                        </table>
+                                </div>
+                                <div>
+                                </div>
+                                <div class="io-description">
+                                    <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                                </div>
+                        </td>
+                    </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="placeChange"></a>
+                        <span class="name"><b>placeChange</b><a href="#placeChange"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>placeChange()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="544" class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/services/model/model.service.ts:544</a></div>
+                                </td>
+                            </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="transitionChange"></a>
+                        <span class="name"><b>transitionChange</b><a href="#transitionChange"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>transitionChange()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="548" class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/services/model/model.service.ts:548</a></div>
+                                </td>
+                            </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="arcChange"></a>
+                        <span class="name"><b>arcChange</b><a href="#arcChange"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>arcChange()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="552" class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/services/model/model.service.ts:552</a></div>
+                                </td>
+                            </tr>
+
+            </tbody>
+        </table>
+</section>
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Injectable} from &#x27;@angular/core&#x27;;
+import {CanvasConfiguration} from &#x27;@netgrif/petri.svg&#x27;;
+import {
+  Action,
+  Arc,
+  ArcType,
+  Breakpoint,
+  DataType,
+  DataVariable,
+  I18nString,
+  ImportUtils,
+  NodeElement,
+  PetriNet,
+  Place,
+  Role,
+  Transition,
+  XmlArcType,
+} from &#x27;@netgrif/petriflow&#x27;;
+import {BehaviorSubject, Observable, Subject} from &#x27;rxjs&#x27;;
+import {ChangedTransition} from &#x27;../../../dialogs/dialog-transition-edit/changed-transition&#x27;;
+import {ChangedArc} from &#x27;../../../dialogs/dialog-arc-edit/changed-arc&#x27;;
+import {ArcFactory} from &#x27;../../edit-mode/domain/arc-builders/arc-factory.service&#x27;;
+import {ModelChange} from &#x27;../../history-mode/model/model/model-change&#x27;;
+import {PlaceChange} from &#x27;../../history-mode/model/place/place-change&#x27;;
+import {PlaceDeleted} from &#x27;../../history-mode/model/place/place-deleted&#x27;;
+import {PlaceMoved} from &#x27;../../history-mode/model/place/place-moved&#x27;;
+import {ModelerConfig} from &#x27;../../modeler-config&#x27;;
+import {ModelerUtils} from &#x27;../../modeler-utils&#x27;;
+import {ChangedRole} from &#x27;../../role-mode/role-detail/changed-role&#x27;;
+import {ModelConfig} from &#x27;./model-config&#x27;;
+import {SequenceGenerator} from &#x27;./sequence-generator&#x27;;
+import {TranslateService} from &quot;@ngx-translate/core&quot;;
+
+@Injectable()
+export class ModelService {
+    private readonly _model: BehaviorSubject&lt;PetriNet&gt;;
+    private readonly _placeChange: Subject&lt;PlaceChange&gt;;
+    private readonly _transitionChange: Subject&lt;ChangedTransition&gt;;
+    private readonly _arcChange: Subject&lt;ChangedArc&gt;;
+
+    private _placeIdSequence &#x3D; new SequenceGenerator(&#x27;p&#x27;);
+    private _transitionIdSequence &#x3D; new SequenceGenerator(&#x27;t&#x27;);
+    private _arcIdSequence &#x3D; new SequenceGenerator(&#x27;a&#x27;);
+    private _dataIdSequence &#x3D; new SequenceGenerator(&#x27;data&#x27;);
+    private _roleIdSequence &#x3D; new SequenceGenerator(&#x27;role&#x27;);
+    private _actionIdSequence &#x3D; new SequenceGenerator(&#x27;action&#x27;);
+
+    private xmlArcTypeMapping: Map&lt;XmlArcType, ArcType&gt; &#x3D; new Map([
+        [XmlArcType.REGULAR, ArcType.REGULAR_PT],
+        [XmlArcType.READ, ArcType.READ],
+        [XmlArcType.RESET, ArcType.RESET],
+        [XmlArcType.INHIBITOR, ArcType.INHIBITOR],
+    ]);
+    private arcTypeMapping: Map&lt;ArcType, XmlArcType&gt; &#x3D; new Map([
+        [ArcType.REGULAR_PT, XmlArcType.REGULAR],
+        [ArcType.REGULAR_TP, XmlArcType.REGULAR],
+        [ArcType.READ, XmlArcType.READ],
+        [ArcType.RESET, XmlArcType.RESET],
+        [ArcType.INHIBITOR, XmlArcType.INHIBITOR],
+    ]);
+
+    constructor(
+        private arcFactory: ArcFactory,
+        private _translateService: TranslateService
+    ) {
+        this._model &#x3D; new BehaviorSubject&lt;PetriNet&gt;(undefined);
+        this._placeChange &#x3D; new Subject&lt;PlaceChange&gt;();
+        this._transitionChange &#x3D; new Subject&lt;ChangedTransition&gt;();
+        this._arcChange &#x3D; new Subject&lt;ChangedArc&gt;();
+    }
+
+    set model(newModel: PetriNet) {
+        this.alignModel(newModel);
+        this._model.next(newModel);
+        this._placeIdSequence.reset(newModel.getPlaces());
+        this._transitionIdSequence.reset(newModel.getTransitions());
+        this._arcIdSequence.reset(newModel.getArcs());
+        this._dataIdSequence.reset(newModel.getDataSet());
+        this._roleIdSequence.reset(newModel.getRoles());
+        this._actionIdSequence.reset(this.collectActions(newModel));
+    }
+
+    get model(): PetriNet {
+        return this._model.value;
+    }
+
+    model$(): Observable&lt;PetriNet&gt; {
+        return this._model.asObservable();
+    }
+
+    public newModel(): PetriNet {
+        const model &#x3D; new PetriNet();
+        model.id &#x3D; ModelConfig.IDENTIFIER;
+        model.version &#x3D; ModelConfig.VERSION;
+        model.title &#x3D; new I18nString(this._translateService.instant(&#x27;builder.modeler.services.newProcess&#x27;));
+        model.initials &#x3D; ModelConfig.INITIALS;
+        model.icon &#x3D; ModelConfig.ICON;
+        return model;
+    }
+
+    public updateModel(changedModel: ModelChange): void {
+        this.model.id &#x3D; changedModel.model.id;
+        this.model.title &#x3D; changedModel.model.title;
+        this.model.initials &#x3D; changedModel.model.initials;
+        this.model.icon &#x3D; changedModel.model.icon;
+        this.model.defaultRole &#x3D; changedModel.model.defaultRole;
+        this.model.anonymousRole &#x3D; changedModel.model.anonymousRole;
+        this.model.caseName &#x3D; changedModel.model.caseName;
+        this.model.tags &#x3D; changedModel.model.tags;
+        this.model.version &#x3D; changedModel.model.version;
+    }
+
+    // PLACE
+
+    public newPlace(x: number, y: number): Place {
+        const place &#x3D; new Place(
+            this.alignPositionCoordinate(x, CanvasConfiguration.WIDTH),
+            this.alignPositionCoordinate(y, CanvasConfiguration.HEIGHT),
+            false,
+            this.nextPlaceId(),
+        );
+        if (this.model.getPlaces().length &#x3D;&#x3D;&#x3D; 0) {
+            place.marking &#x3D; 1;
+        }
+        this.model.addPlace(place);
+        return place;
+    }
+
+    public copyPlace(copy: Place): Place {
+        const place &#x3D; copy.clone();
+        place.id &#x3D; this.nextPlaceId();
+        place.x +&#x3D; ModelerConfig.SIZE;
+        place.y +&#x3D; ModelerConfig.SIZE;
+        this.model.addPlace(place);
+        return place;
+    }
+
+    public updatePlace(newPlace: PlaceChange): void {
+        if (!newPlace) {
+            return;
+        }
+        // TODO: NAB-326 validate unique id
+        const place &#x3D; this.model.getPlace(newPlace.originalPlace.id);
+        place.id &#x3D; newPlace.place.id;
+        place.marking &#x3D; newPlace.place.marking;
+        place.label &#x3D; newPlace.place.label;
+        this.model.removePlace(newPlace.originalPlace.id);
+        this.model.addPlace(place);
+        this.model.getArcs()
+            .filter(arc &#x3D;&gt; arc.reference &#x3D;&#x3D;&#x3D; newPlace.originalPlace.id)
+            .forEach(arc &#x3D;&gt; arc.reference &#x3D; place.id);
+        this.model.lastChanged &#x3D; Date.now();
+        this._placeChange.next(new PlaceChange(newPlace.originalPlace, place, this.model.clone()));
+    }
+
+    public movePlace(place: Place, position: DOMPoint): void {
+        place.x &#x3D; this.alignPositionX(position.x);
+        place.y &#x3D; this.alignPositionY(position.y);
+        this.model.lastChanged &#x3D; Date.now();
+        this._placeChange.next(new PlaceMoved(place, this.model.clone()));
+    }
+
+    public removePlace(place: Place): void {
+        this.model.getArcs()
+            .filter(arc &#x3D;&gt; arc.source &#x3D;&#x3D;&#x3D; place || arc.destination &#x3D;&#x3D;&#x3D; place)
+            .forEach(arc &#x3D;&gt; this.removeArc(arc));
+        this.model.getArcs()
+            .filter(arc &#x3D;&gt; arc.reference &#x3D;&#x3D;&#x3D; place.id)
+            .forEach(arc &#x3D;&gt; {
+                arc.reference &#x3D; undefined;
+                arc.multiplicity &#x3D; 1;
+            });
+        this.model.removePlace(place.id);
+        this.model.lastChanged &#x3D; Date.now();
+        this._placeChange.next(new PlaceDeleted(place, this.model.clone()));
+    }
+
+    // TRANSITION
+
+    public newTransition(x: number, y: number): Transition {
+        const transition &#x3D; new Transition(
+            this.alignPositionCoordinate(x, CanvasConfiguration.WIDTH),
+            this.alignPositionCoordinate(y, CanvasConfiguration.HEIGHT),
+            this.nextTransitionId(),
+        );
+        this.addTransition(transition);
+        return transition;
+    }
+
+    public copyTransition(copy: Transition): Transition {
+        const transition &#x3D; copy.clone();
+        transition.id &#x3D; this.nextTransitionId();
+        transition.x +&#x3D; ModelerConfig.SIZE;
+        transition.y +&#x3D; ModelerConfig.SIZE;
+        this.addTransition(transition);
+        return transition;
+    }
+
+    private addTransition(transition: Transition) {
+        this.model.addTransition(transition);
+        this.model.lastChanged &#x3D; Date.now();
+        this._transitionChange.next(new ChangedTransition(this.model.clone(), transition));
+    }
+
+    public updateTransition(newTransition: ChangedTransition): void {
+        if (!newTransition) {
+            return;
+        }
+        // TODO: NAB-326 validate unique id
+        const transition &#x3D; this.model.getTransition(newTransition.id);
+        transition.id &#x3D; newTransition.transition.id;
+        transition.label &#x3D; newTransition.transition.label;
+        transition.icon &#x3D; newTransition.transition.icon;
+        transition.tags &#x3D; newTransition.transition.tags;
+        transition.assignPolicy &#x3D; newTransition.transition.assignPolicy;
+        transition.finishPolicy &#x3D; newTransition.transition.finishPolicy;
+        transition.triggers &#x3D; newTransition.transition.triggers;
+        this.model.removeTransition(newTransition.id);
+        this.model.addTransition(transition);
+        this.model.lastChanged &#x3D; Date.now();
+        this._transitionChange.next(new ChangedTransition(this.model.clone(), transition, newTransition.id));
+    }
+
+    public moveTransition(transition: Transition, position: DOMPoint): void {
+        transition.x &#x3D; this.alignPositionX(position.x);
+        transition.y &#x3D; this.alignPositionY(position.y);
+        this.model.lastChanged &#x3D; Date.now();
+        this._transitionChange.next(new ChangedTransition(this.model.clone(), transition));
+    }
+
+    public removeTransition(transition: Transition): void {
+        this.model.getArcs()
+            .filter(arc &#x3D;&gt; arc.source &#x3D;&#x3D;&#x3D; transition || arc.destination &#x3D;&#x3D;&#x3D; transition)
+            .forEach(arc &#x3D;&gt; this.removeArc(arc));
+        this.model.removeTransition(transition.id);
+        this.model.lastChanged &#x3D; Date.now();
+        this._transitionChange.next(new ChangedTransition(this.model.clone(), undefined, transition.id));
+    }
+
+    // ARC
+
+    public newArc(source: NodeElement, destination: NodeElement, type: ArcType): Arc&lt;NodeElement, NodeElement&gt; {
+        const arc &#x3D; this.arcFactory.buildArc(type, this.nextArcId(), source, destination);
+        this.addArc(arc);
+        return arc;
+    }
+
+    public copyArc(copy: Arc&lt;NodeElement, NodeElement&gt;, sourceId: string, destinationId: string): Arc&lt;NodeElement, NodeElement&gt; {
+        const arc &#x3D; copy.clone();
+        arc.id &#x3D; this.nextArcId();
+        arc.breakpoints.forEach(bp &#x3D;&gt; {
+            bp.x +&#x3D; ModelerConfig.SIZE;
+            bp.y +&#x3D; ModelerConfig.SIZE;
+        });
+        arc.source &#x3D; arc.type &#x3D;&#x3D;&#x3D; ArcType.REGULAR_TP ? this.model.getTransition(sourceId) : this.model.getPlace(sourceId);
+        arc.destination &#x3D; arc.type &#x3D;&#x3D;&#x3D; ArcType.REGULAR_TP ? this.model.getPlace(destinationId) : this.model.getTransition(destinationId);
+        this.addArc(arc);
+        return arc;
+    }
+
+    public updateArc(newArc: ChangedArc): Arc&lt;NodeElement, NodeElement&gt; {
+        if (!newArc) {
+            return;
+        }
+        let arc &#x3D; this.model.getArc(newArc.id);
+        if (newArc.arcType !&#x3D;&#x3D; arc.type) {
+            arc &#x3D; this.arcFactory.buildArc(newArc.arcType, arc.id, arc.source, arc.destination);
+            this.model.removeArc(arc.id);
+            this.model.addArc(arc);
+        }
+        arc.multiplicity &#x3D; newArc.arc.multiplicity;
+        arc.reference &#x3D; newArc.arc.reference;
+        arc.breakpoints &#x3D; newArc.arc.breakpoints;
+        this.model.lastChanged &#x3D; Date.now();
+        this._arcChange.next(new ChangedArc(this.model.clone(), arc));
+        return arc;
+    }
+
+    public newArcBreakpoint(arc: Arc&lt;NodeElement, NodeElement&gt;, position: DOMPoint, index: number): void {
+        const breakPoint &#x3D; new Breakpoint(
+            this.alignPositionX(position.x),
+            this.alignPositionY(position.y),
+        );
+        arc.breakpoints.splice(index, 0, breakPoint);
+        this.model.lastChanged &#x3D; Date.now();
+        this._arcChange.next(new ChangedArc(this.model.clone(), arc));
+    }
+
+    public moveArcBreakpoint(arc: Arc&lt;NodeElement, NodeElement&gt;, index: number, position: DOMPoint): void {
+        position &#x3D; this.alignPosition(position);
+        // TODO: NAB-327 breakpoint undefined?
+        arc.breakpoints[index].x &#x3D; position.x;
+        arc.breakpoints[index].y &#x3D; position.y;
+        this.model.lastChanged &#x3D; Date.now();
+        this._arcChange.next(new ChangedArc(this.model.clone(), arc));
+    }
+
+    public removeArcBreakpoint(arc: Arc&lt;NodeElement, NodeElement&gt;, index: number): void {
+        arc.breakpoints.splice(index, 1);
+        this.model.lastChanged &#x3D; Date.now();
+        this._arcChange.next(new ChangedArc(this.model.clone(), arc));
+    }
+
+    private addArc(arc: Arc&lt;NodeElement, NodeElement&gt;) {
+        this.model.addArc(arc);
+        this.model.lastChanged &#x3D; Date.now();
+        this._arcChange.next(new ChangedArc(this.model.clone(), arc));
+    }
+
+    public removeArc(arc: Arc&lt;NodeElement, NodeElement&gt;): void {
+        this.model.removeArc(arc.id);
+        this.model.lastChanged &#x3D; Date.now();
+        this._arcChange.next(new ChangedArc(this.model.clone(), undefined, arc.id));
+    }
+
+    public toXmlArcType(arcType: ArcType): XmlArcType {
+        return this.arcTypeMapping.get(arcType);
+    }
+
+    public toArcType(xmlArcType: XmlArcType): ArcType {
+        return this.xmlArcTypeMapping.get(xmlArcType);
+    }
+
+    // DATA
+
+    public removeDataVariable(data: DataVariable): void {
+        if (data.type &#x3D;&#x3D;&#x3D; DataType.USER_LIST &amp;&amp; this.model.getUserRef(data.id)) {
+            this.model.removeUserRef(data.id);
+        }
+        this.model.getTransitions().forEach(t &#x3D;&gt; {
+            t.dataGroups
+                .filter(group &#x3D;&gt; group.getDataRef(data.id))
+                .forEach(group &#x3D;&gt; group.removeDataRef(data.id));
+            if (data.type &#x3D;&#x3D;&#x3D; DataType.USER_LIST &amp;&amp; t.userRefs) {
+                t.userRefs &#x3D; t.userRefs.filter(ref &#x3D;&gt; ref.id !&#x3D;&#x3D; data.id);
+            }
+        });
+        this.model.getArcs()
+            .filter(a &#x3D;&gt; a.reference &#x3D;&#x3D;&#x3D; data.id)
+            .forEach(a &#x3D;&gt; {
+                a.reference &#x3D; undefined;
+                a.multiplicity &#x3D; 1;
+            });
+        this.model.removeData(data.id);
+    }
+
+    // ROLE
+
+    public newRole(): Role {
+        const role &#x3D; new Role(this.nextRoleId());
+        this.model.addRole(role);
+        this.model.lastChanged &#x3D; Date.now();
+        return role;
+    }
+
+    public copyRole(copy: Role): Role {
+        // TODO: release/4.0.0 action ids after clone everywhere
+        const role &#x3D; copy.clone();
+        role.id &#x3D; this.nextRoleId();
+        this.model.addRole(role);
+        this.model.lastChanged &#x3D; Date.now();
+        return role;
+    }
+
+    public updateRole(newRole: ChangedRole): Role {
+        if (!newRole) {
+            return;
+        }
+        const role &#x3D; this.model.getRole(newRole.id);
+        role.id &#x3D; newRole.role.id;
+        role.title &#x3D; newRole.role.title;
+        role.global &#x3D; newRole.role.global;
+        this.model.removeRole(newRole.id);
+        this.model.addRole(role);
+
+        const processRoleRef &#x3D; this.model.getRoleRef(newRole.id);
+        if (processRoleRef) {
+            this.model.removeRoleRef(newRole.id);
+            processRoleRef.id &#x3D; role.id;
+            this.model.addRoleRef(processRoleRef);
+        }
+        this.model.getTransitions()
+            .map(t &#x3D;&gt; t.roleRefs.find(ref &#x3D;&gt; ref.id &#x3D;&#x3D;&#x3D; newRole.id))
+            .filter(r &#x3D;&gt; r !&#x3D;&#x3D; undefined)
+            .forEach(roleRef &#x3D;&gt; {
+                roleRef.id &#x3D; role.id;
+            });
+
+        this.model.lastChanged &#x3D; Date.now();
+        return role;
+    }
+
+    public removeRole(role: Role): void {
+        this.model.removeRole(role.id);
+        this.model.removeRoleRef(role.id);
+        this.model.getTransitions().forEach(trans &#x3D;&gt; {
+            const index &#x3D; trans.roleRefs.findIndex(roleRef &#x3D;&gt; roleRef.id &#x3D;&#x3D;&#x3D; role.id);
+            if (index !&#x3D;&#x3D; -1) {
+                trans.roleRefs.splice(index, 1);
+            }
+        });
+        this.model.lastChanged &#x3D; Date.now();
+    }
+
+    // utils
+
+    public nextPlaceId(): string {
+        const id &#x3D; this._placeIdSequence.next();
+        if (this.model.getPlace(id) !&#x3D;&#x3D; undefined) {
+            return this.nextPlaceId();
+        }
+        return id;
+    }
+
+    public nextTransitionId(): string {
+        const id &#x3D; this._transitionIdSequence.next();
+        if (this.model.getTransition(id) !&#x3D;&#x3D; undefined) {
+            return this.nextTransitionId();
+        }
+        return id;
+    }
+
+    public nextArcId(): string {
+        const id &#x3D; this._arcIdSequence.next();
+        if (this.model.getArc(id) !&#x3D;&#x3D; undefined) {
+            return this.nextArcId();
+        }
+        return id;
+    }
+
+    public nextDataId(): string {
+        const id &#x3D; this._dataIdSequence.next();
+        if (this.model.getData(id) !&#x3D;&#x3D; undefined) {
+            return this.nextDataId();
+        }
+        return id;
+    }
+
+    public nextRoleId(): string {
+        const id &#x3D; this._roleIdSequence.next();
+        if (this.model.getRole(id) !&#x3D;&#x3D; undefined) {
+            return this.nextRoleId();
+        }
+        return id;
+    }
+
+    public nextActionId(): string {
+        return this._actionIdSequence.next();
+    }
+
+    private collectActions(newModel: PetriNet): Action[] {
+        const actions &#x3D; new Array&lt;Action&gt;();
+        newModel.getCaseEvents().forEach(e &#x3D;&gt; {
+            actions.push(...e.preActions);
+            actions.push(...e.postActions);
+        });
+        newModel.getProcessEvents().forEach(e &#x3D;&gt; {
+            actions.push(...e.preActions);
+            actions.push(...e.postActions);
+        });
+        newModel.getRoles().forEach(r &#x3D;&gt; {
+            r.getEvents().forEach(e &#x3D;&gt; {
+                actions.push(...e.preActions);
+                actions.push(...e.postActions);
+            });
+        });
+        newModel.getTransitions().forEach(t &#x3D;&gt; {
+            t.eventSource.getEvents().forEach(e &#x3D;&gt; {
+                actions.push(...e.preActions);
+                actions.push(...e.postActions);
+            });
+            t.dataGroups.forEach(g &#x3D;&gt; g.getDataRefs().forEach(d &#x3D;&gt; d.getEvents().forEach(e &#x3D;&gt; {
+                actions.push(...e.preActions);
+                actions.push(...e.postActions);
+            })));
+        });
+        newModel.getDataSet().forEach(d &#x3D;&gt; {
+            d.getEvents().forEach(e &#x3D;&gt; {
+                actions.push(...e.preActions);
+                actions.push(...e.postActions);
+            });
+        });
+        return actions;
+    }
+
+    public alignModel(model &#x3D; this.model): void {
+        [...model.getPlaces(), ...model.getTransitions()].forEach(node &#x3D;&gt; {
+            node.x &#x3D; this.alignPositionX(node.x);
+            node.y &#x3D; this.alignPositionY(node.y);
+        });
+        model.getArcs().forEach(a &#x3D;&gt; {
+            a.breakpoints.forEach(bp &#x3D;&gt; {
+                bp.x &#x3D; this.alignPositionX(bp.x);
+                bp.y &#x3D; this.alignPositionY(bp.y);
+            });
+        });
+    }
+
+    public alignPosition(position: DOMPoint): DOMPoint {
+        return new DOMPoint(
+            this.alignPositionX(position.x),
+            this.alignPositionY(position.y),
+        );
+    }
+
+    public alignPositionX(x: number): number {
+        return this.alignPositionCoordinate(x, ModelerConfig.MAX_WIDTH);
+    }
+
+    public alignPositionY(y: number): number {
+        return this.alignPositionCoordinate(y, ModelerConfig.MAX_HEIGHT);
+    }
+
+    public alignPositionCoordinate(originalPosition: number, maxCoordinate: number): number {
+        let newPosition &#x3D; Math.round(originalPosition / ModelerConfig.SIZE) * ModelerConfig.SIZE;
+        newPosition &#x3D; originalPosition &lt; newPosition ? newPosition - ModelerConfig.SIZE / 2 : newPosition + ModelerConfig.SIZE / 2;
+        if (newPosition &lt; 0) {
+            newPosition +&#x3D; ModelerConfig.SIZE;
+        } else if (newPosition &gt; maxCoordinate) {
+            newPosition -&#x3D; ModelerConfig.SIZE;
+        }
+        return newPosition;
+    }
+
+    public getReferenceValue(id: string, model: PetriNet &#x3D; this.model): number {
+        // TODO: NAB-326 probably move to petriflow.js
+        const referencedData &#x3D; model.getData(id);
+        if (referencedData) {
+            if (referencedData.init?.value) {
+                if (ImportUtils.isInitValueNumber(referencedData.init)) {
+                    return Number(referencedData.init.value);
+                }
+                return 0;
+            }
+            return 0;
+        }
+        const referencedPlace &#x3D; model.getPlace(id);
+        if (referencedPlace) {
+            return referencedPlace.marking;
+        }
+        return 0;
+    }
+
+    get placeChange(): Subject&lt;PlaceChange&gt; {
+        return this._placeChange;
+    }
+
+    get transitionChange(): Subject&lt;ChangedTransition&gt; {
+        return this._transitionChange;
+    }
+
+    get arcChange(): Subject&lt;ChangedArc&gt; {
+        return this._arcChange;
+    }
+
+    numberOfActions(): number {
+        const caseEvents &#x3D; ModelerUtils.numberOfEventActions(this.model.getCaseEvents());
+        const processEvents &#x3D; ModelerUtils.numberOfEventActions(this.model.getProcessEvents());
+        return caseEvents + processEvents;
+    }
+
+    numberOfPermissions(): number {
+        const rolePermissions &#x3D; this.model.getRoleRefs()
+            .map(ref &#x3D;&gt; {
+                return (ref.logic.view !&#x3D;&#x3D; undefined || ref.logic.create !&#x3D;&#x3D; undefined || ref.logic.delete !&#x3D;&#x3D; undefined) ? 1 : 0;
+            }).reduce((sum, current) &#x3D;&gt; sum + current, 0);
+        const userPermission &#x3D; this.model.getUserRefs()
+            .map(ref &#x3D;&gt; {
+                return (ref.logic.view !&#x3D;&#x3D; undefined || ref.logic.create !&#x3D;&#x3D; undefined || ref.logic.delete !&#x3D;&#x3D; undefined) ? 1 : 0;
+            }).reduce((sum, current) &#x3D;&gt; sum + current, 0);
+        return rolePermissions + userPermission;
+    }
+
+    numberOfTransitionActions(transition: Transition): number {
+        const eventActions &#x3D; ModelerUtils.numberOfEventActions(transition.eventSource.getEvents());
+        const dataRefActions &#x3D; transition.dataGroups
+            .map(dg &#x3D;&gt;
+                dg.getDataRefs()
+                    .map(ref &#x3D;&gt;
+                        ModelerUtils.numberOfEventActions(ref.getEvents()),
+                    ).reduce((sum, current) &#x3D;&gt; sum + current, 0),
+            ).reduce((sum, current) &#x3D;&gt; sum + current, 0);
+        return eventActions + dataRefActions;
+    }
+
+    numberOfTransitionPermissions(transition: Transition): number {
+        const rolePermissions &#x3D; transition.roleRefs
+            .map(ref &#x3D;&gt; {
+                return (ref.logic.cancel !&#x3D;&#x3D; undefined || ref.logic.view !&#x3D;&#x3D; undefined || ref.logic.assign !&#x3D;&#x3D; undefined || ref.logic.perform !&#x3D;&#x3D; undefined || ref.logic.delegate !&#x3D;&#x3D; undefined) ? 1 : 0;
+            }).reduce((sum, current) &#x3D;&gt; sum + current, 0);
+        const userPermission &#x3D; transition.userRefs
+            .map(ref &#x3D;&gt; {
+                return (ref.logic.cancel !&#x3D;&#x3D; undefined || ref.logic.view !&#x3D;&#x3D; undefined || ref.logic.assign !&#x3D;&#x3D; undefined || ref.logic.perform !&#x3D;&#x3D; undefined || ref.logic.delegate !&#x3D;&#x3D; undefined) ? 1 : 0;
+            }).reduce((sum, current) &#x3D;&gt; sum + current, 0);
+        return rolePermissions + userPermission;
+    }
+}
+</code></pre>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'injectable';
+            var COMPODOC_CURRENT_PAGE_URL = 'ModelService.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

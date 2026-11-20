@@ -9,13 +9,64 @@
 
         <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
 	   <link rel="stylesheet" href="../styles/style.css">
-        <link rel="stylesheet" href="../styles/dark.css" media="(prefers-color-scheme: dark)">
+        <link rel="stylesheet" href="../styles/dark.css">
     </head>
     <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
 
-        <div class="navbar navbar-default navbar-fixed-top visible-xs">
-            <a href="../" class="navbar-brand">Netgrif Components library Documentation</a>
-            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">Netgrif Components library Documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
         </div>
 
         <div class="xs-menu menu" id="mobile-menu">
@@ -24,7 +75,7 @@
 
         <div class="container-fluid main">
            <div class="row main">
-               <div class="hidden-xs menu">
+               <div class="d-none d-md-block menu">
                    <compodoc-menu mode="normal"></compodoc-menu>
                </div>
                <!-- START CONTENT -->
@@ -44,14 +95,16 @@
 
 
 
-                   
+
+
+
 
 <ol class="breadcrumb">
-  <li>Miscellaneous</li>
-  <li>Variables</li>
+  <li class="breadcrumb-item">Miscellaneous</li>
+  <li class="breadcrumb-item">Variables</li>
 </ol>
 
-<section>
+<section data-compodoc="block-index">
     <h3 id="index">Index</h3>
     <table class="table table-sm table-bordered index-table">
         <tbody>
@@ -59,10 +112,49 @@
                 <td class="col-md-4">
                     <ul class="index-list">
                         <li>
-                            <a href="#localAllowedNetsFactory" title="projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/default-case-ref-list-view/default-case-ref-list-view.component.ts" ><b>localAllowedNetsFactory</b>&nbsp;&nbsp;&nbsp;(projects/.../default-case-ref-list-view.component.ts)</a>
+                            <a href="#baseFilterFactory" title="projects/netgrif-components/src/lib/builder/modeler/task-mode/task-mode.component.ts" ><b>baseFilterFactory</b>&nbsp;&nbsp;&nbsp;(projects/.../task-mode.component.ts)</a>
                         </li>
                         <li>
-                            <a href="#localAllowedNetsFactory" title="projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/default-task-view/default-task-view.component.ts" ><b>localAllowedNetsFactory</b>&nbsp;&nbsp;&nbsp;(projects/.../default-task-view.component.ts)</a>
+                            <a href="#bracketTokens" title="projects/netgrif-components/src/lib/builder/modeler/actions-mode/action-editor/definitions/tokens.ts" ><b>bracketTokens</b>&nbsp;&nbsp;&nbsp;(projects/.../tokens.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#DIALOG_COMPONENTS" title="projects/netgrif-components/src/lib/builder/dialogs/dialogs.module.ts" ><b>DIALOG_COMPONENTS</b>&nbsp;&nbsp;&nbsp;(projects/.../dialogs.module.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#localAllowedNetsFactory" title="projects/netgrif-components/src/lib/builder/modeler/task-mode/task-mode.component.ts" ><b>localAllowedNetsFactory</b>&nbsp;&nbsp;&nbsp;(projects/.../task-mode.component.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#localAllowedNetsFactory" title="projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/refs/default-case-ref-list-view/default-case-ref-list-view.component.ts" ><b>localAllowedNetsFactory</b>&nbsp;&nbsp;&nbsp;(projects/.../default-case-ref-list-view.component.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#localAllowedNetsFactory" title="projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/refs/default-task-view/default-task-view.component.ts" ><b>localAllowedNetsFactory</b>&nbsp;&nbsp;&nbsp;(projects/.../default-task-view.component.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#localAllowedNetsFactory" title="projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/tabbed/default-tabbed-single-task-view/default-tabbed-single-task-view.component.ts" ><b>localAllowedNetsFactory</b>&nbsp;&nbsp;&nbsp;(projects/.../default-tabbed-single-task-view.component.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#localAllowedNetsServiceFactory" title="projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/public/default-public-single-task-view/default-public-single-task-view.component.ts" ><b>localAllowedNetsServiceFactory</b>&nbsp;&nbsp;&nbsp;(projects/.../default-public-single-task-view.component.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#localAllowedNetsServiceFactory" title="projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/public/default-public-task-view/default-public-task-view.component.ts" ><b>localAllowedNetsServiceFactory</b>&nbsp;&nbsp;&nbsp;(projects/.../default-public-task-view.component.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#MASTER_ITEM" title="projects/netgrif-components/src/lib/builder/modeler/components/master-detail/main-master-item/master-injection-tokens.ts" ><b>MASTER_ITEM</b>&nbsp;&nbsp;&nbsp;(projects/.../master-injection-tokens.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#MASTER_SERVICE" title="projects/netgrif-components/src/lib/builder/modeler/components/master-detail/main-master-item/master-injection-tokens.ts" ><b>MASTER_SERVICE</b>&nbsp;&nbsp;&nbsp;(projects/.../master-injection-tokens.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#monaco" title="projects/netgrif-components/src/lib/builder/modeler/actions-mode/action-editor/action-editor.module.ts" ><b>monaco</b>&nbsp;&nbsp;&nbsp;(projects/.../action-editor.module.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#monacoConfig" title="projects/netgrif-components/src/lib/builder/modeler/actions-mode/action-editor/action-editor.module.ts" ><b>monacoConfig</b>&nbsp;&nbsp;&nbsp;(projects/.../action-editor.module.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#NAB_CONTROL_PANEL_MODE" title="projects/netgrif-components/src/lib/builder/modeler/control-panel/control-panel-tool-injection-token.ts" ><b>NAB_CONTROL_PANEL_MODE</b>&nbsp;&nbsp;&nbsp;(projects/.../control-panel-tool-injection-token.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#NAB_CONTROL_PANEL_TOOL" title="projects/netgrif-components/src/lib/builder/modeler/control-panel/control-panel-tool-injection-token.ts" ><b>NAB_CONTROL_PANEL_TOOL</b>&nbsp;&nbsp;&nbsp;(projects/.../control-panel-tool-injection-token.ts)</a>
                         </li>
                         <li>
                             <a href="#newCaseConfigFactory" title="projects/netgrif-components/src/lib/filter-field-content/filter-field-tabbed-case-view/filter-field-tabbed-case-view.component.ts" ><b>newCaseConfigFactory</b>&nbsp;&nbsp;&nbsp;(projects/.../filter-field-tabbed-case-view.component.ts)</a>
@@ -80,6 +172,12 @@
                             <a href="#railContentAnimation" title="projects/netgrif-components/src/lib/navigation/navigation-rail/navigation-rail.component.ts" ><b>railContentAnimation</b>&nbsp;&nbsp;&nbsp;(projects/.../navigation-rail.component.ts)</a>
                         </li>
                         <li>
+                            <a href="#readOnlyBuilder" title="projects/netgrif-components/src/lib/builder/read-only-builder.ts" ><b>readOnlyBuilder</b>&nbsp;&nbsp;&nbsp;(projects/.../read-only-builder.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#reloadMenu" title="projects/netgrif-components/src/lib/navigation/model/reload-menu.ts" ><b>reloadMenu</b>&nbsp;&nbsp;&nbsp;(projects/.../reload-menu.ts)</a>
+                        </li>
+                        <li>
                             <a href="#STRING_CAMELIZE_REGEXP" title="projects/netgrif-components/src/commons/angular-cli-devkit-core-strings.ts" ><b>STRING_CAMELIZE_REGEXP</b>&nbsp;&nbsp;&nbsp;(projects/.../angular-cli-devkit-core-strings.ts)</a>
                         </li>
                         <li>
@@ -94,6 +192,9 @@
                         <li>
                             <a href="#STRING_UNDERSCORE_REGEXP_2" title="projects/netgrif-components/src/commons/angular-cli-devkit-core-strings.ts" ><b>STRING_UNDERSCORE_REGEXP_2</b>&nbsp;&nbsp;&nbsp;(projects/.../angular-cli-devkit-core-strings.ts)</a>
                         </li>
+                        <li>
+                            <a href="#translateService" title="projects/netgrif-components/src/lib/builder/modeler/actions-mode/action-editor/action-editor.module.ts" ><b>translateService</b>&nbsp;&nbsp;&nbsp;(projects/.../action-editor.module.ts)</a>
+                        </li>
                     </ul>
                 </td>
             </tr>
@@ -101,8 +202,146 @@
     </table>
 </section>
 
-    <h3>projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/default-case-ref-list-view/default-case-ref-list-view.component.ts</h3>
-    <section>
+    <h3>projects/netgrif-components/src/lib/builder/modeler/task-mode/task-mode.component.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="baseFilterFactory"></a>
+                    <span class="name">
+                        <span ><b>baseFilterFactory</b></span>
+                        <a href="#baseFilterFactory"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>(integrationService: BuilderIntegrationService) &#x3D;&gt; {
+    const caseId &#x3D; integrationService?.processCase?.stringId ?? &quot;__EMPTY__&quot;
+    return {filter: SimpleFilter.fromTaskQuery({case: {id: caseId}, transitionId: integrationService?.allowedTransIds})};
+}</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="localAllowedNetsFactory"></a>
+                    <span class="name">
+                        <span ><b>localAllowedNetsFactory</b></span>
+                        <a href="#localAllowedNetsFactory"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>(factory: AllowedNetsServiceFactory) &#x3D;&gt; {
+    return factory.createFromArray([&#x27;process&#x27;]);
+}</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>projects/netgrif-components/src/lib/builder/modeler/actions-mode/action-editor/definitions/tokens.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="bracketTokens"></a>
+                    <span class="name">
+                        <span ><b>bracketTokens</b></span>
+                        <a href="#bracketTokens"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[
+    {
+        open: &quot;[&quot;,
+        close: &quot;]&quot;,
+        token: &quot;delimiter.square&quot;,
+    },
+    {
+        open: &quot;(&quot;,
+        close: &quot;)&quot;,
+        token: &quot;delimiter.parenthesis&quot;,
+    },
+    {
+        open: &quot;{&quot;,
+        close: &quot;}&quot;,
+        token: &quot;delimiter.curly&quot;,
+    },
+]</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>projects/netgrif-components/src/lib/builder/dialogs/dialogs.module.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="DIALOG_COMPONENTS"></a>
+                    <span class="name">
+                        <span ><b>DIALOG_COMPONENTS</b></span>
+                        <a href="#DIALOG_COMPONENTS"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[
+    DialogArcEditComponent,
+    DialogChangeDataComponent,
+    DialogDeadNetComponent,
+    DialogDeleteComponent,
+    DialogDeleteModelComponent,
+    DialogErrorsComponent,
+    DialogLocalStorageModelComponent,
+    DialogManageRolesComponent,
+    DialogMarkingChangeComponent,
+    DialogModelEditComponent,
+    DialogPlaceEditComponent,
+    DialogPlaceRefDeleteComponent,
+    DialogRefactorComponent,
+    DialogTransitionEditComponent,
+    TriggerTreeComponent
+]</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/refs/default-case-ref-list-view/default-case-ref-list-view.component.ts</h3>
+    <section data-compodoc="block-properties">
     <h3></h3>    <table class="table table-sm table-bordered">
         <tbody>
             <tr>
@@ -126,8 +365,8 @@
         </tbody>
     </table>
 </section>
-    <h3>projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/default-task-view/default-task-view.component.ts</h3>
-    <section>
+    <h3>projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/refs/default-task-view/default-task-view.component.ts</h3>
+    <section data-compodoc="block-properties">
     <h3></h3>    <table class="table table-sm table-bordered">
         <tbody>
             <tr>
@@ -144,6 +383,251 @@
                         <i>Default value : </i><code>(factory: AllowedNetsServiceFactory) &#x3D;&gt; {
     return factory.createWithAllNets();
 }</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/tabbed/default-tabbed-single-task-view/default-tabbed-single-task-view.component.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="localAllowedNetsFactory"></a>
+                    <span class="name">
+                        <span ><b>localAllowedNetsFactory</b></span>
+                        <a href="#localAllowedNetsFactory"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>(factory: AllowedNetsServiceFactory) &#x3D;&gt; {
+    return factory.createWithAllNets();
+}</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/public/default-public-single-task-view/default-public-single-task-view.component.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="localAllowedNetsServiceFactory"></a>
+                    <span class="name">
+                        <span ><b>localAllowedNetsServiceFactory</b></span>
+                        <a href="#localAllowedNetsServiceFactory"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>(factory: AllowedNetsServiceFactory, route: ActivatedRoute) &#x3D;&gt; {
+    const array &#x3D; [];
+    if (route.snapshot.paramMap.get(&#x27;petriNetId&#x27;) !&#x3D;&#x3D; null) {
+        array.push(route.snapshot.paramMap.get(&#x27;petriNetId&#x27;));
+    }
+    return factory.createFromArray(array);
+}</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/public/default-public-task-view/default-public-task-view.component.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="localAllowedNetsServiceFactory"></a>
+                    <span class="name">
+                        <span ><b>localAllowedNetsServiceFactory</b></span>
+                        <a href="#localAllowedNetsServiceFactory"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>(factory: AllowedNetsServiceFactory, route: ActivatedRoute) &#x3D;&gt; {
+    const array &#x3D; [];
+    if (route.snapshot.paramMap.get(&#x27;petriNetId&#x27;) !&#x3D;&#x3D; null) {
+        array.push(route.snapshot.paramMap.get(&#x27;petriNetId&#x27;));
+    }
+    return factory.createFromArray(array);
+}</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>projects/netgrif-components/src/lib/builder/modeler/components/master-detail/main-master-item/master-injection-tokens.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="MASTER_ITEM"></a>
+                    <span class="name">
+                        <span ><b>MASTER_ITEM</b></span>
+                        <a href="#MASTER_ITEM"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new InjectionToken&lt;any&gt;(&#x27;MasterItem&#x27;)</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="MASTER_SERVICE"></a>
+                    <span class="name">
+                        <span ><b>MASTER_SERVICE</b></span>
+                        <a href="#MASTER_SERVICE"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new InjectionToken&lt;AbstractMasterDetailService&lt;any&gt;&gt;(&#x27;MasterService&#x27;)</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>projects/netgrif-components/src/lib/builder/modeler/actions-mode/action-editor/action-editor.module.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="monaco"></a>
+                    <span class="name">
+                        <span ><b>monaco</b></span>
+                        <a href="#monaco"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="monacoConfig"></a>
+                    <span class="name">
+                        <span ><b>monacoConfig</b></span>
+                        <a href="#monacoConfig"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>NgxMonacoEditorConfig</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{
+    defaultOptions: {
+        scrollBeyondLastLine: false,
+    }, // pass default options to be used
+    onMonacoLoad // here monaco object will be available as window.monaco use this function to extend monaco editor functionalities.
+}</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="translateService"></a>
+                    <span class="name">
+                        <span ><b>translateService</b></span>
+                        <a href="#translateService"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>TranslateService</code>
+
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>projects/netgrif-components/src/lib/builder/modeler/control-panel/control-panel-tool-injection-token.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="NAB_CONTROL_PANEL_MODE"></a>
+                    <span class="name">
+                        <span ><b>NAB_CONTROL_PANEL_MODE</b></span>
+                        <a href="#NAB_CONTROL_PANEL_MODE"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new InjectionToken&lt;Tool&gt;(&#x27;Control panel mode&#x27;)</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="NAB_CONTROL_PANEL_TOOL"></a>
+                    <span class="name">
+                        <span ><b>NAB_CONTROL_PANEL_TOOL</b></span>
+                        <a href="#NAB_CONTROL_PANEL_TOOL"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new InjectionToken&lt;Tool&gt;(&#x27;Control panel mode tool&#x27;)</code>
                     </td>
                 </tr>
 
@@ -152,7 +636,7 @@
     </table>
 </section>
     <h3>projects/netgrif-components/src/lib/filter-field-content/filter-field-tabbed-case-view/filter-field-tabbed-case-view.component.ts</h3>
-    <section>
+    <section data-compodoc="block-properties">
     <h3></h3>    <table class="table table-sm table-bordered">
         <tbody>
             <tr>
@@ -177,7 +661,7 @@
     </table>
 </section>
     <h3>projects/netgrif-components/src/lib/data-fields/text-field/rich-textarea-field/easymde-wrapper/easymde-wrapper.component.ts</h3>
-    <section>
+    <section data-compodoc="block-properties">
     <h3></h3>    <table class="table table-sm table-bordered">
         <tbody>
             <tr>
@@ -207,7 +691,7 @@
     </table>
 </section>
     <h3>projects/netgrif-components/src/lib/dialog/model/dialog-actions.ts</h3>
-    <section>
+    <section data-compodoc="block-properties">
     <h3></h3>    <table class="table table-sm table-bordered">
         <tbody>
             <tr>
@@ -234,8 +718,8 @@
         const ref &#x3D; dialog.open(dialogComponent, {
             panelClass: &quot;dialog-task-responsive&quot;,
             data: {
-                taskIds: frontAction.args[0]
-            } as TaskViewInjectionData,
+                searchBody: { stringId: frontAction.args[0] }
+            } as TaskViewDialogInjectionData,
         });
         ref.afterClosed().subscribe(event &#x3D;&gt; {
             reloadTaskAction.call(injector, frontAction)
@@ -250,7 +734,7 @@
     </table>
 </section>
     <h3>projects/netgrif-components/src/lib/navigation/navigation-rail/navigation-rail.component.ts</h3>
-    <section>
+    <section data-compodoc="block-properties">
     <h3></h3>    <table class="table table-sm table-bordered">
         <tbody>
             <tr>
@@ -312,8 +796,78 @@
         </tbody>
     </table>
 </section>
+    <h3>projects/netgrif-components/src/lib/builder/read-only-builder.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="readOnlyBuilder"></a>
+                    <span class="name">
+                        <span ><b>readOnlyBuilder</b></span>
+                        <a href="#readOnlyBuilder"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>FrontActionDefinition</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{
+    call: (injector: Injector, frontAction: FrontAction) &#x3D;&gt; {
+        const builderModeService &#x3D; injector.get(BuilderModeService);
+        if (!!builderModeService) {
+            builderModeService.readOnly$.next(true);
+        }
+    }
+}</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>projects/netgrif-components/src/lib/navigation/model/reload-menu.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="reloadMenu"></a>
+                    <span class="name">
+                        <span ><b>reloadMenu</b></span>
+                        <a href="#reloadMenu"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>FrontActionDefinition</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{
+    call: (injector: Injector, frontAction: FrontAction) &#x3D;&gt; {
+        const doubleDrawerNavigationService &#x3D; injector.get(DoubleDrawerNavigationService);
+        doubleDrawerNavigationService.loadNavigationItems(doubleDrawerNavigationService.currentNode);
+    }
+}</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
     <h3>projects/netgrif-components/src/commons/angular-cli-devkit-core-strings.ts</h3>
-    <section>
+    <section data-compodoc="block-properties">
     <h3></h3>    <table class="table table-sm table-bordered">
         <tbody>
             <tr>
@@ -420,7 +974,7 @@
 
                    </div><div class="search-results">
     <div class="has-results">
-        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
         <ul class="search-results-list"></ul>
     </div>
     <div class="no-results">
@@ -432,6 +986,15 @@
            </div>
        </div>
 
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'miscellaneous-variables';
@@ -439,10 +1002,23 @@
             var MAX_SEARCH_RESULTS = 15;
        </script>
 
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
        <script src="../js/libs/custom-elements.min.js"></script>
        <script src="../js/libs/lit-html.js"></script>
-       
-       <script type="module" src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/menu-wc.js" defer></script>
        <script nomodule src="../js/menu-wc_es5.js" defer></script>
 
        <script src="../js/libs/bootstrap-native.js"></script>

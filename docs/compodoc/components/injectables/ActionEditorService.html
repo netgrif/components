@@ -1,0 +1,1114 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Netgrif Components library Documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">Netgrif Components library Documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content injectable">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Injectables</li>
+  <li class="breadcrumb-item" >ActionEditorService</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" 
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" 
+                class="nav-link"
+                
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>projects/netgrif-components/src/lib/builder/modeler/actions-mode/action-editor/action-editor.service.ts</code>
+        </p>
+
+
+
+
+
+            <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#editedActions" >editedActions</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#historySave" >historySave</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#nextId" >nextId</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#populateEditedActionsFromCaseEvents" >populateEditedActionsFromCaseEvents</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#populateEditedActionsFromDataVariable" >populateEditedActionsFromDataVariable</a>
+                            </li>
+                            <li>
+                                <a href="#populateEditedActionsFromProcessEvents" >populateEditedActionsFromProcessEvents</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#populateEditedActionsFromRole" >populateEditedActionsFromRole</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#populateEditedActionsFromTransition" >populateEditedActionsFromTransition</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#saveActionChange" >saveActionChange</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+            <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(_modelService: <a href="../injectables/ModelService.html" target="_self">ModelService</a>, _translateService: TranslateService)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="35" class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/actions-mode/action-editor/action-editor.service.ts:35</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>_modelService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/ModelService.html" target="_self" >ModelService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_translateService</td>
+                                                  
+                                                        <td>
+                                                                    <code>TranslateService</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+            <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="nextId"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>nextId</b></span>
+                        <a href="#nextId"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>nextId()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="45"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/actions-mode/action-editor/action-editor.service.ts:45</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="populateEditedActionsFromCaseEvents"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>populateEditedActionsFromCaseEvents</b></span>
+                        <a href="#populateEditedActionsFromCaseEvents"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>populateEditedActionsFromCaseEvents(item: <a href="../classes/MasterItem.html" target="_self">MasterItem</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="83"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/actions-mode/action-editor/action-editor.service.ts:83</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>item</td>
+                                            <td>
+                                                            <code><a href="../classes/MasterItem.html" target="_self" >MasterItem</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="populateEditedActionsFromDataVariable"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>populateEditedActionsFromDataVariable</b></span>
+                        <a href="#populateEditedActionsFromDataVariable"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>populateEditedActionsFromDataVariable(dataVariable: DataVariable)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="69"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/actions-mode/action-editor/action-editor.service.ts:69</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>dataVariable</td>
+                                            <td>
+                                                        <code>DataVariable</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="populateEditedActionsFromProcessEvents"></a>
+                    <span class="name">
+                        <span ><b>populateEditedActionsFromProcessEvents</b></span>
+                        <a href="#populateEditedActionsFromProcessEvents"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>populateEditedActionsFromProcessEvents(item: <a href="../classes/MasterItem.html" target="_self">MasterItem</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="90"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/actions-mode/action-editor/action-editor.service.ts:90</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>item</td>
+                                            <td>
+                                                            <code><a href="../classes/MasterItem.html" target="_self" >MasterItem</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="populateEditedActionsFromRole"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>populateEditedActionsFromRole</b></span>
+                        <a href="#populateEditedActionsFromRole"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>populateEditedActionsFromRole(role: Role)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="76"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/actions-mode/action-editor/action-editor.service.ts:76</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>role</td>
+                                            <td>
+                                                        <code>Role</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="populateEditedActionsFromTransition"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>populateEditedActionsFromTransition</b></span>
+                        <a href="#populateEditedActionsFromTransition"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>populateEditedActionsFromTransition(transition: Transition)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="49"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/actions-mode/action-editor/action-editor.service.ts:49</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>transition</td>
+                                            <td>
+                                                        <code>Transition</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="saveActionChange"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>saveActionChange</b></span>
+                        <a href="#saveActionChange"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>saveActionChange(changedAction: <a href="../classes/EditableAction.html" target="_self">EditableAction</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="123"
+                                    class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/actions-mode/action-editor/action-editor.service.ts:123</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>changedAction</td>
+                                            <td>
+                                                            <code><a href="../classes/EditableAction.html" target="_self" >EditableAction</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+            <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="editedActions"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>editedActions</b></span>
+                        <a href="#editedActions"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../classes/ActionGroup.html" target="_self" >Array&lt;ActionGroup&gt;</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="32" class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/actions-mode/action-editor/action-editor.service.ts:32</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="historySave"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>historySave</b></span>
+                        <a href="#historySave"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="33" class="link-to-prism">projects/netgrif-components/src/lib/builder/modeler/actions-mode/action-editor/action-editor.service.ts:33</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Injectable} from &#x27;@angular/core&#x27;;
+import {
+  Action,
+  CaseEvent,
+  CaseEventType,
+  DataEvent,
+  DataEventType,
+  DataRef,
+  DataVariable,
+  Event,
+  EventPhase,
+  PetriNet,
+  ProcessEvent,
+  ProcessEventType,
+  Role,
+  RoleEvent,
+  RoleEventType,
+  Transition,
+  TransitionEvent,
+  TransitionEventType,
+} from &#x27;@netgrif/petriflow&#x27;;
+import {ModelService} from &#x27;../../services/model/model.service&#x27;;
+import {ActionGroup} from &#x27;./classes/action-group&#x27;;
+import {ActionType, ChangeType, EditableAction} from &#x27;./classes/editable-action&#x27;;
+import {MasterItem} from &#x27;./classes/master-item&#x27;;
+import {EventType} from &#x27;./event-type&#x27;;
+import {TranslateService} from &quot;@ngx-translate/core&quot;;
+
+@Injectable()
+export class ActionEditorService {
+
+    public editedActions: Array&lt;ActionGroup&gt;;
+    public historySave: boolean;
+    private _datarefMap: Map&lt;string, DataRef&gt;;
+    private _currentlyEdited: Transition | DataVariable | PetriNet | Role;
+
+    constructor(
+        private _modelService: ModelService,
+        private _translateService: TranslateService
+    ) {
+        this.editedActions &#x3D; [];
+        this._datarefMap &#x3D; new Map&lt;string, DataRef&gt;();
+    }
+
+    public nextId(): string {
+        return this._modelService.nextActionId();
+    }
+
+    public populateEditedActionsFromTransition(transition: Transition): void {
+        this.editedActions.splice(0, this.editedActions.length);
+        this._datarefMap.clear();
+        this._currentlyEdited &#x3D; transition;
+
+        // transition actions
+        this.editedActions.push(this.createActionGroup(transition.eventSource.getEvents(), this._translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.transition&#x27;), ActionType.TRANSITION));
+
+        // dataref actions
+        let combinedDataRefs: Array&lt;DataRef&gt; &#x3D; [];
+        transition.dataGroups.forEach(dataGroup &#x3D;&gt; {
+            combinedDataRefs &#x3D; combinedDataRefs.concat(dataGroup.getDataRefs());
+        });
+
+        combinedDataRefs.forEach(dataref &#x3D;&gt; {
+            this._datarefMap.set(dataref.id, dataref);
+            this.editedActions.push(this.createActionGroup(dataref.getEvents(), dataref.id, ActionType.DATAREF, dataref.id));
+        });
+    }
+
+    public populateEditedActionsFromDataVariable(dataVariable: DataVariable): void {
+        this.editedActions.splice(0, this.editedActions.length);
+        this._currentlyEdited &#x3D; dataVariable;
+
+        this.editedActions.push(this.createActionGroup(dataVariable.getEvents(), dataVariable.title?.value, ActionType.DATA));
+    }
+
+    public populateEditedActionsFromRole(role: Role) {
+        this.editedActions.splice(0, this.editedActions.length);
+        this._datarefMap.clear();
+        this._currentlyEdited &#x3D; role;
+        this.editedActions.push(this.createActionGroup(role.getEvents(), this._translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.role&#x27;), ActionType.ROLE));
+    }
+
+    public populateEditedActionsFromCaseEvents(item: MasterItem): void {
+        this.editedActions.splice(0, this.editedActions.length);
+        this._currentlyEdited &#x3D; item.model;
+
+        this.editedActions.push(this.createActionGroup(item.model.getCaseEvents(), this._translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.caseEvents&#x27;), ActionType.CASE));
+    }
+
+    populateEditedActionsFromProcessEvents(item: MasterItem): void {
+        this.editedActions.splice(0, this.editedActions.length);
+        this._currentlyEdited &#x3D; item.model;
+
+        this.editedActions.push(this.createActionGroup(item.model.getProcessEvents(), this._translateService.instant(&#x27;builder.modeler.actions-mode.action-editor.processEvents&#x27;), ActionType.PROCESS));
+    }
+
+    private createActionGroup(events: Array&lt;Event&lt;EventType&gt;&gt;, parentName: string, actionType: ActionType, parentDataRefId?: string): ActionGroup {
+        return new ActionGroup(actionType, parentName, this.extractActions(events, actionType, parentDataRefId));
+    }
+
+    private extractActions(events: Array&lt;Event&lt;EventType&gt;&gt;, actionType: ActionType, parentDataRefId?: string): Array&lt;EditableAction&gt; {
+        const result &#x3D; [];
+
+        events.forEach(event &#x3D;&gt; {
+            result.push(...this.extractPhaseActions(event.preActions, actionType, event.type, EventPhase.PRE, parentDataRefId));
+            result.push(...this.extractPhaseActions(event.postActions, actionType, event.type, EventPhase.POST, parentDataRefId));
+        });
+
+        return result;
+    }
+
+    private extractPhaseActions(actions: Array&lt;Action&gt;, actionType: ActionType, eventType: EventType, phase: EventPhase, parentDataRefId?: string): Array&lt;EditableAction&gt; {
+        return actions.map(action &#x3D;&gt; this.loadAction(action, actionType, eventType, phase, parentDataRefId));
+    }
+
+    private loadAction(action: Action, actionType: ActionType, eventType: EventType, phase: EventPhase, parentDataRefId?: string): EditableAction {
+        if (action.id &#x3D;&#x3D;&#x3D; undefined || action.id &#x3D;&#x3D;&#x3D; null) {
+            action.id &#x3D; this.nextId();
+        }
+        return new EditableAction(action.id, actionType, false, action.definition, eventType, phase, parentDataRefId);
+    }
+
+    public saveActionChange(changedAction: EditableAction) {
+        this.saveAction(changedAction);
+        changedAction.commitChanges();
+        this.historySave &#x3D; true;
+    }
+
+    private saveAction(changedAction: EditableAction): void {
+        let event &#x3D; this.getEvent(changedAction, changedAction.changeType &#x3D;&#x3D;&#x3D; ChangeType.MOVED);
+        let actions: Array&lt;Action&gt;;
+        let action: Action;
+        let index: number;
+        switch (changedAction.changeType) {
+            case ChangeType.EDITED:
+                actions &#x3D; this.getPhaseActions(event, changedAction.phase);
+                action &#x3D; actions.find(it &#x3D;&gt; it.id &#x3D;&#x3D;&#x3D; changedAction.id);
+                action.definition &#x3D; changedAction.definition;
+                return;
+            case ChangeType.MOVED:
+                actions &#x3D; this.getPhaseActions(event, changedAction.originalPhase);
+                index &#x3D; actions.findIndex(it &#x3D;&gt; it.id &#x3D;&#x3D;&#x3D; changedAction.id);
+                action &#x3D; actions.splice(index, 1)[0];
+
+                event &#x3D; this.getEvent(changedAction, false);
+                if (event &#x3D;&#x3D;&#x3D; undefined) {
+                    event &#x3D; this.addMissingEvent(changedAction);
+                }
+                actions &#x3D; this.getPhaseActions(event, changedAction.phase);
+                actions.push(action);
+                return;
+            case ChangeType.CREATED:
+                if (event &#x3D;&#x3D;&#x3D; undefined) {
+                    event &#x3D; this.addMissingEvent(changedAction);
+                }
+                actions &#x3D; this.getPhaseActions(event, changedAction.phase);
+                actions.push(new Action(changedAction.id, changedAction.definition));
+                return;
+            case ChangeType.REMOVED:
+                actions &#x3D; this.getPhaseActions(event, changedAction.phase);
+                index &#x3D; actions.findIndex(it &#x3D;&gt; it.id &#x3D;&#x3D;&#x3D; changedAction.id);
+                actions.splice(index, 1);
+                return;
+        }
+    }
+
+    private addMissingEvent(changedAction: EditableAction): Event&lt;EventType&gt; {
+        let event: Event&lt;EventType&gt;;
+        const id &#x3D; changedAction.type &#x3D;&#x3D;&#x3D; ActionType.DATAREF ? changedAction.parentDataRefId : this._currentlyEdited.id;
+        const eventId &#x3D; &#x60;${id}_${changedAction.event}&#x60;;
+        switch (changedAction.type) {
+            case ActionType.CASE:
+                event &#x3D; new CaseEvent(changedAction.event as CaseEventType, eventId);
+                break;
+            case ActionType.PROCESS:
+                event &#x3D; new ProcessEvent(changedAction.event as ProcessEventType, eventId);
+                break;
+            case ActionType.TRANSITION:
+                event &#x3D; new TransitionEvent(changedAction.event as TransitionEventType, eventId);
+                break;
+            case ActionType.DATA:
+            case ActionType.DATAREF:
+                event &#x3D; new DataEvent(changedAction.event as DataEventType, eventId);
+                break;
+            case ActionType.ROLE:
+                event &#x3D; new RoleEvent(changedAction.event as RoleEventType, eventId);
+                break;
+        }
+        switch (changedAction.type) {
+            case ActionType.CASE:
+                (this._currentlyEdited as PetriNet).addCaseEvent(event as CaseEvent);
+                break;
+            case ActionType.PROCESS:
+                (this._currentlyEdited as PetriNet).addProcessEvent(event as ProcessEvent);
+                break;
+            case ActionType.TRANSITION:
+                (this._currentlyEdited as Transition).eventSource.addEvent(event as TransitionEvent);
+                break;
+            case ActionType.DATA:
+                (this._currentlyEdited as DataVariable).addEvent(event as DataEvent);
+                break;
+            case ActionType.DATAREF:
+                this.getDataRef(changedAction.parentDataRefId).addEvent(event as DataEvent);
+                break;
+            case ActionType.ROLE:
+                (this._currentlyEdited as Role).addEvent(event as RoleEvent);
+                break;
+        }
+        return event;
+    }
+
+    private getEvent(changedAction: EditableAction, getOriginal: boolean): Event&lt;EventType&gt; {
+        const event &#x3D; getOriginal ? changedAction.originalEvent : changedAction.event;
+        switch (changedAction.type) {
+            case ActionType.CASE:
+                return (this._currentlyEdited as PetriNet).getCaseEvent(event as CaseEventType);
+            case ActionType.PROCESS:
+                return (this._currentlyEdited as PetriNet).getProcessEvent(event as ProcessEventType);
+            case ActionType.TRANSITION:
+                return (this._currentlyEdited as Transition).eventSource.getEvent(event as TransitionEventType);
+            case ActionType.DATA:
+                return (this._currentlyEdited as DataVariable).getEvent(event as DataEventType);
+            case ActionType.DATAREF:
+                return this.getDataRef(changedAction.parentDataRefId).getEvent(event as DataEventType);
+            case ActionType.ROLE:
+                return (this._currentlyEdited as Role).getEvent(event as RoleEventType);
+        }
+    }
+
+    private getPhaseActions(event: Event&lt;unknown&gt;, phase: EventPhase): Array&lt;Action&gt; {
+        if (phase &#x3D;&#x3D;&#x3D; EventPhase.PRE) {
+            return event.preActions;
+        } else {
+            return event.postActions;
+        }
+    }
+
+    private getDataRef(datarefId: string): DataRef {
+        for (const dataGroup of (this._currentlyEdited as Transition).dataGroups) {
+            const dataRef &#x3D; dataGroup.getDataRef(datarefId);
+            if (dataRef !&#x3D;&#x3D; undefined) {
+                return dataRef;
+            }
+        }
+        return undefined;
+    }
+}
+</code></pre>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'injectable';
+            var COMPODOC_CURRENT_PAGE_URL = 'ActionEditorService.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>
