@@ -1,0 +1,16 @@
+<button type="button" class="comment-toggle" (click)="toggle()" [attr.aria-expanded]="expanded">
+    <mat-icon class="comment-chevron" [class.comment-chevron-expanded]="expanded">chevron_right</mat-icon>
+    <mat-icon class="comment-icon" [color]="hasComment ? 'primary' : undefined">{{ hasComment ? 'comment' : 'mode_comment' }}</mat-icon>
+    <span>{{ title | translate }}</span>
+</button>
+<div *ngIf="rendered" class="comment-content" [hidden]="!expanded">
+    <div *ngIf="!readOnly; else readOnlyComment" class="comment-editor">
+        <textarea #editor></textarea>
+    </div>
+    <ng-template #readOnlyComment>
+        <div *ngIf="hasComment; else emptyComment" class="comment-preview" [innerHTML]="renderedComment"></div>
+        <ng-template #emptyComment>
+            <span class="comment-empty">{{ 'builder.comment.empty' | translate }}</span>
+        </ng-template>
+    </ng-template>
+</div>

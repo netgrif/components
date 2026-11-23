@@ -101,6 +101,7 @@ export class ModelService {
     public updateModel(changedModel: ModelChange): void {
         this.model.id = changedModel.model.id;
         this.model.title = changedModel.model.title;
+        this.model.comment = changedModel.model.comment;
         this.model.initials = changedModel.model.initials;
         this.model.icon = changedModel.model.icon;
         this.model.defaultRole = changedModel.model.defaultRole;
@@ -144,6 +145,7 @@ export class ModelService {
         place.id = newPlace.place.id;
         place.marking = newPlace.place.marking;
         place.label = newPlace.place.label;
+        place.comment = newPlace.place.comment;
         this.model.removePlace(newPlace.originalPlace.id);
         this.model.addPlace(place);
         this.model.getArcs()
@@ -210,6 +212,7 @@ export class ModelService {
         const transition = this.model.getTransition(newTransition.id);
         transition.id = newTransition.transition.id;
         transition.label = newTransition.transition.label;
+        transition.comment = newTransition.transition.comment;
         transition.icon = newTransition.transition.icon;
         transition.tags = newTransition.transition.tags;
         transition.assignPolicy = newTransition.transition.assignPolicy;
@@ -271,6 +274,7 @@ export class ModelService {
         arc.multiplicity = newArc.arc.multiplicity;
         arc.reference = newArc.arc.reference;
         arc.breakpoints = newArc.arc.breakpoints;
+        arc.comment = newArc.arc.comment;
         this.model.lastChanged = Date.now();
         this._arcChange.next(new ChangedArc(this.model.clone(), arc));
         return arc;
@@ -370,6 +374,7 @@ export class ModelService {
         role.id = newRole.role.id;
         role.title = newRole.role.title;
         role.global = newRole.role.global;
+        role.comment = newRole.role.comment;
         this.model.removeRole(newRole.id);
         this.model.addRole(role);
 

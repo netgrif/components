@@ -1,0 +1,63 @@
+:host {
+    display: block;
+    width: 100%;
+    margin: 8px 0;
+}
+
+:host ::ng-deep {
+    @import 'easymde/dist/easymde.min';
+}
+
+.comment-toggle {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    width: 100%;
+    min-height: 40px;
+    padding: 4px 8px 4px 4px;
+    border: none;
+    border-radius: 4px;
+    background: none;
+    // same look as the triggers tree in the transition dialog
+    color: var(--mat-tree-node-text-color, inherit);
+    font-family: var(--mat-tree-node-text-font, inherit);
+    font-size: var(--mat-tree-node-text-size, inherit);
+    font-weight: var(--mat-tree-node-text-weight, inherit);
+    text-align: left;
+    cursor: pointer;
+    transition: background-color 150ms ease-in-out;
+
+    &:hover {
+        background-color: color-mix(in srgb, currentColor 6%, transparent);
+    }
+
+    &:focus-visible {
+        outline: none;
+        background-color: color-mix(in srgb, currentColor 12%, transparent);
+    }
+}
+
+.comment-chevron {
+    transition: transform 150ms ease-in-out;
+}
+
+.comment-chevron-expanded {
+    transform: rotate(90deg);
+}
+
+.comment-content {
+    width: 100%;
+    padding-top: 4px;
+}
+
+.comment-editor {
+    width: 100%;
+}
+
+.comment-empty {
+    opacity: 0.6;
+}
+
+.comment-preview {
+    overflow-wrap: anywhere;
+}

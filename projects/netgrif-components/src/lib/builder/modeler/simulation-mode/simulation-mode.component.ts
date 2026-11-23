@@ -33,6 +33,6 @@ export class SimulationModeComponent implements AfterViewInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        this.simulationService.activeTool.unbind();
+        this.simulationService.activeTool?.unbind();
     }
 }

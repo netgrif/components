@@ -92,7 +92,7 @@ export class EditModeComponent implements AfterViewInit, OnDestroy {
     ngOnDestroy(): void {
         this.contextMenuSubscription?.unsubscribe();
         this.gridSubscription?.unsubscribe();
-        this.editModeService.activeTool.unbind();
+        this.editModeService.activeTool?.unbind();
     }
 
     onDropZone($event: NgxDropzoneChangeEvent) {

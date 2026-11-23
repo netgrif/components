@@ -391,6 +391,16 @@
 
         <div fxFlex></div>
     </div>
+    <div fxLayout="row wrap" fxLayoutAlign="start center">
+
+        <div fxFlex="2.5"></div>
+
+        <div fxFlex="95">
+            <nc-builder-comment-editor [comment]="item?.comment" (commentChange)="setComment($event)"></nc-builder-comment-editor>
+        </div>
+
+        <div fxFlex="2.5"></div>
+    </div>
 </div>
 
 <ng-template #elseBlock>

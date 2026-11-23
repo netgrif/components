@@ -69,6 +69,7 @@ import {NgxMatMomentModule} from "@angular-material-components/moment-adapter";
 import { DataFieldsComponentModule } from "../../data-fields/data-fields.module";
 import {TaskContentComponentModule} from "../../task-content/task-content.module";
 import {MaterialIconPickerComponent} from "./components/material-icon-picker/material-icon-picker.component";
+import {CommentEditorComponent} from "./components/comment-editor/comment-editor.component";
 import {TaskModeComponent} from "./task-mode/task-mode.component";
 import {TranslateModule} from "@ngx-translate/core";
 
@@ -141,6 +142,7 @@ import {TranslateModule} from "@ngx-translate/core";
         NgxMatDatetimePickerModule,
         NgxMatMomentModule,
         MaterialIconPickerComponent,
+        CommentEditorComponent,
         TaskModeComponent,
         TranslateModule,
     ]

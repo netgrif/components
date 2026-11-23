@@ -407,37 +407,19 @@
                 </button>
             </div>
 
+            <div class="full-width">
+                <button mat-stroked-button color="primary" (click)="openDataEditView()"
+                        class="full-width save-button">
+                    <mat-icon>open_in_new</mat-icon>
+                    {{ 'builder.modeler.data-mode.dataEditView' | translate }}
+                </button>
+            </div>
+
+
             <mat-divider></mat-divider>
 
-            <!--  FIELD OFFSET MANAGEMENT  -->
-            <mat-form-field appearance="outline" class="full-width margin-html">
-                <mat-label>{{ 'builder.form-builder.edit-panel.template' | translate }}</mat-label>
-                <mat-select [(value)]="dataRef.layout.template" (selectionChange)="notifyGridster()"
-                            [disabled]="_builderModeService.readOnly">
-                    <mat-option *ngFor="let opt of templates" [value]="opt">
-                        {{ opt }}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-            <mat-form-field appearance="outline" *ngIf="!isBoolean() && !isListOptionsDisplay() && !isFile() && !isFileList()"
-                            class="full-width margin-html">
-                <mat-label>{{ 'builder.form-builder.edit-panel.appearance' | translate }}</mat-label>
-                <mat-select [(value)]="dataRef.layout.appearance" (selectionChange)="notifyGridster()"
-                            [disabled]="_builderModeService.readOnly">
-                    <mat-option *ngFor="let opt of appearances" [value]="opt">
-                        {{ opt }}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-            <div>
-                <mat-form-field appearance="outline" class="full-width margin-html">
-                    <mat-label>{{ 'builder.form-builder.edit-panel.fieldOffset' | translate }}</mat-label>
-                    <input matInput type="number"
-                           [(ngModel)]="gridsterService.selectedDataField.dataRef.layout.offset"
-                           [disabled]="_builderModeService.readOnly"
-                           (change)="notifyGridster()">
-                </mat-form-field>
-            </div>
+            <nc-builder-comment-editor title="builder.comment.dataRefTitle" [comment]="dataRef.comment"
+                                       (commentChange)="dataRef.comment = $event; registerChange()"></nc-builder-comment-editor>
         </div>
     </div>
 </div>

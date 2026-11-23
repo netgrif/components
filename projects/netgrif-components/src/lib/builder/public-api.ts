@@ -6,6 +6,7 @@ export * from './modeler/data-mode/task-ref-init-field/task-ref-init-field.compo
 export * from './dialogs/dialog-transition-edit/trigger-tree/trigger-tree.component';
 export * from './modeler/actions-mode/action-editor/function-editor/function-editor.component';
 export * from './modeler/actions-mode/action-editor/action-editor-list/action-editor-list.component';
+export * from './modeler/components/comment-editor/comment-editor.component';
 
 
 // SERVICES
