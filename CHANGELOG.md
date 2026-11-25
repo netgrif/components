@@ -5,7 +5,39 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres
 to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-Full Changelog: [https://github.com/netgrif/components/commits/v6.5.0](https://github.com/netgrif/components/commits/v6.5.0)
+Full Changelog: [https://github.com/netgrif/components/commits/v7.1.1](https://github.com/netgrif/components/commits/v7.1.1)
+
+## [7.1.1](https://github.com/netgrif/components/releases/tag/v7.1.1) (2026-11-26)
+
+### Changed
+- [NAE-2507] Event outcome content is not configurable
+
+## [7.1.0](https://github.com/netgrif/components/releases/tag/v7.1.0) (2026-11-05)
+
+### Added
+- [NAE-2503] Add support for public workflow URLs and builder redirection
+- [NAE-2491] Add New Number Formatting Component
+- [NAE-2495] Tab Persistence
+- [NAE-2286] Group API
+- [NAE-2487] Add Column Configuration and Sorting to Menu Item
+- [NAE-2496] Custom Component Registry for Case Views
+
+### Changed
+- [NAE-2451] Optimize and Reduce Outcome Size
+
+## [7.0.3](https://github.com/netgrif/components/releases/tag/v7.0.3) (2026-09-02)
+
+### Changed
+- [NAE-2479] Setting order to menu item
+- [NAE-2478] Persist Sorting in User Preference Data
+
+## [7.0.2](https://github.com/netgrif/components/releases/tag/v7.0.2) (2026-08-04)
+
+No changes
+
+## [7.0.1](https://github.com/netgrif/components/releases/tag/v7.0.1) (2026-07-02)
+
+No changes
 
 ## [7.0.0](https://github.com/netgrif/components/releases/tag/v7.0.0) (2024-11-22)
 
