@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- e2e: the file fields stored by the engine (files.spec): the task Upload edits a file and a file list, the task
+     Check shows them (visible) after Upload is finished -->
+<document xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://petriflow.com/petriflow.schema.xsd">
+    <id>e2e_files</id>
+    <initials>EFI</initials>
+    <title>E2E files</title>
+    <defaultRole>true</defaultRole>
+    <anonymousRole>false</anonymousRole>
+    <data type="file">
+        <id>document</id>
+        <title>Document</title>
+    </data>
+    <data type="fileList">
+        <id>attachments</id>
+        <title>Attachments</title>
+    </data>
+    <transition>
+        <id>upload</id>
+        <x>300</x>
+        <y>100</y>
+        <label>Upload</label>
+        <dataGroup>
+            <id>upload_group</id>
+            <dataRef>
+                <id>document</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>attachments</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+        </dataGroup>
+    </transition>
+    <transition>
+        <id>check</id>
+        <x>500</x>
+        <y>100</y>
+        <label>Check</label>
+        <dataGroup>
+            <id>check_group</id>
+            <dataRef>
+                <id>document</id>
+                <logic>
+                    <behavior>visible</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>attachments</id>
+                <logic>
+                    <behavior>visible</behavior>
+                </logic>
+            </dataRef>
+        </dataGroup>
+    </transition>
+    <place>
+        <id>p1</id>
+        <x>100</x>
+        <y>100</y>
+        <tokens>1</tokens>
+        <static>false</static>
+    </place>
+    <place>
+        <id>p2</id>
+        <x>400</x>
+        <y>100</y>
+        <tokens>0</tokens>
+        <static>false</static>
+    </place>
+    <arc>
+        <id>a1</id>
+        <type>regular</type>
+        <sourceId>p1</sourceId>
+        <destinationId>upload</destinationId>
+        <multiplicity>1</multiplicity>
+    </arc>
+    <arc>
+        <id>a2</id>
+        <type>regular</type>
+        <sourceId>upload</sourceId>
+        <destinationId>p2</destinationId>
+        <multiplicity>1</multiplicity>
+    </arc>
+    <arc>
+        <id>a3</id>
+        <type>regular</type>
+        <sourceId>p2</sourceId>
+        <destinationId>check</destinationId>
+        <multiplicity>1</multiplicity>
+    </arc>
+</document>

@@ -1,0 +1,453 @@
+<document xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://petriflow.com/petriflow.schema.xsd">
+	<id>triggers</id>
+	<version>1.0.0</version>
+	<initials>TRG</initials>
+	<title>Triggers</title>
+	<icon>home</icon>
+	<defaultRole>true</defaultRole>
+	<anonymousRole>true</anonymousRole>
+	<transitionRole>false</transitionRole>
+	<data type="enumeration_map">
+		<id>fork</id>
+		<title>Fork</title>
+		<options>
+			<option key="var_auto">Auto trigger</option>
+			<option key="var_time">Time trigger</option>
+			<option key="var_other">Other</option>
+		</options>
+		<event type="set">
+			<id>set_event_0</id>
+			<actions phase="post">
+				<action id="action_0">fork: f.fork,
+                var_auto: f.var_auto,
+                var_time: f.var_time,
+                var_other: f.var_other;
+            
+                if (fork.value == "var_auto") {
+                    change var_auto value { 1 }
+                    change var_time value { 0 }
+                    change var_other value { 0 }
+                } else if (fork.value == "var_time") {
+                    change var_auto value { 0 }
+                    change var_time value { 1 }
+                    change var_other value { 0 }
+                } else {
+                    change var_auto value { 0 }
+                    change var_time value { 0 }
+                    change var_other value { 1 }
+                }</action>
+			</actions>
+		</event>
+	</data>
+	<data type="number">
+		<id>var_auto</id>
+		<title>var_auto</title>
+		<init>0</init>
+	</data>
+	<data type="number">
+		<id>var_time</id>
+		<title>var_time</title>
+		<init>0</init>
+	</data>
+	<data type="number">
+		<id>var_other</id>
+		<title>var_other</title>
+		<init>0</init>
+	</data>
+	<transition>
+		<id>t1</id>
+		<x>140</x>
+		<y>220</y>
+		<label>init</label>
+		<icon>settings</icon>
+		<trigger type="auto"/>
+		<dataGroup>
+			<id>t1_0</id>
+			<cols>4</cols>
+			<layout>grid</layout>
+		</dataGroup>
+		<event type="assign">
+			<id>t1_assign</id>
+		</event>
+		<event type="finish">
+			<id>t1_finish</id>
+		</event>
+		<event type="cancel">
+			<id>t1_cancel</id>
+		</event>
+		<event type="delegate">
+			<id>t1_delegate</id>
+		</event>
+	</transition>
+	<transition>
+		<id>t2</id>
+		<x>300</x>
+		<y>220</y>
+		<label>Fork</label>
+		<assignPolicy>auto</assignPolicy>
+		<dataGroup>
+			<id>t2_0</id>
+			<cols>4</cols>
+			<layout>grid</layout>
+			<dataRef>
+				<id>fork</id>
+				<logic>
+					<behavior>editable</behavior>
+				</logic>
+				<layout>
+					<x>0</x>
+					<y>0</y>
+					<rows>1</rows>
+					<cols>4</cols>
+					<template>material</template>
+					<appearance>outline</appearance>
+				</layout>
+			</dataRef>
+		</dataGroup>
+		<event type="assign">
+			<id>t2_assign</id>
+		</event>
+		<event type="finish">
+			<id>t2_finish</id>
+		</event>
+		<event type="cancel">
+			<id>t2_cancel</id>
+		</event>
+		<event type="delegate">
+			<id>t2_delegate</id>
+		</event>
+	</transition>
+	<transition>
+		<id>t3</id>
+		<x>620</x>
+		<y>140</y>
+		<label>auto_fail</label>
+		<icon>settings</icon>
+		<trigger type="auto"/>
+	</transition>
+	<transition>
+		<id>t4</id>
+		<x>860</x>
+		<y>100</y>
+		<label>after auto</label>
+	</transition>
+	<transition>
+		<id>t5</id>
+		<x>620</x>
+		<y>60</y>
+		<label>auto_pass</label>
+		<icon>settings</icon>
+		<trigger type="auto"/>
+	</transition>
+	<transition>
+		<id>t7</id>
+		<x>620</x>
+		<y>220</y>
+		<label>time</label>
+		<icon>timer</icon>
+		<trigger type="time">
+			<delay>PT1S</delay>
+		</trigger>
+	</transition>
+	<transition>
+		<id>t8</id>
+		<x>860</x>
+		<y>220</y>
+		<label>after time</label>
+	</transition>
+	<transition>
+		<id>t9</id>
+		<x>620</x>
+		<y>300</y>
+		<label>auto_parallel_1</label>
+		<trigger type="auto"/>
+	</transition>
+	<transition>
+		<id>t10</id>
+		<x>620</x>
+		<y>380</y>
+		<label>auto_parallel_2</label>
+		<trigger type="auto"/>
+	</transition>
+	<transition>
+		<id>t11</id>
+		<x>860</x>
+		<y>340</y>
+		<label>after auto parallel</label>
+	</transition>
+	<place>
+		<id>p1</id>
+		<x>60</x>
+		<y>220</y>
+		<tokens>1</tokens>
+		<static>false</static>
+	</place>
+	<place>
+		<id>p2</id>
+		<x>220</x>
+		<y>220</y>
+		<tokens>0</tokens>
+		<static>false</static>
+	</place>
+	<place>
+		<id>p3</id>
+		<x>500</x>
+		<y>100</y>
+		<tokens>0</tokens>
+		<static>false</static>
+	</place>
+	<place>
+		<id>p4</id>
+		<x>500</x>
+		<y>220</y>
+		<tokens>0</tokens>
+		<static>false</static>
+	</place>
+	<place>
+		<id>p5</id>
+		<x>500</x>
+		<y>300</y>
+		<tokens>0</tokens>
+		<static>false</static>
+	</place>
+	<place>
+		<id>p7</id>
+		<x>980</x>
+		<y>100</y>
+		<tokens>0</tokens>
+		<static>false</static>
+	</place>
+	<place>
+		<id>p8</id>
+		<x>740</x>
+		<y>100</y>
+		<tokens>0</tokens>
+		<static>false</static>
+	</place>
+	<place>
+		<id>p9</id>
+		<x>740</x>
+		<y>220</y>
+		<tokens>0</tokens>
+		<static>false</static>
+	</place>
+	<place>
+		<id>p10</id>
+		<x>980</x>
+		<y>220</y>
+		<tokens>0</tokens>
+		<static>false</static>
+	</place>
+	<place>
+		<id>p11</id>
+		<x>500</x>
+		<y>380</y>
+		<tokens>0</tokens>
+		<static>false</static>
+	</place>
+	<place>
+		<id>p12</id>
+		<x>740</x>
+		<y>300</y>
+		<tokens>0</tokens>
+		<static>false</static>
+	</place>
+	<place>
+		<id>p13</id>
+		<x>980</x>
+		<y>340</y>
+		<tokens>0</tokens>
+		<static>false</static>
+	</place>
+	<place>
+		<id>p15</id>
+		<x>740</x>
+		<y>380</y>
+		<tokens>0</tokens>
+		<static>false</static>
+	</place>
+	<arc>
+		<id>a1</id>
+		<type>regular</type>
+		<sourceId>p1</sourceId>
+		<destinationId>t1</destinationId>
+		<multiplicity>1</multiplicity>
+	</arc>
+	<arc>
+		<id>a2</id>
+		<type>regular</type>
+		<sourceId>t1</sourceId>
+		<destinationId>p2</destinationId>
+		<multiplicity>1</multiplicity>
+	</arc>
+	<arc>
+		<id>a3</id>
+		<type>regular</type>
+		<sourceId>p2</sourceId>
+		<destinationId>t2</destinationId>
+		<multiplicity>1</multiplicity>
+	</arc>
+	<arc>
+		<id>a4</id>
+		<type>regular</type>
+		<sourceId>t2</sourceId>
+		<destinationId>p3</destinationId>
+		<multiplicity>0</multiplicity>
+		<reference>var_auto</reference>
+		<breakpoint>
+			<x>300</x>
+			<y>100</y>
+		</breakpoint>
+	</arc>
+	<arc>
+		<id>a6</id>
+		<type>regular</type>
+		<sourceId>t2</sourceId>
+		<destinationId>p4</destinationId>
+		<multiplicity>0</multiplicity>
+		<reference>var_time</reference>
+	</arc>
+	<arc>
+		<id>a8</id>
+		<type>regular</type>
+		<sourceId>t2</sourceId>
+		<destinationId>p5</destinationId>
+		<multiplicity>0</multiplicity>
+		<reference>var_other</reference>
+		<breakpoint>
+			<x>300</x>
+			<y>300</y>
+		</breakpoint>
+	</arc>
+	<arc>
+		<id>a10</id>
+		<type>regular</type>
+		<sourceId>p3</sourceId>
+		<destinationId>t3</destinationId>
+		<multiplicity>1</multiplicity>
+	</arc>
+	<arc>
+		<id>a13</id>
+		<type>regular</type>
+		<sourceId>t4</sourceId>
+		<destinationId>p7</destinationId>
+		<multiplicity>1</multiplicity>
+	</arc>
+	<arc>
+		<id>a15</id>
+		<type>regular</type>
+		<sourceId>p3</sourceId>
+		<destinationId>t5</destinationId>
+		<multiplicity>1</multiplicity>
+	</arc>
+	<arc>
+		<id>a16</id>
+		<type>regular</type>
+		<sourceId>t5</sourceId>
+		<destinationId>p8</destinationId>
+		<multiplicity>1</multiplicity>
+	</arc>
+	<arc>
+		<id>a17</id>
+		<type>regular</type>
+		<sourceId>p8</sourceId>
+		<destinationId>t4</destinationId>
+		<multiplicity>1</multiplicity>
+	</arc>
+	<arc>
+		<id>a19</id>
+		<type>regular</type>
+		<sourceId>p4</sourceId>
+		<destinationId>t7</destinationId>
+		<multiplicity>1</multiplicity>
+	</arc>
+	<arc>
+		<id>a20</id>
+		<type>regular</type>
+		<sourceId>t7</sourceId>
+		<destinationId>p9</destinationId>
+		<multiplicity>1</multiplicity>
+	</arc>
+	<arc>
+		<id>a21</id>
+		<type>regular</type>
+		<sourceId>p9</sourceId>
+		<destinationId>t8</destinationId>
+		<multiplicity>1</multiplicity>
+	</arc>
+	<arc>
+		<id>a22</id>
+		<type>regular</type>
+		<sourceId>t8</sourceId>
+		<destinationId>p10</destinationId>
+		<multiplicity>1</multiplicity>
+	</arc>
+	<arc>
+		<id>a24</id>
+		<type>regular</type>
+		<sourceId>t2</sourceId>
+		<destinationId>p11</destinationId>
+		<multiplicity>0</multiplicity>
+		<reference>var_other</reference>
+		<breakpoint>
+			<x>300</x>
+			<y>380</y>
+		</breakpoint>
+	</arc>
+	<arc>
+		<id>a25</id>
+		<type>regular</type>
+		<sourceId>p11</sourceId>
+		<destinationId>t10</destinationId>
+		<multiplicity>1</multiplicity>
+	</arc>
+	<arc>
+		<id>a26</id>
+		<type>regular</type>
+		<sourceId>p5</sourceId>
+		<destinationId>t9</destinationId>
+		<multiplicity>1</multiplicity>
+	</arc>
+	<arc>
+		<id>a27</id>
+		<type>regular</type>
+		<sourceId>t9</sourceId>
+		<destinationId>p12</destinationId>
+		<multiplicity>1</multiplicity>
+	</arc>
+	<arc>
+		<id>a28</id>
+		<type>regular</type>
+		<sourceId>p12</sourceId>
+		<destinationId>t11</destinationId>
+		<multiplicity>1</multiplicity>
+	</arc>
+	<arc>
+		<id>a29</id>
+		<type>regular</type>
+		<sourceId>t11</sourceId>
+		<destinationId>p13</destinationId>
+		<multiplicity>1</multiplicity>
+	</arc>
+	<arc>
+		<id>a33</id>
+		<type>regular</type>
+		<sourceId>t10</sourceId>
+		<destinationId>p15</destinationId>
+		<multiplicity>1</multiplicity>
+	</arc>
+	<arc>
+		<id>a34</id>
+		<type>regular</type>
+		<sourceId>p15</sourceId>
+		<destinationId>t11</destinationId>
+		<multiplicity>1</multiplicity>
+	</arc>
+	<arc>
+		<id>a35</id>
+		<type>regular</type>
+		<sourceId>t3</sourceId>
+		<destinationId>p8</destinationId>
+		<multiplicity>1</multiplicity>
+	</arc>
+</document>

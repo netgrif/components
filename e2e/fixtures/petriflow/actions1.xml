@@ -1,0 +1,75 @@
+<document xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://netgrif.github.io/petriflow/petriflow.schema.xsd">
+	<id>Actions</id>
+	<initials>ACT</initials>
+	<title>Actions</title>
+	<icon>device_hub</icon>
+	<defaultRole>true</defaultRole>
+	<anonymousRole>true</anonymousRole>
+	<transitionRole>false</transitionRole>
+	<data type="number" immediate="true">
+		<id>number_0</id>
+		<title>Base</title>
+		<placeholder>0</placeholder>
+		<event type="set">
+			<id>set_event_0</id>
+			<actions phase="post">
+				<action id="1">
+					<!-- @formatter:off -->
+					number_1: f.number_1,
+                    number_0: f.number_0;
+                    change number_1 value { number_0.value + 15}
+					<!-- @formatter:on -->
+				</action>
+			</actions>
+		</event>
+	</data>
+	<data type="number" immediate="true">
+		<id>number_1</id>
+		<title>Result</title>
+		<placeholder>0</placeholder>
+		<desc>Changed Base value</desc>
+		<event type="set">
+			<id>number_1_set</id>
+		</event>
+	</data>
+	<transition>
+		<id>t1</id>
+		<x>500</x>
+		<y>220</y>
+		<label />
+		<assignPolicy>auto</assignPolicy>
+		<dataGroup>
+			<id>t1_0</id>
+			<cols>4</cols>
+			<layout>grid</layout>
+			<dataRef>
+				<id>number_0</id>
+				<logic>
+					<behavior>editable</behavior>
+				</logic>
+				<layout>
+					<x>0</x>
+					<y>0</y>
+					<rows>1</rows>
+					<cols>2</cols>
+					<template>material</template>
+					<appearance>outline</appearance>
+				</layout>
+			</dataRef>
+			<dataRef>
+				<id>number_1</id>
+				<logic>
+					<behavior>editable</behavior>
+				</logic>
+				<layout>
+					<x>2</x>
+					<y>0</y>
+					<rows>1</rows>
+					<cols>2</cols>
+					<template>material</template>
+					<appearance>outline</appearance>
+				</layout>
+			</dataRef>
+		</dataGroup>
+	</transition>
+</document>

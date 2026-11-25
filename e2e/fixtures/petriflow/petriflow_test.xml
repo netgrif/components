@@ -1,0 +1,1353 @@
+<document xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://petriflow.com/petriflow.schema.xsd">
+	<id>petriflow_test</id>
+	<initials>PTS</initials>
+	<title name="title">Petriflow Test Model</title>
+	<icon>home</icon>
+	<defaultRole>true</defaultRole>
+	<anonymousRole>true</anonymousRole>
+	<transitionRole>false</transitionRole>
+	<caseName dynamic="true">
+		<![CDATA[
+		${new Date() as String}
+		]]>
+	</caseName>
+	<roleRef>
+		<id>anonymous</id>
+		<caseLogic>
+			<create>true</create>
+			<view>false</view>
+		</caseLogic>
+	</roleRef>
+	<roleRef>
+		<id>default</id>
+		<caseLogic>
+			<delete>false</delete>
+			<view>true</view>
+		</caseLogic>
+	</roleRef>
+	<roleRef>
+		<id>newRole_1</id>
+		<caseLogic>
+			<create>false</create>
+			<delete>true</delete>
+		</caseLogic>
+	</roleRef>
+	<roleRef>
+		<id>newRole_2</id>
+		<caseLogic>
+			<delete>false</delete>
+			<view>false</view>
+		</caseLogic>
+	</roleRef>
+	<roleRef>
+		<id>newRole_3</id>
+		<caseLogic>
+			<create>false</create>
+			<view>true</view>
+		</caseLogic>
+	</roleRef>
+	<userRef>
+		<id>newVariable_15</id>
+		<caseLogic>
+			<create>false</create>
+			<delete>true</delete>
+		</caseLogic>
+	</userRef>
+	<userRef>
+		<id>newVariable_18</id>
+		<caseLogic>
+			<create>false</create>
+			<delete>true</delete>
+		</caseLogic>
+	</userRef>
+	<processEvents>
+		<event type="upload">
+			<id>process_upload</id>
+			<actions phase="pre">
+				<action id="action_4">
+					<![CDATA[
+					test("process_upload_pre")
+					]]>
+				</action>
+			</actions>
+			<actions phase="post">
+				<action id="action_5">
+					<![CDATA[
+					<!-- @formatter:off    -->
+					<!-- some xml comment                    -->
+					                    // some java comment
+					                    test("process_upload_post")
+					                    if (a < b && c) d >> e
+					<!--                        some cdata-->
+					                                            some cdata
+					                    <!-- @formatter:on    -->
+					]]>
+				</action>
+			</actions>
+		</event>
+	</processEvents>
+	<caseEvents>
+		<event type="create">
+			<id>case_create</id>
+			<actions phase="pre">
+				<action id="action_6">
+					<![CDATA[
+					test("case_create_pre")
+					test("second_run_case_create_pre")
+					]]>
+				</action>
+			</actions>
+			<actions phase="post">
+				<action id="action_7">
+					<![CDATA[
+					test("case_create_post")
+					]]>
+				</action>
+			</actions>
+		</event>
+	</caseEvents>
+	<caseEvents>
+		<event type="delete">
+			<id>case_delete</id>
+			<actions phase="pre">
+				<action id="action_8">
+					<![CDATA[
+					test("case_delete_pre")
+					]]>
+				</action>
+			</actions>
+			<actions phase="post">
+				<action id="action_9">
+					<![CDATA[
+					test("case_delete_post")
+					]]>
+				</action>
+			</actions>
+		</event>
+	</caseEvents>
+	<transaction>
+		<id>trans1</id>
+		<title>Transaction 1</title>
+	</transaction>
+	<role>
+		<id>newRole_1</id>
+		<title name="role_1_title">title</title>
+		<event type="assign">
+			<id>assign_role</id>
+			<actions phase="pre">
+				<action id="action_0">
+					<![CDATA[
+					test("assign_role_pre")
+					]]>
+				</action>
+			</actions>
+			<actions phase="post">
+				<action id="action_1">
+					<![CDATA[
+					test("assign_role_post")
+					]]>
+				</action>
+			</actions>
+		</event>
+		<event type="cancel">
+			<id>cancel_role</id>
+			<actions phase="pre">
+				<action id="action_2">
+					<![CDATA[
+					test("cancel_role_pre")
+					]]>
+				</action>
+			</actions>
+			<actions phase="post">
+				<action id="action_3">
+					<![CDATA[
+					test("cancel_role_post")
+					]]>
+				</action>
+			</actions>
+		</event>
+	</role>
+	<role>
+		<id>newRole_2</id>
+		<title name="role_2_title">title</title>
+	</role>
+	<role>
+		<id>newRole_3</id>
+		<title name="role_3_title">title</title>
+	</role>
+	<role>
+		<id>newRole_4</id>
+		<title name="role_4_title">title</title>
+	</role>
+	<function scope="process" name="calc">
+		<![CDATA[
+		{ monthly, loan, period ->
+		    change monthly value { (loan + loan * 0.02 * period) / (period * 12) }
+		}
+		]]>
+	</function>
+	<function scope="namespace" name="sum">
+		<![CDATA[
+		{ Double x, Double y ->
+		    return x + y
+		}
+		]]>
+	</function>
+	<data type="text">
+		<id>cdata_escape</id>
+		<title>CDATA &amp;&lt;&gt;</title>
+		<init>&lt;p&gt;CDATA &amp;amp;&amp;lt;&amp;gt;&lt;/p&gt;</init>
+		<event type="get">
+			<id>cdata_get</id>
+			<actions phase="post">
+				<action id="cdata_get_post">
+					<![CDATA[
+					test
+					]]>
+				</action>
+			</actions>
+		</event>
+		<event type="set">
+			<id>cdata_set</id>
+			<actions phase="post">
+				<action id="cdata_set_post">
+					<![CDATA[
+					test
+					]]>
+				</action>
+				<action id="cdata_set_post_duplicate">
+					<![CDATA[
+					test
+					]]>
+				</action>
+			</actions>
+		</event>
+		<actionRef>
+			<id>cdata_get_post</id>
+		</actionRef>
+	</data>
+	<data type="number">
+		<id>newVariable_1</id>
+		<title>title</title>
+		<validations>
+			<validation>
+				<expression>inrange 1,10</expression>
+			</validation>
+		</validations>
+		<init>5</init>
+		<component>
+			<name>currency</name>
+			<property key="locale">SK</property>
+			<property key="code">SK</property>
+			<property key="fractionSize">2</property>
+		</component>
+		<event type="set">
+			<id>newVariable_1_set</id>
+			<actions phase="pre">
+				<action id="action_10">
+					<![CDATA[
+					test("newVariable_1_set_pre")
+					]]>
+				</action>
+			</actions>
+			<actions phase="post">
+				<action id="action_13">
+					<![CDATA[
+					test("newVariable_1_set")
+					]]>
+				</action>
+			</actions>
+		</event>
+		<event type="get">
+			<id>newVariable_1_get</id>
+			<actions phase="pre">
+				<action id="action_12">
+					<![CDATA[
+					test("newVariable_1_get")
+					]]>
+				</action>
+			</actions>
+			<actions phase="post">
+				<action id="action_11">
+					<![CDATA[
+					test("newVariable_1_get_post")
+					]]>
+				</action>
+			</actions>
+		</event>
+	</data>
+	<data type="date">
+		<id>newVariable_10</id>
+		<title>title</title>
+		<init dynamic="true">
+			<![CDATA[
+			new Date()
+			]]>
+		</init>
+	</data>
+	<data type="dateTime">
+		<id>newVariable_11</id>
+		<title>title</title>
+	</data>
+	<data type="user">
+		<id>newVariable_12</id>
+		<title>title</title>
+	</data>
+	<data type="taskRef">
+		<id>newVariable_13</id>
+		<title>title</title>
+	</data>
+	<data type="caseRef">
+		<id>newVariable_14</id>
+		<title>title</title>
+		<allowedNets>
+			<allowedNet>net_1</allowedNet>
+			<allowedNet>net_2</allowedNet>
+			<allowedNet>net_3</allowedNet>
+		</allowedNets>
+	</data>
+	<data type="userList">
+		<id>newVariable_15</id>
+		<title>title</title>
+	</data>
+	<data type="filter">
+		<id>newVariable_16</id>
+		<title>title</title>
+	</data>
+	<data type="button">
+		<id>newVariable_17</id>
+		<title>title</title>
+	</data>
+	<data type="userList">
+		<id>newVariable_18</id>
+		<title>title</title>
+	</data>
+	<data type="i18n">
+		<id>newVariable_19</id>
+		<title>i18n</title>
+		<init name="newVariable_19_name">newVariable_19 name value</init>
+	</data>
+	<data type="text" immediate="true">
+		<id>newVariable_2</id>
+		<title name="newVariable_2_title">newVariable_2_title_value</title>
+		<placeholder name="newVariable_2_placeholder">newVariable_2_placeholder_value</placeholder>
+		<desc name="newVariable_2_desc">newVariable_2_desc_value</desc>
+		<validations>
+			<validation>
+				<expression>inrange 1,2000</expression>
+				<message>invalid text</message>
+			</validation>
+			<validation>
+				<expression>email</expression>
+				<message name="newVariable_2_valid_email">invalid email</message>
+			</validation>
+		</validations>
+		<component>
+			<name>area</name>
+		</component>
+		<encryption algorithm="SHA2">true</encryption>
+	</data>
+	<data type="i18n">
+		<id>newVariable_20</id>
+		<title>i18n</title>
+		<init dynamic="true">
+			<![CDATA[
+			newVariable_20 name value
+			]]>
+		</init>
+	</data>
+	<data type="i18n">
+		<id>newVariable_21</id>
+		<title>i18n no translation</title>
+		<init name="newVariable_21_name">newVariable_21 name value</init>
+	</data>
+	<data type="enumeration">
+		<id>newVariable_3</id>
+		<title>title</title>
+		<options>
+			<option key="option1" name="newVariable_3_value1">option1</option>
+			<option key="option2" name="newVariable_3_value2">option2</option>
+			<option key="option3" name="newVariable_3_value3">option3</option>
+		</options>
+		<component>
+			<name>autocomplete</name>
+		</component>
+		<encryption>true</encryption>
+	</data>
+	<data type="enumeration">
+		<id>newVariable_3_view_autocomplete</id>
+		<title>title</title>
+		<options>
+			<option key="option1">option1</option>
+			<option key="option2">option2</option>
+			<option key="option3">option3</option>
+		</options>
+		<component>
+			<name>autocomplete</name>
+		</component>
+	</data>
+	<data type="enumeration">
+		<id>newVariable_3_view_list</id>
+		<title>title</title>
+		<options>
+			<option key="option1">option1</option>
+			<option key="option2">option2</option>
+			<option key="option3">option3</option>
+		</options>
+		<component>
+			<name>list</name>
+		</component>
+	</data>
+	<data type="enumeration_map">
+		<id>newVariable_4</id>
+		<title>title</title>
+		<options>
+			<option key="key1" name="newVariable_4_option_1">value1</option>
+			<option key="key2" name="newVariable_4_option_2">value2</option>
+			<option key="key3" name="newVariable_4_option_3">value3</option>
+		</options>
+		<component>
+			<name>icon</name>
+			<properties>
+				<property key="arrow">true</property>
+				<property key="divider">true</property>
+				<option_icons>
+					<icon key="key1">home</icon>
+					<icon key="key2" type="svg">nature</icon>
+					<icon key="key3">search</icon>
+				</option_icons>
+			</properties>
+		</component>
+	</data>
+	<data type="multichoice">
+		<id>newVariable_5</id>
+		<title>title</title>
+		<options>
+			<option key="option4">option4</option>
+			<option key="option5">option5</option>
+		</options>
+	</data>
+	<data type="multichoice_map">
+		<id>newVariable_6</id>
+		<title>title</title>
+		<options>
+			<option key="key4">value4</option>
+			<option key="key5">value5</option>
+			<option key="key6">value6</option>
+		</options>
+		<inits>
+			<init>key4</init>
+			<init>key5</init>
+		</inits>
+	</data>
+	<data type="file">
+		<id>newVariable_7</id>
+		<title>title</title>
+		<remote>true</remote>
+		<length>10</length>
+	</data>
+	<data type="fileList">
+		<id>newVariable_8</id>
+		<title>title</title>
+	</data>
+	<data type="boolean">
+		<id>newVariable_9</id>
+		<title>title</title>
+		<init>true</init>
+	</data>
+	<i18n locale="uk">
+		<i18nString name="title">UK_title</i18nString>
+		<i18nString name="p1_label">UK_p1_label</i18nString>
+		<i18nString name="t1_label">UK_t1_label</i18nString>
+		<i18nString name="role_1_title">UK_role_1_title</i18nString>
+		<i18nString name="role_2_title">UK_role_2_title</i18nString>
+		<i18nString name="role_3_title">UK_role_3_title</i18nString>
+		<i18nString name="role_4_title">UK_role_4_title</i18nString>
+		<i18nString name="newVariable_2_title">UK_newVariable_2_title</i18nString>
+		<i18nString name="newVariable_2_placeholder">UK_newVariable_2_placeholder</i18nString>
+		<i18nString name="newVariable_2_desc">UK_newVariable_2_desc</i18nString>
+		<i18nString name="newVariable_2_valid_email">UK_newVariable_2_valid_email</i18nString>
+		<i18nString name="t1_assign_message">UK_t1_assign_message</i18nString>
+		<i18nString name="t1_assign_title">UK_t1_assign_title</i18nString>
+		<i18nString name="t5_datagroup">UK_t5_datagroup</i18nString>
+		<i18nString name="newVariable_3_value1">UK_newVariable_3_value1</i18nString>
+		<i18nString name="newVariable_3_value2">UK_newVariable_3_value2</i18nString>
+		<i18nString name="newVariable_3_value3">UK_newVariable_3_value3</i18nString>
+		<i18nString name="newVariable_4_option_1">UK_newVariable_4_option_1</i18nString>
+		<i18nString name="newVariable_4_option_2">UK_newVariable_4_option_2</i18nString>
+		<i18nString name="newVariable_4_option_3">UK_newVariable_4_option_3</i18nString>
+		<i18nString name="newVariable_19_name">UK_newVariable_19_name</i18nString>
+		<i18nString name="case_create_message">UK_case_create_message</i18nString>
+	</i18n>
+	<i18n locale="de">
+		<i18nString name="title">DE_title</i18nString>
+		<i18nString name="p1_label">DE_p1_label</i18nString>
+		<i18nString name="t1_label">DE_t1_label</i18nString>
+		<i18nString name="role_1_title">DE_role_1_title</i18nString>
+		<i18nString name="role_2_title">DE_role_2_title</i18nString>
+		<i18nString name="role_3_title">DE_role_3_title</i18nString>
+		<i18nString name="role_4_title">DE_role_4_title</i18nString>
+		<i18nString name="newVariable_2_title">DE_newVariable_2_title</i18nString>
+		<i18nString name="newVariable_2_placeholder">DE_newVariable_2_placeholder</i18nString>
+		<i18nString name="newVariable_2_desc">DE_newVariable_2_desc</i18nString>
+		<i18nString name="newVariable_2_valid_email">DE_newVariable_2_valid_email</i18nString>
+		<i18nString name="t1_assign_message">DE_t1_assign_message</i18nString>
+		<i18nString name="t1_assign_title">DE_t1_assign_title</i18nString>
+		<i18nString name="t5_datagroup">DE_t5_datagroup</i18nString>
+		<i18nString name="newVariable_3_value1">DE_newVariable_3_value1</i18nString>
+		<i18nString name="newVariable_3_value2">DE_newVariable_3_value2</i18nString>
+		<i18nString name="newVariable_3_value3">DE_newVariable_3_value3</i18nString>
+		<i18nString name="newVariable_4_option_1">DE_newVariable_4_option_1</i18nString>
+		<i18nString name="newVariable_4_option_2">DE_newVariable_4_option_2</i18nString>
+		<i18nString name="newVariable_4_option_3">DE_newVariable_4_option_3</i18nString>
+		<i18nString name="newVariable_19_name">DE_newVariable_19_name</i18nString>
+		<i18nString name="case_create_message">DE_case_create_message</i18nString>
+	</i18n>
+	<i18n locale="sk"/>
+	<transition>
+		<id>predefined_roles</id>
+		<x>464</x>
+		<y>272</y>
+		<label/>
+		<layout type="flow">
+			<cols>3</cols>
+			<offset>0</offset>
+			<fieldAlignment>bottom</fieldAlignment>
+		</layout>
+		<roleRef>
+			<id>anonymous</id>
+			<logic>
+				<view>false</view>
+				<cancel>false</cancel>
+				<assign>false</assign>
+				<perform>true</perform>
+			</logic>
+		</roleRef>
+		<roleRef>
+			<id>default</id>
+			<logic>
+				<cancel>true</cancel>
+				<assign>true</assign>
+				<delegate>false</delegate>
+				<perform>false</perform>
+			</logic>
+		</roleRef>
+	</transition>
+	<transition>
+		<id>t1</id>
+		<x>464</x>
+		<y>176</y>
+		<label name="t1_label">Task escape:&amp;&lt;&gt;</label>
+		<layout type="grid">
+			<cols>5</cols>
+			<rows>4</rows>
+			<offset>0</offset>
+			<fieldAlignment>center</fieldAlignment>
+		</layout>
+		<icon>home</icon>
+		<priority>1</priority>
+		<assignPolicy>auto</assignPolicy>
+		<finishPolicy>auto_no_data</finishPolicy>
+		<transactionRef></transactionRef>
+		<event type="assign">
+			<id>assign</id>
+			<title name="t1_assign_title">t1_assign_title_value</title>
+			<message name="t1_assign_message">t1_assign_message_value</message>
+			<actions phase="pre">
+				<action id="action_15">
+					<![CDATA[
+					test("t1_assign_pre")
+					]]>
+				</action>
+			</actions>
+			<actions phase="post">
+				<action id="action_14">
+					<![CDATA[
+					test("t1_assign_post")
+					]]>
+				</action>
+			</actions>
+		</event>
+		<event type="finish">
+			<id>finish</id>
+			<actions phase="pre">
+				<action id="action_17">
+					<![CDATA[
+					test("t1_finish_pre")
+					]]>
+				</action>
+			</actions>
+			<actions phase="post">
+				<action id="action_16">
+					<![CDATA[
+					test("t1_finish_post")
+					]]>
+				</action>
+			</actions>
+		</event>
+		<event type="cancel">
+			<id>cancel</id>
+			<actions phase="pre">
+				<action id="action_19">
+					<![CDATA[
+					test("t1_cancel_pre")
+					]]>
+				</action>
+			</actions>
+			<actions phase="post">
+				<action id="action_18">
+					<![CDATA[
+					test("t1_cancel_post")
+					]]>
+				</action>
+			</actions>
+		</event>
+		<event type="delegate">
+			<id>delegate</id>
+			<actions phase="pre">
+				<action id="action_21">
+					<![CDATA[
+					test("t1_delegate_pre")
+					]]>
+				</action>
+			</actions>
+			<actions phase="post">
+				<action id="action_20">
+					<![CDATA[
+					test("t1_delegate_post")
+					]]>
+				</action>
+			</actions>
+		</event>
+	</transition>
+	<transition>
+		<id>t10</id>
+		<x>912</x>
+		<y>272</y>
+		<label>compact</label>
+		<layout type="grid">
+			<cols>5</cols>
+			<rows>4</rows>
+			<offset>0</offset>
+			<fieldAlignment>bottom</fieldAlignment>
+			<hideEmptyRows>compacted</hideEmptyRows>
+			<compactDirection>up</compactDirection>
+		</layout>
+		<dataGroup>
+			<id>compact_up</id>
+			<layout>grid</layout>
+			<hideEmptyRows>compacted</hideEmptyRows>
+			<compactDirection>up</compactDirection>
+		</dataGroup>
+	</transition>
+	<transition>
+		<id>t11</id>
+		<x>912</x>
+		<y>304</y>
+		<label>all</label>
+		<layout type="grid">
+			<cols>5</cols>
+			<rows>4</rows>
+			<offset>0</offset>
+			<fieldAlignment>bottom</fieldAlignment>
+			<hideEmptyRows>all</hideEmptyRows>
+			<compactDirection>none</compactDirection>
+		</layout>
+		<dataGroup>
+			<id>compact_up</id>
+			<layout>grid</layout>
+			<hideEmptyRows>all</hideEmptyRows>
+			<compactDirection>none</compactDirection>
+		</dataGroup>
+	</transition>
+	<transition>
+		<id>t12</id>
+		<x>912</x>
+		<y>336</y>
+		<label>all</label>
+		<layout type="grid">
+			<cols>5</cols>
+			<rows>4</rows>
+			<offset>0</offset>
+			<fieldAlignment>bottom</fieldAlignment>
+			<hideEmptyRows>none</hideEmptyRows>
+			<compactDirection>none</compactDirection>
+		</layout>
+		<dataGroup>
+			<id>compact_up</id>
+			<layout>grid</layout>
+			<hideEmptyRows>none</hideEmptyRows>
+			<compactDirection>up</compactDirection>
+		</dataGroup>
+	</transition>
+	<transition>
+		<id>t2</id>
+		<x>464</x>
+		<y>272</y>
+		<label/>
+		<layout type="flow">
+			<cols>3</cols>
+			<offset>0</offset>
+			<fieldAlignment>bottom</fieldAlignment>
+		</layout>
+	</transition>
+	<transition>
+		<id>t3</id>
+		<x>464</x>
+		<y>336</y>
+		<label/>
+		<layout>
+			<offset>0</offset>
+			<fieldAlignment>top</fieldAlignment>
+		</layout>
+	</transition>
+	<transition>
+		<id>t4</id>
+		<x>464</x>
+		<y>432</y>
+		<label/>
+		<layout>
+			<offset>0</offset>
+			<fieldAlignment>bottom</fieldAlignment>
+		</layout>
+	</transition>
+	<transition>
+		<id>t5</id>
+		<x>464</x>
+		<y>112</y>
+		<label>form</label>
+		<layout>
+			<offset>0</offset>
+			<fieldAlignment>center</fieldAlignment>
+		</layout>
+		<icon>home</icon>
+		<assignPolicy>auto</assignPolicy>
+		<finishPolicy>auto_no_data</finishPolicy>
+		<dataGroup>
+			<id>test_group</id>
+			<layout>grid</layout>
+			<title name="t5_datagroup">t5_datagroup_value</title>
+			<dataRef>
+				<id>newVariable_1</id>
+				<logic>
+					<behavior>editable</behavior>
+					<behavior>immediate</behavior>
+				</logic>
+				<layout>
+					<x>0</x>
+					<y>0</y>
+					<rows>1</rows>
+					<cols>1</cols>
+					<offset>0</offset>
+					<template>material</template>
+					<appearance>legacy</appearance>
+				</layout>
+				<event type="set">
+					<id>dataref_set</id>
+					<actions phase="pre">
+						<action id="action_22">
+							<![CDATA[
+							test("t5_newVariable_1_set_pre")
+							]]>
+						</action>
+					</actions>
+					<actions phase="post">
+						<action id="action_23">
+							<![CDATA[
+							test("t5_newVariable_1_set_post")
+							]]>
+						</action>
+						<action id="t5_newVariable_1_set">
+							<![CDATA[
+							test("t5_newVariable_1_set")
+							]]>
+						</action>
+					</actions>
+				</event>
+				<event type="get">
+					<id>dataref_get</id>
+					<actions phase="pre">
+						<action id="action_24">
+							<![CDATA[
+							test("t5_newVariable_1_get_pre")
+							]]>
+						</action>
+						<action id="action_26">
+							<![CDATA[
+							test("t5_newVariable_1_get")
+							]]>
+						</action>
+					</actions>
+					<actions phase="post">
+						<action id="action_25">
+							<![CDATA[
+							test("t5_newVariable_1_get_post")
+							]]>
+						</action>
+					</actions>
+				</event>
+			</dataRef>
+			<dataRef>
+				<id>newVariable_4</id>
+				<logic>
+					<behavior>editable</behavior>
+				</logic>
+				<layout>
+					<x>1</x>
+					<y>0</y>
+					<rows>1</rows>
+					<cols>1</cols>
+					<offset>0</offset>
+					<template>netgrif</template>
+					<appearance>outline</appearance>
+				</layout>
+			</dataRef>
+			<dataRef>
+				<id>newVariable_6</id>
+				<logic>
+					<behavior>editable</behavior>
+				</logic>
+				<layout>
+					<x>2</x>
+					<y>0</y>
+					<rows>1</rows>
+					<cols>1</cols>
+					<offset>0</offset>
+					<template>material</template>
+					<appearance>standard</appearance>
+				</layout>
+			</dataRef>
+			<dataRef>
+				<id>newVariable_7</id>
+				<logic>
+					<behavior>editable</behavior>
+				</logic>
+				<layout>
+					<x>3</x>
+					<y>0</y>
+					<rows>1</rows>
+					<cols>1</cols>
+					<offset>0</offset>
+					<template>material</template>
+				</layout>
+			</dataRef>
+			<dataRef>
+				<id>newVariable_8</id>
+				<logic>
+					<behavior>editable</behavior>
+				</logic>
+				<layout>
+					<x>0</x>
+					<y>1</y>
+					<rows>1</rows>
+					<cols>1</cols>
+					<offset>0</offset>
+					<template>material</template>
+					<appearance>fill</appearance>
+				</layout>
+			</dataRef>
+			<dataRef>
+				<id>newVariable_3</id>
+				<logic>
+					<behavior>editable</behavior>
+				</logic>
+				<layout>
+					<x>1</x>
+					<y>1</y>
+					<rows>1</rows>
+					<cols>1</cols>
+					<offset>0</offset>
+					<template>material</template>
+					<appearance>fill</appearance>
+				</layout>
+			</dataRef>
+			<dataRef>
+				<id>newVariable_5</id>
+				<logic>
+					<behavior>editable</behavior>
+				</logic>
+				<layout>
+					<x>2</x>
+					<y>1</y>
+					<rows>1</rows>
+					<cols>1</cols>
+					<offset>0</offset>
+					<template>material</template>
+					<appearance>outline</appearance>
+				</layout>
+			</dataRef>
+			<dataRef>
+				<id>newVariable_11</id>
+				<logic>
+					<behavior>hidden</behavior>
+				</logic>
+				<layout>
+					<x>3</x>
+					<y>1</y>
+					<rows>1</rows>
+					<cols>1</cols>
+					<offset>0</offset>
+					<template>material</template>
+					<appearance>outline</appearance>
+				</layout>
+			</dataRef>
+			<dataRef>
+				<id>newVariable_2</id>
+				<logic>
+					<behavior>editable</behavior>
+				</logic>
+				<layout>
+					<x>0</x>
+					<y>2</y>
+					<rows>1</rows>
+					<cols>1</cols>
+					<offset>0</offset>
+					<template>material</template>
+					<appearance>outline</appearance>
+				</layout>
+			</dataRef>
+			<dataRef>
+				<id>newVariable_12</id>
+				<logic>
+					<behavior>editable</behavior>
+				</logic>
+				<layout>
+					<x>1</x>
+					<y>2</y>
+					<rows>1</rows>
+					<cols>1</cols>
+					<offset>0</offset>
+					<template>material</template>
+					<appearance>outline</appearance>
+				</layout>
+			</dataRef>
+			<dataRef>
+				<id>newVariable_13</id>
+				<logic>
+					<behavior>editable</behavior>
+				</logic>
+				<layout>
+					<x>2</x>
+					<y>2</y>
+					<rows>1</rows>
+					<cols>1</cols>
+					<offset>0</offset>
+					<template>material</template>
+					<appearance>outline</appearance>
+				</layout>
+			</dataRef>
+			<dataRef>
+				<id>newVariable_9</id>
+				<logic>
+					<behavior>visible</behavior>
+					<behavior>required</behavior>
+				</logic>
+				<layout>
+					<x>3</x>
+					<y>2</y>
+					<rows>1</rows>
+					<cols>1</cols>
+					<offset>0</offset>
+					<template>material</template>
+				</layout>
+			</dataRef>
+			<dataRef>
+				<id>newVariable_10</id>
+				<logic>
+					<behavior>editable</behavior>
+					<behavior>required</behavior>
+				</logic>
+				<layout>
+					<x>0</x>
+					<y>3</y>
+					<rows>1</rows>
+					<cols>1</cols>
+					<offset>0</offset>
+					<template>material</template>
+					<appearance>outline</appearance>
+				</layout>
+			</dataRef>
+			<dataRef>
+				<id>newVariable_14</id>
+				<logic>
+					<behavior>visible</behavior>
+				</logic>
+				<layout>
+					<x>1</x>
+					<y>3</y>
+					<rows>1</rows>
+					<cols>1</cols>
+					<offset>0</offset>
+					<template>material</template>
+					<appearance>outline</appearance>
+				</layout>
+			</dataRef>
+			<dataRef>
+				<id>newVariable_15</id>
+				<logic>
+					<behavior>editable</behavior>
+				</logic>
+				<layout>
+					<x>2</x>
+					<y>3</y>
+					<rows>1</rows>
+					<cols>1</cols>
+					<offset>0</offset>
+					<template>material</template>
+					<appearance>outline</appearance>
+				</layout>
+			</dataRef>
+		</dataGroup>
+	</transition>
+	<transition>
+		<id>t6</id>
+		<x>848</x>
+		<y>112</y>
+		<label>auto trigger</label>
+		<layout>
+			<offset>0</offset>
+		</layout>
+		<trigger type="auto"/>
+	</transition>
+	<transition>
+		<id>t7</id>
+		<x>848</x>
+		<y>176</y>
+		<label>exact trigger</label>
+		<layout>
+			<offset>0</offset>
+		</layout>
+		<trigger type="time">
+			<exact>2021-07-14T08:00:00.000Z</exact>
+		</trigger>
+		<userRef>
+			<id>newVariable_15</id>
+			<logic>
+				<view>true</view>
+				<cancel>true</cancel>
+				<delegate>false</delegate>
+			</logic>
+		</userRef>
+		<userRef>
+			<id>newVariable_18</id>
+			<logic>
+				<view>true</view>
+				<cancel>true</cancel>
+				<delegate>false</delegate>
+			</logic>
+		</userRef>
+		<assignedUser>
+			<cancel>false</cancel>
+		</assignedUser>
+	</transition>
+	<transition>
+		<id>t8</id>
+		<x>848</x>
+		<y>272</y>
+		<label>delay trigger</label>
+		<layout>
+			<offset>0</offset>
+		</layout>
+		<trigger type="time">
+			<delay>PT5D</delay>
+		</trigger>
+		<roleRef>
+			<id>a</id>
+			<logic>
+				<view>true</view>
+				<cancel>true</cancel>
+				<assign>true</assign>
+				<delegate>false</delegate>
+				<perform>false</perform>
+			</logic>
+		</roleRef>
+		<assignedUser>
+			<cancel>true</cancel>
+			<reassign>false</reassign>
+		</assignedUser>
+	</transition>
+	<transition>
+		<id>t9_datarefs_without_group</id>
+		<x>848</x>
+		<y>112</y>
+		<label/>
+		<roleRef>
+			<id>newRole_1</id>
+			<logic>
+				<view>true</view>
+				<cancel>true</cancel>
+				<assign>true</assign>
+				<delegate>false</delegate>
+				<perform>false</perform>
+			</logic>
+		</roleRef>
+		<roleRef>
+			<id>newRole_2</id>
+			<logic>
+				<cancel>false</cancel>
+				<assign>true</assign>
+			</logic>
+		</roleRef>
+		<dataGroup>
+			<id>NewDataGroup</id>
+			<stretch>true</stretch>
+			<dataRef>
+				<id>newVariable_1</id>
+				<logic>
+					<behavior>editable</behavior>
+				</logic>
+				<layout>
+					<x>0</x>
+					<y>0</y>
+					<rows>1</rows>
+					<cols>2</cols>
+					<template>material</template>
+					<appearance>outline</appearance>
+				</layout>
+			</dataRef>
+			<dataRef>
+				<id>newVariable_2</id>
+				<logic>
+					<behavior>editable</behavior>
+				</logic>
+				<layout>
+					<x>0</x>
+					<y>1</y>
+					<rows>1</rows>
+					<cols>2</cols>
+					<template>material</template>
+					<appearance>outline</appearance>
+				</layout>
+			</dataRef>
+			<dataRef>
+				<id>newVariable_3</id>
+				<logic>
+					<behavior>editable</behavior>
+				</logic>
+				<layout>
+					<x>0</x>
+					<y>2</y>
+					<rows>1</rows>
+					<cols>2</cols>
+					<template>material</template>
+					<appearance>outline</appearance>
+				</layout>
+			</dataRef>
+		</dataGroup>
+	</transition>
+	<place>
+		<id>invalid_x</id>
+		<x>16</x>
+		<y>112</y>
+		<tokens>0</tokens>
+		<static>false</static>
+	</place>
+	<place>
+		<id>invalid_y</id>
+		<x>112</x>
+		<y>16</y>
+		<tokens>0</tokens>
+		<static>false</static>
+	</place>
+	<place>
+		<id>p1</id>
+		<x>304</x>
+		<y>176</y>
+		<label name="p1_label">place 1</label>
+		<tokens>0</tokens>
+		<static>false</static>
+	</place>
+	<place>
+		<id>p10</id>
+		<x>528</x>
+		<y>112</y>
+		<tokens>0</tokens>
+		<static>false</static>
+	</place>
+	<place>
+		<id>p2</id>
+		<x>368</x>
+		<y>112</y>
+		<tokens>3</tokens>
+		<static>false</static>
+	</place>
+	<place>
+		<id>p3</id>
+		<x>624</x>
+		<y>176</y>
+		<tokens>0</tokens>
+		<static>false</static>
+	</place>
+	<place>
+		<id>p4</id>
+		<x>304</x>
+		<y>272</y>
+		<tokens>2</tokens>
+		<static>false</static>
+	</place>
+	<place>
+		<id>p5</id>
+		<x>304</x>
+		<y>336</y>
+		<tokens>0</tokens>
+		<static>false</static>
+	</place>
+	<place>
+		<id>p6</id>
+		<x>304</x>
+		<y>432</y>
+		<tokens>0</tokens>
+		<static>false</static>
+	</place>
+	<place>
+		<id>p7</id>
+		<x>624</x>
+		<y>272</y>
+		<tokens>0</tokens>
+		<static>false</static>
+	</place>
+	<place>
+		<id>p8</id>
+		<x>624</x>
+		<y>336</y>
+		<tokens>0</tokens>
+		<static>false</static>
+	</place>
+	<place>
+		<id>p9</id>
+		<x>624</x>
+		<y>432</y>
+		<tokens>0</tokens>
+		<static>false</static>
+	</place>
+	<arc>
+		<id>a1</id>
+		<type>regular</type>
+		<sourceId>p1</sourceId>
+		<destinationId>t1</destinationId>
+		<multiplicity>3</multiplicity>
+		<reference>p2</reference>
+	</arc>
+	<arc>
+		<id>a10</id>
+		<type>regular</type>
+		<sourceId>p4</sourceId>
+		<destinationId>t3</destinationId>
+		<multiplicity>1</multiplicity>
+	</arc>
+	<arc>
+		<id>a11</id>
+		<type>regular</type>
+		<sourceId>p5</sourceId>
+		<destinationId>t4</destinationId>
+		<multiplicity>1</multiplicity>
+	</arc>
+	<arc>
+		<id>a12</id>
+		<type>regular</type>
+		<sourceId>p6</sourceId>
+		<destinationId>t3</destinationId>
+		<multiplicity>1</multiplicity>
+	</arc>
+	<arc>
+		<id>a13</id>
+		<type>regular</type>
+		<sourceId>p5</sourceId>
+		<destinationId>t2</destinationId>
+		<multiplicity>1</multiplicity>
+	</arc>
+	<arc>
+		<id>a14</id>
+		<type>regular</type>
+		<sourceId>t2</sourceId>
+		<destinationId>p8</destinationId>
+		<multiplicity>1</multiplicity>
+	</arc>
+	<arc>
+		<id>a15</id>
+		<type>regular</type>
+		<sourceId>t2</sourceId>
+		<destinationId>p3</destinationId>
+		<multiplicity>1</multiplicity>
+	</arc>
+	<arc>
+		<id>a16</id>
+		<type>regular</type>
+		<sourceId>t2</sourceId>
+		<destinationId>p3</destinationId>
+		<multiplicity>5</multiplicity>
+		<reference>newVariable_1</reference>
+		<breakpoint>
+			<x>16</x>
+			<y>16</y>
+		</breakpoint>
+		<breakpoint>
+			<x>16</x>
+			<y>16</y>
+		</breakpoint>
+	</arc>
+	<arc>
+		<id>a2</id>
+		<type>regular</type>
+		<sourceId>t1</sourceId>
+		<destinationId>p3</destinationId>
+		<multiplicity>5</multiplicity>
+		<reference>newVariable_1</reference>
+	</arc>
+	<arc>
+		<id>a3</id>
+		<type>reset</type>
+		<sourceId>p4</sourceId>
+		<destinationId>t2</destinationId>
+		<multiplicity>1</multiplicity>
+	</arc>
+	<arc>
+		<id>a4</id>
+		<type>inhibitor</type>
+		<sourceId>p5</sourceId>
+		<destinationId>t3</destinationId>
+		<multiplicity>1</multiplicity>
+	</arc>
+	<arc>
+		<id>a5</id>
+		<type>read</type>
+		<sourceId>p6</sourceId>
+		<destinationId>t4</destinationId>
+		<multiplicity>1</multiplicity>
+	</arc>
+	<arc>
+		<id>a6</id>
+		<type>regular</type>
+		<sourceId>t2</sourceId>
+		<destinationId>p7</destinationId>
+		<multiplicity>20</multiplicity>
+	</arc>
+	<arc>
+		<id>a7</id>
+		<type>regular</type>
+		<sourceId>t3</sourceId>
+		<destinationId>p8</destinationId>
+		<multiplicity>1</multiplicity>
+	</arc>
+	<arc>
+		<id>a8</id>
+		<type>regular</type>
+		<sourceId>t4</sourceId>
+		<destinationId>p9</destinationId>
+		<multiplicity>1</multiplicity>
+	</arc>
+	<arc>
+		<id>a9</id>
+		<type>regular</type>
+		<sourceId>p1</sourceId>
+		<destinationId>t2</destinationId>
+		<multiplicity>1</multiplicity>
+	</arc>
+	<arc>
+		<id>invalid_breakpont</id>
+		<type>regular</type>
+		<sourceId>t2</sourceId>
+		<destinationId>p3</destinationId>
+		<multiplicity>0</multiplicity>
+	</arc>
+</document>

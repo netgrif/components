@@ -67,7 +67,12 @@
         "pfql:build-grammar": "antlr-ng -Dlanguage=TypeScript -v true -l false -o projects/netgrif-components-core/src/lib/pfql/generated projects/netgrif-components-core/src/lib/pfql/QueryLang.g4",
         "frontend:start": "ng serve netgrif-frontend",
         "frontend:start:full": "npm run project:local-build && ng serve netgrif-frontend",
-        "frontend:build": "ng build netgrif-frontend --configuration production"
+        "frontend:build": "ng build netgrif-frontend --configuration production",
+        "e2e": "playwright test -c e2e",
+        "e2e:example": "playwright test -c e2e --project=example",
+        "e2e:frontend": "playwright test -c e2e --project=frontend --workers=1",
+        "e2e:ui": "playwright test -c e2e --ui",
+        "e2e:report": "playwright show-report playwright-report"
     },
     "dependencies": {
         "@angular/animations": "~22.2.3",
@@ -121,7 +126,9 @@
         "@angular/cli": "~22.2.4",
         "@angular/compiler-cli": "~22.2.3",
         "@angular/language-service": "~22.2.3",
+        "@axe-core/playwright": "4.14.0",
         "@compodoc/compodoc": "1.1.25",
+        "@playwright/test": "~1.65.0",
         "@types/jasmine": "~3.10.0",
         "@types/moment": "~2.13.0",
         "@types/node": "~12.12.29",

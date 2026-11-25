@@ -9,7 +9,11 @@
             "endpoints": {
                 "login": "/auth/login",
                 "logout": "/auth/logout",
-                "signup": "/auth/signup"
+                "signup": "/auth/signup",
+                "invite": "/auth/invite",
+                "verify": "/auth/token/verify",
+                "reset": "/auth/reset",
+                "recover": "/auth/recover"
             },
             "sessionBearer": "X-Auth-Token"
         },
@@ -61,6 +65,46 @@
             "navigation": false,
             "routing": {
                 "path": "login"
+            }
+        },
+        "sign-up": {
+            "component": {
+                "class": "LoginComponent"
+            },
+            "access": "public",
+            "navigation": false,
+            "routing": {
+                "path": "sign-up"
+            }
+        },
+        "registration": {
+            "component": {
+                "class": "LoginComponent"
+            },
+            "access": "public",
+            "navigation": false,
+            "routing": {
+                "path": "signup/:token"
+            }
+        },
+        "forgotten-password": {
+            "component": {
+                "class": "LoginComponent"
+            },
+            "access": "public",
+            "navigation": false,
+            "routing": {
+                "path": "forgotten-password"
+            }
+        },
+        "password-recovery": {
+            "component": {
+                "class": "LoginComponent"
+            },
+            "access": "public",
+            "navigation": false,
+            "routing": {
+                "path": "recover/:token"
             }
         },
         "dashboard": {
@@ -167,6 +211,25 @@
                     },
                     "routing": {
                         "path": "role-assignment"
+                    }
+                },
+                "user-invite": {
+                    "component": {
+                        "class": "UserInviteComponent"
+                    },
+                    "access": {
+                        "authority": [
+                            "ROLE_ADMIN"
+                        ]
+                    },
+                    "navigation": {
+                        "title": "dynamicNavigation.defaultViews.userInvite",
+                        "icon": "person_add",
+                        "translate": true,
+                        "hidden": true
+                    },
+                    "routing": {
+                        "path": "user-invite"
                     }
                 },
                 "profile": {

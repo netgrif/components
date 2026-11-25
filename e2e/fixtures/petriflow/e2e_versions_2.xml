@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- e2e: version 2 of the process e2e_versions (versions.spec): the same identifier, the task "Second version task" -->
+<document xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://petriflow.com/petriflow.schema.xsd">
+    <id>e2e_versions</id>
+    <initials>EVE</initials>
+    <title>E2E versions</title>
+    <defaultRole>true</defaultRole>
+    <anonymousRole>false</anonymousRole>
+    <transition>
+        <id>t1</id>
+        <x>300</x>
+        <y>100</y>
+        <label>Second version task</label>
+    </transition>
+    <place>
+        <id>p1</id>
+        <x>100</x>
+        <y>100</y>
+        <tokens>1</tokens>
+        <static>false</static>
+    </place>
+    <arc>
+        <id>a1</id>
+        <type>regular</type>
+        <sourceId>p1</sourceId>
+        <destinationId>t1</destinationId>
+        <multiplicity>1</multiplicity>
+    </arc>
+</document>

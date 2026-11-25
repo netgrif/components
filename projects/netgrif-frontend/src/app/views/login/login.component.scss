@@ -66,6 +66,29 @@
     letter-spacing: var(--mat-sys-body-medium-tracking);
 }
 
+// the confirmation of the sent e-mail (sign up, forgotten password)
+.mail-sent {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    margin: 0 0 16px;
+    padding: 16px;
+    border-radius: var(--mat-sys-corner-medium);
+    background: var(--mat-sys-secondary-container);
+    color: var(--mat-sys-on-secondary-container);
+    font: var(--mat-sys-body-medium);
+    letter-spacing: var(--mat-sys-body-medium-tracking);
+
+    mat-icon {
+        flex: none;
+    }
+}
+
+.sent-footer {
+    display: flex;
+    justify-content: center;
+}
+
 @media (min-width: 1024px) {
     .login-page {
         grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);

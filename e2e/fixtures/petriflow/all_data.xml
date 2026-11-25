@@ -1,0 +1,5955 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:noNamespaceSchemaLocation="https://petriflow.com/petriflow.schema.xsd">
+    <id>all_data</id>
+    <initials>ALL</initials>
+    <title>All Data</title>
+    <defaultRole>true</defaultRole>
+    <anonymousRole>true</anonymousRole>
+    <transitionRole>false</transitionRole>
+    <caseName>All data test default case name</caseName>
+
+    <caseEvents>
+        <event type="create">
+            <id>create</id>
+            <actions phase="post">
+                <action id="create_action_0">
+                    filter: f.filter,
+                    caze_filter: f.caze_filter;
+
+                    def caze = createFilter("All cases" as String, "" as String, "Case", [] as ArrayList, "assignment"
+                    as
+                    String, "public" as String, [
+                    "predicateMetadata": [[["category": "case_author", "configuration": ["operator": "equals"],
+                    "values":
+                    [["text": "search.category.userMe", value: ["&lt;&lt;me&gt;&gt;"]]]]]],
+                    "searchCategories" : ["case_author"]                                                                                                 
+                    ])
+
+                    useCase.dataSet["filter"].value = caze.dataSet["filter"].value
+                    useCase.dataSet["filter"].allowedNets = caze.dataSet["filter"].allowedNets
+                    useCase.dataSet["filter"].filterMetadata = caze.dataSet["filter"].filterMetadata
+
+                    change caze_filter value {caze.getStringId()}
+                </action>
+            </actions>
+        </event>
+        <event type="delete">
+            <id>delete</id>
+            <actions phase="pre">
+                <action id="delete_action_0">
+                    caze_filter: f.caze_filter;
+
+                    workflowService.deleteCase(caze_filter.value)
+                </action>
+            </actions>
+        </event>
+    </caseEvents>
+
+    <!-- ROLES -->
+    <role>
+        <id>process_role</id>
+        <title>Process role</title>
+    </role>
+
+    <!-- DATA -->
+    <data type="text" immediate="true">
+        <id>caze_filter</id>
+        <title>Filter Case</title>
+    </data>
+
+    <!-- NUMBER -->
+    <data type="number" immediate="true">
+        <id>number</id>
+        <title name="number">Number</title>
+        <init>10000</init>
+        <action trigger="set">
+            number:f.number,
+            number_currency:f.number_currency;
+            change number_currency value {number.value}
+        </action>
+    </data>
+
+    <data type="number" immediate="true">
+        <id>number_currency</id>
+        <title>Number currency</title>
+        <init>10000</init>
+        <component>
+            <name>currency</name>
+            <properties>
+                <property key="code">EUR</property>
+                <property key="fractionSize">2</property>
+                <property key="locale">sk_SK</property>
+            </properties>
+        </component>
+    </data>
+
+    <data type="number" immediate="true">
+        <id>number_currency_dollar</id>
+        <title>Number currency</title>
+        <init>10000</init>
+        <component>
+            <name>currency</name>
+            <properties>
+                <property key="code">USD</property>
+                <property key="fractionSize">2</property>
+                <property key="locale">en-US</property>
+            </properties>
+        </component>
+    </data>
+
+    <!-- TEXT -->
+    <data type="text" immediate="true">
+        <id>text</id>
+        <title>Text</title>
+        <init>Lorem ipsum</init>
+    </data>
+
+    <data type="text" immediate="true">
+        <id>password_data</id>
+        <title>Password from data</title>
+        <component>
+            <name>password</name>
+        </component>
+    </data>
+
+    <data type="text" immediate="true">
+        <id>password_dataref</id>
+        <title>Password from dataRef</title>
+    </data>
+
+    <data type="text" immediate="true">
+        <id>text_area</id>
+        <title>Text area</title>
+        <init>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque vitae magna in libero semper
+            vulputate ut eu sapien. Phasellus vel.
+        </init>
+        <component>
+            <name>textarea</name>
+            <property key="color">red</property>
+            <property key="fontSize">12</property>
+        </component>
+    </data>
+
+    <data type="text">
+        <id>text_markdown_area</id>
+        <title>Text Markdown area</title>
+        <init>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque vitae magna in libero semper
+            vulputate ut eu sapien. Phasellus vel.
+        </init>
+        <component>
+            <name>richtextarea</name>
+        </component>
+    </data>
+
+    <data type="text">
+        <id>text_html_area</id>
+        <title>Text HTML area</title>
+        <init>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque vitae magna in libero semper
+            vulputate ut eu sapien. Phasellus vel.
+        </init>
+        <component>
+            <name>htmltextarea</name>
+        </component>
+    </data>
+
+    <!-- ENUMERATION -->
+    <data type="enumeration" immediate="true">
+        <id>enumeration</id>
+        <title>Enumeration</title>
+        <options>
+            <option key="al">Alice</option>
+            <option key="bo">Bob</option>
+            <option key="ca">Carol</option>
+        </options>
+        <init>Bob</init>
+    </data>
+
+    <data type="enumeration" immediate="true">
+        <id>enumeration_autocomplete</id>
+        <title>Enumeration autocomplete</title>
+        <options>
+            <option key="al">Alice</option>
+            <option key="bo">Bob</option>
+            <option key="ca">Carol</option>
+        </options>
+        <init>Bob</init>
+        <component>
+            <name>autocomplete</name>
+        </component>
+    </data>
+
+    <data type="enumeration">
+        <id>enumeration_autocomplete_dynamic</id>
+        <title>Enumeration autocomplete dynamic</title>
+        <options>
+            <option key="al">Alice</option>
+            <option key="bo">Bob</option>
+            <option key="ca">Carol</option>
+        </options>
+        <init>Bob</init>
+        <component>
+            <name>autocomplete_dynamic</name>
+        </component>
+    </data>
+
+    <data type="enumeration" immediate="true">
+        <id>enumeration_list</id>
+        <title>Enumeration list</title>
+        <options>
+            <option key="al">Alice</option>
+            <option key="bo">Bob</option>
+            <option key="ca">Carol</option>
+        </options>
+        <init>Bob</init>
+        <component>
+            <name>list</name>
+        </component>
+    </data>
+
+    <data type="enumeration">
+        <id>enumeration_stepper</id>
+        <title>Enumeration Stepper</title>
+        <options>
+            <option key="al">Alice</option>
+            <option key="bo">Bob</option>
+            <option key="ca">Carol</option>
+        </options>
+        <init>Bob</init>
+        <component>
+            <name>stepper</name>
+        </component>
+    </data>
+
+    <data type="enumeration">
+        <id>enumeration_arrow</id>
+        <title>Enumeration Arrow Stepper</title>
+        <options>
+            <option key="al">Alice</option>
+            <option key="bo">Bob</option>
+            <option key="ca">Carol</option>
+        </options>
+        <init>Bob</init>
+        <component>
+            <name>stepper</name>
+            <property key="arrowStepper">true</property>
+        </component>
+    </data>
+
+    <data type="enumeration">
+        <id>enumeration_icon</id>
+        <title>Enumeration icon</title>
+        <options>
+            <option key="Alice">Alice</option>
+            <option key="Bob">Bob</option>
+            <option key="Carol">Carol</option>
+            <option key="Dave">Dave</option>
+            <option key="Alex">Alex</option>
+        </options>
+        <component>
+            <name>icon</name>
+            <properties>
+                <property key="arrow">true</property>
+                <property key="divider">true</property>
+                <option_icons>
+                    <icon key="Alice">home</icon>
+                    <icon key="Bob">nature</icon>
+                    <icon key="Carol">home</icon>
+                    <icon key="Dave">nature</icon>
+                    <icon key="Alex">home</icon>
+                </option_icons>
+            </properties>
+        </component>
+    </data>
+
+    <data type="enumeration_map" immediate="true">
+        <id>enumeration_map</id>
+        <title>Enumeration Map</title>
+        <options>
+            <option key="al">Alice</option>
+            <option key="bo">Bob</option>
+            <option key="ca">Carol</option>
+        </options>
+        <init>bo</init>
+    </data>
+
+    <data type="enumeration_map">
+        <id>enumeration_autocomplete_dynamic_map</id>
+        <title>Enumeration autocomplete dynamic map</title>
+        <options>
+            <option key="al">Alice</option>
+            <option key="bo">Bob</option>
+            <option key="ca">Carol</option>
+        </options>
+        <init>bo</init>
+        <component>
+            <name>autocomplete_dynamic</name>
+        </component>
+    </data>
+
+    <data type="enumeration_map">
+        <id>enumeration_autocomplete_map</id>
+        <title>Enumeration autocomplete map</title>
+        <options>
+            <option key="al">Alice</option>
+            <option key="bo">Bob</option>
+            <option key="ca">Carol</option>
+        </options>
+        <init>bo</init>
+        <component>
+            <name>autocomplete</name>
+        </component>
+    </data>
+
+    <data type="enumeration_map">
+        <id>enumeration_list_map</id>
+        <title>Enumeration list map</title>
+        <options>
+            <option key="al">Alice</option>
+            <option key="bo">Bob</option>
+            <option key="ca">Carol</option>
+        </options>
+        <init>bo</init>
+        <component>
+            <name>list</name>
+        </component>
+    </data>
+
+    <data type="enumeration_map">
+        <id>enumeration_stepper_map</id>
+        <title>Enumeration Stepper map</title>
+        <options>
+            <option key="al">Alice</option>
+            <option key="bo">Bob</option>
+            <option key="ca">Carol</option>
+        </options>
+        <init>bo</init>
+        <component>
+            <name>stepper</name>
+        </component>
+    </data>
+
+    <data type="enumeration_map">
+        <id>enumeration_arrow_map</id>
+        <title>Enumeration Arrow Stepper map</title>
+        <options>
+            <option key="al">Alice</option>
+            <option key="bo">Bob</option>
+            <option key="ca">Carol</option>
+        </options>
+        <init>bo</init>
+        <component>
+            <name>stepper</name>
+            <property key="arrowStepper">true</property>
+        </component>
+    </data>
+
+    <data type="enumeration_map">
+        <id>enumeration_map_icon</id>
+        <title>Enumeration map icon</title>
+        <options>
+            <option key="al">Alice</option>
+            <option key="bo">Bob</option>
+            <option key="ca">Carol</option>
+            <option key="da">Dave</option>
+            <option key="ale">Alex</option>
+        </options>
+        <component>
+            <name>icon</name>
+            <properties>
+                <option_icons>
+                    <icon key="al">home</icon>
+                    <icon key="bo">nature</icon>
+                    <icon key="ca">home</icon>
+                    <icon key="da">nature</icon>
+                    <icon key="ale">home</icon>
+                </option_icons>
+            </properties>
+        </component>
+    </data>
+
+    <!-- MULTICHOICE -->
+    <data type="multichoice" immediate="true">
+        <id>multichoice</id>
+        <title>Multichoice</title>
+        <options>
+            <option key="al">Alice</option>
+            <option key="bo">Bob</option>
+            <option key="ca">Carol</option>
+        </options>
+        <inits>
+            <init>Alice</init>
+            <init>Bob</init>
+        </inits>
+    </data>
+
+    <data type="multichoice" immediate="true">
+        <id>multichoice_list</id>
+        <title>Multichoice list</title>
+        <options>
+            <option key="al">Alice</option>
+            <option key="bo">Bob</option>
+            <option key="ca">Carol</option>
+        </options>
+        <inits>
+            <init>Alice</init>
+            <init>Bob</init>
+        </inits>
+        <component>
+            <name>list</name>
+        </component>
+    </data>
+
+    <data type="multichoice">
+        <id>multichoice_autocomplete</id>
+        <title>Multichoice autocomplete</title>
+        <options>
+            <option key="al">Alice</option>
+            <option key="bo">Bob</option>
+            <option key="ca">Carol</option>
+        </options>
+        <inits>
+            <init>Alice</init>
+            <init>Bob</init>
+        </inits>
+        <component>
+            <name>autocomplete</name>
+        </component>
+    </data>
+
+    <!-- MULTICHOICE MAP -->
+    <data type="multichoice_map" immediate="true">
+        <id>multichoice_map</id>
+        <title>Multichoice Map</title>
+        <options>
+            <option key="al">Alice</option>
+            <option key="bo">Bob</option>
+            <option key="ca">Carol</option>
+        </options>
+        <inits>
+            <init>al</init>
+            <init>bo</init>
+        </inits>
+    </data>
+
+    <data type="multichoice_map">
+        <id>multichoice_list_map</id>
+        <title>Multichoice list map</title>
+        <options>
+            <option key="al">Alice</option>
+            <option key="bo">Bob</option>
+            <option key="ca">Carol</option>
+        </options>
+        <inits>
+            <init>al</init>
+            <init>bo</init>
+        </inits>
+        <component>
+            <name>list</name>
+        </component>
+    </data>
+
+    <data type="multichoice_map">
+        <id>multichoice_autocomplete_map</id>
+        <title>Multichoice autocomplete map</title>
+        <options>
+            <option key="al">Alice</option>
+            <option key="bo">Bob</option>
+            <option key="ca">Carol</option>
+        </options>
+        <init>al,bo</init>
+        <component>
+            <name>autocomplete</name>
+        </component>
+    </data>
+
+    <data type="boolean" immediate="true">
+        <id>boolean</id>
+        <title>Boolean</title>
+        <placeholder>True</placeholder>
+    </data>
+
+    <!-- DATE -->
+    <data type="date" immediate="true">
+        <id>date</id>
+        <title>Date</title>
+        <init>01.01.2019</init>
+    </data>
+
+    <data type="dateTime" immediate="true">
+        <id>datetime</id>
+        <title>Datetime</title>
+        <init>01.01.2019 20:00</init>
+    </data>
+
+    <!-- TASKREF -->
+    <data type="taskRef">
+        <id>taskRef</id>
+        <title>Task Ref</title>
+        <inits>
+            <init>4</init>
+        </inits>
+    </data>
+
+    <data type="file" immediate="true">
+        <id>file</id>
+        <title>File</title>
+        <action trigger="set">
+            <!-- @formatter:off -->
+            textfield: f.text;
+            change textfield value {
+            "funguje to"
+            }
+            <!-- @formatter:on -->
+        </action>
+    </data>
+
+    <data type="file" immediate="true">
+        <id>file_preview</id>
+        <title>File preview border</title>
+        <component>
+            <name>preview</name>
+            <property key="borderStyle">dotted dashed solid double</property>
+            <property key="borderColor">red</property>
+            <property key="borderWidth">5</property>
+        </component>
+    </data>
+
+    <data type="file" immediate="true">
+        <id>file_preview_test</id>
+        <title>File preview</title>
+        <component>
+            <name>preview</name>
+            <property key="borderLGBTQ">true</property>
+        </component>
+    </data>
+
+    <!-- FILELIST -->
+    <data type="fileList" immediate="true">
+        <id>fileList</id>
+        <title>File List</title>
+    </data>
+
+    <!-- USER -->
+    <data type="user" immediate="true">
+        <id>user</id>
+        <title>User</title>
+    </data>
+
+    <data type="userList">
+        <id>userList1</id>
+        <title>UserList</title>
+    </data>
+
+    <data type="userList">
+        <id>userList2</id>
+        <title>UserList</title>
+    </data>
+
+    <!-- FILTER -->
+    <data type="filter">
+        <id>filter</id>
+        <title>Filter</title>
+    </data>
+
+    <!-- BUTTONS -->
+    <data type="button" immediate="true">
+        <id>button</id>
+        <title>Button</title>
+        <placeholder>Push</placeholder>
+    </data>
+
+    <data type="button">
+        <id>button_raised</id>
+        <title>Button Raised</title>
+        <placeholder>Push</placeholder>
+        <component>
+            <name>raised</name>
+        </component>
+    </data>
+
+    <data type="button">
+        <id>button_stroked</id>
+        <title>Button Stroked</title>
+        <placeholder>Push</placeholder>
+        <component>
+            <name>stroked</name>
+        </component>
+    </data>
+
+    <data type="button">
+        <id>button_flat</id>
+        <title>Button Flat</title>
+        <placeholder>Push</placeholder>
+        <component>
+            <name>flat</name>
+        </component>
+    </data>
+
+    <data type="button">
+        <id>button_icon</id>
+        <title>Button Icon</title>
+        <placeholder>home</placeholder>
+        <component>
+            <name>icon</name>
+        </component>
+    </data>
+
+    <data type="button">
+        <id>button_fab</id>
+        <title>Button Fab</title>
+        <placeholder>home</placeholder>
+        <component>
+            <name>fab</name>
+        </component>
+    </data>
+
+    <data type="button">
+        <id>button_minifab</id>
+        <title>Button Minifab</title>
+        <placeholder>home</placeholder>
+        <component>
+            <name>minifab</name>
+        </component>
+    </data>
+
+    <data type="button">
+        <id>button_dialog</id>
+        <title>Button with Dialog</title>
+        <placeholder>Open dialog</placeholder>
+        <component>
+            <name>stroked</name>
+            <property key="dialogTitle">Opened Dialog</property>
+            <property key="dialogText">If you want to proceed, click the button!</property>
+        </component>
+    </data>
+
+    <!-- Task Ref -->
+    <data type="text">
+        <id>taskref_test_field</id>
+        <title>Text datafield z iného transitionu</title>
+        <init>Field načítaný pomocou taskrefu</init>
+    </data>
+
+
+    <!-- I18N -->
+    <data type="i18n" immediate="true">
+        <id>i18n</id>
+        <title>i18n field</title>
+        <init name="i18n_field_translation">This is DEFAULT translation of i18n</init>
+        <component>
+            <name>text</name>
+            <properties>
+                <property key="plainText">true</property>
+                <property key="fontSize">14</property>
+            </properties>
+        </component>
+    </data>
+
+    <data type="i18n" immediate="true">
+        <id>i18n_divider</id>
+        <title>Nema title</title>
+        <placeholder>Nema placeholder</placeholder>
+        <init name="i18n_field_translation">This is DEFAULT translation of i18n</init>
+        <component>
+            <name>divider</name>
+            <properties>
+                <property key="fontSize">12</property>
+                <property key="dividerColor">red</property>
+            </properties>
+        </component>
+    </data>
+
+    <data type="i18n">
+        <id>i18n_divider_lgbtq</id>
+        <title/>
+        <init name="i18n_field_translation">This is DEFAULT translation of i18n</init>
+        <component>
+            <name>divider</name>
+            <properties>
+                <property key="fontSize">10</property>
+                <property key="dividerLGBTQ">true</property>
+            </properties>
+        </component>
+    </data>
+
+
+    <!-- ACTIONS CHANGE/CLEAR-->
+
+    <data type="button">
+        <id>boolean_change</id>
+        <placeholder>CHANGE</placeholder>
+        <event type="set">
+            <id>set</id>
+            <actions phase="pre">
+                <action>
+                    fieldEdit: f.boolean,
+                    button: f.this;
+
+                    change fieldEdit value { !fieldEdit.value }
+                </action>
+            </actions>
+        </event>
+    </data>
+
+    <data type="button">
+        <id>button_change</id>
+        <placeholder>VISIBLE</placeholder>
+        <event type="set">
+            <id>set</id>
+            <actions phase="pre">
+                <action>
+                    fieldEdit: f.button,
+                    trans: t.t3;
+
+                    make fieldEdit, visible on trans when { return true; }
+                </action>
+            </actions>
+        </event>
+    </data>
+
+    <data type="button">
+        <id>button_fab_change</id>
+        <placeholder>VISIBLE</placeholder>
+        <event type="set">
+            <id>set</id>
+            <actions phase="pre">
+                <action>
+                    fieldEdit: f.button_fab,
+                    trans: t.t3;
+
+                    make fieldEdit, visible on trans when { return true; }
+                </action>
+            </actions>
+        </event>
+    </data>
+
+    <data type="button">
+        <id>button_icon_change</id>
+        <placeholder>VISIBLE</placeholder>
+        <event type="set">
+            <id>set</id>
+            <actions phase="pre">
+                <action>
+                    fieldEdit: f.button_icon,
+                    trans: t.t3;
+
+                    make fieldEdit, visible on trans when { return true; }
+                </action>
+            </actions>
+        </event>
+    </data>
+    <data type="button">
+        <id>button_flat_change</id>
+        <placeholder>VISIBLE</placeholder>
+        <event type="set">
+            <id>set</id>
+            <actions phase="pre">
+                <action>
+                    fieldEdit: f.button_flat,
+                    trans: t.t3;
+
+                    make fieldEdit, visible on trans when { return true; }
+                </action>
+            </actions>
+        </event>
+    </data>
+    <data type="button">
+        <id>button_raised_change</id>
+        <placeholder>VISIBLE</placeholder>
+        <event type="set">
+            <id>set</id>
+            <actions phase="pre">
+                <action>
+                    fieldEdit: f.button_raised,
+                    trans: t.t3;
+
+                    make fieldEdit, visible on trans when { return true; }
+                </action>
+            </actions>
+        </event>
+    </data>
+
+    <data type="button">
+        <id>button_minifab_change</id>
+        <placeholder>VISIBLE</placeholder>
+        <event type="set">
+            <id>set</id>
+            <actions phase="pre">
+                <action>
+                    fieldEdit: f.button_minifab,
+                    trans: t.t3;
+
+                    make fieldEdit, visible on trans when { return true; }
+                </action>
+            </actions>
+        </event>
+    </data>
+
+    <data type="button">
+        <id>button_stroked_change</id>
+        <placeholder>VISIBLE</placeholder>
+        <event type="set">
+            <id>set</id>
+            <actions phase="pre">
+                <action>
+                    fieldEdit: f.button_stroked,
+                    trans: t.t3;
+
+                    make fieldEdit, visible on trans when { return true; }
+                </action>
+            </actions>
+        </event>
+    </data>
+
+    <data type="button">
+        <id>button_dialog_change</id>
+        <placeholder>VISIBLE</placeholder>
+        <event type="set">
+            <id>set</id>
+            <actions phase="pre">
+                <action>
+                    fieldEdit: f.button_dialog,
+                    trans: t.t3;
+
+                    make fieldEdit, visible on trans when { return true; }
+                </action>
+            </actions>
+        </event>
+    </data>
+
+    <data type="button">
+        <id>date_change</id>
+        <placeholder>CHANGE</placeholder>
+        <event type="set">
+            <id>date</id>
+            <actions phase="post">
+                <action>
+                    date: f.date;
+                    change date value { java.time.LocalDate.now() }
+                </action>
+            </actions>
+        </event>
+    </data>
+
+    <data type="button">
+        <id>datetime_change</id>
+        <placeholder>CHANGE</placeholder>
+        <event type="set">
+            <id>datetime</id>
+            <actions phase="post">
+                <action>
+                    datetime: f.datetime;
+                    change datetime value { java.time.LocalDateTime.now() }
+                </action>
+            </actions>
+        </event>
+    </data>
+
+    <data type="button">
+        <id>enumeration_change</id>
+        <placeholder>CHANGE</placeholder>
+        <event type="set">
+            <id>enumeration</id>
+            <actions phase="post">
+                <action>
+                    enumeration: f.enumeration;
+                    change enumeration value { "Alice" }
+                </action>
+            </actions>
+        </event>
+    </data>
+
+    <data type="button">
+        <id>enumeration_arrow_change</id>
+        <placeholder>CHANGE</placeholder>
+        <event type="set">
+            <id>enumeration_arrow</id>
+            <actions phase="post">
+                <action>
+                    enumeration_arrow: f.enumeration_arrow;
+                    change enumeration_arrow value { "Alice" }
+                </action>
+            </actions>
+        </event>
+    </data>
+
+    <data type="button">
+        <id>enumeration_arrow_map_change</id>
+        <placeholder>CHANGE</placeholder>
+        <event type="set">
+            <id>enumeration_arrow_map</id>
+            <actions phase="post">
+                <action>
+                    enumeration_arrow_map: f.enumeration_arrow_map;
+                    change enumeration_arrow_map value { "al" }
+                </action>
+            </actions>
+        </event>
+    </data>
+
+    <data type="button">
+        <id>enumeration_map_change</id>
+        <placeholder>CHANGE</placeholder>
+        <event type="set">
+            <id>enumeration_map</id>
+            <actions phase="post">
+                <action>
+                    enumeration_map: f.enumeration_map;
+                    change enumeration_map value { "al" }
+                </action>
+            </actions>
+        </event>
+    </data>
+
+    <data type="button">
+        <id>enumeration_stepper_change</id>
+        <placeholder>CHANGE</placeholder>
+        <event type="set">
+            <id>enumeration_stepper</id>
+            <actions phase="post">
+                <action>
+                    enumeration_stepper: f.enumeration_stepper;
+                    change enumeration_stepper value { "Alice" }
+                </action>
+            </actions>
+        </event>
+    </data>
+
+    <data type="button">
+        <id>enumeration_stepper_map_change</id>
+        <placeholder>CHANGE</placeholder>
+        <event type="set">
+            <id>enumeration_stepper_map</id>
+            <actions phase="post">
+                <action>
+                    enumeration_stepper_map: f.enumeration_stepper_map;
+                    change enumeration_stepper_map value { "al" }
+                </action>
+            </actions>
+        </event>
+    </data>
+    <data type="button">
+        <id>enumeration_autocomplete_change</id>
+        <placeholder>CHANGE</placeholder>
+        <event type="set">
+            <id>enumeration_autocomplete</id>
+            <actions phase="post">
+                <action>
+                    enumeration_autocomplete: f.enumeration_autocomplete;
+                    change enumeration_autocomplete value { "Alice" }
+                </action>
+            </actions>
+        </event>
+    </data>
+
+    <data type="button">
+        <id>enumeration_autocomplete_dynamic_change</id>
+        <placeholder>CHANGE</placeholder>
+        <event type="set">
+            <id>enumeration_autocomplete_dynamic</id>
+            <actions phase="post">
+                <action>
+                    enumeration_autocomplete_dynamic: f.enumeration_autocomplete_dynamic;
+                    change enumeration_autocomplete_dynamic value { "Alice" }
+                </action>
+            </actions>
+        </event>
+    </data>
+
+    <data type="button">
+        <id>enumeration_autocomplete_dynamic_map_change</id>
+        <placeholder>CHANGE</placeholder>
+        <event type="set">
+            <id>enumeration_autocomplete_dynamic_map</id>
+            <actions phase="post">
+                <action>
+                    enumeration_autocomplete_dynamic_map: f.enumeration_autocomplete_dynamic_map;
+                    change enumeration_autocomplete_dynamic_map value { "al" }
+                </action>
+            </actions>
+        </event>
+    </data>
+
+    <data type="button">
+        <id>enumeration_autocomplete_map_change</id>
+        <placeholder>CHANGE</placeholder>
+        <event type="set">
+            <id>date_change</id>
+            <actions phase="post">
+                <action>
+                    enumeration_autocomplete_map: f.enumeration_autocomplete_map;
+                    change enumeration_autocomplete_map value { "al" }
+                </action>
+            </actions>
+        </event>
+    </data>
+
+    <data type="button">
+        <id>enumeration_icon_change</id>
+        <placeholder>CHANGE</placeholder>
+        <event type="set">
+            <id>enumeration_icon</id>
+            <actions phase="post">
+                <action>
+                    enumeration_icon: f.enumeration_icon;
+                    change enumeration_icon value { "Alice" }
+                </action>
+            </actions>
+        </event>
+    </data>
+
+    <data type="button">
+        <id>enumeration_list_change</id>
+        <placeholder>CHANGE</placeholder>
+        <event type="set">
+            <id>enumeration_list</id>
+            <actions phase="post">
+                <action>
+                    enumeration_list: f.enumeration_list;
+                    change enumeration_list value { "Alice" }
+                </action>
+            </actions>
+        </event>
+    </data>
+    <data type="button">
+        <id>enumeration_list_map_change</id>
+        <placeholder>CHANGE</placeholder>
+        <event type="set">
+            <id>date_change</id>
+            <actions phase="post">
+                <action>
+                    enumeration_list_map: f.enumeration_list_map;
+                    change enumeration_list_map value { "al" }
+                </action>
+            </actions>
+        </event>
+    </data>
+    <data type="button">
+        <id>enumeration_map_icon_change</id>
+        <placeholder>CHANGE</placeholder>
+        <event type="set">
+            <id>date_change</id>
+            <actions phase="post">
+                <action>
+                    enumeration_map_icon: f.enumeration_map_icon;
+                    change enumeration_map_icon value { "al" }
+                </action>
+            </actions>
+        </event>
+    </data>
+    <data type="button">
+        <id>file_change</id>
+        <placeholder>CHANGE</placeholder>
+        <event type="set">
+            <id>file</id>
+            <actions phase="post">
+                <action>
+                    file: f.file;
+                    generatePdf("t1", "file")
+                </action>
+            </actions>
+        </event>
+    </data>
+    <data type="button">
+        <id>fileList_change</id>
+        <placeholder>CHANGE</placeholder>
+        <event type="set">
+            <id>fileList</id>
+            <actions phase="post">
+                <action>
+                    fileList: f.fileList,
+                    file: f.file;
+
+                    if (file.value != null) {
+                    change fileList value { com.netgrif.application.engine.petrinet.domain.dataset.FileListFieldValue.fromList([file.value.name + ":" + file.value.path]) }
+                    }
+                </action>
+            </actions>
+        </event>
+    </data>
+    <data type="button">
+        <id>file_preview_change</id>
+        <placeholder>CHANGE</placeholder>
+        <event type="set">
+            <id>file_preview</id>
+            <actions phase="post">
+                <action>
+                    file_preview: f.file_preview;
+                    generatePdf("t1", "file_preview")
+                </action>
+            </actions>
+        </event>
+    </data>
+    <data type="button">
+        <id>filter_change</id>
+        <placeholder>CHANGE</placeholder>
+        <event type="set">Ø
+            <id>filter</id>
+            <actions phase="post">
+                <action>
+                    filter: f.filter;
+                    change filter value { "This is greater than aaa" }
+                </action>
+            </actions>
+        </event>
+    </data>
+    <data type="button">
+        <id>caze_filter_change</id>
+        <placeholder>HIDDEN</placeholder>
+        <event type="set">
+            <id>caze_filter</id>
+            <actions phase="post">
+                <action>
+                    fieldEdit: f.caze_filter,
+                    trans: t.t3;
+
+                    make fieldEdit, hidden on trans when { return true; }
+                </action>
+            </actions>
+        </event>
+    </data>
+    <data type="button">
+        <id>multichoice_change</id>
+        <placeholder>CHANGE</placeholder>
+        <event type="set">
+            <id>multichoice</id>
+            <actions phase="post">
+                <action>
+                    multichoice: f.multichoice;
+                    change multichoice value { ["Alice", "Bob"] }
+                </action>
+            </actions>
+        </event>
+    </data>
+    <data type="button">
+        <id>multichoice_map_change</id>
+        <placeholder>CHANGE</placeholder>
+        <event type="set">
+            <id>multichoice_map</id>
+            <actions phase="post">
+                <action>
+                    multichoice_map: f.multichoice_map;
+                    change multichoice_map value { ["al", "bo"] }
+                </action>
+            </actions>
+        </event>
+    </data>
+    <data type="button">
+        <id>multichoice_autocomplete_change</id>
+        <placeholder>CHANGE</placeholder>
+        <event type="set">
+            <id>multichoice_autocomplete</id>
+            <actions phase="post">
+                <action>
+                    multichoice_autocomplete: f.multichoice_autocomplete;
+                    change multichoice_autocomplete value { ["Alice", "Bob"] }
+                </action>
+            </actions>
+        </event>
+    </data>
+    <data type="button">
+        <id>multichoice_autocomplete_map_change</id>
+        <placeholder>CHANGE</placeholder>
+        <event type="set">
+            <id>multichoice_autocomplete_map</id>
+            <actions phase="post">
+                <action>
+                    multichoice_autocomplete_map: f.multichoice_autocomplete_map;
+                    change multichoice_autocomplete_map value { ["al", "bo"] }
+                </action>
+            </actions>
+        </event>
+    </data>
+    <data type="button">
+        <id>multichoice_list_change</id>
+        <placeholder>CHANGE</placeholder>
+        <event type="set">
+            <id>multichoice_list</id>
+            <actions phase="post">
+                <action>
+                    multichoice_list: f.multichoice_list;
+                    change multichoice_list value { ["Alice", "Bob"] }
+                </action>
+            </actions>
+        </event>
+    </data>
+    <data type="button">
+        <id>multichoice_list_map_change</id>
+        <placeholder>CHANGE</placeholder>
+        <event type="set">
+            <id>multichoice_list_map</id>
+            <actions phase="post">
+                <action>
+                    multichoice_list_map: f.multichoice_list_map;
+                    change multichoice_list_map value { ["al", "bo"] }
+                </action>
+            </actions>
+        </event>
+    </data>
+    <data type="button">
+        <id>i18n_divider_change</id>
+        <placeholder>CHANGE</placeholder>
+        <event type="set">
+            <id>i18n_divider</id>
+            <actions phase="post">
+                <action>
+                    i18n_divider: f.i18n_divider;
+                    change i18n_divider value { new com.netgrif.application.engine.petrinet.domain.I18nString("test") }
+                </action>
+            </actions>
+        </event>
+    </data>
+    <data type="button">
+        <id>number_change</id>
+        <placeholder>CHANGE</placeholder>
+        <event type="set">
+            <id>number</id>
+            <actions phase="post">
+                <action>
+                    number: f.number;
+                    change number value { 43110 }
+                </action>
+            </actions>
+        </event>
+    </data>
+    <data type="button">
+        <id>number_currency_change</id>
+        <placeholder>CHANGE</placeholder>
+        <event type="set">
+            <id>number_currency</id>
+            <actions phase="post">
+                <action>
+                    number_currency: f.number_currency;
+                    change number_currency value { 456.25 }
+                </action>
+            </actions>
+        </event>
+    </data>
+    <data type="button">
+        <id>number_currency_dollar_change</id>
+        <placeholder>CHANGE</placeholder>
+        <event type="set">
+            <id>number_currency_dollar</id>
+            <actions phase="post">
+                <action>
+                    number_currency_dollar: f.number_currency_dollar;
+                    change number_currency_dollar value { 55.12 }
+                </action>
+            </actions>
+        </event>
+    </data>
+    <data type="button">
+        <id>password_data_change</id>
+        <placeholder>CHANGE</placeholder>
+        <event type="set">
+            <id>password_data</id>
+            <actions phase="post">
+                <action>
+                    password_data: f.password_data;
+                    change password_data value { "pwdheslo" }
+                </action>
+            </actions>
+        </event>
+    </data>
+    <data type="button">
+        <id>password_dataref_change</id>
+        <placeholder>CHANGE</placeholder>
+        <event type="set">
+            <id>password_dataref</id>
+            <actions phase="post">
+                <action>
+                    password_dataref: f.password_dataref;
+                    change password_dataref value { "my_password" }
+                </action>
+            </actions>
+        </event>
+    </data>
+    <data type="button">
+        <id>taskRef_change</id>
+        <placeholder>CHANGE</placeholder>
+        <event type="set">
+            <id>taskRef</id>
+            <actions phase="post">
+                <action>
+                    taskRef: f.taskRef;
+                    change taskRef value { [useCase.tasks.find { it.transition == "t3" }.task] }
+                </action>
+            </actions>
+        </event>
+    </data>
+    <data type="button">
+        <id>text_change</id>
+        <placeholder>CHANGE</placeholder>
+        <event type="set">
+            <id>text</id>
+            <actions phase="post">
+                <action>
+                    text: f.text;
+                    change text value { "Changed" }
+                </action>
+            </actions>
+        </event>
+    </data>
+    <data type="button">
+        <id>text_html_area_change</id>
+        <placeholder>CHANGE</placeholder>
+        <init>1</init>
+        <event type="set">
+            <id>text_html_area</id>
+            <actions phase="post">
+                <action>
+                    text_html_area: f.text_html_area;
+                    change text_html_area value { "changed" }
+                </action>
+            </actions>
+        </event>
+    </data>
+    <data type="button">
+        <id>text_markdown_area_change</id>
+        <placeholder>CHANGE</placeholder>
+        <event type="set">
+            <id>text_markdown_area</id>
+            <actions phase="post">
+                <action>
+                    text_markdown_area: f.text_markdown_area;
+                    change text_markdown_area value { "changed" }
+                </action>
+            </actions>
+        </event>
+    </data>
+    <data type="button">
+        <id>text_area_change</id>
+        <placeholder>CHANGE</placeholder>
+        <event type="set">
+            <id>text_area</id>
+            <actions phase="post">
+                <action>
+                    text_area: f.text_area;
+                    change text_area value { "changed" }
+                </action>
+            </actions>
+        </event>
+    </data>
+
+    <data type="button">
+        <id>user_change</id>
+        <placeholder>CHANGE</placeholder>
+        <event type="set">
+            <id>user</id>
+            <actions phase="post">
+                <action>
+                    user: f.user;
+                    change user value { new com.netgrif.application.engine.petrinet.domain.dataset.UserFieldValue(userService.findByEmail("super@netgrif.com", false)) }
+                </action>
+            </actions>
+        </event>
+    </data>
+    <data type="button">
+        <id>userList1_change</id>
+        <placeholder>CHANGE</placeholder>
+        <event type="set">
+            <id>userList1</id>
+            <actions phase="post">
+                <action>
+                    userList1: f.userList1;
+                    change userList1 value { [userService.findByEmail("super@netgrif.com", false).stringId] }
+                </action>
+            </actions>
+        </event>
+    </data>
+    <data type="button">
+        <id>userList2_change</id>
+        <placeholder>CHANGE</placeholder>
+        <event type="set">
+            <id>userList2</id>
+            <actions phase="post">
+                <action>
+                    userList2: f.userList2;
+                    change userList2 value { [userService.findByEmail("super@netgrif.com", false).stringId] }
+                </action>
+            </actions>
+        </event>
+    </data>
+    <data type="button">
+        <id>i18n_change</id>
+        <placeholder>CHANGE</placeholder>
+    </data>
+    <data type="button">
+        <id>boolean_clear</id>
+        <placeholder>CLEAR</placeholder>
+        <event type="set">
+            <id>set</id>
+            <actions phase="pre">
+                <action>
+                    fieldEdit: f.boolean;
+                    change fieldEdit value { return false; }
+                </action>
+            </actions>
+        </event>
+    </data>
+    <data type="button">
+        <id>button_clear</id>
+        <placeholder>EDIT</placeholder>
+        <event type="set">
+            <id>set</id>
+            <actions phase="pre">
+                <action>
+                    fieldEdit: f.button,
+                    trans: t.t3;
+
+                    make fieldEdit, editable on trans when { return true; }
+                </action>
+            </actions>
+        </event>
+    </data>
+    <data type="button">
+        <id>button_fab_clear</id>
+        <placeholder>EDIT</placeholder>
+        <event type="set">
+            <id>set</id>
+            <actions phase="pre">
+                <action>
+                    fieldEdit: f.button_fab,
+                    trans: t.t3;
+
+                    make fieldEdit, editable on trans when { return true; }
+                </action>
+            </actions>
+        </event>
+    </data>
+    <data type="button">
+        <id>button_icon_clear</id>
+        <placeholder>EDIT</placeholder>
+        <event type="set">
+            <id>set</id>
+            <actions phase="pre">
+                <action>
+                    fieldEdit: f.button_icon,
+                    trans: t.t3;
+
+                    make fieldEdit, editable on trans when { return true; }
+                </action>
+            </actions>
+        </event>
+    </data>
+    <data type="button">
+        <id>button_flat_clear</id>
+        <placeholder>EDIT</placeholder>
+        <event type="set">
+            <id>set</id>
+            <actions phase="pre">
+                <action>
+                    fieldEdit: f.button_flat,
+                    trans: t.t3;
+
+                    make fieldEdit, editable on trans when { return true; }
+                </action>
+            </actions>
+        </event>
+    </data>
+    <data type="button">
+        <id>button_raised_clear</id>
+        <placeholder>EDIT</placeholder>
+        <event type="set">
+            <id>set</id>
+            <actions phase="pre">
+                <action>
+                    fieldEdit: f.button_raised,
+                    trans: t.t3;
+
+                    make fieldEdit, editable on trans when { return true; }
+                </action>
+            </actions>
+        </event>
+    </data>
+    <data type="button">
+        <id>button_minifab_clear</id>
+        <placeholder>EDIT</placeholder>
+        <event type="set">
+            <id>set</id>
+            <actions phase="pre">
+                <action>
+                    fieldEdit: f.button_minifab,
+                    trans: t.t3;
+
+                    make fieldEdit, editable on trans when { return true; }
+                </action>
+            </actions>
+        </event>
+    </data>
+    <data type="button">
+        <id>button_stroked_clear</id>
+        <placeholder>EDIT</placeholder>
+        <event type="set">
+            <id>set</id>
+            <actions phase="pre">
+                <action>
+                    fieldEdit: f.button_stroked,
+                    trans: t.t3;
+
+                    make fieldEdit, editable on trans when { return true; }
+                </action>
+            </actions>
+        </event>
+    </data>
+    <data type="button">
+        <id>button_dialog_clear</id>
+        <placeholder>EDIT</placeholder>
+        <event type="set">
+            <id>set</id>
+            <actions phase="pre">
+                <action>
+                    fieldEdit: f.button_dialog,
+                    trans: t.t3;
+
+                    make fieldEdit, editable on trans when { return true; }
+                </action>
+            </actions>
+        </event>
+    </data>
+    <data type="button">
+        <id>date_clear</id>
+        <placeholder>CLEAR</placeholder>
+        <event type="set">
+            <id>set</id>
+            <actions phase="pre">
+                <action>
+                    fieldEdit: f.date;
+                    change fieldEdit value { return null; }
+                </action>
+            </actions>
+        </event>
+    </data>
+    <data type="button">
+        <id>datetime_clear</id>
+        <placeholder>CLEAR</placeholder>
+        <event type="set">
+            <id>set</id>
+            <actions phase="pre">
+                <action>
+                    fieldEdit: f.datetime;
+                    change fieldEdit value { return null; }
+                </action>
+            </actions>
+        </event>
+    </data>
+    <data type="button">
+        <id>enumeration_clear</id>
+        <placeholder>CLEAR</placeholder>
+        <event type="set">
+            <id>set</id>
+            <actions phase="pre">
+                <action>
+                    fieldEdit: f.enumeration;
+                    change fieldEdit value { return null; }
+                </action>
+            </actions>
+        </event>
+    </data>
+    <data type="button">
+        <id>enumeration_arrow_clear</id>
+        <placeholder>CLEAR</placeholder>
+        <event type="set">
+            <id>set</id>
+            <actions phase="pre">
+                <action>
+                    fieldEdit: f.enumeration_arrow;
+                    change fieldEdit value { return null; }
+                </action>
+            </actions>
+        </event>
+    </data>
+    <data type="button">
+        <id>enumeration_arrow_map_clear</id>
+        <placeholder>CLEAR</placeholder>
+        <event type="set">
+            <id>set</id>
+            <actions phase="pre">
+                <action>
+                    fieldEdit: f.enumeration_arrow_map;
+                    change fieldEdit value { return null; }
+                </action>
+            </actions>
+        </event>
+    </data>
+    <data type="button">
+        <id>enumeration_map_clear</id>
+        <placeholder>CLEAR</placeholder>
+        <event type="set">
+            <id>set</id>
+            <actions phase="pre">
+                <action>
+                    fieldEdit: f.enumeration_map;
+                    change fieldEdit value { return null; }
+                </action>
+            </actions>
+        </event>
+    </data>
+    <data type="button">
+        <id>enumeration_stepper_clear</id>
+        <placeholder>CLEAR</placeholder>
+        <event type="set">
+            <id>set</id>
+            <actions phase="pre">
+                <action>
+                    fieldEdit: f.enumeration_stepper;
+                    change fieldEdit value { return null; }
+                </action>
+            </actions>
+        </event>
+    </data>
+    <data type="button">
+        <id>enumeration_stepper_map_clear</id>
+        <placeholder>CLEAR</placeholder>
+        <event type="set">
+            <id>set</id>
+            <actions phase="pre">
+                <action>
+                    fieldEdit: f.enumeration_stepper_map;
+                    change fieldEdit value { return null; }
+                </action>
+            </actions>
+        </event>
+    </data>
+    <data type="button">
+        <id>enumeration_autocomplete_clear</id>
+        <placeholder>CLEAR</placeholder>
+        <event type="set">
+            <id>set</id>
+            <actions phase="pre">
+                <action>
+                    fieldEdit: f.enumeration_autocomplete;
+                    change fieldEdit value { return null; }
+                </action>
+            </actions>
+        </event>
+    </data>
+    <data type="button">
+        <id>enumeration_autocomplete_dynamic_clear</id>
+        <placeholder>CLEAR</placeholder>
+        <event type="set">
+            <id>set</id>
+            <actions phase="pre">
+                <action>
+                    fieldEdit: f.enumeration_autocomplete_dynamic;
+                    change fieldEdit value { return null; }
+                </action>
+            </actions>
+        </event>
+    </data>
+    <data type="button">
+        <id>enumeration_autocomplete_dynamic_map_clear</id>
+        <placeholder>CLEAR</placeholder>
+        <event type="set">
+            <id>set</id>
+            <actions phase="pre">
+                <action>
+                    fieldEdit: f.enumeration_autocomplete_dynamic_map;
+                    change fieldEdit value { return null; }
+                </action>
+            </actions>
+        </event>
+    </data>
+    <data type="button">
+        <id>enumeration_autocomplete_map_clear</id>
+        <placeholder>CLEAR</placeholder>
+        <event type="set">
+            <id>set</id>
+            <actions phase="pre">
+                <action>
+                    fieldEdit: f.enumeration_autocomplete_map;
+                    change fieldEdit value { return null; }
+                </action>
+            </actions>
+        </event>
+    </data>
+    <data type="button">
+        <id>enumeration_icon_clear</id>
+        <placeholder>CLEAR</placeholder>
+        <event type="set">
+            <id>set</id>
+            <actions phase="pre">
+                <action>
+                    fieldEdit: f.enumeration_icon;
+                    change fieldEdit value { return null; }
+                </action>
+            </actions>
+        </event>
+    </data>
+    <data type="button">
+        <id>enumeration_list_clear</id>
+        <placeholder>CLEAR</placeholder>
+        <event type="set">
+            <id>set</id>
+            <actions phase="pre">
+                <action>
+                    fieldEdit: f.enumeration_list;
+                    change fieldEdit value { return null; }
+                </action>
+            </actions>
+        </event>
+    </data>
+    <data type="button">
+        <id>enumeration_list_map_clear</id>
+        <placeholder>CLEAR</placeholder>
+        <event type="set">
+            <id>set</id>
+            <actions phase="pre">
+                <action>
+                    fieldEdit: f.enumeration_list_map;
+                    change fieldEdit value { return null; }
+                </action>
+            </actions>
+        </event>
+    </data>
+    <data type="button">
+        <id>enumeration_map_icon_clear</id>
+        <placeholder>CLEAR</placeholder>
+        <event type="set">
+            <id>set</id>
+            <actions phase="pre">
+                <action>
+                    fieldEdit: f.enumeration_map_icon;
+                    change fieldEdit value { return null; }
+                </action>
+            </actions>
+        </event>
+    </data>
+    <data type="button">
+        <id>file_clear</id>
+        <placeholder>CLEAR</placeholder>
+        <event type="set">
+            <id>set</id>
+            <actions phase="pre">
+                <action>
+                    fieldEdit: f.file;
+                    change fieldEdit value { return null; }
+                </action>
+            </actions>
+        </event>
+    </data>
+    <data type="button">
+        <id>fileList_clear</id>
+        <placeholder>CLEAR</placeholder>
+        <event type="set">
+            <id>set</id>
+            <actions phase="pre">
+                <action>
+                    fieldEdit: f.fileList;
+                    change fieldEdit value { return null; }
+                </action>
+            </actions>
+        </event>
+    </data>
+    <data type="button">
+        <id>file_preview_clear</id>
+        <placeholder>CLEAR</placeholder>
+        <event type="set">
+            <id>set</id>
+            <actions phase="pre">
+                <action>
+                    fieldEdit: f.file_preview;
+                    change fieldEdit value { return null; }
+                </action>
+            </actions>
+        </event>
+    </data>
+    <data type="button">
+        <id>filter_clear</id>
+        <placeholder>CLEAR</placeholder>
+        <event type="set">
+            <id>set</id>
+            <actions phase="pre">
+                <action>
+                    fieldEdit: f.filter;
+                    change fieldEdit value { return null; }
+                </action>
+            </actions>
+        </event>
+    </data>
+    <data type="button">
+        <id>caze_filter_clear</id>
+        <placeholder>VISIBLE</placeholder>
+        <event type="set">
+            <id>set</id>
+            <actions phase="pre">
+                <action>
+                    fieldEdit: f.caze_filter,
+                    trans: t.t3;
+
+                    make fieldEdit, visible on trans when { return true; }
+                </action>
+            </actions>
+        </event>
+    </data>
+    <data type="button">
+        <id>multichoice_clear</id>
+        <placeholder>CLEAR</placeholder>
+        <event type="set">
+            <id>set</id>
+            <actions phase="pre">
+                <action>
+                    fieldEdit: f.multichoice;
+                    change fieldEdit value { return null; }
+                </action>
+            </actions>
+        </event>
+    </data>
+    <data type="button">
+        <id>multichoice_map_clear</id>
+        <placeholder>CLEAR</placeholder>
+        <event type="set">
+            <id>set</id>
+            <actions phase="pre">
+                <action>
+                    fieldEdit: f.multichoice_map;
+                    change fieldEdit value { return null; }
+                </action>
+            </actions>
+        </event>
+    </data>
+    <data type="button">
+        <id>multichoice_autocomplete_clear</id>
+        <placeholder>CLEAR</placeholder>
+        <event type="set">
+            <id>set</id>
+            <actions phase="pre">
+                <action>
+                    fieldEdit: f.multichoice_autocomplete;
+                    change fieldEdit value { return null; }
+                </action>
+            </actions>
+        </event>
+    </data>
+    <data type="button">
+        <id>multichoice_autocomplete_map_clear</id>
+        <placeholder>CLEAR</placeholder>
+        <event type="set">
+            <id>set</id>
+            <actions phase="pre">
+                <action>
+                    fieldEdit: f.multichoice_autocomplete_map;
+                    change fieldEdit value { return null; }
+                </action>
+            </actions>
+        </event>
+    </data>
+    <data type="button">
+        <id>multichoice_list_clear</id>
+        <placeholder>CLEAR</placeholder>
+        <event type="set">
+            <id>set</id>
+            <actions phase="pre">
+                <action>
+                    fieldEdit: f.multichoice_list;
+                    change fieldEdit value { return null; }
+                </action>
+            </actions>
+        </event>
+    </data>
+    <data type="button">
+        <id>multichoice_list_map_clear</id>
+        <placeholder>CLEAR</placeholder>
+        <event type="set">
+            <id>set</id>
+            <actions phase="pre">
+                <action>
+                    fieldEdit: f.multichoice_list_map;
+                    change fieldEdit value { return null; }
+                </action>
+            </actions>
+        </event>
+    </data>
+    <data type="button">
+        <id>i18n_divider_clear</id>
+        <placeholder>CLEAR</placeholder>
+        <event type="set">
+            <id>set</id>
+            <actions phase="pre">
+                <action>
+                    fieldEdit: f.i18n_divider;
+                    change fieldEdit value { return null; }
+                </action>
+            </actions>
+        </event>
+    </data>
+    <data type="button">
+        <id>number_clear</id>
+        <placeholder>CLEAR</placeholder>
+        <event type="set">
+            <id>set</id>
+            <actions phase="pre">
+                <action>
+                    fieldEdit: f.number;
+                    change fieldEdit value { return null; }
+                </action>
+            </actions>
+        </event>
+    </data>
+    <data type="button">
+        <id>number_currency_clear</id>
+        <placeholder>CLEAR</placeholder>
+        <event type="set">
+            <id>set</id>
+            <actions phase="pre">
+                <action>
+                    fieldEdit: f.number_currency;
+                    change fieldEdit value { return null; }
+                </action>
+            </actions>
+        </event>
+    </data>
+    <data type="button">
+        <id>number_currency_dollar_clear</id>
+        <placeholder>CLEAR</placeholder>
+        <event type="set">
+            <id>set</id>
+            <actions phase="pre">
+                <action>
+                    fieldEdit: f.number_currency_dollar;
+                    change fieldEdit value { return null; }
+                </action>
+            </actions>
+        </event>
+    </data>
+    <data type="button">
+        <id>password_data_clear</id>
+        <placeholder>CLEAR</placeholder>
+        <event type="set">
+            <id>set</id>
+            <actions phase="pre">
+                <action>
+                    fieldEdit: f.password_data;
+                    change fieldEdit value { return null; }
+                </action>
+            </actions>
+        </event>
+    </data>
+    <data type="button">
+        <id>password_dataref_clear</id>
+        <placeholder>CLEAR</placeholder>
+        <event type="set">
+            <id>set</id>
+            <actions phase="pre">
+                <action>
+                    fieldEdit: f.password_dataref;
+                    change fieldEdit value { return null; }
+                </action>
+            </actions>
+        </event>
+    </data>
+    <data type="button">
+        <id>taskRef_clear</id>
+        <placeholder>CLEAR</placeholder>
+        <event type="set">
+            <id>set</id>
+            <actions phase="pre">
+                <action>
+                    fieldEdit: f.taskRef;
+                    change fieldEdit value { return null; }
+                </action>
+            </actions>
+        </event>
+    </data>
+    <data type="button">
+        <id>text_clear</id>
+        <placeholder>CLEAR</placeholder>
+        <event type="set">
+            <id>set</id>
+            <actions phase="pre">
+                <action>
+                    fieldEdit: f.text;
+                    change fieldEdit value { return null; }
+                </action>
+            </actions>
+        </event>
+    </data>
+    <data type="button">
+        <id>text_html_area_clear</id>
+        <placeholder>CLEAR</placeholder>
+        <event type="set">
+            <id>set</id>
+            <actions phase="pre">
+                <action>
+                    fieldEdit: f.text_html_area;
+                    change fieldEdit value { return null; }
+                </action>
+            </actions>
+        </event>
+    </data>
+    <data type="button">
+        <id>text_markdown_area_clear</id>
+        <placeholder>CLEAR</placeholder>
+        <event type="set">
+            <id>set</id>
+            <actions phase="pre">
+                <action>
+                    fieldEdit: f.text_markdown_area;
+                    change fieldEdit value { return ""; }
+                </action>
+            </actions>
+        </event>
+    </data>
+    <data type="button">
+        <id>text_area_clear</id>
+        <placeholder>CLEAR</placeholder>
+        <event type="set">
+            <id>set</id>
+            <actions phase="pre">
+                <action>
+                    fieldEdit: f.text_area;
+                    change fieldEdit value { return null; }
+                </action>
+            </actions>
+        </event>
+    </data>
+    <data type="button">
+        <id>user_clear</id>
+        <placeholder>CLEAR</placeholder>
+        <event type="set">
+            <id>set</id>
+            <actions phase="pre">
+                <action>
+                    fieldEdit: f.user;
+                    change fieldEdit value { return null; }
+                </action>
+            </actions>
+        </event>
+    </data>
+    <data type="button">
+        <id>userList1_clear</id>
+        <placeholder>CLEAR</placeholder>
+        <event type="set">
+            <id>set</id>
+            <actions phase="pre">
+                <action>
+                    fieldEdit: f.userList1;
+                    change fieldEdit value { return null; }
+                </action>
+            </actions>
+        </event>
+    </data>
+    <data type="button">
+        <id>userList2_clear</id>
+        <placeholder>CLEAR</placeholder>
+        <event type="set">
+            <id>set</id>
+            <actions phase="pre">
+                <action>
+                    fieldEdit: f.userList2;
+                    change fieldEdit value { return []; }
+                </action>
+            </actions>
+        </event>
+    </data>
+    <data type="button">
+        <id>i18n_clear</id>
+        <placeholder>CLEAR</placeholder>
+        <event type="set">
+            <id>set</id>
+            <actions phase="pre">
+                <action>
+                    fieldEdit: f.i18n;
+                    change fieldEdit value { return null; }
+                </action>
+            </actions>
+        </event>
+    </data>
+
+
+    <!-- I18N Translate -->
+    <i18n locale="sk">
+        <i18nString name="i18n_field_translation">Toto je slovensky preklad i18n fieldu</i18nString>
+    </i18n>
+    <i18n locale="de">
+        <i18nString name="i18n_field_translation">Dis ist die deutsche Übersetzung von i18n</i18nString>
+    </i18n>
+    <i18n locale="en">
+        <i18nString name="i18n_field_translation">This is english translation of i18n</i18nString>
+    </i18n>
+
+
+    <!-- TRANSITIONS -->
+    <transition>
+        <id>1</id>
+        <x>379</x>
+        <y>273</y>
+        <label>Task - editable</label>
+        <assignPolicy>auto</assignPolicy>
+        <dataGroup>
+            <id>number</id>
+            <title>Number fields</title>
+            <stretch>false</stretch>
+            <rows>2</rows>
+            <dataRef>
+                <id>number</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>number_currency</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>number_currency_dollar</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+        </dataGroup>
+        <dataGroup>
+            <id>text</id>
+            <title>Text fields</title>
+            <stretch>false</stretch>
+            <dataRef>
+                <id>text</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>text_area</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>text_markdown_area</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>text_html_area</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>password_data</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>password_dataref</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <component>
+                    <name>password</name>
+                </component>
+            </dataRef>
+        </dataGroup>
+        <dataGroup>
+            <id>enumeration_steppers</id>
+            <title>Enumeration stepper fields</title>
+            <stretch>true</stretch>
+            <dataRef>
+                <id>enumeration_stepper</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>enumeration_arrow</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+        </dataGroup>
+        <dataGroup>
+            <id>enumeration_steppers_map</id>
+            <title>Enumeration stepper fields map</title>
+            <stretch>true</stretch>
+            <dataRef>
+                <id>enumeration_stepper_map</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>enumeration_arrow_map</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+        </dataGroup>
+        <dataGroup>
+            <id>enumeration</id>
+            <title>Enumeration fields</title>
+            <stretch>false</stretch>
+            <dataRef>
+                <id>enumeration</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>enumeration_autocomplete</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>enumeration_autocomplete_dynamic</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>enumeration_list</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>enumeration_icon</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+        </dataGroup>
+        <dataGroup>
+            <id>enumeration_map</id>
+            <stretch>false</stretch>
+            <title>Enumeration fields map</title>
+            <dataRef>
+                <id>enumeration_map</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>enumeration_autocomplete_map</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>enumeration_autocomplete_dynamic_map</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>enumeration_list_map</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>enumeration_map_icon</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+        </dataGroup>
+        <dataGroup>
+            <id>multichoice</id>
+            <title>Multichoice fields</title>
+            <stretch>false</stretch>
+            <dataRef>
+                <id>multichoice</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>multichoice_list</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>multichoice_autocomplete</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+        </dataGroup>
+        <dataGroup>
+            <id>multichoice_map</id>
+            <title>Multichoice fields map</title>
+            <stretch>false</stretch>
+            <dataRef>
+                <id>multichoice_map</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>multichoice_list_map</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>multichoice_autocomplete_map</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>multichoice_map</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+        </dataGroup>
+        <dataGroup>
+            <id>boolean</id>
+            <title>Boolean fields</title>
+            <stretch>false</stretch>
+            <dataRef>
+                <id>boolean</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+        </dataGroup>
+        <dataGroup>
+            <id>date</id>
+            <title>Date fields</title>
+            <stretch>false</stretch>
+            <dataRef>
+                <id>date</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>datetime</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+        </dataGroup>
+        <dataGroup>
+            <id>file</id>
+            <title>File fields</title>
+            <stretch>false</stretch>
+            <dataRef>
+                <id>file</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>file_preview</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>file_preview_test</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>fileList</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+        </dataGroup>
+        <dataGroup>
+            <id>user</id>
+            <title>User fields</title>
+            <stretch>false</stretch>
+            <dataRef>
+                <id>user</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>userList1</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+        </dataGroup>
+        <dataGroup>
+            <id>button</id>
+            <title>Button fields</title>
+            <stretch>false</stretch>
+            <dataRef>
+                <id>button</id>
+                <logic>
+                    <behavior>editable</behavior>
+                    <action trigger="set">
+                        generatePDF("1","file")
+                    </action>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>button_stroked</id>
+                <logic>
+                    <behavior>editable</behavior>
+                    <action trigger="set">
+                        text_markdown_area: f.text_markdown_area;
+
+                        change text_markdown_area value { "AHOJ TU BACKO :)" }
+                    </action>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>button_flat</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>button_raised</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>button_fab</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>button_minifab</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>button_icon</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>button_dialog</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+        </dataGroup>
+        <dataGroup>
+            <id>i18ngroup</id>
+            <title>I18n fields</title>
+            <stretch>false</stretch>
+            <dataRef>
+                <id>i18n_divider</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>i18n_divider_lgbtq</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>i18n</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+        </dataGroup>
+        <dataGroup>
+            <id>taskRef</id>
+            <title>Task refs</title>
+            <stretch>false</stretch>
+            <dataRef>
+                <id>taskRef</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+        </dataGroup>
+        <dataGroup>
+            <id>filterGroup</id>
+            <title>Filter fields</title>
+            <stretch>false</stretch>
+            <dataRef>
+                <id>filter</id>
+                <logic>
+                    <behavior>visible</behavior>
+                </logic>
+            </dataRef>
+        </dataGroup>
+    </transition>
+    <transition>
+        <id>2</id>
+        <x>379</x>
+        <y>273</y>
+        <label>Task - visible</label>
+        <assignPolicy>auto</assignPolicy>
+        <dataGroup>
+            <id>number</id>
+            <title>Number fields</title>
+            <stretch>false</stretch>
+            <rows>2</rows>
+            <dataRef>
+                <id>number</id>
+                <logic>
+                    <behavior>visible</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>number_currency</id>
+                <logic>
+                    <behavior>visible</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>number_currency_dollar</id>
+                <logic>
+                    <behavior>visible</behavior>
+                </logic>
+            </dataRef>
+        </dataGroup>
+        <dataGroup>
+            <id>text</id>
+            <title>Text fields</title>
+            <stretch>false</stretch>
+            <dataRef>
+                <id>text</id>
+                <logic>
+                    <behavior>visible</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>text_area</id>
+                <logic>
+                    <behavior>visible</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>text_markdown_area</id>
+                <logic>
+                    <behavior>visible</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>text_html_area</id>
+                <logic>
+                    <behavior>visible</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>password_data</id>
+                <logic>
+                    <behavior>visible</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>password_dataref</id>
+                <logic>
+                    <behavior>visible</behavior>
+                </logic>
+                <component>
+                    <name>password</name>
+                </component>
+            </dataRef>
+        </dataGroup>
+        <dataGroup>
+            <id>enumeration_steppers</id>
+            <title>Enumeration stepper fields</title>
+            <stretch>true</stretch>
+            <dataRef>
+                <id>enumeration_stepper</id>
+                <logic>
+                    <behavior>visible</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>enumeration_arrow</id>
+                <logic>
+                    <behavior>visible</behavior>
+                </logic>
+            </dataRef>
+        </dataGroup>
+        <dataGroup>
+            <id>enumeration_steppers_map</id>
+            <title>Enumeration stepper fields map</title>
+            <stretch>true</stretch>
+            <dataRef>
+                <id>enumeration_stepper_map</id>
+                <logic>
+                    <behavior>visible</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>enumeration_arrow_map</id>
+                <logic>
+                    <behavior>visible</behavior>
+                </logic>
+            </dataRef>
+        </dataGroup>
+        <dataGroup>
+            <id>enumeration</id>
+            <title>Enumeration fields</title>
+            <stretch>false</stretch>
+            <dataRef>
+                <id>enumeration</id>
+                <logic>
+                    <behavior>visible</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>enumeration_autocomplete</id>
+                <logic>
+                    <behavior>visible</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>enumeration_autocomplete_dynamic</id>
+                <logic>
+                    <behavior>visible</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>enumeration_list</id>
+                <logic>
+                    <behavior>visible</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>enumeration_icon</id>
+                <logic>
+                    <behavior>visible</behavior>
+                </logic>
+            </dataRef>
+        </dataGroup>
+        <dataGroup>
+            <id>enumeration_map</id>
+            <stretch>false</stretch>
+            <title>Enumeration fields map</title>
+            <dataRef>
+                <id>enumeration_map</id>
+                <logic>
+                    <behavior>visible</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>enumeration_autocomplete_map</id>
+                <logic>
+                    <behavior>visible</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>enumeration_autocomplete_dynamic_map</id>
+                <logic>
+                    <behavior>visible</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>enumeration_list_map</id>
+                <logic>
+                    <behavior>visible</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>enumeration_map_icon</id>
+                <logic>
+                    <behavior>visible</behavior>
+                </logic>
+            </dataRef>
+        </dataGroup>
+        <dataGroup>
+            <id>multichoice</id>
+            <title>Multichoice fields</title>
+            <stretch>false</stretch>
+            <dataRef>
+                <id>multichoice</id>
+                <logic>
+                    <behavior>visible</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>multichoice_list</id>
+                <logic>
+                    <behavior>visible</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>multichoice_autocomplete</id>
+                <logic>
+                    <behavior>visible</behavior>
+                </logic>
+            </dataRef>
+        </dataGroup>
+        <dataGroup>
+            <id>multichoice_map</id>
+            <title>Multichoice fields map</title>
+            <stretch>false</stretch>
+            <dataRef>
+                <id>multichoice_map</id>
+                <logic>
+                    <behavior>visible</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>multichoice_list_map</id>
+                <logic>
+                    <behavior>visible</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>multichoice_autocomplete_map</id>
+                <logic>
+                    <behavior>visible</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>multichoice_map</id>
+                <logic>
+                    <behavior>visible</behavior>
+                </logic>
+            </dataRef>
+        </dataGroup>
+        <dataGroup>
+            <id>boolean</id>
+            <title>Boolean fields</title>
+            <stretch>false</stretch>
+            <dataRef>
+                <id>boolean</id>
+                <logic>
+                    <behavior>visible</behavior>
+                </logic>
+            </dataRef>
+        </dataGroup>
+        <dataGroup>
+            <id>date</id>
+            <title>Date fields</title>
+            <stretch>false</stretch>
+            <dataRef>
+                <id>date</id>
+                <logic>
+                    <behavior>visible</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>datetime</id>
+                <logic>
+                    <behavior>visible</behavior>
+                </logic>
+            </dataRef>
+        </dataGroup>
+        <dataGroup>
+            <id>file</id>
+            <title>File fields</title>
+            <stretch>false</stretch>
+            <dataRef>
+                <id>file</id>
+                <logic>
+                    <behavior>visible</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>file_preview</id>
+                <logic>
+                    <behavior>visible</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>file_preview_test</id>
+                <logic>
+                    <behavior>visible</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>fileList</id>
+                <logic>
+                    <behavior>visible</behavior>
+                </logic>
+            </dataRef>
+        </dataGroup>
+        <dataGroup>
+            <id>user</id>
+            <title>User fields</title>
+            <stretch>false</stretch>
+            <dataRef>
+                <id>user</id>
+                <logic>
+                    <behavior>visible</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>userList1</id>
+                <logic>
+                    <behavior>visible</behavior>
+                </logic>
+            </dataRef>
+        </dataGroup>
+        <dataGroup>
+            <id>button</id>
+            <title>Button fields</title>
+            <stretch>false</stretch>
+            <dataRef>
+                <id>button</id>
+                <logic>
+                    <behavior>visible</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>button_stroked</id>
+                <logic>
+                    <behavior>visible</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>button_flat</id>
+                <logic>
+                    <behavior>visible</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>button_raised</id>
+                <logic>
+                    <behavior>visible</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>button_fab</id>
+                <logic>
+                    <behavior>visible</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>button_minifab</id>
+                <logic>
+                    <behavior>visible</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>button_icon</id>
+                <logic>
+                    <behavior>visible</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>button_dialog</id>
+                <logic>
+                    <behavior>visible</behavior>
+                </logic>
+            </dataRef>
+        </dataGroup>
+        <dataGroup>
+            <id>i18ngroup</id>
+            <title>I18n fields</title>
+            <stretch>false</stretch>
+            <dataRef>
+                <id>i18n_divider</id>
+                <logic>
+                    <behavior>visible</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>i18n_divider_lgbtq</id>
+                <logic>
+                    <behavior>visible</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>i18n</id>
+                <logic>
+                    <behavior>visible</behavior>
+                </logic>
+            </dataRef>
+        </dataGroup>
+        <dataGroup>
+            <id>taskRef</id>
+            <title>Task refs</title>
+            <stretch>false</stretch>
+            <dataRef>
+                <id>taskRef</id>
+                <logic>
+                    <behavior>visible</behavior>
+                </logic>
+            </dataRef>
+        </dataGroup>
+        <dataGroup>
+            <id>filterGroup</id>
+            <title>Filter fields</title>
+            <stretch>false</stretch>
+            <dataRef>
+                <id>filter</id>
+                <logic>
+                    <behavior>visible</behavior>
+                </logic>
+            </dataRef>
+        </dataGroup>
+    </transition>
+    <transition>
+        <id>3</id>
+        <x>379</x>
+        <y>273</y>
+        <label>Datagroups</label>
+        <assignPolicy>auto</assignPolicy>
+        <dataGroup>
+            <id>stretch</id>
+            <title>Stretch</title>
+            <alignment>start</alignment>
+            <stretch>true</stretch>
+            <dataRef>
+                <id>text</id>
+                <logic>
+                    <behavior>visible</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>number</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>enumeration</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+        </dataGroup>
+        <dataGroup>
+            <id>right</id>
+            <title>Alignment - Right</title>
+            <alignment>end</alignment>
+            <stretch>false</stretch>
+            <dataRef>
+                <id>text</id>
+                <logic>
+                    <behavior>visible</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>number</id>
+                <logic>
+                    <behavior>visible</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>enumeration</id>
+                <logic>
+                    <behavior>visible</behavior>
+                </logic>
+            </dataRef>
+        </dataGroup>
+        <dataGroup>
+            <id>left</id>
+            <title>Alignment - Left</title>
+            <alignment>start</alignment>
+            <stretch>false</stretch>
+            <dataRef>
+                <id>text</id>
+                <logic>
+                    <behavior>visible</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>number</id>
+                <logic>
+                    <behavior>visible</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>enumeration</id>
+                <logic>
+                    <behavior>visible</behavior>
+                </logic>
+            </dataRef>
+        </dataGroup>
+        <dataGroup>
+            <id>center</id>
+            <title>Alignment - Center</title>
+            <alignment>center</alignment>
+            <stretch>false</stretch>
+            <dataRef>
+                <id>text</id>
+                <logic>
+                    <behavior>visible</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>number</id>
+                <logic>
+                    <behavior>visible</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>enumeration</id>
+                <logic>
+                    <behavior>visible</behavior>
+                </logic>
+            </dataRef>
+        </dataGroup>
+    </transition>
+    <transition>
+        <id>4</id>
+        <x>379</x>
+        <y>273</y>
+        <label>Task ref test transition</label>
+        <assignPolicy>auto</assignPolicy>
+        <dataGroup>
+            <id>taskref</id>
+            <title>Task ref test group</title>
+            <dataRef>
+                <id>taskref_test_field</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+        </dataGroup>
+    </transition>
+    <transition>
+        <id>t1</id>
+        <x>380</x>
+        <y>380</y>
+        <label>Task - flow layout</label>
+        <layout>
+            <cols>3</cols>
+        </layout>
+        <dataGroup>
+            <id>number</id>
+            <layout>flow</layout>
+            <title>Number fields</title>
+            <dataRef>
+                <id>number</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>number_currency</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>number_currency_dollar</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+        </dataGroup>
+        <dataGroup>
+            <id>text</id>
+            <layout>flow</layout>
+            <title>Text fields</title>
+            <dataRef>
+                <id>text</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>text_area</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>text_markdown_area</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>text_html_area</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>password_data</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>password_dataref</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <component>
+                    <name>password</name>
+                </component>
+            </dataRef>
+        </dataGroup>
+        <dataGroup>
+            <id>enumeration_steppers</id>
+            <layout>flow</layout>
+            <title>Enumeration stepper fields</title>
+            <stretch>true</stretch>
+            <dataRef>
+                <id>enumeration_stepper</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>enumeration_arrow</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+        </dataGroup>
+        <dataGroup>
+            <id>enumeration_steppers_map</id>
+            <layout>flow</layout>
+            <title>Enumeration stepper fields map</title>
+            <stretch>true</stretch>
+            <dataRef>
+                <id>enumeration_stepper_map</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>enumeration_arrow_map</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+        </dataGroup>
+        <dataGroup>
+            <id>enumeration</id>
+            <layout>flow</layout>
+            <title>Enumeration fields</title>
+            <dataRef>
+                <id>enumeration</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>enumeration_autocomplete</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>enumeration_autocomplete_dynamic</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>enumeration_list</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>enumeration_map</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>enumeration_icon</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+        </dataGroup>
+        <dataGroup>
+            <id>enumeration_map</id>
+            <layout>flow</layout>
+            <title>Enumeration fields map</title>
+            <dataRef>
+                <id>enumeration_map</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>enumeration_autocomplete_map</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>enumeration_autocomplete_dynamic_map</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>enumeration_list_map</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>enumeration_map_icon</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+        </dataGroup>
+        <dataGroup>
+            <id>multichoice</id>
+            <layout>flow</layout>
+            <title>Multichoice fields</title>
+            <dataRef>
+                <id>multichoice</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>multichoice_list</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>multichoice_autocomplete</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+        </dataGroup>
+        <dataGroup>
+            <id>boolean</id>
+            <layout>flow</layout>
+            <title>Boolean fields</title>
+            <dataRef>
+                <id>boolean</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+        </dataGroup>
+        <dataGroup>
+            <id>date</id>
+            <layout>flow</layout>
+            <title>Date fields</title>
+            <dataRef>
+                <id>date</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>datetime</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+        </dataGroup>
+        <dataGroup>
+            <id>file</id>
+            <layout>flow</layout>
+            <title>File fields</title>
+            <dataRef>
+                <id>file</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>file_preview</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>file_preview_test</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>fileList</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+        </dataGroup>
+        <dataGroup>
+            <id>user</id>
+            <layout>flow</layout>
+            <title>User fields</title>
+            <dataRef>
+                <id>user</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>userList1</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+        </dataGroup>
+        <dataGroup>
+            <id>button</id>
+            <layout>flow</layout>
+            <title>Button fields</title>
+            <dataRef>
+                <id>button</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>button_stroked</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>button_flat</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>button_raised</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>button_fab</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>button_minifab</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>button_icon</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>button_dialog</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+        </dataGroup>
+        <dataGroup>
+            <id>i18ngroup</id>
+            <layout>flow</layout>
+            <title>I18n fields</title>
+            <dataRef>
+                <id>i18n_divider</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>i18n_divider_lgbtq</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>i18n</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+        </dataGroup>
+        <dataGroup>
+            <id>filterGroup</id>
+            <layout>flow</layout>
+            <title>Filter fields</title>
+            <dataRef>
+                <id>filter</id>
+                <logic>
+                    <behavior>visible</behavior>
+                </logic>
+            </dataRef>
+        </dataGroup>
+        <dataGroup>
+            <id>taskRef</id>
+            <title>Task refs</title>
+            <dataRef>
+                <id>taskRef</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+        </dataGroup>
+    </transition>
+    <transition>
+        <id>t2</id>
+        <x>500</x>
+        <y>380</y>
+        <label>Task - legacy layout</label>
+        <dataGroup>
+            <id>number</id>
+            <layout>legacy</layout>
+            <title>Number fields</title>
+            <dataRef>
+                <id>number</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>number_currency</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>number_currency_dollar</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+        </dataGroup>
+        <dataGroup>
+            <id>text</id>
+            <layout>legacy</layout>
+            <title>Text fields</title>
+            <dataRef>
+                <id>text</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>text_area</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>text_markdown_area</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>text_html_area</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>password_data</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>password_dataref</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <component>
+                    <name>password</name>
+                </component>
+            </dataRef>
+        </dataGroup>
+        <dataGroup>
+            <id>enumeration_steppers</id>
+            <layout>legacy</layout>
+            <title>Enumeration stepper fields</title>
+            <stretch>true</stretch>
+            <dataRef>
+                <id>enumeration_stepper</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>enumeration_arrow</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+        </dataGroup>
+        <dataGroup>
+            <id>enumeration_steppers_map</id>
+            <layout>legacy</layout>
+            <title>Enumeration stepper fields map</title>
+            <stretch>true</stretch>
+            <dataRef>
+                <id>enumeration_stepper_map</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>enumeration_arrow_map</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+        </dataGroup>
+        <dataGroup>
+            <id>enumeration</id>
+            <layout>legacy</layout>
+            <title>Enumeration fields</title>
+            <dataRef>
+                <id>enumeration</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>enumeration_autocomplete</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>enumeration_autocomplete_dynamic</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>enumeration_list</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>enumeration_map</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>enumeration_icon</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+        </dataGroup>
+        <dataGroup>
+            <id>enumeration_map</id>
+            <layout>legacy</layout>
+            <title>Enumeration fields map</title>
+            <dataRef>
+                <id>enumeration_map</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>enumeration_autocomplete_map</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>enumeration_autocomplete_dynamic_map</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>enumeration_list_map</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>enumeration_map_icon</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+        </dataGroup>
+        <dataGroup>
+            <id>multichoice</id>
+            <layout>legacy</layout>
+            <title>Multichoice fields</title>
+            <dataRef>
+                <id>multichoice</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>multichoice_list</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>multichoice_autocomplete</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+        </dataGroup>
+        <dataGroup>
+            <id>boolean</id>
+            <layout>legacy</layout>
+            <title>Boolean fields</title>
+            <dataRef>
+                <id>boolean</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+        </dataGroup>
+        <dataGroup>
+            <id>date</id>
+            <layout>legacy</layout>
+            <title>Date fields</title>
+            <dataRef>
+                <id>date</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>datetime</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+        </dataGroup>
+        <dataGroup>
+            <id>file</id>
+            <layout>legacy</layout>
+            <title>File fields</title>
+            <dataRef>
+                <id>file</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>file_preview</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>file_preview_test</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>fileList</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+        </dataGroup>
+        <dataGroup>
+            <id>user</id>
+            <layout>legacy</layout>
+            <title>User fields</title>
+            <dataRef>
+                <id>user</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>userList1</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+        </dataGroup>
+        <dataGroup>
+            <id>button</id>
+            <layout>legacy</layout>
+            <title>Button fields</title>
+            <dataRef>
+                <id>button</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>button_stroked</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>button_flat</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>button_raised</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>button_fab</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>button_minifab</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>button_icon</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>button_dialog</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+        </dataGroup>
+        <dataGroup>
+            <id>i18ngroup</id>
+            <layout>legacy</layout>
+            <title>I18n fields</title>
+            <dataRef>
+                <id>i18n_divider</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>i18n_divider_lgbtq</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>i18n</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+        </dataGroup>
+        <dataGroup>
+            <id>taskRef</id>
+            <layout>legacy</layout>
+            <title>Task refs</title>
+            <dataRef>
+                <id>taskRef</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+        </dataGroup>
+        <dataGroup>
+            <id>filterGroup</id>
+            <layout>legacy</layout>
+            <title>Filter fields</title>
+            <dataRef>
+                <id>filter</id>
+                <logic>
+                    <behavior>visible</behavior>
+                </logic>
+            </dataRef>
+        </dataGroup>
+    </transition>
+    <transition>
+        <id>t3</id>
+        <x>500</x>
+        <y>380</y>
+        <label>Task - grid layout</label>
+        <dataGroup>
+            <id>t1_0</id>
+            <cols>4</cols>
+            <layout>grid</layout>
+            <dataRef>
+                <id>boolean</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>0</x>
+                    <y>0</y>
+                    <rows>1</rows>
+                    <cols>2</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>button</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>0</x>
+                    <y>1</y>
+                    <rows>1</rows>
+                    <cols>2</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>button_fab</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>0</x>
+                    <y>2</y>
+                    <rows>1</rows>
+                    <cols>2</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>button_icon</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>0</x>
+                    <y>3</y>
+                    <rows>1</rows>
+                    <cols>2</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>button_flat</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>0</x>
+                    <y>4</y>
+                    <rows>1</rows>
+                    <cols>2</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>button_raised</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>0</x>
+                    <y>5</y>
+                    <rows>1</rows>
+                    <cols>2</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>button_minifab</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>0</x>
+                    <y>6</y>
+                    <rows>1</rows>
+                    <cols>2</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>button_stroked</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>0</x>
+                    <y>7</y>
+                    <rows>1</rows>
+                    <cols>2</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>button_dialog</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>0</x>
+                    <y>8</y>
+                    <rows>1</rows>
+                    <cols>2</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>date</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>0</x>
+                    <y>9</y>
+                    <rows>1</rows>
+                    <cols>2</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>datetime</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>0</x>
+                    <y>10</y>
+                    <rows>1</rows>
+                    <cols>2</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>enumeration</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>0</x>
+                    <y>11</y>
+                    <rows>1</rows>
+                    <cols>2</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>enumeration_arrow</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>0</x>
+                    <y>12</y>
+                    <rows>1</rows>
+                    <cols>2</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>enumeration_arrow_map</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>0</x>
+                    <y>13</y>
+                    <rows>1</rows>
+                    <cols>2</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>enumeration_map</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>0</x>
+                    <y>14</y>
+                    <rows>1</rows>
+                    <cols>2</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>enumeration_stepper</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>0</x>
+                    <y>15</y>
+                    <rows>1</rows>
+                    <cols>2</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>enumeration_stepper_map</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>0</x>
+                    <y>16</y>
+                    <rows>1</rows>
+                    <cols>2</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>enumeration_autocomplete</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>0</x>
+                    <y>17</y>
+                    <rows>1</rows>
+                    <cols>2</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>enumeration_autocomplete_dynamic</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>0</x>
+                    <y>18</y>
+                    <rows>1</rows>
+                    <cols>2</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>enumeration_autocomplete_dynamic_map</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>0</x>
+                    <y>19</y>
+                    <rows>1</rows>
+                    <cols>2</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>enumeration_autocomplete_map</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>0</x>
+                    <y>20</y>
+                    <rows>1</rows>
+                    <cols>2</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>enumeration_icon</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>0</x>
+                    <y>21</y>
+                    <rows>1</rows>
+                    <cols>2</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>enumeration_list</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>0</x>
+                    <y>22</y>
+                    <rows>1</rows>
+                    <cols>2</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>enumeration_list_map</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>0</x>
+                    <y>23</y>
+                    <rows>1</rows>
+                    <cols>2</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>enumeration_map_icon</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>0</x>
+                    <y>24</y>
+                    <rows>1</rows>
+                    <cols>2</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>file</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>0</x>
+                    <y>25</y>
+                    <rows>1</rows>
+                    <cols>2</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>fileList</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>0</x>
+                    <y>26</y>
+                    <rows>1</rows>
+                    <cols>2</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>file_preview</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>0</x>
+                    <y>27</y>
+                    <rows>1</rows>
+                    <cols>2</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>filter</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>0</x>
+                    <y>28</y>
+                    <rows>1</rows>
+                    <cols>2</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>caze_filter</id>
+                <logic>
+                    <behavior>visible</behavior>
+                </logic>
+                <layout>
+                    <x>0</x>
+                    <y>29</y>
+                    <rows>1</rows>
+                    <cols>2</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>multichoice</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>0</x>
+                    <y>30</y>
+                    <rows>1</rows>
+                    <cols>2</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>multichoice_map</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>0</x>
+                    <y>31</y>
+                    <rows>1</rows>
+                    <cols>2</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>multichoice_autocomplete</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>0</x>
+                    <y>32</y>
+                    <rows>1</rows>
+                    <cols>2</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>multichoice_autocomplete_map</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>0</x>
+                    <y>33</y>
+                    <rows>1</rows>
+                    <cols>2</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>multichoice_list</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>0</x>
+                    <y>34</y>
+                    <rows>1</rows>
+                    <cols>2</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>multichoice_list_map</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>0</x>
+                    <y>35</y>
+                    <rows>1</rows>
+                    <cols>2</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>i18n_divider</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>0</x>
+                    <y>36</y>
+                    <rows>1</rows>
+                    <cols>2</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>number</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>0</x>
+                    <y>37</y>
+                    <rows>1</rows>
+                    <cols>2</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>number_currency</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>0</x>
+                    <y>38</y>
+                    <rows>1</rows>
+                    <cols>2</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>number_currency_dollar</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>0</x>
+                    <y>39</y>
+                    <rows>1</rows>
+                    <cols>2</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>password_data</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>0</x>
+                    <y>40</y>
+                    <rows>1</rows>
+                    <cols>2</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>password_dataref</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>0</x>
+                    <y>41</y>
+                    <rows>1</rows>
+                    <cols>2</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>text</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>0</x>
+                    <y>43</y>
+                    <rows>1</rows>
+                    <cols>2</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>text_html_area</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>0</x>
+                    <y>44</y>
+                    <rows>2</rows>
+                    <cols>3</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>text_markdown_area</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>0</x>
+                    <y>46</y>
+                    <rows>2</rows>
+                    <cols>3</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>text_area</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>0</x>
+                    <y>48</y>
+                    <rows>2</rows>
+                    <cols>3</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+
+            <dataRef>
+                <id>user</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>0</x>
+                    <y>51</y>
+                    <rows>1</rows>
+                    <cols>2</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>userList1</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>0</x>
+                    <y>52</y>
+                    <rows>1</rows>
+                    <cols>2</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>userList2</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>0</x>
+                    <y>53</y>
+                    <rows>1</rows>
+                    <cols>2</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>i18n</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>0</x>
+                    <y>54</y>
+                    <rows>1</rows>
+                    <cols>2</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>boolean_change</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>2</x>
+                    <y>0</y>
+                    <rows>1</rows>
+                    <cols>1</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>button_change</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>2</x>
+                    <y>1</y>
+                    <rows>1</rows>
+                    <cols>1</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>button_fab_change</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>2</x>
+                    <y>2</y>
+                    <rows>1</rows>
+                    <cols>1</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>userList1_clear</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>3</x>
+                    <y>52</y>
+                    <rows>1</rows>
+                    <cols>1</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>userList2_clear</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>3</x>
+                    <y>53</y>
+                    <rows>1</rows>
+                    <cols>1</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>button_icon_change</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>2</x>
+                    <y>3</y>
+                    <rows>1</rows>
+                    <cols>1</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>button_flat_change</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>2</x>
+                    <y>4</y>
+                    <rows>1</rows>
+                    <cols>1</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>button_raised_change</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>2</x>
+                    <y>5</y>
+                    <rows>1</rows>
+                    <cols>1</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>button_minifab_change</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>2</x>
+                    <y>6</y>
+                    <rows>1</rows>
+                    <cols>1</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>button_stroked_change</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>2</x>
+                    <y>7</y>
+                    <rows>1</rows>
+                    <cols>1</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>button_dialog_change</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>2</x>
+                    <y>8</y>
+                    <rows>1</rows>
+                    <cols>1</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>date_change</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>2</x>
+                    <y>9</y>
+                    <rows>1</rows>
+                    <cols>1</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>datetime_change</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>2</x>
+                    <y>10</y>
+                    <rows>1</rows>
+                    <cols>1</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>enumeration_change</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>2</x>
+                    <y>11</y>
+                    <rows>1</rows>
+                    <cols>1</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>enumeration_arrow_change</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>2</x>
+                    <y>12</y>
+                    <rows>1</rows>
+                    <cols>1</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>enumeration_arrow_map_change</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>2</x>
+                    <y>13</y>
+                    <rows>1</rows>
+                    <cols>1</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>enumeration_map_change</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>2</x>
+                    <y>14</y>
+                    <rows>1</rows>
+                    <cols>1</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>enumeration_stepper_change</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>2</x>
+                    <y>15</y>
+                    <rows>1</rows>
+                    <cols>1</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>enumeration_stepper_map_change</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>2</x>
+                    <y>16</y>
+                    <rows>1</rows>
+                    <cols>1</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>enumeration_autocomplete_change</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>2</x>
+                    <y>17</y>
+                    <rows>1</rows>
+                    <cols>1</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>enumeration_autocomplete_dynamic_change</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>2</x>
+                    <y>18</y>
+                    <rows>1</rows>
+                    <cols>1</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>enumeration_autocomplete_dynamic_map_change</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>2</x>
+                    <y>19</y>
+                    <rows>1</rows>
+                    <cols>1</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>enumeration_autocomplete_map_change</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>2</x>
+                    <y>20</y>
+                    <rows>1</rows>
+                    <cols>1</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+
+            <dataRef>
+                <id>enumeration_icon_change</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>2</x>
+                    <y>21</y>
+                    <rows>1</rows>
+                    <cols>1</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>enumeration_list_change</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>2</x>
+                    <y>22</y>
+                    <rows>1</rows>
+                    <cols>1</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>enumeration_list_map_change</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>2</x>
+                    <y>23</y>
+                    <rows>1</rows>
+                    <cols>1</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>enumeration_map_icon_change</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>2</x>
+                    <y>24</y>
+                    <rows>1</rows>
+                    <cols>1</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>file_change</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>2</x>
+                    <y>25</y>
+                    <rows>1</rows>
+                    <cols>1</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>fileList_change</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>2</x>
+                    <y>26</y>
+                    <rows>1</rows>
+                    <cols>1</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>file_preview_change</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>2</x>
+                    <y>27</y>
+                    <rows>1</rows>
+                    <cols>1</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>filter_change</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>2</x>
+                    <y>28</y>
+                    <rows>1</rows>
+                    <cols>1</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>caze_filter_change</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>2</x>
+                    <y>29</y>
+                    <rows>1</rows>
+                    <cols>1</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>multichoice_change</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>2</x>
+                    <y>30</y>
+                    <rows>1</rows>
+                    <cols>1</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>multichoice_map_change</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>2</x>
+                    <y>31</y>
+                    <rows>1</rows>
+                    <cols>1</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>multichoice_autocomplete_change</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>2</x>
+                    <y>32</y>
+                    <rows>1</rows>
+                    <cols>1</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>multichoice_autocomplete_map_change</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>2</x>
+                    <y>33</y>
+                    <rows>1</rows>
+                    <cols>1</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>multichoice_list_change</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>2</x>
+                    <y>34</y>
+                    <rows>1</rows>
+                    <cols>1</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>multichoice_list_map_change</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>2</x>
+                    <y>35</y>
+                    <rows>1</rows>
+                    <cols>1</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>i18n_divider_change</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>2</x>
+                    <y>36</y>
+                    <rows>1</rows>
+                    <cols>1</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>number_change</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>2</x>
+                    <y>37</y>
+                    <rows>1</rows>
+                    <cols>1</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>number_currency_change</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>2</x>
+                    <y>38</y>
+                    <rows>1</rows>
+                    <cols>1</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>number_currency_dollar_change</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>2</x>
+                    <y>39</y>
+                    <rows>1</rows>
+                    <cols>1</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>password_data_change</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>2</x>
+                    <y>40</y>
+                    <rows>1</rows>
+                    <cols>1</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>password_dataref_change</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>2</x>
+                    <y>41</y>
+                    <rows>1</rows>
+                    <cols>1</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>text_change</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>2</x>
+                    <y>43</y>
+                    <rows>1</rows>
+                    <cols>1</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>text_html_area_change</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>3</x>
+                    <y>44</y>
+                    <rows>1</rows>
+                    <cols>1</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>text_markdown_area_change</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>3</x>
+                    <y>46</y>
+                    <rows>1</rows>
+                    <cols>1</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>text_area_change</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>3</x>
+                    <y>48</y>
+                    <rows>1</rows>
+                    <cols>1</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+
+            <dataRef>
+                <id>user_change</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>2</x>
+                    <y>51</y>
+                    <rows>1</rows>
+                    <cols>1</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>userList1_change</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>2</x>
+                    <y>52</y>
+                    <rows>1</rows>
+                    <cols>1</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>userList2_change</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>2</x>
+                    <y>53</y>
+                    <rows>1</rows>
+                    <cols>1</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>i18n_change</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>2</x>
+                    <y>54</y>
+                    <rows>1</rows>
+                    <cols>1</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>boolean_clear</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>3</x>
+                    <y>0</y>
+                    <rows>1</rows>
+                    <cols>1</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>button_clear</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>3</x>
+                    <y>1</y>
+                    <rows>1</rows>
+                    <cols>1</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>button_fab_clear</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>3</x>
+                    <y>2</y>
+                    <rows>1</rows>
+                    <cols>1</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>button_icon_clear</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>3</x>
+                    <y>3</y>
+                    <rows>1</rows>
+                    <cols>1</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>button_flat_clear</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>3</x>
+                    <y>4</y>
+                    <rows>1</rows>
+                    <cols>1</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>button_raised_clear</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>3</x>
+                    <y>5</y>
+                    <rows>1</rows>
+                    <cols>1</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>button_minifab_clear</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>3</x>
+                    <y>6</y>
+                    <rows>1</rows>
+                    <cols>1</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>button_stroked_clear</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>3</x>
+                    <y>7</y>
+                    <rows>1</rows>
+                    <cols>1</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>button_dialog_clear</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>3</x>
+                    <y>8</y>
+                    <rows>1</rows>
+                    <cols>1</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>date_clear</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>3</x>
+                    <y>9</y>
+                    <rows>1</rows>
+                    <cols>1</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>datetime_clear</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>3</x>
+                    <y>10</y>
+                    <rows>1</rows>
+                    <cols>1</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>enumeration_clear</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>3</x>
+                    <y>11</y>
+                    <rows>1</rows>
+                    <cols>1</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>enumeration_arrow_clear</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>3</x>
+                    <y>12</y>
+                    <rows>1</rows>
+                    <cols>1</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>enumeration_arrow_map_clear</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>3</x>
+                    <y>13</y>
+                    <rows>1</rows>
+                    <cols>1</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>enumeration_map_clear</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>3</x>
+                    <y>14</y>
+                    <rows>1</rows>
+                    <cols>1</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>enumeration_stepper_clear</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>3</x>
+                    <y>15</y>
+                    <rows>1</rows>
+                    <cols>1</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>enumeration_stepper_map_clear</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>3</x>
+                    <y>16</y>
+                    <rows>1</rows>
+                    <cols>1</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>enumeration_autocomplete_clear</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>3</x>
+                    <y>17</y>
+                    <rows>1</rows>
+                    <cols>1</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>enumeration_autocomplete_dynamic_clear</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>3</x>
+                    <y>18</y>
+                    <rows>1</rows>
+                    <cols>1</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>enumeration_autocomplete_dynamic_map_clear</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>3</x>
+                    <y>19</y>
+                    <rows>1</rows>
+                    <cols>1</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>enumeration_autocomplete_map_clear</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>3</x>
+                    <y>20</y>
+                    <rows>1</rows>
+                    <cols>1</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>enumeration_icon_clear</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>3</x>
+                    <y>21</y>
+                    <rows>1</rows>
+                    <cols>1</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>enumeration_list_clear</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>3</x>
+                    <y>22</y>
+                    <rows>1</rows>
+                    <cols>1</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>enumeration_list_map_clear</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>3</x>
+                    <y>23</y>
+                    <rows>1</rows>
+                    <cols>1</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>enumeration_map_icon_clear</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>3</x>
+                    <y>24</y>
+                    <rows>1</rows>
+                    <cols>1</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>file_clear</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>3</x>
+                    <y>25</y>
+                    <rows>1</rows>
+                    <cols>1</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>fileList_clear</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>3</x>
+                    <y>26</y>
+                    <rows>1</rows>
+                    <cols>1</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>file_preview_clear</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>3</x>
+                    <y>27</y>
+                    <rows>1</rows>
+                    <cols>1</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>filter_clear</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>3</x>
+                    <y>28</y>
+                    <rows>1</rows>
+                    <cols>1</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>caze_filter_clear</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>3</x>
+                    <y>29</y>
+                    <rows>1</rows>
+                    <cols>1</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>multichoice_clear</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>3</x>
+                    <y>30</y>
+                    <rows>1</rows>
+                    <cols>1</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>multichoice_map_clear</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>3</x>
+                    <y>31</y>
+                    <rows>1</rows>
+                    <cols>1</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>multichoice_autocomplete_clear</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>3</x>
+                    <y>32</y>
+                    <rows>1</rows>
+                    <cols>1</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>multichoice_autocomplete_map_clear</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>3</x>
+                    <y>33</y>
+                    <rows>1</rows>
+                    <cols>1</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>multichoice_list_clear</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>3</x>
+                    <y>34</y>
+                    <rows>1</rows>
+                    <cols>1</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>multichoice_list_map_clear</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>3</x>
+                    <y>35</y>
+                    <rows>1</rows>
+                    <cols>1</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>i18n_divider_clear</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>3</x>
+                    <y>36</y>
+                    <rows>1</rows>
+                    <cols>1</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>number_clear</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>3</x>
+                    <y>37</y>
+                    <rows>1</rows>
+                    <cols>1</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>number_currency_clear</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>3</x>
+                    <y>38</y>
+                    <rows>1</rows>
+                    <cols>1</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>number_currency_dollar_clear</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>3</x>
+                    <y>39</y>
+                    <rows>1</rows>
+                    <cols>1</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>password_data_clear</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>3</x>
+                    <y>40</y>
+                    <rows>1</rows>
+                    <cols>1</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>password_dataref_clear</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>3</x>
+                    <y>41</y>
+                    <rows>1</rows>
+                    <cols>1</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>text_clear</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>3</x>
+                    <y>43</y>
+                    <rows>1</rows>
+                    <cols>1</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>text_html_area_clear</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>3</x>
+                    <y>45</y>
+                    <rows>1</rows>
+                    <cols>1</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>text_markdown_area_clear</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>3</x>
+                    <y>47</y>
+                    <rows>1</rows>
+                    <cols>1</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>text_area_clear</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>3</x>
+                    <y>49</y>
+                    <rows>1</rows>
+                    <cols>1</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>user_clear</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>3</x>
+                    <y>51</y>
+                    <rows>1</rows>
+                    <cols>1</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>i18n_clear</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>3</x>
+                    <y>54</y>
+                    <rows>1</rows>
+                    <cols>1</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+
+            <dataRef>
+                <id>userList1_clear</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>3</x>
+                    <y>52</y>
+                    <rows>1</rows>
+                    <cols>1</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+
+            <dataRef>
+                <id>taskRef</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>0</x>
+                    <y>55</y>
+                    <rows>1</rows>
+                    <cols>4</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>taskRef_change</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>0</x>
+                    <y>56</y>
+                    <rows>1</rows>
+                    <cols>2</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+            <dataRef>
+                <id>taskRef_clear</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+                <layout>
+                    <x>2</x>
+                    <y>56</y>
+                    <rows>1</rows>
+                    <cols>2</cols>
+                    <template>material</template>
+                    <appearance>outline</appearance>
+                </layout>
+            </dataRef>
+        </dataGroup>
+        <event type="assign">
+            <id>t1_assign</id>
+        </event>
+        <event type="finish">
+            <id>t1_finish</id>
+        </event>
+        <event type="cancel">
+            <id>t1_cancel</id>
+        </event>
+        <event type="delegate">
+            <id>t1_delegate</id>
+        </event>
+    </transition>
+
+</document>

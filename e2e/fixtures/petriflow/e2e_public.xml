@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- e2e: the public view (public-view.spec): an anonymous user opens /process/<base64 of the identifier>, the frontend
+     creates a case "Public request" and the user finishes its task Public form; the task Review is only for the
+     logged users (default role) and shows the message -->
+<document xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://petriflow.com/petriflow.schema.xsd">
+    <id>e2e_public</id>
+    <initials>EPU</initials>
+    <title>E2E public</title>
+    <defaultRole>true</defaultRole>
+    <anonymousRole>true</anonymousRole>
+    <caseName>Public request</caseName>
+    <data type="text">
+        <id>message</id>
+        <title>Message</title>
+    </data>
+    <transition>
+        <id>public_form</id>
+        <x>300</x>
+        <y>100</y>
+        <label>Public form</label>
+        <dataGroup>
+            <id>public_group</id>
+            <dataRef>
+                <id>message</id>
+                <logic>
+                    <behavior>editable</behavior>
+                    <behavior>required</behavior>
+                </logic>
+            </dataRef>
+        </dataGroup>
+    </transition>
+    <transition>
+        <id>review</id>
+        <x>500</x>
+        <y>100</y>
+        <label>Review</label>
+        <roleRef>
+            <id>default</id>
+            <logic>
+                <perform>true</perform>
+                <view>true</view>
+            </logic>
+        </roleRef>
+        <dataGroup>
+            <id>review_group</id>
+            <dataRef>
+                <id>message</id>
+                <logic>
+                    <behavior>visible</behavior>
+                </logic>
+            </dataRef>
+        </dataGroup>
+    </transition>
+    <place>
+        <id>p1</id>
+        <x>100</x>
+        <y>100</y>
+        <tokens>1</tokens>
+        <static>false</static>
+    </place>
+    <place>
+        <id>p2</id>
+        <x>400</x>
+        <y>100</y>
+        <tokens>0</tokens>
+        <static>false</static>
+    </place>
+    <arc>
+        <id>a1</id>
+        <type>regular</type>
+        <sourceId>p1</sourceId>
+        <destinationId>public_form</destinationId>
+        <multiplicity>1</multiplicity>
+    </arc>
+    <arc>
+        <id>a2</id>
+        <type>regular</type>
+        <sourceId>public_form</sourceId>
+        <destinationId>p2</destinationId>
+        <multiplicity>1</multiplicity>
+    </arc>
+    <arc>
+        <id>a3</id>
+        <type>regular</type>
+        <sourceId>p2</sourceId>
+        <destinationId>review</destinationId>
+        <multiplicity>1</multiplicity>
+    </arc>
+</document>

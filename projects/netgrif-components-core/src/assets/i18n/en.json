@@ -331,7 +331,8 @@
         "email": {
             "enterEmail": "E-mail",
             "send": "Send link",
-            "backToLogin": "Back to login"
+            "backToLogin": "Back to login",
+            "sent": "If the address can be used, we have sent a link to it. Check your e-mail."
         },
         "login": {
             "length": "The login name must have at least 4 letters",
@@ -344,6 +345,10 @@
             "noAccount": "Don't have an account?",
             "title": "Sign in",
             "subtitle": "Sign in with your account to continue"
+        },
+        "signUp": {
+            "title": "Sign up",
+            "subtitle": "Enter your e-mail, we will send you a link to finish the registration"
         },
         "changePassword": {
             "oldPassword": "Current password",
@@ -359,12 +364,20 @@
             "repeatPass": "Confirm password",
             "register": "Register",
             "notVerified": "The link is invalid or has expired",
-            "passwordsMustMatch": "The passwords do not match"
+            "passwordsMustMatch": "The passwords do not match",
+            "title": "Create account",
+            "subtitle": "Fill in your name and choose a password",
+            "done": "The registration is complete, you can log in"
         },
         "forgottenPass": {
             "enterNewPass": "New password",
             "repeatNewPass": "Confirm new password",
-            "recover": "Set password"
+            "recover": "Set password",
+            "title": "Forgotten password",
+            "subtitle": "Enter the e-mail of your account, we will send you a link to set a new password",
+            "recoverTitle": "New password",
+            "recoverSubtitle": "Choose a new password of your account",
+            "done": "The password has been set, you can log in"
         },
         "submitFailed": "The request failed, try it again",
         "showPassword": "Show password",
@@ -560,7 +573,8 @@
         "defaultViews": {
             "cases": "Cases",
             "tasks": "Tasks",
-            "roleAssignment": "Role assignment"
+            "roleAssignment": "Role assignment",
+            "userInvite": "Invite user"
         }
     },
     "impersonation": {

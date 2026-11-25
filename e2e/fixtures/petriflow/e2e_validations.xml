@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- e2e: the validations of the fields block the finish of a task (validations.spec): the task Fill has a required text,
+     a number in a range, a text of a pattern with an own message and an e-mail; Done follows after Fill is finished -->
+<document xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://petriflow.com/petriflow.schema.xsd">
+    <id>e2e_validations</id>
+    <initials>EVA</initials>
+    <title>E2E validations</title>
+    <defaultRole>true</defaultRole>
+    <anonymousRole>false</anonymousRole>
+    <data type="text">
+        <id>name</id>
+        <title>Name</title>
+    </data>
+    <data type="number">
+        <id>amount</id>
+        <title>Amount</title>
+        <validations>
+            <validation>
+                <expression>inrange 10,100</expression>
+            </validation>
+        </validations>
+    </data>
+    <data type="text">
+        <id>code</id>
+        <title>Code</title>
+        <validations>
+            <validation>
+                <expression>regex ^[A-Z]{3}$</expression>
+                <message>The code has three capital letters</message>
+            </validation>
+        </validations>
+    </data>
+    <data type="text">
+        <id>email</id>
+        <title>Contact e-mail</title>
+        <validations>
+            <validation>
+                <expression>email</expression>
+            </validation>
+        </validations>
+    </data>
+    <transition>
+        <id>fill</id>
+        <x>300</x>
+        <y>100</y>
+        <label>Fill</label>
+        <dataGroup>
+            <id>fill_group</id>
+            <dataRef>
+                <id>name</id>
+                <logic>
+                    <behavior>editable</behavior>
+                    <behavior>required</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>amount</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>code</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+            <dataRef>
+                <id>email</id>
+                <logic>
+                    <behavior>editable</behavior>
+                </logic>
+            </dataRef>
+        </dataGroup>
+    </transition>
+    <transition>
+        <id>done</id>
+        <x>500</x>
+        <y>100</y>
+        <label>Done</label>
+    </transition>
+    <place>
+        <id>p1</id>
+        <x>100</x>
+        <y>100</y>
+        <tokens>1</tokens>
+        <static>false</static>
+    </place>
+    <place>
+        <id>p2</id>
+        <x>400</x>
+        <y>100</y>
+        <tokens>0</tokens>
+        <static>false</static>
+    </place>
+    <arc>
+        <id>a1</id>
+        <type>regular</type>
+        <sourceId>p1</sourceId>
+        <destinationId>fill</destinationId>
+        <multiplicity>1</multiplicity>
+    </arc>
+    <arc>
+        <id>a2</id>
+        <type>regular</type>
+        <sourceId>fill</sourceId>
+        <destinationId>p2</destinationId>
+        <multiplicity>1</multiplicity>
+    </arc>
+    <arc>
+        <id>a3</id>
+        <type>regular</type>
+        <sourceId>p2</sourceId>
+        <destinationId>done</destinationId>
+        <multiplicity>1</multiplicity>
+    </arc>
+</document>

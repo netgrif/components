@@ -331,7 +331,8 @@
         "email": {
             "enterEmail": "E-Mail",
             "send": "Link senden",
-            "backToLogin": "Zurück zur Anmeldung"
+            "backToLogin": "Zurück zur Anmeldung",
+            "sent": "Wenn die Adresse verwendet werden kann, haben wir einen Link an sie gesendet. Prüfen Sie Ihre E-Mails."
         },
         "login": {
             "length": "Das Benutzername muss mindestens 4 Zeichen enthalten",
@@ -344,6 +345,10 @@
             "noAccount": "Noch kein Konto?",
             "title": "Anmelden",
             "subtitle": "Melden Sie sich mit Ihrem Konto an, um fortzufahren"
+        },
+        "signUp": {
+            "title": "Registrieren",
+            "subtitle": "Geben Sie Ihre E-Mail ein, wir senden Ihnen einen Link zum Abschließen der Registrierung"
         },
         "changePassword": {
             "oldPassword": "Aktuelles Passwort",
@@ -359,12 +364,20 @@
             "repeatPass": "Passwort bestätigen",
             "register": "Registrieren",
             "notVerified": "Der Link ist ungültig oder abgelaufen",
-            "passwordsMustMatch": "Die Passwörter stimmen nicht überein"
+            "passwordsMustMatch": "Die Passwörter stimmen nicht überein",
+            "title": "Konto erstellen",
+            "subtitle": "Geben Sie Ihren Namen ein und wählen Sie ein Passwort",
+            "done": "Die Registrierung ist abgeschlossen, Sie können sich anmelden"
         },
         "forgottenPass": {
             "enterNewPass": "Neues Passwort",
             "repeatNewPass": "Neues Passwort bestätigen",
-            "recover": "Passwort festlegen"
+            "recover": "Passwort festlegen",
+            "title": "Passwort vergessen",
+            "subtitle": "Geben Sie die E-Mail Ihres Kontos ein, wir senden Ihnen einen Link zum Festlegen eines neuen Passworts",
+            "recoverTitle": "Neues Passwort",
+            "recoverSubtitle": "Wählen Sie ein neues Passwort für Ihr Konto",
+            "done": "Das Passwort wurde festgelegt, Sie können sich anmelden"
         },
         "submitFailed": "Die Anfrage ist fehlgeschlagen, versuchen Sie es erneut",
         "showPassword": "Passwort anzeigen",
@@ -560,7 +573,8 @@
         "defaultViews": {
             "cases": "Fälle",
             "tasks": "Aufgaben",
-            "roleAssignment": "Rollenzuweisung"
+            "roleAssignment": "Rollenzuweisung",
+            "userInvite": "Benutzer einladen"
         }
     },
     "impersonation": {

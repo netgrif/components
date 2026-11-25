@@ -331,7 +331,8 @@
         "email": {
             "enterEmail": "E-mail",
             "send": "Poslať odkaz",
-            "backToLogin": "Späť na prihlásenie"
+            "backToLogin": "Späť na prihlásenie",
+            "sent": "Ak sa adresa dá použiť, poslali sme na ňu odkaz. Skontrolujte svoj e-mail."
         },
         "login": {
             "length": "Prihlasovacie meno musí mať aspoň 4 písmená",
@@ -344,6 +345,10 @@
             "noAccount": "Nemáte účet?",
             "title": "Prihlásenie",
             "subtitle": "Pokračujte prihlásením do svojho účtu"
+        },
+        "signUp": {
+            "title": "Registrácia",
+            "subtitle": "Zadajte svoj e-mail, pošleme vám odkaz na dokončenie registrácie"
         },
         "changePassword": {
             "oldPassword": "Súčasné heslo",
@@ -359,12 +364,20 @@
             "repeatPass": "Potvrdenie hesla",
             "register": "Registrovať",
             "notVerified": "Odkaz je neplatný alebo mu vypršala platnosť",
-            "passwordsMustMatch": "Heslá sa nezhodujú"
+            "passwordsMustMatch": "Heslá sa nezhodujú",
+            "title": "Vytvorenie účtu",
+            "subtitle": "Vyplňte svoje meno a zvoľte si heslo",
+            "done": "Registrácia je dokončená, môžete sa prihlásiť"
         },
         "forgottenPass": {
             "enterNewPass": "Nové heslo",
             "repeatNewPass": "Potvrdenie nového hesla",
-            "recover": "Nastaviť heslo"
+            "recover": "Nastaviť heslo",
+            "title": "Zabudnuté heslo",
+            "subtitle": "Zadajte e-mail svojho účtu, pošleme vám odkaz na nastavenie nového hesla",
+            "recoverTitle": "Nové heslo",
+            "recoverSubtitle": "Zvoľte si nové heslo svojho účtu",
+            "done": "Heslo bolo nastavené, môžete sa prihlásiť"
         },
         "submitFailed": "Požiadavka zlyhala, skúste to znova",
         "showPassword": "Zobraziť heslo",
@@ -560,7 +573,8 @@
         "defaultViews": {
             "cases": "Prípady",
             "tasks": "Úlohy",
-            "roleAssignment": "Priradenie rolí"
+            "roleAssignment": "Priradenie rolí",
+            "userInvite": "Pozvať používateľa"
         }
     },
     "impersonation": {

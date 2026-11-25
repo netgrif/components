@@ -11,6 +11,7 @@ import {
     MaterialModule,
     NAE_ASYNC_RENDERING_CONFIGURATION,
     ResourceProvider,
+    SignUpModule,
     TranslateLibModule,
     ViewService
 } from '@netgrif/components-core';
@@ -19,11 +20,14 @@ import {
     BuilderModule,
     CaseViewComponentModule,
     DialogComponentsModule,
+    EmailSubmissionFormComponentModule,
+    ForgottenPasswordFormComponentModule,
     HeaderComponentModule,
     LoginFormComponentModule,
     NavigationComponentModule,
     PanelComponentModule,
     ProfileComponentModule,
+    RegistrationFormComponentModule,
     SearchComponentModule,
     TabsComponentModule,
     provideNaeMaterialDefaults
@@ -55,8 +59,13 @@ import {EmptyViewComponent} from './views/side-nav/emptyView/empty-view.componen
         MaterialModule,
         TranslateLibModule,
         AuthenticationModule,
+        // SignUpService of the sign up and the password recovery of the login page (views/login)
+        SignUpModule,
         AuthenticationComponentModule,
         LoginFormComponentModule,
+        EmailSubmissionFormComponentModule,
+        RegistrationFormComponentModule,
+        ForgottenPasswordFormComponentModule,
         NavigationComponentModule,
         HeaderComponentModule,
         PanelComponentModule,

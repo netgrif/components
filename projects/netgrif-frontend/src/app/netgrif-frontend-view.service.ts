@@ -16,6 +16,7 @@ import {
     DefaultProcessViewComponent,
     ProfileComponent,
     RoleAssignmentComponent,
+    UserInviteComponent,
     WorkflowViewComponent
 } from '@netgrif/components';
 
@@ -27,6 +28,7 @@ export class NetgrifFrontendViewService extends ViewService {
     constructor(configurationService: ConfigurationService, router: Router, loggerService: LoggerService) {
         // Views referenced from nae.json (view `layout.componentName`) have to be registered here.
         super([{id: 'RoleAssignmentComponent', class: RoleAssignmentComponent},
+            {id: 'UserInviteComponent', class: UserInviteComponent},
             {id: 'WorkflowViewComponent', class: WorkflowViewComponent},
             {id: 'DashboardComponent', class: DashboardComponent},
             {id: 'EmptyViewComponent', class: EmptyViewComponent},

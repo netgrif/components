@@ -23,9 +23,39 @@
                 </mat-menu>
             </div>
             <section class="login-card">
-                <h1 class="headline">{{ "forms.login.title" | translate }}</h1>
-                <p class="subtitle">{{ "forms.login.subtitle" | translate }}</p>
-                <nc-login-form (login)="onLogin($event)"></nc-login-form>
+                <h1 class="headline">{{ title | translate }}</h1>
+                <p class="subtitle">{{ subtitle | translate }}</p>
+                @switch (page) {
+                @case ('login') {
+                <nc-login-form [showSignUpButton]="true" [showForgottenPasswordButton]="true"
+                               (login)="onLogin($event)"
+                               (signUp)="navigate('sign-up')"
+                               (resetPassword)="navigate('forgotten-password')"></nc-login-form>
+                }
+                @case ('registration') {
+                <nc-registration-form [token]="token" [displayLegalNotice]="false" (register)="onPasswordSet($event)"></nc-registration-form>
+                }
+                @case ('recovery') {
+                <nc-forgotten-password-form [token]="token" (register)="onPasswordSet($event)"></nc-forgotten-password-form>
+                }
+                @default {
+                @if (mailSent) {
+                <p class="mail-sent" role="status">
+                    <mat-icon>mail</mat-icon>
+                    <span>{{ "forms.email.sent" | translate }}</span>
+                </p>
+                <div class="sent-footer">
+                    <button mat-button type="button" (click)="toLogin()">
+                        <mat-icon>arrow_back</mat-icon>
+                        {{ "forms.email.backToLogin" | translate }}
+                    </button>
+                </div>
+                } @else {
+                <nc-email-submission-form [displayLegalNotice]="false" (formSubmit)="onEmailSubmit($event)"
+                                          (goBackButton)="toLogin()"></nc-email-submission-form>
+                }
+                }
+                }
             </section>
         </main>
     </div>

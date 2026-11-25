@@ -52,3 +52,9 @@ package-lock.json
 
 # caches of the tools
 /.cache
+
+# Playwright
+/test-results
+/playwright-report
+/e2e/.auth
+/e2e/.env
