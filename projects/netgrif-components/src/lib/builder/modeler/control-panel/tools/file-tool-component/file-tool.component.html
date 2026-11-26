@@ -2,6 +2,7 @@
     id="tool_{{ fileTool.id }}"
     mat-icon-button
     matTooltip="{{ fileTool.tooltip }}"
+    [attr.aria-label]="fileTool.tooltip"
     (click)="(fileTool.onClick)"
 >
     <input type="file" class="button--input" (change)="fileTool.onClick()" />

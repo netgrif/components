@@ -39,9 +39,6 @@ async function ensureMenuItem(page: Page, filter: string) {
  */
 test.describe('No allowed processes (NAE)', () => {
 
-    // the settings of a menu item (a task ref list) log NG0100 ExpressionChangedAfterItHasBeenCheckedError in the
-    // development mode of Angular, a bug of TaskRefListFieldComponent
-    test.use({knownConsoleErrors: [/NG0100: ExpressionChangedAfterItHasBeenCheckedError.*TaskRefListFieldComponent/]});
 
     test.beforeAll(async ({browser}) => deployForSpec(browser, 'e2e_no_create.xml'));
 

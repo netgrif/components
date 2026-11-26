@@ -260,14 +260,15 @@ export class BuilderComponent implements OnDestroy {
 
     protected parseModel(data: string, mode: BuilderMode) {
         try {
-            if (data !== undefined) {
-                const model = this._importService.parseFromXml(data)?.model;
-                if (model) {
-                    this.modelService.model = model;
-                    this.historyService.save(`Model ${this.modelService.model.id} ` + this._translateService.instant('builder.hasBeenImported'));
-                }
+            const model = data ? this._importService.parseFromXml(data)?.model : undefined;
+            if (model) {
+                this.modelService.model = model;
+                this._builderIntegrationService.modelLoaded(model);
+                this.historyService.save(`Model ${this.modelService.model.id} ` + this._translateService.instant('builder.hasBeenImported'));
             } else if (!this.modelService.model) {
+                // a new process (no model in its case yet): the empty model is not written, its first change is
                 this.modelService.model = this.modelService.newModel();
+                this._builderIntegrationService.modelLoaded(this.modelService.model);
                 this.historyService.save(this._translateService.instant('builder.newModelCreated'));
             }
         } catch (e) {

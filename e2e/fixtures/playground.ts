@@ -1,7 +1,23 @@
-import {expect, Page, test as base} from '@playwright/test';
+import {ConsoleMessage, expect, Page, test as base} from '@playwright/test';
 
 /** messages of the browser console that are not errors of the application */
 const IGNORED_CONSOLE = [/\[vite\]/, /Angular is running in development mode/];
+
+/**
+ * The text of a console message with the HTTP errors named `HttpErrorResponse`: the production build minifies the name
+ * of the class (the console shows e.g. `ERROR El`), so an HTTP error is recognized by its shape.
+ */
+async function consoleText(message: ConsoleMessage): Promise<string> {
+    const args = await Promise.all(message.args().map(arg => arg.evaluate(value =>
+        !!value && typeof value === 'object' && 'status' in value && 'url' in value && 'headers' in value
+            ? 'HttpErrorResponse' : null).catch(() => null)));
+    if (args.every(arg => arg === null)) {
+        return message.text();
+    }
+    const texts = await Promise.all(message.args().map((arg, i) => args[i] ?? arg.evaluate(value =>
+        typeof value === 'string' ? value : value instanceof Error ? value.message : String(value)).catch(() => '')));
+    return texts.join(' ');
+}
 
 /**
  * The playground page with the errors of the browser console collected: a test fails when the application logged
@@ -23,9 +39,15 @@ export const test = base.extend<{knownConsoleErrors: Array<RegExp>, consoleError
     consoleErrors: [async ({page, knownConsoleErrors}, use) => {
         const errors: Array<string> = [];
         const ignored = (text: string) => [...IGNORED_CONSOLE, ...knownConsoleErrors].some(pattern => pattern.test(text));
+        const pending: Array<Promise<void>> = [];
         page.on('console', message => {
-            if (message.type() === 'error' && !ignored(message.text())) {
-                errors.push(`${new URL(page.url()).pathname}: ${message.text().split('\n')[0]}`);
+            if (message.type() === 'error') {
+                const path = new URL(page.url()).pathname;
+                pending.push(consoleText(message).then(text => {
+                    if (!ignored(text)) {
+                        errors.push(`${path}: ${text.split('\n')[0]}`);
+                    }
+                }));
             }
         });
         page.on('pageerror', error => {
@@ -34,6 +56,7 @@ export const test = base.extend<{knownConsoleErrors: Array<RegExp>, consoleError
             }
         });
         await use(errors);
+        await Promise.all(pending);
         expect(errors, 'errors in the browser console').toEqual([]);
     }, {auto: true}],
 });

@@ -5,7 +5,8 @@
     @let selected = tabView.tabView?.selectedIndex.value ?? 0;
     @if (selected > 0) {
     <div class="detail-header">
-        <button mat-icon-button (click)="closeDetail(tabView.tabView)" [matTooltip]="'toolbar.menu.back' | translate">
+        <button mat-icon-button (click)="closeDetail(tabView.tabView)" [matTooltip]="'toolbar.menu.back' | translate"
+                [attr.aria-label]="'toolbar.menu.back' | translate">
             <mat-icon>arrow_back</mat-icon>
         </button>
         <h1 class="mat-title-large detail-title">{{ tabView.tabView.openedTabs[selected]?.getText$() | async | translate }}</h1>

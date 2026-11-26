@@ -59,7 +59,7 @@ export async function openRoleAssignment(page: Page, user: UserRef) {
 
 /**
  * The roles of the process in the role assignment or in the user invite (every deployed version has its roles, the
- * newest version is the first). The processes are loaded a while (the pane shows "No processes found" until then), the
+ * newest version is the first). The processes are loaded a while (a progress bar is shown until then), the
  * roles are loaded when the panel is expanded: Material listens to the end of the expand animation 200 ms after the
  * panel is rendered, so it is expanded after that.
  */
@@ -91,8 +91,17 @@ export async function ensureMenuItemExists(page: Page, name: string, identifier:
     await expect(page.getByText('Create new menu item')).toBeVisible();
     if (await link.count() === 0) {
         const dialog = page.getByRole('dialog');
+        // the frontend assigns the task of the new item case right after its creation, the assign action of the item
+        // reads the case from the search index (elasticCaseService.findUriNodeId) and fails with 500 until the case is
+        // indexed: the assign is held for 3 s
+        const ASSIGN = '**/api/task/assign/**';
+        await page.route(ASSIGN, async route => {
+            await new Promise(resolve => setTimeout(resolve, 3000));
+            await route.continue();
+        });
         await page.getByText('Create new menu item').click();
         await dialog.getByRole('textbox', {name: 'Name of the item'}).fill(name);
+        await page.unroute(ASSIGN);
         await dialog.getByRole('textbox', {name: 'Menu item identifier'}).fill(identifier);
         await dialog.getByRole('combobox', {name: 'Autocomplete'}).click();
         await page.locator('mat-option').filter({hasText: /^\s*Simple case view\s*$/}).click();

@@ -272,7 +272,9 @@ export class GridsterService implements OnDestroy {
             +event.dataTransfer.getData('cols'),
             event.dataTransfer.getData('ref_component'),
             item);
-        const properties: Array<PropertyDef> = JSON.parse(event.dataTransfer.getData('properties'));
+        // the drag of a component without properties does not set them (field list dragStartHandlerNew)
+        const serializedProperties = event.dataTransfer.getData('properties');
+        const properties: Array<PropertyDef> = serializedProperties ? JSON.parse(serializedProperties) : undefined;
         if (!!properties) {
             for (const property of properties) {
                 newDataRef.component.properties.push(new Property(property.name, property.defaultValue));

@@ -28,7 +28,7 @@
         </div>
         <div fxFlex="40px" fxLayoutAlign="center center">
         @if (showDeleteMenu && canDelete()) {
-        <button mat-icon-button (click)="show($event)" [matMenuTriggerFor]="menu">
+        <button mat-icon-button (click)="show($event)" [matMenuTriggerFor]="menu" [attr.aria-label]="'panel.moreActions' | translate">
             <mat-icon>more_vert</mat-icon>
         </button>
         <mat-menu #menu="matMenu">

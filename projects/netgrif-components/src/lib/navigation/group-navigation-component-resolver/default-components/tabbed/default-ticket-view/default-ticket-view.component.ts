@@ -20,7 +20,7 @@ import {
 } from '@netgrif/components-core';
 import {TranslateService} from "@ngx-translate/core";
 import {FormControl} from "@angular/forms";
-import {forkJoin} from "rxjs";
+import {forkJoin, of} from "rxjs";
 import {map} from 'rxjs/operators';
 import {
     InjectedTabbedTicketViewDataWithNavigationItemTaskData
@@ -96,7 +96,8 @@ export class DefaultTicketViewComponent implements OnInit {
             forkJoin(items.map(item => {
                 const taskId = DoubleDrawerUtils.findTaskIdInCase(item.resource, GroupNavigationConstants.ITEM_TRANS_ID_ALL_DATA);
                 if (taskId === undefined) {
-                    return;
+                    // a menu item without its data task is skipped (below), the other items are shown
+                    return of({caseId: item.resource.stringId, dataGroups: undefined} as DataGroupCaseIdPair);
                 }
                 return this._taskResourceService.getData(taskId)
                     .pipe(map(dataGroups => {return {caseId: item.resource.stringId, dataGroups} as DataGroupCaseIdPair}));

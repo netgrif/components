@@ -541,7 +541,7 @@ export class EditPanelComponent implements OnInit, AfterViewInit, OnDestroy {
         if (!componentDefs) {
             return [];
         }
-        return componentDefs.components.filter(def => def.name !== undefined && def.title.toLowerCase().includes(component.name));
+        return componentDefs.components.filter(def => def.name !== undefined && def.title.toLowerCase().includes(component.name?.toLowerCase() ?? ''));
     }
 
     public filteredProperties(component: PetriflowComponent, propertyName: string): Array<PropertyDef> {

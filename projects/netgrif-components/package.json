@@ -42,7 +42,7 @@
         "@angular/platform-browser-dynamic": "~22.2.3",
         "@angular/router": "~22.2.3",
         "@netgrif/petri.svg": "1.1.1",
-        "@netgrif/petriflow": "2.2.4",
+        "@netgrif/petriflow": "2.2.5",
         "@netgrif/petriflow.svg": "1.1.1",
         "@ngx-translate/core": "~15.0.0",
         "@ngx-translate/http-loader": "~8.0.0",

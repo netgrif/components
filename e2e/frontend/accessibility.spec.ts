@@ -24,12 +24,10 @@ async function checkAccessibility(page: Page, known: Array<string> = []) {
 }
 
 /**
- * The known violations (open bugs): icon buttons without a name (rail menu, more menus, builder tools), aria-sort on the
- * sort headers of the lists, buttons nested in the expansion panel headers and in the tabs, the selection lists and the
- * progress bars without a name, the language button whose name does not contain its visible text.
+ * The known violations (open bugs): aria-sort on the sort headers of the lists (not a column header), buttons nested in
+ * the expansion panel headers (the menu of a case or a task) and in the tabs.
  */
-const KNOWN_LIST = ['aria-allowed-attr', 'button-name', 'nested-interactive'];
-const KNOWN_ADMIN = ['aria-input-field-name', 'aria-progressbar-name', 'button-name'];
+const KNOWN_LIST = ['aria-allowed-attr', 'nested-interactive'];
 
 test.describe('Accessibility (NAE)', () => {
 
@@ -40,7 +38,7 @@ test.describe('Accessibility (NAE)', () => {
             test(`NC-E2E-012 Accessibility ${path}`, async ({page}) => {
                 await page.goto(path);
                 await expect(page.getByRole('heading', {level: 1})).toBeVisible();
-                await checkAccessibility(page, ['label-content-name-mismatch']);
+                await checkAccessibility(page);
             });
         }
     });
@@ -70,7 +68,7 @@ test.describe('Accessibility (NAE)', () => {
         await page.getByRole('menuitem', {name: 'Role assignment'}).click();
         await expect(page.getByRole('heading', {name: 'Users'})).toBeVisible();
         await page.waitForLoadState('networkidle');
-        await checkAccessibility(page, KNOWN_ADMIN);
+        await checkAccessibility(page);
     });
 
     test('NC-E2E-012 Accessibility the user invite', async ({page}) => {
@@ -79,13 +77,13 @@ test.describe('Accessibility (NAE)', () => {
         await page.getByRole('menuitem', {name: 'Invite user'}).click();
         await expect(page.getByRole('heading', {name: 'New user'})).toBeVisible();
         await page.waitForLoadState('networkidle');
-        await checkAccessibility(page, KNOWN_ADMIN);
+        await checkAccessibility(page);
     });
 
     test('NC-E2E-012 Accessibility the builder', async ({page}) => {
         await page.goto('/processes');
         await page.getByRole('button', {name: 'New process', exact: true}).click();
         await expect(builderButton(page, 'tool_import')).toBeVisible();
-        await checkAccessibility(page, ['button-name', 'nested-interactive']);
+        await checkAccessibility(page, ['nested-interactive']);
     });
 });

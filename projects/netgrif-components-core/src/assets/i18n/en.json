@@ -430,7 +430,8 @@
             "version": "Version",
             "author": "Author",
             "upload": "Upload date"
-        }
+        },
+        "moreActions": "More actions"
     },
     "profile": {
         "notLogged": "You are not logged in!",
@@ -508,7 +509,8 @@
             "inviteSent": "Invite sent",
             "inviteFailed": "Invite failed",
             "invite-user": "Invite user"
-        }
+        },
+        "loading": "Loading"
     },
     "preferences": {
         "snackbar": {

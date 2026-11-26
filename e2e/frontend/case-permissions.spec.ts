@@ -25,12 +25,9 @@ async function expectCaseShown(page: Page, title: string) {
     }).toPass({timeout: 30_000});
 }
 
-/**
- * The more button of the case row (the menu with Delete), shown only with the delete permission. The icon button has no
- * accessible name (open bug), it is found by its icon.
- */
+/** the more button of the case row (the menu with Delete), shown only with the delete permission */
 function caseMenu(page: Page, title: string) {
-    return caseRow(page, title).first().getByRole('button').filter({has: page.locator('mat-icon', {hasText: 'more_vert'})});
+    return caseRow(page, title).first().getByRole('button', {name: 'More actions', exact: true});
 }
 
 /**

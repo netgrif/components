@@ -1,5 +1,5 @@
 <mat-toolbar fxHide.gt-sm>
-    <button mat-icon-button (click)="toggleMenu()">
+    <button mat-icon-button (click)="toggleMenu()" [attr.aria-label]="'toolbar.menu.open' | translate">
         <mat-icon>menu</mat-icon>
     </button>
     <span fxFlex></span>
@@ -126,7 +126,8 @@
 </mat-menu>
 
 <ng-template #defaultLeftSide>
-    <button class="rail-item rail-menu" (click)="toggleRightMenu()" fxHide.lt-md>
+    <button class="rail-item rail-menu" (click)="toggleRightMenu()" fxHide.lt-md
+            [attr.aria-label]="'toolbar.menu.open' | translate">
         <span class="rail-indicator"><mat-icon>menu</mat-icon></span>
     </button>
     @for (folder of leftItems$ | async; track itemsTrackBy($index, folder)) {

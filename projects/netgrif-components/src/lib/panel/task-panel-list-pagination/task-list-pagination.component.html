@@ -1,7 +1,8 @@
+@let tasks = tasks$ | async;
 <div class="list-viewport" [ncListViewport]="header">
     <div class="list-content">
         <div class="list-header" #header><ng-content select="[ncListHeader]"></ng-content></div>
-        @if (tasks$ | async; as tasks) {
+        @if (tasks) {
         @if ((loading$ | async) === false && tasks.length === 0) {
         <div class="nae-empty-state" role="status">
             <mat-icon class="nae-empty-state-icon">check_box</mat-icon>
@@ -29,7 +30,7 @@
         }
     </div>
 </div>
-@if (tasks$ | async) {
+@if (tasks) {
 <mat-paginator [length]="length"
                [pageSize]="pageSize"
                [pageIndex]="pageIndex"

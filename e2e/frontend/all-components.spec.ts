@@ -33,9 +33,6 @@ test.describe('All components (NAE)', () => {
     test.beforeAll(async ({browser}) => deployForSpec(browser, 'all_data.xml'));
 
     test('NAE-TC-003 All_components_1 the editable fields show their values and take new ones', async ({page}) => {
-        // fails without the fix of NAE-2509-opravy: TaskDataService sent only the last changed field of a task
-        // (the other changes were lost), remove test.fail() when the fix is merged
-        test.fail();
         test.setTimeout(120_000);
         await createCase(page, 'All Data', CASE);
         const task = await openTask(page, 'Task - editable');

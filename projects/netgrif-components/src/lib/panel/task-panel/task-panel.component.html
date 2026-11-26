@@ -24,7 +24,7 @@
         @if (isLoading) {
         <mat-progress-bar mode="indeterminate" class="task-panel-progress"></mat-progress-bar>
         } @else if (showMoreMenu && (canAssign() || canDo('delegate') || canReassign() || canCancel() || canFinish())) {
-        <button mat-icon-button (click)="preventPanelOpen($event)" [matMenuTriggerFor]="menu">
+        <button mat-icon-button (click)="preventPanelOpen($event)" [matMenuTriggerFor]="menu" [attr.aria-label]="'panel.moreActions' | translate">
             <mat-icon>more_vert</mat-icon>
         </button>
         }

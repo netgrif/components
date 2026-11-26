@@ -45,7 +45,7 @@
         </div>
         <footer class="pane-actions">
             @if (loading.isActive) {
-            <mat-progress-bar mode="indeterminate" class="invite-progress"></mat-progress-bar>
+            <mat-progress-bar mode="indeterminate" class="invite-progress" [attr.aria-label]="'admin.loading' | translate"></mat-progress-bar>
             }
             <button mat-flat-button type="button" (click)="invite()"
                     [disabled]="invitedEmailControl.invalid || invitedGroups.length === 0 || loading.isActive">
@@ -64,7 +64,7 @@
             <span class="nae-empty-state-title">{{ "admin.user-invite.noOrgs" | translate }}</span>
         </div>
         } @else {
-        <mat-selection-list class="org-list" (selectionChange)="toggleGroup($event.options[0].value)">
+        <mat-selection-list class="org-list" [attr.aria-label]="'admin.user-invite.orgs' | translate" (selectionChange)="toggleGroup($event.options[0].value)">
             @for (group of groups; track group.id) {
             <mat-list-option togglePosition="before" [value]="group" [selected]="isGroupInvited(group)">{{ group.name }}</mat-list-option>
             }
@@ -87,7 +87,7 @@
             }
         </mat-form-field>
         @if (nets.loading$ | async) {
-        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        <mat-progress-bar mode="indeterminate" [attr.aria-label]="'admin.loading' | translate"></mat-progress-bar>
         } @else if (filteredProcesses.length === 0) {
         <div class="nae-empty-state" role="status">
             <mat-icon class="nae-empty-state-icon">account_tree</mat-icon>
@@ -105,7 +105,7 @@
                     </mat-panel-title>
                 </mat-expansion-panel-header>
                 @if (item.loading) {
-                <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+                <mat-progress-bar mode="indeterminate" [attr.aria-label]="'admin.loading' | translate"></mat-progress-bar>
                 } @else if (item.emptyRoles) {
                 <p class="no-roles">{{ "admin.role-assignment.emptyRoles" | translate }}</p>
                 } @else {

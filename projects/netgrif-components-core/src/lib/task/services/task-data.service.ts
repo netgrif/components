@@ -328,13 +328,19 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
 
         this._safeTask.dataGroups.filter(dataGroup => dataGroup.parentTaskId === undefined).forEach(dataGroup => {
             dataGroup.fields.filter(field => this.wasFieldUpdated(field)).forEach(field => {
-                context.body[this._task.stringId] = {};
+                // created once: a new object for every field would leave only the last changed field in the request
+                if (!context.body[this._task.stringId]) {
+                    context.body[this._task.stringId] = {};
+                }
                 this.addFieldToSetDataRequestBody(context, this._task.stringId, field);
             });
         });
         this._safeTask.dataGroups.filter(dataGroup => dataGroup.parentTaskId !== undefined).forEach(dataGroup => {
             if (dataGroup.fields.some(field => this.wasFieldUpdated(field))) {
-                context.body[dataGroup.parentTaskId] = {};
+                // more data groups can come from the same referenced task
+                if (!context.body[dataGroup.parentTaskId]) {
+                    context.body[dataGroup.parentTaskId] = {};
+                }
             } else {
                 return;
             }
@@ -542,31 +548,22 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
      * @param context the context of the failed request
      */
     protected revertSetDataRequest(context: TaskSetDataRequestContext) {
-        // this iteration could be improved if we had a map of all the data fields in a task
-        const totalCount = Object.keys(context.body).length;
-        let foundCount = 0;
-
-        for (const datagroup of this._safeTask.dataGroups) {
-            for (const field of datagroup.fields) {
-                if (!context.body[field.stringId]) {
-                    continue;
-                }
-
-                if (this.compareBackendFormattedFieldValues(
-                    this._fieldConverterService.formatValueForBackend(field, field.value),
-                    context.body[field.stringId].value)
-                ) {
-                    field.valueWithoutChange(context.previousValues[field.stringId]);
-                }
-
-                foundCount++;
-                if (foundCount === totalCount) {
+        // the body is {taskId: {fieldId: value}}, the fields of the referenced tasks are in it too
+        Object.keys(context.body).forEach(taskId => {
+            Object.keys(context.body[taskId]).forEach(fieldId => {
+                const field = this._taskContentService.taskFieldsIndex[taskId]?.fields[fieldId];
+                if (field === undefined) {
+                    this._log.error(`Invalid state. The data field ${fieldId} of task ${taskId} is no longer present in it!`);
                     return;
                 }
-            }
-        }
-
-        this._log.error(`Invalid state. Some data fields of task ${this._safeTask.stringId}, are no longer present in it!`);
+                if (this.compareBackendFormattedFieldValues(
+                    this._fieldConverterService.formatValueForBackend(field, field.value),
+                    context.body[taskId][fieldId].value)
+                ) {
+                    field.valueWithoutChange(context.previousValues[fieldId]);
+                }
+            });
+        });
     }
 
     /**

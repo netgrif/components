@@ -40,15 +40,15 @@
                         matTooltipShowDelay="600">{{ dragOver ? ("dataField.file.dropToUpload" | translate) : constructDisplayName() }}</button>
                 <span class="file-actions">
                     @if (isFilePreviewButton && isDisplayable) {
-                    <button mat-icon-button type="button" (click)="showPreviewDialog()" [matTooltip]="'dataField.file.preview' | translate">
+                    <button mat-icon-button type="button" (click)="showPreviewDialog()" [matTooltip]="'dataField.file.preview' | translate" [attr.aria-label]="'dataField.file.preview' | translate">
                         <mat-icon>visibility</mat-icon>
                     </button>
                     }
-                    <button mat-icon-button type="button" (click)="download()" [matTooltip]="'dataField.file.download' | translate">
+                    <button mat-icon-button type="button" (click)="download()" [matTooltip]="'dataField.file.download' | translate" [attr.aria-label]="'dataField.file.download' | translate">
                         <mat-icon>download</mat-icon>
                     </button>
                     @if (canUpload) {
-                    <button mat-icon-button type="button" (click)="deleteFile()" [matTooltip]="'dataField.file.delete' | translate">
+                    <button mat-icon-button type="button" (click)="deleteFile()" [matTooltip]="'dataField.file.delete' | translate" [attr.aria-label]="'dataField.file.delete' | translate">
                         <mat-icon>delete</mat-icon>
                     </button>
                     }

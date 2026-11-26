@@ -97,7 +97,7 @@ export class LoginComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        if (this.page === 'login' && this._userService.user.id.length !== 0) {
+        if (this.page === 'login' && !!this._userService.user?.id) {
             this.redirectToHome();
         }
     }

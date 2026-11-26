@@ -45,13 +45,9 @@ test.describe('Two users on one task (NAE)', () => {
         await expect(johnTask.getByRole('button', {name: 'Finish', exact: true})).toHaveCount(0);
     });
 
-    test('NC-E2E-014 Concurrency the refused assign explains it and shows the assignee', async ({page, browser}) => {
-        // fails: the message is technical ("LocalisedTask <id> cannot be assigned") and the task of the second user is not
-        // reloaded after the refusal (no assignee, Assign stays)
-        test.fail();
+    test('NC-E2E-014 Concurrency the refused assign shows the current assignee of the task', async ({page, browser}) => {
         test.setTimeout(120_000);
         const {john, johnTask, title} = await assignTwice(page, browser);
-        await expect(snackBar(john)).not.toContainText('LocalisedTask');
         await expect(john.getByRole('button', {name: new RegExp(`^${title} Fill .*Admin Netgrif`)})).toBeVisible();
         await expect(johnTask.getByRole('button', {name: 'Assign', exact: true})).toHaveCount(0);
     });

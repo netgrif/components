@@ -167,8 +167,6 @@ async function addRoles(page: Page, roles: Array<[string, string]>) {
         await detail.getByRole('textbox', {name: 'Title'}).fill(title);
         await detail.getByRole('textbox', {name: 'Title'}).blur();
     }
-    // the role detail saves its changes to the model when another role is selected
-    await page.locator('nc-builder-role-master-item').filter({hasText: roles[0][0]}).click();
     for (const [id, title] of roles) {
         await expect(page.locator('nc-builder-role-master-item').filter({hasText: id})).toContainText(title);
     }
@@ -255,9 +253,6 @@ test.describe('NAB scenarios', () => {
     test.use({knownConsoleErrors: [/^Canceled\b/], actionTimeout: 15_000});
 
     test('Generic_request the request process built in the builder is the model of the scenario and it runs on the engine', async ({page}) => {
-        // fails without the fix of NAE-2509-opravy: the gridster of the form builder (OnPush) does not render a field
-        // added from the field list, remove test.fail() when the fix is merged
-        test.fail();
         test.setTimeout(600_000);
         const GRID = {x: 80, y: 120, left: 60, top: 80};
         await newProcess(page);
@@ -315,6 +310,11 @@ test.describe('NAB scenarios', () => {
             await addExistingField(page, 'taskRef_0', {behavior: 'Visible'});
             await closeForm(page);
 
+            // the answer of the registration (text_6 of t7) is shown on Status by the action of t7 (make text_6, visible on t8)
+            await openForm(page, 't8');
+            await addExistingField(page, 'text_6', {behavior: 'Hidden'});
+            await closeForm(page);
+
             await renameData(page, 'boolean_0', 'decision');
         });
 
@@ -335,11 +335,6 @@ test.describe('NAB scenarios', () => {
         const PROCESS = 'Generic request';
         const ROLES = ['Registration', 'System', 'User'];
         await test.step('deploy', async () => {
-            // the action of PR makes the answer visible on Status, the model of the scenario does not have the answer
-            // on Status ("Cannot get property 'behavior' on null object" on the finish of PR), it is added hidden
-            await openForm(page, 't8');
-            await addExistingField(page, 'text_6', {behavior: 'Hidden'});
-            await closeForm(page);
             await editModel(page, {ID: 'e2e_generic_request', Title: PROCESS, Initials: 'GRQ'});
             await deployOpenedProcess(page, runVersion());
         });

@@ -29,20 +29,26 @@ test.describe('Session (NAE)', () => {
     });
 
     test('NC-E2E-015 Session a token unknown to the engine returns to the login', async ({page}) => {
-        // fails: the login page logs "TypeError: Cannot read properties of undefined (reading 'length')" with the refused
-        // session (the user without an id)
-        test.fail();
         await logIn(page, process.env['E2E_USERNAME']!, process.env['E2E_PASSWORD']!);
-        // the stored session token of the frontend (local storage "naet", base64) is replaced by one the engine does not know
-        // (an expired session)
+        // the stored session token of the frontend (local storage "naet": base64 of "naet:<token>") is replaced by one the
+        // engine does not know (an expired session)
         const replaced = await page.evaluate(() => {
             const stored = localStorage.getItem('naet') !== null;
-            localStorage.setItem('naet', btoa('e2e-unknown-session-token'));
+            localStorage.setItem('naet', btoa('naet:00000000-0000-0000-0000-000000000000'));
             return stored;
         });
         expect(replaced, 'the frontend keeps its session token in the local storage "naet"').toBe(true);
         await page.goto('/cases');
         await expect(page).toHaveURL(/\/login/, {timeout: 15_000});
         await expect(page.getByRole('button', {name: 'Log in'})).toBeVisible();
+    });
+
+    test('NC-E2E-015 Session a stored value that is not a session token is ignored', async ({page}) => {
+        await page.goto('/login');
+        await page.evaluate(() => localStorage.setItem('naet', 'not-a-base64-session-token'));
+        await page.goto('/cases');
+        await expect(page).toHaveURL(/\/login/, {timeout: 15_000});
+        await expect(page.getByRole('button', {name: 'Log in'})).toBeVisible();
+        expect(await page.evaluate(() => localStorage.getItem('naet'))).toBeNull();
     });
 });

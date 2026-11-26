@@ -69,7 +69,8 @@ export abstract class AbstractResourceService {
         };
 
         return {
-            content: this.changeType<Array<T>>(r, propertiesParams),
+            // an empty page has no _embedded (the whole response would be the content)
+            content: r.hasOwnProperty('_embedded') ? this.changeType<Array<T>>(r, propertiesParams) : [],
             pagination: r.hasOwnProperty(PaginationParams.PAGE_NUMBER) ? r.page : defaultPage
         };
     }

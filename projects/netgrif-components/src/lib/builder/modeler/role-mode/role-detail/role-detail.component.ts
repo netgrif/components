@@ -69,6 +69,8 @@ export class RoleDetailComponent implements OnDestroy {
         this._modelService.updateRole(this.role);
         this._historyService.save(this._translateService.instant('builder.modeler.role-mode.role') + ` ${this.role.id} ` + this._translateService.instant('builder.modeler.role-mode.hasBeenChanged'));
         this.shouldSave = false;
+        // the next change refers to the role by its saved id
+        this.role = new ChangedRole(this.role.role);
     }
 
     private validUnique(): ValidatorFn {
@@ -81,19 +83,27 @@ export class RoleDetailComponent implements OnDestroy {
         };
     }
 
+    // a change is saved to the model at once (the export, the other modes and the deploy work with the model), an
+    // id that is not valid (empty, used by another role) is not saved
+
     changeId($event): void {
         this.role.role.id = $event.target.value;
         this.shouldSave = true;
+        if (this.roleIdForm.valid) {
+            this.saveChange();
+        }
     }
 
     changeTitle($event): void {
         this.role.role.title.value = $event.target.value;
         this.shouldSave = true;
+        this.saveChange();
     }
 
     changeGlobalFlag($event): void {
         this.role.role.global = $event.checked;
         this.shouldSave = true;
+        this.saveChange();
     }
 
     get item(): Role {

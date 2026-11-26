@@ -38,11 +38,10 @@ test.describe('Mobile width (NAE)', () => {
         await expect(page.getByRole('button', {name: 'New case', exact: true})).toBeVisible({timeout: 30_000});
         await expectNoHorizontalScroll(page);
 
-        // the navigation of the rail: the menu button opens the drawer with the items (the icon button has no accessible
-        // name, open bug, it is found by its icon)
+        // the navigation of the rail: the menu button opens the drawer with the items
         const tasks = page.getByRole('navigation').getByRole('link', {name: 'Tasks'});
         if (!await tasks.isVisible()) {
-            await page.getByRole('button').filter({has: page.locator('mat-icon', {hasText: /^menu$/})}).first().click();
+            await page.getByRole('button', {name: 'Open menu', exact: true}).first().click();
         }
         await tasks.click();
         await expect(page).toHaveURL(/\/tasks/);

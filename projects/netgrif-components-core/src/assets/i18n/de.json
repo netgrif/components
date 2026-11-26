@@ -430,7 +430,8 @@
             "version": "Version",
             "author": "Netzauthor",
             "upload": "Hochladungsdatum"
-        }
+        },
+        "moreActions": "Weitere Aktionen"
     },
     "profile": {
         "notLogged": "Sie sind nicht angemeldet!",
@@ -508,7 +509,8 @@
             "inviteSent": "Einladung gesendet",
             "inviteFailed": "Einladung fehlgeschlagen",
             "invite-user": "Benutzer einladen"
-        }
+        },
+        "loading": "Wird geladen"
     },
     "preferences": {
         "snackbar": {

@@ -117,9 +117,6 @@ test.describe('Builder modes (NAB)', () => {
     });
 
     test('Roles_permissions the permissions set from the Edit task dialog are kept', async ({page}) => {
-        // fails: the Edit task dialog edits a copy of the transition, its Permissions button closes the dialog without
-        // saving and the permissions are changed on that copy (the Permissions item of the context menu works)
-        test.fail();
         await builderButton(page, 'mode_roles').click();
         await page.getByRole('button', {name: 'Add role'}).click();
         await builderButton(page, 'mode_modeler').click();
@@ -177,9 +174,6 @@ test.describe('Builder modes (NAB)', () => {
     });
 
     test('Form_builder the fields added to the form are data references of the task', async ({page}) => {
-        // fails without the fix of NAE-2509-opravy: the gridster of the form builder (OnPush) does not render a field
-        // added from the field list, remove test.fail() when the fix is merged
-        test.fail();
         await openForm(page);
         await addFormField(page, 'Text', 'Simple');
         await addFormField(page, 'Number', 'Currency');
@@ -200,9 +194,6 @@ test.describe('Builder modes (NAB)', () => {
     });
 
     test('Form_builder a field dragged to the form is a data reference of the task', async ({page}) => {
-        // fails without the fix of NAE-2509-opravy: the drop of a component without properties parses the empty
-        // properties (JSON.parse), remove test.fail() when the fix is merged
-        test.fail();
         // a component without properties (Text - Simple): the drop parsed the empty properties (JSON.parse(''))
         await openForm(page);
         const types = page.getByRole('region', {name: 'Create new fields'});
@@ -216,9 +207,6 @@ test.describe('Builder modes (NAB)', () => {
     });
 
     test('Component_editor the component of a data variable is exported', async ({page}) => {
-        // fails without the fix of NAE-2509-opravy: the components of a data variable are filtered by the name
-        // case sensitively (no component is offered), remove test.fail() when the fix is merged
-        test.fail();
         await addData(page, 'Number', 'Amount');
         await detail(page, 'data').getByRole('button', {name: 'Add component'}).click();
         // an autocomplete of the component names
@@ -298,9 +286,6 @@ test.describe('Builder modes (NAB)', () => {
     });
 
     test('Check_components_elements the Markdown and HTML editors of a text field have their toolbars in the form', async ({page}) => {
-        // fails without the fix of NAE-2509-opravy: the gridster of the form builder (OnPush) does not render a field
-        // added from the field list, remove test.fail() when the fix is merged
-        test.fail();
         await openForm(page);
         await addFormField(page, 'Text', 'Markdown editor');
         await expect(page.locator('gridster .editor-toolbar')).toBeVisible();
@@ -410,8 +395,8 @@ test.describe('Builder simulation (NAB)', () => {
         const role = detail(page, 'role');
         await role.getByRole('textbox', {name: 'ID'}).fill('new_role');
         await role.getByRole('textbox', {name: 'Title'}).fill('New role');
-        // the role detail saves its changes to the model when another role is selected (as the Ranorex test did)
-        await masterItem(page, 'role', 'client').click();
+        // the change of the field (it loses the focus) is saved to the model at once
+        await role.getByRole('textbox', {name: 'Title'}).blur();
         await expect(masterItem(page, 'role', 'new_role')).toContainText('New role');
         let roles = petriflowElements(await exportModel(page), 'role').map(r => petriflowText(r, 'id')).sort();
         expect(roles).toEqual(['account_clerk', 'client', 'loan_officer', 'new_role', 'property_appraiser']);
@@ -552,9 +537,6 @@ test.describe('Builder actions (NAB)', () => {
     });
 
     test('Action_view3 the actions of the case events create and delete', async ({page}) => {
-        // fails: the actions of the case events are mixed up, the create action ended in the delete event or the
-        // delete action was not saved at all (the role and process events are right)
-        test.fail();
         await builderButton(page, 'mode_actions').click();
         const actions = detail(page, 'actions');
         await builderButton(page, 'tool_process').click();

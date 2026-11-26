@@ -16,11 +16,11 @@
             <button type="button" class="file-name" (click)="download(name)"
                     [matTooltip]="'dataField.file.clickToDownload' | translate: { fileName: name }" matTooltipShowDelay="600">{{ name }}</button>
             <span class="file-actions">
-                <button mat-icon-button type="button" (click)="download(name)" [matTooltip]="'dataField.file.download' | translate">
+                <button mat-icon-button type="button" (click)="download(name)" [matTooltip]="'dataField.file.download' | translate" [attr.aria-label]="'dataField.file.download' | translate">
                     <mat-icon>download</mat-icon>
                 </button>
                 @if (canUpload) {
-                <button mat-icon-button type="button" (click)="deleteFile(name)" [matTooltip]="'dataField.file.delete' | translate">
+                <button mat-icon-button type="button" (click)="deleteFile(name)" [matTooltip]="'dataField.file.delete' | translate" [attr.aria-label]="'dataField.file.delete' | translate">
                     <mat-icon>delete</mat-icon>
                 </button>
                 }

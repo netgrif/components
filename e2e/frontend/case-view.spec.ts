@@ -21,8 +21,7 @@ function caseRows(page: Page, title: string) {
 
 /** the menu of the header of the case list (Ordering / Search / Edit mode) */
 function headerMenu(page: Page) {
-    return caseView(page).locator('button:not([aria-label="Help"])')
-        .filter({has: page.locator('mat-icon', {hasText: /^more_vert$/})}).first();
+    return caseView(page).getByRole('button', {name: 'More actions', exact: true}).first();
 }
 
 /**
@@ -102,8 +101,8 @@ test.describe('Case view (NAE)', () => {
         await expect(search).toBeVisible();
         await search.fill(PROCESS);
         await dialog.getByRole('button', {name: new RegExp(`^${PROCESS} `)}).click();
-        // the old dialog had a Reset button that cleared the title, the Material 3 dialog keeps it after the way back
-        await expect(title).toBeVisible();
+        // the title of the left process is cleared
+        await expect(title).toHaveValue('');
 
         await dialog.getByRole('button', {name: 'Cancel'}).click();
         await expect(dialog).toBeHidden();
@@ -111,7 +110,8 @@ test.describe('Case view (NAE)', () => {
     });
 
     test('NAE-TC-005 Case_view a created case is found by the fulltext and by the search of the header', async ({page}) => {
-        // one word: the search of the header with more words ("title contains 'a b'") returns every case
+        // one word: the search of the header with more words ("title contains 'a b'") returns every case (engine bug,
+        // SearchUtils.doBuildElasticQuery builds `title:*"a b"*`)
         const title = `E2E_case_view_${Date.now()}`;
         await createCase(page, PROCESS, title);
         await openCases(page);

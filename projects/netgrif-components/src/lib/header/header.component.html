@@ -37,7 +37,7 @@
 
         <div fxFlex="40px" fxLayoutAlign="center center">
             @if (!hideHeaderMenu) {
-            <button mat-icon-button [matMenuTriggerFor]="headerMenu">
+            <button mat-icon-button [matMenuTriggerFor]="headerMenu" [attr.aria-label]="'panel.moreActions' | translate">
                 <mat-icon>more_vert</mat-icon>
             </button>
             }

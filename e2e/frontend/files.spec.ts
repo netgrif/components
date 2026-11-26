@@ -19,13 +19,9 @@ async function upload(page: Page, field: Locator, files: Array<string>) {
     await (await chooser).setFiles(files);
 }
 
-/**
- * The icon button of the file (download, delete): the buttons have no accessible name, only a tooltip (open bug), they
- * are found by their icon.
- */
-function fileButton(field: Locator, name: string, icon: 'download' | 'delete'): Locator {
-    return field.locator('.file-line').filter({hasText: name}).getByRole('button')
-        .filter({has: field.page().locator('mat-icon', {hasText: icon})});
+/** the icon button of the file (Download, Delete) */
+function fileButton(field: Locator, name: string, action: 'Download' | 'Delete'): Locator {
+    return field.locator('.file-line').filter({hasText: name}).getByRole('button', {name: action, exact: true});
 }
 
 /** downloads the file of the field by its name and returns the content */
@@ -62,7 +58,7 @@ test.describe('Files (NAE)', () => {
         await expect(attachments.getByRole('button', {name: 'second.txt', exact: true})).toBeVisible();
 
         // the delete button of the file in the list (the icon button next to its name)
-        await fileButton(attachments, 'first.txt', 'delete').click();
+        await fileButton(attachments, 'first.txt', 'Delete').click();
         await expect(attachments.getByRole('button', {name: 'first.txt', exact: true})).toHaveCount(0);
         await expect(attachments.getByRole('button', {name: 'second.txt', exact: true})).toBeVisible();
         await finishTask(page, title, 'Upload', task);
@@ -71,7 +67,7 @@ test.describe('Files (NAE)', () => {
         const check = await expandTask(page, title, 'Check');
         const shown = check.getByRole('group', {name: 'Document', exact: true});
         await expect(shown.getByRole('button', {name: 'document.txt', exact: true})).toBeVisible();
-        await expect(fileButton(shown, 'document.txt', 'delete')).toHaveCount(0);
+        await expect(fileButton(shown, 'document.txt', 'Delete')).toHaveCount(0);
         expect(await download(page, shown, 'document.txt')).toBe(content);
 
         const list = check.getByRole('group', {name: 'Attachments', exact: true});

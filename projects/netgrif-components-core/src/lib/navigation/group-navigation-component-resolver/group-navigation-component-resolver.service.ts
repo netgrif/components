@@ -1,6 +1,6 @@
 import {Injector, Type} from '@angular/core';
 import {ComponentPortal} from '@angular/cdk/portal';
-import {Observable, ReplaySubject, Subject} from 'rxjs';
+import {Observable, ReplaySubject, Subject, throwError} from 'rxjs';
 import {switchMap} from 'rxjs/operators';
 import {NAE_NAVIGATION_ITEM_TASK_DATA} from '../model/filter-case-injection-token';
 import {LoggerService} from '../../logger/services/logger.service';
@@ -29,7 +29,7 @@ export abstract class GroupNavigationComponentResolverService {
             .pipe(switchMap((useCase) => {
                 const taskId = DoubleDrawerUtils.findTaskIdInCase(useCase, GroupNavigationConstants.ITEM_TRANS_ID_ALL_DATA);
                 if (taskId === undefined) {
-                    return;
+                    return throwError(() => new Error(`The menu item ${decodedCaseId} has no task ${GroupNavigationConstants.ITEM_TRANS_ID_ALL_DATA}`));
                 }
                 return this._taskResourceService.getData(taskId)
             })).subscribe(itemData => {

@@ -2,6 +2,7 @@
     mat-icon-button
     id="tool_{{ tool.id }}"
     matTooltip="{{ tool.tooltip }}"
+    [attr.aria-label]="tool.tooltip"
     [ngClass]="{ 'button-highlight': isActive() }"
     (click)="activate(); tool.onClick()"
     [disabled]="tool.disabled.value"

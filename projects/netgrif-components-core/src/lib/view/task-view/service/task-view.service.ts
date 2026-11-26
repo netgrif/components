@@ -184,6 +184,11 @@ export class TaskViewService extends AbstractSortableViewComponent implements On
         return this._panelUpdate$.asObservable();
     }
 
+    /** the panels show the current state of their tasks again (e.g. a task changed without a reload of the list) */
+    public refreshPanels(): void {
+        this._panelUpdate$.next(this._panelUpdate$.getValue());
+    }
+
     public get closeTab(): Observable<void> {
         return this._closeTab$.asObservable();
     }

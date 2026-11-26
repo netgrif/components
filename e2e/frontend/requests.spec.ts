@@ -7,7 +7,10 @@ function recordRequests(page: Page, matches: (request: Request) => boolean) {
     const requests: Array<string> = [];
     const listener = (request: Request) => {
         if (matches(request)) {
-            requests.push(`${request.method()} ${request.url().replace(/[0-9a-f]{24}/g, '<id>')}`);
+            // the fields of a set data request ({taskId: {fieldId: ...}}) tell which save it is
+            const fields = request.url().endsWith('/data') && request.method() === 'POST'
+                ? ` [${Object.values(request.postDataJSON() ?? {}).flatMap(f => Object.keys(f ?? {})).join(',')}]` : '';
+            requests.push(`${new Date().toISOString().slice(17, 23)} ${request.method()} ${request.url().replace(/[0-9a-f]{24}/g, '<id>')}${fields}`);
         }
     };
     page.on('request', listener);
@@ -35,8 +38,6 @@ function setsField(request: Request, field: string): boolean {
 test.describe('Requests to the engine (NAE)', () => {
 
     test('NC-E2E-011 Requests the case view loads the page of its cases once', async ({page}) => {
-        // fails: the case view of netgrif-frontend loads the first page of the cases twice when it is opened
-        test.fail();
         const list = recordRequests(page, request => request.url().includes('/case/search') && request.url().includes('size=20'));
         await page.goto('/cases');
         await expect(page.getByRole('button', {name: 'New case', exact: true})).toBeVisible({timeout: 30_000});
@@ -46,9 +47,6 @@ test.describe('Requests to the engine (NAE)', () => {
     });
 
     test('NC-E2E-011 Requests the builder saves the imported model once and once more for the changed version', async ({page}) => {
-        // fails: the builder sends the whole XML of the model (xml_text of the process case) five times for the import and
-        // the change of the version, a big model is sent as many times
-        test.fail();
         test.setTimeout(180_000);
         const saves = recordRequests(page, request => setsField(request, 'xml_text'));
         await prepareDeploy(page, 'all_data.xml', runVersion());

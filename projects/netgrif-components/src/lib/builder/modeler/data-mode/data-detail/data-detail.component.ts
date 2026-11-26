@@ -404,7 +404,7 @@ export class DataDetailComponent implements OnDestroy {
         if (!componentDefs) {
             return [];
         }
-        return componentDefs.components.filter(def => def.name !== undefined && def.title.toLowerCase().includes(this.item.component.name));
+        return componentDefs.components.filter(def => def.name !== undefined && def.title.toLowerCase().includes(this.item.component.name?.toLowerCase() ?? ''));
     }
 
     public filteredProperties(dataVariable: DataVariable, propertyName: string): Array<PropertyDef> {

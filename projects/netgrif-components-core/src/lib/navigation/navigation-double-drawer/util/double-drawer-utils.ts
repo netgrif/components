@@ -57,7 +57,7 @@ export class DoubleDrawerUtils {
     }
 
     public static findTaskIdInCase(useCase: Case, transId: string): string {
-        return useCase.tasks.find(taskPair => taskPair.transition === transId).task;
+        return useCase.tasks.find(taskPair => taskPair.transition === transId)?.task;
     }
 
 }

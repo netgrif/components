@@ -162,7 +162,12 @@ test.describe('Builder editor (NAB)', () => {
     });
 
     /** selects the elements in the rectangle with the select tool (a drag on the empty canvas) */
+    /**
+     * Selects the elements in the rectangle by the select tool. A snack bar (of the export, of the paste) lies over the
+     * bottom of the canvas: the drag over it leaves the canvas and the builder drops the selection, so it is waited for.
+     */
     async function selectArea(page: Page, from: {x: number, y: number}, to: {x: number, y: number}) {
+        await expect(page.locator('mat-snack-bar-container')).toHaveCount(0, {timeout: 15_000});
         await builderButton(page, 'tool_SelectTool').click();
         await page.mouse.move(from.x, from.y);
         await page.mouse.down();
@@ -209,14 +214,10 @@ test.describe('Builder editor (NAB)', () => {
         expect(copied.arc).toHaveLength(2);
 
         // everything except p2 is deleted by the Delete key
-        // the selection right after the paste and the export is sometimes not taken (flaky), it is repeated until the
-        // copied elements are selected
-        await expect(async () => {
-            await selectArea(page, {x: 450, y: 470}, {x: 850, y: 700});
-            for (const id of ['place_p1', 'transition_t1', 'place_p3', 'transition_t2']) {
-                await expect(canvasElement(page, id)).toHaveClass(/svg-active-stroke/, {timeout: 1000});
-            }
-        }).toPass({timeout: 15_000});
+        await selectArea(page, {x: 450, y: 470}, {x: 850, y: 700});
+        for (const id of ['place_p1', 'transition_t1', 'place_p3', 'transition_t2']) {
+            await expect(canvasElement(page, id)).toHaveClass(/svg-active-stroke/);
+        }
         await page.keyboard.press('Delete');
         const rest = petriflowContent(await exportModel(page));
         expect(rest.place).toEqual(['p2']);

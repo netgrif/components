@@ -8,7 +8,7 @@
         <main class="login-main">
             <div class="topbar">
                 <img class="topbar-logo" src="assets/netgrif_logo.svg" alt="Netgrif">
-                <button mat-button class="language" [matMenuTriggerFor]="languageMenu" [attr.aria-label]="'toolbar.menu.lang' | translate">
+                <button mat-button class="language" [matMenuTriggerFor]="languageMenu" [attr.aria-label]="('toolbar.menu.lang' | translate) + ' ' + (currentLanguage() | uppercase)">
                     <mat-icon>translate</mat-icon>
                     {{ currentLanguage() | uppercase }}
                     <mat-icon iconPositionEnd>arrow_drop_down</mat-icon>

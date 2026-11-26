@@ -12,6 +12,8 @@ setup('NAE-TC-001 Signup registration of a new user through the sign up and the 
     const email = process.env['E2E_USER2_USERNAME'] as string;
     const password = process.env['E2E_USER2_PASSWORD'] as string;
     setup.skip(!email || !password, 'Set E2E_USER2_USERNAME and E2E_USER2_PASSWORD (the user registered by the tests)');
+    // the first loads of the pages of a fresh dev server take seconds
+    setup.setTimeout(120_000);
 
     const basic = `Basic ${Buffer.from(`${email}:${password}`).toString('base64')}`;
     const registered = (await request.get(`${ENGINE_API}/auth/login`, {headers: {Authorization: basic}})).ok();

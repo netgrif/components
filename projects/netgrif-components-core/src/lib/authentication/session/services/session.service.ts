@@ -151,18 +151,27 @@ export class SessionService implements OnDestroy {
         this.idleTimerService.stopTimer()
         if (token) {
             token = this.resolveToken(token);
+        }
+        if (token) {
             this.sessionToken = token;
             this.verify(token).pipe(take(1)).subscribe(ver => {
                 this._log.debug('Token ' + token + ' verified status: ' + ver);
             });
         } else {
+            // no session or a stored value that is not a session token (changed by hand, an older format)
+            this._storage.removeItem(SessionService.SESSION_TOKEN_STORAGE_KEY);
             this._initialized.on();
         }
         return '';
     }
 
+    /** the token of the stored value `base64(<key>:<token>)`, an empty string when the value is not one */
     private resolveToken(raw: string): string {
-        return raw ? atob(raw).split(':')[1] : '';
+        try {
+            return atob(raw).split(':')[1] ?? '';
+        } catch {
+            return '';
+        }
     }
 
     private resolveStorage(storage: string): any {

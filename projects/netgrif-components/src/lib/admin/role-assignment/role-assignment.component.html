@@ -26,7 +26,7 @@
             </button>
         </div>
         @if (users.loading$ | async) {
-        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        <mat-progress-bar mode="indeterminate" [attr.aria-label]="'admin.loading' | translate"></mat-progress-bar>
         }
         @if ((users.loading$ | async) === false && users_.length === 0) {
         <div class="nae-empty-state" role="status">
@@ -34,7 +34,7 @@
             <span class="nae-empty-state-title">{{ "admin.role-assignment.noUsers" | translate }}</span>
         </div>
         }
-        <mat-selection-list #userList class="item-list">
+        <mat-selection-list #userList class="item-list" [attr.aria-label]="'admin.user-list.listTitle' | translate">
             <cdk-virtual-scroll-viewport [itemSize]="itemSize.value" class="item-viewport" (scrolledIndexChange)="loadNextUserPage()">
                 <mat-list-option *cdkVirtualFor="let user of users_"
                                  togglePosition="after"
@@ -53,7 +53,7 @@
         <header class="pane-header">
             <h2 class="pane-title">{{ "admin.process-list.roles" | translate }}</h2>
             @if (users.updating$ | async) {
-            <mat-progress-bar mode="indeterminate" class="saving-progress"></mat-progress-bar>
+            <mat-progress-bar mode="indeterminate" class="saving-progress" [attr.aria-label]="'admin.role-assignment.saving' | translate"></mat-progress-bar>
             <span class="saving">{{ "admin.role-assignment.saving" | translate }}</span>
             }
         </header>
@@ -74,7 +74,9 @@
             </button>
             }
         </mat-form-field>
-        @if (filteredProcesses.length === 0) {
+        @if (nets.loading$ | async) {
+        <mat-progress-bar mode="indeterminate" [attr.aria-label]="'admin.loading' | translate"></mat-progress-bar>
+        } @else if (filteredProcesses.length === 0) {
         <div class="nae-empty-state" role="status">
             <mat-icon class="nae-empty-state-icon">account_tree</mat-icon>
             <span class="nae-empty-state-title">{{ "admin.role-assignment.noProcesses" | translate }}</span>
@@ -94,7 +96,7 @@
                     }
                 </mat-expansion-panel-header>
                 @if (item.loading) {
-                <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+                <mat-progress-bar mode="indeterminate" [attr.aria-label]="'admin.loading' | translate"></mat-progress-bar>
                 } @else if (item.emptyRoles) {
                 <p class="no-roles">{{ "admin.role-assignment.emptyRoles" | translate }}</p>
                 } @else {

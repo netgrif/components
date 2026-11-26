@@ -86,7 +86,7 @@ test.describe('Mortgage (NAE)', () => {
             const form = await expandTask(page, CASE, 'Mortgage application form / System');
             await assignTask(form);
             await form.getByRole('button', {name: 'Finish', exact: true}).click();
-            await expect(taskHeader(page, CASE, 'Mortgage application form / System').first()).toHaveAccessibleName(/ high$/);
+            await expect(taskHeader(page, CASE, 'Mortgage application form / System').first()).toHaveAccessibleName(/ high( More actions)?$/);
             await expect(taskHeader(page, CASE, 'Sign loan contract / Client')).toHaveCount(1);
         });
 

@@ -41,9 +41,6 @@ async function renameItem(page: Page, from: string, to: string) {
  */
 test.describe('Menu (NAE)', () => {
 
-    // the settings of a menu item (a task ref list) log NG0100 ExpressionChangedAfterItHasBeenCheckedError in the
-    // development mode of Angular, a bug of TaskRefListFieldComponent
-    test.use({knownConsoleErrors: [/NG0100: ExpressionChangedAfterItHasBeenCheckedError.*TaskRefListFieldComponent/]});
 
     test('NC-E2E-017 Menu a menu item is renamed and the new name is in the navigation', async ({page}) => {
         test.setTimeout(180_000);

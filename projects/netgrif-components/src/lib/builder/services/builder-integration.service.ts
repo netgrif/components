@@ -2,6 +2,7 @@ import {Injectable, OnDestroy} from "@angular/core";
 import {HistoryService} from "../modeler/services/history/history.service";
 import {
     Case,
+    EventOutcomeMessageResource,
     extractFieldValueFromData,
     LoadingEmitter,
     LoggerService,
@@ -11,7 +12,8 @@ import {
 } from "@netgrif/components-core";
 import {ExportService, PetriNet} from "@netgrif/petriflow";
 import {HistoryChange} from "../modeler/services/history/history-change";
-import {Observable, of, Subject, Subscription} from 'rxjs';
+import {defer, EMPTY, Observable, of, Subject, Subscription} from 'rxjs';
+import {catchError, concatMap, skip, tap} from 'rxjs/operators';
 import {BuilderModeService} from "./builder-mode.service";
 
 @Injectable()
@@ -27,7 +29,23 @@ export class BuilderIntegrationService implements OnDestroy {
     protected _reloadModes: Subject<boolean>;
     protected _loading: LoadingEmitter;
     protected _historySub: Subscription;
+    protected _modeSub: Subscription;
     protected _modelDataSet: Subject<PetriNet>;
+    /**
+     * The change of the model waiting to be saved: the whole XML of the model is sent to the process case, so a series of
+     * changes (an import, a drag, typing) is saved once after a pause of the editing
+     */
+    protected _pendingSave: HistoryChange<PetriNet> | undefined;
+    protected _saveTimer: ReturnType<typeof setTimeout> | undefined;
+    /**
+     * The writes of the model into the process case (the XML of a change, the model data) run one after the other in
+     * the order they were requested: a later write is never overwritten by an earlier one that was answered later
+     */
+    protected _writes: Subject<Observable<unknown>>;
+    /** the XML of the model in the process case (loaded or written last), an unchanged model is not written again */
+    protected _savedXml: string | undefined;
+    protected _writesSub: Subscription;
+    protected static readonly SAVE_DELAY = 400;
 
     constructor(protected _historyService: HistoryService,
                 protected _taskResourceService: TaskResourceService,
@@ -38,24 +56,50 @@ export class BuilderIntegrationService implements OnDestroy {
         this._reloadModes = new Subject<boolean>();
         this._loading = new LoadingEmitter();
         this._modelDataSet = new Subject<PetriNet>();
+        this._writes = new Subject<Observable<unknown>>();
+        this._writesSub = this._writes.pipe(concatMap(write => write.pipe(catchError(() => EMPTY)))).subscribe();
         this._historySub = this._historyService.historyChange.subscribe(history => {
             if (this._isIntegrated && this._editTaskId && !_builderModeService.readOnly) {
-                if (!this._isAssigned) {
-                    this._taskResourceService.assignTask(this._editTaskId).subscribe(result => {
-                        if (result.success) {
-                            this._isAssigned = true;
-                        }
-                        this.setData(history);
-                    });
-                } else {
-                    this.setData(history);
-                }
+                this.scheduleSave(history);
             }
         });
+        // another mode (e.g. the Deploy task of the process case) works with the saved model
+        this._modeSub = this._builderModeService.mode$().pipe(skip(1)).subscribe(() => this.flushSave());
+    }
+
+    /** saves the change after the pause of the editing ({@link SAVE_DELAY}), a newer change replaces it */
+    protected scheduleSave(history: HistoryChange<PetriNet>) {
+        this._pendingSave = history;
+        clearTimeout(this._saveTimer);
+        this._saveTimer = setTimeout(() => this.flushSave(), BuilderIntegrationService.SAVE_DELAY);
+    }
+
+    /** saves the waiting change of the model now */
+    public flushSave() {
+        clearTimeout(this._saveTimer);
+        const history = this._pendingSave;
+        this._pendingSave = undefined;
+        if (!history) {
+            return;
+        }
+        this.setData(history);
+    }
+
+    /** the write into the process case, after the assign of its edit task when it is not assigned yet */
+    protected write(request: () => Observable<unknown>) {
+        this._writes.next(defer(() => this._isAssigned
+            ? request()
+            : this._taskResourceService.assignTask(this._editTaskId).pipe(
+                tap(result => this._isAssigned = !!result.success),
+                concatMap(() => request()))));
     }
 
     ngOnDestroy(): any {
+        this.flushSave();
         this._historySub?.unsubscribe();
+        this._modeSub?.unsubscribe();
+        // the writes already requested are finished (the queue is not unsubscribed), no new ones come
+        this._writes.complete();
         this._modelDataSet.complete();
     }
 
@@ -131,18 +175,25 @@ export class BuilderIntegrationService implements OnDestroy {
         return this._loading.value;
     }
 
+    /** the model was loaded from the process case: the same model is not written back (e.g. by the first history save) */
+    public modelLoaded(model: PetriNet) {
+        this._savedXml = this._exportService.exportXml(model);
+    }
+
     protected setData(history: HistoryChange<PetriNet>) {
-        if (this._loading.value) {
+        const xml = this._exportService.exportXml(history.record);
+        if (xml === this._savedXml) {
             return;
         }
+        this._savedXml = xml;
         const body = {};
         body[this._editTaskId] = {};
         body[this._editTaskId]['xml_text'] = {
             type: 'text',
-            value: this._exportService.exportXml(history.record)
+            value: xml
         };
-        this._taskResourceService.setData(this._editTaskId, body).subscribe({
-            next: outcome => {
+        this.write(() => this._taskResourceService.setData(this._editTaskId, body).pipe(tap({
+            next: (outcome: EventOutcomeMessageResource) => {
                 if ((outcome.outcome as TaskEventOutcome)?.task?.user?.email !== undefined) {
                     this._isAssigned = true;
                 }
@@ -150,7 +201,7 @@ export class BuilderIntegrationService implements OnDestroy {
             }, error: error => {
                 this._log.error('Data set failed', error.message);
             }
-        });
+        })));
     }
 
     public getXml(taskId = this._editTaskId): Observable<string> {
@@ -177,6 +228,9 @@ export class BuilderIntegrationService implements OnDestroy {
 
     public setModelData(model: PetriNet) {
         if (this._isIntegrated && this._editTaskId) {
+            // the XML of the current model is sent here, the waiting change of the history is in it
+            clearTimeout(this._saveTimer);
+            this._pendingSave = undefined;
             const body = {};
             body[this._editTaskId] = {};
             body[this._editTaskId]['id'] = {
@@ -195,13 +249,14 @@ export class BuilderIntegrationService implements OnDestroy {
                 type: 'text',
                 value: model.title?.value
             };
+            this._savedXml = this._exportService.exportXml(model);
             body[this._editTaskId]['xml_text'] = {
                 type: 'text',
-                value: this._exportService.exportXml(model)
+                value: this._savedXml
             };
             this._loading.next(true);
-            this._taskResourceService.setData(this._editTaskId, body).subscribe({
-                next: outcome => {
+            this.write(() => this._taskResourceService.setData(this._editTaskId, body).pipe(tap({
+                next: (outcome: EventOutcomeMessageResource) => {
                     this._loading.next(false);
                     if ((outcome.outcome as TaskEventOutcome)?.task?.user?.email !== undefined) {
                         this._isAssigned = true;
@@ -212,7 +267,7 @@ export class BuilderIntegrationService implements OnDestroy {
                     this._loading.next(false);
                     this._log.error('Data set failed', error.message);
                 }
-            });
+            })));
         }
     }
 }

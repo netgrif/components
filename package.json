@@ -71,6 +71,7 @@
         "e2e": "playwright test -c e2e",
         "e2e:example": "playwright test -c e2e --project=example",
         "e2e:frontend": "playwright test -c e2e --project=frontend --workers=1",
+        "e2e:frontend:serve": "npm run frontend:build && node e2e/serve-frontend.mjs",
         "e2e:ui": "playwright test -c e2e --ui",
         "e2e:report": "playwright show-report playwright-report"
     },
@@ -88,7 +89,7 @@
         "@angular/router": "~22.2.3",
         "@material/material-color-utilities": "^0.4.0",
         "@netgrif/petri.svg": "1.1.1",
-        "@netgrif/petriflow": "2.2.4",
+        "@netgrif/petriflow": "2.2.5",
         "@netgrif/petriflow.svg": "1.1.1",
         "@ngbracket/ngx-layout": "^22.0.2",
         "@ngx-translate/core": "~15.0.0",

@@ -96,13 +96,16 @@ export class DialogTransitionEditComponent implements OnInit {
     }
 
     openPermissions() {
+        // the button closes this dialog without saving its copy of the transition: the permissions are edited on the
+        // transition of the model (as the Permissions item of the context menu does)
+        const modelTransition = this._modelService.model.getTransition(this.data.transitionId);
         this.dialog.open(DialogManageRolesComponent, {
             panelClass: 'dialog-task-responsive',
             data: {
                 type: RoleRefType.TRANSITION,
                 roles: this._modelService.model.getRoles(),
-                rolesRefs: this.transition.transition.roleRefs,
-                userRefs: this.transition.transition.userRefs,
+                rolesRefs: modelTransition.roleRefs,
+                userRefs: modelTransition.userRefs,
                 userLists: this._modelService.model.getDataSet().filter(item => item.type === DataType.USER_LIST),
                 modelService: this._modelService,
                 historyService: this._historyService,

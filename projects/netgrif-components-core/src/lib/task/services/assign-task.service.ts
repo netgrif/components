@@ -26,6 +26,8 @@ import {ChangedFieldsMap} from '../../event/services/interfaces/changed-fields-m
 import {TaskEventOutcome} from '../../event/model/event-outcomes/task-outcomes/task-event-outcome';
 import {FrontActionService} from '../../actions/services/front-action.service';
 import {FrontAction} from '../../data-fields/models/changed-fields';
+import {SimpleFilter} from '../../filter/models/simple-filter';
+import {FilterType} from '../../filter/models/filter-type';
 
 /**
  * Service that handles the logic of assigning a task.
@@ -139,6 +141,8 @@ export class AssignTaskService extends TaskHandlingService {
                     if (outcomeResource.error !== '') {
                         this._snackBar.openErrorSnackBar(outcomeResource.error);
                     }
+                    // e.g. another user assigned the task meanwhile: the panel shows its current state
+                    this.reloadRefusedTask(assignedTaskId);
                     if (outcomeResource.outcome !== undefined) {
                         const changedFieldsMap = this._eventService.parseChangedFieldsFromOutcomeTree(outcomeResource.outcome);
                         this._changedFieldsService.emitChangedFields(changedFieldsMap);
@@ -188,5 +192,20 @@ export class AssignTaskService extends TaskHandlingService {
      */
     protected sendNotification(success: boolean, outcome?: TaskEventOutcome): void {
         this._taskEvent.publishTaskEvent(createTaskEventNotification(this._safeTask, TaskEvent.ASSIGN, success, outcome));
+    }
+
+    /**
+     * The assign was refused (e.g. another user assigned the task meanwhile, an action of the task refused it): only
+     * this task is loaded again, so the panel shows its current assignee and buttons (the list is not reloaded).
+     */
+    protected reloadRefusedTask(taskId: string) {
+        this._taskResourceService.getTasks(new SimpleFilter('', FilterType.TASK, {stringId: taskId})).pipe(take(1)).subscribe(page => {
+            const task = page?.content?.[0];
+            if (task && this.isTaskRelevant(taskId)) {
+                this._taskContentService.updateStateData({task} as TaskEventOutcome);
+                // the header of the panel (assignee) is resolved again
+                this._taskViewService?.refreshPanels();
+            }
+        }, error => this._log.debug('the refused task could not be loaded again', error));
     }
 }

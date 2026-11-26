@@ -2,10 +2,6 @@ import {expect, openDemo, test} from '../fixtures/playground';
 
 test.describe('Playground smoke', () => {
 
-    // without the fix of NAE-2509-opravy: DoubleDrawerUtils.findTaskIdInCase reads the task of a menu item without its
-    // data task (the account demos), remove the known error when the fix is merged
-    test.use({knownConsoleErrors: [/TypeError: Cannot read properties of undefined \(reading 'task'\)/]});
-
     test('NC-E2E-001 overview lists the demos', async ({page}) => {
         await openDemo(page, '/');
         await expect(page.getByRole('heading', {name: 'Netgrif components playground'})).toBeVisible();

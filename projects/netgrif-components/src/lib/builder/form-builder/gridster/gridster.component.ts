@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
 import {Router} from '@angular/router';
 import {GridsterConfig} from 'angular-gridster2';
 import {SelectedTransitionService} from '../../modeler/selected-transition.service';
@@ -9,6 +9,7 @@ import {GridsterDataField} from './classes/gridster-data-field';
 import {GridsterService} from './gridster.service';
 import {BuilderModeService, BuilderMode} from "../../services/builder-mode.service";
 import {TranslateService} from "@ngx-translate/core";
+import {Subscription} from 'rxjs';
 
 @Component({
     selector: 'nc-builder-gridster-component',
@@ -30,6 +31,9 @@ export class GridsterComponent implements OnInit, OnDestroy {
      */
     private readonly _initializedItems = new WeakSet<GridsterDataField>();
 
+    /** a field added from the field list (a click outside of this OnPush component) is rendered at once */
+    private _newFieldSubscription: Subscription;
+
     constructor(private gridsterService: GridsterService,
                 private fieldListService: FieldListService,
                 private modelService: ModelService,
@@ -37,7 +41,8 @@ export class GridsterComponent implements OnInit, OnDestroy {
                 private transitionService: SelectedTransitionService,
                 private historyService: HistoryService,
                 protected _builderModeService: BuilderModeService,
-                protected _translateService: TranslateService) {
+                protected _translateService: TranslateService,
+                private _changeDetector: ChangeDetectorRef) {
     }
 
     ngOnInit() {
@@ -51,9 +56,11 @@ export class GridsterComponent implements OnInit, OnDestroy {
         }
         this.gridsterService.updatePlacedDataFields();
         this.gridsterService.updateGridsterRows();
+        this._newFieldSubscription = this.gridsterService.onNewFieldPlaced$().subscribe(() => this._changeDetector.markForCheck());
     }
 
     ngOnDestroy() {
+        this._newFieldSubscription?.unsubscribe();
         if (this.gridsterService.historySave) {
             this.gridsterService.historySave = false;
             this.historyService.save(this._translateService.instant('builder.form-builder.gridster.dataRefsChanged'));

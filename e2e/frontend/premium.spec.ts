@@ -23,7 +23,7 @@ async function choose(page: Page, select: Locator, option: string) {
 async function finishSection(page: Page, title: string, section: string, task: Locator, next: string) {
     await task.getByRole('button', {name: 'Finish', exact: true}).click();
     await expect(taskHeader(page, title, next)).toHaveCount(1);
-    await expect(taskHeader(page, title, section).first()).toHaveAccessibleName(/ (high|medium|low)$/);
+    await expect(taskHeader(page, title, section).first()).toHaveAccessibleName(/ (high|medium|low)( More actions)?$/);
 }
 
 /**
@@ -43,9 +43,6 @@ test.describe('Premium insurance (NAE)', () => {
     test.afterEach(async ({page}) => setProcessRoles(page, PROCESS, ROLES, false));
 
     test('NAE Premium_nehnutelnost_domacnost the insurance of a property and a household is filled in', async ({page}) => {
-        // fails without the fix of NAE-2509-opravy: TaskDataService sent only the last changed field of a task, the
-        // other values of the form are lost and the next tasks are not created, remove test.fail() when the fix is merged
-        test.fail();
         test.setTimeout(300_000);
         const title = `E2E_premium_${Date.now()}`;
         await createCase(page, PROCESS, title);

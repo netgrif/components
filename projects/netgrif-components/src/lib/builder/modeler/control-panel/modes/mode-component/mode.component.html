@@ -3,6 +3,7 @@
     id="mode_{{ mode.id }}"
     [ngClass]="{ 'button-highlight': isActive() }"
     matTooltip="{{ mode.tooltip }}"
+    [attr.aria-label]="mode.tooltip"
     (click)="mode.onClick(); setActive()"
 >
 

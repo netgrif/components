@@ -280,8 +280,9 @@ export class NewCaseDialogComponent implements OnDestroy {
         this.step = 'title';
     }
 
-    /** back from the title to the list of the processes */
+    /** back from the title to the list of the processes, the title belongs to the case of the left process */
     backToProcess(): void {
+        this.titleFormControl.reset('');
         this.step = 'process';
     }
 

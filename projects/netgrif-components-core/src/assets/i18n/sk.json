@@ -430,7 +430,8 @@
             "version": "Verzia",
             "author": "Autor",
             "upload": "Dátum nahratia"
-        }
+        },
+        "moreActions": "Ďalšie akcie"
     },
     "profile": {
         "notLogged": "Nie ste prihlásený!",
@@ -508,7 +509,8 @@
             "inviteFailed": "Poslanie pozvánky zlyhalo",
             "invite-user": "Pozvať používateľa",
             "selectedRoles": "Roly"
-        }
+        },
+        "loading": "Načítava sa"
     },
     "preferences": {
         "snackbar": {

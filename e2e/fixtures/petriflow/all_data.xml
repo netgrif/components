@@ -9,42 +9,9 @@
     <transitionRole>false</transitionRole>
     <caseName>All data test default case name</caseName>
 
-    <caseEvents>
-        <event type="create">
-            <id>create</id>
-            <actions phase="post">
-                <action id="create_action_0">
-                    filter: f.filter,
-                    caze_filter: f.caze_filter;
-
-                    def caze = createFilter("All cases" as String, "" as String, "Case", [] as ArrayList, "assignment"
-                    as
-                    String, "public" as String, [
-                    "predicateMetadata": [[["category": "case_author", "configuration": ["operator": "equals"],
-                    "values":
-                    [["text": "search.category.userMe", value: ["&lt;&lt;me&gt;&gt;"]]]]]],
-                    "searchCategories" : ["case_author"]                                                                                                 
-                    ])
-
-                    useCase.dataSet["filter"].value = caze.dataSet["filter"].value
-                    useCase.dataSet["filter"].allowedNets = caze.dataSet["filter"].allowedNets
-                    useCase.dataSet["filter"].filterMetadata = caze.dataSet["filter"].filterMetadata
-
-                    change caze_filter value {caze.getStringId()}
-                </action>
-            </actions>
-        </event>
-        <event type="delete">
-            <id>delete</id>
-            <actions phase="pre">
-                <action id="delete_action_0">
-                    caze_filter: f.caze_filter;
-
-                    workflowService.deleteCase(caze_filter.value)
-                </action>
-            </actions>
-        </event>
-    </caseEvents>
+    <!-- e2e: the case events of the Ranorex model (create: createFilter of the old engine, delete: the delete of the
+         filter case) are removed, engine 7 has no createFilter action; with @netgrif/petriflow 2.2.4 the builder
+         exported them in separate caseEvents elements and the engine kept only the last one, so they never ran -->
 
     <!-- ROLES -->
     <role>
