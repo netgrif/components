@@ -41,7 +41,7 @@ export class PublicTaskResourceService extends TaskResourceService {
 
     public delegateTask(taskId: string, body: object, params?: HttpParams): Observable<EventOutcomeMessageResource> {
         this._logger.warn('Delegate task is not supported on public view');
-        return of({});
+        return of({error: 'Delegate task is not supported on public view'} as EventOutcomeMessageResource);
     }
 
     /**
