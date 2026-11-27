@@ -7,7 +7,7 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 Full Changelog: [https://github.com/netgrif/components/commits/v7.1.1](https://github.com/netgrif/components/commits/v7.1.1)
 
-## [7.1.1](https://github.com/netgrif/components/releases/tag/v7.1.1) (2026-11-26)
+## [7.1.1](https://github.com/netgrif/components/releases/tag/v7.1.1) (2026-11-27)
 
 ### Changed
 - [NAE-2507] Event outcome content is not configurable
