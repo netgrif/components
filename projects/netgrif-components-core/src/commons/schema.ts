@@ -367,7 +367,11 @@ export interface Services {
     builder?: {
         url: string,
         openProcessFromFile?: boolean
+    },
+    requests?: {
+        fields?: {
+            [operation: string]: string
+        }
     }
-
     [k: string]: any;
 }
