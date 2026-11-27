@@ -1348,6 +1348,23 @@
         "builder": {
             "url": "http://localhost:4300",
             "openProcessFromFile": true
+        },
+        "requests": {
+            "fields": {
+                "task.assign": null,
+                "task.cancel": null,
+                "task.delegate": null,
+                "task.finish": null,
+                "task.getData": null,
+                "task.setData": null,
+                "publicTask.assign": null,
+                "publicTask.cancel": null,
+                "publicTask.finish": null,
+                "publicTask.getData": null,
+                "publicTask.setData": null,
+                "case.create": null,
+                "case.delete": null
+            }
         }
     }
 }

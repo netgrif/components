@@ -62,11 +62,8 @@ describe('TaskResourceService', () => {
                         done();
                     });
 
-                    const reqLog = httpMock.expectOne('http://localhost:8080/api/task/assign/id?fields=outcomes,outcome,task(stringId)');
+                    const reqLog = httpMock.expectOne('http://localhost:8080/api/task/assign/id');
                     expect(reqLog.request.method).toEqual('GET');
-                    expect(reqLog.request.params.has('fields')).toBeTrue();
-                    expect(reqLog.request.params.get('fields')).toEqual('outcomes,outcome,task(stringId)');
-
                     reqLog.flush({success: 'Success'});
                 })();
         }
@@ -80,11 +77,8 @@ describe('TaskResourceService', () => {
                         done();
                     });
 
-                    const reqLog = httpMock.expectOne('http://localhost:8080/api/task/cancel/id?fields=outcomes,outcome,task(stringId)');
+                    const reqLog = httpMock.expectOne('http://localhost:8080/api/task/cancel/id');
                     expect(reqLog.request.method).toEqual('GET');
-                    expect(reqLog.request.params.has('fields')).toBeTrue();
-                    expect(reqLog.request.params.get('fields')).toEqual('outcomes,outcome,task(stringId)');
-
                     reqLog.flush({success: 'Success'});
                 })();
         }
@@ -98,11 +92,8 @@ describe('TaskResourceService', () => {
                         done();
                     });
 
-                    const reqLog = httpMock.expectOne('http://localhost:8080/api/task/delegate/id?fields=outcomes,outcome,task(stringId)');
+                    const reqLog = httpMock.expectOne('http://localhost:8080/api/task/delegate/id');
                     expect(reqLog.request.method).toEqual('POST');
-                    expect(reqLog.request.params.has('fields')).toBeTrue();
-                    expect(reqLog.request.params.get('fields')).toEqual('outcomes,outcome,task(stringId)');
-
                     reqLog.flush({success: 'Success'});
                 })();
         }
@@ -116,11 +107,8 @@ describe('TaskResourceService', () => {
                         done();
                     });
 
-                    const reqLog = httpMock.expectOne('http://localhost:8080/api/task/finish/id?fields=outcomes,outcome,task(stringId)');
+                    const reqLog = httpMock.expectOne('http://localhost:8080/api/task/finish/id');
                     expect(reqLog.request.method).toEqual('GET');
-                    expect(reqLog.request.params.has('fields')).toBeTrue();
-                    expect(reqLog.request.params.get('fields')).toEqual('outcomes,outcome,task(stringId)');
-
                     reqLog.flush({success: 'Success'});
                 })();
         }
@@ -230,10 +218,8 @@ describe('TaskResourceService', () => {
                         done();
                     });
 
-                    const reqLog = httpMock.expectOne('http://localhost:8080/api/task/id/data?fields=outcomes,outcome,task(stringId),data');
+                    const reqLog = httpMock.expectOne('http://localhost:8080/api/task/id/data');
                     expect(reqLog.request.method).toEqual('GET');
-                    expect(reqLog.request.params.has('fields')).toBeTrue();
-                    expect(reqLog.request.params.get('fields')).toEqual('outcomes,outcome,task(stringId),data');
 
                     reqLog.flush({
                         success: 'Get data groups successful',
@@ -257,10 +243,8 @@ describe('TaskResourceService', () => {
                         done();
                     });
 
-                    const reqLog = httpMock.expectOne('http://localhost:8080/api/task/id/data?fields=outcomes,outcome,case(stringId),task(stringId),changedFields');
+                    const reqLog = httpMock.expectOne('http://localhost:8080/api/task/id/data');
                     expect(reqLog.request.method).toEqual('POST');
-                    expect(reqLog.request.params.has('fields')).toBeTrue();
-                    expect(reqLog.request.params.get('fields')).toEqual('outcomes,outcome,case(stringId),task(stringId),changedFields');
 
                     reqLog.flush({outcome: {}});
                 })();
